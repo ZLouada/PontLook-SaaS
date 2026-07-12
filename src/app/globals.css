@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #2451bf;
+  --color-interactive: #3d7bff;
+  --color-accent: #7fb8ff;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  body {
+    @apply bg-white font-sans text-body;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading font-semibold text-ink;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary-400 ring-offset-2;
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-shadow: 0 8px 32px rgba(36, 81, 191, 0.12);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200;
+  }
+  .btn-primary {
+    @apply btn bg-primary text-white shadow-lifted hover:bg-primary-400 hover:shadow-glass active:scale-[0.98];
+  }
+  .btn-secondary {
+    @apply btn border border-primary-200 bg-white text-primary hover:border-primary-300 hover:bg-primary-50 active:scale-[0.98];
+  }
+
+  .card {
+    @apply rounded-3xl bg-white p-8 shadow-card transition-shadow duration-300 hover:shadow-lifted;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-primary-100 bg-primary-50 px-4 py-2 text-sm font-medium text-primary-600;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-sm font-medium text-ink;
+  }
+  .field-input {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-ink placeholder:text-slate-400 transition-colors focus:border-primary-400;
+  }
+  .field-error {
+    @apply mt-1.5 text-xs font-medium text-red-600;
+  }
+
+  .prose-custom {
+    @apply text-base leading-relaxed text-body;
+  }
+  .prose-custom h2 {
+    @apply mt-10 mb-4 text-2xl;
+  }
+  .prose-custom h3 {
+    @apply mt-8 mb-3 text-xl;
+  }
+  .prose-custom p {
+    @apply mb-5;
+  }
+  .prose-custom ul,
+  .prose-custom ol {
+    @apply mb-5 ml-5 list-disc space-y-2;
+  }
+  .prose-custom ol {
+    @apply list-decimal;
+  }
+  .prose-custom strong {
+    @apply font-semibold text-ink;
+  }
+  .prose-custom blockquote {
+    @apply my-6 border-l-4 border-primary-200 pl-5 italic text-slate-600;
+  }
+  .prose-custom a {
+    @apply font-medium text-primary underline underline-offset-2;
+  }
+}
