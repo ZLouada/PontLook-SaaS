@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "npm run build && git add -f out && git commit -m \"deploy: build assets\" && git push origin $(git subtree split --prefix out main):deploy --force && git reset --hard HEAD~1"
+    "deploy": "npm run build && git add out && git commit -m \"deploy: update build assets\""
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
