@@ -22,7 +22,7 @@ export default function ContactPage() {
           <ul className="mt-8 space-y-4 text-sm">
             <li className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-50 text-primary"><Mail size={18} /></span>
-              <a href="mailto:hello@pontlook.com" className="font-medium text-ink hover:text-primary">hello@pontlook.com</a>
+              <a href="mailto:contact@pontlook.com" className="font-medium text-ink hover:text-primary">contact@pontlook.com</a>
             </li>
             <li className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-50 text-primary"><MapPin size={18} /></span>

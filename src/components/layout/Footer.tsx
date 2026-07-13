@@ -41,8 +41,8 @@ export default function Footer() {
           <ul className="mt-4 space-y-2.5 text-sm">
             <li className="flex items-center gap-2">
               <Mail size={15} className="text-primary" />
-              <a href="mailto:hello@pontlook.com" className="hover:text-primary">
-                hello@pontlook.com
+              <a href="mailto:contact@pontlook.com" className="hover:text-primary">
+                contact@pontlook.com
               </a>
             </li>
             <li className="flex items-center gap-2">
