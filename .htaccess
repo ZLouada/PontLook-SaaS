@@ -1,0 +1,24 @@
+RewriteEngine On
+
+# 1. Forward empty root to out/index.html
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ out/index.html [L]
+
+# 2. If it's a file inside the out folder or exists globally, serve it
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# 3. If the request is for a file that exists in the out folder, rewrite to it
+RewriteCond %{DOCUMENT_ROOT}/out%{REQUEST_URI} -f
+RewriteRule ^(.*)$ out/$1 [L]
+
+# 4. If the request is for a directory that exists in the out folder, rewrite to it
+RewriteCond %{DOCUMENT_ROOT}/out%{REQUEST_URI} -d
+RewriteRule ^(.*)$ out/$1/ [L]
+
+# 5. Clean URLs: if the URL + .html exists in out folder, rewrite to it
+RewriteCond %{DOCUMENT_ROOT}/out%{REQUEST_URI}.html -f
+RewriteRule ^(.*)$ out/$1.html [L]
+
+# 6. Fallback 404 to out/404.html
+ErrorDocument 404 /out/404.html
