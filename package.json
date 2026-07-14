@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "npm run build && git add out && git commit -m \"deploy: update build assets\""
+    "deploy": "npm run build && cp -R out/* . && git add _next/ insights/ *.html sitemap.xml favicon.ico icon.png apple-icon.png skyline-bg.jpg og-image.png && git commit -m \"deploy: update build assets at root\""
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
