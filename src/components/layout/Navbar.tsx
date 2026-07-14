@@ -37,7 +37,7 @@ export default function Navbar() {
         aria-label="Main navigation"
       >
         <div className="flex items-center justify-between">
-          <Link href="/" className="relative flex items-center h-10 w-[120px] md:h-11 md:w-[140px]" aria-label="Pontlook home">
+          <Link href="/" className="relative flex items-center h-10 w-10 md:h-11 md:w-11" aria-label="Pontlook home">
             <Image 
               src="/logo.png"
               alt="Pontlook Logo"
