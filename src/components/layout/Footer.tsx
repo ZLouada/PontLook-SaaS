@@ -9,10 +9,10 @@ export default function Footer() {
         <div className="md:col-span-2">
           <div className="relative h-9 w-[108px]">
             <Image 
-              src="/logo.png"
+              src="/logo-white.png"
               alt="Pontlook Logo"
               fill
-              className="object-contain opacity-80"
+              className="object-contain opacity-90"
             />
           </div>
           <p className="mt-3 max-w-md text-sm leading-relaxed">
