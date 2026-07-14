@@ -7,9 +7,9 @@ export default function Footer() {
     <footer className="border-t border-border bg-sky-gradient">
       <div className="container-site grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="relative h-9 w-[54px]">
+          <div className="relative h-9 w-[108px]">
             <Image 
-              src="/logo.jpg"
+              src="/logo.png"
               alt="Pontlook Logo"
               fill
               className="object-contain opacity-80"
