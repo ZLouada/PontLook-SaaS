@@ -8,9 +8,10 @@ import { Menu, X, ArrowRight } from 'lucide-react';
 
 const links = [
   { href: '/', label: 'Home' },
-  { href: '/for-providers', label: 'For Training Providers' },
-  { href: '/find-training', label: 'Find Training' },
-  { href: '/insights', label: 'Insights' },
+  { href: '/#who-we-are', label: 'Who we are' },
+  { href: '/for-providers', label: 'I\'m a training provider' },
+  { href: '/find-training', label: 'I\'m looking for training' },
+  { href: '/research', label: 'Research' },
   { href: '/contact', label: 'Contact' },
 ];
 

@@ -1,35 +1,35 @@
 import SectionHeading from '@/components/shared/SectionHeading';
 import Reveal from '@/components/shared/Reveal';
-import { BadgeCheck, Ban, Crosshair, Gem, MapPinned, UserCheck } from 'lucide-react';
+import { Target, ShieldCheck, Briefcase, Award, WalletCards, Globe } from 'lucide-react';
 
 const items = [
   {
-    icon: Crosshair,
+    icon: Target,
     title: 'Intelligence-driven targeting',
     text: 'We find demand signals in the market — not lists to spam. Every opportunity starts with evidence.',
   },
   {
-    icon: BadgeCheck,
+    icon: ShieldCheck,
     title: 'Verified business pain',
     text: 'Each challenge is confirmed directly with the company before it ever reaches a provider.',
   },
   {
-    icon: UserCheck,
+    icon: Briefcase,
     title: 'Validated decision-makers',
     text: 'You talk to the CHRO, CEO, or L&D owner with authority to buy — not a gatekeeper.',
   },
   {
-    icon: Gem,
+    icon: Award,
     title: 'Qualified opportunities only',
     text: 'Budget, timeline, and scope checked. If it does not meet the bar, you never see it.',
   },
   {
-    icon: Ban,
+    icon: WalletCards,
     title: 'No retainers',
     text: 'Pay per qualified lead or success-based commission. Your cost tracks your revenue.',
   },
   {
-    icon: MapPinned,
+    icon: Globe,
     title: 'GCC specialization',
     text: 'Saudi Arabia, UAE, and the wider GCC — including Saudization and Emiratization dynamics.',
   },
@@ -40,7 +40,7 @@ export default function WhyDifferent() {
     <section className="bg-white py-24">
       <div className="container-site">
         <SectionHeading
-          eyebrow="Why we’re different"
+          eyebrow="What You Can Expect"
           title="Built for outcomes, not activity"
           subtitle="Everything we deliver is verified, validated, and qualified before it reaches you."
         />

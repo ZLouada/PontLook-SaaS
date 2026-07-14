@@ -7,14 +7,9 @@ export default function Footer() {
     <footer className="border-t border-border bg-sky-gradient">
       <div className="container-site grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="relative h-9 w-9">
-            <Image 
-              src="/logo-white.png?v=2"
-              alt="Pontlook Logo"
-              fill
-              className="object-contain opacity-90"
-            />
-          </div>
+          <p className="font-heading text-xl font-bold text-ink tracking-widest uppercase">
+            PONTLOOK
+          </p>
           <p className="mt-3 max-w-md text-sm leading-relaxed">
             We identify GCC organizations experiencing verified workforce challenges and connect
             them with the right corporate training providers. Qualified opportunities only — no
@@ -29,9 +24,9 @@ export default function Footer() {
         <nav aria-label="Footer — platform">
           <p className="font-heading text-sm font-semibold text-ink">Platform</p>
           <ul className="mt-4 space-y-2.5 text-sm">
-            <li><Link href="/for-providers" className="hover:text-primary">For Training Providers</Link></li>
-            <li><Link href="/find-training" className="hover:text-primary">Find Training</Link></li>
-            <li><Link href="/insights" className="hover:text-primary">Insights</Link></li>
+            <li><Link href="/for-providers" className="hover:text-primary">I&apos;m a training provider</Link></li>
+            <li><Link href="/find-training" className="hover:text-primary">I&apos;m looking for training</Link></li>
+            <li><Link href="/research" className="hover:text-primary">Research</Link></li>
             <li><Link href="/contact" className="hover:text-primary">Contact</Link></li>
           </ul>
         </nav>
@@ -54,7 +49,7 @@ export default function Footer() {
       </div>
       <div className="border-t border-border py-5">
         <p className="container-site text-xs text-body">
-          © {new Date().getFullYear()} Pontlook. All rights reserved.
+          © 2019 - {new Date().getFullYear()} Pontlook, LLC. All rights reserved.
         </p>
       </div>
     </footer>

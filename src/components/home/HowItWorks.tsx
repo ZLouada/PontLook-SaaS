@@ -22,10 +22,10 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="bg-sky-gradient py-24">
+    <section id="who-we-are" className="bg-sky-gradient py-24">
       <div className="container-site">
         <SectionHeading
-          eyebrow="How it works"
+          eyebrow="Why Choose Us?"
           title="From verified pain point to signed contract"
           subtitle="Three steps. Zero wasted meetings."
         />

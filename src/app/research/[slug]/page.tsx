@@ -24,7 +24,7 @@ export default function InsightPage({ params }: Props) {
   return (
     <div className="bg-hero-gradient">
       <article className="container-site max-w-3xl pt-36 pb-24">
-        <Link href="/insights" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
+        <Link href="/research" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
           <ArrowLeft size={15} /> All insights
         </Link>
         <div className="mt-6 flex items-center gap-3 text-xs text-slate-500">

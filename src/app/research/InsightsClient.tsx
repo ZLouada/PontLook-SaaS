@@ -18,7 +18,7 @@ export default function InsightsClient({ posts }: { posts: any[] }) {
         {categories.map((c) => (
           <Link
             key={c}
-            href={c === 'All' ? '/insights' : `/insights?category=${encodeURIComponent(c)}`}
+            href={c === 'All' ? '/research' : `/research?category=${encodeURIComponent(c)}`}
             className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
               active === c ? 'bg-primary text-white' : 'bg-white text-body shadow-soft hover:text-primary'
             }`}
@@ -31,7 +31,7 @@ export default function InsightsClient({ posts }: { posts: any[] }) {
       <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filteredPosts.map((p, i) => (
           <Reveal key={p.slug} delay={(i % 3) * 0.06}>
-            <Link href={`/insights/${p.slug}`} className="card block h-full">
+            <Link href={`/research/${p.slug}`} className="card block h-full">
               <div className="flex items-center justify-between">
                 <span className="chip !py-1 text-xs">{p.category}</span>
                 <span className="text-xs text-slate-400">{p.readingTime}</span>

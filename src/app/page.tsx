@@ -2,7 +2,6 @@ import Hero from '@/components/home/Hero';
 import TrustBar from '@/components/home/TrustBar';
 import HowItWorks from '@/components/home/HowItWorks';
 import WhyDifferent from '@/components/home/WhyDifferent';
-import Industries from '@/components/home/Industries';
 import StatsCounter from '@/components/home/StatsCounter';
 import ProviderTeaser from '@/components/home/ProviderTeaser';
 import FindTrainingTeaser from '@/components/home/FindTrainingTeaser';
@@ -16,7 +15,6 @@ export default function HomePage() {
       <TrustBar />
       <HowItWorks />
       <WhyDifferent />
-      <Industries />
       <StatsCounter />
       <ProviderTeaser />
       <FindTrainingTeaser />

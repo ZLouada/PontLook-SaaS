@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Reveal from '@/components/shared/Reveal';
 import SectionHeading from '@/components/shared/SectionHeading';
-import Industries from '@/components/home/Industries';
 import LeadTiers from '@/components/providers/LeadTiers';
 import PartnershipForm from '@/components/providers/PartnershipForm';
 import {
@@ -110,9 +109,6 @@ export default function ForProvidersPage() {
           </Reveal>
         </div>
       </section>
-
-      <Industries />
-
       <section className="bg-white py-24">
         <div className="container-site">
           <SectionHeading

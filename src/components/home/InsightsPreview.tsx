@@ -18,7 +18,7 @@ export default function InsightsPreview() {
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {posts.map((p, i) => (
             <Reveal key={p.slug} delay={i * 0.08}>
-              <Link href={`/insights/${p.slug}`} className="card block h-full">
+              <Link href={`/research/${p.slug}`} className="card block h-full">
                 <span className="chip !py-1 text-xs">{p.category}</span>
                 <h3 className="mt-4 text-lg leading-snug">{p.title}</h3>
                 <p className="mt-2 line-clamp-3 text-sm leading-relaxed">{p.excerpt}</p>
@@ -28,7 +28,7 @@ export default function InsightsPreview() {
           ))}
         </div>
         <Reveal className="mt-10 text-center" delay={0.15}>
-          <Link href="/insights" className="btn-secondary">
+          <Link href="/research" className="btn-secondary">
             All insights <ArrowRight size={16} />
           </Link>
         </Reveal>
