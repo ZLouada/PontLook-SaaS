@@ -39,7 +39,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           <Link href="/" className="relative flex items-center h-10 w-10 md:h-11 md:w-11" aria-label="Pontlook home">
             <Image 
-              src="/logo.png"
+              src="/logo.png?v=2"
               alt="Pontlook Logo"
               fill
               className="object-contain"
