@@ -3,9 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: #2451bf;
-  --color-interactive: #3d7bff;
-  --color-accent: #7fb8ff;
+  --color-primary: #3B6FF6;
 }
 
 @layer base {
@@ -24,7 +22,8 @@
     }
   }
   body {
-    @apply bg-white font-sans text-body;
+    @apply bg-background font-sans text-foreground-muted;
+    line-height: 1.65;
   }
   h1,
   h2,
@@ -32,56 +31,49 @@
   h4,
   h5,
   h6 {
-    @apply font-heading font-semibold text-ink;
+    @apply font-heading font-semibold text-slate-900 tracking-tight;
+    letter-spacing: -0.02em;
   }
   :focus-visible {
-    @apply outline-none ring-2 ring-primary-400 ring-offset-2;
+    @apply outline-none ring-2 ring-primary ring-offset-2;
   }
 }
 
 @layer components {
   .container-site {
-    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
-  }
-
-  .glass {
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(16px) saturate(160%);
-    -webkit-backdrop-filter: blur(16px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    box-shadow: 0 8px 32px rgba(36, 81, 191, 0.12);
+    @apply mx-auto w-full max-w-[1200px] px-5 sm:px-8 lg:px-12;
   }
 
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200;
   }
   .btn-primary {
-    @apply btn bg-primary text-white shadow-lifted hover:bg-primary-400 hover:shadow-glass active:scale-[0.98];
+    @apply btn bg-primary text-white hover:opacity-90;
   }
   .btn-secondary {
-    @apply btn border border-primary-200 bg-white text-primary hover:border-primary-300 hover:bg-primary-50 active:scale-[0.98];
+    @apply btn border border-border bg-white text-primary hover:border-primary hover:bg-slate-50;
   }
 
   .card {
-    @apply rounded-3xl bg-white p-8 shadow-card transition-shadow duration-300 hover:shadow-lifted;
+    @apply rounded-[20px] border border-border bg-white p-8 shadow-sm transition-shadow duration-300;
   }
 
   .chip {
-    @apply inline-flex items-center rounded-full border border-primary-100 bg-primary-50 px-4 py-2 text-sm font-medium text-primary-600;
+    @apply inline-flex items-center rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground-muted;
   }
 
   .field-label {
-    @apply mb-1.5 block text-sm font-medium text-ink;
+    @apply mb-1.5 block text-sm font-medium text-foreground;
   }
   .field-input {
-    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-ink placeholder:text-slate-400 transition-colors focus:border-primary-400;
+    @apply w-full rounded-2xl border border-border bg-white px-5 py-4 text-sm text-foreground placeholder:text-slate-400 transition-colors focus:border-primary;
   }
   .field-error {
     @apply mt-1.5 text-xs font-medium text-red-600;
   }
 
   .prose-custom {
-    @apply text-base leading-relaxed text-body;
+    @apply text-base leading-relaxed text-foreground-muted;
   }
   .prose-custom h2 {
     @apply mt-10 mb-4 text-2xl;
@@ -94,18 +86,36 @@
   }
   .prose-custom ul,
   .prose-custom ol {
-    @apply mb-5 ml-5 list-disc space-y-2;
+    @apply mb-5 ms-5 list-disc space-y-2;
   }
   .prose-custom ol {
     @apply list-decimal;
   }
   .prose-custom strong {
-    @apply font-semibold text-ink;
+    @apply font-semibold text-foreground;
   }
   .prose-custom blockquote {
-    @apply my-6 border-l-4 border-primary-200 pl-5 italic text-slate-600;
+    @apply my-6 border-s-4 border-primary ps-5 italic text-foreground-muted;
   }
   .prose-custom a {
     @apply font-medium text-primary underline underline-offset-2;
   }
+}
+
+/* SAP Faceted Hero Gradient Utility */
+.sap-gradient-mesh {
+  background-image: radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.7) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(232, 79, 160, 0.7) 0px, transparent 50%),
+                    radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.7) 0px, transparent 50%),
+                    radial-gradient(at 0% 100%, rgba(34, 211, 238, 0.7) 0px, transparent 50%);
+  filter: blur(40px);
+}
+
+/* Texture Utilities */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+.glow-primary {
+  background: radial-gradient(circle at center, rgba(36, 81, 191, 0.08) 0%, transparent 60%);
 }

@@ -1,63 +1,69 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Linkedin, Mail, MapPin, Twitter, Ghost } from 'lucide-react';
+import { useDictionary } from '@/components/providers/DictionaryProvider';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+  const dict = useDictionary();
+  const pathname = usePathname() || '/en';
+  const lang = pathname.startsWith('/ar') ? 'ar' : 'en';
+
   return (
-    <footer className="border-t border-border bg-sky-gradient">
+    <footer className="border-t border-[#1E293B] bg-background-dark text-white">
       <div className="container-site grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
-          <p className="font-heading text-xl font-bold text-ink tracking-widest uppercase">
-            PONTLOOK
+          <div className="flex items-center">
+            <Image src="/logo-pl.png" alt="PontLook Logo" width={48} height={48} className="object-contain" />
+          </div>
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-300">
+            {dict.footer.about}
           </p>
-          <p className="mt-3 max-w-md text-sm leading-relaxed">
-            We identify GCC organizations experiencing verified workforce challenges and connect
-            them with the right corporate training providers. Qualified opportunities only — no
-            retainers, no cold outreach.
-          </p>
-          <div className="mt-5 flex items-center gap-3 text-sm">
-            <MapPin size={16} className="text-primary" />
-            <span>Riyadh · Dubai · Serving the GCC</span>
+          <div className="mt-5 flex items-center gap-3 text-sm text-slate-300">
+            <MapPin size={16} className="text-primary-400" />
+            <span>{dict.footer.location}</span>
           </div>
         </div>
 
         <nav aria-label="Footer — platform">
-          <p className="font-heading text-sm font-semibold text-ink">Platform</p>
-          <ul className="mt-4 space-y-2.5 text-sm">
-            <li><Link href="/for-providers" className="hover:text-primary">I&apos;m a training provider</Link></li>
-            <li><Link href="/find-training" className="hover:text-primary">I&apos;m looking for training</Link></li>
-            <li><Link href="/research" className="hover:text-primary">Research</Link></li>
-            <li><Link href="/contact" className="hover:text-primary">Contact</Link></li>
+          <p className="font-heading text-sm font-semibold text-white">{dict.footer.platform}</p>
+          <ul className="mt-4 space-y-2.5 text-sm text-slate-300">
+            <li><Link href={`/${lang}/for-providers`} className="hover:text-primary-400">{dict.nav.for_providers}</Link></li>
+            <li><Link href={`/${lang}/find-training`} className="hover:text-primary-400">{dict.nav.find_training}</Link></li>
+            <li><Link href={`/${lang}/research`} className="hover:text-primary-400">{dict.nav.research}</Link></li>
+            <li><Link href={`/${lang}/contact`} className="hover:text-primary-400">{dict.nav.contact}</Link></li>
           </ul>
         </nav>
 
         <div>
-          <p className="font-heading text-sm font-semibold text-ink">Get in touch</p>
-          <ul className="mt-4 space-y-2.5 text-sm">
+          <p className="font-heading text-sm font-semibold text-white">{dict.footer.get_in_touch}</p>
+          <ul className="mt-4 space-y-2.5 text-sm text-slate-300">
             <li className="flex items-center gap-2">
-              <Mail size={15} className="text-primary" />
-              <a href="mailto:contact@pontlook.com" className="hover:text-primary">
+              <Mail size={15} className="text-primary-400" />
+              <a href="mailto:contact@pontlook.com" className="hover:text-primary-400">
                 contact@pontlook.com
               </a>
             </li>
             <li className="flex items-center gap-2">
-              <Linkedin size={15} className="text-primary" />
-              <a href="https://www.linkedin.com/company/pontlook/" className="hover:text-primary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <Linkedin size={15} className="text-primary-400" />
+              <a href="https://www.linkedin.com/company/pontlook/" className="hover:text-primary-400" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             </li>
             <li className="flex items-center gap-2">
-              <Twitter size={15} className="text-primary" />
-              <a href="https://x.com/PontLook" className="hover:text-primary" target="_blank" rel="noopener noreferrer">X</a>
+              <Twitter size={15} className="text-primary-400" />
+              <a href="https://x.com/PontLook" className="hover:text-primary-400" target="_blank" rel="noopener noreferrer">X</a>
             </li>
             <li className="flex items-center gap-2">
-              <Ghost size={15} className="text-primary" />
-              <a href="https://www.snapchat.com/@pontlook" className="hover:text-primary" target="_blank" rel="noopener noreferrer">Snapchat</a>
+              <Ghost size={15} className="text-primary-400" />
+              <a href="https://www.snapchat.com/@pontlook" className="hover:text-primary-400" target="_blank" rel="noopener noreferrer">Snapchat</a>
             </li>
           </ul>
         </div>
       </div>
-      <div className="border-t border-border py-5">
-        <p className="container-site text-xs text-body">
-          © 2019 - {new Date().getFullYear()} Pontlook, LLC. All rights reserved.
+      <div className="border-t border-[#1E293B] py-5">
+        <p className="container-site text-xs text-slate-400">
+          © 2019 - {new Date().getFullYear()} {dict.footer.rights}
         </p>
       </div>
     </footer>

@@ -38,6 +38,9 @@ export function CompanyStep({ data, onNext }: StepProps<Step1>) {
         <SelectField label="Industry" options={industriesList} registration={register('industry')} error={errors.industry} />
         <SelectField label="Number of employees" options={employeeRanges} registration={register('employees')} error={errors.employees} />
       </div>
+      <div className="absolute left-[-9999px] top-[-9999px]" aria-hidden="true" tabIndex={-1}>
+        <input type="text" {...register('_honeypot')} tabIndex={-1} autoComplete="off" />
+      </div>
       <StepNav />
     </form>
   );

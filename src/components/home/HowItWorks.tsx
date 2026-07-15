@@ -1,4 +1,3 @@
-import SectionHeading from '@/components/shared/SectionHeading';
 import Reveal from '@/components/shared/Reveal';
 import { Radar, GitMerge, Handshake } from 'lucide-react';
 
@@ -7,40 +6,106 @@ const steps = [
     icon: Radar,
     title: 'We detect the need',
     text: 'Market intelligence surfaces GCC companies with verified workforce challenges — before they start searching.',
+    mockup: (
+      <div className="w-full max-w-xs rounded-xl border border-border bg-white shadow-lifted p-4 flex flex-col gap-3 relative z-10">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="h-8 w-8 rounded-full bg-primary-50 flex items-center justify-center text-primary"><Radar size={16} /></div>
+          <div>
+            <div className="text-xs font-semibold text-foreground">Demand Signal Detected</div>
+            <div className="text-[10px] text-foreground-muted">Just now · Enterprise Tech</div>
+          </div>
+        </div>
+        <div className="h-2 w-3/4 bg-slate-100 rounded-full" />
+        <div className="h-2 w-1/2 bg-slate-100 rounded-full" />
+        <div className="mt-2 flex gap-2">
+          <span className="px-2 py-1 rounded bg-emerald-50 text-emerald-600 text-[10px] font-medium border border-emerald-100">High intent</span>
+          <span className="px-2 py-1 rounded bg-secondary-50 text-secondary-600 text-[10px] font-medium border border-secondary-100">Leadership</span>
+        </div>
+      </div>
+    )
   },
   {
     icon: GitMerge,
     title: 'We qualify & match',
     text: 'Decision-makers are validated, budgets and timelines confirmed, then matched to the right provider.',
+    mockup: (
+      <div className="w-full max-w-xs rounded-xl border border-border bg-white shadow-lifted p-4 flex flex-col gap-3 relative z-10">
+        <div className="flex items-center justify-between mb-2">
+          <div className="text-xs font-semibold text-foreground">Match Confidence</div>
+          <div className="text-xs font-bold text-emerald-600">94%</div>
+        </div>
+        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+          <div className="h-full bg-gradient-to-r from-secondary to-emerald-400 w-[94%]" />
+        </div>
+        <div className="mt-3 space-y-2">
+          {[
+            { label: 'Budget Confirmed' },
+            { label: 'Decision Maker Verified' },
+            { label: 'Timeline Active' }
+          ].map((item, idx) => (
+            <div key={idx} className="flex items-center gap-2 text-[11px] text-foreground-muted">
+              <div className="h-3 w-3 rounded-full bg-emerald-100 flex items-center justify-center"><div className="h-1.5 w-1.5 rounded-full bg-emerald-500" /></div>
+              {item.label}
+            </div>
+          ))}
+        </div>
+      </div>
+    )
   },
   {
     icon: Handshake,
     title: 'You close the deal',
     text: 'Providers receive warm introductions to buyers who are ready. No cold outreach, ever.',
+    mockup: (
+      <div className="w-full max-w-xs rounded-xl border border-border bg-white shadow-lifted p-5 text-center flex flex-col items-center gap-3 relative z-10">
+        <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-secondary p-[1px]">
+          <div className="h-full w-full rounded-full bg-white flex items-center justify-center text-primary">
+            <Handshake size={20} />
+          </div>
+        </div>
+        <div>
+          <div className="text-sm font-semibold text-foreground">Introduction Made</div>
+          <div className="text-[11px] text-foreground-muted mt-1">Connecting you with the CHRO</div>
+        </div>
+        <div className="mt-2 w-full pt-3 border-t border-border flex justify-between px-2">
+           <div className="h-6 w-6 rounded-full bg-slate-100" />
+           <div className="h-6 w-16 bg-primary-50 rounded border border-primary-100" />
+        </div>
+      </div>
+    )
   },
 ];
 
 export default function HowItWorks() {
   return (
-    <section id="who-we-are" className="bg-sky-gradient py-24">
+    <section id="who-we-are" className="bg-background py-24 border-t border-border">
       <div className="container-site">
-        <SectionHeading
-          eyebrow="Why Choose Us?"
-          title="From verified pain point to signed contract"
-          subtitle="Three steps. Zero wasted meetings."
-        />
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="mb-20 text-center max-w-[700px] mx-auto">
+          <h2 className="font-heading text-4xl font-semibold sm:text-5xl text-foreground">From verified pain point to signed contract</h2>
+          <p className="mt-6 text-lg text-foreground-muted">Three steps. Zero wasted meetings.</p>
+        </div>
+        
+        <div className="space-y-12 relative">
+          <div className="absolute start-[2.5rem] lg:start-[4rem] top-10 bottom-10 w-0.5 bg-primary-100 hidden lg:block" />
+          
           {steps.map((s, i) => (
             <Reveal key={s.title} delay={i * 0.1}>
-              <div className="card h-full">
-                <div className="flex items-center gap-4">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cta-gradient text-white">
-                    <s.icon size={22} />
-                  </span>
-                  <span className="font-heading text-sm font-bold text-primary-300">0{i + 1}</span>
+              <div className="flex flex-col lg:flex-row items-center gap-12 bg-white rounded-[24px] p-10 lg:p-16 border border-border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative z-20">
+                <div className="flex-1 space-y-6 relative z-30">
+                  <div className="absolute -start-12 lg:-start-20 top-1 hidden lg:flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white font-bold text-sm z-30">
+                    {i + 1}
+                  </div>
+                  <span className="text-secondary font-heading font-semibold tracking-wider text-sm uppercase opacity-100">Step 0{i + 1}</span>
+                  <h3 className="text-3xl font-heading font-semibold text-slate-900 opacity-100">{s.title}</h3>
+                  <p className="text-lg text-slate-600 leading-relaxed max-w-[500px] opacity-100">{s.text}</p>
                 </div>
-                <h3 className="mt-5 text-xl">{s.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed">{s.text}</p>
+                <div className="flex-1 w-full flex justify-center lg:justify-end">
+                  {/* Mockup Frame */}
+                  <div className="w-full max-w-[400px] aspect-[4/3] rounded-[20px] bg-slate-50 border border-border flex items-center justify-center relative overflow-hidden">
+                    <div className="absolute inset-0 opacity-10 bg-gradient-to-br from-primary to-secondary" />
+                    {s.mockup}
+                  </div>
+                </div>
               </div>
             </Reveal>
           ))}

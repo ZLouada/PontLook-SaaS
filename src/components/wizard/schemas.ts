@@ -44,6 +44,7 @@ export const step1Schema = z.object({
   city: z.string().min(2, 'City is required'),
   industry: z.enum(industriesList, { errorMap: () => ({ message: 'Select your industry' }) }),
   employees: z.enum(employeeRanges, { errorMap: () => ({ message: 'Select company size' }) }),
+  _honeypot: z.string().optional(),
 });
 
 export const step2Schema = z.object({
@@ -93,21 +94,3 @@ export type WizardData = Partial<Step1 & Step2 & Step3 & Step4 & Step5>;
 
 export const STORAGE_KEY = 'gcc-find-training-wizard';
 
-/**
- * Internal lead score — never shown to the submitting company.
- * Decision-maker confirmed +20 · 50–500 employees +20 · budget provided +15
- * timeline within 30 days +20 · multiple pain points +15 · detailed description +10
- */
-export function computeLeadScore(d: WizardData): number {
-  let score = 0;
-  if (d.fullName && d.jobTitle && d.email) score += 20;
-  if (d.employees === '50–200' || d.employees === '201–500') score += 20;
-  if (d.budgetRange && d.budgetRange !== 'Not defined yet') score += 15;
-  if (d.startDate) {
-    const days = (new Date(d.startDate).getTime() - Date.now()) / 86_400_000;
-    if (days >= 0 && days <= 30) score += 20;
-  }
-  if ((d.challenges?.length ?? 0) >= 2) score += 15;
-  if ((d.successDefinition ?? '').length + (d.biggestChallenge ?? '').length >= 200) score += 10;
-  return score;
-}

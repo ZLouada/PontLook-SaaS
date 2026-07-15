@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { ArrowRight, CheckCircle2, ClipboardCheck, Handshake, SearchCheck } from 'lucide-react';
-import { computeLeadScore, STORAGE_KEY, type WizardData } from './schemas';
+import { STORAGE_KEY, type WizardData } from './schemas';
 import { ChallengesStep, CompanyStep, DecisionMakerStep, MatchingStep, ScopeStep } from './steps';
 
 const stepLabels = ['Company', 'Decision Maker', 'Challenges', 'Requirements', 'Matching'];
@@ -20,7 +20,7 @@ export default function FindTrainingWizard() {
   // Restore progress across reloads
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const raw = sessionStorage.getItem(STORAGE_KEY);
       if (raw) {
         const saved: Saved = JSON.parse(raw);
         if (saved?.data) setData(saved.data);
@@ -34,7 +34,7 @@ export default function FindTrainingWizard() {
 
   const persist = (nextStep: number, nextData: WizardData) => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ step: nextStep, data: nextData } satisfies Saved));
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ step: nextStep, data: nextData } satisfies Saved));
     } catch {
       /* storage unavailable — continue in-memory */
     }
@@ -49,16 +49,26 @@ export default function FindTrainingWizard() {
       persist(next, merged);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      // Final submission — scoring is internal only, never shown to the company.
-      const submission = { ...merged, _score: computeLeadScore(merged), submittedAt: new Date().toISOString() };
-      try {
-        localStorage.setItem('gcc-find-training-submission', JSON.stringify(submission));
-        localStorage.removeItem(STORAGE_KEY);
-      } catch {
-        /* non-blocking */
-      }
-      setDone(true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Final submission via secure API route
+      fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(merged)
+      }).then((res) => {
+        if (res.ok) {
+          try {
+            sessionStorage.setItem('gcc-find-training-submission', JSON.stringify({ submittedAt: new Date().toISOString() }));
+            sessionStorage.removeItem(STORAGE_KEY);
+          } catch {
+            /* non-blocking */
+          }
+          setDone(true);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          console.error('Failed to submit form');
+          // In a real app we'd show a toast error here
+        }
+      });
     }
   };
 
@@ -74,7 +84,7 @@ export default function FindTrainingWizard() {
 
   if (done) {
     return (
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="card text-center !p-10 sm:!p-14"
@@ -101,51 +111,42 @@ export default function FindTrainingWizard() {
         <Link href="/research" className="btn-secondary mt-10">
           Explore GCC training insights <ArrowRight size={16} />
         </Link>
-      </motion.div>
+      </m.div>
     );
   }
 
   return (
     <div>
       {/* Progress indicator */}
-      <nav aria-label="Form progress" className="mb-8">
-        <ol className="flex items-center gap-2">
+      <nav aria-label="Form progress" className="mb-10">
+        <div className="flex w-full items-end gap-1">
           {stepLabels.map((label, i) => {
             const n = i + 1;
             const state = n < step ? 'done' : n === step ? 'current' : 'todo';
             return (
-              <li key={label} className="flex flex-1 flex-col items-center gap-2">
-                <span
-                  aria-current={state === 'current' ? 'step' : undefined}
-                  className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-colors ${
-                    state === 'done'
-                      ? 'bg-blue-600 text-white'
-                      : state === 'current'
-                        ? 'bg-blue-400 text-white ring-4 ring-blue-50'
-                        : 'bg-slate-100 text-slate-900 opacity-60'
-                  }`}
-                >
-                  {n}
-                </span>
-                <span className={`hidden text-xs font-medium sm:block ${state === 'todo' ? 'text-slate-900 opacity-60' : 'text-slate-900'}`}>
+              <div key={label} className="flex flex-1 flex-col gap-2">
+                <span className={`text-[11px] font-semibold uppercase tracking-wider ${state === 'current' ? 'text-primary' : state === 'done' ? 'text-foreground' : 'text-slate-400'}`}>
                   {label}
                 </span>
-              </li>
+                <div className="h-1.5 w-full rounded-full bg-slate-100 overflow-hidden relative">
+                  {(state === 'done' || state === 'current') && (
+                    <m.div
+                      className="absolute inset-y-0 start-0 bg-primary rounded-full"
+                      initial={{ width: state === 'current' ? '0%' : '100%' }}
+                      animate={{ width: state === 'current' ? '50%' : '100%' }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
+                </div>
+              </div>
             );
           })}
-        </ol>
-        <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-slate-100" role="presentation">
-          <motion.div
-            className="h-full rounded-full bg-blue-600"
-            animate={{ width: `${((step - 1) / 4) * 100}%` }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-          />
         </div>
       </nav>
 
       <div className="card !p-7 sm:!p-10">
         <AnimatePresence mode="wait">
-          <motion.div
+          <m.div
             key={step}
             initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
@@ -161,7 +162,7 @@ export default function FindTrainingWizard() {
             {step === 3 && <ChallengesStep data={data} onNext={advance} onBack={back} />}
             {step === 4 && <ScopeStep data={data} onNext={advance} onBack={back} />}
             {step === 5 && <MatchingStep data={data} onNext={advance} onBack={back} />}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </div>
     </div>
