@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Linkedin, Mail, MapPin } from 'lucide-react';
+import { Linkedin, Mail, MapPin, Twitter, Ghost } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -42,7 +42,15 @@ export default function Footer() {
             </li>
             <li className="flex items-center gap-2">
               <Linkedin size={15} className="text-primary" />
-              <a href="#" className="hover:text-primary">LinkedIn</a>
+              <a href="https://www.linkedin.com/company/pontlook/" className="hover:text-primary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </li>
+            <li className="flex items-center gap-2">
+              <Twitter size={15} className="text-primary" />
+              <a href="https://x.com/PontLook" className="hover:text-primary" target="_blank" rel="noopener noreferrer">X</a>
+            </li>
+            <li className="flex items-center gap-2">
+              <Ghost size={15} className="text-primary" />
+              <a href="https://www.snapchat.com/@pontlook" className="hover:text-primary" target="_blank" rel="noopener noreferrer">Snapchat</a>
             </li>
           </ul>
         </div>
