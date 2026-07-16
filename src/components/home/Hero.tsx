@@ -16,7 +16,7 @@ export default function Hero() {
       {/* Full-Bleed Ambient Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <Image
-          src="/skyline-bg.webp"
+          src="/skyline-bg.jpg"
           alt="GCC Skyline"
           fill
           className="object-cover"
