@@ -42,7 +42,7 @@ export default function Navbar({ lang }: { lang: Locale }) {
         <div className="flex items-center gap-8">
           <Link href={`/${lang}`} className="relative flex h-8 w-8 items-center md:h-9 md:w-9" aria-label="Pontlook home">
             <Image 
-              src="/logo.png?v=3"
+              src="/logo.png"
               alt="Pontlook Logo"
               fill
               className="object-contain"
