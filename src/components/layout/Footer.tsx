@@ -16,7 +16,7 @@ export default function Footer() {
       <div className="container-site grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
           <div className="flex items-center">
-            <Image src="/logo-pl.png" alt="PontLook Logo" width={180} height={60} className="object-contain brightness-0 invert" />
+            <Image src="/logo-pl.png" alt="PontLook Logo" width={180} height={60} className="object-contain brightness-0 invert" unoptimized />
           </div>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-300">
             {dict.footer.about}
