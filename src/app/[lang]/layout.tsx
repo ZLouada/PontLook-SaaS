@@ -23,11 +23,11 @@ const cairo = Cairo({
 export const metadata: Metadata = {
   metadataBase: new URL('https://pontlook.com'),
   title: {
-    default: 'Pontlook — Qualified Corporate Training Opportunities in GCC',
-    template: '%s | Pontlook',
+    default: 'PontLook',
+    template: '%s | PontLook',
   },
   description:
-    'We connect corporate training providers with GCC organizations experiencing verified workforce challenges. Get qualified B2B L&D opportunities in Saudi Arabia, UAE, and the wider Gulf region.',
+    'PontLook bridges the gap between training providers, businesses, and professionals making it easier to discover, compare, and access the best learning opportunities.',
   keywords: [
     'corporate training GCC',
     'B2B training Saudi Arabia',
@@ -36,15 +36,15 @@ export const metadata: Metadata = {
     'employee upskilling Gulf',
     'qualified training leads',
     'corporate training matchmaker',
-    'Pontlook'
+    'PontLook'
   ],
   openGraph: {
     type: 'website',
-    siteName: 'Pontlook',
-    title: 'Pontlook — Qualified B2B Corporate Training Opportunities',
+    siteName: 'PontLook',
+    title: 'PontLook',
     description:
-      'Intelligence-driven matchmaking between corporate training providers and GCC companies with verified workforce challenges. No retainers — pay per qualified lead.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Pontlook' }],
+      'PontLook bridges the gap between training providers, businesses, and professionals making it easier to discover, compare, and access the best learning opportunities.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'PontLook' }],
   },
   twitter: { card: 'summary_large_image' },
 };
