@@ -15,8 +15,8 @@ export default function Footer() {
     <footer className="border-t border-[#1E293B] bg-background-dark text-white">
       <div className="container-site grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="flex items-center">
-            <Image src="/logo-pl.png" alt="PontLook Logo" width={180} height={60} className="object-contain brightness-0 invert" unoptimized />
+          <div className="flex items-center inline-flex bg-white p-2 rounded-xl">
+            <Image src="/logo.png?v=3" alt="PontLook Logo" width={56} height={56} className="object-contain" unoptimized />
           </div>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-300">
             {dict.footer.about}
