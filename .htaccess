@@ -1,8 +1,53 @@
 RewriteEngine On
 
-# Force HTTPS (optional)
-# RewriteCond %{HTTPS} off
-# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Compression (mod_deflate) to reduce Document Request Latency
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+# Browser Caching (mod_expires) to reduce Network Dependency Latency
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+  ExpiresByType application/font-woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+</IfModule>
+
+# Immutable cache for hashed _next/static assets (JS, CSS, fonts)
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|woff2|woff|png|jpg|jpeg|webp|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # Security Headers
+  Header set X-DNS-Prefetch-Control "on"
+  Header set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+  Header set X-XSS-Protection "1; mode=block"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), browsing-topics=()"
+
+  # Keep-Alive for reduced connection overhead
+  Header set Connection keep-alive
+</IfModule>
+
+# Disable ETags (reduces header size; mod_expires handles caching)
+FileETag None
+
+# --- Redirect: root / -> /en (single server-side 301, avoids client-side JS redirect) ---
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ /en [R=301,L]
 
 # If the requested file or directory exists, serve it directly
 RewriteCond %{REQUEST_FILENAME} -d [OR]
