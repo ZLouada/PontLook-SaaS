@@ -1,7 +1,9 @@
+'use client';
+
 import SectionHeading from '@/components/shared/SectionHeading';
-import Reveal from '@/components/shared/Reveal';
 import { Target, ShieldCheck, Briefcase, Award, WalletCards, Globe, ChevronRight, Search, CheckCircle2, User, CheckSquare, FileText, MapPin } from 'lucide-react';
 import Link from 'next/link';
+import { m } from 'framer-motion';
 
 const items = [
   {
@@ -116,41 +118,74 @@ const items = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 300,
+      damping: 24,
+    },
+  },
+};
+
 export default function WhyDifferent() {
   return (
-    <section className="bg-white py-24 border-t border-border">
-      <div className="container-site">
-        <div className="mb-16">
+    <section className="bg-white py-24 lg:py-32 border-t border-slate-200/50">
+      <div className="container-site px-6 sm:px-8 lg:px-12">
+        <div className="mb-16 lg:mb-24">
           <SectionHeading
             eyebrow="What You Can Expect"
             title="Built for outcomes, not activity"
             subtitle="Everything we deliver is verified, validated, and qualified before it reaches you."
           />
         </div>
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {items.map((it, i) => (
-            <Reveal key={it.title} delay={(i % 3) * 0.08}>
-              <div className="flex flex-col h-full group cursor-pointer bg-white rounded-2xl p-6 border border-transparent hover:border-border hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <div className="mb-4">
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary-50 text-primary transition-colors group-hover:bg-primary group-hover:text-white group-hover:shadow-md">
-                    <it.icon size={20} />
+        <m.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+        >
+          {items.map((it) => (
+            <m.div key={it.title} variants={cardVariants}>
+              <m.div 
+                whileHover={{ scale: 1.01, borderColor: "rgba(59, 130, 246, 0.2)" }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                className="flex flex-col h-full group cursor-pointer bg-white rounded-[24px] p-8 border border-slate-200/50 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_10px_40px_rgb(0,0,0,0.08)] transition-shadow duration-300"
+              >
+                <div className="mb-6">
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white shadow-sm">
+                    <it.icon size={24} />
                   </span>
                 </div>
-                <h3 className="text-[20px] font-heading font-semibold text-slate-900 leading-tight mb-2 group-hover:text-primary transition-colors opacity-100">{it.title}</h3>
-                <p className="text-[15px] text-slate-600 leading-relaxed mb-6 flex-1 opacity-100">{it.text}</p>
+                <h3 className="text-[22px] font-heading font-semibold text-slate-900 leading-tight mb-3 transition-colors opacity-100">{it.title}</h3>
+                <p className="text-base text-slate-600 leading-relaxed tracking-wide mb-8 flex-1 opacity-100">{it.text}</p>
                 
                 {/* Simulated Mockup Frame */}
-                <div className="w-full aspect-[16/9] rounded-[16px] bg-[#F7F8FA] border border-border flex items-center justify-center overflow-hidden mb-5 group-hover:border-primary/20 transition-colors relative z-10">
+                <div className="w-full aspect-[16/9] rounded-[16px] bg-[#F7F8FA] border border-slate-200/50 flex items-center justify-center overflow-hidden mb-6 transition-colors relative z-10 shadow-inner">
                    {it.mockup}
                 </div>
 
-                <Link href="/for-providers" className="inline-flex items-center text-[14px] font-semibold text-primary group-hover:text-primary-600 transition-colors">
-                  Explore how it works <ChevronRight size={16} className="ml-1" />
+                <Link href="/for-providers" className="inline-flex items-center text-[15px] font-semibold text-primary group-hover:text-primary-600 transition-colors">
+                  Explore how it works <ChevronRight size={16} className="ml-1 transition-transform group-hover:translate-x-1" />
                 </Link>
-              </div>
-            </Reveal>
+              </m.div>
+            </m.div>
           ))}
-        </div>
+        </m.div>
       </div>
     </section>
   );

@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowRight, Search, User, Globe } from 'lucide-react';
+import { Menu, X, ArrowRight, Search, Globe } from 'lucide-react';
+import { m, AnimatePresence } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Locale } from '@/i18n';
 
-export default function Navbar({ lang }: { lang: Locale }) {
+export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname() || `/${lang}`;
@@ -24,7 +25,7 @@ export default function Navbar({ lang }: { lang: Locale }) {
   ];
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -33,14 +34,19 @@ export default function Navbar({ lang }: { lang: Locale }) {
   useEffect(() => setOpen(false), [pathname]);
 
   const targetLang = lang === 'en' ? 'ar' : 'en';
-  // safely replace current locale prefix to switch language
-  const switchUrl = pathname.replace(new RegExp(`^\\/${lang}`), `/${targetLang}`) || `/${targetLang}`;
+  const switchUrl = pathname.replace(new RegExp(String.raw`^\/${lang}`), `/${targetLang}`) || `/${targetLang}`;
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-white ${scrolled ? 'border-b border-border' : ''}`}>
-      <nav className="mx-auto flex w-full max-w-[1400px] items-center justify-between px-5 py-3 sm:px-8" aria-label="Main navigation">
-        <div className="flex items-center gap-8">
-          <Link href={`/${lang}`} className="relative flex h-8 w-8 items-center md:h-9 md:w-9" aria-label="Pontlook home">
+    <header 
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        scrolled 
+          ? 'bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-[0_2px_20px_rgb(0,0,0,0.03)] py-2' 
+          : 'bg-transparent py-4'
+      }`}
+    >
+      <nav className="mx-auto flex w-full max-w-[1400px] items-center justify-between px-6 sm:px-10" aria-label="Main navigation">
+        <div className="flex items-center gap-10">
+          <Link href={`/${lang}`} className="relative flex h-9 w-9 items-center md:h-10 md:w-10 transition-transform duration-300 hover:scale-105" aria-label="Pontlook home">
             <Image 
               src="/logo.png"
               alt="Pontlook Logo"
@@ -50,16 +56,12 @@ export default function Navbar({ lang }: { lang: Locale }) {
             />
           </Link>
 
-          <ul className="hidden items-center gap-6 lg:flex">
+          <ul className="hidden items-center gap-8 lg:flex">
             {links.map((l) => (
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className={`text-[13px] font-medium tracking-wide transition-colors ${
-                    pathname === l.href
-                      ? 'text-foreground'
-                      : 'text-foreground-muted hover:text-primary'
-                  }`}
+                  className="text-sm font-medium text-slate-700 no-underline hover:text-blue-600 transition-colors duration-200"
                 >
                   {l.label}
                 </Link>
@@ -68,63 +70,91 @@ export default function Navbar({ lang }: { lang: Locale }) {
           </ul>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="hidden lg:flex items-center gap-4 text-foreground-muted">
-            <div className="relative">
-              <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input type="text" placeholder={dict.nav.search} className="h-9 w-40 rounded-full bg-slate-100 px-4 ps-9 text-[13px] outline-none transition-all focus:w-48 focus:ring-2 focus:ring-primary/20" />
+        <div className="flex items-center gap-5">
+          <div className="hidden lg:flex items-center gap-5 text-slate-500">
+            {/* Elegant Search Bar */}
+            <div className="relative group">
+              <Search size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" />
+              <input 
+                type="text" 
+                placeholder={dict.nav.search} 
+                className="h-10 w-48 rounded-full border border-slate-200/60 bg-white/50 px-4 ps-11 text-[13px] outline-none transition-all duration-300 focus:w-60 focus:bg-white focus:ring-4 focus:ring-primary/10 focus:border-primary/30 shadow-inner shadow-slate-100/50" 
+              />
             </div>
             
-            <Link href={switchUrl} className="flex h-9 items-center justify-center rounded-full bg-slate-100 px-3 text-foreground-muted hover:bg-slate-200 transition-colors gap-2" aria-label="Switch Language" title={dict.nav.switch_lang}>
+            {/* Minimal Language Switcher */}
+            <Link 
+              href={switchUrl} 
+              className="flex h-10 items-center justify-center rounded-full border border-slate-200/60 bg-white/50 px-4 text-slate-500 hover:bg-white hover:text-slate-900 hover:shadow-sm transition-all duration-300 gap-2" 
+              aria-label="Switch Language" 
+              title={dict.nav.switch_lang}
+            >
               <Globe size={16} />
               <span className="text-[11px] font-bold font-heading tracking-widest">{lang === 'en' ? 'AR' : 'EN'}</span>
             </Link>
 
-
-            <Link href={`/${lang}/find-training`} className="btn bg-primary text-white hover:bg-primary-600 !h-9 !px-5 !py-0 !text-[13px]">
-              {dict.nav.get_matched} <ArrowRight size={14} className="inline ms-1 rtl:-scale-x-100" />
+            {/* Premium CTA Button */}
+            <Link href={`/${lang}/find-training`} className="group relative flex h-10 items-center justify-center overflow-hidden rounded-full bg-slate-900 px-6 text-[13px] font-semibold text-white shadow-md transition-all duration-300 hover:bg-slate-800 hover:shadow-lg hover:-translate-y-0.5">
+              <span className="relative z-10 flex items-center gap-1.5">
+                {dict.nav.get_matched} <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100" />
+              </span>
             </Link>
           </div>
 
-          <div className="flex items-center gap-3 lg:hidden">
-            <Link href={switchUrl} className="flex h-8 items-center justify-center rounded-full bg-slate-100 px-3 text-foreground-muted hover:bg-slate-200 transition-colors gap-2" aria-label="Switch Language">
+          {/* Mobile Actions */}
+          <div className="flex items-center gap-4 lg:hidden">
+            <Link 
+              href={switchUrl} 
+              className="flex h-9 items-center justify-center rounded-full border border-slate-200/60 bg-white/50 px-3 text-slate-500 hover:bg-white shadow-sm transition-colors gap-2" 
+              aria-label="Switch Language"
+            >
               <Globe size={14} />
               <span className="text-[10px] font-bold font-heading tracking-widest">{lang === 'en' ? 'AR' : 'EN'}</span>
             </Link>
             <button
-              className="rounded p-1 text-foreground"
+              type="button"
+              className="rounded-full p-2 text-slate-700 bg-white shadow-sm border border-slate-100 transition-transform active:scale-95"
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-label="Toggle menu"
             >
-              {open ? <X size={22} /> : <Menu size={22} />}
+              {open ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
 
-        {open && (
-          <div className="absolute inset-x-0 top-full border-b border-border bg-white p-5 lg:hidden shadow-sm">
-            <ul className="flex flex-col gap-4">
-              {links.map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className={`block text-[14px] font-medium ${
-                      pathname === l.href ? 'text-primary' : 'text-foreground-muted hover:text-foreground'
-                    }`}
-                  >
-                    {l.label}
+        {/* Premium Mobile Menu */}
+        <AnimatePresence>
+          {open && (
+            <m.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="absolute inset-x-0 top-full border-b border-slate-200/50 bg-white/95 backdrop-blur-2xl p-6 lg:hidden shadow-[0_10px_40px_rgb(0,0,0,0.05)]"
+            >
+              <ul className="flex flex-col gap-5">
+                {links.map((l) => (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      className={`block text-[15px] font-semibold tracking-wide transition-colors ${
+                        pathname === l.href ? 'text-slate-900' : 'text-slate-500 hover:text-slate-900'
+                      }`}
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+                <li className="pt-4 border-t border-slate-100 mt-2">
+                  <Link href={`/${lang}/find-training`} className="flex w-full items-center justify-center rounded-full bg-slate-900 py-3 text-[14px] font-semibold text-white shadow-md active:scale-[0.98] transition-transform">
+                    {dict.nav.get_matched} <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
                   </Link>
                 </li>
-              ))}
-              <li className="pt-2">
-                <Link href={`/${lang}/find-training`} className="flex items-center text-[14px] font-medium text-primary">
-                  {dict.nav.get_matched} <ArrowRight size={14} className="ms-1 rtl:-scale-x-100" />
-                </Link>
-              </li>
-            </ul>
-          </div>
-        )}
+              </ul>
+            </m.div>
+          )}
+        </AnimatePresence>
       </nav>
     </header>
   );

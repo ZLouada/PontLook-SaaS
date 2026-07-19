@@ -1,0 +1,44 @@
+flowchart TD
+    %% Layouts & Routing
+    RootLayout["Root Layout 'app/layout.tsx'"]
+    LangLayout["Lang Layout 'app/[lang]/layout.tsx'"]
+    
+    %% Pages
+    HomePage[Home Page]
+    FindTrainingPage[Find Training Page]
+    ResearchPage[Research Page]
+    
+    %% Layout Components
+    Navbar[Navbar]
+    Footer[Footer]
+    
+    %% Home Components
+    Hero[Hero Section]
+    WhyDifferent[Why Different Section]
+    TrustBar[Trust Bar]
+    
+    %% Wizard Components
+    FindTrainingWizard[Find Training Wizard]
+    WizardSteps[Wizard Steps]
+    WizardFields[Wizard Fields]
+    
+    %% Shared Components
+    Reveal[Reveal Animation]
+    
+    RootLayout --> LangLayout
+    LangLayout --> Navbar
+    LangLayout --> HomePage
+    LangLayout --> FindTrainingPage
+    LangLayout --> ResearchPage
+    LangLayout --> Footer
+    
+    HomePage --> Hero
+    HomePage --> TrustBar
+    HomePage --> WhyDifferent
+    
+    FindTrainingPage --> FindTrainingWizard
+    FindTrainingWizard --> WizardSteps
+    FindTrainingWizard --> WizardFields
+    
+    Hero -. uses .-> Reveal
+    WhyDifferent -. uses .-> Reveal
