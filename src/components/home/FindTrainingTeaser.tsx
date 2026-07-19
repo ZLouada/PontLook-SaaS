@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Reveal from '@/components/shared/Reveal';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
@@ -13,7 +13,6 @@ const searchTerms = [
 ];
 
 export default function FindTrainingTeaser() {
-  const router = useRouter();
   const [placeholder, setPlaceholder] = useState('');
   const [termIndex, setTermIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
@@ -61,7 +60,7 @@ export default function FindTrainingTeaser() {
             you compare proposals — free for companies.
           </p>
           
-          <div className="block max-w-[800px] mx-auto group cursor-pointer" onClick={() => router.push('/find-training')}>
+          <Link href="/find-training" className="block max-w-[800px] mx-auto group no-underline">
             <div className="relative rounded-[40px] p-[1px] bg-gradient-to-r from-violet-500 via-primary to-cyan-400 opacity-90 group-hover:opacity-100 transition-opacity duration-300 shadow-xl focus-within:ring-4 focus-within:ring-blue-500/10 focus-within:shadow-[0_0_40px_rgba(59,130,246,0.3)]">
               {/* Glowing Aura Background */}
               <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-primary to-cyan-400 blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 rounded-[40px]" />
@@ -72,13 +71,6 @@ export default function FindTrainingTeaser() {
                 </div>
                 
                 <div className="flex-1 text-left px-4 sm:px-0 relative flex items-center h-12">
-                  <input
-                    type="text"
-                    readOnly
-                    className="w-full h-full bg-transparent outline-none text-slate-700 text-base sm:text-lg font-medium cursor-pointer placeholder-transparent"
-                    placeholder={placeholder}
-                  />
-                  {/* Absolute positioning to simulate the typing placeholder since native placeholder doesn't animate well natively with cursor */}
                   <div className="absolute inset-y-0 left-4 sm:left-0 flex items-center pointer-events-none">
                     <span className="text-slate-400 text-base sm:text-lg font-medium">
                       {placeholder}
@@ -92,7 +84,7 @@ export default function FindTrainingTeaser() {
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         </Reveal>
       </div>
     </section>
