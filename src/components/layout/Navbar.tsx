@@ -48,7 +48,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
         <div className="flex items-center gap-10">
           <Link href={`/${lang}`} className="relative flex h-9 w-9 items-center md:h-10 md:w-10 transition-transform duration-300 hover:scale-105" aria-label="Pontlook home">
             <Image 
-              src="/logo.svg"
+              src="/PontLook-Logo.png"
               alt="PontLook Logo"
               fill
               className="object-contain"

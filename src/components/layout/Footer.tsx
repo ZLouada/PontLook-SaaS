@@ -16,7 +16,7 @@ export default function Footer() {
       <div className="container-site grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
           <Link href={`/${lang}`} className="flex items-center hover:opacity-90 transition-opacity bg-transparent">
-            <Image src="/logo.svg" alt="PontLook Logo" width={56} height={56} className="object-contain bg-transparent" />
+            <Image src="/PontLook-Logo.png" alt="PontLook Logo" width={56} height={56} className="object-contain bg-transparent" />
           </Link>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-300">
             {dict.footer.about}
