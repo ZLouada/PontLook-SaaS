@@ -44,8 +44,8 @@ const steps = [
             { label: 'Budget Confirmed' },
             { label: 'Decision Maker Verified' },
             { label: 'Timeline Active' }
-          ].map((item, idx) => (
-            <div key={idx} className="flex items-center gap-2 text-[11px] text-foreground-muted">
+          ].map((item) => (
+            <div key={item.label} className="flex items-center gap-2 text-[11px] text-foreground-muted">
               <div className="h-3 w-3 rounded-full bg-emerald-100 flex items-center justify-center"><div className="h-1.5 w-1.5 rounded-full bg-emerald-500" /></div>
               {item.label}
             </div>

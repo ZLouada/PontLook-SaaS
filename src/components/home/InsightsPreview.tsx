@@ -20,7 +20,7 @@ export default function InsightsPreview() {
             <Reveal key={p.slug} delay={i * 0.08}>
               <Link href={`/research/${p.slug}`} className="group block h-full">
                 <div className="card h-full flex flex-col p-0 overflow-hidden hover:shadow-lifted border-transparent hover:border-border transition-all">
-                  <div className={`h-32 w-full bg-gradient-to-r ${i % 3 === 0 ? 'from-blue-500 to-cyan-400' : i % 3 === 1 ? 'from-violet-500 to-fuchsia-500' : 'from-emerald-400 to-teal-500'} opacity-80 group-hover:opacity-100 transition-opacity`} />
+                  <div className={`h-32 w-full bg-gradient-to-r ${['from-blue-500 to-cyan-400', 'from-violet-500 to-fuchsia-500', 'from-emerald-400 to-teal-500'][i % 3]} opacity-80 group-hover:opacity-100 transition-opacity`} />
                   <div className="p-6 flex flex-col flex-1">
                     <div className="mb-4">
                       <span className="inline-flex items-center rounded-full border border-border bg-white px-3 py-1 text-xs font-semibold text-foreground-muted tracking-wide uppercase">

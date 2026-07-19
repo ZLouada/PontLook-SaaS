@@ -122,10 +122,17 @@ export default function FindTrainingWizard() {
         <div className="flex w-full items-end gap-1">
           {stepLabels.map((label, i) => {
             const n = i + 1;
-            const state = n < step ? 'done' : n === step ? 'current' : 'todo';
+            let state = 'todo';
+            if (n < step) state = 'done';
+            else if (n === step) state = 'current';
+
+            let stateColor = 'text-slate-400';
+            if (state === 'current') stateColor = 'text-primary';
+            else if (state === 'done') stateColor = 'text-foreground';
+
             return (
               <div key={label} className="flex flex-1 flex-col gap-2">
-                <span className={`text-[11px] font-semibold uppercase tracking-wider ${state === 'current' ? 'text-primary' : state === 'done' ? 'text-foreground' : 'text-slate-400'}`}>
+                <span className={`text-[11px] font-semibold uppercase tracking-wider ${stateColor}`}>
                   {label}
                 </span>
                 <div className="h-1.5 w-full rounded-full bg-slate-100 overflow-hidden relative">

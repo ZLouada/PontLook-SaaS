@@ -5,7 +5,7 @@ import { Dictionary } from '@/i18n';
 
 const DictionaryContext = createContext<Dictionary | null>(null);
 
-export function DictionaryProvider({ dictionary, children }: { dictionary: Dictionary, children: ReactNode }) {
+export function DictionaryProvider({ dictionary, children }: Readonly<{ dictionary: Dictionary, children: ReactNode }>) {
   return (
     <DictionaryContext.Provider value={dictionary}>
       {children}

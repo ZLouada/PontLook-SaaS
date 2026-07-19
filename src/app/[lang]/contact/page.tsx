@@ -26,11 +26,11 @@ export default function ContactPage() {
             </li>
             <li className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-50 text-primary"><MapPin size={18} /></span>
-              Riyadh · Dubai · Serving the GCC
+              <span>Riyadh · Dubai · Serving the GCC</span>
             </li>
             <li className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-50 text-primary"><Clock size={18} /></span>
-              Sunday–Thursday · 9:00–18:00 (GST)
+              <span>Sunday–Thursday · 9:00–18:00 (GST)</span>
             </li>
           </ul>
         </Reveal>
