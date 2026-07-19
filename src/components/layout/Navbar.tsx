@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowRight, Search, Globe } from 'lucide-react';
+import { Menu, X, ArrowRight, Globe } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Locale } from '@/i18n';
@@ -72,16 +72,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
         <div className="flex items-center gap-5">
           <div className="hidden lg:flex items-center gap-5 text-slate-500">
-            {/* Elegant Search Bar */}
-            <div className="relative group">
-              <Search size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" />
-              <input 
-                type="text" 
-                placeholder={dict.nav.search} 
-                className="h-10 w-48 rounded-full border border-slate-200/60 bg-white/50 px-4 ps-11 text-[13px] outline-none transition-all duration-300 focus:w-60 focus:bg-white focus:ring-4 focus:ring-primary/10 focus:border-primary/30 shadow-inner shadow-slate-100/50" 
-              />
-            </div>
-            
+
             {/* Minimal Language Switcher */}
             <Link 
               href={switchUrl} 
