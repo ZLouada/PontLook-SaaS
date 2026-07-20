@@ -21,7 +21,7 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://pontlook.com'),
+  metadataBase: new URL('https://www.pontlook.com'),
   title: {
     default: 'PontLook',
     template: '%s | PontLook',
@@ -45,6 +45,11 @@ export const metadata: Metadata = {
     description:
       'PontLook bridges the gap between training providers, businesses, and professionals making it easier to discover, compare, and access the best learning opportunities.',
     images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'PontLook' }],
+  },
+  icons: {
+    icon: '/PontLook-Logo.png',
+    shortcut: '/PontLook-Logo.png',
+    apple: '/PontLook-Logo.png',
   },
   twitter: { card: 'summary_large_image' },
 };
