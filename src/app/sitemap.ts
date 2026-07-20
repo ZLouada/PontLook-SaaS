@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/posts';
 
-const BASE = 'https://gcctrainingconnect.com';
+const BASE = 'https://www.pontlook.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = ['', '/for-providers', '/find-training', '/research', '/contact'].map((p) => ({

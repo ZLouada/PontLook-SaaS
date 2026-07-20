@@ -24,6 +24,6 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     // Skip all internal paths (_next)
-    '/((?!_next|favicon.ico|logo.png|logo-white.png|skyline-bg.jpg|og-image.png|api).*)',
+    '/((?!_next|favicon\\.ico|favicon-.*\\.png|apple-touch-icon\\.png|android-chrome-.*\\.png|site\\.webmanifest|PontLook-Logo\\.png|logo-white\\.png|skyline-bg\\.jpg|skyline-bg\\.webp|og-image\\.png|api).*)',
   ],
 };
