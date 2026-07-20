@@ -49,18 +49,33 @@ RewriteRule ^(.*)$ https://www.pontlook.com/$1 [R=301,L]
 # Disable ETags (reduces header size; mod_expires handles caching)
 FileETag None
 
+# Disable directory listing and MultiViews (prevents Apache from serving .txt instead of .html)
+Options -Indexes -MultiViews
+
+# Prevent Google from indexing Next.js internal RSC payload (.txt) files
+<FilesMatch "\.txt$">
+  Header set X-Robots-Tag "noindex"
+</FilesMatch>
+# Allow indexing of robots.txt
+<Files "robots.txt">
+  Header unset X-Robots-Tag
+</Files>
+
 # --- Redirect: root / -> /en (single server-side 301, avoids client-side JS redirect) ---
 RewriteCond %{REQUEST_URI} ^/$
 RewriteRule ^$ /en [R=301,L]
 
-# If the requested file or directory exists, serve it directly
-RewriteCond %{REQUEST_FILENAME} -d [OR]
+# 1. If the requested file exists, serve it directly
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
-# Append .html extension for clean URLs (e.g. /contact -> contact.html)
+# 2. If the requested path + .html exists, serve the .html file (Prioritizes .html over directory)
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.*)$ $1.html [L]
+
+# 3. If the requested directory exists, serve it directly (fallback)
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
 
 # Custom 404 page
 ErrorDocument 404 /404.html
