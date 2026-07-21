@@ -70,7 +70,7 @@ export default function FAQPage({ params: { lang } }: { params: { lang: string }
             <div className="mt-16 bg-gradient-to-br from-primary-50 to-white border border-primary-100 p-10 rounded-3xl text-center shadow-sm">
               <h3 className="text-2xl font-bold text-slate-900 mb-4">Still have questions?</h3>
               <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
-                We're here to help. Reach out to our team to discuss your specific needs and how we can support your growth in the GCC.
+                We&apos;re here to help. Reach out to our team to discuss your specific needs and how we can support your growth in the GCC.
               </p>
               <Link href={`/${lang}/contact`} className="btn-primary inline-flex">
                 Contact Us
