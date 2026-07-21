@@ -51,7 +51,7 @@ export default function Hero() {
   const lang = (params?.lang as string) || 'en';
 
   return (
-    <section className="relative overflow-hidden bg-background pt-32 pb-24 lg:pt-56 lg:pb-48 min-h-[90vh] flex flex-col justify-center">
+    <section className="relative overflow-hidden bg-background pt-28 pb-20 lg:pt-40 lg:pb-32 min-h-[90vh] flex flex-col justify-center">
       {/* Premium Full-Bleed Ambient Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <Image
@@ -91,14 +91,14 @@ export default function Hero() {
           className="max-w-[900px] flex flex-col items-center"
         >
           {/* Subtle top badge for premium feel */}
-          <m.div variants={itemVariants} className="mb-8 hidden sm:flex items-center gap-2 rounded-full border border-slate-200/60 bg-white/40 backdrop-blur-md px-4 py-1.5 shadow-sm">
+          <m.div variants={itemVariants} className="mb-6 hidden sm:flex items-center gap-2 rounded-full border border-slate-200/60 bg-white/40 backdrop-blur-md px-4 py-1.5 shadow-sm">
             <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-800">Transforming GCC Workforces</span>
           </m.div>
 
           <m.h1
             variants={itemVariants}
-            className="font-heading text-4xl font-bold tracking-tight text-slate-900 sm:text-6xl md:text-7xl lg:text-[84px] leading-[1.05] drop-shadow-sm"
+            className="font-heading text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl lg:text-[72px] leading-tight drop-shadow-sm"
           >
             {dict.hero.headline}
           </m.h1>
@@ -106,14 +106,14 @@ export default function Hero() {
           {/* Upgraded Typography */}
           <m.p
             variants={itemVariants}
-            className="mt-8 sm:mt-10 text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 max-w-[700px] tracking-wide leading-relaxed font-medium"
+            className="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl lg:text-2xl text-slate-600 max-w-[700px] tracking-wide leading-relaxed font-medium"
           >
             {dict.hero.subtitle}
           </m.p>
 
           <m.div
             variants={itemVariants}
-            className="mt-12 sm:mt-14 flex flex-col w-full sm:w-auto sm:flex-row items-center gap-5 sm:gap-6"
+            className="mt-8 sm:mt-12 flex flex-col w-full sm:w-auto sm:flex-row items-center gap-5 sm:gap-6"
           >
             {/* Primary Button */}
             <Link href={`/${lang}/for-providers`} passHref legacyBehavior>

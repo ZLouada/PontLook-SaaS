@@ -103,7 +103,7 @@ const cardVariants = {
 
 export default function HowItWorks() {
   return (
-    <section id="who-we-are" className="bg-background py-24 lg:py-32 border-t border-border">
+    <section id="how-it-works" className="bg-background py-24 lg:py-32 border-t border-border">
       <div className="container-site px-6 sm:px-8 lg:px-12">
         <div className="mb-20 text-center max-w-[800px] mx-auto">
           <m.h2 

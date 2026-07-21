@@ -17,7 +17,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
   const links = [
     { href: `/${lang}`, label: dict.nav.home },
-    { href: `/${lang}/#who-we-are`, label: dict.nav.who_we_are },
+    { href: `/${lang}/who-we-are`, label: dict.nav.who_we_are },
     { href: `/${lang}/for-providers`, label: dict.nav.for_providers },
     { href: `/${lang}/find-training`, label: dict.nav.find_training },
     { href: `/${lang}/research`, label: dict.nav.research },
