@@ -150,7 +150,7 @@ export default function WhoWeArePage({ params: { lang } }: Props) {
                 <SectionHeading
                   eyebrow="Why Our Clients Choose Us"
                   title="Dependable opportunity generation without building an internal sales team."
-                  alignment="left"
+                  align="left"
                 />
                 <div className="mt-10 space-y-4">
                   {whyChooseUs.map((item, i) => (
