@@ -34,6 +34,7 @@ export default function Footer() {
             <li><Link href={`/${lang}/find-training`} className="hover:text-primary-400">{dict.nav.find_training}</Link></li>
             <li><Link href={`/${lang}/research`} className="hover:text-primary-400">{dict.nav.research}</Link></li>
             <li><Link href={`/${lang}/contact`} className="hover:text-primary-400">{dict.nav.contact}</Link></li>
+            <li><Link href={`/${lang}/who-we-are#faq`} className="hover:text-primary-400">{dict.nav.faq}</Link></li>
           </ul>
         </nav>
 

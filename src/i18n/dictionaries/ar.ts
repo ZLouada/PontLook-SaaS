@@ -6,6 +6,7 @@ export const ar = {
     find_training: "أبحث عن تدريب",
     research: "الأبحاث",
     contact: "اتصل بنا",
+    faq: "الأسئلة الشائعة",
     search: "بحث...",
     get_matched: "احصل على المطابقة",
     switch_lang: "English"

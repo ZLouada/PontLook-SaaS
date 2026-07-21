@@ -6,6 +6,7 @@ export const en = {
     find_training: "I'm looking for training",
     research: "Research",
     contact: "Contact",
+    faq: "FAQ",
     search: "Search...",
     get_matched: "Get Matched",
     switch_lang: "عربي"
