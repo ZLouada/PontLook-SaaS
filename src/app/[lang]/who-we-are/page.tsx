@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Reveal from '@/components/shared/Reveal';
-import { HelpCircle } from 'lucide-react';
+import FAQAccordion from '@/components/faq/FAQAccordion';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -45,26 +45,8 @@ export default function FAQPage({ params: { lang } }: { params: { lang: string }
       </section>
 
       <section className="bg-white py-24" id="faq">
-        <div className="container-site max-w-5xl">
-          <div className="grid gap-6 md:grid-cols-2">
-            {faqs.map((faq, i) => (
-              <Reveal key={i} delay={i * 0.05}>
-                <div className="bg-slate-50 border border-slate-100 rounded-2xl p-8 hover:shadow-lg hover:border-primary/20 transition-all duration-300 h-full flex flex-col group">
-                  <div className="flex gap-4 items-start mb-4">
-                    <span className="shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                      <HelpCircle size={20} strokeWidth={2} />
-                    </span>
-                    <h3 className="text-xl font-bold text-slate-900 leading-tight pt-1">
-                      {faq.question}
-                    </h3>
-                  </div>
-                  <p className="text-slate-600 leading-relaxed text-lg pl-14">
-                    {faq.answer}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+        <div className="container-site max-w-3xl mx-auto">
+          <FAQAccordion faqs={faqs} />
 
           <Reveal delay={0.4}>
             <div className="mt-16 bg-gradient-to-br from-primary-50 to-white border border-primary-100 p-10 rounded-3xl text-center shadow-sm">

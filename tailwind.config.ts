@@ -49,6 +49,7 @@ const config: Config = {
       fontFamily: {
         heading: ['var(--font-heading)', 'sans-serif'],
         sans: ['var(--font-inter)', 'sans-serif'],
+        poppins: ['var(--font-poppins)', 'Poppins', 'sans-serif'],
       },
       boxShadow: {
         sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
