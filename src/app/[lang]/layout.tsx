@@ -77,10 +77,12 @@ export default async function RootLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { lang: Locale };
+  params: Promise<{ lang: string }>;
 }>) {
-  const dictionary = await getDictionary(params.lang);
-  const isRtl = params.lang === 'ar';
+  const resolvedParams = await params;
+  const lang = resolvedParams.lang as Locale;
+  const dictionary = await getDictionary(lang);
+  const isRtl = lang === 'ar';
   
   // Reuse --font-heading variable so it seamlessly applies to all font-heading classes
   const fontClass = isRtl 
@@ -88,11 +90,11 @@ export default async function RootLayout({
     : `${inter.variable} ${jakarta.variable} ${poppins.variable}`;
 
   return (
-    <html lang={params.lang} dir={isRtl ? 'rtl' : 'ltr'} className={fontClass}>
+    <html lang={lang} dir={isRtl ? 'rtl' : 'ltr'} className={fontClass}>
       <body>
         <DictionaryProvider dictionary={dictionary}>
           <FramerMotionProvider>
-            <Navbar lang={params.lang} />
+            <Navbar lang={lang} />
             <main className="min-h-screen">{children}</main>
             <Footer />
           </FramerMotionProvider>
