@@ -8,10 +8,9 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 RewriteCond %{HTTP_HOST} ^pontlook\.com$ [NC]
 RewriteRule ^(.*)$ https://www.pontlook.com/$1 [R=301,L]
 
-# 3. Direct Full-URL Root Redirect (Root / -> https://www.pontlook.com/en)
-# Emits a clean Location header for Googlebot and prevents 307 CDN rewrites
+# Force Full Absolute URL Redirect
 RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^$ https://www.pontlook.com/en [R=301,L]
+RewriteRule ^$ https://pontlook.com/en [R=301,L]
 
 # Compression (mod_deflate) to reduce Document Request Latency
 <IfModule mod_deflate.c>
