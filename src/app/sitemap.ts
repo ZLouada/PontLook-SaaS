@@ -1,6 +1,8 @@
 import type { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/posts';
 
+export const dynamic = 'force-static';
+
 const BASE = 'https://www.pontlook.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
