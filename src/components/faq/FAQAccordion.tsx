@@ -2,15 +2,7 @@
 
 import { useState } from 'react';
 import { HelpCircle, ChevronDown } from 'lucide-react';
-import { Poppins } from 'next/font/google';
 import Reveal from '@/components/shared/Reveal';
-
-const poppins = Poppins({
-  weight: ['600', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-poppins',
-});
 
 export interface FAQItem {
   question: string;
@@ -29,7 +21,7 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
   };
 
   return (
-    <div className={`space-y-4 ${poppins.variable}`}>
+    <div className="space-y-4">
       {faqs.map((faq, i) => {
         const isOpen = openIndex === i;
 

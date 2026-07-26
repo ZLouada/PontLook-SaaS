@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Plus_Jakarta_Sans, Cairo } from 'next/font/google';
+import { Inter, Plus_Jakarta_Sans, Cairo, Poppins } from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import '../globals.css';
@@ -7,6 +7,12 @@ import { getDictionary, Locale } from '@/i18n';
 import { DictionaryProvider } from '@/components/providers/DictionaryProvider';
 import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const poppins = Poppins({
+  weight: ['600', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-poppins',
+});
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800'],
@@ -78,8 +84,8 @@ export default async function RootLayout({
   
   // Reuse --font-heading variable so it seamlessly applies to all font-heading classes
   const fontClass = isRtl 
-    ? `${inter.variable} ${cairo.variable}` 
-    : `${inter.variable} ${jakarta.variable}`;
+    ? `${inter.variable} ${cairo.variable} ${poppins.variable}` 
+    : `${inter.variable} ${jakarta.variable} ${poppins.variable}`;
 
   return (
     <html lang={params.lang} dir={isRtl ? 'rtl' : 'ltr'} className={fontClass}>
