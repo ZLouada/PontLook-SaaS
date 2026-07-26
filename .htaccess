@@ -1,8 +1,17 @@
 RewriteEngine On
 
-# Force WWW (Redirect non-www to www)
+# 1. Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# 2. Force WWW (Redirect non-www pontlook.com to www.pontlook.com)
 RewriteCond %{HTTP_HOST} ^pontlook\.com$ [NC]
 RewriteRule ^(.*)$ https://www.pontlook.com/$1 [R=301,L]
+
+# 3. Direct Full-URL Root Redirect (Root / -> https://www.pontlook.com/en)
+# Emits a clean Location header for Googlebot and prevents 307 CDN rewrites
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ https://www.pontlook.com/en [R=301,L]
 
 # Compression (mod_deflate) to reduce Document Request Latency
 <IfModule mod_deflate.c>
@@ -56,20 +65,19 @@ Options -Indexes -MultiViews
 <FilesMatch "\.txt$">
   Header set X-Robots-Tag "noindex"
 </FilesMatch>
+
 # Allow indexing of robots.txt
 <Files "robots.txt">
   Header unset X-Robots-Tag
 </Files>
 
-# --- Redirect: root / -> /en (single server-side 301, avoids client-side JS redirect) ---
-RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^$ /en [R=301,L]
+# --- Static Next.js Route Rewrites ---
 
 # 1. If the requested file exists, serve it directly
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
-# 2. If the requested path + .html exists, serve the .html file (Prioritizes .html over directory)
+# 2. If the requested path + .html exists, serve the .html file
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.*)$ $1.html [L]
 
