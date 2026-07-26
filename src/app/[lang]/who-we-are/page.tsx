@@ -27,7 +27,9 @@ const faqs = [
   { question: "How quickly can we get started?", answer: "Once we agree on your targeting and lead criteria, we begin research and outreach to identify suitable opportunities." },
 ];
 
-export default function FAQPage({ params: { lang } }: { params: { lang: string } }) {
+export default async function FAQPage({ params }: { params: Promise<{ lang: string }> }) {
+  const resolvedParams = await params;
+  const lang = resolvedParams.lang;
   return (
     <>
       <section className="bg-hero-gradient pt-36 pb-20 relative overflow-hidden">

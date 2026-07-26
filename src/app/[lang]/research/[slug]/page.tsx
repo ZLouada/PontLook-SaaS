@@ -5,20 +5,22 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { getAllPosts, getPost } from '@/lib/posts';
 
-type Props = { params: { slug: string } };
+type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const post = getPost(params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolvedParams = await params;
+  const post = getPost(resolvedParams.slug);
   if (!post) return {};
   return { title: post.title, description: post.excerpt };
 }
 
-export default function InsightPage({ params }: Props) {
-  const post = getPost(params.slug);
+export default async function InsightPage({ params }: Props) {
+  const resolvedParams = await params;
+  const post = getPost(resolvedParams.slug);
   if (!post) notFound();
 
   return (
