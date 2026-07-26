@@ -49,12 +49,9 @@ export default function FindTrainingWizard() {
       persist(next, merged);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      // Final submission via secure API route
-      fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(merged)
-      }).then((res) => {
+      // Static Export Mode: Final submission disabled (no API)
+      console.warn('Form submission disabled in static mode. Data:', merged);
+      Promise.resolve({ ok: true }).then((res) => {
         if (res.ok) {
           try {
             sessionStorage.setItem('gcc-find-training-submission', JSON.stringify({ submittedAt: new Date().toISOString() }));
