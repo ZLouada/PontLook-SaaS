@@ -47,6 +47,9 @@ RewriteRule ^$ https://pontlook.com/en [R=301,L]
 FileETag None
 Options -Indexes -MultiViews
 
+# Disable automatic trailing slash redirects to prevent 503 loops on /ar and /en
+DirectorySlash Off
+
 # Allow robots.txt to serve as plain text
 <Files "robots.txt">
   Header unset X-Robots-Tag
@@ -54,13 +57,8 @@ Options -Indexes -MultiViews
 </Files>
 
 # --- Clean Next.js Static Route Rewrites ---
-RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^ - [L]
-
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^(.*)$ $1.html [L]
-
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
+# If the exact path exists as an HTML file, rewrite it internally
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.*?)/?$ $1.html [L]
 
 ErrorDocument 404 /404.html
