@@ -1,56 +1,26 @@
-# Apache configuration for Next.js Dual-Locale Static Export on Hostinger
+# Apache configuration for Next.js static HTML export on Hostinger
 RewriteEngine On
 
-# Explicitly exclude robots.txt and sitemap.xml from redirects
-RewriteCond %{REQUEST_URI} ^/(robots\.txt|sitemap\.xml)$ [NC]
-RewriteRule ^ - [L]
-
-# 1. Enforce HTTPS (301 Redirect)
-RewriteCond %{HTTPS} off
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-
-# 2. Redirect www.pontlook.com to non-www (https://pontlook.com)
-RewriteCond %{HTTP_HOST} ^www\.pontlook\.com$ [NC]
-RewriteRule ^(.*)$ https://pontlook.com/$1 [R=301,L]
-
-# 3. Direct Root Redirect (/ -> https://pontlook.com/en)
+# 1. Direct root path / to https://pontlook.com/en (301 Redirect)
 RewriteCond %{REQUEST_URI} ^/$
 RewriteRule ^$ https://pontlook.com/en [R=301,L]
 
-# 4. Clean URLs for Next.js Dual-Locale Static Export
-# Serve existing files directly (_next/..., assets, images)
+# 2. Serve existing static files directly (_next/..., images, CSS, JS, robots.txt, sitemap.xml)
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
-# Serve corresponding .html file cleanly (e.g. /en -> en.html, /ar -> ar.html, /en/who-we-are -> en/who-we-are.html)
+# 3. Clean URLs for static HTML exports (serves /en from en.html, /ar from ar.html, /en/who-we-are from en/who-we-are.html, etc.)
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.*)$ $1.html [L]
 
-# Serve directory index if present (e.g. /en/ -> /en/index.html)
+# 4. Serve directory index if present (e.g. /en/ -> /en/index.html)
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_FILENAME}/index.html -f
 RewriteRule ^(.*)$ $1/index.html [L]
 
-# Serve existing directories directly
+# 5. Serve existing directories directly
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# 5. Custom 404 Error Page
+# 6. Custom 404 Error Page
 ErrorDocument 404 /404.html
-
-# 6. Performance & Security Headers (safely guarded for Hostinger compatibility)
-<IfModule mod_headers.c>
-  Header set X-Content-Type-Options "nosniff"
-  Header set X-Frame-Options "SAMEORIGIN"
-  Header set X-XSS-Protection "1; mode=block"
-  Header set Referrer-Policy "strict-origin-when-cross-origin"
-  Header set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
-</IfModule>
-
-<IfModule mod_autoindex.c>
-  Options -Indexes
-</IfModule>
-
-<IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml
-</IfModule>
