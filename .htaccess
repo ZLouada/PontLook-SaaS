@@ -1,9 +1,5 @@
 RewriteEngine On
 
-# Exclude robots.txt and sitemap.xml from rewrites
-RewriteCond %{REQUEST_URI} ^/(robots\.txt|sitemap\.xml)$ [NC]
-RewriteRule ^ - [L]
-
 # 1. Force HTTPS
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
@@ -12,12 +8,13 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 RewriteCond %{HTTP_HOST} ^www\.pontlook\.com$ [NC]
 RewriteRule ^(.*)$ https://pontlook.com/$1 [R=301,L]
 
-# 3. Direct Root '/' Request to https://pontlook.com/en
+# 3. Direct Root '/' Request to /en/
 RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^$ https://pontlook.com/en [R=301,L]
+RewriteRule ^$ https://pontlook.com/en/ [R=301,L]
 
-# 4. Redirect all /ar requests to /en (Arabic support removed)
-RewriteRule ^ar/?$ https://pontlook.com/en [R=301,L]
+# 4. Redirect all /ar requests to /en/ (Arabic support removed)
+# This clears out old cached browser redirects
+RewriteRule ^ar/?$ https://pontlook.com/en/ [R=301,L]
 RewriteRule ^ar/(.*)$ https://pontlook.com/en/$1 [R=301,L]
 
 # Compression (mod_deflate)
@@ -49,10 +46,7 @@ RewriteRule ^ar/(.*)$ https://pontlook.com/en/$1 [R=301,L]
 </IfModule>
 
 FileETag None
-Options -Indexes -MultiViews
-
-# Disable automatic trailing slash redirects to prevent 503 loops on /ar and /en
-DirectorySlash Off
+Options -Indexes
 
 # Allow robots.txt to serve as plain text
 <Files "robots.txt">
@@ -60,9 +54,5 @@ DirectorySlash Off
   Header set Content-Type "text/plain; charset=utf-8"
 </Files>
 
-# --- Clean Next.js Static Route Rewrites ---
-# If the exact path exists as an HTML file, rewrite it internally
-RewriteCond %{DOCUMENT_ROOT}/$1.html -f
-RewriteRule ^(.*?)/?$ $1.html [L]
-
-ErrorDocument 404 /404.html
+# Next.js generates /404/index.html with trailingSlash: true
+ErrorDocument 404 /404/index.html
