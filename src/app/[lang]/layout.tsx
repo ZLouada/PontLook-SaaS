@@ -54,8 +54,8 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/PontlookIcon.png', type: 'image/png' },
       { url: '/PontlookIcon.png' },
+      { url: '/PontlookIcon.png', type: 'image/png', sizes: '32x32' },
     ],
     shortcut: '/PontlookIcon.png',
     apple: '/PontlookIcon.png',
