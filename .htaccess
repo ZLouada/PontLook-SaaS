@@ -1,5 +1,9 @@
 RewriteEngine On
 
+# Explicitly exclude robots.txt and sitemap.xml from any redirects
+RewriteCond %{REQUEST_URI} ^/(robots\.txt|sitemap\.xml)$ [NC]
+RewriteRule ^ - [L]
+
 # 1. Force HTTPS
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
@@ -39,6 +43,7 @@ Options -Indexes -MultiViews
 
 <Files "robots.txt">
   Header unset X-Robots-Tag
+  Header set Content-Type "text/plain; charset=utf-8"
 </Files>
 
 # --- Static Next.js Route Rewrites ---

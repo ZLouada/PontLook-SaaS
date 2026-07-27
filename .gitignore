@@ -18,42 +18,8 @@ _next/
 *.html
 *.txt
 !src/**/*.html
-
-# Archives & Logs
-*.zip
-*.log
-sonar_issues.log
-
-# Local Development Paths & Tool Outputs
-home/
-
-# Build & Export Outputs
-.next/
-out/
-_next/
-
-# Generated HTML & static export files at root
-*.html
-*.txt
-!src/**/*.html
-
-# Archives & Logs
-*.zip
-*.log
-sonar_issues.log
-
-# Local Development Paths & Tool Outputs
-home/
-
-# Build & Export Outputs
-.next/
-out/
-_next/
-
-# Generated HTML & static export files at root
-*.html
-*.txt
-!src/**/*.html
+!public/robots.txt
+!robots.txt
 
 # Archives & Logs
 *.zip

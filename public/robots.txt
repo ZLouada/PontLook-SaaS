@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pontlook.com/sitemap.xml
