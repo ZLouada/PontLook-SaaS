@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowRight, Globe } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Locale } from '@/i18n';
@@ -32,9 +32,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   }, []);
 
   useEffect(() => setOpen(false), [pathname]);
-
-  const targetLang = lang === 'en' ? 'ar' : 'en';
-  const switchUrl = pathname.replace(new RegExp(String.raw`^\/${lang}`), `/${targetLang}`) || `/${targetLang}`;
 
   return (
     <header 
@@ -73,16 +70,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
         <div className="flex items-center gap-5">
           <div className="hidden lg:flex items-center gap-5 text-slate-500">
 
-            {/* Minimal Language Switcher */}
-            <Link 
-              href={switchUrl} 
-              className="flex h-10 items-center justify-center rounded-full border border-slate-200/60 bg-white/50 px-4 text-slate-500 hover:bg-white hover:text-slate-900 hover:shadow-sm transition-all duration-300 gap-2" 
-              aria-label="Switch Language" 
-              title={dict.nav.switch_lang}
-            >
-              <Globe size={16} />
-              <span className="text-[11px] font-bold font-heading tracking-widest">{lang === 'en' ? 'AR' : 'EN'}</span>
-            </Link>
+
 
             {/* Premium CTA Button */}
             <Link href={`/${lang}/find-training`} className="group relative flex h-10 items-center justify-center overflow-hidden rounded-full bg-slate-900 px-6 text-[13px] font-semibold text-white shadow-md transition-all duration-300 hover:bg-slate-800 hover:shadow-lg hover:-translate-y-0.5">
@@ -94,14 +82,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-4 lg:hidden">
-            <Link 
-              href={switchUrl} 
-              className="flex h-9 items-center justify-center rounded-full border border-slate-200/60 bg-white/50 px-3 text-slate-500 hover:bg-white shadow-sm transition-colors gap-2" 
-              aria-label="Switch Language"
-            >
-              <Globe size={14} />
-              <span className="text-[10px] font-bold font-heading tracking-widest">{lang === 'en' ? 'AR' : 'EN'}</span>
-            </Link>
+
             <button
               type="button"
               className="rounded-full p-2 text-slate-700 bg-white shadow-sm border border-slate-100 transition-transform active:scale-95"

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Plus_Jakarta_Sans, Cairo, Poppins } from 'next/font/google';
+import { Inter, Plus_Jakarta_Sans, Poppins } from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import '../globals.css';
@@ -15,12 +15,6 @@ const poppins = Poppins({
 });
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-heading',
-  display: 'swap',
-});
-const cairo = Cairo({
-  subsets: ['arabic', 'latin'],
   weight: ['400', '500', '600', '700', '800'],
   variable: '--font-heading',
   display: 'swap',
@@ -65,7 +59,7 @@ export const metadata: Metadata = {
 };
 
 export function generateStaticParams() {
-  return [{ lang: 'en' }, { lang: 'ar' }];
+  return [{ lang: 'en' }];
 }
 
 export default async function RootLayout({
@@ -78,15 +72,12 @@ export default async function RootLayout({
   const resolvedParams = await params;
   const lang = resolvedParams.lang as Locale;
   const dictionary = await getDictionary(lang);
-  const isRtl = lang === 'ar';
   
   // Reuse --font-heading variable so it seamlessly applies to all font-heading classes
-  const fontClass = isRtl 
-    ? `${inter.variable} ${cairo.variable} ${poppins.variable}` 
-    : `${inter.variable} ${jakarta.variable} ${poppins.variable}`;
+  const fontClass = `${inter.variable} ${jakarta.variable} ${poppins.variable}`;
 
   return (
-    <html lang={lang} dir={isRtl ? 'rtl' : 'ltr'} className={fontClass}>
+    <html lang={lang} dir="ltr" className={fontClass}>
       <body>
         <DictionaryProvider dictionary={dictionary}>
           <FramerMotionProvider>

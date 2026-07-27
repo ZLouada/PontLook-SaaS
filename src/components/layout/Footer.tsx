@@ -4,12 +4,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Linkedin, Mail, MapPin, Twitter, Ghost } from 'lucide-react';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { usePathname } from 'next/navigation';
+
 
 export default function Footer() {
   const dict = useDictionary();
-  const pathname = usePathname() || '/en';
-  const lang = pathname.startsWith('/ar') ? 'ar' : 'en';
+  const lang = 'en';
 
   return (
     <footer className="border-t border-[#1E293B] bg-background-dark text-white">
