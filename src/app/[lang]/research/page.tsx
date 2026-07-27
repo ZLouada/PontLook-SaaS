@@ -10,7 +10,9 @@ export const metadata: Metadata = {
     'Intelligence on the GCC corporate training market — HR & leadership, AI & workforce, market analysis, and how we qualify opportunities.',
 };
 
-export default function InsightsPage() {
+export default async function InsightsPage({ params }: { params: Promise<{ lang: string }> }) {
+  const resolvedParams = await params;
+  const lang = resolvedParams.lang || 'en';
   const posts = getAllPosts();
 
   return (
@@ -25,9 +27,10 @@ export default function InsightsPage() {
           </p>
         </Reveal>
         <Suspense fallback={<p className="mt-10 text-center">Loading insights...</p>}>
-          <InsightsClient posts={posts} />
+          <InsightsClient posts={posts} lang={lang} />
         </Suspense>
       </section>
     </div>
   );
 }
+

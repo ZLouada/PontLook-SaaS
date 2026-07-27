@@ -1,4 +1,4 @@
-# Apache configuration for Next.js static export on Hostinger
+# Apache configuration for Next.js Dual-Locale Static Export on Hostinger
 RewriteEngine On
 
 # Explicitly exclude robots.txt and sitemap.xml from redirects
@@ -17,14 +17,19 @@ RewriteRule ^(.*)$ https://pontlook.com/$1 [R=301,L]
 RewriteCond %{REQUEST_URI} ^/$
 RewriteRule ^$ https://pontlook.com/en [R=301,L]
 
-# 4. Clean URLs for Next.js Static Export
-# Serve existing files directly
+# 4. Clean URLs for Next.js Dual-Locale Static Export
+# Serve existing files directly (_next/..., assets, images)
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
-# Serve corresponding .html file cleanly (e.g. /en -> en.html, /ar -> ar.html)
+# Serve corresponding .html file cleanly (e.g. /en -> en.html, /ar -> ar.html, /en/who-we-are -> en/who-we-are.html)
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.*)$ $1.html [L]
+
+# Serve directory index if present (e.g. /en/ -> /en/index.html)
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.*)$ $1/index.html [L]
 
 # Serve existing directories directly
 RewriteCond %{REQUEST_FILENAME} -d

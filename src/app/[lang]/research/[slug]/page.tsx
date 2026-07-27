@@ -5,10 +5,13 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { getAllPosts, getPost } from '@/lib/posts';
 
-type Props = { params: Promise<{ slug: string }> };
+type Props = { params: Promise<{ lang: string; slug: string }> };
 
 export function generateStaticParams() {
-  return getAllPosts().map((p) => ({ slug: p.slug }));
+  const posts = getAllPosts();
+  return ['en', 'ar'].flatMap((lang) =>
+    posts.map((p) => ({ lang, slug: p.slug }))
+  );
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -20,13 +23,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function InsightPage({ params }: Props) {
   const resolvedParams = await params;
+  const lang = resolvedParams.lang || 'en';
   const post = getPost(resolvedParams.slug);
   if (!post) notFound();
 
   return (
     <div className="bg-hero-gradient">
       <article className="container-site max-w-3xl pt-36 pb-24">
-        <Link href="/research" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
+        <Link href={`/${lang}/research`} className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
           <ArrowLeft size={15} /> All insights
         </Link>
         <div className="mt-6 flex items-center gap-3 text-xs text-slate-500">
@@ -42,7 +46,7 @@ export default async function InsightPage({ params }: Props) {
         <div className="mt-14 rounded-3xl bg-cta-gradient p-8 text-center sm:p-10">
           <h2 className="text-2xl font-bold !text-white">Facing this challenge in your organization?</h2>
           <p className="mt-2 text-primary-100">Tell us about it — we’ll match you with providers who’ve solved it before.</p>
-          <Link href="/find-training" className="btn mt-6 bg-white text-primary shadow-lifted hover:bg-primary-50">
+          <Link href={`/${lang}/find-training`} className="btn mt-6 bg-white text-primary shadow-lifted hover:bg-primary-50">
             Start the needs assessment <ArrowRight size={16} />
           </Link>
         </div>
@@ -50,3 +54,4 @@ export default async function InsightPage({ params }: Props) {
     </div>
   );
 }
+
