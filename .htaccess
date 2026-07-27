@@ -11,20 +11,7 @@ RewriteRule ^(.*)$ https://pontlook.com/$1 [R=301,L]
 # Set default index file
 DirectoryIndex index.html
 
-# 3. Direct Root '/' Request to /en/
-RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^$ https://pontlook.com/en/ [R=301,L]
-
-# 4. Redirect all /ar requests to /en/ (Arabic support removed)
-# This clears out old cached browser redirects
-RewriteRule ^ar/?$ https://pontlook.com/en/ [R=301,L]
-RewriteRule ^ar/(.*)$ https://pontlook.com/en/$1 [R=301,L]
-
-# 5. Enforce trailing slash (since we use Next.js trailingSlash: true)
-# If the request is not a file and does not end in a slash, add it!
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_URI} !(.*)/$
-RewriteRule ^(.*)$ https://pontlook.com/$1/ [R=301,L]
+# Routing is now handled by Next.js SSR natively
 
 # Compression (mod_deflate)
 <IfModule mod_deflate.c>
