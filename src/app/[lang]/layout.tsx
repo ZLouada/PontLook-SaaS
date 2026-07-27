@@ -27,7 +27,7 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.pontlook.com'),
+  metadataBase: new URL('https://pontlook.com'),
   title: {
     default: 'PontLook',
     template: '%s | PontLook',
@@ -54,8 +54,8 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: '/PontlookIcon.png', type: 'image/png' },
       { url: '/PontlookIcon.png' },
-      { url: '/PontlookIcon.png', type: 'image/png', sizes: '32x32' },
     ],
     shortcut: '/PontlookIcon.png',
     apple: '/PontlookIcon.png',

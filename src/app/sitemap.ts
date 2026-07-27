@@ -3,7 +3,7 @@ import { getAllPosts } from '@/lib/posts';
 
 export const dynamic = 'force-static';
 
-const BASE = 'https://www.pontlook.com';
+const BASE = 'https://pontlook.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = ['', '/for-providers', '/find-training', '/research', '/contact'].map((p) => ({
