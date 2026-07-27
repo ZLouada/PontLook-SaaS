@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "npm run build && cp -R out/* . && git add -A _next/ ar/ en/ *.html *.txt sitemap.xml favicon* apple-* android-* site.webmanifest skyline-bg.* og-image.png PontLook-Logo.png robots.txt && git commit -m \"deploy: update static assets\""
+    "deploy": "npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

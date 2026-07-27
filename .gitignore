@@ -1,30 +1,47 @@
-node_modules
-.next
-out
-build
-.DS_Store
-*.pem
-.env*.local
-next-env.d.ts
-.vercel
-*.tsbuildinfo
+# Dependencies
+node_modules/
 
 # Build & Export Outputs
 .next/
 out/
+build/
 _next/
 
-# Generated HTML & static export files at root
+# Generated static export files at root (from `next build`)
 *.html
 *.txt
 !src/**/*.html
 !public/robots.txt
-!robots.txt
+
+# Sitemap & robots generated at root by export
+sitemap.xml
+
+# OS & Editor
+.DS_Store
+*.pem
+*.tsbuildinfo
+
+# Environment
+.env*.local
+.vercel
+
+# Auto-generated
+next-env.d.ts
 
 # Archives & Logs
 *.zip
 *.log
-sonar_issues.log
 
 # Local Development Paths & Tool Outputs
 home/
+
+# Misplaced root-level static assets (belong in /public)
+/PontlookIcon.png
+/PontLook-Logo.png
+/favicon*
+/android-chrome*
+/apple-touch-icon*
+/og-image.png
+/skyline-bg.*
+/site.webmanifest
+/robots.txt
