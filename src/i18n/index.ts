@@ -1,6 +1,10 @@
 import 'server-only';
 import { en } from './dictionaries/en';
 import { ar } from './dictionaries/ar';
+import { defaultLocale, locales, Locale } from './config';
+
+export { defaultLocale, locales };
+export type { Locale };
 
 const dictionaries = {
   en: en,
@@ -8,8 +12,8 @@ const dictionaries = {
 };
 
 export type Dictionary = typeof en;
-export type Locale = keyof typeof dictionaries;
 
 export const getDictionary = async (locale: Locale) => {
-  return dictionaries[locale] ?? dictionaries.en;
+  return dictionaries[locale] ?? dictionaries[defaultLocale];
 };
+
