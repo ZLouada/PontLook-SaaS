@@ -8,6 +8,10 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 RewriteCond %{HTTP_HOST} ^www\.pontlook\.com$ [NC]
 RewriteRule ^(.*)$ https://pontlook.com/$1 [R=301,L]
 
+# 3. Let favicon / icon files bypass all further rewrites
+RewriteCond %{REQUEST_URI} ^/(favicon\.ico|PontlookIcon\.png|apple-touch-icon\.png)$ [NC]
+RewriteRule ^ - [L]
+
 # Set default index file
 DirectoryIndex index.html
 

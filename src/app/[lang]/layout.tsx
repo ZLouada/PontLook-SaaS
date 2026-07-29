@@ -48,10 +48,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/PontlookIcon.png' },
-      { url: '/PontlookIcon.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/PontlookIcon.png', type: 'image/png', sizes: '192x192' },
+      { url: '/PontlookIcon.png', type: 'image/png', sizes: '512x512' },
     ],
-    shortcut: '/PontlookIcon.png',
+    shortcut: '/favicon.ico',
     apple: '/PontlookIcon.png',
   },
   manifest: '/site.webmanifest',
