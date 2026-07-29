@@ -37,10 +37,11 @@ export default function Footer() {
         <nav aria-label="Footer — platform">
           <p className="font-heading text-sm font-semibold text-white">{dict.footer.platform}</p>
           <ul className="mt-4 space-y-2.5 text-sm text-slate-300">
+            <li><Link href={`/${lang}/who-we-are`} className="hover:text-primary-400">{dict.nav.who_we_are}</Link></li>
             <li><Link href={`/${lang}/for-providers`} className="hover:text-primary-400">{dict.nav.for_providers}</Link></li>
             <li><Link href={`/${lang}/find-training`} className="hover:text-primary-400">{dict.nav.find_training}</Link></li>
             <li><Link href={`/${lang}/contact`} className="hover:text-primary-400">{dict.nav.contact}</Link></li>
-            <li><Link href={`/${lang}/who-we-are#faq`} className="hover:text-primary-400">{dict.nav.faq}</Link></li>
+            <li><Link href={`/${lang}/faq`} className="hover:text-primary-400">{dict.nav.faq}</Link></li>
             <li><a href="https://blog.pontlook.com" className="hover:text-primary-400" target="_blank" rel="noopener noreferrer">{dict.nav.blog}</a></li>
           </ul>
         </nav>
