@@ -4,7 +4,6 @@ export const en = {
     who_we_are: "Who we are",
     for_providers: "I'm a training provider",
     find_training: "I'm looking for training",
-    research: "Research",
     contact: "Contact",
     faq: "FAQ",
     search: "Search...",

@@ -20,7 +20,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
     { href: `/${lang}/who-we-are`, label: dict.nav.who_we_are },
     { href: `/${lang}/for-providers`, label: dict.nav.for_providers },
     { href: `/${lang}/find-training`, label: dict.nav.find_training },
-    { href: `/${lang}/research`, label: dict.nav.research },
     { href: `/${lang}/contact`, label: dict.nav.contact },
   ];
 

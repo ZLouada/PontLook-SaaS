@@ -100,8 +100,8 @@ export default function FindTrainingWizard() {
             </div>
           ))}
         </div>
-        <Link href="/research" className="btn-secondary mt-10">
-          Explore GCC training insights <ArrowRight size={16} />
+        <Link href="/en" className="btn-secondary mt-10">
+          Back to home <ArrowRight size={16} />
         </Link>
       </m.div>
     );
