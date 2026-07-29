@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import Reveal from '@/components/shared/Reveal';
 import { useSearchParams } from 'next/navigation';
+import type { Post } from '@/lib/posts';
 
 const categories = ['All', 'HR & Leadership', 'GCC Market', 'AI & Workforce', 'Corporate Training'];
 
-export default function InsightsClient({ posts, lang = 'en' }: { posts: any[]; lang?: string }) {
+export default function InsightsClient({ posts, lang = 'en' }: { posts: Post[]; lang?: string }) {
   const searchParams = useSearchParams();
   const categoryParam = searchParams?.get('category');
   const active = categoryParam && categories.includes(categoryParam) ? categoryParam : 'All';

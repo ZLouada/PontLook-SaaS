@@ -7,13 +7,13 @@ import { z } from 'zod';
 import { CheckCircle2, Send } from 'lucide-react';
 
 const schema = z.object({
-  name: z.string().min(2, 'Your name is required'),
-  email: z.string().email('Enter a valid email'),
-  company: z.string().min(2, 'Company is required'),
+  name: z.string().trim().min(2, 'Your name is required').max(100, 'Name is too long'),
+  email: z.string().trim().max(254, 'Email is too long').email('Enter a valid email'),
+  company: z.string().trim().min(2, 'Company is required').max(150, 'Company name is too long'),
   topic: z.enum(['provider', 'company', 'partnership', 'media', 'other'], {
     errorMap: () => ({ message: 'Select a topic' }),
   }),
-  message: z.string().min(20, 'Give us at least a couple of sentences (20+ characters)'),
+  message: z.string().trim().min(20, 'Give us at least a couple of sentences (20+ characters)').max(5000, 'Message is too long'),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -24,11 +24,9 @@ export default function ContactForm() {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (_data: FormValues) => {
     // Endpoint to be wired to CRM/email in a later phase.
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('contact-message', JSON.stringify({ ...data, at: Date.now() }));
-    }
+    // NOTE: PII intentionally NOT stored in localStorage for security.
     await new Promise((r) => setTimeout(r, 500));
     setSubmitted(true);
   };

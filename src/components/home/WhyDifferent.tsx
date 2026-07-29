@@ -179,7 +179,7 @@ export default function WhyDifferent() {
                    {it.mockup}
                 </div>
 
-                <Link href="/for-providers" className="inline-flex items-center text-[15px] font-semibold text-primary group-hover:text-primary-600 transition-colors">
+                <Link href="/en/for-providers" className="inline-flex items-center text-[15px] font-semibold text-primary group-hover:text-primary-600 transition-colors">
                   Explore how it works <ChevronRight size={16} className="ml-1 transition-transform group-hover:translate-x-1" />
                 </Link>
               </m.div>

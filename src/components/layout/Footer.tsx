@@ -1,14 +1,22 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Linkedin, Mail, MapPin, Twitter, Ghost } from 'lucide-react';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 
 export default function Footer() {
   const dict = useDictionary();
-  const lang = 'en';
+  const pathname = usePathname() || '/en';
+  const lang = pathname.split('/')[1] || 'en';
+  const [year, setYear] = useState(2025);
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
 
   return (
     <footer className="border-t border-[#1E293B] bg-background-dark text-white">
@@ -63,7 +71,7 @@ export default function Footer() {
       </div>
       <div className="border-t border-[#1E293B] py-5">
         <p className="container-site text-xs text-slate-400">
-          © 2019 - {new Date().getFullYear()} {dict.footer.rights}
+          © 2019 - {year} {dict.footer.rights}
         </p>
       </div>
     </footer>

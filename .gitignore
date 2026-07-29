@@ -34,6 +34,8 @@ next-env.d.ts
 
 # Local Development Paths & Tool Outputs
 home/
+scripts/
+.agents/
 
 # Misplaced root-level static assets (belong in /public)
 /PontlookIcon.png

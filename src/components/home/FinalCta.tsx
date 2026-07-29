@@ -16,10 +16,10 @@ export default function FinalCta() {
           Join the GCC’s intelligence-driven training marketplace — as a provider or as a buyer.
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Link href="/for-providers" className="btn bg-primary text-white hover:bg-primary-600">
+          <Link href="/en/for-providers" className="btn bg-primary text-white hover:bg-primary-600">
             Become a partner provider <ArrowRight size={17} />
           </Link>
-          <Link href="/find-training" className="btn bg-white border border-border text-foreground hover:border-primary hover:text-primary">
+          <Link href="/en/find-training" className="btn bg-white border border-border text-foreground hover:border-primary hover:text-primary">
             Find corporate training
           </Link>
         </div>

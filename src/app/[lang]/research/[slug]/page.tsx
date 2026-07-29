@@ -9,9 +9,7 @@ type Props = { params: Promise<{ lang: string; slug: string }> };
 
 export function generateStaticParams() {
   const posts = getAllPosts();
-  return ['en', 'ar'].flatMap((lang) =>
-    posts.map((p) => ({ lang, slug: p.slug }))
-  );
+  return posts.map((p) => ({ lang: 'en', slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

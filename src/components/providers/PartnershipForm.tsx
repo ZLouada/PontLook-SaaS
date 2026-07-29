@@ -12,18 +12,20 @@ const specialties = [
 ] as const;
 
 const schema = z.object({
-  companyName: z.string().min(2, 'Company name is required'),
-  contactName: z.string().min(2, 'Your name is required'),
-  email: z.string().email('Enter a valid business email'),
-  phone: z.string().min(7, 'Enter a valid phone number'),
+  companyName: z.string().trim().min(2, 'Company name is required').max(150, 'Company name is too long'),
+  contactName: z.string().trim().min(2, 'Your name is required').max(100, 'Name is too long'),
+  email: z.string().trim().max(254, 'Email is too long').email('Enter a valid business email'),
+  phone: z.string().trim().min(7, 'Enter a valid phone number').max(30, 'Phone number is too long'),
   website: z
     .string()
+    .trim()
     .min(4, 'Website is required')
+    .max(500, 'URL is too long')
     .refine((v) => /^(https?:\/\/)?[\w-]+(\.[\w-]+)+/.test(v), 'Enter a valid website'),
   specialties: z.array(z.string()).min(1, 'Select at least one specialty'),
   yearsInBusiness: z.string().min(1, 'Required'),
-  markets: z.string().min(2, 'Tell us which GCC markets you serve'),
-  message: z.string().min(20, 'Give us at least a couple of sentences (20+ characters)'),
+  markets: z.string().trim().min(2, 'Tell us which GCC markets you serve').max(500, 'Response is too long'),
+  message: z.string().trim().min(20, 'Give us at least a couple of sentences (20+ characters)').max(5000, 'Message is too long'),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -48,11 +50,9 @@ export default function PartnershipForm() {
     setValue('specialties', next, { shouldValidate: true });
   };
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (_data: FormValues) => {
     // Submission endpoint to be wired to CRM in a later phase.
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('provider-application', JSON.stringify({ ...data, at: Date.now() }));
-    }
+    // NOTE: PII intentionally NOT stored in localStorage for security.
     await new Promise((r) => setTimeout(r, 600));
     setSubmitted(true);
   };
