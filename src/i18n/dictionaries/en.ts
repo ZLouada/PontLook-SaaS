@@ -8,6 +8,7 @@ export const en = {
     faq: "FAQ",
     search: "Search...",
     get_matched: "Get Matched",
+    blog: "Blog",
     switch_lang: "عربي"
   },
   hero: {

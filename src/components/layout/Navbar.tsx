@@ -21,6 +21,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
     { href: `/${lang}/for-providers`, label: dict.nav.for_providers },
     { href: `/${lang}/find-training`, label: dict.nav.find_training },
     { href: `/${lang}/contact`, label: dict.nav.contact },
+    { href: 'https://blog.pontlook.com', label: dict.nav.blog, external: true },
   ];
 
   useEffect(() => {
@@ -57,6 +58,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               <li key={l.href}>
                 <Link
                   href={l.href}
+                  {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                   className="text-sm font-medium text-slate-700 no-underline hover:text-blue-600 transition-colors duration-200"
                 >
                   {l.label}
@@ -109,6 +111,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   <li key={l.href}>
                     <Link
                       href={l.href}
+                      {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                       className={`block text-[15px] font-semibold tracking-wide transition-colors ${
                         pathname === l.href ? 'text-slate-900' : 'text-slate-500 hover:text-slate-900'
                       }`}
