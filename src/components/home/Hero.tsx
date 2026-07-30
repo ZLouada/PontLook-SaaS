@@ -39,32 +39,36 @@ export default function Hero() {
   const lang = (params?.lang as string) || 'en';
 
   return (
-    <section className="relative overflow-hidden bg-background pt-24 pb-20 lg:pt-32 lg:pb-36 min-h-[92vh] flex flex-col justify-center">
-      {/* Premium Full-Bleed Ambient Background */}
+    <section className="relative overflow-hidden bg-slate-950 pt-24 pb-20 lg:pt-36 lg:pb-40 min-h-[92vh] flex flex-col justify-center text-white">
+      {/* Background Video Loop with High-Contrast Dark Gradient Overlay */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          poster="/skyline-bg.jpg"
+          className="absolute inset-0 w-full h-full object-cover scale-105 opacity-25 transform-gpu"
+        >
+          <source src="/videos/skyline-loop.mp4" type="video/mp4" />
+        </video>
+        
+        {/* Fallback Image */}
         <Image
           src="/skyline-bg.jpg"
           alt="GCC Skyline"
           fill
-          className="object-cover scale-105 opacity-20"
+          className="object-cover scale-105 opacity-20 -z-10"
           priority
         />
-        {/* Advanced Gradient Mask */}
-        <div 
-          className="absolute inset-0 bg-background" 
-          style={{ 
-            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 50%, black 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 50%, black 100%)'
-          }} 
-        />
-        
-        {/* Ambient Glow Orbs - $25,000 Premium SaaS Mesh */}
-        <div className="absolute top-1/4 start-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-r from-blue-600/15 via-indigo-500/10 to-blue-400/15 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
-        <div className="absolute top-10 start-1/4 w-[350px] h-[350px] bg-primary/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
-        <div className="absolute bottom-10 end-1/4 w-[400px] h-[400px] bg-indigo-500/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
-        {/* Backdrop Blur Layer */}
-        <div className="absolute inset-0 bg-background/20 backdrop-blur-[1px]" />
+        {/* High-Contrast HP/Vercel-style Dark Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-900/90 to-slate-950 pointer-events-none" />
+
+        {/* Ambient Glow Orbs */}
+        <div className="absolute top-1/4 start-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-r from-blue-600/20 via-indigo-500/15 to-blue-400/20 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
+        <div className="absolute top-10 start-1/4 w-[400px] h-[400px] bg-primary/15 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
+        <div className="absolute bottom-10 end-1/4 w-[450px] h-[450px] bg-indigo-500/15 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
       </div>
 
       <div className="container-site relative z-10 mx-auto flex flex-col items-center text-center px-6 sm:px-8 lg:px-12">
@@ -72,12 +76,15 @@ export default function Hero() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="max-w-[940px] flex flex-col items-center transform-gpu will-change-transform"
+          className="max-w-[960px] flex flex-col items-center transform-gpu will-change-transform"
         >
-          {/* Top Enterprise B2B Badge */}
-          <m.div variants={itemVariants} className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-white/70 backdrop-blur-md px-4.5 py-1.5 shadow-sm shadow-slate-900/5">
-            <ShieldCheck size={16} className="text-primary shrink-0" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-slate-800 font-sans">
+          {/* Top Enterprise Announcement Badge */}
+          <m.div 
+            variants={itemVariants} 
+            className="mb-6 inline-flex items-center gap-2 backdrop-blur-md bg-blue-500/10 border border-blue-500/30 text-blue-400 rounded-full px-4.5 py-1.5 text-xs font-semibold uppercase tracking-wider shadow-sm shadow-blue-500/10"
+          >
+            <ShieldCheck size={16} className="text-blue-400 shrink-0" />
+            <span className="font-sans">
               Transforming GCC Workforces
             </span>
           </m.div>
@@ -85,7 +92,7 @@ export default function Hero() {
           {/* Main Headline */}
           <m.h1
             variants={itemVariants}
-            className="font-heading text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl lg:text-[70px] leading-[1.12] drop-shadow-sm font-poppins"
+            className="font-heading text-3xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[72px] leading-[1.12] drop-shadow-md font-poppins"
           >
             {dict.hero.headline}
           </m.h1>
@@ -93,23 +100,23 @@ export default function Hero() {
           {/* Subtitle */}
           <m.p
             variants={itemVariants}
-            className="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl text-slate-600 max-w-[760px] tracking-wide leading-relaxed font-sans font-normal"
+            className="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl text-slate-300 max-w-[780px] tracking-wide leading-relaxed font-sans font-normal"
           >
             {dict.hero.subtitle}
           </m.p>
 
-          {/* Action Buttons */}
+          {/* Dual Action CTAs */}
           <m.div
             variants={itemVariants}
             className="mt-8 sm:mt-10 flex flex-col w-full sm:w-auto sm:flex-row items-center gap-4 sm:gap-5"
           >
-            {/* Primary Button */}
+            {/* Primary Button with Hover Gradient Glow */}
             <Link href={`/${lang}/for-providers`}>
               <m.div
-                whileHover={{ y: -3, boxShadow: '0 20px 35px -10px rgba(36,81,191,0.35)' }}
+                whileHover={{ y: -2, scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                className="btn-primary flex justify-center items-center w-full sm:w-auto px-8 py-4 text-base font-semibold rounded-full shadow-lg shadow-primary/20 transform-gpu cursor-pointer"
+                className="bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/25 transition-all duration-300 transform-gpu hover:-translate-y-0.5 flex justify-center items-center w-full sm:w-auto px-8 py-4 text-base font-semibold rounded-full cursor-pointer"
               >
                 <Building2 size={18} className="me-2 text-white/90" />
                 {dict.hero.btn_provider}
@@ -120,12 +127,12 @@ export default function Hero() {
             {/* Secondary Glassmorphic Button */}
             <Link href={`/${lang}/find-training`}>
               <m.div
-                whileHover={{ y: -3, boxShadow: '0 15px 30px -10px rgba(0,0,0,0.1)' }}
+                whileHover={{ y: -2, scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                className="flex justify-center items-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-slate-900 border border-slate-200/80 bg-white/80 backdrop-blur-md hover:bg-white hover:border-slate-300 rounded-full shadow-sm transform-gpu cursor-pointer"
+                className="flex justify-center items-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-white border border-slate-700/80 bg-slate-900/80 backdrop-blur-md hover:bg-slate-800 hover:border-slate-600 rounded-full shadow-sm transform-gpu cursor-pointer transition-all"
               >
-                <Target size={18} className="me-2 text-slate-700" />
+                <Target size={18} className="me-2 text-slate-300" />
                 {dict.hero.btn_buyer}
               </m.div>
             </Link>
@@ -134,28 +141,28 @@ export default function Hero() {
           {/* Quick Metrics Bar */}
           <m.div 
             variants={itemVariants} 
-            className="mt-14 pt-8 border-t border-slate-200/60 w-full max-w-2xl grid grid-cols-3 gap-4 text-center"
+            className="mt-14 pt-8 border-t border-slate-800/80 w-full max-w-2xl grid grid-cols-3 gap-4 text-center"
           >
             <div>
-              <div className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 flex items-center justify-center gap-1">
-                <ShieldCheck size={18} className="text-primary" />
+              <div className="text-xl sm:text-2xl font-bold font-poppins text-white flex items-center justify-center gap-1.5">
+                <ShieldCheck size={18} className="text-blue-400" />
                 <span>100%</span>
               </div>
-              <p className="text-xs text-slate-500 font-medium mt-1">Verified Decision-Makers</p>
+              <p className="text-xs text-slate-400 font-medium mt-1">Verified Decision-Makers</p>
             </div>
             <div>
-              <div className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 flex items-center justify-center gap-1">
-                <TrendingUp size={18} className="text-emerald-500" />
+              <div className="text-xl sm:text-2xl font-bold font-poppins text-white flex items-center justify-center gap-1.5">
+                <TrendingUp size={18} className="text-emerald-400" />
                 <span>Zero</span>
               </div>
-              <p className="text-xs text-slate-500 font-medium mt-1">Monthly Retainer Risk</p>
+              <p className="text-xs text-slate-400 font-medium mt-1">Monthly Retainer Risk</p>
             </div>
             <div>
-              <div className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 flex items-center justify-center gap-1">
-                <Building2 size={18} className="text-indigo-500" />
+              <div className="text-xl sm:text-2xl font-bold font-poppins text-white flex items-center justify-center gap-1.5">
+                <Building2 size={18} className="text-indigo-400" />
                 <span>6</span>
               </div>
-              <p className="text-xs text-slate-500 font-medium mt-1">GCC Markets Covered</p>
+              <p className="text-xs text-slate-400 font-medium mt-1">GCC Markets Covered</p>
             </div>
           </m.div>
         </m.div>
