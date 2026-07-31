@@ -34,6 +34,13 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pontlook.com'),
+  alternates: {
+    canonical: 'https://pontlook.com/en',
+    languages: {
+      'en': 'https://pontlook.com/en',
+      'ar': 'https://pontlook.com/ar',
+    },
+  },
   title: {
     default: 'PontLook',
     template: '%s | PontLook',

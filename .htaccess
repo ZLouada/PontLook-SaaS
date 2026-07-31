@@ -1,21 +1,32 @@
 RewriteEngine On
 
+# Exclude robots.txt and sitemap.xml from rewrites
+RewriteCond %{REQUEST_URI} ^/(robots.txt|sitemap.xml)$ [NC]
+RewriteRule ^ - [L]
+
 # 1. Force HTTPS
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
-# 2. Redirect www to non-www
+# 2. Merge www into non-www (https://www.pontlook.com -> https://pontlook.com)
 RewriteCond %{HTTP_HOST} ^www\.pontlook\.com$ [NC]
 RewriteRule ^(.*)$ https://pontlook.com/$1 [R=301,L]
 
-# 3. Let favicon / icon files bypass all further rewrites
-RewriteCond %{REQUEST_URI} ^/(favicon\.ico|PontlookIcon\.png|apple-touch-icon\.png)$ [NC]
+# 3. Direct Root '/' Request to https://pontlook.com/en
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ https://pontlook.com/en [R=301,L]
+
+# --- Clean Next.js Static Route Rewrites ---
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ - [L]
 
-# Set default index file
-DirectoryIndex index.html
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
 
-# Routing is now handled by Next.js SSR natively
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+ErrorDocument 404 /404.html
 
 # Compression (mod_deflate)
 <IfModule mod_deflate.c>
@@ -53,6 +64,3 @@ Options -Indexes
   Header unset X-Robots-Tag
   Header set Content-Type "text/plain; charset=utf-8"
 </Files>
-
-# Next.js generates /404/index.html with trailingSlash: true
-ErrorDocument 404 /404/index.html
