@@ -2,6 +2,8 @@
 
 import Reveal from '@/components/shared/Reveal';
 import SectionHeading from '@/components/shared/SectionHeading';
+import Card from '@/components/shared/Card';
+import Badge from '@/components/shared/Badge';
 import { Flame, TrendingUp, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { m } from 'framer-motion';
 
@@ -29,8 +31,8 @@ const tiers = [
     name: 'Qualified',
     range: '50–69',
     pct: '60%',
-    cls: 'bg-blue-50 text-primary border-blue-200',
-    barColor: 'from-blue-600 to-indigo-600',
+    cls: 'bg-accent/10 text-accent border-accent/20',
+    barColor: 'from-accent to-accent-secondary',
     desc: 'Genuine, verified need at an earlier stage of the buying journey. Ideal for relationship-building.',
   },
   {
@@ -55,9 +57,9 @@ const signals = [
 
 export default function LeadTiers() {
   return (
-    <section className="relative bg-white py-24 lg:py-32 overflow-hidden" id="lead-quality">
+    <section className="relative bg-white py-28 lg:py-40 overflow-hidden" id="lead-quality">
       {/* Ambient background glow */}
-      <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-r from-blue-600/10 via-indigo-500/10 to-blue-400/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
+      <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[750px] h-[450px] bg-gradient-to-r from-accent/10 via-accent-secondary/10 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
       <div className="container-site px-6 sm:px-8 lg:px-12">
         <SectionHeading
@@ -65,34 +67,30 @@ export default function LeadTiers() {
           title="You always know what you’re walking into"
           subtitle="Every opportunity is scored before delivery. The tier tells you exactly how ready the buyer is."
         />
-        
+
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {tiers.map((t, i) => {
             const Icon = t.icon;
             return (
               <Reveal key={t.name} delay={i * 0.1}>
-                <m.div 
-                  whileHover={{ y: -6 }}
-                  transition={{ type: 'spring', stiffness: 350, damping: 22 }}
-                  className="flex flex-col justify-between h-full p-6 rounded-2xl bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-xl shadow-slate-900/5 hover:border-blue-500/40 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 transform-gpu will-change-transform"
-                >
+                <Card className="flex flex-col justify-between h-full">
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <span className={`inline-flex h-11 w-11 items-center justify-center rounded-xl border ${t.cls}`}>
+                      <span
+                        className={`inline-flex h-11 w-11 items-center justify-center rounded-xl border ${t.cls}`}
+                      >
                         <Icon size={20} />
                       </span>
-                      <span className="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded-md">
-                        {t.range}
-                      </span>
+                      <Badge variant="slate">{t.range}</Badge>
                     </div>
 
-                    <p className="font-heading text-lg font-bold text-slate-900 font-poppins">
+                    <h3 className="font-serif text-xl font-normal text-slate-900">
                       {t.name} Tier
-                    </p>
+                    </h3>
 
                     {/* Animated Lead Score Progress Meter */}
                     <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden my-3">
-                      <m.div 
+                      <m.div
                         initial={{ width: '0%' }}
                         whileInView={{ width: t.pct }}
                         viewport={{ once: true }}
@@ -105,27 +103,30 @@ export default function LeadTiers() {
                       {t.desc}
                     </p>
                   </div>
-                </m.div>
+                </Card>
               </Reveal>
             );
           })}
         </div>
 
         {/* Driver Card */}
-        <Reveal className="mx-auto mt-14 max-w-4xl rounded-3xl bg-slate-900 text-white p-8 md:p-12 shadow-2xl border border-slate-800 relative overflow-hidden" delay={0.1}>
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-indigo-600/10 blur-xl pointer-events-none" />
-          
+        <Reveal
+          className="mx-auto mt-14 max-w-4xl rounded-3xl bg-slate-50/90 text-slate-900 p-8 md:p-12 shadow-lg border border-slate-200/80 relative overflow-hidden"
+          delay={0.1}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-accent/5 to-accent-secondary/5 blur-xl pointer-events-none" />
+
           <div className="relative z-10">
-            <h3 className="text-xl font-bold font-poppins text-white mb-2">What drives the score</h3>
-            <p className="text-sm text-slate-300 leading-relaxed font-sans max-w-2xl">
+            <h3 className="text-xl font-serif font-normal text-slate-900 mb-2">What drives the score</h3>
+            <p className="text-sm text-slate-600 leading-relaxed font-sans max-w-2xl">
               We don’t publish exact point algorithms — the philosophy is simple: the more a buyer has
               verified about their own readiness, the higher the score.
             </p>
 
             <ul className="mt-6 grid gap-3 text-sm sm:grid-cols-2">
               {signals.map((s) => (
-                <li key={s} className="flex items-center gap-2.5 text-slate-200 font-medium">
-                  <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
+                <li key={s} className="flex items-center gap-2.5 text-slate-700 font-medium">
+                  <CheckCircle2 size={16} className="text-emerald-500 shrink-0" />
                   <span>{s}</span>
                 </li>
               ))}

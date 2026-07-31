@@ -8,6 +8,7 @@ import { Menu, X, ArrowRight, ShieldCheck } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Locale } from '@/i18n';
+import Button from '@/components/shared/Button';
 
 export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const [scrolled, setScrolled] = useState(false);
@@ -34,17 +35,24 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   useEffect(() => setOpen(false), [pathname]);
 
   return (
-    <header 
+    <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 transform-gpu will-change-transform ${
-        scrolled 
-          ? 'bg-white/80 backdrop-blur-lg border-b border-slate-200/50 shadow-[0_4px_25px_rgb(0,0,0,0.04)] py-2.5' 
-          : 'bg-transparent py-4.5'
+        scrolled
+          ? 'bg-white/85 backdrop-blur-xl border-b border-slate-200/60 shadow-md py-3'
+          : 'bg-transparent py-5'
       }`}
     >
-      <nav className="mx-auto flex w-full max-w-[1400px] items-center justify-between px-6 sm:px-10" aria-label="Main navigation">
+      <nav
+        className="mx-auto flex w-full max-w-[1240px] items-center justify-between px-6 sm:px-10"
+        aria-label="Main navigation"
+      >
         <div className="flex items-center gap-10">
-          <Link href={`/${lang}`} className="relative flex h-9 w-9 items-center md:h-10 md:w-10 transition-transform duration-300 hover:scale-105" aria-label="Pontlook home">
-            <Image 
+          <Link
+            href={`/${lang}`}
+            className="relative flex h-9 w-9 items-center md:h-10 md:w-10 transition-transform duration-300 hover:scale-105"
+            aria-label="PontLook home"
+          >
+            <Image
               src="/PontLook-Logo.png"
               alt="PontLook Logo"
               fill
@@ -61,17 +69,15 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   <Link
                     href={l.href}
                     {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    className={`text-sm font-semibold transition-all duration-200 relative py-1 ${
-                      isActive 
-                        ? 'text-primary' 
-                        : 'text-slate-700 hover:text-primary'
+                    className={`text-sm font-semibold transition-all duration-200 relative py-1.5 ${
+                      isActive ? 'text-accent' : 'text-slate-700 hover:text-accent'
                     }`}
                   >
                     {l.label}
                     {isActive && (
                       <m.div
                         layoutId="activeNavIndicator"
-                        className="absolute bottom-0 inset-x-0 h-0.5 bg-primary rounded-full"
+                        className="absolute bottom-0 inset-x-0 h-0.5 bg-gradient-to-r from-accent to-accent-secondary rounded-full"
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -83,18 +89,21 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
         </div>
 
         <div className="flex items-center gap-5">
-          <div className="hidden lg:flex items-center gap-5">
-            {/* Premium CTA Button */}
-            <Link 
-              href={`/${lang}/find-training`} 
-              className="group relative flex h-10 items-center justify-center overflow-hidden rounded-full bg-slate-900 px-6 text-[13px] font-semibold text-white shadow-md transition-all duration-300 hover:bg-primary hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5 transform-gpu"
+          <div className="hidden lg:flex items-center gap-4">
+            <Button
+              href={`/${lang}/find-training`}
+              variant="primary"
+              size="sm"
+              leftIcon={<ShieldCheck size={16} className="text-white/90" />}
+              rightIcon={
+                <ArrowRight
+                  size={15}
+                  className="transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100"
+                />
+              }
             >
-              <span className="relative z-10 flex items-center gap-2">
-                <ShieldCheck size={15} className="text-blue-400 group-hover:text-white transition-colors" />
-                {dict.nav.get_matched}
-                <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100" />
-              </span>
-            </Link>
+              {dict.nav.get_matched}
+            </Button>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -111,24 +120,26 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           </div>
         </div>
 
-        {/* Premium Mobile Menu */}
+        {/* Mobile Drawer Menu */}
         <AnimatePresence>
           {open && (
-            <m.div 
+            <m.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute inset-x-0 top-full border-b border-slate-200/80 bg-white/95 backdrop-blur-2xl p-6 lg:hidden shadow-[0_20px_40px_rgb(0,0,0,0.08)] transform-gpu"
+              className="absolute inset-x-0 top-full border-b border-slate-200/80 bg-white/95 backdrop-blur-2xl p-6 lg:hidden shadow-xl transform-gpu"
             >
-              <ul className="flex flex-col gap-4">
+              <ul className="flex flex-col gap-3">
                 {links.map((l) => (
                   <li key={l.href}>
                     <Link
                       href={l.href}
                       {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                      className={`block text-[15px] font-semibold tracking-wide transition-colors py-2 px-3 rounded-xl ${
-                        pathname === l.href ? 'text-primary bg-primary/5' : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
+                      className={`block text-[15px] font-semibold tracking-wide transition-colors py-2.5 px-3.5 rounded-xl ${
+                        pathname === l.href
+                          ? 'text-accent bg-accent/5'
+                          : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
                       }`}
                     >
                       {l.label}
@@ -136,11 +147,16 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   </li>
                 ))}
                 <li className="pt-4 border-t border-slate-100 mt-2">
-                  <Link href={`/${lang}/find-training`} className="flex w-full items-center justify-center rounded-full bg-slate-900 py-3 text-[14px] font-semibold text-white shadow-md active:scale-[0.98] transition-transform">
-                    <ShieldCheck size={16} className="me-2 text-blue-400" />
+                  <Button
+                    href={`/${lang}/find-training`}
+                    variant="primary"
+                    size="md"
+                    className="w-full"
+                    leftIcon={<ShieldCheck size={18} className="text-white/90" />}
+                    rightIcon={<ArrowRight size={17} className="rtl:-scale-x-100" />}
+                  >
                     {dict.nav.get_matched}
-                    <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
-                  </Link>
+                  </Button>
                 </li>
               </ul>
             </m.div>

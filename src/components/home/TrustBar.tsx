@@ -1,6 +1,6 @@
 'use client';
 
-import { ShieldCheck, Building2, Target, TrendingUp, Award } from 'lucide-react';
+import { ShieldCheck, Building2, Target, TrendingUp } from 'lucide-react';
 import { m } from 'framer-motion';
 
 const values = [
@@ -12,31 +12,31 @@ const values = [
 
 export default function TrustBar() {
   return (
-    <section className="relative bg-slate-900 text-white py-10 border-y border-slate-800 overflow-hidden">
+    <section className="relative bg-slate-50/80 text-slate-900 py-12 border-y border-slate-200/80 overflow-hidden">
       {/* Ambient background glow */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-indigo-500/10 to-blue-400/10 blur-xl pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-accent-secondary/5 to-accent/5 blur-xl pointer-events-none" />
 
       <div className="container-site relative z-10 px-6 sm:px-8 lg:px-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
           {values.map((v, i) => {
             const Icon = v.icon;
             return (
-              <m.div 
+              <m.div
                 key={v.title}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 hover:border-white/20 transition-all duration-300 transform-gpu will-change-transform"
+                className="flex items-center gap-4 p-4.5 rounded-2xl bg-white/90 border border-slate-200/90 shadow-sm backdrop-blur-md hover:bg-white hover:border-slate-300 hover:shadow-md transition-all duration-300 transform-gpu will-change-transform"
               >
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/20 text-primary-400 border border-primary/30">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent border border-accent/20">
                   <Icon size={22} />
                 </div>
                 <div>
-                  <span className="font-heading font-bold text-sm text-white tracking-tight block">
+                  <span className="font-sans font-bold text-sm text-slate-900 tracking-tight block">
                     {v.title}
                   </span>
-                  <span className="text-xs text-slate-400 block mt-0.5 font-sans">
+                  <span className="text-xs text-slate-500 block mt-0.5 font-sans font-medium">
                     {v.desc}
                   </span>
                 </div>

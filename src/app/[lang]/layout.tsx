@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
-import { Inter, Plus_Jakarta_Sans, Poppins } from 'next/font/google';
+import { Inter, Plus_Jakarta_Sans, Poppins, Calistoga, JetBrains_Mono } from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import '../globals.css';
 import { getDictionary, Locale } from '@/i18n';
 import { DictionaryProvider } from '@/components/providers/DictionaryProvider';
 import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
+
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 const poppins = Poppins({
   weight: ['600', '700'],
@@ -17,6 +18,17 @@ const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800'],
   variable: '--font-heading',
+  display: 'swap',
+});
+const calistoga = Calistoga({
+  weight: ['400'],
+  subsets: ['latin'],
+  variable: '--font-calistoga',
+  display: 'swap',
+});
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
   display: 'swap',
 });
 
@@ -71,14 +83,15 @@ export default async function RootLayout({
   params: Promise<{ lang: string }>;
 }>) {
   const resolvedParams = await params;
-  const lang = resolvedParams.lang as Locale;
+  const rawLang = resolvedParams.lang || 'en';
+  const lang = (rawLang as Locale) || 'en';
   const dictionary = await getDictionary(lang);
-  
-  // Reuse --font-heading variable so it seamlessly applies to all font-heading classes
-  const fontClass = `${inter.variable} ${jakarta.variable} ${poppins.variable}`;
+  const dir = rawLang === 'ar' ? 'rtl' : 'ltr';
+
+  const fontClass = `${inter.variable} ${jakarta.variable} ${poppins.variable} ${calistoga.variable} ${jetbrainsMono.variable}`;
 
   return (
-    <html lang={lang} dir="ltr" className={fontClass}>
+    <html lang={lang} dir={dir} className={fontClass}>
       <body>
         <DictionaryProvider dictionary={dictionary}>
           <FramerMotionProvider>
