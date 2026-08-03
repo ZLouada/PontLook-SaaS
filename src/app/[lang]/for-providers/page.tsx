@@ -95,13 +95,15 @@ export default function ForProvidersPage() {
       <LeadTiers />
 
       <section className="py-20 bg-slate-50/60">
-        <div className="container-site max-w-4xl mx-auto px-6">
-          <Reveal className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 md:p-12 text-center shadow-sm">
-            <Wallet size={40} className="mx-auto text-primary mb-4" />
-            <h2 className="text-slate-900 dark:text-white font-bold text-3xl md:text-4xl tracking-tight">
+        <div className="container-site px-6">
+          <Reveal className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-8 md:p-12 shadow-sm max-w-4xl mx-auto text-center">
+            <div className="mx-auto mb-6 inline-flex items-center justify-center h-12 w-12 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-[#2451BF]">
+              <Wallet size={24} />
+            </div>
+            <h2 className="text-slate-900 dark:text-white font-bold text-3xl md:text-4xl tracking-tight mb-4">
               No retainers. Ever.
             </h2>
-            <p className="mt-4 text-slate-600 dark:text-slate-300 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-slate-600 dark:text-slate-300 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
               Pay per qualified lead, or a success-based commission on closed business, your
               choice at contract stage. If we don’t deliver qualified opportunities, you pay
               nothing. Our revenue only exists when yours does.
