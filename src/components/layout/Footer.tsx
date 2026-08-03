@@ -34,6 +34,19 @@ export default function Footer() {
             <MapPin size={16} className="text-accent-secondary shrink-0" />
             <span>{dict.footer.location}</span>
           </div>
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-400">
+            <Link href={`/${lang}/privacy-policy`} className="hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <span>•</span>
+            <Link href={`/${lang}/terms-of-service`} className="hover:text-white transition-colors">
+              Terms of Service
+            </Link>
+            <span>•</span>
+            <Link href={`/${lang}/returns-faq`} className="hover:text-white transition-colors">
+              Returns &amp; FAQ
+            </Link>
+          </div>
         </div>
 
         <nav aria-label="Footer: platform">

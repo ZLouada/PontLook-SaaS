@@ -12,6 +12,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/en/find-training`, priority: 0.8 },
     { url: `${BASE}/en/contact`, priority: 0.8 },
     { url: `${BASE}/en/faq`, priority: 0.8 },
+    { url: `${BASE}/en/privacy-policy`, priority: 0.5 },
+    { url: `${BASE}/en/terms-of-service`, priority: 0.5 },
+    { url: `${BASE}/en/returns-faq`, priority: 0.5 },
     { url: 'https://blog.pontlook.com', priority: 0.8 },
   ];
 
