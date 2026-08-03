@@ -37,7 +37,7 @@ export default function ContactForm() {
         <CheckCircle2 size={48} className="mx-auto text-emerald-500" />
         <h3 className="mt-5 text-2xl">Message sent</h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed">
-          Thanks for reaching out — we respond to every message within 1 business day.
+          Thanks for reaching out, we respond to every message within 1 business day.
         </p>
       </div>
     );

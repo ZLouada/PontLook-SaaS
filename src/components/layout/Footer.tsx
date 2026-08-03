@@ -36,7 +36,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <nav aria-label="Footer — platform">
+        <nav aria-label="Footer: platform">
           <p className="font-mono text-xs font-bold uppercase tracking-wider text-white">{dict.footer.platform}</p>
           <ul className="mt-5 space-y-3 text-sm font-medium text-slate-400 font-sans">
             <li><Link href={`/${lang}/who-we-are`} className="hover:text-accent-secondary transition-colors">{dict.nav.who_we_are}</Link></li>

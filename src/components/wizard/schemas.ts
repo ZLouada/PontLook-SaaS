@@ -23,7 +23,7 @@ export const challengesList = [
 export const trainingTypes = [
   'Leadership & Management', 'Sales & Business Development', 'AI & Digital Skills',
   'Compliance & Regulatory', 'Soft Skills & Communication', 'Customer Experience',
-  'Health & Safety', 'Technical / Role-specific', 'Not sure yet — need guidance',
+  'Health & Safety', 'Technical / Role-specific', 'Not sure yet: need guidance',
 ] as const;
 
 export const deliveryFormats = ['In-person', 'Virtual (live)', 'Hybrid', 'Self-paced e-learning', 'Flexible'] as const;
@@ -80,7 +80,7 @@ export const step4Schema = z.object({
 export const step5Schema = z.object({
   workedBefore: z.enum(['yes', 'no'], { errorMap: () => ({ message: 'Please choose one' }) }),
   whatWasMissing: z.string().trim().max(5000, 'Response is too long').optional(),
-  successDefinition: z.string().trim().min(20, 'Help us match well — describe success in a sentence or two').max(5000, 'Response is too long'),
+  successDefinition: z.string().trim().min(20, 'Help us match well: describe success in a sentence or two').max(5000, 'Response is too long'),
   industryExperience: z.enum(['required', 'preferred', 'flexible'], {
     errorMap: () => ({ message: 'Please choose one' }),
   }),

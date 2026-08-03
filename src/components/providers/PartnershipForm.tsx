@@ -63,7 +63,7 @@ export default function PartnershipForm() {
         <CheckCircle2 size={48} className="mx-auto text-emerald-500" />
         <h3 className="mt-5 text-2xl">Application received</h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed">
-          Thank you — our partnerships team will review your profile and reach out within 2 business
+          Thank you, our partnerships team will review your profile and reach out within 2 business
           days to schedule your qualification call. Next steps: qualification call → partnership
           agreement → onboarding → first opportunities.
         </p>

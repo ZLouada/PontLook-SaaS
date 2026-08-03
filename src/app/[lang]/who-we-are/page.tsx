@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Who We Are — The GCC Corporate Training Matchmaking Platform',
+  title: 'Who We Are: The GCC Corporate Training Matchmaking Platform',
   description: 'We connect corporate training companies with GCC decision-makers who already have a real workforce challenge to solve.',
 };
 
@@ -94,8 +94,8 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
         <div className="container-site max-w-5xl relative z-10 text-center mx-auto px-6">
           <Reveal>
             <span className="chip mx-auto">Who We Are</span>
-            <h1 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-slate-900 leading-[1.15]">
-              Who We Are — The GCC Corporate Training <span className="text-primary">Matchmaking Platform</span>
+            <h1 className="mt-6 text-4xl font-extrabold sm:text-5xl lg:text-6xl text-slate-900 leading-[1.15]">
+              Who We Are: The GCC Corporate Training <span className="text-primary">Matchmaking Platform</span>
             </h1>
             <p className="mt-6 text-xl leading-relaxed text-slate-600 max-w-3xl mx-auto font-medium">
               We connect corporate training companies with GCC decision-makers who already have a real workforce challenge to solve.
@@ -161,7 +161,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                 Pay Only for <span className="text-primary-400">Qualified Leads</span>
               </h2>
               <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl mb-8">
-                We operate on a zero-retainer, pay-per-lead model designed to eliminate risk for training providers. No monthly setup fees, no promises of arbitrary outreach volume — you pay strictly when we deliver a verified decision-maker who has a confirmed corporate training need.
+                We operate on a zero-retainer, pay-per-lead model designed to eliminate risk for training providers. No monthly setup fees, no promises of arbitrary outreach volume. You pay strictly when we deliver a verified decision-maker who has a confirmed corporate training need.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-white/10">

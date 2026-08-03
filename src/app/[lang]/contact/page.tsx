@@ -5,7 +5,7 @@ import { Mail, MapPin, Clock } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: 'Talk to the Pontlook team — providers, companies, and partners welcome.',
+  description: 'Talk to the Pontlook team, providers, companies, and partners welcome.',
 };
 
 export default function ContactPage() {
@@ -16,7 +16,7 @@ export default function ContactPage() {
           <span className="chip">Contact</span>
           <h1 className="mt-5 text-4xl font-bold leading-tight">Let’s talk</h1>
           <p className="mt-4 text-lg leading-relaxed">
-            Whether you deliver training or need it, we’ll point you in the right direction —
+            Whether you deliver training or need it, we’ll point you in the right direction,
             usually within one business day.
           </p>
           <ul className="mt-8 space-y-4 text-sm">

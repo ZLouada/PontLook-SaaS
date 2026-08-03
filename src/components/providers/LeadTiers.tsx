@@ -42,7 +42,7 @@ const tiers = [
     pct: '40%',
     cls: 'bg-slate-100 text-slate-500 border-slate-200',
     barColor: 'from-slate-400 to-slate-500',
-    desc: 'Signal detected but not yet qualified. We keep nurturing — you are never charged for these.',
+    desc: 'Signal detected but not yet qualified. We keep nurturing: you are never charged for these.',
   },
 ];
 
@@ -119,7 +119,7 @@ export default function LeadTiers() {
           <div className="relative z-10">
             <h3 className="text-xl font-serif font-normal text-slate-900 mb-2">What drives the score</h3>
             <p className="text-sm text-slate-600 leading-relaxed font-sans max-w-2xl">
-              We don’t publish exact point algorithms — the philosophy is simple: the more a buyer has
+              We don’t publish exact point algorithms: the philosophy is simple: the more a buyer has
               verified about their own readiness, the higher the score.
             </p>
 

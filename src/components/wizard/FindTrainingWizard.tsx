@@ -27,7 +27,7 @@ export default function FindTrainingWizard() {
         if (saved?.step >= 1 && saved?.step <= 5) setStep(saved.step);
       }
     } catch {
-      /* corrupted storage — start fresh */
+      /* corrupted storage: start fresh */
     }
     setHydrated(true);
   }, []);
@@ -36,7 +36,7 @@ export default function FindTrainingWizard() {
     try {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ step: nextStep, data: nextData } satisfies Saved));
     } catch {
-      /* storage unavailable — continue in-memory */
+      /* storage unavailable: continue in-memory */
     }
   };
 
@@ -84,14 +84,14 @@ export default function FindTrainingWizard() {
         <CheckCircle2 size={56} className="mx-auto text-emerald-500" />
         <h2 className="mt-6 text-3xl">Assessment received. Matching begins now.</h2>
         <p className="mx-auto mt-4 max-w-lg leading-relaxed">
-          Thank you — your needs assessment is with our qualification team. Here’s exactly what
+          Thank you, your needs assessment is with our qualification team. Here’s exactly what
           happens next:
         </p>
         <div className="mt-10 grid gap-6 text-left sm:grid-cols-3">
           {[
             { icon: ClipboardCheck, title: '1 · Qualification review', text: 'Within 2 business days we verify your requirements and may call to clarify scope.' },
             { icon: SearchCheck, title: '2 · Provider matching', text: 'We shortlist providers whose specialty, language, and track record fit your challenge.' },
-            { icon: Handshake, title: '3 · Introduction', text: 'You receive curated introductions and compare proposals — free for companies.' },
+            { icon: Handshake, title: '3 · Introduction', text: 'You receive curated introductions and compare proposals: free for companies.' },
           ].map((s) => (
             <div key={s.title} className="rounded-2xl bg-slate-50 p-5">
               <s.icon size={22} className="text-blue-600" />

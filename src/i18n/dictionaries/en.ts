@@ -20,7 +20,7 @@ export const en = {
   provider_teaser: {
     badge: "For training providers",
     headline: "A predictable pipeline of enterprise opportunities",
-    subtitle: "Every lead is scored on decision-maker verification, company size, budget, timeline, and depth of need — so you always know exactly what you’re walking into.",
+    subtitle: "Every lead is scored on decision-maker verification, company size, budget, timeline, and depth of need, so you always know exactly what you’re walking into.",
     btn: "Explore the partnership",
     tiers: {
       hot: { name: "Hot", desc: "Verified decision-maker, confirmed budget, starts within 30 days." },
@@ -30,7 +30,7 @@ export const en = {
     score: "Score"
   },
   footer: {
-    about: "We identify GCC organizations experiencing verified workforce challenges and connect them with the right corporate training providers. Qualified opportunities only — no retainers, no cold outreach.",
+    about: "We identify GCC organizations experiencing verified workforce challenges and connect them with the right corporate training providers. Qualified opportunities only, no retainers, no cold outreach.",
     location: "31 Continental Dr, Newark, Delaware 19713, US",
     platform: "Platform",
     get_in_touch: "Get in touch",

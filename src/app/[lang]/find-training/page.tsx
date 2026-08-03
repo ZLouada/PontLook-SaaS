@@ -7,7 +7,7 @@ import { ShieldCheck, Clock, BadgeDollarSign, Target, Briefcase } from 'lucide-r
 export const metadata: Metadata = {
   title: 'Find Corporate Training',
   description:
-    'Tell us your workforce challenge. We qualify it and match you with proven GCC corporate training providers — free for companies.',
+    'Tell us your workforce challenge. We qualify it and match you with proven GCC corporate training providers: free for companies.',
 };
 
 const benefits = [

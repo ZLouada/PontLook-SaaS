@@ -12,19 +12,19 @@ import {
 export const metadata: Metadata = {
   title: 'For Training Providers',
   description:
-    'Receive qualified corporate training opportunities across the GCC. Pay per qualified lead — no retainers, no cold outreach.',
+    'Receive qualified corporate training opportunities across the GCC. Pay per qualified lead, no retainers, no cold outreach.',
 };
 
 const methodology = [
   {
     icon: SearchCheck,
     title: 'Signal detection',
-    text: 'Hiring surges, restructures, compliance deadlines, Saudization/Emiratization targets, expansion news — we monitor the signals that precede training demand.',
+    text: 'Hiring surges, restructures, compliance deadlines, Saudization/Emiratization targets, expansion news: we monitor the signals that precede training demand.',
   },
   {
     icon: PhoneCall,
     title: 'Direct verification',
-    text: 'We speak with the company. The pain point, its urgency, and the decision-maker’s authority are confirmed — not assumed.',
+    text: 'We speak with the company. The pain point, its urgency, and the decision-maker’s authority are confirmed, not assumed.',
   },
   {
     icon: LineChart,
@@ -34,17 +34,17 @@ const methodology = [
   {
     icon: BadgeCheck,
     title: 'Matched delivery',
-    text: 'Opportunities route to the provider whose specialty, language coverage, and track record best fit — with full context attached.',
+    text: 'Opportunities route to the provider whose specialty, language coverage, and track record best fit, with full context attached.',
   },
 ];
 
 const onboarding = [
   { icon: FileSignature, step: 'Apply', text: 'Submit the partnership application below.' },
-  { icon: PhoneCall, step: 'Qualification call', text: 'We validate mutual fit — specialties, capacity, markets.' },
+  { icon: PhoneCall, step: 'Qualification call', text: 'We validate mutual fit: specialties, capacity, markets.' },
   { icon: ShieldCheck, step: 'Agreement', text: 'Simple partnership contract. No retainer, no lock-in.' },
   { icon: Rocket, step: 'Onboarding', text: 'Profile setup: specialties, languages, delivery formats, references.' },
   { icon: CalendarCheck, step: 'Lead delivery', text: 'Qualified opportunities begin flowing, each scored and tiered.' },
-  { icon: LineChart, step: 'Feedback loop', text: 'Your outcomes tune our matching — quality compounds over time.' },
+  { icon: LineChart, step: 'Feedback loop', text: 'Your outcomes tune our matching: quality compounds over time.' },
 ];
 
 export default function ForProvidersPage() {
@@ -59,7 +59,7 @@ export default function ForProvidersPage() {
             </h1>
             <p className="mt-5 text-lg leading-relaxed">
               Referrals are unpredictable. Cold outreach is expensive. We deliver verified,
-              decision-maker-confirmed opportunities from GCC companies with real budgets — and you
+              decision-maker-confirmed opportunities from GCC companies with real budgets, and you
               only pay when a lead is qualified.
             </p>
             <Link href="#apply" className="btn-primary mt-8">
@@ -102,7 +102,7 @@ export default function ForProvidersPage() {
               No retainers. Ever.
             </h2>
             <p className="mt-4 text-lg text-primary-100">
-              Pay per qualified lead, or a success-based commission on closed business — your
+              Pay per qualified lead, or a success-based commission on closed business, your
               choice at contract stage. If we don’t deliver qualified opportunities, you pay
               nothing. Our revenue only exists when yours does.
             </p>

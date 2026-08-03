@@ -193,7 +193,7 @@ export function MatchingStep({ data, onNext, onBack }: StepProps<Step5>) {
               <option value="">Select…</option>
               <option value="required">Must have experience in our industry</option>
               <option value="preferred">Preferred, not essential</option>
-              <option value="flexible">Flexible — expertise matters most</option>
+              <option value="flexible">Flexible: expertise matters most</option>
             </select>
             {errors.industryExperience && <p className="field-error" role="alert">{errors.industryExperience.message}</p>}
           </div>

@@ -9,7 +9,7 @@ import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 const poppins = Poppins({
-  weight: ['600', '700'],
+  weight: ['400', '600', '700'],
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-poppins',
@@ -44,13 +44,13 @@ export async function generateMetadata({
     metadataBase: new URL('https://pontlook.com'),
     title: {
       default: isAr
-        ? 'PontLook — منصة الربط بين شركات التدريب والشركات في الخليج'
-        : 'PontLook — GCC Corporate Training Matchmaking Platform',
+        ? 'PontLook: منصة الربط بين شركات التدريب والشركات في الخليج'
+        : 'PontLook: GCC Corporate Training Matchmaking Platform',
       template: '%s | PontLook',
     },
     description: isAr
       ? 'ربط مديري HR والرؤساء التنفيذيين بشركات التدريب المعتمدة في السعودية والإمارات. فرص معتمدة بنسبة 100٪ بدون رسوم شهرية.'
-      : 'Connect corporate buyers with verified training providers across Saudi Arabia and the UAE. Qualified opportunities only — zero retainers or cold outreach.',
+      : 'Connect corporate buyers with verified training providers across Saudi Arabia and the UAE. Qualified opportunities only, zero retainers or cold outreach.',
     alternates: {
       canonical: `https://pontlook.com/${isAr ? 'ar' : 'en'}`,
       languages: {
@@ -69,8 +69,8 @@ export async function generateMetadata({
     },
     openGraph: {
       title: isAr
-        ? 'PontLook — منصة الربط بين شركات التدريب والشركات في الخليج'
-        : 'PontLook — GCC Corporate Training Matchmaking Platform',
+        ? 'PontLook: منصة الربط بين شركات التدريب والشركات في الخليج'
+        : 'PontLook: GCC Corporate Training Matchmaking Platform',
       description: isAr
         ? 'ربط مديري HR والرؤساء التنفيذيين بشركات التدريب المعتمدة في السعودية والإمارات. فرص معتمدة بنسبة 100٪ بدون رسوم شهرية.'
         : 'Connect corporate buyers with verified training providers across Saudi Arabia and the UAE.',
@@ -82,7 +82,7 @@ export async function generateMetadata({
           width: 1200,
           height: 630,
           alt: isAr
-            ? 'PontLook — منصة الربط بين شركات التدريب والشركات في الخليج'
+            ? 'PontLook: منصة الربط بين شركات التدريب والشركات في الخليج'
             : 'PontLook GCC Corporate Training Matchmaking',
         },
       ],

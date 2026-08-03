@@ -17,7 +17,7 @@ const faqs = [
   { question: "Which industries do you target?", answer: "We focus on construction, real estate, financial services, technology, healthcare, hospitality, manufacturing, and logistics." },
   { question: "Is this just a contact list?", answer: "No. A contact list gives you names and emails; we provide researched prospects with context on their role, company, pain point, and potential need." },
   { question: "How do you qualify each lead?", answer: "We verify the person’s current role, company fit, industry, business challenge, and the evidence that makes your training offer relevant." },
-  { question: "How does your pricing work?", answer: "You pay per qualified lead delivered and accepted—rather than paying a monthly retainer for activity or promises." },
+  { question: "How does your pricing work?", answer: "You pay per qualified lead delivered and accepted, rather than paying a monthly retainer for activity or promises." },
   { question: "Do I need to sign a long-term contract?", answer: "No. Our model is designed without a monthly retainer or long-term commitment; you pay for qualified opportunities delivered." },
   { question: "What happens if a lead does not meet our criteria?", answer: "We replace any lead that does not meet the qualification criteria agreed with you at the beginning." },
   { question: "Can you target UAE or Saudi Arabia only?", answer: "Yes. We can focus campaigns on one GCC country, selected cities, or a wider GCC market based on where you deliver training." },
