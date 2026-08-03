@@ -40,7 +40,7 @@ export default function FindTrainingWizard() {
     }
   };
 
-  const advance = (values: object) => {
+  const advance = async (values: object) => {
     const merged = { ...data, ...values };
     setData(merged);
     if (step < 5) {
@@ -49,18 +49,32 @@ export default function FindTrainingWizard() {
       persist(next, merged);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      // Static Export Mode: Final submission will be wired to API in a later phase.
-      Promise.resolve({ ok: true }).then((res) => {
+      try {
+        const payload = {
+          ...merged,
+          referralSourceUrl: typeof window !== 'undefined' ? window.location.href : '',
+          languagePreference: typeof window !== 'undefined' && window.location.pathname.includes('/ar') ? '/ar' : '/en',
+        };
+
+        const res = await fetch('/api/submit-training-request/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
         if (res.ok) {
           try {
             sessionStorage.removeItem(STORAGE_KEY);
           } catch {
             /* non-blocking */
           }
-          setDone(true);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-      });
+      } catch (err) {
+        console.error('Submission API call failed:', err);
+      } finally {
+        setDone(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
   };
 
