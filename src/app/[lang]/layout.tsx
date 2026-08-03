@@ -32,51 +32,67 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://pontlook.com'),
-  alternates: {
-    canonical: 'https://pontlook.com/en',
-    languages: {
-      'en': 'https://pontlook.com/en',
-      'ar': 'https://pontlook.com/ar',
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const isAr = resolvedParams?.lang === 'ar';
+
+  return {
+    metadataBase: new URL('https://pontlook.com'),
+    title: {
+      default: isAr
+        ? 'PontLook — منصة الربط بين شركات التدريب والشركات في الخليج'
+        : 'PontLook — GCC Corporate Training Matchmaking Platform',
+      template: '%s | PontLook',
     },
-  },
-  title: {
-    default: 'PontLook',
-    template: '%s | PontLook',
-  },
-  description:
-    'PontLook bridges the gap between training providers, businesses, and professionals making it easier to discover, compare, and access the best learning opportunities.',
-  keywords: [
-    'corporate training GCC',
-    'B2B training Saudi Arabia',
-    'L&D opportunities Riyadh',
-    'training providers Dubai',
-    'employee upskilling Gulf',
-    'qualified training leads',
-    'corporate training matchmaker',
-    'PontLook'
-  ],
-  openGraph: {
-    type: 'website',
-    siteName: 'PontLook',
-    title: 'PontLook',
-    description:
-      'PontLook bridges the gap between training providers, businesses, and professionals making it easier to discover, compare, and access the best learning opportunities.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'PontLook' }],
-  },
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/PontlookIcon.png', type: 'image/png', sizes: '192x192' },
-      { url: '/PontlookIcon.png', type: 'image/png', sizes: '512x512' },
-    ],
-    shortcut: '/favicon.ico',
-    apple: '/PontlookIcon.png',
-  },
-  manifest: '/site.webmanifest',
-  twitter: { card: 'summary_large_image' },
-};
+    description: isAr
+      ? 'ربط مديري HR والرؤساء التنفيذيين بشركات التدريب المعتمدة في السعودية والإمارات. فرص معتمدة بنسبة 100٪ بدون رسوم شهرية.'
+      : 'Connect corporate buyers with verified training providers across Saudi Arabia and the UAE. Qualified opportunities only — zero retainers or cold outreach.',
+    alternates: {
+      canonical: `https://pontlook.com/${isAr ? 'ar' : 'en'}`,
+      languages: {
+        'en': 'https://pontlook.com/en',
+        'ar': 'https://pontlook.com/ar',
+      },
+    },
+    icons: {
+      icon: [
+        { url: '/favicon.ico', sizes: 'any' },
+        { url: '/PontlookIcon.png', type: 'image/png', sizes: '192x192' },
+        { url: '/PontlookIcon.png', type: 'image/png', sizes: '512x512' },
+      ],
+      shortcut: '/favicon.ico',
+      apple: '/PontlookIcon.png',
+    },
+    openGraph: {
+      title: isAr
+        ? 'PontLook — منصة الربط بين شركات التدريب والشركات في الخليج'
+        : 'PontLook — GCC Corporate Training Matchmaking Platform',
+      description: isAr
+        ? 'ربط مديري HR والرؤساء التنفيذيين بشركات التدريب المعتمدة في السعودية والإمارات. فرص معتمدة بنسبة 100٪ بدون رسوم شهرية.'
+        : 'Connect corporate buyers with verified training providers across Saudi Arabia and the UAE.',
+      url: `https://pontlook.com/${isAr ? 'ar' : 'en'}`,
+      siteName: 'PontLook',
+      images: [
+        {
+          url: '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: isAr
+            ? 'PontLook — منصة الربط بين شركات التدريب والشركات في الخليج'
+            : 'PontLook GCC Corporate Training Matchmaking',
+        },
+      ],
+      locale: isAr ? 'ar_SA' : 'en_US',
+      type: 'website',
+    },
+    manifest: '/site.webmanifest',
+    twitter: { card: 'summary_large_image' },
+  };
+}
 
 export function generateStaticParams() {
   return [{ lang: 'en' }];
