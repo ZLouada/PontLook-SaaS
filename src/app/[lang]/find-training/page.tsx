@@ -5,9 +5,9 @@ import SectionHeading from '@/components/shared/SectionHeading';
 import { ShieldCheck, Clock, BadgeDollarSign, Target, Briefcase } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Find Corporate Training',
+  title: 'Find Corporate Training: Get Matched',
   description:
-    'Tell us your workforce challenge. We qualify it and match you with proven GCC corporate training providers: free for companies.',
+    'Submit your corporate training challenge and get matched with verified GCC providers.',
 };
 
 const benefits = [

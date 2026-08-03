@@ -18,8 +18,8 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Who We Are: The GCC Corporate Training Matchmaking Platform',
-  description: 'We connect corporate training companies with GCC decision-makers who already have a real workforce challenge to solve.',
+  title: 'Who We Are: GCC Corporate Training Matchmaking Platform',
+  description: 'Learn how PontLook connects GCC corporate buyers with verified training providers.',
 };
 
 const featureCards = [

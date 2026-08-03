@@ -113,8 +113,26 @@ export default async function RootLayout({
 
   const fontClass = `${inter.variable} ${jakarta.variable} ${poppins.variable} ${calistoga.variable} ${jetbrainsMono.variable}`;
 
+  const siteNavigationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    'itemListElement': [
+      { '@type': 'SiteNavigationElement', 'position': 1, 'name': 'Who We Are', 'url': 'https://pontlook.com/en/who-we-are' },
+      { '@type': 'SiteNavigationElement', 'position': 2, 'name': 'For Training Providers', 'url': 'https://pontlook.com/en/for-providers' },
+      { '@type': 'SiteNavigationElement', 'position': 3, 'name': 'Find Training', 'url': 'https://pontlook.com/en/find-training' },
+      { '@type': 'SiteNavigationElement', 'position': 4, 'name': 'Contact', 'url': 'https://pontlook.com/en/contact' },
+      { '@type': 'SiteNavigationElement', 'position': 5, 'name': 'Blog', 'url': 'https://blog.pontlook.com' }
+    ]
+  };
+
   return (
     <html lang={lang} dir={dir} className={fontClass}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteNavigationSchema) }}
+        />
+      </head>
       <body>
         <DictionaryProvider dictionary={dictionary}>
           <FramerMotionProvider>

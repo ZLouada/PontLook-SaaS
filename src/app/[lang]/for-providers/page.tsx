@@ -10,9 +10,9 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'For Training Providers',
+  title: 'For Training Providers | PontLook',
   description:
-    'Receive qualified corporate training opportunities across the GCC. Pay per qualified lead, no retainers, no cold outreach.',
+    'Receive verified corporate training opportunities across the GCC on a pay-per-lead model.',
 };
 
 const methodology = [

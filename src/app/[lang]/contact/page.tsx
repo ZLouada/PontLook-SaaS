@@ -4,8 +4,8 @@ import ContactForm from '@/components/contact/ContactForm';
 import { Mail, MapPin, Clock } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Contact',
-  description: 'Talk to the Pontlook team, providers, companies, and partners welcome.',
+  title: 'Contact | PontLook',
+  description: 'Talk to the PontLook team: providers, corporate buyers, and partners.',
 };
 
 export default function ContactPage() {
