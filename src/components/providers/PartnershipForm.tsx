@@ -51,39 +51,39 @@ export default function PartnershipForm() {
   };
 
   const onSubmit = async (data: FormValues) => {
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = 'https://api.web3forms.com/submit';
+    try {
+      const res = await fetch('https://formspree.io/f/xppawggd', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          company_name: data.companyName || 'N/A',
+          website: data.website || 'N/A',
+          full_name: data.contactName || 'N/A',
+          business_email: data.email || 'N/A',
+          phone: data.phone || 'N/A',
+          years_in_business: data.yearsInBusiness || 'N/A',
+          specialties: Array.isArray(data.specialties) ? data.specialties.join(', ') : (data.specialties || 'N/A'),
+          primary_challenges: data.markets || 'N/A',
+          headcount_tier: 'N/A',
+          allocated_budget: 'N/A',
+          estimated_timeline: 'N/A',
+          challenge_notes: data.message || 'N/A',
+          markets_served: data.markets || 'N/A',
+        }),
+      });
 
-    const fields: Record<string, string> = {
-      access_key: '8b61988b-d8e3-414b-a843-5ea273292bb5',
-      subject: 'New Partnership Application from PontLook Website',
-      from_name: 'PontLook Lead Engine',
-      redirect: 'https://pontlook.com/en/contact?submitted=true',
-
-      company_name: data.companyName || '',
-      website: data.website || '',
-      full_name: data.contactName || '',
-      business_email: data.email || '',
-      phone: data.phone || '',
-      years_in_business: data.yearsInBusiness || '',
-      specialties: Array.isArray(data.specialties) ? data.specialties.join(', ') : (data.specialties || ''),
-      markets_served: data.markets || '',
-      description: data.message || '',
-      challenge_notes: data.message || '',
-      submitted_at: new Date().toISOString(),
-    };
-
-    Object.entries(fields).forEach(([k, v]) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = k;
-      input.value = v;
-      form.appendChild(input);
-    });
-
-    document.body.appendChild(form);
-    form.submit();
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        alert('Submission error. Please check your details and try again.');
+      }
+    } catch (err) {
+      console.error('Formspree partnership submission error:', err);
+      alert('Submission error. Please check your network connection and try again.');
+    }
   };
 
   if (submitted) {
