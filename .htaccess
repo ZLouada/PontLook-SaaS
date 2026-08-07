@@ -48,6 +48,7 @@ ErrorDocument 404 /404.html
 
 # Security Headers
 <IfModule mod_headers.c>
+  Header set Content-Security-Policy "upgrade-insecure-requests; default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; connect-src 'self' https://api.web3forms.com https://formspree.io https:;"
   Header set X-DNS-Prefetch-Control "on"
   Header set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
   Header set X-Frame-Options "SAMEORIGIN"

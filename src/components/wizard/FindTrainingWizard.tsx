@@ -51,78 +51,72 @@ export default function FindTrainingWizard() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       try {
-        const scoreResult = calculateLeadScore(merged);
-        const leadScore = scoreResult.score;
-        const leadTier = scoreResult.tier;
-
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            access_key: '8b61988b-d8e3-414b-a843-5ea273292bb5',
-            subject: `New Lead: ${merged.companyName || 'Corporate Training Request'} — ${leadTier || 'Qualified'}`,
-            from_name: 'PontLook Lead Engine',
-
-            // --- 100% OF CAPTURED FORM DATA ---
-            company_name: merged.companyName || 'N/A',
-            website: merged.website || 'N/A',
-            full_name: merged.fullName || 'N/A',
-            business_email: merged.email || 'N/A',
-            phone: merged.phone || 'N/A',
-            years_in_business: merged.orgStage || 'N/A',
-            specialties: merged.trainingType || 'N/A',
-            challenges: Array.isArray(merged.challenges) ? merged.challenges.join(', ') : (merged.challenges || 'N/A'),
-            primary_challenges: Array.isArray(merged.challenges) ? merged.challenges.join(', ') : (merged.challenges || 'N/A'),
-            headcount: merged.employees || 'N/A',
-            headcount_tier: merged.employees || 'N/A',
-            employees_to_train: merged.employeesToTrain || 'N/A',
-            budget: merged.budgetRange || 'N/A',
-            allocated_budget: merged.budgetRange || 'N/A',
-            timeline: merged.startDate || 'N/A',
-            estimated_timeline: merged.startDate || 'N/A',
-            description: merged.biggestChallenge || merged.notes || 'N/A',
-            challenge_notes: merged.notes || merged.biggestChallenge || merged.successDefinition || 'N/A',
-            country: merged.country || 'N/A',
-            city: merged.city || 'N/A',
-            industry: merged.industry || 'N/A',
-            job_title: merged.jobTitle || 'N/A',
-            delivery_format: merged.deliveryFormat || 'N/A',
-            language: merged.language || 'N/A',
-            organization_stage: merged.orgStage || 'N/A',
-            industry_experience_requirement: merged.industryExperience || 'N/A',
-            worked_with_provider_before: merged.workedBefore || 'N/A',
-            what_was_missing: merged.whatWasMissing || 'N/A',
-            success_definition: merged.successDefinition || 'N/A',
-            biggest_challenge: merged.biggestChallenge || 'N/A',
-            additional_notes: merged.notes || 'N/A',
-            lead_score: leadScore,
-            lead_tier: leadTier,
-            referral_source_url: typeof window !== 'undefined' ? window.location.href : '',
-            language_preference: typeof window !== 'undefined' && window.location.pathname.includes('/ar') ? '/ar' : '/en',
-            submitted_at: new Date().toISOString(),
-          }),
-        });
-
-        const result = await res.json();
-        if (result.success) {
-          try {
-            sessionStorage.removeItem(STORAGE_KEY);
-          } catch {
-            /* non-blocking */
-          }
-          setDone(true);
-        } else {
-          alert('Submission error: ' + (result.message || 'Please check your details and try again.'));
-        }
-      } catch (err) {
-        console.error('Submission API call failed:', err);
-        alert('Submission error: Please check your network connection and try again.');
-      } finally {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        sessionStorage.removeItem(STORAGE_KEY);
+      } catch {
+        /* non-blocking */
       }
+
+      const scoreResult = calculateLeadScore(merged);
+      const leadScore = scoreResult.score;
+      const leadTier = scoreResult.tier;
+
+      // Native HTML form POST to bypass CORS & JS blocking
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://api.web3forms.com/submit';
+
+      const fields: Record<string, string> = {
+        access_key: '8b61988b-d8e3-414b-a843-5ea273292bb5',
+        subject: `New Lead Request from PontLook Website (${leadTier || 'Qualified'})`,
+        from_name: 'PontLook Lead Engine',
+        redirect: 'https://pontlook.com/en/contact?submitted=true',
+
+        company_name: merged.companyName || '',
+        website: merged.website || '',
+        full_name: merged.fullName || '',
+        business_email: merged.email || '',
+        phone: merged.phone || '',
+        years_in_business: merged.orgStage || '',
+        specialties: merged.trainingType || '',
+        challenges: Array.isArray(merged.challenges) ? merged.challenges.join(', ') : (merged.challenges || ''),
+        primary_challenges: Array.isArray(merged.challenges) ? merged.challenges.join(', ') : (merged.challenges || ''),
+        headcount: merged.employees || '',
+        headcount_tier: merged.employees || '',
+        employees_to_train: merged.employeesToTrain || '',
+        budget: merged.budgetRange || '',
+        allocated_budget: merged.budgetRange || '',
+        timeline: merged.startDate || '',
+        estimated_timeline: merged.startDate || '',
+        description: merged.biggestChallenge || merged.notes || merged.successDefinition || '',
+        challenge_notes: merged.notes || merged.biggestChallenge || merged.successDefinition || '',
+        country: merged.country || '',
+        city: merged.city || '',
+        industry: merged.industry || '',
+        job_title: merged.jobTitle || '',
+        delivery_format: merged.deliveryFormat || '',
+        language: merged.language || '',
+        organization_stage: merged.orgStage || '',
+        industry_experience_requirement: merged.industryExperience || '',
+        worked_with_provider_before: merged.workedBefore || '',
+        what_was_missing: merged.whatWasMissing || '',
+        success_definition: merged.successDefinition || '',
+        biggest_challenge: merged.biggestChallenge || '',
+        additional_notes: merged.notes || '',
+        lead_score: String(leadScore),
+        lead_tier: leadTier,
+        submitted_at: new Date().toISOString(),
+      };
+
+      Object.entries(fields).forEach(([k, v]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = k;
+        input.value = v;
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+      form.submit();
     }
   };
 

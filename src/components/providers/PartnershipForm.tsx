@@ -51,45 +51,39 @@ export default function PartnershipForm() {
   };
 
   const onSubmit = async (data: FormValues) => {
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          access_key: '8b61988b-d8e3-414b-a843-5ea273292bb5',
-          subject: `New Lead: ${data.companyName || 'Corporate Training Request'}`,
-          from_name: 'PontLook Lead Engine',
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://api.web3forms.com/submit';
 
-          // --- 100% OF CAPTURED FORM DATA ---
-          company_name: data.companyName || 'N/A',
-          website: data.website || 'N/A',
-          full_name: data.contactName || 'N/A',
-          business_email: data.email || 'N/A',
-          phone: data.phone || 'N/A',
-          years_in_business: data.yearsInBusiness || 'N/A',
-          specialties: Array.isArray(data.specialties) ? data.specialties.join(', ') : (data.specialties || 'N/A'),
-          markets_served: data.markets || 'N/A',
-          description: data.message || 'N/A',
-          challenge_notes: data.message || 'N/A',
-          lead_score: 80,
-          lead_tier: 'QUALIFIED',
-          submitted_at: new Date().toISOString(),
-        }),
-      });
+    const fields: Record<string, string> = {
+      access_key: '8b61988b-d8e3-414b-a843-5ea273292bb5',
+      subject: 'New Partnership Application from PontLook Website',
+      from_name: 'PontLook Lead Engine',
+      redirect: 'https://pontlook.com/en/contact?submitted=true',
 
-      const result = await res.json();
-      if (result.success) {
-        setSubmitted(true);
-      } else {
-        alert('Submission error: ' + (result.message || 'Please check your details and try again.'));
-      }
-    } catch (err) {
-      console.error('Partnership submission error:', err);
-      alert('Submission error: Please check your network connection and try again.');
-    }
+      company_name: data.companyName || '',
+      website: data.website || '',
+      full_name: data.contactName || '',
+      business_email: data.email || '',
+      phone: data.phone || '',
+      years_in_business: data.yearsInBusiness || '',
+      specialties: Array.isArray(data.specialties) ? data.specialties.join(', ') : (data.specialties || ''),
+      markets_served: data.markets || '',
+      description: data.message || '',
+      challenge_notes: data.message || '',
+      submitted_at: new Date().toISOString(),
+    };
+
+    Object.entries(fields).forEach(([k, v]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = k;
+      input.value = v;
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
   };
 
   if (submitted) {
