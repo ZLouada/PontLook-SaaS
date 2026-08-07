@@ -62,8 +62,8 @@ export default function FindTrainingWizard() {
             Accept: 'application/json',
           },
           body: JSON.stringify({
-            access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '8b61988b-d8e3-414b-a843-5ea273292bb5',
-            subject: `[NEW LEAD DATA] ${merged.companyName || 'Corporate Request'} — ${leadTier || 'Qualified'}`,
+            access_key: '8b61988b-d8e3-414b-a843-5ea273292bb5',
+            subject: `New Lead: ${merged.companyName || 'Corporate Training Request'} — ${leadTier || 'Qualified'}`,
             from_name: 'PontLook Lead Engine',
 
             // --- 100% OF CAPTURED FORM DATA ---
@@ -72,26 +72,31 @@ export default function FindTrainingWizard() {
             full_name: merged.fullName || 'N/A',
             business_email: merged.email || 'N/A',
             phone: merged.phone || 'N/A',
+            years_in_business: merged.orgStage || 'N/A',
+            specialties: merged.trainingType || 'N/A',
+            challenges: Array.isArray(merged.challenges) ? merged.challenges.join(', ') : (merged.challenges || 'N/A'),
+            primary_challenges: Array.isArray(merged.challenges) ? merged.challenges.join(', ') : (merged.challenges || 'N/A'),
+            headcount: merged.employees || 'N/A',
+            headcount_tier: merged.employees || 'N/A',
+            employees_to_train: merged.employeesToTrain || 'N/A',
+            budget: merged.budgetRange || 'N/A',
+            allocated_budget: merged.budgetRange || 'N/A',
+            timeline: merged.startDate || 'N/A',
+            estimated_timeline: merged.startDate || 'N/A',
+            description: merged.biggestChallenge || merged.notes || 'N/A',
+            challenge_notes: merged.notes || merged.biggestChallenge || merged.successDefinition || 'N/A',
             country: merged.country || 'N/A',
             city: merged.city || 'N/A',
             industry: merged.industry || 'N/A',
             job_title: merged.jobTitle || 'N/A',
-            headcount_tier: merged.employees || 'N/A',
-            employees_to_train: merged.employeesToTrain || 'N/A',
-            specialties: merged.trainingType || 'N/A',
-            primary_challenges: Array.isArray(merged.challenges) ? merged.challenges.join(', ') : (merged.challenges || 'N/A'),
             delivery_format: merged.deliveryFormat || 'N/A',
             language: merged.language || 'N/A',
-            allocated_budget: merged.budgetRange || 'N/A',
-            estimated_timeline: merged.startDate || 'N/A',
             organization_stage: merged.orgStage || 'N/A',
-            years_in_business: merged.orgStage || 'N/A',
             industry_experience_requirement: merged.industryExperience || 'N/A',
             worked_with_provider_before: merged.workedBefore || 'N/A',
             what_was_missing: merged.whatWasMissing || 'N/A',
             success_definition: merged.successDefinition || 'N/A',
             biggest_challenge: merged.biggestChallenge || 'N/A',
-            challenge_notes: merged.notes || merged.biggestChallenge || merged.successDefinition || 'N/A',
             additional_notes: merged.notes || 'N/A',
             lead_score: leadScore,
             lead_tier: leadTier,
@@ -101,17 +106,21 @@ export default function FindTrainingWizard() {
           }),
         });
 
-        if (res.ok) {
+        const result = await res.json();
+        if (result.success) {
           try {
             sessionStorage.removeItem(STORAGE_KEY);
           } catch {
             /* non-blocking */
           }
+          setDone(true);
+        } else {
+          alert('Submission error: ' + (result.message || 'Please check your details and try again.'));
         }
       } catch (err) {
         console.error('Submission API call failed:', err);
+        alert('Submission error: Please check your network connection and try again.');
       } finally {
-        setDone(true);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }

@@ -52,15 +52,15 @@ export default function PartnershipForm() {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '8b61988b-d8e3-414b-a843-5ea273292bb5',
-          subject: `[NEW LEAD DATA] ${data.companyName || 'Corporate Request'} — Qualified`,
+          access_key: '8b61988b-d8e3-414b-a843-5ea273292bb5',
+          subject: `New Lead: ${data.companyName || 'Corporate Training Request'}`,
           from_name: 'PontLook Lead Engine',
 
           // --- 100% OF CAPTURED FORM DATA ---
@@ -72,16 +72,23 @@ export default function PartnershipForm() {
           years_in_business: data.yearsInBusiness || 'N/A',
           specialties: Array.isArray(data.specialties) ? data.specialties.join(', ') : (data.specialties || 'N/A'),
           markets_served: data.markets || 'N/A',
+          description: data.message || 'N/A',
           challenge_notes: data.message || 'N/A',
           lead_score: 80,
           lead_tier: 'QUALIFIED',
           submitted_at: new Date().toISOString(),
         }),
       });
+
+      const result = await res.json();
+      if (result.success) {
+        setSubmitted(true);
+      } else {
+        alert('Submission error: ' + (result.message || 'Please check your details and try again.'));
+      }
     } catch (err) {
       console.error('Partnership submission error:', err);
-    } finally {
-      setSubmitted(true);
+      alert('Submission error: Please check your network connection and try again.');
     }
   };
 
