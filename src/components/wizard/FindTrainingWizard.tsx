@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, m } from 'framer-motion';
 import { ArrowRight, CheckCircle2, ClipboardCheck, Handshake, SearchCheck } from 'lucide-react';
+import { calculateLeadScore } from '@/lib/lead-scoring';
 import { STORAGE_KEY, type WizardData } from './schemas';
 import { ChallengesStep, CompanyStep, DecisionMakerStep, MatchingStep, ScopeStep } from './steps';
 
@@ -50,16 +51,54 @@ export default function FindTrainingWizard() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       try {
-        const payload = {
-          ...merged,
-          referralSourceUrl: typeof window !== 'undefined' ? window.location.href : '',
-          languagePreference: typeof window !== 'undefined' && window.location.pathname.includes('/ar') ? '/ar' : '/en',
-        };
+        const scoreResult = calculateLeadScore(merged);
+        const leadScore = scoreResult.score;
+        const leadTier = scoreResult.tier;
 
-        const res = await fetch('/api/submit-training-request/', {
+        const res = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+            subject: `[NEW LEAD DATA] ${merged.companyName || 'Corporate Request'} — ${leadTier || 'Qualified'}`,
+            from_name: 'PontLook Lead Engine',
+
+            // --- 100% OF CAPTURED FORM DATA ---
+            company_name: merged.companyName,
+            website: merged.website,
+            full_name: merged.fullName,
+            business_email: merged.email,
+            phone: merged.phone,
+            country: merged.country,
+            city: merged.city,
+            industry: merged.industry,
+            job_title: merged.jobTitle,
+            headcount_tier: merged.employees,
+            employees_to_train: merged.employeesToTrain,
+            specialties: merged.trainingType,
+            primary_challenges: Array.isArray(merged.challenges) ? merged.challenges.join(', ') : merged.challenges,
+            delivery_format: merged.deliveryFormat,
+            language: merged.language,
+            allocated_budget: merged.budgetRange,
+            estimated_timeline: merged.startDate,
+            organization_stage: merged.orgStage,
+            years_in_business: merged.orgStage,
+            industry_experience_requirement: merged.industryExperience,
+            worked_with_provider_before: merged.workedBefore,
+            what_was_missing: merged.whatWasMissing,
+            success_definition: merged.successDefinition,
+            biggest_challenge: merged.biggestChallenge,
+            challenge_notes: merged.notes || merged.biggestChallenge || merged.successDefinition,
+            additional_notes: merged.notes,
+            lead_score: leadScore,
+            lead_tier: leadTier,
+            referral_source_url: typeof window !== 'undefined' ? window.location.href : '',
+            language_preference: typeof window !== 'undefined' && window.location.pathname.includes('/ar') ? '/ar' : '/en',
+            submitted_at: new Date().toISOString(),
+          }),
         });
 
         if (res.ok) {

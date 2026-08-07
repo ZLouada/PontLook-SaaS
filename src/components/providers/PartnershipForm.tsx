@@ -50,11 +50,39 @@ export default function PartnershipForm() {
     setValue('specialties', next, { shouldValidate: true });
   };
 
-  const onSubmit = async (_data: FormValues) => {
-    // Submission endpoint to be wired to CRM in a later phase.
-    // NOTE: PII intentionally NOT stored in localStorage for security.
-    await new Promise((r) => setTimeout(r, 600));
-    setSubmitted(true);
+  const onSubmit = async (data: FormValues) => {
+    try {
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+          subject: `[NEW LEAD DATA] ${data.companyName || 'Corporate Request'} — Qualified`,
+          from_name: 'PontLook Lead Engine',
+
+          // --- 100% OF CAPTURED FORM DATA ---
+          company_name: data.companyName,
+          website: data.website,
+          full_name: data.contactName,
+          business_email: data.email,
+          phone: data.phone,
+          years_in_business: data.yearsInBusiness,
+          specialties: Array.isArray(data.specialties) ? data.specialties.join(', ') : data.specialties,
+          markets_served: data.markets,
+          challenge_notes: data.message,
+          lead_score: 80,
+          lead_tier: 'QUALIFIED',
+          submitted_at: new Date().toISOString(),
+        }),
+      });
+    } catch (err) {
+      console.error('Partnership submission error:', err);
+    } finally {
+      setSubmitted(true);
+    }
   };
 
   if (submitted) {
