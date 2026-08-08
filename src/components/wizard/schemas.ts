@@ -35,58 +35,43 @@ export const budgetRanges = [
 export const orgStages = ['Startup / scale-up', 'Established SME', 'Large enterprise', 'Government / semi-government'] as const;
 
 export const step1Schema = z.object({
-  companyName: z.string().trim().min(2, 'Company name is required').max(150, 'Company name is too long'),
-  website: z
-    .string()
-    .trim()
-    .min(4, 'Website is required')
-    .max(500, 'URL is too long')
-    .refine((v) => /^(https?:\/\/)?[\w-]+(\.[\w-]+)+/.test(v), 'Enter a valid website'),
-  country: z.enum(countries, { errorMap: () => ({ message: 'Select your country' }) }),
-  city: z.string().trim().min(2, 'City is required').max(100, 'City name is too long'),
-  industry: z.enum(industriesList, { errorMap: () => ({ message: 'Select your industry' }) }),
-  employees: z.enum(employeeRanges, { errorMap: () => ({ message: 'Select company size' }) }),
-  _honeypot: z.string().max(0, 'Bot detected').optional(),
+  companyName: z.string().trim().optional().or(z.literal('')),
+  website: z.string().trim().optional().or(z.literal('')),
+  country: z.string().optional().or(z.literal('')),
+  city: z.string().trim().optional().or(z.literal('')),
+  industry: z.string().optional().or(z.literal('')),
+  employees: z.string().optional().or(z.literal('')),
+  _honeypot: z.string().optional(),
 });
 
 export const step2Schema = z.object({
-  fullName: z.string().trim().min(2, 'Your name is required').max(100, 'Name is too long'),
-  jobTitle: z.string().trim().min(2, 'Job title is required').max(100, 'Job title is too long'),
-  email: z
-    .string()
-    .trim()
-    .max(254, 'Email is too long')
-    .email('Enter a valid business email')
-    .refine(
-      (v) => !/@(gmail|yahoo|hotmail|outlook|icloud)\./i.test(v),
-      'Please use your business email address',
-    ),
-  phone: z.string().trim().min(7, 'Enter a valid phone number').max(30, 'Phone number is too long'),
+  fullName: z.string().trim().optional().or(z.literal('')),
+  jobTitle: z.string().trim().optional().or(z.literal('')),
+  email: z.string().trim().optional().or(z.literal('')),
+  phone: z.string().trim().optional().or(z.literal('')),
 });
 
 export const step3Schema = z.object({
-  challenges: z.array(z.enum(challengesList)).min(1, 'Select at least one challenge'),
+  challenges: z.array(z.string()).optional().default([]),
 });
 
 export const step4Schema = z.object({
-  trainingType: z.enum(trainingTypes, { errorMap: () => ({ message: 'Select a training type' }) }),
-  deliveryFormat: z.enum(deliveryFormats, { errorMap: () => ({ message: 'Select a delivery format' }) }),
-  language: z.enum(languages, { errorMap: () => ({ message: 'Select a language' }) }),
-  employeesToTrain: z.string().trim().min(1, 'How many employees need training?').max(20, 'Value is too long'),
-  startDate: z.string().trim().min(1, 'Select a preferred start date').max(20, 'Invalid date'),
-  budgetRange: z.enum(budgetRanges, { errorMap: () => ({ message: 'Select a budget range' }) }),
+  trainingType: z.string().optional().or(z.literal('')),
+  deliveryFormat: z.string().optional().or(z.literal('')),
+  language: z.string().optional().or(z.literal('')),
+  employeesToTrain: z.string().trim().optional().or(z.literal('')),
+  startDate: z.string().trim().optional().or(z.literal('')),
+  budgetRange: z.string().optional().or(z.literal('')),
 });
 
 export const step5Schema = z.object({
-  workedBefore: z.enum(['yes', 'no'], { errorMap: () => ({ message: 'Please choose one' }) }),
-  whatWasMissing: z.string().trim().max(5000, 'Response is too long').optional(),
-  successDefinition: z.string().trim().min(20, 'Help us match well: describe success in a sentence or two').max(5000, 'Response is too long'),
-  industryExperience: z.enum(['required', 'preferred', 'flexible'], {
-    errorMap: () => ({ message: 'Please choose one' }),
-  }),
-  orgStage: z.enum(orgStages, { errorMap: () => ({ message: 'Select your organization stage' }) }),
-  biggestChallenge: z.string().trim().min(20, 'Give us at least a couple of sentences').max(5000, 'Response is too long'),
-  notes: z.string().trim().max(5000, 'Notes are too long').optional(),
+  workedBefore: z.string().optional().or(z.literal('')),
+  whatWasMissing: z.string().trim().optional().or(z.literal('')),
+  successDefinition: z.string().trim().optional().or(z.literal('')),
+  industryExperience: z.string().optional().or(z.literal('')),
+  orgStage: z.string().optional().or(z.literal('')),
+  biggestChallenge: z.string().trim().optional().or(z.literal('')),
+  notes: z.string().trim().optional().or(z.literal('')),
 });
 
 export type Step1 = z.infer<typeof step1Schema>;

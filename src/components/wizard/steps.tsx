@@ -216,7 +216,7 @@ export function MatchingStep({ data, onNext, onBack }: StepProps<Step5>) {
           error={errors.notes}
         />
       </div>
-      <StepNav onBack={onBack} isSubmitting={isSubmitting} nextLabel="Submit assessment" />
+      <StepNav onBack={onBack} isSubmitting={isSubmitting} nextLabel="Submit Training Request" />
     </form>
   );
 }

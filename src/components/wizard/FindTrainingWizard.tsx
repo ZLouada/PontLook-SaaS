@@ -92,11 +92,11 @@ export default function FindTrainingWizard() {
           }
           setDone(true);
         } else {
-          alert('Submission error. Please check your details and try again.');
+          alert('Submission error. Please check form inputs.');
         }
       } catch (err) {
         console.error('Formspree submission error:', err);
-        alert('Network error. Please try again.');
+        alert('Network error submitting request.');
       } finally {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
