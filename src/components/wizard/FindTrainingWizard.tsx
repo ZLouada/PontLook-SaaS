@@ -40,7 +40,7 @@ export default function FindTrainingWizard() {
     }
   };
 
-  const advance = (values: object) => {
+  const advance = async (values: object) => {
     const merged = { ...data, ...values };
     setData(merged);
     if (step < 5) {
@@ -48,8 +48,59 @@ export default function FindTrainingWizard() {
       setStep(next);
       persist(next, merged);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      try {
+        const res = await fetch('https://formspree.io/f/xppawggd', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            company_name: merged.companyName || 'N/A',
+            website: merged.website || 'N/A',
+            full_name: merged.fullName || 'N/A',
+            business_email: merged.email || 'N/A',
+            phone: merged.phone || 'N/A',
+            years_in_business: merged.orgStage || 'N/A',
+            specialties: merged.trainingType || 'N/A',
+            primary_challenges: Array.isArray(merged.challenges) ? merged.challenges.join(', ') : (merged.challenges || 'N/A'),
+            headcount_tier: merged.employees || 'N/A',
+            allocated_budget: merged.budgetRange || 'N/A',
+            estimated_timeline: merged.startDate || 'N/A',
+            challenge_notes: merged.biggestChallenge || merged.notes || merged.successDefinition || 'N/A',
+            country: merged.country || 'N/A',
+            city: merged.city || 'N/A',
+            industry: merged.industry || 'N/A',
+            job_title: merged.jobTitle || 'N/A',
+            delivery_format: merged.deliveryFormat || 'N/A',
+            language: merged.language || 'N/A',
+            employees_to_train: merged.employeesToTrain || 'N/A',
+            industry_experience: merged.industryExperience || 'N/A',
+            worked_before: merged.workedBefore || 'N/A',
+            what_was_missing: merged.whatWasMissing || 'N/A',
+            success_definition: merged.successDefinition || 'N/A',
+            notes: merged.notes || 'N/A',
+          }),
+        });
+
+        if (res.ok) {
+          try {
+            sessionStorage.removeItem(STORAGE_KEY);
+          } catch {
+            /* non-blocking */
+          }
+          setDone(true);
+        } else {
+          alert('Submission error. Please check your details and try again.');
+        }
+      } catch (err) {
+        console.error('Formspree submission error:', err);
+        alert('Network error. Please try again.');
+      } finally {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
-    // Step 5 submission is handled natively by the MatchingStep's hidden <form action> to Formspree
   };
 
   const back = () => {

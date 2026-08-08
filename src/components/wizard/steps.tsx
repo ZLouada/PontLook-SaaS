@@ -1,12 +1,11 @@
 'use client';
 
-import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   budgetRanges, challengesList, countries, deliveryFormats, employeeRanges, industriesList,
   languages, orgStages, step1Schema, step2Schema, step3Schema, step4Schema, step5Schema,
-  trainingTypes, STORAGE_KEY,
+  trainingTypes,
   type Step1, type Step2, type Step3, type Step4, type Step5, type WizardData,
 } from './schemas';
 import { SelectField, StepNav, TextArea, TextField } from './fields';
@@ -139,7 +138,6 @@ export function ScopeStep({ data, onNext, onBack }: StepProps<Step4>) {
 }
 
 export function MatchingStep({ data, onNext, onBack }: StepProps<Step5>) {
-  const formRef = useRef<HTMLFormElement>(null);
   const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<Step5>({
     resolver: zodResolver(step5Schema),
     defaultValues: {
@@ -153,119 +151,72 @@ export function MatchingStep({ data, onNext, onBack }: StepProps<Step5>) {
     },
   });
   const workedBefore = watch('workedBefore');
-
-  // On valid validation, clear storage and let the native form action fire
-  const onValid = () => {
-    try { sessionStorage.removeItem(STORAGE_KEY); } catch { /* non-blocking */ }
-    // requestSubmit triggers the native <form action> POST
-    formRef.current?.requestSubmit();
-  };
-
   return (
-    <>
-      {/* Visible form: validates via react-hook-form, then triggers the hidden native form */}
-      <form
-        onSubmit={handleSubmit(onValid)}
-        noValidate
-      >
-        <div className="space-y-6">
-          <fieldset>
-            <legend className="field-label">Have you worked with a training provider before?</legend>
-            <div className="mt-1 flex gap-3">
-              {(['yes', 'no'] as const).map((v) => (
-                <label key={v} className="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 px-5 py-3 text-sm font-medium has-[:checked]:border-primary has-[:checked]:bg-primary-50">
-                  <input type="radio" value={v} {...register('workedBefore')} className="accent-[#2451BF]" />
-                  {v === 'yes' ? 'Yes' : 'No'}
-                </label>
-              ))}
-            </div>
-            {errors.workedBefore && <p className="field-error" role="alert">{errors.workedBefore.message}</p>}
-          </fieldset>
-
-          {workedBefore === 'yes' && (
-            <TextArea
-              label="What was missing from that experience?"
-              optional
-              rows={3}
-              placeholder="What would you want done differently this time?"
-              registration={register('whatWasMissing')}
-              error={errors.whatWasMissing}
-            />
-          )}
-
-          <TextArea
-            label="How will you define success for this training?"
-            rows={3}
-            placeholder="e.g., Middle managers retain top performers and run effective 1:1s within 6 months…"
-            registration={register('successDefinition')}
-            error={errors.successDefinition}
-          />
-
-          <div className="grid gap-5 sm:grid-cols-2">
-            <div>
-              <label htmlFor="industryExperience" className="field-label">Provider industry experience</label>
-              <select id="industryExperience" className="field-input" {...register('industryExperience')}>
-                <option value="">Select…</option>
-                <option value="required">Must have experience in our industry</option>
-                <option value="preferred">Preferred, not essential</option>
-                <option value="flexible">Flexible: expertise matters most</option>
-              </select>
-              {errors.industryExperience && <p className="field-error" role="alert">{errors.industryExperience.message}</p>}
-            </div>
-            <SelectField label="Organization stage" options={orgStages} registration={register('orgStage')} error={errors.orgStage} />
+    <form onSubmit={handleSubmit(onNext)} noValidate>
+      <div className="space-y-6">
+        <fieldset>
+          <legend className="field-label">Have you worked with a training provider before?</legend>
+          <div className="mt-1 flex gap-3">
+            {(['yes', 'no'] as const).map((v) => (
+              <label key={v} className="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 px-5 py-3 text-sm font-medium has-[:checked]:border-primary has-[:checked]:bg-primary-50">
+                <input type="radio" value={v} {...register('workedBefore')} className="accent-[#2451BF]" />
+                {v === 'yes' ? 'Yes' : 'No'}
+              </label>
+            ))}
           </div>
+          {errors.workedBefore && <p className="field-error" role="alert">{errors.workedBefore.message}</p>}
+        </fieldset>
 
+        {workedBefore === 'yes' && (
           <TextArea
-            label="What's the biggest challenge behind this request?"
-            rows={4}
-            placeholder="The more context you share, the better your matches will be…"
-            registration={register('biggestChallenge')}
-            error={errors.biggestChallenge}
-          />
-
-          <TextArea
-            label="Anything else the provider should know?"
+            label="What was missing from that experience?"
             optional
             rows={3}
-            registration={register('notes')}
-            error={errors.notes}
+            placeholder="What would you want done differently this time?"
+            registration={register('whatWasMissing')}
+            error={errors.whatWasMissing}
           />
-        </div>
-        <StepNav onBack={onBack} isSubmitting={isSubmitting} nextLabel="Submit assessment" />
-      </form>
+        )}
 
-      {/* Hidden native form: carries ALL wizard data as hidden inputs and submits to Formspree */}
-      <form
-        ref={formRef}
-        action="https://formspree.io/f/xppawggd"
-        method="POST"
-        className="hidden"
-      >
-        <input type="hidden" name="Company Name" value={data.companyName || ''} />
-        <input type="hidden" name="Website" value={data.website || ''} />
-        <input type="hidden" name="Country" value={data.country || ''} />
-        <input type="hidden" name="City" value={data.city || ''} />
-        <input type="hidden" name="Industry" value={data.industry || ''} />
-        <input type="hidden" name="Employees" value={data.employees || ''} />
-        <input type="hidden" name="Full Name" value={data.fullName || ''} />
-        <input type="hidden" name="Job Title" value={data.jobTitle || ''} />
-        <input type="hidden" name="Business Email" value={data.email || ''} />
-        <input type="hidden" name="Phone Number" value={data.phone || ''} />
-        <input type="hidden" name="Challenges" value={Array.isArray(data.challenges) ? data.challenges.join(', ') : (data.challenges || '')} />
-        <input type="hidden" name="Training Type" value={data.trainingType || ''} />
-        <input type="hidden" name="Delivery Format" value={data.deliveryFormat || ''} />
-        <input type="hidden" name="Language" value={data.language || ''} />
-        <input type="hidden" name="Employees to Train" value={data.employeesToTrain || ''} />
-        <input type="hidden" name="Start Date" value={data.startDate || ''} />
-        <input type="hidden" name="Budget Range" value={data.budgetRange || ''} />
-        <input type="hidden" name="Worked Before" value={data.workedBefore || ''} />
-        <input type="hidden" name="What Was Missing" value={data.whatWasMissing || ''} />
-        <input type="hidden" name="Success Definition" value={data.successDefinition || ''} />
-        <input type="hidden" name="Industry Experience" value={data.industryExperience || ''} />
-        <input type="hidden" name="Organization Stage" value={data.orgStage || ''} />
-        <input type="hidden" name="Biggest Challenge" value={data.biggestChallenge || ''} />
-        <input type="hidden" name="Notes" value={data.notes || ''} />
-      </form>
-    </>
+        <TextArea
+          label="How will you define success for this training?"
+          rows={3}
+          placeholder="e.g., Middle managers retain top performers and run effective 1:1s within 6 months…"
+          registration={register('successDefinition')}
+          error={errors.successDefinition}
+        />
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label htmlFor="industryExperience" className="field-label">Provider industry experience</label>
+            <select id="industryExperience" className="field-input" {...register('industryExperience')}>
+              <option value="">Select…</option>
+              <option value="required">Must have experience in our industry</option>
+              <option value="preferred">Preferred, not essential</option>
+              <option value="flexible">Flexible: expertise matters most</option>
+            </select>
+            {errors.industryExperience && <p className="field-error" role="alert">{errors.industryExperience.message}</p>}
+          </div>
+          <SelectField label="Organization stage" options={orgStages} registration={register('orgStage')} error={errors.orgStage} />
+        </div>
+
+        <TextArea
+          label="What's the biggest challenge behind this request?"
+          rows={4}
+          placeholder="The more context you share, the better your matches will be…"
+          registration={register('biggestChallenge')}
+          error={errors.biggestChallenge}
+        />
+
+        <TextArea
+          label="Anything else the provider should know?"
+          optional
+          rows={3}
+          registration={register('notes')}
+          error={errors.notes}
+        />
+      </div>
+      <StepNav onBack={onBack} isSubmitting={isSubmitting} nextLabel="Submit assessment" />
+    </form>
   );
 }

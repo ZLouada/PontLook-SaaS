@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -37,7 +37,6 @@ export default function PartnershipForm() {
     handleSubmit,
     setValue,
     watch,
-    getValues,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -51,11 +50,36 @@ export default function PartnershipForm() {
     setValue('specialties', next, { shouldValidate: true });
   };
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const res = await fetch('https://formspree.io/f/xppawggd', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          company_name: data.companyName || 'N/A',
+          website: data.website || 'N/A',
+          full_name: data.contactName || 'N/A',
+          business_email: data.email || 'N/A',
+          phone: data.phone || 'N/A',
+          years_in_business: data.yearsInBusiness || 'N/A',
+          specialties: Array.isArray(data.specialties) ? data.specialties.join(', ') : (data.specialties || 'N/A'),
+          markets_served: data.markets || 'N/A',
+          message: data.message || 'N/A',
+        }),
+      });
 
-  const onSubmit = () => {
-    // Validation passed via react-hook-form; trigger the hidden native form
-    formRef.current?.requestSubmit();
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        alert('Submission error. Please check your details and try again.');
+      }
+    } catch (err) {
+      console.error('Formspree partnership submission error:', err);
+      alert('Network error. Please try again.');
+    }
   };
 
   if (submitted) {
@@ -72,109 +96,87 @@ export default function PartnershipForm() {
     );
   }
 
-  const vals = getValues();
-
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)} className="card !p-8 sm:!p-10" noValidate>
-        <div className="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label htmlFor="companyName" className="field-label">Company name</label>
-            <input id="companyName" className="field-input" placeholder="Acme Training Group" {...register('companyName')} />
-            {errors.companyName && <p className="field-error" role="alert">{errors.companyName.message}</p>}
-          </div>
-          <div>
-            <label htmlFor="website" className="field-label">Website</label>
-            <input id="website" className="field-input" placeholder="https://…" {...register('website')} />
-            {errors.website && <p className="field-error" role="alert">{errors.website.message}</p>}
-          </div>
-          <div>
-            <label htmlFor="contactName" className="field-label">Your name</label>
-            <input id="contactName" className="field-input" placeholder="Full name" {...register('contactName')} />
-            {errors.contactName && <p className="field-error" role="alert">{errors.contactName.message}</p>}
-          </div>
-          <div>
-            <label htmlFor="email" className="field-label">Business email</label>
-            <input id="email" type="email" className="field-input" placeholder="you@company.com" {...register('email')} />
-            {errors.email && <p className="field-error" role="alert">{errors.email.message}</p>}
-          </div>
-          <div>
-            <label htmlFor="phone" className="field-label">Phone</label>
-            <input id="phone" type="tel" className="field-input" placeholder="+966 …" {...register('phone')} />
-            {errors.phone && <p className="field-error" role="alert">{errors.phone.message}</p>}
-          </div>
-          <div>
-            <label htmlFor="yearsInBusiness" className="field-label">Years in business</label>
-            <select id="yearsInBusiness" className="field-input" {...register('yearsInBusiness')}>
-              <option value="">Select…</option>
-              <option value="<2">Less than 2</option>
-              <option value="2-5">2–5</option>
-              <option value="5-10">5–10</option>
-              <option value="10+">10+</option>
-            </select>
-            {errors.yearsInBusiness && <p className="field-error" role="alert">{errors.yearsInBusiness.message}</p>}
-          </div>
+    <form onSubmit={handleSubmit(onSubmit)} className="card !p-8 sm:!p-10" noValidate>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label htmlFor="companyName" className="field-label">Company name</label>
+          <input id="companyName" className="field-input" placeholder="Acme Training Group" {...register('companyName')} />
+          {errors.companyName && <p className="field-error" role="alert">{errors.companyName.message}</p>}
         </div>
-
-        <fieldset className="mt-6">
-          <legend className="field-label">Training specialties</legend>
-          <div className="mt-1 flex flex-wrap gap-2">
-            {specialties.map((s) => {
-              const active = selected.includes(s);
-              return (
-                <button
-                  key={s}
-                  type="button"
-                  onClick={() => toggle(s)}
-                  aria-pressed={active}
-                  className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-                    active
-                      ? 'border-primary bg-primary text-white'
-                      : 'border-slate-200 bg-white text-body hover:border-primary-300'
-                  }`}
-                >
-                  {s}
-                </button>
-              );
-            })}
-          </div>
-          {errors.specialties && <p className="field-error" role="alert">{errors.specialties.message}</p>}
-        </fieldset>
-
-        <div className="mt-6">
-          <label htmlFor="markets" className="field-label">GCC markets you serve</label>
-          <input id="markets" className="field-input" placeholder="e.g., Saudi Arabia, UAE, Qatar" {...register('markets')} />
-          {errors.markets && <p className="field-error" role="alert">{errors.markets.message}</p>}
+        <div>
+          <label htmlFor="website" className="field-label">Website</label>
+          <input id="website" className="field-input" placeholder="https://…" {...register('website')} />
+          {errors.website && <p className="field-error" role="alert">{errors.website.message}</p>}
         </div>
-
-        <div className="mt-6">
-          <label htmlFor="message" className="field-label">Tell us about your ideal client and track record</label>
-          <textarea id="message" rows={4} className="field-input" placeholder="Typical engagement size, notable clients, differentiators…" {...register('message')} />
-          {errors.message && <p className="field-error" role="alert">{errors.message.message}</p>}
+        <div>
+          <label htmlFor="contactName" className="field-label">Your name</label>
+          <input id="contactName" className="field-input" placeholder="Full name" {...register('contactName')} />
+          {errors.contactName && <p className="field-error" role="alert">{errors.contactName.message}</p>}
         </div>
+        <div>
+          <label htmlFor="email" className="field-label">Business email</label>
+          <input id="email" type="email" className="field-input" placeholder="you@company.com" {...register('email')} />
+          {errors.email && <p className="field-error" role="alert">{errors.email.message}</p>}
+        </div>
+        <div>
+          <label htmlFor="phone" className="field-label">Phone</label>
+          <input id="phone" type="tel" className="field-input" placeholder="+966 …" {...register('phone')} />
+          {errors.phone && <p className="field-error" role="alert">{errors.phone.message}</p>}
+        </div>
+        <div>
+          <label htmlFor="yearsInBusiness" className="field-label">Years in business</label>
+          <select id="yearsInBusiness" className="field-input" {...register('yearsInBusiness')}>
+            <option value="">Select…</option>
+            <option value="<2">Less than 2</option>
+            <option value="2-5">2–5</option>
+            <option value="5-10">5–10</option>
+            <option value="10+">10+</option>
+          </select>
+          {errors.yearsInBusiness && <p className="field-error" role="alert">{errors.yearsInBusiness.message}</p>}
+        </div>
+      </div>
 
-        <button type="submit" disabled={isSubmitting} className="btn-primary mt-8 w-full disabled:opacity-60 sm:w-auto">
-          {isSubmitting ? 'Submitting…' : 'Apply for partnership'} <Send size={16} />
-        </button>
-      </form>
+      <fieldset className="mt-6">
+        <legend className="field-label">Training specialties</legend>
+        <div className="mt-1 flex flex-wrap gap-2">
+          {specialties.map((s) => {
+            const active = selected.includes(s);
+            return (
+              <button
+                key={s}
+                type="button"
+                onClick={() => toggle(s)}
+                aria-pressed={active}
+                className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                  active
+                    ? 'border-primary bg-primary text-white'
+                    : 'border-slate-200 bg-white text-body hover:border-primary-300'
+                }`}
+              >
+                {s}
+              </button>
+            );
+          })}
+        </div>
+        {errors.specialties && <p className="field-error" role="alert">{errors.specialties.message}</p>}
+      </fieldset>
 
-      {/* Hidden native form: carries all field values and submits to Formspree */}
-      <form
-        ref={formRef}
-        action="https://formspree.io/f/xppawggd"
-        method="POST"
-        className="hidden"
-      >
-        <input type="hidden" name="Company Name" value={vals.companyName || ''} />
-        <input type="hidden" name="Website" value={vals.website || ''} />
-        <input type="hidden" name="Full Name" value={vals.contactName || ''} />
-        <input type="hidden" name="Business Email" value={vals.email || ''} />
-        <input type="hidden" name="Phone Number" value={vals.phone || ''} />
-        <input type="hidden" name="Years in Business" value={vals.yearsInBusiness || ''} />
-        <input type="hidden" name="Specialties" value={Array.isArray(vals.specialties) ? vals.specialties.join(', ') : (vals.specialties || '')} />
-        <input type="hidden" name="GCC Markets" value={vals.markets || ''} />
-        <input type="hidden" name="Message" value={vals.message || ''} />
-      </form>
-    </>
+      <div className="mt-6">
+        <label htmlFor="markets" className="field-label">GCC markets you serve</label>
+        <input id="markets" className="field-input" placeholder="e.g., Saudi Arabia, UAE, Qatar" {...register('markets')} />
+        {errors.markets && <p className="field-error" role="alert">{errors.markets.message}</p>}
+      </div>
+
+      <div className="mt-6">
+        <label htmlFor="message" className="field-label">Tell us about your ideal client and track record</label>
+        <textarea id="message" rows={4} className="field-input" placeholder="Typical engagement size, notable clients, differentiators…" {...register('message')} />
+        {errors.message && <p className="field-error" role="alert">{errors.message.message}</p>}
+      </div>
+
+      <button type="submit" disabled={isSubmitting} className="btn-primary mt-8 w-full disabled:opacity-60 sm:w-auto">
+        {isSubmitting ? 'Submitting…' : 'Apply for partnership'} <Send size={16} />
+      </button>
+    </form>
   );
 }
