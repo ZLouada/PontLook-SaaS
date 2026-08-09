@@ -70,11 +70,11 @@ export function TextArea({
 
 export function StepNav({
   onBack, isSubmitting, nextLabel = 'Continue',
-}: { onBack?: () => void; isSubmitting?: boolean; nextLabel?: string }) {
+}: { onBack?: (e?: React.MouseEvent) => void; isSubmitting?: boolean; nextLabel?: string }) {
   return (
     <div className="mt-8 flex items-center justify-between">
       {onBack ? (
-        <button type="button" onClick={onBack} className="btn-secondary">
+        <button type="button" onClick={(e) => onBack(e)} className="btn-secondary">
           Back
         </button>
       ) : (

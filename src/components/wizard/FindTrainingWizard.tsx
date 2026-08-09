@@ -47,7 +47,6 @@ export default function FindTrainingWizard() {
       const next = step + 1;
       setStep(next);
       persist(next, merged);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       try {
         const res = await fetch('https://formspree.io/f/xppawggd', {
@@ -98,12 +97,13 @@ export default function FindTrainingWizard() {
         console.error('Formspree submission error:', err);
         alert('Network error submitting request.');
       } finally {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        /* no-op */
       }
     }
   };
 
-  const back = () => {
+  const back = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
     const prev = Math.max(1, step - 1);
     setStep(prev);
     persist(prev, data);

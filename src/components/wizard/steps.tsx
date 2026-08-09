@@ -13,7 +13,7 @@ import { SelectField, StepNav, TextArea, TextField } from './fields';
 type StepProps<T> = {
   data: WizardData;
   onNext: (values: T) => void;
-  onBack?: () => void;
+  onBack?: (e?: React.MouseEvent) => void;
 };
 
 export function CompanyStep({ data, onNext }: StepProps<Step1>) {
