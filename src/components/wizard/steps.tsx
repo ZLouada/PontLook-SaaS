@@ -12,11 +12,12 @@ import { SelectField, StepNav, TextArea, TextField } from './fields';
 
 type StepProps<T> = {
   data: WizardData;
-  onNext: (values: T) => void;
+  onNext: (values: T, e?: React.BaseSyntheticEvent | React.MouseEvent | React.FormEvent) => void;
   onBack?: (e?: React.MouseEvent) => void;
+  isSubmitting?: boolean;
 };
 
-export function CompanyStep({ data, onNext }: StepProps<Step1>) {
+export function CompanyStep({ data, onNext, isSubmitting }: StepProps<Step1>) {
   const { register, handleSubmit, formState: { errors } } = useForm<Step1>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
@@ -29,7 +30,14 @@ export function CompanyStep({ data, onNext }: StepProps<Step1>) {
     },
   });
   return (
-    <form onSubmit={handleSubmit(onNext)} noValidate>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit((values) => onNext(values, e))(e);
+      }}
+      noValidate
+    >
       <div className="grid gap-5 sm:grid-cols-2">
         <TextField label="Company name" placeholder="Your company" registration={register('companyName')} error={errors.companyName} />
         <TextField label="Website" placeholder="https://…" registration={register('website')} error={errors.website} />
@@ -41,12 +49,12 @@ export function CompanyStep({ data, onNext }: StepProps<Step1>) {
       <div className="absolute left-[-9999px] top-[-9999px]" aria-hidden="true" tabIndex={-1}>
         <input type="text" {...register('_honeypot')} tabIndex={-1} autoComplete="off" />
       </div>
-      <StepNav />
+      <StepNav isSubmitting={isSubmitting} />
     </form>
   );
 }
 
-export function DecisionMakerStep({ data, onNext, onBack }: StepProps<Step2>) {
+export function DecisionMakerStep({ data, onNext, onBack, isSubmitting }: StepProps<Step2>) {
   const { register, handleSubmit, formState: { errors } } = useForm<Step2>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
@@ -57,30 +65,46 @@ export function DecisionMakerStep({ data, onNext, onBack }: StepProps<Step2>) {
     },
   });
   return (
-    <form onSubmit={handleSubmit(onNext)} noValidate>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit((values) => onNext(values, e))(e);
+      }}
+      noValidate
+    >
       <div className="grid gap-5 sm:grid-cols-2">
         <TextField label="Full name" placeholder="Your name" registration={register('fullName')} error={errors.fullName} />
         <TextField label="Job title" placeholder="e.g., HR Director" registration={register('jobTitle')} error={errors.jobTitle} />
         <TextField label="Business email" type="email" placeholder="you@company.com" registration={register('email')} error={errors.email} />
         <TextField label="Phone" type="tel" placeholder="+966 …" registration={register('phone')} error={errors.phone} />
       </div>
-      <StepNav onBack={onBack} />
+      <StepNav onBack={onBack} isSubmitting={isSubmitting} />
     </form>
   );
 }
 
-export function ChallengesStep({ data, onNext, onBack }: StepProps<Step3>) {
+export function ChallengesStep({ data, onNext, onBack, isSubmitting }: StepProps<Step3>) {
   const { handleSubmit, setValue, watch, formState: { errors } } = useForm<Step3>({
     resolver: zodResolver(step3Schema),
     defaultValues: { challenges: data.challenges ?? [] },
   });
   const selected = watch('challenges');
-  const toggle = (c: (typeof challengesList)[number]) => {
+  const toggle = (e: React.MouseEvent, c: (typeof challengesList)[number]) => {
+    e.preventDefault();
+    e.stopPropagation();
     const next = selected.includes(c) ? selected.filter((x) => x !== c) : [...selected, c];
     setValue('challenges', next, { shouldValidate: true });
   };
   return (
-    <form onSubmit={handleSubmit(onNext)} noValidate>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit((values) => onNext(values, e))(e);
+      }}
+      noValidate
+    >
       <fieldset>
         <legend className="field-label mb-3">Select every challenge that applies</legend>
         <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
@@ -90,7 +114,7 @@ export function ChallengesStep({ data, onNext, onBack }: StepProps<Step3>) {
               <button
                 key={c}
                 type="button"
-                onClick={() => toggle(c)}
+                onClick={(e) => toggle(e, c)}
                 aria-pressed={active}
                 className={`rounded-2xl border px-3 py-3 text-sm font-medium transition-all ${
                   active
@@ -105,12 +129,12 @@ export function ChallengesStep({ data, onNext, onBack }: StepProps<Step3>) {
         </div>
         {errors.challenges && <p className="field-error" role="alert">{errors.challenges.message}</p>}
       </fieldset>
-      <StepNav onBack={onBack} />
+      <StepNav onBack={onBack} isSubmitting={isSubmitting} />
     </form>
   );
 }
 
-export function ScopeStep({ data, onNext, onBack }: StepProps<Step4>) {
+export function ScopeStep({ data, onNext, onBack, isSubmitting }: StepProps<Step4>) {
   const { register, handleSubmit, formState: { errors } } = useForm<Step4>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
@@ -123,7 +147,14 @@ export function ScopeStep({ data, onNext, onBack }: StepProps<Step4>) {
     },
   });
   return (
-    <form onSubmit={handleSubmit(onNext)} noValidate>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit((values) => onNext(values, e))(e);
+      }}
+      noValidate
+    >
       <div className="grid gap-5 sm:grid-cols-2">
         <SelectField label="Training type" options={trainingTypes} registration={register('trainingType')} error={errors.trainingType} />
         <SelectField label="Delivery format" options={deliveryFormats} registration={register('deliveryFormat')} error={errors.deliveryFormat} />
@@ -132,13 +163,13 @@ export function ScopeStep({ data, onNext, onBack }: StepProps<Step4>) {
         <TextField label="Preferred start date" type="date" registration={register('startDate')} error={errors.startDate} />
         <SelectField label="Budget range (USD)" options={budgetRanges} registration={register('budgetRange')} error={errors.budgetRange} />
       </div>
-      <StepNav onBack={onBack} />
+      <StepNav onBack={onBack} isSubmitting={isSubmitting} />
     </form>
   );
 }
 
-export function MatchingStep({ data, onNext, onBack }: StepProps<Step5>) {
-  const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<Step5>({
+export function MatchingStep({ data, onNext, onBack, isSubmitting }: StepProps<Step5>) {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<Step5>({
     resolver: zodResolver(step5Schema),
     defaultValues: {
       workedBefore: data.workedBefore,
@@ -152,7 +183,14 @@ export function MatchingStep({ data, onNext, onBack }: StepProps<Step5>) {
   });
   const workedBefore = watch('workedBefore');
   return (
-    <form onSubmit={handleSubmit(onNext)} noValidate>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit((values) => onNext(values, e))(e);
+      }}
+      noValidate
+    >
       <div className="space-y-6">
         <fieldset>
           <legend className="field-label">Have you worked with a training provider before?</legend>

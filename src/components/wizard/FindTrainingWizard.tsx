@@ -16,6 +16,7 @@ export default function FindTrainingWizard() {
   const [data, setData] = useState<WizardData>({});
   const [done, setDone] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Restore progress across reloads
   useEffect(() => {
@@ -40,7 +41,11 @@ export default function FindTrainingWizard() {
     }
   };
 
-  const advance = async (values: object) => {
+  const advance = async (values: object, e?: React.BaseSyntheticEvent | React.MouseEvent | React.FormEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     const merged = { ...data, ...values };
     setData(merged);
     if (step < 5) {
@@ -48,42 +53,53 @@ export default function FindTrainingWizard() {
       setStep(next);
       persist(next, merged);
     } else {
+      setIsLoading(true);
+
+      const payload = {
+        company_name: merged.companyName || 'N/A',
+        website: merged.website || 'N/A',
+        country: merged.country || 'N/A',
+        city: merged.city || 'N/A',
+        industry: merged.industry || 'N/A',
+        employees: merged.employees || 'N/A',
+        headcount: merged.employees || 'N/A',
+        full_name: merged.fullName || 'N/A',
+        job_title: merged.jobTitle || 'N/A',
+        business_email: merged.email || 'N/A',
+        phone: merged.phone || 'N/A',
+        challenges: Array.isArray(merged.challenges) ? merged.challenges.join(', ') : (merged.challenges || 'N/A'),
+        specialties: merged.trainingType || 'N/A',
+        training_type: merged.trainingType || 'N/A',
+        delivery_format: merged.deliveryFormat || 'N/A',
+        language: merged.language || 'N/A',
+        employees_to_train: merged.employeesToTrain || 'N/A',
+        timeline: merged.startDate || 'N/A',
+        start_date: merged.startDate || 'N/A',
+        budget: merged.budgetRange || 'N/A',
+        budget_range: merged.budgetRange || 'N/A',
+        worked_before: merged.workedBefore || 'N/A',
+        what_was_missing: merged.whatWasMissing || 'N/A',
+        success_definition: merged.successDefinition || 'N/A',
+        industry_experience: merged.industryExperience || 'N/A',
+        years_in_business: merged.orgStage || 'N/A',
+        org_stage: merged.orgStage || 'N/A',
+        description: merged.biggestChallenge || merged.notes || merged.successDefinition || 'N/A',
+        biggest_challenge: merged.biggestChallenge || 'N/A',
+        notes: merged.notes || 'N/A',
+        submitted_at: new Date().toISOString(),
+      };
+
       try {
-        const res = await fetch('https://formspree.io/f/xppawggd', {
+        const response = await fetch('https://formspree.io/f/xppawggd', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
           },
-          body: JSON.stringify({
-            company_name: merged.companyName || 'N/A',
-            website: merged.website || 'N/A',
-            full_name: merged.fullName || 'N/A',
-            business_email: merged.email || 'N/A',
-            phone: merged.phone || 'N/A',
-            years_in_business: merged.orgStage || 'N/A',
-            specialties: merged.trainingType || 'N/A',
-            primary_challenges: Array.isArray(merged.challenges) ? merged.challenges.join(', ') : (merged.challenges || 'N/A'),
-            headcount_tier: merged.employees || 'N/A',
-            allocated_budget: merged.budgetRange || 'N/A',
-            estimated_timeline: merged.startDate || 'N/A',
-            challenge_notes: merged.biggestChallenge || merged.notes || merged.successDefinition || 'N/A',
-            country: merged.country || 'N/A',
-            city: merged.city || 'N/A',
-            industry: merged.industry || 'N/A',
-            job_title: merged.jobTitle || 'N/A',
-            delivery_format: merged.deliveryFormat || 'N/A',
-            language: merged.language || 'N/A',
-            employees_to_train: merged.employeesToTrain || 'N/A',
-            industry_experience: merged.industryExperience || 'N/A',
-            worked_before: merged.workedBefore || 'N/A',
-            what_was_missing: merged.whatWasMissing || 'N/A',
-            success_definition: merged.successDefinition || 'N/A',
-            notes: merged.notes || 'N/A',
-          }),
+          body: JSON.stringify(payload),
         });
 
-        if (res.ok) {
+        if (response.ok) {
           try {
             sessionStorage.removeItem(STORAGE_KEY);
           } catch {
@@ -91,19 +107,24 @@ export default function FindTrainingWizard() {
           }
           setDone(true);
         } else {
-          alert('Submission error. Please check form inputs.');
+          const resData = await response.json().catch(() => ({}));
+          console.error('Formspree error response:', resData);
+          alert('Submission failed. Please verify your contact information and try again.');
         }
-      } catch (err) {
-        console.error('Formspree submission error:', err);
-        alert('Network error submitting request.');
+      } catch (error) {
+        console.error('Network submission error:', error);
+        alert('Network connection error. Please try again.');
       } finally {
-        /* no-op */
+        setIsLoading(false);
       }
     }
   };
 
   const back = (e?: React.MouseEvent) => {
-    if (e) e.preventDefault();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     const prev = Math.max(1, step - 1);
     setStep(prev);
     persist(prev, data);
@@ -139,7 +160,7 @@ export default function FindTrainingWizard() {
             </div>
           ))}
         </div>
-        <Link href="/en" className="btn-secondary mt-10">
+        <Link href="/" className="btn-secondary mt-10 inline-flex items-center gap-2">
           Back to home <ArrowRight size={16} />
         </Link>
       </m.div>
@@ -195,11 +216,11 @@ export default function FindTrainingWizard() {
             <p className="mt-1 mb-7 text-sm text-body">
               Step {step} of 5 · progress saves automatically
             </p>
-            {step === 1 && <CompanyStep data={data} onNext={advance} />}
-            {step === 2 && <DecisionMakerStep data={data} onNext={advance} onBack={back} />}
-            {step === 3 && <ChallengesStep data={data} onNext={advance} onBack={back} />}
-            {step === 4 && <ScopeStep data={data} onNext={advance} onBack={back} />}
-            {step === 5 && <MatchingStep data={data} onNext={advance} onBack={back} />}
+            {step === 1 && <CompanyStep data={data} onNext={advance} isSubmitting={isLoading} />}
+            {step === 2 && <DecisionMakerStep data={data} onNext={advance} onBack={back} isSubmitting={isLoading} />}
+            {step === 3 && <ChallengesStep data={data} onNext={advance} onBack={back} isSubmitting={isLoading} />}
+            {step === 4 && <ScopeStep data={data} onNext={advance} onBack={back} isSubmitting={isLoading} />}
+            {step === 5 && <MatchingStep data={data} onNext={advance} onBack={back} isSubmitting={isLoading} />}
           </m.div>
         </AnimatePresence>
       </div>

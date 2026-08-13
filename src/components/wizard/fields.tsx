@@ -74,7 +74,15 @@ export function StepNav({
   return (
     <div className="mt-8 flex items-center justify-between">
       {onBack ? (
-        <button type="button" onClick={(e) => onBack(e)} className="btn-secondary">
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onBack(e);
+          }}
+          className="btn-secondary"
+        >
           Back
         </button>
       ) : (

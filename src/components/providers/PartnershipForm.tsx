@@ -12,73 +12,101 @@ const specialties = [
 ] as const;
 
 const schema = z.object({
-  companyName: z.string().trim().min(2, 'Company name is required').max(150, 'Company name is too long'),
-  contactName: z.string().trim().min(2, 'Your name is required').max(100, 'Name is too long'),
-  email: z.string().trim().max(254, 'Email is too long').email('Enter a valid business email'),
-  phone: z.string().trim().min(7, 'Enter a valid phone number').max(30, 'Phone number is too long'),
-  website: z
-    .string()
-    .trim()
-    .min(4, 'Website is required')
-    .max(500, 'URL is too long')
-    .refine((v) => /^(https?:\/\/)?[\w-]+(\.[\w-]+)+/.test(v), 'Enter a valid website'),
-  specialties: z.array(z.string()).min(1, 'Select at least one specialty'),
-  yearsInBusiness: z.string().min(1, 'Required'),
-  markets: z.string().trim().min(2, 'Tell us which GCC markets you serve').max(500, 'Response is too long'),
-  message: z.string().trim().min(20, 'Give us at least a couple of sentences (20+ characters)').max(5000, 'Message is too long'),
+  companyName: z.string().trim().min(1, 'Company name is required').max(150, 'Company name is too long'),
+  contactName: z.string().trim().min(1, 'Your name is required').max(100, 'Name is too long'),
+  email: z.string().trim().min(1, 'Business email is required').email('Enter a valid business email').max(254, 'Email is too long'),
+  phone: z.string().trim().optional().or(z.literal('')),
+  website: z.string().trim().optional().or(z.literal('')),
+  specialties: z.array(z.string()).optional().default([]),
+  yearsInBusiness: z.string().optional().or(z.literal('')),
+  markets: z.string().trim().optional().or(z.literal('')),
+  message: z.string().trim().optional().or(z.literal('')),
 });
 
 type FormValues = z.infer<typeof schema>;
 
 export default function PartnershipForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { specialties: [] },
+    defaultValues: {
+      companyName: '',
+      contactName: '',
+      email: '',
+      phone: '',
+      website: '',
+      specialties: [],
+      yearsInBusiness: '',
+      markets: '',
+      message: '',
+    },
   });
 
-  const selected = watch('specialties');
+  const selected = watch('specialties') || [];
 
-  const toggle = (s: string) => {
+  const toggle = (e: React.MouseEvent, s: string) => {
+    e.preventDefault();
+    e.stopPropagation();
     const next = selected.includes(s) ? selected.filter((x) => x !== s) : [...selected, s];
     setValue('specialties', next, { shouldValidate: true });
   };
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (formData: FormValues, e?: React.BaseSyntheticEvent | React.MouseEvent | React.FormEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    setIsLoading(true);
+
+    const payload = {
+      company_name: formData.companyName || 'N/A',
+      website: formData.website || 'N/A',
+      full_name: formData.contactName || 'N/A',
+      business_email: formData.email || 'N/A',
+      phone: formData.phone || 'N/A',
+      years_in_business: formData.yearsInBusiness || 'N/A',
+      specialties: Array.isArray(formData.specialties) ? formData.specialties.join(', ') : (formData.specialties || 'N/A'),
+      challenges: 'N/A',
+      markets_served: formData.markets || 'N/A',
+      headcount: 'N/A',
+      budget: 'N/A',
+      timeline: 'N/A',
+      description: formData.message || 'N/A',
+      message: formData.message || 'N/A',
+      submitted_at: new Date().toISOString(),
+    };
+
     try {
-      const res = await fetch('https://formspree.io/f/xppawggd', {
+      const response = await fetch('https://formspree.io/f/xppawggd', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({
-          company_name: data.companyName || 'N/A',
-          website: data.website || 'N/A',
-          full_name: data.contactName || 'N/A',
-          business_email: data.email || 'N/A',
-          phone: data.phone || 'N/A',
-          years_in_business: data.yearsInBusiness || 'N/A',
-          specialties: Array.isArray(data.specialties) ? data.specialties.join(', ') : (data.specialties || 'N/A'),
-          markets_served: data.markets || 'N/A',
-          message: data.message || 'N/A',
-        }),
+        body: JSON.stringify(payload),
       });
 
-      if (res.ok) {
+      if (response.ok) {
         setSubmitted(true);
       } else {
-        alert('Submission error. Please check your details and try again.');
+        const resData = await response.json().catch(() => ({}));
+        console.error('Formspree error response:', resData);
+        alert('Submission failed. Please verify your contact information and try again.');
       }
-    } catch (err) {
-      console.error('Formspree partnership submission error:', err);
-      alert('Network error. Please try again.');
+    } catch (error) {
+      console.error('Network submission error:', error);
+      alert('Network connection error. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -97,7 +125,15 @@ export default function PartnershipForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="card !p-8 sm:!p-10" noValidate>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit((data) => onSubmit(data, e))(e);
+      }}
+      className="card !p-8 sm:!p-10"
+      noValidate
+    >
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="companyName" className="field-label">Company name</label>
@@ -146,7 +182,7 @@ export default function PartnershipForm() {
               <button
                 key={s}
                 type="button"
-                onClick={() => toggle(s)}
+                onClick={(e) => toggle(e, s)}
                 aria-pressed={active}
                 className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
                   active
@@ -174,8 +210,8 @@ export default function PartnershipForm() {
         {errors.message && <p className="field-error" role="alert">{errors.message.message}</p>}
       </div>
 
-      <button type="submit" disabled={isSubmitting} className="btn-primary mt-8 w-full disabled:opacity-60 sm:w-auto">
-        {isSubmitting ? 'Submitting…' : 'Apply for partnership'} <Send size={16} />
+      <button type="submit" disabled={isLoading} className="btn-primary mt-8 w-full disabled:opacity-60 sm:w-auto">
+        {isLoading ? 'Submitting…' : 'Apply for partnership'} <Send size={16} />
       </button>
     </form>
   );
