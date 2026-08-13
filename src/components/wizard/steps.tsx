@@ -255,16 +255,36 @@ export function MatchingStep({ data, onNext, onBack, isSubmitting }: StepProps<S
           error={errors.notes}
         />
       </div>
-      <StepNav
-        onBack={onBack}
-        isSubmitting={isSubmitting}
-        nextLabel="Submit Training Request"
-        onSubmitClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          handleSubmit((values) => onNext(values, e))(e);
-        }}
-      />
+
+      <div className="mt-8 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
+        {onBack ? (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onBack(e);
+            }}
+            className="btn-secondary w-full sm:w-auto"
+          >
+            Back
+          </button>
+        ) : (
+          <span />
+        )}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleSubmit((values) => onNext(values, e))(e);
+          }}
+          disabled={isSubmitting}
+          className="w-full sm:w-auto px-8 py-4 bg-[#2451BF] text-white rounded-xl font-semibold shadow-lg hover:bg-blue-700 transition-all disabled:opacity-60"
+        >
+          {isSubmitting ? 'Submitting...' : 'Get Matched'}
+        </button>
+      </div>
     </form>
   );
 }

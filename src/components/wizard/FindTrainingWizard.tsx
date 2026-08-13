@@ -42,7 +42,7 @@ export default function FindTrainingWizard() {
   };
 
   const handleSubmit = async (
-    e?: React.BaseSyntheticEvent | React.MouseEvent | React.FormEvent,
+    e?: React.BaseSyntheticEvent | React.FormEvent | React.MouseEvent,
     finalValues?: object
   ) => {
     if (e) {
@@ -62,7 +62,7 @@ export default function FindTrainingWizard() {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          form_type: 'Looking for Training Request',
+          form_type: 'Looking for Training Request (5-Step Wizard)',
           company_name: currentData.companyName || (currentData as any).company || 'N/A',
           website: currentData.website || 'N/A',
           country: currentData.country || 'N/A',
@@ -98,7 +98,7 @@ export default function FindTrainingWizard() {
         }
         setIsSubmitted(true);
       } else {
-        alert('Submission failed. Please verify your details.');
+        alert('Submission failed. Please check your details and try again.');
       }
     } catch (error) {
       console.error('Network submission error:', error);
