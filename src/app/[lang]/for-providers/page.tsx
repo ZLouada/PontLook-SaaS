@@ -4,6 +4,8 @@ import Reveal from '@/components/shared/Reveal';
 import SectionHeading from '@/components/shared/SectionHeading';
 import LeadTiers from '@/components/providers/LeadTiers';
 import PartnershipForm from '@/components/providers/PartnershipForm';
+import { getDictionary } from '@/i18n';
+import { Locale, i18n, locales } from '@/i18n/config';
 import {
   ArrowRight, BadgeCheck, CalendarCheck, FileSignature, LineChart, PhoneCall,
   Rocket, SearchCheck, ShieldCheck, Wallet,
@@ -14,6 +16,10 @@ export const metadata: Metadata = {
   description:
     'Receive verified corporate training opportunities across the GCC on a pay-per-lead model.',
 };
+
+export async function generateStaticParams() {
+  return (i18n?.locales || locales || ['en']).map((lang) => ({ lang }));
+}
 
 const methodology = [
   {
@@ -47,23 +53,30 @@ const onboarding = [
   { icon: LineChart, step: 'Feedback loop', text: 'Your outcomes tune our matching: quality compounds over time.' },
 ];
 
-export default function ForProvidersPage() {
+export default async function ForProvidersPage({
+  params,
+}: {
+  params: Promise<{ lang: Locale }> | { lang: Locale };
+}) {
+  const resolvedParams = await params;
+  const lang = (resolvedParams?.lang as Locale) || 'en';
+  const dict = await getDictionary(lang);
+
   return (
     <>
       <section className="bg-hero-gradient pt-36 pb-20">
         <div className="container-site max-w-3xl">
           <Reveal>
-            <span className="chip">For training providers</span>
+            <span className="chip">{dict?.forProviders?.badge || 'For training providers'}</span>
             <h1 className="mt-5 text-4xl font-bold leading-tight sm:text-5xl">
-              Predictable revenue from buyers who are <span className="text-primary">already looking</span>
+              {dict?.forProviders?.headline || 'Predictable revenue from buyers who are already looking'}
             </h1>
             <p className="mt-5 text-lg leading-relaxed">
-              Referrals are unpredictable. Cold outreach is expensive. We deliver verified,
-              decision-maker-confirmed opportunities from GCC companies with real budgets, and you
-              only pay when a lead is qualified.
+              {dict?.forProviders?.subtitle ||
+                'Referrals are unpredictable. Cold outreach is expensive. We deliver verified, decision-maker-confirmed opportunities from GCC companies with real budgets, and you only pay when a lead is qualified.'}
             </p>
             <Link href="#apply" className="btn-primary mt-8">
-              Apply for partnership <ArrowRight size={17} />
+              {dict?.forProviders?.applyBtn || 'Apply for partnership'} <ArrowRight size={17} />
             </Link>
           </Reveal>
         </div>
@@ -92,7 +105,7 @@ export default function ForProvidersPage() {
         </div>
       </section>
 
-      <LeadTiers />
+      <LeadTiers dict={dict} lang={lang} />
 
       <section className="py-20 bg-slate-50/60">
         <div className="container-site px-6">
@@ -111,6 +124,7 @@ export default function ForProvidersPage() {
           </Reveal>
         </div>
       </section>
+
       <section className="bg-white py-24">
         <div className="container-site">
           <SectionHeading
@@ -139,12 +153,12 @@ export default function ForProvidersPage() {
       <section id="apply" className="bg-sky-gradient py-24 scroll-mt-24">
         <div className="container-site max-w-3xl">
           <SectionHeading
-            eyebrow="Partnership application"
+            eyebrow={dict?.forProviders?.form?.title || 'Partnership application'}
             title="Join the provider network"
-            subtitle="Tell us about your firm. If there’s a fit, you’ll hear from us within 2 business days."
+            subtitle={dict?.forProviders?.form?.subtitle || "Tell us about your firm. If there’s a fit, you’ll hear from us within 2 business days."}
           />
           <Reveal className="mt-12" delay={0.1}>
-            <PartnershipForm />
+            <PartnershipForm dict={dict} lang={lang} />
           </Reveal>
         </div>
       </section>

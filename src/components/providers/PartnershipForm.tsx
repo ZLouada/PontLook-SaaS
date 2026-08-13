@@ -4,13 +4,19 @@ import React, { useState } from 'react';
 import { CheckCircle2, Send } from 'lucide-react';
 import { useDictionary } from './DictionaryProvider';
 
+type PartnershipFormProps = {
+  dict?: any;
+  lang?: string;
+};
+
 const defaultSpecialties = [
   'Leadership Development', 'Sales Performance', 'AI & Digital Skills', 'Compliance',
   'Soft Skills & Communication', 'Customer Service', 'Safety Training', 'Executive Coaching',
 ] as const;
 
-export default function PartnershipForm() {
-  const dict = useDictionary();
+export default function PartnershipForm({ dict: propDict, lang }: PartnershipFormProps = {}) {
+  const contextDict = useDictionary();
+  const dict = propDict || contextDict;
   const t = dict?.forProviders?.form || {};
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -90,11 +96,11 @@ export default function PartnershipForm() {
       } else {
         const data = await res.json().catch(() => ({}));
         console.error('Formspree error response:', data);
-        alert('Submission error. Please verify your details.');
+        alert('Form submission failed. Please verify your details.');
       }
     } catch (err) {
-      console.error('Submit error:', err);
-      alert('Network error. Please try again.');
+      console.error('Submission error:', err);
+      alert('Network connection error. Please try again.');
     } finally {
       setIsLoading(false);
     }

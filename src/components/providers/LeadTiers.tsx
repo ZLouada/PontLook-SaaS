@@ -6,8 +6,14 @@ import Card from '@/components/shared/Card';
 import Badge from '@/components/shared/Badge';
 import { Flame, TrendingUp, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { m } from 'framer-motion';
+import { useDictionary } from './DictionaryProvider';
 
-const tiers = [
+type LeadTiersProps = {
+  dict?: any;
+  lang?: string;
+};
+
+const defaultTiers = [
   {
     icon: Flame,
     name: 'Hot',
@@ -46,7 +52,7 @@ const tiers = [
   },
 ];
 
-const signals = [
+const defaultSignals = [
   'Decision-maker identity and authority verified',
   'Company size and organizational maturity',
   'Budget disclosed and sanity-checked',
@@ -55,7 +61,10 @@ const signals = [
   'Depth and specificity of the challenge description',
 ];
 
-export default function LeadTiers() {
+export default function LeadTiers({ dict: propDict, lang }: LeadTiersProps = {}) {
+  const contextDict = useDictionary();
+  const dict = propDict || contextDict;
+
   return (
     <section className="relative bg-white py-28 lg:py-40 overflow-hidden" id="lead-quality">
       {/* Ambient background glow */}
@@ -63,13 +72,13 @@ export default function LeadTiers() {
 
       <div className="container-site px-6 sm:px-8 lg:px-12">
         <SectionHeading
-          eyebrow="Lead Quality Tiers"
+          eyebrow={dict?.provider_teaser?.badge || 'Lead Quality Tiers'}
           title="You always know what you’re walking into"
           subtitle="Every opportunity is scored before delivery. The tier tells you exactly how ready the buyer is."
         />
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {tiers.map((t, i) => {
+          {(defaultTiers || []).map((t, i) => {
             const Icon = t.icon;
             return (
               <Reveal key={t.name} delay={i * 0.1}>
@@ -124,7 +133,7 @@ export default function LeadTiers() {
             </p>
 
             <ul className="mt-6 grid gap-3 text-sm sm:grid-cols-2">
-              {signals.map((s) => (
+              {(defaultSignals || []).map((s) => (
                 <li key={s} className="flex items-center gap-2.5 text-slate-700 font-medium">
                   <CheckCircle2 size={16} className="text-emerald-500 shrink-0" />
                   <span>{s}</span>
