@@ -29,6 +29,36 @@ export const en = {
     },
     score: "Score"
   },
+  forProviders: {
+    badge: "For training providers",
+    headline: "Predictable revenue from buyers who are already looking",
+    subtitle: "Referrals are unpredictable. Cold outreach is expensive. We deliver verified, decision-maker-confirmed opportunities from GCC companies with real budgets, and you only pay when a lead is qualified.",
+    applyBtn: "Apply for partnership",
+    form: {
+      title: "Partnership application",
+      subtitle: "Tell us about your firm. If there’s a fit, you’ll hear from us within 2 business days.",
+      companyName: "Company name",
+      companyNamePlaceholder: "Acme Training Group",
+      website: "Website",
+      websitePlaceholder: "https://…",
+      fullName: "Your name",
+      fullNamePlaceholder: "Full name",
+      businessEmail: "Business email",
+      businessEmailPlaceholder: "you@company.com",
+      phone: "Phone",
+      phonePlaceholder: "+966 …",
+      yearsInBusiness: "Years in business",
+      specialties: "Training specialties",
+      markets: "GCC markets you serve",
+      marketsPlaceholder: "e.g., Saudi Arabia, UAE, Qatar",
+      message: "Tell us about your ideal client and track record",
+      messagePlaceholder: "Typical engagement size, notable clients, differentiators…",
+      submit: "Apply for partnership",
+      submitting: "Submitting…",
+      successTitle: "Application received",
+      successMessage: "Thank you, our partnerships team will review your profile and reach out within 2 business days to schedule your qualification call. Next steps: qualification call → partnership agreement → onboarding → first opportunities."
+    }
+  },
   footer: {
     about: "We identify GCC organizations experiencing verified workforce challenges and connect them with the right corporate training providers. Qualified opportunities only, no retainers, no cold outreach.",
     location: "31 Continental Dr, Newark, Delaware 19713, US",
