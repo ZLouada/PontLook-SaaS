@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -254,7 +255,16 @@ export function MatchingStep({ data, onNext, onBack, isSubmitting }: StepProps<S
           error={errors.notes}
         />
       </div>
-      <StepNav onBack={onBack} isSubmitting={isSubmitting} nextLabel="Submit Training Request" />
+      <StepNav
+        onBack={onBack}
+        isSubmitting={isSubmitting}
+        nextLabel="Submit Training Request"
+        onSubmitClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          handleSubmit((values) => onNext(values, e))(e);
+        }}
+      />
     </form>
   );
 }

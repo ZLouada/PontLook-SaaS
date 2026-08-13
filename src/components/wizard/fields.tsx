@@ -69,8 +69,16 @@ export function TextArea({
 }
 
 export function StepNav({
-  onBack, isSubmitting, nextLabel = 'Continue',
-}: { onBack?: (e?: React.MouseEvent) => void; isSubmitting?: boolean; nextLabel?: string }) {
+  onBack,
+  isSubmitting,
+  nextLabel = 'Continue',
+  onSubmitClick,
+}: {
+  onBack?: (e?: React.MouseEvent) => void;
+  isSubmitting?: boolean;
+  nextLabel?: string;
+  onSubmitClick?: (e: React.MouseEvent) => void;
+}) {
   return (
     <div className="mt-8 flex items-center justify-between">
       {onBack ? (
@@ -88,7 +96,12 @@ export function StepNav({
       ) : (
         <span />
       )}
-      <button type="submit" disabled={isSubmitting} className="btn-primary disabled:opacity-60">
+      <button
+        type={onSubmitClick ? 'button' : 'submit'}
+        onClick={onSubmitClick}
+        disabled={isSubmitting}
+        className="btn-primary disabled:opacity-60"
+      >
         {isSubmitting ? 'Saving…' : nextLabel}
       </button>
     </div>
