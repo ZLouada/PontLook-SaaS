@@ -130,6 +130,46 @@ export default async function RootLayout({
       <head>
         <script
           type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "WebSite",
+                  "@id": "https://pontlook.com/#website",
+                  "url": "https://pontlook.com",
+                  "name": "PontLook",
+                  "description": "GCC Corporate Training Matchmaking Platform",
+                  "inLanguage": ["en", "ar"]
+                },
+                {
+                  "@type": "Organization",
+                  "@id": "https://pontlook.com/#organization",
+                  "name": "PontLook",
+                  "alternateName": ["Pont Look", "pontlook", "PontLook SaaS"],
+                  "url": "https://pontlook.com",
+                  "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://pontlook.com/PontlookIcon.png",
+                    "width": 512,
+                    "height": 512
+                  },
+                  "sameAs": [
+                    "https://www.linkedin.com/company/pontlook",
+                    "https://x.com/pontlook"
+                  ],
+                  "contactPoint": {
+                    "@type": "ContactPoint",
+                    "email": "contact@pontlook.com",
+                    "contactType": "customer service"
+                  }
+                }
+              ]
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteNavigationSchema) }}
         />
       </head>
