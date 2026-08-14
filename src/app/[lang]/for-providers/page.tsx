@@ -2,17 +2,38 @@ import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import PartnershipForm from '@/components/providers/PartnershipForm';
 import LeadTiers from '@/components/providers/LeadTiers';
+import Reveal from '@/components/shared/Reveal';
+import SectionHeading from '@/components/shared/SectionHeading';
+import { ShieldCheck, Target, Sparkles, DollarSign, Users, Award } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'For Training Providers | PontLook',
   description:
-    'Receive verified corporate training opportunities across the GCC on a pay-per-lead model.',
+    'Receive verified corporate training opportunities across the GCC on a zero-retainer, pay-per-lead model.',
 };
 
 export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
 }
+
+const providerBenefits = [
+  {
+    icon: DollarSign,
+    title: 'Zero Retainer Risk',
+    text: 'No monthly management fees or fixed retainers. You pay strictly per verified decision-maker delivered.',
+  },
+  {
+    icon: Target,
+    title: 'Pre-Qualified GCC Buyers',
+    text: 'Every lead has confirmed corporate training needs, authority, and explicit problem definitions.',
+  },
+  {
+    icon: Award,
+    title: 'Consistent Pipeline',
+    text: 'Keep your business development active and predictable throughout the year, even during delivery seasons.',
+  },
+];
 
 export default async function ForProvidersPage({
   params,
@@ -30,13 +51,56 @@ export default async function ForProvidersPage({
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 dark:bg-slate-950 py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto space-y-16">
-        <LeadTiers dict={dict} lang={lang} />
-        <div id="apply">
-          <PartnershipForm dict={dict} lang={lang} />
-        </div>
+    <>
+      {/* Light Hero Section */}
+      <div className="bg-hero-gradient">
+        <section className="container-site pt-36 pb-20">
+          <Reveal className="mx-auto max-w-3xl text-center">
+            <span className="chip mx-auto">For Training Providers</span>
+            <h1 className="mt-5 text-4xl font-extrabold sm:text-5xl lg:text-6xl text-slate-900 leading-tight">
+              Enterprise Training Leads <span className="text-primary">On Demand</span>
+            </h1>
+            <p className="mt-5 text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
+              Connect directly with GCC corporate decision-makers actively seeking training solutions. Zero retainers, 100% pay-per-lead.
+            </p>
+          </Reveal>
+        </section>
       </div>
-    </main>
+
+      {/* Main Content Area */}
+      <section className="bg-white py-20 border-t border-slate-100">
+        <div className="container-site max-w-6xl mx-auto px-6 space-y-24">
+          {/* 3 Quick Value Props */}
+          <div className="grid gap-6 md:grid-cols-3">
+            {providerBenefits.map((b, i) => (
+              <Reveal key={b.title} delay={i * 0.1}>
+                <div className="card h-full text-center flex flex-col items-center !p-8 bg-slate-50/80 border border-slate-200/80 rounded-3xl hover:bg-white hover:shadow-lg transition-all duration-300">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary mb-4">
+                    <b.icon size={24} />
+                  </span>
+                  <h3 className="text-lg font-bold text-slate-900">{b.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{b.text}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          {/* Lead Tiers Section */}
+          <LeadTiers dict={dict} lang={lang} />
+
+          {/* Partnership Form Section */}
+          <div id="apply" className="scroll-mt-24">
+            <SectionHeading
+              eyebrow="Provider Application"
+              title="Apply to Join Our Network"
+              subtitle="Submit your company credentials and training specializations to begin receiving qualified enterprise requests."
+            />
+            <Reveal className="mx-auto mt-12 max-w-3xl">
+              <PartnershipForm dict={dict} lang={lang} />
+            </Reveal>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

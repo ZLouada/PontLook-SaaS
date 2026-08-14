@@ -129,10 +129,10 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
 
   if (isSubmitted) {
     return (
-      <div className="card text-center !p-12">
+      <div className="bg-white border border-slate-200/80 rounded-3xl text-center p-10 sm:p-14 shadow-sm">
         <CheckCircle2 size={48} className="mx-auto text-emerald-500" />
-        <h3 className="mt-5 text-2xl">{successTitle}</h3>
-        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+        <h3 className="mt-5 text-2xl font-bold text-slate-900 font-heading">{successTitle}</h3>
+        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 font-sans">
           {successMessage}
         </p>
       </div>
@@ -140,12 +140,12 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
   }
 
   return (
-    <div className="card !p-8 sm:!p-10">
+    <div className="bg-white border border-slate-200/80 rounded-3xl p-8 sm:p-12 shadow-sm">
       <div className="mb-8 text-center sm:text-left">
-        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-heading">
           {formTitle}
         </h2>
-        <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+        <p className="mt-2 text-sm text-slate-600 font-sans">
           {formSubtitle}
         </p>
       </div>
