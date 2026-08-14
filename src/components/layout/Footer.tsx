@@ -88,7 +88,9 @@ export default function Footer() {
 
       <div className="border-t border-slate-800/80 py-6 bg-slate-950/80 backdrop-blur-md">
         <div className="container-site flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500 px-6 sm:px-8 lg:px-12">
-          <p>© 2019 - {year} {dict.footer.rights}</p>
+          <p className="text-xs text-slate-400">
+            © 2025-2026 PontLook, operating under Firstnestcare, LLC. All rights reserved.
+          </p>
           <div className="flex items-center gap-2 text-slate-400">
             <ShieldCheck size={14} className="text-accent-secondary" />
             <span>GCC B2B Corporate Matchmaking Platform</span>

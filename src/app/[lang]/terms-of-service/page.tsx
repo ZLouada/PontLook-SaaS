@@ -160,21 +160,6 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                   Any legal suit, action, or proceeding arising out of or related to these Terms or the PontLook platform shall be instituted exclusively in the state or federal courts located in San Francisco, California or New Castle County, Delaware, and each party irrevocably submits to the jurisdiction of such courts.
                 </p>
               </div>
-
-              {/* 9. Contact Information */}
-              <div className="bg-primary/5 p-8 rounded-3xl border border-primary/20">
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
-                  9. Contact Us
-                </h2>
-                <p className="mb-4">
-                  For questions or legal inquiries regarding these Terms of Service, please contact:
-                </p>
-                <div className="text-slate-700 font-medium space-y-1 text-sm">
-                  <p className="font-bold text-slate-900 text-base">Firstnestcare, LLC d/b/a PontLook</p>
-                  <p>31 Continental Dr, Newark, Delaware 19713, US</p>
-                  <p>Email: <a href="mailto:contact@pontlook.com" className="text-primary hover:underline">contact@pontlook.com</a></p>
-                </div>
-              </div>
             </div>
           </Reveal>
         </div>

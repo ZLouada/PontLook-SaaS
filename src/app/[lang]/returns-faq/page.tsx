@@ -188,10 +188,6 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
                   <p className="text-slate-600 text-sm">
                     Our support team is ready to assist you with any questions regarding returns, orders, or quality inquiries.
                   </p>
-                  <div className="mt-4 text-slate-700 text-xs space-y-1">
-                    <p className="font-semibold text-slate-900">Firstnestcare, LLC d/b/a PontLook</p>
-                    <p>31 Continental Dr, Newark, Delaware 19713, US</p>
-                  </div>
                 </div>
                 <Link
                   href={`/${lang}/contact`}
