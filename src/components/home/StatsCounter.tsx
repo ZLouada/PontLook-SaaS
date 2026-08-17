@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useInView, useMotionValue, useTransform, animate, m } from 'framer-motion';
+import { useInView, useMotionValue, useTransform, animate, m, useReducedMotion } from 'framer-motion';
 import { Building2, CheckCircle2, Clock, Globe } from 'lucide-react';
 import Card from '@/components/shared/Card';
 
@@ -15,18 +15,21 @@ const stats = [
 function Counter({ end, suffix }: { end: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const propsInView = useInView(ref, { once: true, margin: '-40px' });
+  const shouldReduceMotion = useReducedMotion();
 
-  const count = useMotionValue(0);
+  const count = useMotionValue(end);
   const rounded = useTransform(count, (latest) => Math.round(latest));
 
   useEffect(() => {
-    if (propsInView) {
-      animate(count, end, {
+    if (propsInView && !shouldReduceMotion) {
+      count.set(0);
+      const controls = animate(count, end, {
         duration: 1.8,
         ease: [0.16, 1, 0.3, 1],
       });
+      return () => controls.stop();
     }
-  }, [propsInView, end, count]);
+  }, [propsInView, end, count, shouldReduceMotion]);
 
   return (
     <span

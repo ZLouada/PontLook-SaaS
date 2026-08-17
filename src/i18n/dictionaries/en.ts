@@ -64,6 +64,6 @@ export const en = {
     location: "31 Continental Dr, Newark, Delaware 19713, US",
     platform: "Platform",
     get_in_touch: "Get in touch",
-    rights: "Pontlook, LLC. All rights reserved."
+    rights: "© 2025-2026 PontLook, operating under Firstnestcare, LLC. All rights reserved."
   }
 };

@@ -33,7 +33,7 @@ next-env.d.ts
 *.log
 
 # Local Development Paths & Tool Outputs
-home/
+/home/
 scripts/
 .agents/
 

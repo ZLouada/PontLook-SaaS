@@ -12,7 +12,7 @@ const steps = [
     badge: 'Step 01',
     title: 'Detect Need',
     subtitle:
-      'Market intelligence surfaces GCC companies with verified workforce challenges — before they start searching.',
+      'Market intelligence surfaces GCC companies with verified workforce challenges, before they start searching.',
     mockup: (
       <div className="w-full max-w-sm rounded-2xl border border-slate-200/80 bg-white/90 backdrop-blur-md shadow-lg p-5 flex flex-col gap-3 relative z-10">
         <div className="flex items-center gap-3 pb-3 border-b border-slate-100">

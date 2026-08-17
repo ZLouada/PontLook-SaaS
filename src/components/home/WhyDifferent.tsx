@@ -24,7 +24,7 @@ const items = [
   {
     icon: Target,
     title: 'Intelligence-driven targeting',
-    text: 'We find demand signals in the market — not lists to spam. Every opportunity starts with evidence.',
+    text: 'We find demand signals in the market, not lists to spam. Every opportunity starts with evidence.',
     mockup: (
       <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-sm border border-slate-200/80 w-4/5 p-4 flex flex-col gap-2.5">
         <div className="flex items-center gap-3 mb-1">
@@ -74,7 +74,7 @@ const items = [
   {
     icon: Building2,
     title: 'Validated decision-makers',
-    text: 'You talk to the CHRO, CEO, or L&D owner with authority to buy — not a gatekeeper.',
+    text: 'You talk to the CHRO, CEO, or L&D owner with authority to buy, not a gatekeeper.',
     mockup: (
       <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-sm border border-slate-200/80 w-4/5 p-4 flex items-center gap-3.5">
         <div className="h-10 w-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center font-bold relative shrink-0">
@@ -149,7 +149,7 @@ const items = [
   {
     icon: TrendingUp,
     title: 'GCC specialization',
-    text: 'Saudi Arabia, UAE, and the wider GCC — tailored to local market dynamics and corporate regulations.',
+    text: 'Saudi Arabia, UAE, and the wider GCC: tailored to local market dynamics and corporate regulations.',
     mockup: (
       <div className="relative w-4/5 aspect-[2/1] bg-slate-50/80 rounded-xl overflow-hidden border border-slate-200/80 flex items-center justify-center">
         <div className="flex flex-col items-center gap-1.5 z-10">
