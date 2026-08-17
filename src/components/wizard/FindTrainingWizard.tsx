@@ -52,6 +52,13 @@ export default function FindTrainingWizard() {
 
     setIsLoading(true);
     const currentData = { ...formData, ...(finalValues || {}) };
+
+    if ((currentData as any)._gotcha) {
+      setIsSubmitted(true);
+      setIsLoading(false);
+      return;
+    }
+
     console.log('Submitting FindTrainingWizard form data...', currentData);
 
     try {
@@ -83,6 +90,7 @@ export default function FindTrainingWizard() {
             currentData.notes ||
             currentData.successDefinition ||
             'N/A',
+          _gotcha: (currentData as any)._gotcha || '',
           submitted_at: new Date().toISOString(),
         }),
       });
@@ -210,6 +218,17 @@ export default function FindTrainingWizard() {
       </nav>
 
       <div className="card !p-7 sm:!p-10">
+        {/* Invisible spam honeypot */}
+        <input
+          type="text"
+          name="_gotcha"
+          value={(formData as any)._gotcha || ''}
+          onChange={(e) => setFormData((prev) => ({ ...prev, _gotcha: e.target.value }))}
+          style={{ display: 'none' }}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+
         <AnimatePresence mode="wait">
           <m.div
             key={step}

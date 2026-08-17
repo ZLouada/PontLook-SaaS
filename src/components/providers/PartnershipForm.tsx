@@ -82,9 +82,16 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
       e.preventDefault();
       e.stopPropagation();
     }
+
+    if ((formData as any)._gotcha) {
+      setIsSubmitted(true);
+      return;
+    }
+
     setIsLoading(true);
 
     const payload = {
+      form_type: 'Training Provider Partnership Application',
       company_name: formData.companyName || 'N/A',
       website: formData.website || 'N/A',
       full_name: formData.fullName || 'N/A',
@@ -99,6 +106,7 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
       markets_served: formData.markets || 'N/A',
       description: formData.description || formData.message || 'N/A',
       message: formData.message || formData.description || 'N/A',
+      _gotcha: (formData as any)._gotcha || '',
       submitted_at: new Date().toISOString(),
     };
 
@@ -151,6 +159,17 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
       </div>
 
       <form onSubmit={handleSubmit} noValidate={false}>
+        {/* Invisible spam honeypot */}
+        <input
+          type="text"
+          name="_gotcha"
+          value={(formData as any)._gotcha || ''}
+          onChange={handleChange}
+          style={{ display: 'none' }}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label htmlFor="companyName" className="field-label">
