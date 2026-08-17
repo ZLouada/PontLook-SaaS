@@ -1,4 +1,4 @@
-import { WizardData } from '@/components/wizard/schemas';
+import { WizardData, isCorporateEmail } from '@/components/wizard/schemas';
 
 export type LeadTier = 'HOT' | 'WARM' | 'QUALIFIED';
 
@@ -20,14 +20,24 @@ export function calculateLeadScore(data: WizardData): LeadScoreResult {
   let score = 0;
 
   // 1. Business Email Check (max 15 pts)
-  const isBusinessEmail = Boolean(
-    data.email && !/@(gmail|yahoo|hotmail|outlook|icloud)\./i.test(data.email)
-  );
+  const emailToCheck = data.workEmail || data.email || '';
+  const isBusinessEmail = isCorporateEmail(emailToCheck);
   if (isBusinessEmail) score += 15;
 
-  // 2. Company Size / Org Stage (max 20 pts)
+  // 2. Company Size / Cohort Scale (max 20 pts)
   let companySizeValid = false;
-  if (data.employees) {
+  if (data.cohortSize) {
+    companySizeValid = true;
+    if (data.cohortSize === '50_plus_enterprise') {
+      score += 20;
+    } else if (data.cohortSize === '21_50_dept' || data.cohortSize === '1_5_execs') {
+      score += 15;
+    } else if (data.cohortSize === '6_20_team') {
+      score += 10;
+    } else {
+      score += 5;
+    }
+  } else if (data.employees) {
     companySizeValid = true;
     if (data.employees === '5,000+' || data.employees === '1,001–5,000') {
       score += 20;
@@ -42,7 +52,23 @@ export function calculateLeadScore(data: WizardData): LeadScoreResult {
 
   // 3. Allocated Budget Range (max 25 pts)
   let budgetAllocated = false;
-  if (data.budgetRange) {
+  if (data.budgetBand) {
+    if (data.budgetBand === '50k_plus') {
+      score += 25;
+      budgetAllocated = true;
+    } else if (data.budgetBand === '25k_50k') {
+      score += 20;
+      budgetAllocated = true;
+    } else if (data.budgetBand === '10k_25k') {
+      score += 15;
+      budgetAllocated = true;
+    } else if (data.budgetBand === 'pending_guidance') {
+      score += 12;
+      budgetAllocated = true;
+    } else if (data.budgetBand === 'under_10k') {
+      score += 10;
+    }
+  } else if (data.budgetRange) {
     if (data.budgetRange === '$100,000+' || data.budgetRange === '$50,000 – $100,000') {
       score += 25;
       budgetAllocated = true;
@@ -74,7 +100,9 @@ export function calculateLeadScore(data: WizardData): LeadScoreResult {
       title.includes('partner') ||
       title.includes('owner') ||
       title.includes('ceo') ||
-      title.includes('chro')
+      title.includes('chro') ||
+      title.includes('l&d') ||
+      title.includes('human capital')
     ) {
       score += 15;
     } else if (title.includes('manager') || title.includes('lead')) {
@@ -86,7 +114,19 @@ export function calculateLeadScore(data: WizardData): LeadScoreResult {
 
   // 5. Timeline Urgency (max 15 pts)
   let highUrgencyTimeline = false;
-  if (data.startDate) {
+  if (data.timeline) {
+    if (data.timeline === 'immediate') {
+      score += 15;
+      highUrgencyTimeline = true;
+    } else if (data.timeline === 'within_30_days') {
+      score += 12;
+      highUrgencyTimeline = true;
+    } else if (data.timeline === 'next_quarter') {
+      score += 8;
+    } else {
+      score += 5;
+    }
+  } else if (data.startDate) {
     score += 15;
     highUrgencyTimeline = true;
   }
@@ -94,11 +134,12 @@ export function calculateLeadScore(data: WizardData): LeadScoreResult {
   // 6. Detailed Challenge Notes & Context (max 10 pts)
   let detailedContextProvided = false;
   const totalNotesLen =
+    (data.additionalContext?.length || 0) +
     (data.biggestChallenge?.length || 0) +
     (data.successDefinition?.length || 0) +
     (data.notes?.length || 0);
 
-  if (totalNotesLen >= 100) {
+  if (totalNotesLen >= 50) {
     score += 10;
     detailedContextProvided = true;
   } else if (totalNotesLen > 0) {
@@ -112,10 +153,10 @@ export function calculateLeadScore(data: WizardData): LeadScoreResult {
   let tier: LeadTier = 'QUALIFIED';
   let tierColor = '#2563EB'; // Blue
 
-  if (finalScore >= 90) {
+  if (finalScore >= 85) {
     tier = 'HOT';
     tierColor = '#DC2626'; // Red/Hot
-  } else if (finalScore >= 70) {
+  } else if (finalScore >= 65) {
     tier = 'WARM';
     tierColor = '#D97706'; // Amber/Warm
   } else {
