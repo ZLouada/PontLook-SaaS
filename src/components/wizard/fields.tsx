@@ -36,11 +36,11 @@ export function FormTextField({
   return (
     <div className="w-full">
       <div className="mb-2 flex items-center justify-between">
-        <label htmlFor={id} className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+        <label htmlFor={id} className="text-sm font-semibold text-slate-800">
           {label}
         </label>
         {optional && (
-          <span className="text-xs font-normal text-slate-400 dark:text-slate-500">
+          <span className="text-xs font-normal text-slate-400">
             Optional
           </span>
         )}
@@ -59,25 +59,25 @@ export function FormTextField({
           autoComplete={autoComplete}
           aria-invalid={hasError}
           aria-describedby={hasError ? `${id}-error` : hint ? `${id}-hint` : undefined}
-          className={`w-full rounded-xl border bg-white px-4 py-3.5 text-sm text-slate-900 shadow-sm transition-all placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-1 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500 ${
+          className={`w-full rounded-xl border bg-white px-4 py-3.5 text-sm text-slate-900 shadow-sm transition-all placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-1 ${
             icon ? 'ps-11' : ''
           } ${
             hasError
-              ? 'border-red-500 bg-red-50/20 text-red-900 focus:border-red-500 focus:ring-red-400 dark:border-red-500 dark:bg-red-950/20 dark:text-red-100'
-              : 'border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-blue-600 dark:border-slate-800 dark:hover:border-slate-700 dark:focus:border-blue-500'
+              ? 'border-red-500 bg-red-50/20 text-red-900 focus:border-red-500 focus:ring-red-400'
+              : 'border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-blue-600'
           }`}
           {...registration}
         />
       </div>
 
       {hint && !hasError && (
-        <p id={`${id}-hint`} className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
+        <p id={`${id}-hint`} className="mt-1.5 text-xs text-slate-500">
           {hint}
         </p>
       )}
 
       {hasError && (
-        <p id={`${id}-error`} className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-red-600 dark:text-red-400" role="alert">
+        <p id={`${id}-error`} className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-red-600" role="alert">
           <span>{error?.message}</span>
         </p>
       )}
@@ -104,11 +104,11 @@ export function FormSelectField({
   return (
     <div className="w-full">
       <div className="mb-2 flex items-center justify-between">
-        <label htmlFor={id} className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+        <label htmlFor={id} className="text-sm font-semibold text-slate-800">
           {label}
         </label>
         {optional && (
-          <span className="text-xs font-normal text-slate-400 dark:text-slate-500">
+          <span className="text-xs font-normal text-slate-400">
             Optional
           </span>
         )}
@@ -119,10 +119,10 @@ export function FormSelectField({
           id={id}
           aria-invalid={hasError}
           aria-describedby={hasError ? `${id}-error` : hint ? `${id}-hint` : undefined}
-          className={`w-full appearance-none rounded-xl border bg-white px-4 py-3.5 pe-10 text-sm text-slate-900 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-1 dark:bg-slate-900 dark:text-white ${
+          className={`w-full appearance-none rounded-xl border bg-white px-4 py-3.5 pe-10 text-sm text-slate-900 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-1 ${
             hasError
-              ? 'border-red-500 bg-red-50/20 focus:border-red-500 focus:ring-red-400 dark:border-red-500'
-              : 'border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-blue-600 dark:border-slate-800 dark:hover:border-slate-700'
+              ? 'border-red-500 bg-red-50/20 focus:border-red-500 focus:ring-red-400'
+              : 'border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-blue-600'
           }`}
           {...registration}
         >
@@ -144,13 +144,13 @@ export function FormSelectField({
       </div>
 
       {hint && !hasError && (
-        <p id={`${id}-hint`} className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
+        <p id={`${id}-hint`} className="mt-1.5 text-xs text-slate-500">
           {hint}
         </p>
       )}
 
       {hasError && (
-        <p id={`${id}-error`} className="mt-1.5 text-xs font-medium text-red-600 dark:text-red-400" role="alert">
+        <p id={`${id}-error`} className="mt-1.5 text-xs font-medium text-red-600" role="alert">
           {error?.message}
         </p>
       )}
@@ -179,7 +179,7 @@ export function PhoneInputWithCountry({
   return (
     <div className="w-full">
       <div className="mb-2 flex items-center justify-between">
-        <label htmlFor={phoneId} className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+        <label htmlFor={phoneId} className="text-sm font-semibold text-slate-800">
           {label}
         </label>
         <span className="text-xs font-medium text-slate-400">Direct GCC verification line</span>
@@ -190,7 +190,7 @@ export function PhoneInputWithCountry({
         <div className="relative min-w-[130px] sm:min-w-[145px]">
           <select
             id={codeRegistration.name}
-            className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3.5 pe-8 text-sm font-medium text-slate-900 shadow-sm transition-all hover:border-slate-300 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-slate-800 dark:bg-slate-800 dark:text-white"
+            className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3.5 pe-8 text-sm font-medium text-slate-900 shadow-sm transition-all hover:border-slate-300 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...codeRegistration}
           >
             {GCC_COUNTRIES.map((c) => (
@@ -212,10 +212,10 @@ export function PhoneInputWithCountry({
             placeholder="50 123 4567"
             aria-invalid={hasError}
             aria-describedby={hasError ? `${phoneId}-error` : hint ? `${phoneId}-hint` : undefined}
-            className={`w-full rounded-xl border bg-white px-4 py-3.5 text-sm text-slate-900 shadow-sm transition-all placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-1 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500 ${
+            className={`w-full rounded-xl border bg-white px-4 py-3.5 text-sm text-slate-900 shadow-sm transition-all placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-1 ${
               hasError
-                ? 'border-red-500 bg-red-50/20 text-red-900 focus:border-red-500 focus:ring-red-400 dark:border-red-500'
-                : 'border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-blue-600 dark:border-slate-800 dark:hover:border-slate-700'
+                ? 'border-red-500 bg-red-50/20 text-red-900 focus:border-red-500 focus:ring-red-400'
+                : 'border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-blue-600'
             }`}
             {...phoneRegistration}
           />
@@ -223,13 +223,13 @@ export function PhoneInputWithCountry({
       </div>
 
       {hint && !hasError && (
-        <p id={`${phoneId}-hint`} className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
+        <p id={`${phoneId}-hint`} className="mt-1.5 text-xs text-slate-500">
           {hint}
         </p>
       )}
 
       {hasError && (
-        <p id={`${phoneId}-error`} className="mt-1.5 text-xs font-medium text-red-600 dark:text-red-400" role="alert">
+        <p id={`${phoneId}-error`} className="mt-1.5 text-xs font-medium text-red-600" role="alert">
           {phoneError?.message || codeError?.message}
         </p>
       )}
@@ -251,10 +251,10 @@ export function StepNavigation({
   trustMessage?: string;
 }) {
   return (
-    <div className="mt-10 border-t border-slate-100 pt-6 dark:border-slate-800">
+    <div className="mt-10 border-t border-slate-100 pt-6">
       {trustMessage && (
-        <div className="mb-4 flex items-center justify-center gap-1.5 text-xs font-medium text-slate-500 dark:text-slate-400">
-          <Lock size={13} className="text-emerald-600 dark:text-emerald-400" />
+        <div className="mb-4 flex items-center justify-center gap-1.5 text-xs font-medium text-slate-500">
+          <Lock size={13} className="text-emerald-600" />
           <span>{trustMessage}</span>
         </div>
       )}
@@ -268,7 +268,7 @@ export function StepNavigation({
               e.stopPropagation();
               onBack(e);
             }}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:bg-slate-50 hover:text-slate-900 active:scale-[0.99] dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:bg-slate-50 hover:text-slate-900 active:scale-[0.99] sm:w-auto"
           >
             <ArrowLeft size={16} />
             <span>Back</span>

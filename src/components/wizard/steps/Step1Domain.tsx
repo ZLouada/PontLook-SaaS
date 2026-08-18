@@ -112,17 +112,17 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
       {/* Header section */}
       <div>
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-2xl">
+          <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
             What training domains do you need?
           </h2>
           {selectedDomains.length > 0 && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 dark:bg-blue-950/40 dark:text-blue-300">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
               <Sparkles size={13} />
               {selectedDomains.length} {selectedDomains.length === 1 ? 'domain' : 'domains'} selected
             </span>
           )}
         </div>
-        <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+        <p className="mt-1 text-sm text-slate-600">
           Select all target capabilities for your enterprise cohort. We’ll match specialized GCC providers with proven ROI.
         </p>
       </div>
@@ -137,7 +137,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder='Search topics e.g. "PMP", "Vision 2030", "Generative AI", "Commercial Sales", "GRC"...'
-          className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3.5 ps-11 pe-10 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-slate-800 dark:bg-slate-900/60 dark:text-white dark:placeholder:text-slate-500"
+          className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3.5 ps-11 pe-10 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600"
         />
         {searchQuery && (
           <button
@@ -166,8 +166,8 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                 aria-pressed={isSelected}
                 className={`group relative flex flex-col justify-between rounded-2xl border p-5 text-start transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 ${
                   isSelected
-                    ? 'border-blue-600 bg-gradient-to-b from-blue-50/80 to-blue-50/30 shadow-md ring-1 ring-blue-600 dark:border-blue-500 dark:from-blue-950/50 dark:to-blue-950/20'
-                    : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/60 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-slate-700'
+                    ? 'border-blue-600 bg-gradient-to-b from-blue-50/80 to-blue-50/30 shadow-md ring-1 ring-blue-600'
+                    : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/60 hover:shadow-sm'
                 }`}
               >
                 <div>
@@ -176,7 +176,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                       className={`flex h-11 w-11 items-center justify-center rounded-xl transition-colors ${
                         isSelected
                           ? 'bg-blue-600 text-white shadow-sm'
-                          : 'bg-slate-100 text-slate-600 group-hover:bg-blue-50 group-hover:text-blue-600 dark:bg-slate-800 dark:text-slate-300'
+                          : 'bg-slate-100 text-slate-600 group-hover:bg-blue-50 group-hover:text-blue-600'
                       }`}
                     >
                       <IconComponent size={22} />
@@ -186,7 +186,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                       className={`flex h-6 w-6 items-center justify-center rounded-full border transition-all ${
                         isSelected
                           ? 'border-blue-600 bg-blue-600 text-white'
-                          : 'border-slate-300 bg-white dark:border-slate-700 dark:bg-slate-800'
+                          : 'border-slate-300 bg-white'
                       }`}
                       aria-hidden="true"
                     >
@@ -198,10 +198,10 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                     </div>
                   </div>
 
-                  <h3 className="mt-3.5 text-base font-bold text-slate-900 dark:text-white">
+                  <h3 className="mt-3.5 text-base font-bold text-slate-900">
                     {domain.title}
                   </h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-600">
                     {domain.subtitle}
                   </p>
                 </div>
@@ -213,8 +213,8 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                       key={kw}
                       className={`rounded-md px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ${
                         isSelected
-                          ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-200'
-                          : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
+                          ? 'bg-blue-100 text-blue-800'
+                          : 'bg-slate-100 text-slate-500'
                       }`}
                     >
                       {kw}
@@ -227,8 +227,8 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
         </div>
 
         {filteredDomains.length === 0 && (
-          <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center dark:border-slate-800 dark:bg-slate-900/40">
-            <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+          <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+            <p className="text-sm font-semibold text-slate-700">
               No standard catalog match for &quot;{searchQuery}&quot;
             </p>
             <p className="mt-1 text-xs text-slate-500">
@@ -252,7 +252,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
         )}
 
         {errors.domains && (
-          <p className="text-xs font-medium text-red-600 dark:text-red-400" role="alert">
+          <p className="text-xs font-medium text-red-600" role="alert">
             {errors.domains.message}
           </p>
         )}
@@ -260,14 +260,14 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
 
       {/* Inline custom topic input if 'other' is selected */}
       {isOtherSelected && (
-        <div className="rounded-2xl border border-blue-200 bg-blue-50/40 p-5 dark:border-blue-900/60 dark:bg-blue-950/20">
+        <div className="rounded-2xl border border-blue-200 bg-blue-50/40 p-5">
           <div className="flex items-center gap-2">
-            <Sliders size={18} className="text-blue-600 dark:text-blue-400" />
-            <h4 className="text-sm font-bold text-slate-900 dark:text-white">
+            <Sliders size={18} className="text-blue-600" />
+            <h4 className="text-sm font-bold text-slate-900">
               Specify Custom Training Topic or Industry Certification
             </h4>
           </div>
-          <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
+          <p className="mt-1 text-xs text-slate-600">
             Provide the exact framework, technical skill, or business objective you need covered:
           </p>
 
@@ -275,11 +275,11 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
             <input
               type="text"
               placeholder="e.g., ESG Reporting Frameworks, Supply Chain Optimization, Lean Six Sigma..."
-              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
               {...register('otherDomainText')}
             />
             {errors.otherDomainText && (
-              <p className="mt-1.5 text-xs font-medium text-red-600 dark:text-red-400" role="alert">
+              <p className="mt-1.5 text-xs font-medium text-red-600" role="alert">
                 {errors.otherDomainText.message}
               </p>
             )}
@@ -293,7 +293,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                 key={topic}
                 type="button"
                 onClick={() => setValue('otherDomainText', topic, { shouldValidate: true })}
-                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-700 hover:border-blue-400 hover:bg-blue-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300"
+                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-700 hover:border-blue-400 hover:bg-blue-50"
               >
                 + {topic}
               </button>
