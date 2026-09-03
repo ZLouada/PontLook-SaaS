@@ -8,7 +8,6 @@ import {
   Video,
   Layers,
   Globe,
-  Sparkles,
   CheckCircle2,
   BookOpen,
   Check,
@@ -290,7 +289,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-2">
                       {opt.recommended ? (
-                        <Sparkles size={16} className="text-amber-500" />
+                        <CheckCircle2 size={16} className="text-blue-600" />
                       ) : (
                         <BookOpen size={16} className="text-slate-500" />
                       )}

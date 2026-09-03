@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 
     // Bot honeypot verification
     if (rawBody._gotcha && String(rawBody._gotcha).trim().length > 0) {
-      console.warn('🛡️ Bot honeypot caught spam submission');
+      console.warn('[Security] Bot honeypot triggered; request dropped');
       return NextResponse.json({
         success: true,
         leadId: `lead_bot_${Date.now()}`,

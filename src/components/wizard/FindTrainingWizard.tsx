@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, m } from 'framer-motion';
-import { Clock, ShieldCheck, Sparkles } from 'lucide-react';
+import { Clock, ShieldCheck } from 'lucide-react';
 import { STORAGE_KEY, type WizardData, TRAINING_DOMAINS, DELIVERY_MODES, COHORT_SIZES, TIMELINES, BUDGET_BANDS } from './schemas';
 import { formatSelectedDomains, resolveDomainLabel } from './trainingDomains';
 import {

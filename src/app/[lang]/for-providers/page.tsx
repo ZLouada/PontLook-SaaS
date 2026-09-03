@@ -4,7 +4,7 @@ import PartnershipForm from '@/components/providers/PartnershipForm';
 import LeadTiers from '@/components/providers/LeadTiers';
 import Reveal from '@/components/shared/Reveal';
 import SectionHeading from '@/components/shared/SectionHeading';
-import { ShieldCheck, Target, Sparkles, DollarSign, Users, Award } from 'lucide-react';
+import { ShieldCheck, Target, DollarSign, Users, Award } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {

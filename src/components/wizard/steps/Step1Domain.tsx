@@ -10,7 +10,6 @@ import {
   Cpu,
   ShieldCheck,
   Lightbulb,
-  Sparkles,
   X,
   ChevronDown,
   ChevronUp,
@@ -176,14 +175,12 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
     }
   }, [searchQuery]);
 
-  // Toggle Category selection
   const toggleCategory = (categoryId: string) => {
     setSelectedCategories((prev) => {
       const isSelected = prev.includes(categoryId);
       if (isSelected) {
         return prev.filter((id) => id !== categoryId);
       } else {
-        // When selecting a category, auto-expand its accordion
         setExpandedCategories((exp) =>
           exp.includes(categoryId) ? exp : [...exp, categoryId]
         );
@@ -192,7 +189,6 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
     });
   };
 
-  // Toggle Accordion expansion
   const toggleAccordion = (categoryId: string) => {
     setExpandedCategories((prev) =>
       prev.includes(categoryId)
@@ -201,7 +197,6 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
     );
   };
 
-  // Toggle Sub-domain selection
   const toggleSubDomain = (subDomainId: string, parentCategoryId: string) => {
     setSelectedSubDomains((prev) => {
       const isSelected = prev.includes(subDomainId);
@@ -209,7 +204,6 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
         ? prev.filter((id) => id !== subDomainId)
         : [...prev, subDomainId];
 
-      // Auto-select parent category if not selected
       if (!isSelected && !selectedCategories.includes(parentCategoryId)) {
         setSelectedCategories((cats) => [...cats, parentCategoryId]);
       }
@@ -217,13 +211,11 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
     });
   };
 
-  // Toggle Capability Tag selection
   const toggleTag = (tag: string, parentCategoryId: string) => {
     setSelectedSubDomains((prev) => {
       const isSelected = prev.includes(tag);
       const next = isSelected ? prev.filter((t) => t !== tag) : [...prev, tag];
 
-      // Auto-select parent category if not selected
       if (!isSelected && !selectedCategories.includes(parentCategoryId)) {
         setSelectedCategories((cats) => [...cats, parentCategoryId]);
       }
@@ -231,16 +223,13 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
     });
   };
 
-  // Select / Deselect All Sub-domains for a Category
   const toggleAllSubDomainsForCategory = (category: TrainingCategory) => {
     const subIds = category.subDomains.map((s) => s.id);
     const allSelected = subIds.every((id) => selectedSubDomains.includes(id));
 
     if (allSelected) {
-      // Remove all subDomains for this category
       setSelectedSubDomains((prev) => prev.filter((id) => !subIds.includes(id)));
     } else {
-      // Add all subDomains for this category
       setSelectedSubDomains((prev) => Array.from(new Set([...prev, ...subIds])));
       if (!selectedCategories.includes(category.id)) {
         setSelectedCategories((prev) => [...prev, category.id]);
@@ -298,7 +287,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
           </h2>
           {selectedCount > 0 && (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-[#2451BF]">
-              <Sparkles size={13} />
+              <Layers size={13} />
               {selectedCount} {selectedCount === 1 ? 'domain' : 'domains'} selected
             </span>
           )}

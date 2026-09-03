@@ -9,7 +9,7 @@ import {
   BadgeDollarSign,
   Target,
   Briefcase,
-  Sparkles,
+  Building2,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -70,7 +70,7 @@ export default async function FindTrainingPage({
         <section className="container-site relative z-10 pt-36 pb-16 text-center sm:pt-40 sm:pb-20">
           <Reveal className="mx-auto max-w-3xl">
             <span className="chip mx-auto inline-flex items-center gap-2">
-              <Sparkles size={14} className="text-primary" />
+              <Building2 size={14} className="text-primary" />
               <span>For GCC CHROs, L&D Directors & Enterprise Leaders</span>
             </span>
 

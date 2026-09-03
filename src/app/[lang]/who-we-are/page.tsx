@@ -13,8 +13,7 @@ import {
   DollarSign, 
   BarChart3, 
   CheckCircle2, 
-  ArrowRight,
-  Sparkles
+  ArrowRight
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -121,21 +120,41 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
             </div>
           </Reveal>
 
-          {/* Grid Layout for Feature Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {/* Bento Grid Layout for Feature Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {featureCards.map((card, index) => {
               const Icon = card.icon;
+              const isLarge = index === 0 || index === 3;
+              const isFull = index === 4;
+              const spanClass = isFull
+                ? 'md:col-span-2 lg:col-span-3 rounded-3xl border border-blue-200/80 bg-gradient-to-r from-slate-50 via-blue-50/30 to-slate-50'
+                : isLarge
+                ? 'md:col-span-2 lg:col-span-2 rounded-3xl border border-slate-200/90 bg-white shadow-sm'
+                : 'md:col-span-1 lg:col-span-1 rounded-3xl border border-slate-200/80 bg-slate-50/80';
+
               return (
-                <Reveal key={index} delay={index * 0.1}>
-                  <div className="h-full bg-slate-50/80 border border-slate-200/80 rounded-3xl p-8 transition-all duration-300 hover:shadow-xl hover:bg-white hover:border-primary/30 hover:-translate-y-1 group flex flex-col justify-between">
+                <Reveal key={index} delay={index * 0.08} className={spanClass}>
+                  <div className="h-full p-8 md:p-10 transition-all duration-300 hover:shadow-xl hover:border-primary/40 hover:-translate-y-0.5 group flex flex-col justify-between">
                     <div>
-                      <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                        <Icon size={28} />
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="w-13 h-13 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors duration-300 p-3">
+                          <Icon size={26} />
+                        </div>
+                        {isLarge && (
+                          <span className="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider px-3 py-1 rounded-full bg-slate-100 border border-slate-200">
+                            Enterprise Engine
+                          </span>
+                        )}
+                        {isFull && (
+                          <span className="text-[11px] font-mono font-bold text-emerald-700 uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200">
+                            100% Risk-Free Model
+                          </span>
+                        )}
                       </div>
-                      <h3 className="text-xl font-bold text-slate-900 mb-3 font-poppins leading-snug">
+                      <h3 className={`font-bold text-slate-900 mb-3 font-poppins leading-snug ${isLarge ? 'text-2xl' : 'text-xl'}`}>
                         {card.title}
                       </h3>
-                      <p className="text-slate-600 leading-relaxed text-base">
+                      <p className={`text-slate-600 leading-relaxed ${isLarge ? 'text-base max-w-2xl' : 'text-sm'}`}>
                         {card.description}
                       </p>
                     </div>
@@ -154,7 +173,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
           <Reveal>
             <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-10 md:p-14 shadow-2xl">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/20 text-primary-300 text-xs font-semibold uppercase tracking-wider mb-6 border border-primary/30">
-                <Sparkles size={14} />
+                <ShieldCheck size={14} />
                 <span>What We Do</span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-extrabold text-white font-heading leading-tight mb-6">

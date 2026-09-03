@@ -16,7 +16,6 @@ import {
   Calendar,
   DollarSign,
   ArrowRight,
-  Sparkles,
   ExternalLink,
 } from 'lucide-react';
 import {
