@@ -120,7 +120,7 @@ export const FUNNEL_DICTIONARIES: Record<FunnelLocale, FunnelDictionary> = {
     step1: {
       title: 'What training domains do you need?',
       subtitle: 'Select all target capabilities for your enterprise cohort. We’ll match specialized GCC providers with proven ROI.',
-      searchPlaceholder: 'Search topics e.g. "PMP", "Vision 2030", "Generative AI", "Commercial Sales", "GRC"...',
+      searchPlaceholder: 'Search topics, capabilities, or certifications e.g. "PMP", "Vision 2030", "Generative AI", "NEBOSH", "ISO", "Leadership"...',
       selectedBadge: (count) => `${count} ${count === 1 ? 'domain' : 'domains'} selected`,
       otherSpecifyTitle: 'Specify Custom Training Topic or Industry Certification',
       otherSpecifySubtitle: 'Provide the exact framework, technical skill, or business objective you need covered:',
@@ -220,7 +220,7 @@ export const FUNNEL_DICTIONARIES: Record<FunnelLocale, FunnelDictionary> = {
     step1: {
       title: 'ما هي مجالات التدريب المطلوبة؟',
       subtitle: 'حدد مجالات تطوير الكفاءات المطلوبة لمنشأتك. سنقوم بمطابقتك مع أفضل مقدمي التدريب المعتمدين في الخليج.',
-      searchPlaceholder: 'ابحث عن المواضيع مثل "PMP" أو "رؤية 2030" أو "الذكاء الاصطناعي" أو "الحوكمة والمخاطر"...',
+      searchPlaceholder: 'ابحث عن المواضيع أو الكفاءات أو الشهادات مثل "PMP" أو "رؤية 2030" أو "الذكاء الاصطناعي" أو "NEBOSH" أو "ISO" أو "القيادة"...',
       selectedBadge: (count) => `تم اختيار ${count} ${count === 1 ? 'مجال' : 'مجالات'}`,
       otherSpecifyTitle: 'حدد موضوع التدريب أو الشهادة المهنية التخصصية',
       otherSpecifySubtitle: 'أدخل المهارة أو الإطار المهني المطلوب تغطيته بدقة:',

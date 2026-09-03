@@ -1,4 +1,5 @@
 import { z } from 'zod';
+export * from './trainingDomains';
 
 export const GCC_COUNTRIES = [
   { code: 'SA', name: 'Saudi Arabia', dialCode: '+966', flag: '🇸🇦' },
@@ -172,12 +173,39 @@ export function isCorporateEmail(email: string): boolean {
 // Validation schemas
 export const step1DomainSchema = z
   .object({
-    domains: z.array(z.string()).min(1, 'Please select at least one training domain to begin matching.'),
+    domains: z.array(z.string()).default([]),
+    selectedDomains: z
+      .union([
+        z.array(z.string()),
+        z.object({
+          categories: z.array(z.string()),
+          subDomains: z.array(z.string()),
+        }),
+      ])
+      .optional(),
     otherDomainText: z.string().optional().or(z.literal('')),
   })
   .refine(
     (data) => {
-      if (data.domains.includes('other')) {
+      const hasDomains = Boolean(data.domains && data.domains.length > 0);
+      const hasSelectedArray = Boolean(Array.isArray(data.selectedDomains) && data.selectedDomains.length > 0);
+      const hasSelectedObj = Boolean(
+        data.selectedDomains &&
+          !Array.isArray(data.selectedDomains) &&
+          ((data.selectedDomains.categories && data.selectedDomains.categories.length > 0) ||
+            (data.selectedDomains.subDomains && data.selectedDomains.subDomains.length > 0))
+      );
+      return hasDomains || hasSelectedArray || hasSelectedObj;
+    },
+    {
+      message: 'Please select at least one training domain or capability to begin matching.',
+      path: ['domains'],
+    }
+  )
+  .refine(
+    (data) => {
+      const domainsList = data.domains || (Array.isArray(data.selectedDomains) ? data.selectedDomains : []);
+      if (domainsList.includes('other')) {
         return Boolean(data.otherDomainText && data.otherDomainText.trim().length > 1);
       }
       return true;
@@ -267,6 +295,12 @@ export type Step3Data = z.infer<typeof step3CohortBudgetSchema>;
 export type Step4Data = z.infer<typeof step4ContactSchema>;
 
 export type WizardData = Partial<Step1Data & Step2Data & Step3Data & Step4Data> & {
+  selectedDomains?:
+    | string[]
+    | {
+        categories: string[];
+        subDomains: string[];
+      };
   // Legacy / fallback fields for backwards compatibility with lead-scoring
   companyName?: string;
   website?: string;

@@ -85,15 +85,23 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
     if (queryTopic) {
       const q = queryTopic.toLowerCase();
       if (q.includes('lead') || q.includes('exec') || q.includes('manage')) {
-        prefilledData.domains = Array.from(new Set([...(prefilledData.domains || []), 'executive_leadership']));
+        prefilledData.domains = Array.from(new Set([...(prefilledData.domains || []), 'soft-skills', 'leadership-management']));
+        prefilledData.selectedDomains = { categories: ['soft-skills'], subDomains: ['leadership-management'] };
       } else if (q.includes('sale') || q.includes('negotiat') || q.includes('commercial')) {
-        prefilledData.domains = Array.from(new Set([...(prefilledData.domains || []), 'b2b_sales']));
+        prefilledData.domains = Array.from(new Set([...(prefilledData.domains || []), 'soft-skills', 'sales-customer-service']));
+        prefilledData.selectedDomains = { categories: ['soft-skills'], subDomains: ['sales-customer-service'] };
       } else if (q.includes('ai') || q.includes('data') || q.includes('tech') || q.includes('digital')) {
-        prefilledData.domains = Array.from(new Set([...(prefilledData.domains || []), 'ai_data_tech']));
-      } else if (q.includes('grc') || q.includes('risk') || q.includes('compliance') || q.includes('governance')) {
-        prefilledData.domains = Array.from(new Set([...(prefilledData.domains || []), 'grc_compliance']));
+        prefilledData.domains = Array.from(new Set([...(prefilledData.domains || []), 'hard-skills', 'technology-digital']));
+        prefilledData.selectedDomains = { categories: ['hard-skills'], subDomains: ['technology-digital'] };
+      } else if (q.includes('qhse') || q.includes('safety') || q.includes('iso') || q.includes('risk') || q.includes('compliance') || q.includes('governance')) {
+        prefilledData.domains = Array.from(new Set([...(prefilledData.domains || []), 'qhse', 'occupational-safety']));
+        prefilledData.selectedDomains = { categories: ['qhse'], subDomains: ['occupational-safety'] };
       } else if (q.includes('pmp') || q.includes('agile') || q.includes('project') || q.includes('scrum')) {
-        prefilledData.domains = Array.from(new Set([...(prefilledData.domains || []), 'pm_agile']));
+        prefilledData.domains = Array.from(new Set([...(prefilledData.domains || []), 'hard-skills', 'business-management']));
+        prefilledData.selectedDomains = { categories: ['hard-skills'], subDomains: ['business-management'] };
+      } else if (q.includes('innovat') || q.includes('design think') || q.includes('teamwork')) {
+        prefilledData.domains = Array.from(new Set([...(prefilledData.domains || []), 'collaborative-innovative', 'design-thinking-creativity']));
+        prefilledData.selectedDomains = { categories: ['collaborative-innovative'], subDomains: ['design-thinking-creativity'] };
       } else {
         prefilledData.domains = Array.from(new Set([...(prefilledData.domains || []), 'other']));
         prefilledData.otherDomainText = queryTopic;
@@ -268,6 +276,7 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
         body: JSON.stringify({
           form_type: 'B2B Corporate Training Intake',
           ...finalData,
+          selected_domains: (Array.isArray(finalData.selectedDomains) ? finalData.selectedDomains.join(', ') : undefined) || 'General / Unspecified',
           submitted_at: new Date().toISOString(),
         }),
       });

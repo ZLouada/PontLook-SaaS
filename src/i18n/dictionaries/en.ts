@@ -65,5 +65,11 @@ export const en = {
     platform: "Platform",
     get_in_touch: "Get in touch",
     rights: "© 2025-2026 PontLook, operating under Firstnestcare, LLC. All rights reserved."
+  },
+  trainingCategories: {
+    softSkills: "Soft Skills",
+    hardSkills: "Hard Skills",
+    qhse: "QHSE (Quality, Health, Safety & Environment)",
+    collaborativeInnovative: "Collaborative & Innovative Skills",
   }
 };

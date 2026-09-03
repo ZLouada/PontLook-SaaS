@@ -27,6 +27,7 @@ import {
   BUDGET_BANDS,
   type WizardData,
 } from '../schemas';
+import { resolveDomainLabel } from '../trainingDomains';
 
 type Step5Props = {
   data: WizardData;
@@ -38,12 +39,28 @@ export default function Step5Confirmation({ data }: Step5Props) {
   const [downloadSuccess, setDownloadSuccess] = useState(false);
 
   // Look up labels for summary
-  const selectedDomainNames = (data.domains || [])
-    .map((dId) => {
-      if (dId === 'other') return data.otherDomainText ? `Specialized: ${data.otherDomainText}` : 'Other Specialized';
-      return TRAINING_DOMAINS.find((t) => t.id === dId)?.title || dId;
-    })
-    .filter(Boolean);
+  const selectedDomainNames = React.useMemo(() => {
+    if (data.selectedDomains) {
+      if (Array.isArray(data.selectedDomains)) {
+        return data.selectedDomains.map((item) => {
+          if (item === 'other') return data.otherDomainText ? `Specialized: ${data.otherDomainText}` : 'Other Specialized';
+          return resolveDomainLabel(item);
+        }).filter(Boolean);
+      }
+      if (typeof data.selectedDomains === 'object') {
+        const labels: string[] = [];
+        data.selectedDomains.categories?.forEach((c) => labels.push(resolveDomainLabel(c)));
+        data.selectedDomains.subDomains?.forEach((s) => labels.push(resolveDomainLabel(s)));
+        if (labels.length > 0) return labels;
+      }
+    }
+    return (data.domains || [])
+      .map((dId) => {
+        if (dId === 'other') return data.otherDomainText ? `Specialized: ${data.otherDomainText}` : 'Other Specialized';
+        return resolveDomainLabel(dId) || TRAINING_DOMAINS.find((t) => t.id === dId)?.title || dId;
+      })
+      .filter(Boolean);
+  }, [data.selectedDomains, data.domains, data.otherDomainText]);
 
   const deliveryModeName =
     DELIVERY_MODES.find((m) => m.id === data.deliveryMode)?.title ||

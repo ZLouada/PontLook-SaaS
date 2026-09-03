@@ -65,5 +65,11 @@ export const ar = {
     platform: "المنصة",
     get_in_touch: "تواصل معنا",
     rights: "© 2025-2026 PontLook, operating under Firstnestcare, LLC. جميع الحقوق محفوظة."
+  },
+  trainingCategories: {
+    softSkills: "المهارات الشخصية والقيادية",
+    hardSkills: "المهارات الفنية والمهنية",
+    qhse: "الجودة والصحة والسلامة والبيئة (QHSE)",
+    collaborativeInnovative: "المهارات التعاونية والابتكارية",
   }
 };

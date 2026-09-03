@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { AnimatePresence, m } from 'framer-motion';
 import { Clock, ShieldCheck, Sparkles } from 'lucide-react';
 import { STORAGE_KEY, type WizardData, TRAINING_DOMAINS, DELIVERY_MODES, COHORT_SIZES, TIMELINES, BUDGET_BANDS } from './schemas';
+import { formatSelectedDomains, resolveDomainLabel } from './trainingDomains';
 import {
   Step1Domain,
   Step2Delivery,
@@ -115,12 +116,28 @@ export default function FindTrainingWizard() {
     }
 
     // Format human-readable metadata for proposal matching desk
-    const domainLabels = (finalData.domains || [])
-      .map((dId) => {
-        if (dId === 'other') return finalData.otherDomainText ? `Specialized (${finalData.otherDomainText})` : 'Specialized/Other';
-        return TRAINING_DOMAINS.find((t) => t.id === dId)?.title || dId;
-      })
-      .join(', ');
+    const activeSelectedDomains = finalData.selectedDomains || formData.selectedDomains;
+
+    const formattedSelectedDomains =
+      (Array.isArray(activeSelectedDomains)
+        ? activeSelectedDomains.join(', ')
+        : activeSelectedDomains && typeof activeSelectedDomains === 'object' && 'join' in activeSelectedDomains
+        ? (activeSelectedDomains as any).join(', ')
+        : activeSelectedDomains && typeof activeSelectedDomains === 'object'
+        ? [...(activeSelectedDomains.categories || []), ...(activeSelectedDomains.subDomains || [])].join(', ')
+        : undefined) ||
+      finalData.domains?.join(', ') ||
+      'General / Unspecified';
+
+    const domainLabels =
+      (activeSelectedDomains ? formatSelectedDomains(activeSelectedDomains as any) : '') ||
+      (finalData.domains || [])
+        .map((dId) => {
+          if (dId === 'other') return finalData.otherDomainText ? `Specialized (${finalData.otherDomainText})` : 'Specialized/Other';
+          return resolveDomainLabel(dId) || TRAINING_DOMAINS.find((t) => t.id === dId)?.title || dId;
+        })
+        .join(', ') ||
+      formattedSelectedDomains;
 
     const deliveryTitle =
       DELIVERY_MODES.find((m) => m.id === finalData.deliveryMode)?.title || finalData.deliveryMode || 'N/A';
@@ -142,7 +159,8 @@ export default function FindTrainingWizard() {
       organization_name: finalData.organizationName || 'N/A',
       country: finalData.country || 'Saudi Arabia',
       phone_number: `${finalData.phoneCountryCode || '+966'} ${finalData.phoneNumber || ''}`.trim(),
-      training_domains: domainLabels || 'Leadership & Management',
+      selected_domains: (Array.isArray(formData.selectedDomains) ? formData.selectedDomains?.join(', ') : undefined) || formattedSelectedDomains || 'General / Unspecified',
+      training_domains: domainLabels || formattedSelectedDomains || 'General / Unspecified',
       delivery_mode: deliveryTitle,
       delivery_city: finalData.city || 'N/A',
       instruction_language: finalData.language || 'Bilingual',
@@ -187,6 +205,8 @@ export default function FindTrainingWizard() {
       setIsSubmitting(false);
     }
   };
+
+  const handleSubmit = handleFinalSubmit;
 
   if (!hydrated) {
     return (

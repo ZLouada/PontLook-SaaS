@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { Resend } from 'resend';
 import { calculateLeadScore } from '@/lib/lead-scoring';
 import { isCorporateEmail, TRAINING_DOMAINS, DELIVERY_MODES, COHORT_SIZES, TIMELINES, BUDGET_BANDS } from '@/components/wizard/schemas';
+import { resolveDomainLabel } from '@/components/wizard/trainingDomains';
 
 // Runtime config for Next.js API route
 export const dynamic = 'force-dynamic';
@@ -95,7 +96,7 @@ export async function POST(req: NextRequest) {
     const domainNames = data.domains
       .map((dId) => {
         if (dId === 'other') return data.otherDomainText ? `Specialized (${data.otherDomainText})` : 'Specialized/Other';
-        return TRAINING_DOMAINS.find((t) => t.id === dId)?.title || dId;
+        return resolveDomainLabel(dId) || TRAINING_DOMAINS.find((t) => t.id === dId)?.title || dId;
       })
       .join(', ');
 
