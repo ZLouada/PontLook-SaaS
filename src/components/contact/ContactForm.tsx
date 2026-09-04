@@ -69,7 +69,7 @@ export default function ContactForm() {
     return (
       <div className="card text-center !p-6 sm:!p-12">
         <CheckCircle2 size={48} className="mx-auto text-emerald-500" />
-        <h3 className="mt-5 text-2xl font-bold text-slate-900">Message sent</h3>
+        <h3 className="mt-5 text-2xl font-semibold text-slate-800 font-heading">Message sent</h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
           Thanks for reaching out, we respond to every message within 1 business day.
         </p>

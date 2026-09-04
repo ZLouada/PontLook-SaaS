@@ -10,6 +10,7 @@ import {
   Target,
   Briefcase,
   Building2,
+  Sparkles,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -76,7 +77,7 @@ export default async function FindTrainingPage({
               <span>For GCC CHROs, L&D Directors & Enterprise Leaders</span>
             </span>
 
-            <h1 className="mt-6 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl sm:leading-[1.15]">
+            <h1 className="mt-6 text-3xl font-semibold tracking-normal sm:tracking-tight text-slate-800 sm:text-5xl sm:leading-[1.15] font-heading">
               Get <span className="gradient-text">3 Curated Training Proposals</span> for Your Workforce
             </h1>
 
@@ -89,9 +90,9 @@ export default async function FindTrainingPage({
               {trustMetrics.map((m) => (
                 <div
                   key={m.label}
-                  className="rounded-2xl border border-slate-200/80 bg-white/80 p-4 text-center shadow-sm backdrop-blur-sm"
+                  className="rounded-2xl border border-slate-200/70 bg-white p-4 text-center shadow-sm"
                 >
-                  <div className="text-xl font-extrabold text-slate-900 sm:text-2xl">{m.value}</div>
+                  <div className="text-xl font-semibold text-slate-800 sm:text-2xl">{m.value}</div>
                   <div className="mt-1 text-[11px] font-medium uppercase tracking-wider text-slate-500">{m.label}</div>
                 </div>
               ))}
@@ -110,23 +111,23 @@ export default async function FindTrainingPage({
               <span>100% Free for Companies</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <ShieldCheck size={16} className="text-emerald-600" />
-              <span>Enterprise Confidentiality</span>
+              <Sparkles size={16} className="text-accent-secondary" />
+              <span>Zero Vendor Spam</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <Clock size={16} className="text-primary" />
-              <span>Auto-Saves Progress (~60s)</span>
+              <ShieldCheck size={16} className="text-emerald-600" />
+              <span>Verified Decision-Maker Privacy</span>
             </span>
           </div>
 
-          {/* Interactive Multi-Step Intake Wizard with Suspense for Search Params */}
+          {/* Interactive Multi-Step Funnel Container */}
           <div className="mx-auto max-w-4xl">
             <Suspense fallback={<FunnelLoadingFallback />}>
               <MultiStepFunnel initialLang={lang} />
             </Suspense>
           </div>
 
-          {/* Advantage Cards */}
+          {/* Key Advantages Bento */}
           <div className="mx-auto mt-24 max-w-5xl">
             <SectionHeading
               eyebrow="Why PontLook"
@@ -137,11 +138,11 @@ export default async function FindTrainingPage({
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {keyAdvantages.map((adv, i) => (
                 <Reveal key={adv.title} delay={i * 0.1}>
-                  <div className="flex h-full flex-col rounded-3xl border border-slate-200/80 bg-white p-7 shadow-sm transition-all hover:border-slate-300 hover:shadow-md">
+                  <div className="flex h-full flex-col rounded-3xl border border-slate-200/70 bg-white p-7 shadow-sm transition-all hover:border-slate-300 hover:shadow">
                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary">
                       <adv.icon size={24} />
                     </div>
-                    <h3 className="mt-5 text-base font-bold text-slate-900">
+                    <h3 className="mt-5 text-base font-semibold text-slate-800 font-heading">
                       {adv.title}
                     </h3>
                     <p className="mt-2 text-xs leading-relaxed text-slate-600">

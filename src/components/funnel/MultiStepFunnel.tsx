@@ -388,10 +388,10 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-xs font-extrabold text-white">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-xs font-semibold text-white">
               {currentStep}
             </span>
-            <span className="text-xs sm:text-sm font-bold text-slate-900 shrink-0">
+            <span className="text-xs sm:text-sm font-semibold text-slate-800 shrink-0">
               {lang === 'ar' ? `الخطوة ${currentStep} من 4:` : `Step ${currentStep} of 4:`}
             </span>
             <span className="text-xs sm:text-sm font-medium text-slate-600 truncate">

@@ -93,7 +93,7 @@ export default function LeadTiers({ dict, lang }: LeadTiersProps = {}) {
                       <Badge variant="slate">{t.range}</Badge>
                     </div>
 
-                    <h3 className="font-heading text-xl font-bold text-slate-900">
+                    <h3 className="font-heading text-xl font-semibold text-slate-800">
                       {t.name} Tier
                     </h3>
 
@@ -120,11 +120,11 @@ export default function LeadTiers({ dict, lang }: LeadTiersProps = {}) {
 
         {/* Driver Card */}
         <Reveal
-          className="mx-auto mt-14 max-w-4xl rounded-3xl bg-slate-50 border border-slate-200/80 text-slate-900 p-8 md:p-12 shadow-sm relative overflow-hidden"
+          className="mx-auto mt-14 max-w-4xl rounded-3xl bg-slate-50 border border-slate-200/70 text-slate-800 p-8 md:p-12 shadow-sm relative overflow-hidden"
           delay={0.1}
         >
           <div className="relative z-10">
-            <h3 className="text-xl font-bold text-slate-900 mb-2 font-heading">
+            <h3 className="text-xl font-semibold text-slate-800 mb-2 font-heading">
               What drives the score
             </h3>
             <p className="text-sm text-slate-600 leading-relaxed font-sans max-w-2xl">

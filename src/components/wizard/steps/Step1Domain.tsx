@@ -282,7 +282,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
       {/* Header & Context */}
       <div>
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+          <h2 className="font-heading text-xl font-semibold tracking-normal text-slate-800 sm:text-2xl">
             What training domains do you need?
           </h2>
           {selectedCount > 0 && (
@@ -307,7 +307,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder='Search topics, capabilities, or certifications e.g. "PMP", "Vision 2030", "Generative AI", "NEBOSH", "ISO", "Leadership"...'
-          className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3.5 ps-11 pe-10 text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#2451BF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2451BF]/20 transition-all"
+          className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3.5 ps-11 pe-10 text-base sm:text-sm text-slate-800 placeholder:text-slate-400 focus:border-[#2451BF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2451BF]/20 transition-all"
         />
         {searchQuery && (
           <button
@@ -369,7 +369,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                         <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-[#2451BF] shrink-0">
                           <IconComponent size={22} />
                         </div>
-                        <span className="font-mono text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200/80">
+                        <span className="font-mono text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200/70">
                           {category.badge}
                         </span>
                       </div>
@@ -399,7 +399,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
 
                     {/* Category Title & Short Description */}
                     <div className="mt-3.5">
-                      <h3 className="text-base font-bold text-slate-900">
+                      <h3 className="font-heading text-base font-semibold text-slate-800">
                         {category.title}
                       </h3>
                       <p className="mt-1 text-xs leading-relaxed text-slate-600">
@@ -616,7 +616,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Sliders size={18} className="text-[#2451BF]" />
-                <h4 className="text-sm font-bold text-slate-900">
+                <h4 className="font-heading text-sm font-semibold text-slate-800">
                   Specify Custom Training Topic or Industry Certification
                 </h4>
               </div>
@@ -642,7 +642,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
               <input
                 type="text"
                 placeholder="e.g., ESG Reporting Frameworks, Supply Chain Optimization, Lean Six Sigma..."
-                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 sm:py-3 text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#2451BF] focus:outline-none focus:ring-2 focus:ring-[#2451BF]/20"
+                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 sm:py-3 text-base sm:text-sm text-slate-800 placeholder:text-slate-400 focus:border-[#2451BF] focus:outline-none focus:ring-2 focus:ring-[#2451BF]/20"
                 {...register('otherDomainText')}
               />
               {errors.otherDomainText && (

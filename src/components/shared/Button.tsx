@@ -41,13 +41,13 @@ export default function Button({
 
   const variantClasses = {
     primary:
-      'bg-gradient-to-r from-accent to-accent-secondary text-white shadow-accent hover:shadow-accent-lg border border-transparent',
+      'bg-gradient-to-r from-accent to-accent-secondary text-white shadow-sm hover:shadow border border-transparent',
     secondary:
-      'bg-white/90 backdrop-blur-md text-foreground border border-slate-200/90 shadow-sm hover:bg-white hover:border-slate-300 hover:shadow-md',
+      'bg-white text-slate-800 border border-slate-200/90 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:shadow',
     outline:
-      'bg-transparent border border-slate-200/80 text-foreground hover:bg-slate-50 hover:border-slate-300',
+      'bg-transparent border border-slate-200/80 text-slate-800 hover:bg-slate-50 hover:border-slate-300',
     dark:
-      'bg-slate-900 text-white border border-slate-800 shadow-md hover:bg-slate-800 hover:shadow-lg',
+      'bg-slate-800 text-white border border-slate-700 shadow-sm hover:bg-slate-700',
   }[variant];
 
   const baseClasses = `inline-flex items-center justify-center rounded-full transition-all duration-300 transform-gpu cursor-pointer select-none ${sizeClasses} ${variantClasses} ${className}`;

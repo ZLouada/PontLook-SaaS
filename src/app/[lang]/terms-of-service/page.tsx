@@ -18,7 +18,7 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6">
           <Reveal>
             <span className="chip mx-auto">Legal & Terms</span>
-            <h1 className="mt-6 text-4xl font-extrabold sm:text-5xl lg:text-6xl text-slate-900 leading-tight">
+            <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-slate-800 leading-tight font-heading">
               Terms of <span className="text-primary">Service</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
@@ -34,8 +34,8 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
           <Reveal>
             <div className="prose prose-slate max-w-none space-y-12 text-slate-700 leading-relaxed font-sans">
               {/* 1. Service Overview */}
-              <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/80">
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
+              <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
+                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   1. Service Overview & Agreement
                 </h2>
                 <p className="mb-4">
@@ -48,7 +48,7 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
 
               {/* 2. Eligibility */}
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
+                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   2. Eligibility (Age 13+)
                 </h2>
                 <p className="mb-4">
@@ -63,7 +63,7 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
 
               {/* 3. Account Registration & Responsibilities */}
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
+                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   3. Account Registration & Responsibilities
                 </h2>
                 <p className="mb-4">
@@ -77,8 +77,8 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
               </div>
 
               {/* 4. Payment Authorization & Pricing */}
-              <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/80">
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
+              <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
+                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   4. Payment Authorization & Financial Terms
                 </h2>
                 <p className="mb-4">
@@ -102,13 +102,13 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
 
               {/* 5. Limited License & Intellectual Property */}
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
+                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   5. Limited License & Intellectual Property
                 </h2>
                 <p className="mb-4">
                   Subject to your compliance with these Terms, PontLook grants you a limited, non-exclusive, non-transferable, non-sublicensable, revocable license to access and use the platform for internal business operations.
                 </p>
-                <p className="mb-4 font-semibold text-slate-900">
+                <p className="mb-4 font-semibold text-slate-800">
                   Intellectual Property Ownership:
                 </p>
                 <p className="text-slate-600">
@@ -118,7 +118,7 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
 
               {/* 6. Prohibited Activities */}
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
+                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   6. Prohibited Conduct
                 </h2>
                 <p className="mb-4">
@@ -134,7 +134,7 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
 
               {/* 7. Disclaimers & Limitation of Liability */}
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
+                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   7. Disclaimers & Limitation of Liability
                 </h2>
                 <p className="mb-4">
@@ -149,8 +149,8 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
               </div>
 
               {/* 8. Governing Law & Jurisdiction */}
-              <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/80">
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
+              <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
+                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   8. Governing Law & Jurisdiction (San Francisco, CA / Delaware)
                 </h2>
                 <p className="mb-4">

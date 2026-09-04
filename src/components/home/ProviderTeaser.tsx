@@ -58,7 +58,7 @@ export default function ProviderTeaser() {
               {dict.provider_teaser.badge}
             </Badge>
           </div>
-          <h2 className="text-3xl font-serif font-normal sm:text-5xl text-slate-900 tracking-tight leading-[1.12]">
+          <h2 className="text-3xl font-heading font-semibold sm:text-5xl text-slate-800 tracking-tight leading-[1.12]">
             {dict.provider_teaser.headline}
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-slate-600 font-sans">
@@ -83,7 +83,7 @@ export default function ProviderTeaser() {
               <Reveal key={t.name} delay={i * 0.12}>
                 <m.div
                   whileHover={{ y: -4 }}
-                  className={`flex flex-col gap-3 p-6 rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-lg hover:border-accent/40 hover:shadow-xl transition-all duration-300 border-s-4 ${t.borderCls} relative z-20 transform-gpu will-change-transform`}
+                  className={`flex flex-col gap-3 p-6 rounded-2xl bg-white border border-slate-200/70 shadow-sm hover:border-slate-300 hover:shadow transition-all duration-300 border-s-4 ${t.borderCls} relative z-20 transform-gpu will-change-transform`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3.5">
@@ -93,7 +93,7 @@ export default function ProviderTeaser() {
                         <Icon size={20} />
                       </span>
                       <div>
-                        <p className="font-serif font-normal text-lg text-slate-900 flex items-center gap-2">
+                        <p className="font-heading font-semibold text-lg text-slate-800 flex items-center gap-2">
                           <span>{t.name}</span>
                           <span className="text-xs font-mono font-medium text-slate-500 uppercase tracking-wide">
                             Score {t.range}

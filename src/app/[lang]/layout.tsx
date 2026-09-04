@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Plus_Jakarta_Sans, Poppins, Calistoga, JetBrains_Mono } from 'next/font/google';
+import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import '../globals.css';
@@ -14,25 +14,20 @@ export const viewport: Viewport = {
   themeColor: '#0052FF',
 };
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
-const poppins = Poppins({
-  weight: ['400', '600', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-poppins',
-});
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['500', '600', '700'],
   variable: '--font-heading',
   display: 'swap',
 });
-const calistoga = Calistoga({
-  weight: ['400'],
+
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-calistoga',
+  weight: ['400', '500'],
+  variable: '--font-body',
   display: 'swap',
 });
+
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
@@ -122,7 +117,7 @@ export default async function RootLayout({
   const dictionary = await getDictionary(lang);
   const dir = rawLang === 'ar' ? 'rtl' : 'ltr';
 
-  const fontClass = `${inter.variable} ${jakarta.variable} ${poppins.variable} ${calistoga.variable} ${jetbrainsMono.variable}`;
+  const fontClass = `${inter.variable} ${jakarta.variable} ${jetbrainsMono.variable}`;
 
   const jsonLdGraph = {
     "@context": "https://schema.org",

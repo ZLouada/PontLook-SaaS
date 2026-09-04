@@ -76,7 +76,7 @@ const items = [
     title: 'Validated decision-makers',
     text: 'You talk to the CHRO, CEO, or L&D owner with authority to buy, not a gatekeeper.',
     mockup: (
-      <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-sm border border-slate-200/80 w-4/5 p-4 flex items-center gap-3.5">
+      <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-sm border border-slate-200/70 w-4/5 p-4 flex items-center gap-3.5">
         <div className="h-10 w-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center font-bold relative shrink-0">
           <User size={18} />
           <div className="absolute -bottom-1 -right-1 bg-emerald-500 text-white rounded-full p-0.5 border border-white">
@@ -84,11 +84,11 @@ const items = [
           </div>
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-[11px] font-bold text-slate-900 leading-tight font-sans truncate">
+          <div className="text-[11px] font-semibold text-slate-800 leading-tight font-sans truncate">
             Enterprise Buyer
           </div>
           <div className="text-[10px] text-slate-500 truncate">Chief Human Resources Officer</div>
-          <div className="text-[9px] font-mono font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 inline-block mt-1">
+          <div className="text-[9px] font-mono font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 inline-block mt-1">
             Buying Power: Confirmed
           </div>
         </div>
@@ -153,7 +153,7 @@ const items = [
     mockup: (
       <div className="relative w-4/5 aspect-[2/1] bg-slate-50/80 rounded-xl overflow-hidden border border-slate-200/80 flex items-center justify-center">
         <div className="flex flex-col items-center gap-1.5 z-10">
-          <MapPin size={20} className="text-accent drop-shadow-xs" />
+          <MapPin size={20} className="text-accent" />
           <div className="flex gap-2">
             <span className="px-2 py-0.5 bg-white border border-slate-200 shadow-xs rounded text-[9px] font-bold text-slate-800">
               Saudi Arabia
@@ -218,11 +218,11 @@ export default function WhyDifferent() {
               <m.div key={it.title} variants={cardVariants} className="transform-gpu will-change-transform">
                 <Card className="flex flex-col h-full group cursor-pointer">
                   <div className="mb-6">
-                    <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent transition-colors duration-300 group-hover:bg-gradient-to-r group-hover:from-accent group-hover:to-accent-secondary group-hover:text-white shadow-xs border border-accent/20">
+                    <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent transition-colors duration-200 group-hover:bg-accent group-hover:text-white border border-accent/20">
                       <Icon size={24} />
                     </span>
                   </div>
-                  <h3 className="text-xl font-serif font-normal text-slate-900 leading-tight mb-3 transition-colors">
+                  <h3 className="text-xl font-heading font-semibold text-slate-800 leading-tight mb-3 transition-colors">
                     {it.title}
                   </h3>
                   <p className="text-base text-slate-600 font-sans leading-relaxed tracking-wide mb-8 flex-1">

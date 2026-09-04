@@ -59,7 +59,7 @@ export function FormTextField({
           autoComplete={autoComplete}
           aria-invalid={hasError}
           aria-describedby={hasError ? `${id}-error` : hint ? `${id}-hint` : undefined}
-          className={`w-full rounded-xl border bg-white px-4 py-3.5 text-base sm:text-sm text-slate-900 shadow-sm transition-all placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-1 ${
+          className={`w-full rounded-xl border bg-white px-4 py-3.5 text-base sm:text-sm text-slate-800 shadow-sm transition-all placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-1 ${
             icon ? 'ps-11' : ''
           } ${
             hasError
@@ -119,7 +119,7 @@ export function FormSelectField({
           id={id}
           aria-invalid={hasError}
           aria-describedby={hasError ? `${id}-error` : hint ? `${id}-hint` : undefined}
-          className={`w-full appearance-none rounded-xl border bg-white px-4 py-3.5 pe-10 text-base sm:text-sm text-slate-900 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-1 ${
+          className={`w-full appearance-none rounded-xl border bg-white px-4 py-3.5 pe-10 text-base sm:text-sm text-slate-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-offset-1 ${
             hasError
               ? 'border-red-500 bg-red-50/20 focus:border-red-500 focus:ring-red-400'
               : 'border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-blue-600'
@@ -190,7 +190,7 @@ export function PhoneInputWithCountry({
         <div className="relative w-[115px] sm:w-[145px] shrink-0">
           <select
             id={codeRegistration.name}
-            className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-3.5 pe-7 text-base sm:text-sm font-medium text-slate-900 shadow-sm transition-all hover:border-slate-300 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-3.5 pe-7 text-base sm:text-sm font-medium text-slate-800 shadow-sm transition-all hover:border-slate-300 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...codeRegistration}
           >
             {GCC_COUNTRIES.map((c) => (
@@ -212,7 +212,7 @@ export function PhoneInputWithCountry({
             placeholder="50 123 4567"
             aria-invalid={hasError}
             aria-describedby={hasError ? `${phoneId}-error` : hint ? `${phoneId}-hint` : undefined}
-            className={`w-full rounded-xl border bg-white px-4 py-3.5 text-base sm:text-sm text-slate-900 shadow-sm transition-all placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-1 ${
+            className={`w-full rounded-xl border bg-white px-4 py-3.5 text-base sm:text-sm text-slate-800 shadow-sm transition-all placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-1 ${
               hasError
                 ? 'border-red-500 bg-red-50/20 text-red-900 focus:border-red-500 focus:ring-red-400'
                 : 'border-slate-200 hover:border-slate-300 focus:border-blue-600 focus:ring-blue-600'
@@ -268,7 +268,7 @@ export function StepNavigation({
               e.stopPropagation();
               onBack(e);
             }}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 shadow-xs transition-all hover:bg-slate-50 hover:text-slate-900 active:scale-[0.98] sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 shadow-xs transition-all hover:bg-slate-50 hover:text-slate-800 active:scale-[0.98] sm:w-auto"
           >
             <ArrowLeft size={16} className="rtl:rotate-180" />
             <span>Back</span>
@@ -280,10 +280,10 @@ export function StepNavigation({
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`inline-flex w-full items-center justify-center gap-2.5 rounded-xl px-7 py-4 text-base sm:text-sm font-bold shadow-md transition-all active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:w-auto ${
+          className={`inline-flex w-full items-center justify-center gap-2.5 rounded-xl px-7 py-4 text-base sm:text-sm font-semibold shadow-sm transition-all hover:shadow active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:w-auto ${
             isFinalStep
-              ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-emerald-900/20 hover:from-emerald-500 hover:to-teal-500 hover:shadow-lg'
-              : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-blue-900/20 hover:from-blue-500 hover:to-blue-600 hover:shadow-lg'
+              ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:from-emerald-500 hover:to-teal-500'
+              : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-500 hover:to-blue-600'
           }`}
         >
           {isSubmitting ? (

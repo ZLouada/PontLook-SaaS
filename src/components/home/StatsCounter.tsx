@@ -34,7 +34,7 @@ function Counter({ end, suffix }: { end: number; suffix: string }) {
   return (
     <span
       ref={ref}
-      className="font-mono text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tabular-nums tracking-tight"
+      className="font-mono text-4xl sm:text-5xl lg:text-6xl font-semibold text-slate-800 tabular-nums tracking-normal"
     >
       <m.span>{rounded}</m.span>
       <span className="text-3xl sm:text-4xl text-accent ms-1">{suffix}</span>
@@ -62,7 +62,7 @@ export default function StatsCounter() {
                 className="transform-gpu will-change-transform"
               >
                 <Card className="flex flex-col items-start p-8">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent mb-6 border border-accent/20 shadow-xs">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent mb-6 border border-accent/20">
                     <Icon size={24} />
                   </div>
                   <Counter end={s.end} suffix={s.suffix} />

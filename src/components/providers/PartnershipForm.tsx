@@ -137,9 +137,9 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
 
   if (isSubmitted) {
     return (
-      <div className="bg-white border border-slate-200/80 rounded-3xl text-center p-6 sm:p-14 shadow-sm">
+      <div className="bg-white border border-slate-200/70 rounded-3xl text-center p-6 sm:p-14 shadow-sm">
         <CheckCircle2 size={48} className="mx-auto text-emerald-500" />
-        <h3 className="mt-5 text-2xl font-bold text-slate-900 font-heading">{successTitle}</h3>
+        <h3 className="mt-5 text-2xl font-semibold text-slate-800 font-heading">{successTitle}</h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 font-sans">
           {successMessage}
         </p>
@@ -148,9 +148,9 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
   }
 
   return (
-    <div className="bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-12 shadow-sm">
+    <div className="bg-white border border-slate-200/70 rounded-3xl p-5 sm:p-12 shadow-sm">
       <div className="mb-8 text-center sm:text-left">
-        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-heading">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-slate-800 font-heading">
           {formTitle}
         </h2>
         <p className="mt-2 text-sm text-slate-600 font-sans">

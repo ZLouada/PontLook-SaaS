@@ -37,7 +37,7 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto">
           <Reveal>
             <span className="chip mx-auto">Help & Information</span>
-            <h1 className="mt-6 text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl text-slate-900">
+            <h1 className="mt-6 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl text-slate-800 font-heading">
               Frequently Asked <span className="text-primary">Questions</span>
             </h1>
             <p className="mt-6 text-xl leading-relaxed text-slate-600 max-w-2xl mx-auto">
@@ -53,7 +53,7 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
 
           <Reveal delay={0.4}>
             <div className="mt-16 bg-gradient-to-br from-primary-50 to-white border border-primary-100 p-10 rounded-3xl text-center shadow-sm">
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">Still have questions?</h3>
+              <h3 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">Still have questions?</h3>
               <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
                 We&apos;re here to help. Reach out to our team to discuss your specific needs and how we can support your growth in the GCC.
               </p>

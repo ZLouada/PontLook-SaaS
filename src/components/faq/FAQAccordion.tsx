@@ -52,7 +52,7 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
                   >
                     <HelpCircle size={20} strokeWidth={2} />
                   </span>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug font-poppins">
+                  <h3 className="text-base sm:text-lg font-semibold text-slate-800 leading-snug font-heading">
                     {faq.question}
                   </h3>
                 </div>

@@ -17,8 +17,8 @@ export default function ContactPage() {
       <section className="container-site grid gap-14 pt-36 pb-24 lg:grid-cols-5">
         <Reveal className="lg:col-span-2">
           <span className="chip">Contact</span>
-          <h1 className="mt-5 text-4xl font-bold leading-tight">Let’s talk</h1>
-          <p className="mt-4 text-lg leading-relaxed">
+          <h1 className="mt-5 text-4xl font-semibold leading-tight text-slate-800 font-heading">Let’s talk</h1>
+          <p className="mt-4 text-lg leading-relaxed text-slate-600">
             Whether you deliver training or need it, we’ll point you in the right direction,
             usually within one business day.
           </p>

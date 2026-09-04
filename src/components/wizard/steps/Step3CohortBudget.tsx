@@ -86,12 +86,12 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
       noValidate
       className="space-y-8"
     >
-      {/* 1. Cohort Size */}
+      {/* 1. Target Cohort Size */}
       <section className="space-y-3">
         <div>
           <div className="flex items-center gap-2">
             <Users size={20} className="text-blue-600" />
-            <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+            <h2 className="font-heading text-xl font-semibold tracking-normal text-slate-800 sm:text-2xl">
               Target Cohort Size
             </h2>
           </div>
@@ -117,7 +117,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-slate-900">
+                    <span className="text-sm font-semibold text-slate-800">
                       {size.label}
                     </span>
                     <div
@@ -150,7 +150,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
         <div>
           <div className="flex items-center gap-2">
             <Calendar size={18} className="text-blue-600" />
-            <h3 className="text-base font-bold text-slate-900">
+            <h3 className="font-heading text-base font-semibold text-slate-800">
               Target Start Horizon
             </h3>
           </div>
@@ -177,7 +177,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-slate-900">
+                    <span className="text-sm font-semibold text-slate-800">
                       {t.label}
                     </span>
                     {isUrgent && (
@@ -204,7 +204,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
         <div>
           <div className="flex items-center gap-2">
             <DollarSign size={18} className="text-blue-600" />
-            <h3 className="text-base font-bold text-slate-900">
+            <h3 className="font-heading text-base font-semibold text-slate-800">
               Estimated Budget Allocation (USD)
             </h3>
           </div>
@@ -233,7 +233,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5 font-bold text-slate-900">
+                    <div className="flex items-center gap-1.5 font-semibold text-slate-800">
                       {isGuidance && <HelpCircle size={15} className="text-blue-600" />}
                       <span className="text-sm">{band.label}</span>
                     </div>
@@ -275,7 +275,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
           id="additionalContext"
           rows={3}
           placeholder="e.g., We need to reduce manager turnover by 20%, prepare directors for Vision 2030 initiatives, or align sales teams with enterprise bidding..."
-          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 sm:py-3 text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 sm:py-3 text-base sm:text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
           {...register('additionalContext')}
         />
       </section>

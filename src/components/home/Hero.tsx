@@ -75,7 +75,7 @@ export default function Hero() {
           {/* Main Headline */}
           <m.h1
             variants={itemVariants}
-            className="font-serif text-3xl font-normal tracking-tight text-slate-900 sm:text-5xl md:text-6xl lg:text-[72px] leading-[1.15] sm:leading-[1.1] drop-shadow-xs"
+            className="font-heading text-3xl font-semibold tracking-normal sm:tracking-tight text-slate-800 sm:text-5xl md:text-6xl lg:text-[72px] leading-[1.15] sm:leading-[1.1]"
           >
             {dict.hero.headline}
           </m.h1>
@@ -83,7 +83,7 @@ export default function Hero() {
           {/* Subtitle */}
           <m.p
             variants={itemVariants}
-            className="mt-5 sm:mt-8 text-base sm:text-lg md:text-xl text-slate-600 max-w-[780px] tracking-wide leading-relaxed font-sans font-normal"
+            className="mt-5 sm:mt-8 text-base sm:text-lg md:text-xl text-slate-600 max-w-[780px] leading-relaxed font-sans font-normal"
           >
             {dict.hero.subtitle}
           </m.p>
@@ -121,21 +121,21 @@ export default function Hero() {
             className="mt-12 sm:mt-14 pt-6 sm:pt-8 border-t border-slate-200/70 w-full max-w-2xl grid grid-cols-3 gap-2 sm:gap-4 text-center"
           >
             <div>
-              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-900 flex items-center justify-center gap-1 sm:gap-1.5">
+              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-800 flex items-center justify-center gap-1 sm:gap-1.5">
                 <ShieldCheck size={16} className="text-accent shrink-0 sm:h-[18px] sm:w-[18px]" />
                 <span>100%</span>
               </div>
               <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Verified Decision-Makers</p>
             </div>
             <div>
-              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-900 flex items-center justify-center gap-1 sm:gap-1.5">
+              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-800 flex items-center justify-center gap-1 sm:gap-1.5">
                 <TrendingUp size={16} className="text-emerald-500 shrink-0 sm:h-[18px] sm:w-[18px]" />
                 <span>Zero</span>
               </div>
               <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Monthly Retainer Risk</p>
             </div>
             <div>
-              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-900 flex items-center justify-center gap-1 sm:gap-1.5">
+              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-800 flex items-center justify-center gap-1 sm:gap-1.5">
                 <Building2 size={16} className="text-accent-secondary shrink-0 sm:h-[18px] sm:w-[18px]" />
                 <span>6</span>
               </div>

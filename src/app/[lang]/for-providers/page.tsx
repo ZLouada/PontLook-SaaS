@@ -59,7 +59,7 @@ export default async function ForProvidersPage({
         <section className="container-site pt-36 pb-20">
           <Reveal className="mx-auto max-w-3xl text-center">
             <span className="chip mx-auto">For Training Providers</span>
-            <h1 className="mt-5 text-4xl font-extrabold sm:text-5xl lg:text-6xl text-slate-900 leading-tight">
+            <h1 className="mt-5 text-4xl font-semibold sm:text-5xl lg:text-6xl text-slate-800 leading-tight font-heading">
               Enterprise Training Leads <span className="text-primary">On Demand</span>
             </h1>
             <p className="mt-5 text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
@@ -82,11 +82,11 @@ export default async function ForProvidersPage({
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {providerBenefits.map((b, i) => (
                 <Reveal key={b.title} delay={i * 0.1}>
-                  <div className="card h-full text-center flex flex-col items-center !p-8 bg-slate-50/80 border border-slate-200/80 rounded-3xl hover:bg-white hover:shadow-lg transition-all duration-300">
+                  <div className="card h-full text-center flex flex-col items-center !p-8 bg-slate-50/80 border border-slate-200/70 rounded-3xl hover:bg-white hover:shadow-md transition-all duration-300">
                     <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary mb-4">
                       <b.icon size={24} />
                     </span>
-                    <h3 className="text-lg font-bold text-slate-900">{b.title}</h3>
+                    <h3 className="text-lg font-semibold text-slate-800 font-heading">{b.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-slate-600">{b.text}</p>
                   </div>
                 </Reveal>

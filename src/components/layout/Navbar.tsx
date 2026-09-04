@@ -152,7 +152,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute inset-x-0 top-full border-b border-slate-200/80 bg-white/95 backdrop-blur-2xl p-5 sm:p-6 lg:hidden shadow-xl transform-gpu"
+              className="absolute inset-x-0 top-full border-b border-slate-200/70 bg-white/95 backdrop-blur-2xl p-5 sm:p-6 lg:hidden shadow-md transform-gpu"
             >
               <ul className="flex flex-col gap-2">
                 {links.map((l) => {
@@ -165,7 +165,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                         className={`flex items-center justify-between text-base font-semibold tracking-wide transition-colors py-3 px-4 rounded-2xl ${
                           isActive
                             ? 'text-accent bg-accent/5 font-bold'
-                            : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
+                            : 'text-slate-700 hover:text-slate-800 hover:bg-slate-50'
                         }`}
                       >
                         <span>{l.label}</span>

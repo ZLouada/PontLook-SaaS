@@ -49,7 +49,7 @@ export function TrustBadges() {
                 className="group flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs shadow-xs transition-colors hover:border-blue-400"
                 title={`${acc.name} - ${acc.desc}`}
               >
-                <span className="font-extrabold tracking-tight text-slate-900">
+                <span className="font-semibold tracking-normal text-slate-800">
                   {acc.name}
                 </span>
                 <span className="text-[10px] text-slate-400">

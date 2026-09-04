@@ -96,10 +96,10 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
         <div className="container-site max-w-5xl relative z-10 text-center mx-auto px-6">
           <Reveal>
             <span className="chip mx-auto">Who We Are</span>
-            <h1 className="mt-6 text-4xl font-extrabold sm:text-5xl lg:text-6xl text-slate-900 leading-[1.15]">
+            <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-slate-800 leading-[1.15] font-heading">
               Who We Are: The GCC Corporate Training <span className="text-primary">Matchmaking Platform</span>
             </h1>
-            <p className="mt-6 text-xl leading-relaxed text-slate-600 max-w-3xl mx-auto font-medium">
+            <p className="mt-6 text-xl leading-relaxed text-slate-600 max-w-3xl mx-auto font-normal">
               We connect corporate training companies with GCC decision-makers who already have a real workforce challenge to solve.
             </p>
           </Reveal>
@@ -114,7 +114,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
               <span className="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-4 py-1.5 rounded-full">
                 Built for Training Companies
               </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 font-heading">
+              <h2 className="mt-4 text-3xl sm:text-4xl font-semibold text-slate-800 font-heading">
                 A Predictable Engine for Enterprise Growth
               </h2>
               <p className="mt-4 text-lg text-slate-600">
@@ -154,7 +154,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                           </span>
                         )}
                       </div>
-                      <h3 className={`font-bold text-slate-900 mb-3 font-poppins leading-snug ${isLarge ? 'text-2xl' : 'text-xl'}`}>
+                      <h3 className={`font-semibold text-slate-800 mb-3 font-heading leading-snug ${isLarge ? 'text-2xl' : 'text-xl'}`}>
                         {card.title}
                       </h3>
                       <p className={`text-slate-600 leading-relaxed ${isLarge ? 'text-base max-w-2xl' : 'text-sm'}`}>
@@ -179,7 +179,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                 <ShieldCheck size={14} />
                 <span>What We Do</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-white font-heading leading-tight mb-6">
+              <h2 className="text-3xl sm:text-5xl font-semibold text-white font-heading leading-tight mb-6">
                 Pay Only for <span className="text-primary-400">Qualified Leads</span>
               </h2>
               <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl mb-8">
@@ -190,21 +190,21 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                 <div className="flex items-start gap-3">
                   <CheckCircle2 size={22} className="text-primary-400 shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-bold text-white text-base">Zero Retainers</h3>
+                    <h3 className="font-semibold text-white text-base">Zero Retainers</h3>
                     <p className="text-slate-400 text-sm mt-1">No ongoing management or setup fees.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 size={22} className="text-primary-400 shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-bold text-white text-base">Verified Buyers</h3>
+                    <h3 className="font-semibold text-white text-base">Verified Buyers</h3>
                     <p className="text-slate-400 text-sm mt-1">Vetted HR & L&D leaders in the GCC.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 size={22} className="text-primary-400 shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-bold text-white text-base">Replacement Guarantee</h3>
+                    <h3 className="font-semibold text-white text-base">Replacement Guarantee</h3>
                     <p className="text-slate-400 text-sm mt-1">Full replacement if criteria are not met.</p>
                   </div>
                 </div>
@@ -222,7 +222,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
               <span className="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-4 py-1.5 rounded-full">
                 Proven Advantages
               </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-slate-900 font-heading">
+              <h2 className="mt-4 text-3xl sm:text-4xl font-semibold text-slate-800 font-heading">
                 Why Our Clients Choose Us
               </h2>
               <p className="mt-4 text-lg text-slate-600">
@@ -240,7 +240,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                     <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-5">
                       <Icon size={24} />
                     </div>
-                    <h3 className="text-lg font-bold text-slate-900 mb-2 font-poppins">
+                    <h3 className="text-lg font-semibold text-slate-800 mb-2 font-heading">
                       {point.title}
                     </h3>
                     <p className="text-slate-600 text-sm leading-relaxed">
@@ -258,19 +258,19 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
       <section className="bg-gradient-to-b from-slate-50 to-primary-50/40 py-24 border-t border-slate-200/60">
         <div className="container-site max-w-4xl mx-auto px-6 text-center">
           <Reveal>
-            <div className="bg-white border border-primary-100 p-10 md:p-16 rounded-3xl shadow-lg relative overflow-hidden">
+            <div className="bg-white border border-primary-100 p-10 md:p-16 rounded-3xl shadow-sm relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-2xl pointer-events-none" />
               
               <span className="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-4 py-1.5 rounded-full inline-block mb-6">
                 Our Guarantee
               </span>
               
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 font-heading leading-tight mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-800 font-heading leading-tight mb-6">
                 Our Promise
               </h2>
               
-              <p className="text-xl md:text-2xl text-slate-700 font-medium leading-relaxed max-w-2xl mx-auto mb-10">
-                We deliver verified GCC decision-makers with a confirmed corporate-training need... <span className="text-primary font-bold">No retainer. No risk.</span>
+              <p className="text-xl md:text-2xl text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
+                We deliver verified GCC decision-makers with a confirmed corporate-training need... <span className="text-primary font-semibold">No retainer. No risk.</span>
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

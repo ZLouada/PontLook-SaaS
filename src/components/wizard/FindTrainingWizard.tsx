@@ -234,13 +234,13 @@ export default function FindTrainingWizard() {
   return (
     <div id="find-training-wizard-container" className="w-full space-y-6">
       {/* Progress Scaffolding Header */}
-      <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <div className="rounded-3xl border border-slate-200/70 bg-white p-5 shadow-sm sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-xs font-extrabold text-white">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-xs font-semibold text-white">
               {currentStep}
             </span>
-            <span className="text-sm font-bold text-slate-900">
+            <span className="text-sm font-semibold text-slate-800">
               Step {currentStep} of 4:
             </span>
             <span className="text-sm font-medium text-slate-600">

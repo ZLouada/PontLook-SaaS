@@ -42,7 +42,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6">
           <Reveal>
             <span className="chip mx-auto">Customer Support & Policies</span>
-            <h1 className="mt-6 text-4xl font-extrabold sm:text-5xl lg:text-6xl text-slate-900 leading-tight">
+            <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-slate-800 leading-tight font-heading">
               Returns &amp; FAQ <span className="text-primary">Policy</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
@@ -60,12 +60,12 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
               const Icon = item.icon;
               return (
                 <Reveal key={index} delay={index * 0.08}>
-                  <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 h-full flex flex-col justify-between">
+                  <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/70 h-full flex flex-col justify-between">
                     <div>
                       <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
                         <Icon size={20} />
                       </div>
-                      <h3 className="text-base font-bold text-slate-900 mb-2">{item.title}</h3>
+                      <h3 className="text-base font-semibold text-slate-800 mb-2">{item.title}</h3>
                       <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
@@ -82,8 +82,8 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
           <Reveal>
             <div className="prose prose-slate max-w-none space-y-12 text-slate-700 leading-relaxed font-sans">
               {/* 1. Made-to-Order Overview */}
-              <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/80">
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
+              <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
+                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   1. Made-to-Order Fulfillment Policy
                 </h2>
                 <p className="mb-4">
@@ -96,7 +96,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
 
               {/* 2. 30-Day Quality Issue Reporting */}
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
+                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   2. 30-Day Quality Guarantee & Defect Reporting
                 </h2>
                 <p className="mb-4">
@@ -110,7 +110,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
                 </ul>
 
                 <div className="p-6 bg-primary/5 border border-primary/20 rounded-2xl">
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2 flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-slate-800 mb-2 flex items-center gap-2">
                     <ShieldCheck size={20} className="text-primary" />
                     How to Submit a Quality Claim:
                   </h3>
@@ -127,7 +127,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
 
               {/* 3. Cancellation Policy */}
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
+                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   3. Order Cancellation Policy
                 </h2>
                 <p className="mb-4">
@@ -144,8 +144,8 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
               </div>
 
               {/* 4. Refund Processing */}
-              <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/80">
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
+              <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
+                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   4. Refund Processing & Payment Authorization
                 </h2>
                 <p className="mb-4">
@@ -166,7 +166,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
 
               {/* 5. Fourthwall Fulfillment Partner Terms */}
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 font-heading">
+                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   5. Fourthwall Fulfillment Partner Terms
                 </h2>
                 <p className="mb-4">
@@ -182,7 +182,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
               {/* 6. Contact & Support */}
               <div className="bg-primary/5 p-8 rounded-3xl border border-primary/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                 <div>
-                  <h2 className="text-2xl font-bold text-slate-900 mb-2 font-heading">
+                  <h2 className="text-2xl font-semibold text-slate-800 mb-2 font-heading">
                     Need Help With an Order?
                   </h2>
                   <p className="text-slate-600 text-sm">

@@ -92,7 +92,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
       <div>
         <div className="flex items-center gap-2">
           <ShieldCheck size={22} className="text-emerald-600" />
-          <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+          <h2 className="font-heading text-xl font-semibold tracking-normal text-slate-800 sm:text-2xl">
             Enterprise Verification & Contact Details
           </h2>
         </div>
@@ -160,7 +160,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
               id="country"
               value={selectedCountry}
               onChange={handleCountryChange}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 ps-11 text-base sm:text-sm font-medium text-slate-900 shadow-sm transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 ps-11 text-base sm:text-sm font-medium text-slate-800 shadow-sm transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               {GCC_COUNTRIES.map((c) => (
                 <option key={c.code} value={c.name}>

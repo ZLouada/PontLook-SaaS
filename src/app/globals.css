@@ -33,6 +33,9 @@
   body {
     @apply bg-background font-sans text-muted-foreground;
     line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   h1,
   h2,
@@ -40,7 +43,7 @@
   h4,
   h5,
   h6 {
-    @apply font-heading text-slate-900;
+    @apply font-heading text-slate-800 font-semibold;
     letter-spacing: normal;
     font-feature-settings: "kern" 1, "liga" 1;
     font-stretch: normal;
@@ -56,17 +59,17 @@
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition-all duration-300 transform-gpu;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition-all duration-200 transform-gpu;
   }
   .btn-primary {
-    @apply btn bg-gradient-to-r from-accent to-accent-secondary text-accent-foreground shadow-accent hover:shadow-accent-lg hover:-translate-y-0.5 active:translate-y-0;
+    @apply btn bg-gradient-to-r from-accent to-accent-secondary text-accent-foreground shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0;
   }
   .btn-secondary {
-    @apply btn border border-border bg-white/90 backdrop-blur-md text-foreground hover:border-slate-300 hover:bg-white hover:shadow-md hover:-translate-y-0.5 active:translate-y-0;
+    @apply btn border border-slate-200/90 bg-white text-slate-800 hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0;
   }
 
   .card {
-    @apply rounded-2xl border border-border bg-card p-5 sm:p-8 shadow-md transition-all duration-300 hover:shadow-xl hover:border-slate-300;
+    @apply rounded-2xl border border-slate-200/70 bg-card p-5 sm:p-8 shadow-sm transition-all duration-300 hover:shadow hover:border-slate-300;
   }
 
   .chip {
@@ -74,10 +77,10 @@
   }
 
   .field-label {
-    @apply mb-1.5 block text-sm font-medium text-foreground;
+    @apply mb-1.5 block text-sm font-medium text-slate-700;
   }
   .field-input {
-    @apply w-full rounded-2xl border border-border bg-white px-4 py-3.5 sm:px-5 sm:py-4 text-base sm:text-sm text-foreground placeholder:text-slate-400 transition-colors focus:border-accent focus:ring-1 focus:ring-accent;
+    @apply w-full rounded-2xl border border-border bg-white px-4 py-3.5 sm:px-5 sm:py-4 text-base sm:text-sm text-slate-800 placeholder:text-slate-400 transition-colors focus:border-accent focus:ring-1 focus:ring-accent;
   }
   .field-error {
     @apply mt-1.5 text-xs font-medium text-red-600;
@@ -87,26 +90,26 @@
     @apply text-base leading-relaxed text-muted-foreground;
   }
   .prose-custom h2 {
-    @apply mt-10 mb-4 text-2xl font-bold text-foreground;
+    @apply mt-10 mb-4 text-2xl font-semibold text-slate-800 font-heading;
   }
   .prose-custom h3 {
-    @apply mt-8 mb-3 text-xl font-bold text-foreground;
+    @apply mt-8 mb-3 text-xl font-semibold text-slate-800 font-heading;
   }
   .prose-custom p {
-    @apply mb-5;
+    @apply mb-5 text-slate-600 leading-relaxed;
   }
   .prose-custom ul,
   .prose-custom ol {
-    @apply mb-5 ms-5 list-disc space-y-2;
+    @apply mb-5 ms-5 list-disc space-y-2 text-slate-600;
   }
   .prose-custom ol {
     @apply list-decimal;
   }
   .prose-custom strong {
-    @apply font-semibold text-foreground;
+    @apply font-semibold text-slate-800;
   }
   .prose-custom blockquote {
-    @apply my-6 border-s-4 border-accent ps-5 italic text-muted-foreground;
+    @apply my-6 border-s-4 border-accent ps-5 italic text-slate-600;
   }
   .prose-custom a {
     @apply font-medium text-accent underline underline-offset-2;

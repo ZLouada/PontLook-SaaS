@@ -12,7 +12,7 @@ const values = [
 
 export default function TrustBar() {
   return (
-    <section className="relative bg-slate-50/80 text-slate-900 py-12 border-y border-slate-200/80 overflow-hidden">
+    <section className="relative bg-slate-50/80 text-slate-800 py-12 border-y border-slate-200/80 overflow-hidden">
       {/* Ambient background glow */}
       <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-accent-secondary/5 to-accent/5 blur-xl pointer-events-none" />
 
@@ -27,13 +27,13 @@ export default function TrustBar() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="flex items-center gap-4 p-4.5 rounded-2xl bg-white/90 border border-slate-200/90 shadow-sm backdrop-blur-md hover:bg-white hover:border-slate-300 hover:shadow-md transition-all duration-300 transform-gpu will-change-transform"
+                className="flex items-center gap-4 p-4.5 rounded-2xl bg-white border border-slate-200/70 shadow-sm hover:border-slate-300 hover:shadow transition-all duration-300 transform-gpu will-change-transform"
               >
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent border border-accent/20">
                   <Icon size={22} />
                 </div>
                 <div>
-                  <span className="font-sans font-bold text-sm text-slate-900 tracking-tight block">
+                  <span className="font-sans font-semibold text-sm text-slate-800 tracking-normal block">
                     {v.title}
                   </span>
                   <span className="text-xs text-slate-500 block mt-0.5 font-sans font-medium">

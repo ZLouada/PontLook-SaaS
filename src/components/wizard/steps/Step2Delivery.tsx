@@ -89,7 +89,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
       {/* 1. Delivery Mode */}
       <section className="space-y-3">
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+          <h2 className="font-heading text-xl font-semibold tracking-normal text-slate-800 sm:text-2xl">
             How should the training be delivered?
           </h2>
           <p className="mt-1 text-sm text-slate-600">
@@ -137,7 +137,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                     </div>
                   </div>
 
-                  <h3 className="mt-3.5 text-base font-bold text-slate-900">
+                  <h3 className="font-heading mt-3.5 text-base font-semibold text-slate-800">
                     {mode.title}
                   </h3>
                   <p className="mt-1.5 text-xs leading-relaxed text-slate-600">
@@ -169,10 +169,10 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
 
       {/* 2. GCC Regional Location if In-Person or Hybrid */}
       {requiresLocation && (
-        <section className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
+        <section className="rounded-2xl border border-slate-200/70 bg-slate-50/70 p-4 sm:p-5">
           <div className="flex items-center gap-2">
             <MapPin size={18} className="text-blue-600" />
-            <h3 className="text-sm font-bold text-slate-900">
+            <h3 className="font-heading text-sm font-semibold text-slate-800">
               Primary GCC Location for In-Person Sessions
             </h3>
           </div>
@@ -210,7 +210,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
       {/* 3. Language Delivery */}
       <section className="space-y-3">
         <div>
-          <h3 className="text-base font-bold text-slate-900">
+          <h3 className="font-heading text-base font-semibold text-slate-800">
             Instruction Language
           </h3>
           <p className="mt-0.5 text-xs text-slate-600">
@@ -233,7 +233,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                 }`}
               >
                 <div>
-                  <div className="text-sm font-bold text-slate-900">
+                  <div className="text-sm font-semibold text-slate-800">
                     {lang.label}
                   </div>
                   <div className="text-[11px] text-slate-500">
@@ -263,7 +263,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
       {/* 4. Program Customization Toggle */}
       <section className="space-y-3">
         <div>
-          <h3 className="text-base font-bold text-slate-900">
+          <h3 className="font-heading text-base font-semibold text-slate-800">
             Program Customization Level
           </h3>
           <p className="mt-0.5 text-xs text-slate-600">
@@ -293,7 +293,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                       ) : (
                         <BookOpen size={16} className="text-slate-500" />
                       )}
-                      <span className="text-sm font-bold text-slate-900">
+                      <span className="text-sm font-semibold text-slate-800">
                         {opt.title}
                       </span>
                     </span>
