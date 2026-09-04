@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Linkedin, Mail, MapPin, Twitter, Ghost, ShieldCheck } from 'lucide-react';
+import { Linkedin, Mail, MapPin, ShieldCheck } from 'lucide-react';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 export default function Footer() {
@@ -73,14 +73,6 @@ export default function Footer() {
             <li className="flex items-center gap-2.5">
               <Linkedin size={16} className="text-accent-secondary shrink-0" />
               <a href="https://www.linkedin.com/company/pontlook/" className="hover:text-accent-secondary transition-colors" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            </li>
-            <li className="flex items-center gap-2.5">
-              <Twitter size={16} className="text-accent-secondary shrink-0" />
-              <a href="https://x.com/PontLook" className="hover:text-accent-secondary transition-colors" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
-            </li>
-            <li className="flex items-center gap-2.5">
-              <Ghost size={16} className="text-accent-secondary shrink-0" />
-              <a href="https://www.snapchat.com/@pontlook" className="hover:text-accent-secondary transition-colors" target="_blank" rel="noopener noreferrer">Snapchat</a>
             </li>
           </ul>
         </div>
