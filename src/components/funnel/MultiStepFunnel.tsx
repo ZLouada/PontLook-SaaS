@@ -21,6 +21,7 @@ import {
   Step4Contact,
   Step5Confirmation,
 } from '@/components/wizard/steps';
+import { formatSelectedDomains } from '@/components/wizard/trainingDomains';
 import { useFunnelAnalytics } from '@/hooks/useFunnelAnalytics';
 import { getFunnelDictionary, type FunnelLocale } from '@/lib/i18n';
 import TrustBadges from './TrustBadges';
@@ -230,7 +231,8 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
     analytics.syncState(prev, formData);
   };
 
-  // Final submission handler: Calls /api/intake with Formspree fallback
+  // Final submission handler: Dispatches directly to Formspree (matching PartnershipForm reliability)
+  // and concurrently informs /api/intake for lead scoring/telemetry.
   const handleIntakeSubmission = async (finalData: WizardData) => {
     setIsSubmitting(true);
     setSubmissionError(null);
@@ -242,63 +244,116 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       return;
     }
 
+    const domainNames = formatSelectedDomains(finalData.selectedDomains || finalData.domains);
+
+    const deliveryModeName =
+      DELIVERY_MODES.find((m) => m.id === finalData.deliveryMode)?.title || finalData.deliveryMode || 'N/A';
+
+    const cohortLabel =
+      COHORT_SIZES.find((c) => c.id === finalData.cohortSize)?.label || finalData.cohortSize || 'N/A';
+
+    const timelineLabel =
+      TIMELINES.find((t) => t.id === finalData.timeline)?.label || finalData.timeline || 'N/A';
+
+    const budgetLabel =
+      BUDGET_BANDS.find((b) => b.id === finalData.budgetBand)?.label || finalData.budgetBand || 'N/A';
+
+    const fullPhoneNumber = `${finalData.phoneCountryCode || ''} ${finalData.phoneNumber || ''}`.trim() || 'N/A';
+
+    const formattedMessage = [
+      `Training Scope: ${domainNames}`,
+      `Delivery Mode: ${deliveryModeName} ${finalData.city ? `(${finalData.city})` : ''}`,
+      `Preferred Language: ${finalData.language || 'bilingual'}`,
+      `Customization: ${finalData.customization === 'tailored' ? 'Tailored Cohort' : 'Standard Courseware'}`,
+      `Cohort Size: ${cohortLabel}`,
+      `Timeline: ${timelineLabel}`,
+      `Budget Tier: ${budgetLabel}`,
+      finalData.additionalContext ? `Additional Context: ${finalData.additionalContext}` : null,
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    const formspreePayload = {
+      form_type: 'B2B Enterprise Training Intake',
+      name: finalData.fullName || 'N/A',
+      full_name: finalData.fullName || 'N/A',
+      email: finalData.workEmail || 'N/A',
+      business_email: finalData.workEmail || 'N/A',
+      company_name: finalData.organizationName || 'N/A',
+      organization: finalData.organizationName || 'N/A',
+      job_title: finalData.jobTitle || 'N/A',
+      country: finalData.country || 'N/A',
+      phone: fullPhoneNumber,
+      training_domains: domainNames,
+      delivery_mode: deliveryModeName,
+      city: finalData.city || 'N/A',
+      language: finalData.language || 'bilingual',
+      customization: finalData.customization || 'tailored',
+      cohort_size: cohortLabel,
+      timeline: timelineLabel,
+      budget_tier: budgetLabel,
+      message: formattedMessage,
+      _gotcha: finalData._gotcha || '',
+      submitted_at: new Date().toISOString(),
+    };
+
     try {
-      // Primary: Dispatch to Next.js /api/intake (which triggers Resend transactional email & Slack/CRM webhook)
-      const response = await fetch('/api/intake', {
+      // 1. Direct browser dispatch to Formspree (100% reliable email notification to PontLook admin)
+      const formspreePromise = fetch('https://formspree.io/f/xppawggd', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(formspreePayload),
+      });
+
+      // 2. Next.js /api/intake dispatch (for lead scoring & internal tracking)
+      const apiIntakePromise = fetch('/api/intake', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
         body: JSON.stringify(finalData),
+      }).catch((err) => {
+        console.warn('/api/intake dispatch error:', err);
+        return null;
       });
 
-      const resData = await response.json().catch(() => ({}));
+      const [formspreeRes, apiIntakeRes] = await Promise.all([formspreePromise, apiIntakePromise]);
+      const apiData = apiIntakeRes ? await apiIntakeRes.json().catch(() => ({})) : {};
 
-      if (response.ok && resData.success) {
+      if (formspreeRes.ok || (apiIntakeRes && apiIntakeRes.ok)) {
         try {
           sessionStorage.removeItem(STORAGE_KEY);
         } catch {
           // non-blocking
         }
-        analytics.trackFormSubmitted(finalData, resData.score, resData.tier);
+        analytics.trackFormSubmitted(finalData, apiData?.score, apiData?.tier);
         setIsSubmitted(true);
       } else {
-        // Fallback: If /api/intake returned error (or static host), try direct Formspree dispatch
-        console.warn('/api/intake response not ok, attempting Formspree fallback...', resData);
-        await fallbackFormspreeDispatch(finalData);
+        const errJson = await formspreeRes.json().catch(() => ({}));
+        console.error('Submission failed:', errJson);
+        setSubmissionError('Submission failed. Please verify your details and try again.');
       }
     } catch (err) {
-      console.warn('Network error calling /api/intake, attempting Formspree fallback...', err);
-      await fallbackFormspreeDispatch(finalData);
+      console.error('Submission network error:', err);
+      // Fallback: retry Formspree directly
+      try {
+        await fetch('https://formspree.io/f/xppawggd', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(formspreePayload),
+        });
+        sessionStorage.removeItem(STORAGE_KEY);
+        setIsSubmitted(true);
+      } catch {
+        setSubmissionError('Network error. Please check your connection and try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const fallbackFormspreeDispatch = async (finalData: WizardData) => {
-    try {
-      await fetch('https://formspree.io/f/xppawggd', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          form_type: 'B2B Corporate Training Intake',
-          ...finalData,
-          selected_domains: (Array.isArray(finalData.selectedDomains) ? finalData.selectedDomains.join(', ') : undefined) || 'General / Unspecified',
-          submitted_at: new Date().toISOString(),
-        }),
-      });
-    } catch (fallbackErr) {
-      console.error('Fallback dispatch error:', fallbackErr);
-    }
-    // Transition to confirmation screen so user experience remains flawless
-    try {
-      sessionStorage.removeItem(STORAGE_KEY);
-    } catch {
-      // non-blocking
-    }
-    analytics.trackFormSubmitted(finalData);
-    setIsSubmitted(true);
   };
 
   if (!hydrated) {

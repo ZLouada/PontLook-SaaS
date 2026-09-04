@@ -195,7 +195,7 @@ export async function POST(req: NextRequest) {
 
         await resend.emails.send({
           from: 'PontLook Matching Desk <concierge@pontlook.com>',
-          to: [data.workEmail],
+          to: [data.workEmail, 'contact@pontlook.com'],
           subject: `[PontLook] Training Request Received: ${domainNames} (${data.organizationName})`,
           html: emailHtml,
         });
@@ -261,6 +261,22 @@ export async function POST(req: NextRequest) {
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify({
             form_type: 'B2B Enterprise Training Intake',
+            name: data.fullName,
+            full_name: data.fullName,
+            email: data.workEmail,
+            work_email: data.workEmail,
+            company_name: data.organizationName,
+            organization: data.organizationName,
+            job_title: data.jobTitle,
+            country: data.country,
+            phone: fullPhoneNumber,
+            training_domains: domainNames,
+            delivery_mode: deliveryModeName,
+            city: data.city || 'N/A',
+            cohort_size: cohortLabel,
+            timeline: timelineLabel,
+            budget_tier: budgetLabel,
+            message: `Lead ID: ${leadId} | Score: ${leadScoreResult.score}/100 (${leadScoreResult.tier})\nOrganization: ${data.organizationName} (${data.country})\nContact: ${data.fullName} (${data.jobTitle}) - ${data.workEmail}\nPhone: ${fullPhoneNumber}\nScope: ${domainNames}\nDelivery: ${deliveryModeName} ${data.city ? `(${data.city})` : ''}\nCohort: ${cohortLabel}\nBudget: ${budgetLabel}\nTimeline: ${timelineLabel}`,
             ...webhookPayload,
           }),
         });
