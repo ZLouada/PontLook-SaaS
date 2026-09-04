@@ -5,10 +5,8 @@ import { calculateLeadScore } from '@/lib/lead-scoring';
 import { isCorporateEmail, TRAINING_DOMAINS, DELIVERY_MODES, COHORT_SIZES, TIMELINES, BUDGET_BANDS } from '@/components/wizard/schemas';
 import { resolveDomainLabel } from '@/components/wizard/trainingDomains';
 
-// Runtime config for Next.js API route
 export const dynamic = 'force-dynamic';
 
-// Incoming payload validation schema
 const intakePayloadSchema = z.object({
   fullName: z.string().trim().min(2, 'Name must be at least 2 characters'),
   jobTitle: z.string().trim().optional().or(z.literal('')),
@@ -48,7 +46,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Bot honeypot verification
     if (rawBody._gotcha && String(rawBody._gotcha).trim().length > 0) {
       console.warn('[Security] Bot honeypot triggered; request dropped');
       return NextResponse.json({
@@ -59,7 +56,6 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Validate request schema
     const validationResult = intakePayloadSchema.safeParse(rawBody);
     if (!validationResult.success) {
       return NextResponse.json(
@@ -75,7 +71,6 @@ export async function POST(req: NextRequest) {
     const data = validationResult.data;
     const leadId = `PL-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
 
-    // 1. Calculate B2B Lead Score & Qualification Tier
     const leadScoreResult = calculateLeadScore({
       ...data,
       workEmail: data.workEmail,
@@ -86,7 +81,6 @@ export async function POST(req: NextRequest) {
       additionalContext: data.additionalContext || '',
     });
 
-    // 2. Format Domain & Scope Labels
     const domainNames = ((data.domains && data.domains.length > 0) ? data.domains : ['general'])
       .map((dId) => {
         if (dId === 'other') return data.otherDomainText ? `Specialized (${data.otherDomainText})` : 'Specialized/Other';
@@ -108,7 +102,6 @@ export async function POST(req: NextRequest) {
 
     const fullPhoneNumber = `${data.phoneCountryCode || ''} ${data.phoneNumber || ''}`.trim() || 'N/A';
 
-    // 3. Automated Buyer Confirmation Email via Resend
     let emailSent = false;
     if (resend) {
       try {
@@ -201,7 +194,6 @@ export async function POST(req: NextRequest) {
       console.log(`[Mock Resend Email] Transactional intake confirmation generated for ${data.workEmail}`);
     }
 
-    // 4. Dispatch Internal Webhook to Slack / CRM / Formspree
     const webhookPayload = {
       event: 'lead_intake_created',
       leadId,
@@ -230,7 +222,6 @@ export async function POST(req: NextRequest) {
       submittedAt: new Date().toISOString(),
     };
 
-    // Dispatch to Slack Webhook if configured
     if (slackWebhookUrl) {
       try {
         const tierEmoji = leadScoreResult.tier === 'HOT' ? '🔥' : leadScoreResult.tier === 'WARM' ? '⚡' : '🎯';
@@ -246,7 +237,6 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Dispatch to CRM / Zapier webhook if explicitly configured
     if (crmWebhookUrl) {
       try {
         await fetch(crmWebhookUrl, {

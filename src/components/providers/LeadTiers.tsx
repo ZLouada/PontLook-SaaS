@@ -37,7 +37,7 @@ const defaultTiers = [
     range: '50–69',
     pct: '60%',
     cls: 'bg-blue-50 text-blue-600 border-blue-200',
-    barColor: 'from-blue-500 to-indigo-600',
+    barColor: 'from-accent to-accent-secondary',
     desc: 'Genuine, verified need at an earlier stage of the buying journey. Ideal for relationship-building.',
   },
   {
@@ -67,8 +67,7 @@ export default function LeadTiers({ dict, lang }: LeadTiersProps = {}) {
 
   return (
     <section className="relative bg-white py-12 lg:py-16 rounded-3xl overflow-hidden shadow-sm border border-slate-200/80" id="lead-quality">
-      {/* Ambient background glow */}
-      <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[750px] h-[450px] bg-gradient-to-r from-blue-500/5 via-indigo-500/5 to-blue-500/5 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
+      <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[750px] h-[450px] bg-gradient-to-r from-accent/5 via-accent-secondary/5 to-accent/5 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
       <div className="container-site px-6 sm:px-8 lg:px-12">
         <SectionHeading
@@ -97,7 +96,6 @@ export default function LeadTiers({ dict, lang }: LeadTiersProps = {}) {
                       {t.name} Tier
                     </h3>
 
-                    {/* Animated Lead Score Progress Meter */}
                     <div className="h-2 w-full bg-slate-200/70 rounded-full overflow-hidden my-3">
                       <m.div
                         initial={{ width: '0%' }}
@@ -118,7 +116,6 @@ export default function LeadTiers({ dict, lang }: LeadTiersProps = {}) {
           })}
         </div>
 
-        {/* Driver Card */}
         <Reveal
           className="mx-auto mt-14 max-w-4xl rounded-3xl bg-slate-50 border border-slate-200/70 text-slate-800 p-8 md:p-12 shadow-sm relative overflow-hidden"
           delay={0.1}

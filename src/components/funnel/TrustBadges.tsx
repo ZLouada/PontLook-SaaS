@@ -21,7 +21,6 @@ const ACCREDITATIONS = [
 export function TrustBadges() {
   return (
     <div className="w-full space-y-4">
-      {/* Privacy & Regulatory Compliance Micro-Tag */}
       <div className="flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-slate-200/80 bg-white px-4 py-2.5 text-center text-xs text-slate-600 shadow-sm">
         <div className="flex items-center gap-1.5 font-semibold text-emerald-700">
           <ShieldCheck size={15} />
@@ -34,7 +33,6 @@ export function TrustBadges() {
         </div>
       </div>
 
-      {/* Accreditation Badges Banner */}
       <div className="rounded-2xl border border-slate-200/60 bg-slate-50/70 p-4">
         <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500">

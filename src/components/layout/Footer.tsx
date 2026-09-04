@@ -19,7 +19,6 @@ export default function Footer() {
 
   return (
     <footer className="relative border-t border-slate-800 bg-slate-950 text-white overflow-hidden">
-      {/* Ambient background glow */}
       <div className="absolute top-0 start-1/4 w-[550px] h-[350px] bg-gradient-to-r from-accent/10 via-accent-secondary/5 to-accent/10 blur-3xl pointer-events-none" />
 
       <div className="container-site relative z-10 grid gap-8 sm:gap-10 py-12 sm:py-20 md:grid-cols-4 px-4 sm:px-8 lg:px-12">

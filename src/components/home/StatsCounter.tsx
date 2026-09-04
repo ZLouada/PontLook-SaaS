@@ -45,7 +45,6 @@ function Counter({ end, suffix }: { end: number; suffix: string }) {
 export default function StatsCounter() {
   return (
     <section className="relative bg-gradient-to-b from-white via-slate-50/50 to-white py-28 lg:py-40 border-t border-slate-200/60 overflow-hidden">
-      {/* Ambient Glow */}
       <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[400px] bg-gradient-to-r from-accent/10 via-accent-secondary/10 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
       <div className="container-site px-6 sm:px-8 lg:px-12">

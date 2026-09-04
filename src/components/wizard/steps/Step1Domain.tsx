@@ -52,7 +52,6 @@ type Step1Props = {
 export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) {
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Extract initial categories and subDomains from data
   const { initialCategories, initialSubDomains } = useMemo(() => {
     const cats = new Set<string>();
     const subs = new Set<string>();
@@ -131,7 +130,6 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
     },
   });
 
-  // Sync internal state to react-hook-form
   useEffect(() => {
     const combined = Array.from(new Set([...selectedCategories, ...selectedSubDomains]));
     if (isOtherOpen) {
@@ -150,7 +148,6 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
     setValue('selectedDomains', selectedDomainsPayload as any, { shouldValidate: true });
   }, [selectedCategories, selectedSubDomains, isOtherOpen, setValue]);
 
-  // Auto-expand categories matching live search query
   useEffect(() => {
     if (!searchQuery.trim()) return;
     const q = searchQuery.toLowerCase().trim();
@@ -242,7 +239,6 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
     return subIds.length > 0 && subIds.every((id) => selectedSubDomains.includes(id));
   };
 
-  // Filter categories based on real-time search query
   const filteredCategories = useMemo(() => {
     if (!searchQuery.trim()) return TRAINING_CATEGORIES;
     const q = searchQuery.toLowerCase().trim();
@@ -263,7 +259,6 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
     });
   }, [searchQuery]);
 
-  // Calculate total selected count (categories + sub-domains/tags)
   const selectedCount = useMemo(() => {
     const uniqueItems = new Set([...selectedCategories, ...selectedSubDomains]);
     return uniqueItems.size;
@@ -279,7 +274,6 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
       noValidate
       className="space-y-6"
     >
-      {/* Header & Context */}
       <div>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="font-heading text-xl font-semibold tracking-normal text-slate-800 sm:text-2xl">
@@ -297,7 +291,6 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
         </p>
       </div>
 
-      {/* Live Search Filter Bar */}
       <div className="relative">
         <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-4 text-slate-400">
           <Search size={18} />
@@ -325,7 +318,6 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
         )}
       </div>
 
-      {/* Interactive 4-Category Cards in a 2x2 Grid */}
       <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {filteredCategories.map((category) => {
@@ -333,8 +325,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
             const isExpanded = expandedCategories.includes(category.id);
             const IconComponent = ICON_MAP[category.icon] || Layers;
 
-            // Check if any subDomain or tag within this category is selected
-            const hasSubSelected = category.subDomains.some(
+                  const hasSubSelected = category.subDomains.some(
               (s) => selectedSubDomains.includes(s.id) || s.tags.some((t) => selectedSubDomains.includes(t))
             );
 
@@ -349,8 +340,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                     : 'border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-sm'
                 }`}
               >
-                {/* Main Card Header Area */}
-                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                          <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
                   <div
                     onClick={() => toggleCategory(category.id)}
                     className="cursor-pointer select-none"
@@ -363,8 +353,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                       }
                     }}
                   >
-                    {/* Top Row: Icon, Monospace Badge, and Checkbox Indicator */}
-                    <div className="flex items-start justify-between gap-3">
+                                  <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-3">
                         <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-[#2451BF] shrink-0">
                           <IconComponent size={22} />
@@ -374,8 +363,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                         </span>
                       </div>
 
-                      {/* Checkbox Toggle Indicator in Top-Right */}
-                      <button
+                                      <button
                         type="button"
                         onClick={(e) => {
                           e.preventDefault();
@@ -397,8 +385,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                       </button>
                     </div>
 
-                    {/* Category Title & Short Description */}
-                    <div className="mt-3.5">
+                                  <div className="mt-3.5">
                       <h3 className="font-heading text-base font-semibold text-slate-800">
                         {category.title}
                       </h3>
@@ -407,16 +394,14 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                       </p>
                     </div>
 
-                    {/* Target Buyers Caption */}
-                    <div className="mt-3">
+                                  <div className="mt-3">
                       <p className="text-[11px] text-slate-500 font-medium italic">
                         Target Buyers: {category.targetBuyers}
                       </p>
                     </div>
                   </div>
 
-                  {/* Accordion expand/collapse action bar */}
-                  <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
                     <button
                       type="button"
                       onClick={(e) => {
@@ -448,8 +433,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                   </div>
                 </div>
 
-                {/* Expandable Accordion with Sub-domains & Capability Pills */}
-                {isExpanded && (
+                          {isExpanded && (
                   <div className="border-t border-slate-200/80 bg-slate-50/70 p-4 space-y-3">
                     <div className="flex items-center justify-between text-[11px] text-slate-500">
                       <span>Specific sub-domains & capability tags:</span>
@@ -510,8 +494,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                               </button>
                             </div>
 
-                            {/* Specific capability pills / tags */}
-                            <div className="mt-2.5 flex flex-wrap gap-2">
+                                                  <div className="mt-2.5 flex flex-wrap gap-2">
                               {subDomain.tags.map((tag) => {
                                 const isTagSelected = selectedSubDomains.includes(tag);
                                 const isTagSearchMatch =
@@ -550,8 +533,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
           })}
         </div>
 
-        {/* Fallback when search has no matches */}
-        {filteredCategories.length === 0 && (
+          {filteredCategories.length === 0 && (
           <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
             <p className="text-sm font-semibold text-slate-700">
               No standard catalog match for &quot;{searchQuery}&quot;
@@ -596,7 +578,6 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
         )}
       </div>
 
-      {/* Optional custom / specialized topic drawer toggle */}
       <div className="pt-1">
         {!isOtherOpen ? (
           <button
@@ -652,8 +633,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
               )}
             </div>
 
-            {/* Quick chip suggestions */}
-            <div className="mt-3.5 flex flex-wrap items-center gap-2">
+                  <div className="mt-3.5 flex flex-wrap items-center gap-2">
               <span className="text-xs font-medium text-slate-500">Suggestions:</span>
               {SUGGESTED_OTHER_TOPICS.map((topic) => (
                 <button
@@ -674,7 +654,6 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
         )}
       </div>
 
-      {/* Navigation */}
       <StepNavigation
         nextLabel="Continue to Delivery & Region"
         isSubmitting={isSubmitting}

@@ -8,7 +8,6 @@ import { ArrowRight, ShieldCheck, Building2, Target } from 'lucide-react';
 export default function FinalCta() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 py-28 lg:py-40 border-t border-slate-200/80">
-      {/* Ambient Mesh Glow */}
       <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-accent-secondary/10 to-accent/10 blur-3xl pointer-events-none transform-gpu" />
       <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[380px] bg-accent/10 blur-3xl pointer-events-none rounded-full" />
 

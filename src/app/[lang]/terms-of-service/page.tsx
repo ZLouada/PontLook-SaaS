@@ -13,7 +13,6 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
 
   return (
     <>
-      {/* Hero Section */}
       <section className="bg-hero-gradient pt-36 pb-16 relative overflow-hidden">
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6">
           <Reveal>
@@ -28,12 +27,10 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
         </div>
       </section>
 
-      {/* Main Content */}
       <section className="bg-white py-20 border-t border-slate-100">
         <div className="container-site max-w-4xl mx-auto px-6">
           <Reveal>
             <div className="prose prose-slate max-w-none space-y-12 text-slate-700 leading-relaxed font-sans">
-              {/* 1. Service Overview */}
               <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   1. Service Overview & Agreement
@@ -46,7 +43,6 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                 </p>
               </div>
 
-              {/* 2. Eligibility */}
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   2. Eligibility (Age 13+)
@@ -61,7 +57,6 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                 </ul>
               </div>
 
-              {/* 3. Account Registration & Responsibilities */}
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   3. Account Registration & Responsibilities
@@ -76,7 +71,6 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                 </ul>
               </div>
 
-              {/* 4. Payment Authorization & Pricing */}
               <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   4. Payment Authorization & Financial Terms
@@ -100,7 +94,6 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                 </ul>
               </div>
 
-              {/* 5. Limited License & Intellectual Property */}
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   5. Limited License & Intellectual Property
@@ -116,7 +109,6 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                 </p>
               </div>
 
-              {/* 6. Prohibited Activities */}
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   6. Prohibited Conduct
@@ -132,7 +124,6 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                 </ul>
               </div>
 
-              {/* 7. Disclaimers & Limitation of Liability */}
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   7. Disclaimers & Limitation of Liability
@@ -148,7 +139,6 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                 </p>
               </div>
 
-              {/* 8. Governing Law & Jurisdiction */}
               <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   8. Governing Law & Jurisdiction (San Francisco, CA / Delaware)

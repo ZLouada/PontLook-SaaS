@@ -28,7 +28,6 @@ type Step4Props = {
 };
 
 export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Step4Props) {
-  // Infer initial country code from country or existing phone
   const initialCountry = data.country || 'Saudi Arabia';
   const matchedCountry = GCC_COUNTRIES.find((c) => c.name === initialCountry);
   const initialPhoneCode = data.phoneCountryCode || matchedCountry?.dialCode || '+966';
@@ -55,7 +54,6 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
 
   const selectedCountry = watch('country');
 
-  // Sync country code dropdown when country selector changes
   const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const countryName = e.target.value;
     setValue('country', countryName, { shouldValidate: true });
@@ -88,7 +86,6 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
       noValidate
       className="space-y-6"
     >
-      {/* Step Header */}
       <div>
         <div className="flex items-center gap-2">
           <ShieldCheck size={22} className="text-emerald-600" />
@@ -101,9 +98,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
         </p>
       </div>
 
-      {/* Grid of contact inputs */}
       <div className="grid gap-5 sm:grid-cols-2">
-        {/* Full Name */}
         <FormTextField
           label="Full Name"
           placeholder="e.g. Sarah Al-Rashid"
@@ -113,7 +108,6 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
           error={errors.fullName}
         />
 
-        {/* Official Job Title */}
         <FormTextField
           label="Official Job Title"
           placeholder="e.g. VP of Human Capital / L&D Director"
@@ -124,7 +118,6 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
           optional
         />
 
-        {/* Corporate Work Email */}
         <FormTextField
           label="Corporate Work Email"
           type="email"
@@ -136,7 +129,6 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
           error={errors.workEmail}
         />
 
-        {/* Organization Name */}
         <FormTextField
           label="Organization / Company Name"
           placeholder="e.g. Saudi Aramco, FAB Bank, STC"
@@ -147,7 +139,6 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
           optional
         />
 
-        {/* Primary Country */}
         <div className="w-full">
           <label htmlFor="country" className="mb-2 block text-sm font-semibold text-slate-800">
             Primary Country of Operation
@@ -176,7 +167,6 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
           )}
         </div>
 
-        {/* GCC Direct Phone Number with Dial Code */}
         <PhoneInputWithCountry
           label="Direct Phone / WhatsApp"
           codeRegistration={register('phoneCountryCode')}
@@ -187,10 +177,8 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
         />
       </div>
 
-      {/* Hidden honeypot field for bot protection */}
       <input type="text" {...register('_gotcha')} style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 
-      {/* Enterprise Confidentiality Guarantee Banner */}
       <div className="rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50/90 via-teal-50/60 to-emerald-50/40 p-4 sm:p-5">
         <div className="flex items-start gap-3.5">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-sm">
@@ -207,7 +195,6 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
         </div>
       </div>
 
-      {/* Action Navigation */}
       <StepNavigation
         onBack={onBack}
         nextLabel="Get 3 Curated Provider Proposals"

@@ -4,7 +4,7 @@ import Reveal from '@/components/shared/Reveal';
 import { 
   TrendingUp, 
   Target, 
-  Zap, 
+  Briefcase, 
   MessageSquare, 
   Award, 
   ShieldCheck, 
@@ -36,7 +36,7 @@ const featureCards = [
     description: 'Maintain steady sales outreach and lead generation even when your facilitators are 100% focused on client workshops.',
   },
   {
-    icon: Zap,
+    icon: Briefcase,
     title: 'Use an outsourced growth engine.',
     description: 'Scale your enterprise business development without hiring, training, or managing expensive internal sales teams.',
   },
@@ -56,12 +56,12 @@ const benefitPoints = [
   {
     icon: ShieldCheck,
     title: 'Zero Retainer Risk',
-    desc: 'Pay strictly per qualified lead delivered, ensuring 100% alignment with your revenue growth.',
+    desc: 'Pay strictly per qualified lead ($50–$200) delivered, ensuring 100% alignment with your revenue pipeline.',
   },
   {
     icon: Users,
     title: 'Verified GCC Decision-Makers',
-    desc: 'Direct connections with HR Directors, CHROs, L&D heads, and C-Suite executives across the Gulf.',
+    desc: 'Direct connections with HR Directors, CHROs, and L&D heads navigating Saudization and Emiratization compliance mandates.',
   },
   {
     icon: Target,
@@ -71,7 +71,7 @@ const benefitPoints = [
   {
     icon: Clock,
     title: 'Time & Cost Efficiency',
-    desc: 'Save hundreds of hours of manual research and prospecting for your internal business development team.',
+    desc: 'Save hundreds of hours of manual research with an average 14-day turnaround from request intake to warm introduction.',
   },
   {
     icon: BarChart3,
@@ -91,7 +91,6 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      {/* Hero Section */}
       <section className="bg-hero-gradient pt-36 pb-24 relative overflow-hidden">
         <div className="container-site max-w-5xl relative z-10 text-center mx-auto px-6">
           <Reveal>
@@ -106,7 +105,6 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
         </div>
       </section>
 
-      {/* Built for Training Companies - 5 Feature Cards */}
       <section className="bg-white py-24 border-t border-slate-100">
         <div className="container-site mx-auto px-6">
           <Reveal>
@@ -123,7 +121,6 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
             </div>
           </Reveal>
 
-          {/* Bento Grid Layout for Feature Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {featureCards.map((card, index) => {
               const Icon = card.icon;
@@ -169,7 +166,6 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
         </div>
       </section>
 
-      {/* What We Do - Pay Only for Qualified Leads */}
       <section className="bg-slate-900 text-white py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800 via-slate-900 to-black opacity-80" />
         <div className="container-site max-w-5xl mx-auto px-6 relative z-10">
@@ -214,7 +210,6 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
         </div>
       </section>
 
-      {/* Why Our Clients Choose Us - 6 Benefit Points */}
       <section className="bg-white py-24">
         <div className="container-site mx-auto px-6 max-w-6xl">
           <Reveal>
@@ -254,7 +249,6 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
         </div>
       </section>
 
-      {/* Our Promise & Call to Action */}
       <section className="bg-gradient-to-b from-slate-50 to-primary-50/40 py-24 border-t border-slate-200/60">
         <div className="container-site max-w-4xl mx-auto px-6 text-center">
           <Reveal>

@@ -37,7 +37,6 @@ export default function Step5Confirmation({ data }: Step5Props) {
   const [downloading, setDownloading] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
 
-  // Look up labels for summary
   const selectedDomainNames = React.useMemo(() => {
     if (data.selectedDomains) {
       if (Array.isArray(data.selectedDomains)) {
@@ -83,11 +82,9 @@ export default function Step5Confirmation({ data }: Step5Props) {
 
   const handleDownloadReport = () => {
     setDownloading(true);
-    // Simulate instant report compilation & trigger download
     setTimeout(() => {
       setDownloading(false);
       setDownloadSuccess(true);
-      // Create and download a generated executive benchmark summary report
       const reportContent = `PONTLOOK GCC CORPORATE TRAINING BENCHMARK REPORT (2026 EDITION)
 ================================================================================
 Generated for: ${data.fullName || 'Executive Leader'} (${data.jobTitle || 'Executive'})
@@ -137,9 +134,7 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
       transition={{ duration: 0.4 }}
       className="space-y-8"
     >
-      {/* Top Banner: Pulsing Status Tracker */}
       <div className="rounded-3xl border border-emerald-200 bg-gradient-to-b from-emerald-50/90 to-teal-50/40 p-6 text-center sm:p-8">
-        {/* Animated Pulsing Status Badge */}
         <div className="inline-flex items-center gap-2.5 rounded-full border border-emerald-300/80 bg-white px-4 py-1.5 shadow-sm">
           <span className="relative flex h-3 w-3">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -157,7 +152,6 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
           Thank you, <strong className="text-slate-800">{data.fullName || 'Leader'}</strong>. Your training specifications for <strong className="text-slate-800">{data.organizationName || 'your organization'}</strong> have been prioritized in our qualification queue.
         </p>
 
-        {/* 3-Step Milestone Roadmap */}
         <div className="mt-8 grid gap-4 text-start sm:grid-cols-3">
           <div className="relative rounded-2xl border border-emerald-100 bg-white/90 p-5 shadow-sm">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
@@ -194,11 +188,11 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
           </div>
 
           <div className="relative rounded-2xl border border-emerald-100 bg-white/90 p-5 shadow-sm">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <ShieldCheck size={20} />
             </div>
             <div className="mt-3">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-600">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-primary">
                 Milestone 3 · Zero Obligation
               </span>
               <h3 className="font-heading mt-0.5 text-sm font-semibold text-slate-800">
@@ -212,7 +206,6 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
         </div>
       </div>
 
-      {/* Value-Add Immediate Delivery: Download Benchmark Report */}
       <div className="rounded-3xl border border-slate-200/70 bg-white p-6 shadow-sm sm:p-7">
         <div className="flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
           <div className="flex items-start gap-4">
@@ -258,7 +251,6 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
         </div>
       </div>
 
-      {/* Submitted Scope Summary Card */}
       <div className="rounded-3xl border border-slate-200/70 bg-slate-50/70 p-6 sm:p-7">
         <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-slate-600">
           Submitted Request Scope
@@ -309,7 +301,6 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
         </div>
       </div>
 
-      {/* Footer Navigation */}
       <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
         <Link
           href="/"

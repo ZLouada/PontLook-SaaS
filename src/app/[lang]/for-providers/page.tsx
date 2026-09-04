@@ -23,12 +23,12 @@ const providerBenefits = [
   {
     icon: DollarSign,
     title: 'Zero Retainer Risk',
-    text: 'No monthly management fees or fixed retainers. You pay strictly per verified decision-maker delivered.',
+    text: 'No monthly management fees or fixed retainers. You pay strictly per verified decision-maker delivered ($50–$200 per lead).',
   },
   {
     icon: Target,
     title: 'Pre-Qualified GCC Buyers',
-    text: 'Every lead has confirmed corporate training needs, authority, and explicit problem definitions.',
+    text: 'Every lead has confirmed corporate training needs, authority, and explicit problem definitions tied to Saudization, Emiratization, or digital upskilling.',
   },
   {
     icon: Award,
@@ -54,7 +54,6 @@ export default async function ForProvidersPage({
 
   return (
     <>
-      {/* Light Hero Section */}
       <div className="bg-hero-gradient">
         <section className="container-site pt-36 pb-20">
           <Reveal className="mx-auto max-w-3xl text-center">
@@ -69,10 +68,8 @@ export default async function ForProvidersPage({
         </section>
       </div>
 
-      {/* Main Content Area */}
       <section className="bg-white py-20 border-t border-slate-100">
         <div className="container-site max-w-6xl mx-auto px-6 space-y-24">
-          {/* 3 Quick Value Props */}
           <div>
             <SectionHeading
               eyebrow="Why Partner with PontLook"
@@ -94,10 +91,8 @@ export default async function ForProvidersPage({
             </div>
           </div>
 
-          {/* Lead Tiers Section */}
           <LeadTiers dict={dict} lang={lang} />
 
-          {/* Partnership Form Section */}
           <div id="apply" className="scroll-mt-24">
             <SectionHeading
               eyebrow="Provider Application"

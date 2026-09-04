@@ -48,7 +48,6 @@ export default function ProviderTeaser() {
 
   return (
     <section className="relative bg-gradient-to-b from-white via-slate-50/70 to-white py-28 lg:py-40 overflow-hidden border-y border-slate-200/60">
-      {/* Ambient background glow */}
       <div className="absolute top-1/2 end-10 -translate-y-1/2 w-[650px] h-[450px] bg-gradient-to-r from-accent/10 via-accent-secondary/10 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
       <div className="container-site relative z-10 grid items-center gap-14 lg:grid-cols-2 px-6 sm:px-8 lg:px-12">
@@ -104,7 +103,6 @@ export default function ProviderTeaser() {
                     <Badge variant="slate">{t.pct} Match</Badge>
                   </div>
 
-                  {/* Animated Lead Score Progress Meter */}
                   <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden mt-1">
                     <m.div
                       initial={{ width: '0%' }}

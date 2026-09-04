@@ -186,7 +186,6 @@ export function PhoneInputWithCountry({
       </div>
 
       <div className="flex gap-2">
-        {/* Country Dial Code Dropdown */}
         <div className="relative w-[115px] sm:w-[145px] shrink-0">
           <select
             id={codeRegistration.name}
@@ -204,7 +203,6 @@ export function PhoneInputWithCountry({
           </div>
         </div>
 
-        {/* Local Phone Number Input */}
         <div className="relative flex-1 min-w-0">
           <input
             id={phoneId}

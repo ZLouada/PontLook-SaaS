@@ -86,7 +86,6 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
       noValidate
       className="space-y-8"
     >
-      {/* 1. Delivery Mode */}
       <section className="space-y-3">
         <div>
           <h2 className="font-heading text-xl font-semibold tracking-normal text-slate-800 sm:text-2xl">
@@ -167,7 +166,6 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
         )}
       </section>
 
-      {/* 2. GCC Regional Location if In-Person or Hybrid */}
       {requiresLocation && (
         <section className="rounded-2xl border border-slate-200/70 bg-slate-50/70 p-4 sm:p-5">
           <div className="flex items-center gap-2">
@@ -207,7 +205,6 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
         </section>
       )}
 
-      {/* 3. Language Delivery */}
       <section className="space-y-3">
         <div>
           <h3 className="font-heading text-base font-semibold text-slate-800">
@@ -260,7 +257,6 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
         )}
       </section>
 
-      {/* 4. Program Customization Toggle */}
       <section className="space-y-3">
         <div>
           <h3 className="font-heading text-base font-semibold text-slate-800">
@@ -332,7 +328,6 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
         )}
       </section>
 
-      {/* Step Navigation */}
       <StepNavigation
         onBack={onBack}
         nextLabel="Continue to Cohort & Budget"

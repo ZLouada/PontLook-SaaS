@@ -94,7 +94,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
         </div>
 
         <div className="flex items-center gap-3 sm:gap-4">
-          {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-3">
             <Link
               href={switchHref}
@@ -121,7 +120,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             </Button>
           </div>
 
-          {/* Mobile Actions: Lang Switch + Menu Toggle */}
           <div className="flex items-center gap-2 lg:hidden">
             <Link
               href={switchHref}
@@ -144,7 +142,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           </div>
         </div>
 
-        {/* Mobile Drawer Menu */}
         <AnimatePresence>
           {open && (
             <m.div

@@ -57,7 +57,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
 
   const hasInitializedRef = useRef(false);
 
-  // 1. Pre-population: Parse URL parameters on mount and merge with sessionStorage
   useEffect(() => {
     if (hasInitializedRef.current) return;
     hasInitializedRef.current = true;
@@ -75,11 +74,8 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
         }
       }
     } catch {
-      // Ignore sessionStorage parsing errors
-    }
+      }
 
-    // Dynamic URL Query Parameter Pre-Population
-    // Handles: ?topic=leadership | ?domain=ai_data_tech | ?city=dubai | ?mode=virtual | ?lang=ar | ?cohort=6_20_team | ?budget=25k_50k
     const queryTopic = searchParams?.get('topic') || searchParams?.get('domain');
     const queryCity = searchParams?.get('city');
     const queryMode = searchParams?.get('mode') || searchParams?.get('delivery');
@@ -89,7 +85,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
 
     const prefilledData: WizardData = { ...savedData };
 
-    // Topic / Domain Matching
     if (queryTopic) {
       const q = queryTopic.toLowerCase();
       if (q.includes('lead') || q.includes('exec') || q.includes('manage')) {
@@ -116,7 +111,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       }
     }
 
-    // City Matching
     if (queryCity) {
       const matchedCity = GCC_CITIES.find(
         (c) => c.toLowerCase() === queryCity.toLowerCase() || c.toLowerCase().includes(queryCity.toLowerCase())
@@ -124,7 +118,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       if (matchedCity) prefilledData.city = matchedCity;
     }
 
-    // Delivery Mode Matching
     if (queryMode) {
       const m = queryMode.toLowerCase();
       if (m.includes('person') || m.includes('onsite')) prefilledData.deliveryMode = 'in_person';
@@ -132,7 +125,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       else if (m.includes('hybrid') || m.includes('blend')) prefilledData.deliveryMode = 'hybrid';
     }
 
-    // Cohort Matching
     if (queryCohort) {
       const c = queryCohort.toLowerCase();
       if (c.includes('1') || c.includes('exec')) prefilledData.cohortSize = '1_5_execs';
@@ -141,7 +133,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       else if (c.includes('50') || c.includes('enterprise')) prefilledData.cohortSize = '50_plus_enterprise';
     }
 
-    // Budget Matching
     if (queryBudget) {
       const b = queryBudget.toLowerCase();
       if (b.includes('10k_25k') || b.includes('20')) prefilledData.budgetBand = '10k_25k';
@@ -151,7 +142,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       else if (b.includes('guide') || b.includes('pending')) prefilledData.budgetBand = 'pending_guidance';
     }
 
-    // Language Matching
     if (queryLanguage) {
       const l = queryLanguage.toLowerCase();
       if (l === 'ar' || l.includes('arabic')) prefilledData.language = 'arabic';
@@ -168,7 +158,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Persist current state to sessionStorage
   const persistSession = (step: number, data: WizardData) => {
     try {
       sessionStorage.setItem(
@@ -180,11 +169,9 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
         })
       );
     } catch {
-      // Storage unavailable
-    }
+      }
   };
 
-  // Advance to next step
   const handleAdvance = async (stepValues: object, e?: React.BaseSyntheticEvent | React.MouseEvent | React.FormEvent) => {
     if (e) {
       e.preventDefault();
@@ -204,20 +191,17 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       persistSession(next, updatedData);
       analytics.syncState(next, updatedData);
 
-      // Smooth scroll to wizard top
-      if (typeof window !== 'undefined') {
+        if (typeof window !== 'undefined') {
         const wizardContainer = document.getElementById('multistep-funnel-container');
         if (wizardContainer) {
           wizardContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }
     } else {
-      // Step 4 final submission
-      await handleIntakeSubmission(updatedData);
+        await handleIntakeSubmission(updatedData);
     }
   };
 
-  // Back navigation
   const handleBack = (e?: React.MouseEvent) => {
     if (e) {
       e.preventDefault();
@@ -231,8 +215,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
     analytics.syncState(prev, formData);
   };
 
-  // Final submission handler: Dispatches directly to Formspree (matching PartnershipForm reliability)
-  // and dispatches non-blocking telemetry to /api/intake.
   const handleIntakeSubmission = async (finalData: WizardData) => {
     setIsSubmitting(true);
     setSubmissionError(null);
@@ -369,7 +351,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
     );
   }
 
-  // Step 5: Post-Submission Match Confirmation Screen
   if (isSubmitted) {
     return (
       <div id="multistep-funnel-container" className={`w-full ${className}`} dir={dict.dir}>
@@ -384,7 +365,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       className={`w-full space-y-4 sm:space-y-6 ${className}`}
       dir={dict.dir}
     >
-      {/* Progress Scaffolding Header */}
       <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2 min-w-0">
@@ -411,7 +391,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
           </div>
         </div>
 
-        {/* Step Track Bars */}
         <div className="mt-4 grid grid-cols-4 gap-2">
           {STEP_TITLES.map((def) => {
             const isCompleted = def.step < currentStep;
@@ -446,7 +425,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
         </div>
       </div>
 
-      {/* Main Step Card Container */}
       <div className="relative rounded-3xl border border-slate-200 bg-white p-4 sm:p-8 md:p-10 shadow-sm">
         {submissionError && (
           <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-xs font-medium text-red-700" role="alert">
@@ -497,7 +475,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
         </AnimatePresence>
       </div>
 
-      {/* Trust & Accreditation Badges */}
       <TrustBadges />
     </div>
   );

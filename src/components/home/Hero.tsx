@@ -41,7 +41,6 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-background pt-24 pb-16 lg:pt-36 lg:pb-36 min-h-[90vh] flex flex-col justify-center">
-      {/* Full-Bleed Ambient Background */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <Image
           src="/skyline-bg.jpg"
@@ -50,7 +49,6 @@ export default function Hero() {
           className="object-cover scale-105 opacity-45"
           priority
         />
-        {/* Advanced Gradient Mask */}
         <div
           className="absolute inset-0 bg-background"
           style={{
@@ -59,7 +57,6 @@ export default function Hero() {
           }}
         />
 
-        {/* Ambient Radial Glow Orbs */}
         <div className="absolute top-1/4 start-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-r from-accent/15 via-accent-secondary/10 to-accent/15 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
         <div className="absolute top-10 start-1/4 w-[380px] h-[380px] bg-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
         <div className="absolute bottom-10 end-1/4 w-[420px] h-[420px] bg-accent-secondary/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
@@ -72,7 +69,6 @@ export default function Hero() {
           animate="visible"
           className="max-w-[960px] flex flex-col items-center transform-gpu will-change-transform"
         >
-          {/* Main Headline */}
           <m.h1
             variants={itemVariants}
             className="font-heading text-3xl font-semibold tracking-normal sm:tracking-tight text-slate-800 sm:text-5xl md:text-6xl lg:text-[72px] leading-[1.15] sm:leading-[1.1]"
@@ -80,7 +76,6 @@ export default function Hero() {
             {dict.hero.headline}
           </m.h1>
 
-          {/* Subtitle */}
           <m.p
             variants={itemVariants}
             className="mt-5 sm:mt-8 text-base sm:text-lg md:text-xl text-slate-600 max-w-[780px] leading-relaxed font-sans font-normal"
@@ -88,7 +83,6 @@ export default function Hero() {
             {dict.hero.subtitle}
           </m.p>
 
-          {/* Action Buttons */}
           <m.div
             variants={itemVariants}
             className="mt-8 sm:mt-10 flex flex-col w-full sm:w-auto sm:flex-row items-center gap-3.5 sm:gap-5"
@@ -115,7 +109,6 @@ export default function Hero() {
             </Button>
           </m.div>
 
-          {/* Quick Metrics Bar */}
           <m.div
             variants={itemVariants}
             className="mt-12 sm:mt-14 pt-6 sm:pt-8 border-t border-slate-200/70 w-full max-w-2xl grid grid-cols-3 gap-2 sm:gap-4 text-center"

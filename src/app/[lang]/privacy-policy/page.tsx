@@ -13,7 +13,6 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
 
   return (
     <>
-      {/* Hero Section */}
       <section className="bg-hero-gradient pt-36 pb-16 relative overflow-hidden">
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6">
           <Reveal>
@@ -28,12 +27,10 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
         </div>
       </section>
 
-      {/* Main Content */}
       <section className="bg-white py-20 border-t border-slate-100">
         <div className="container-site max-w-4xl mx-auto px-6">
           <Reveal>
             <div className="prose prose-slate max-w-none space-y-12 text-slate-700 leading-relaxed font-sans">
-              {/* 1. Introduction & Data Controller */}
               <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   1. Overview & Data Controller
@@ -46,7 +43,6 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 </p>
               </div>
 
-              {/* 2. Information We Collect */}
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   2. Information Collection
@@ -67,7 +63,6 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 </ul>
               </div>
 
-              {/* 3. How We Use Information */}
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   3. How We Use Your Information
@@ -85,7 +80,6 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 </ul>
               </div>
 
-              {/* 4. Third-Party Disclosures & Partners */}
               <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   4. Third-Party Disclosures & Service Partners
@@ -109,7 +103,6 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 </ul>
               </div>
 
-              {/* 5. Cookies & Tracking */}
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   5. Cookies & Tracking Technologies
@@ -130,7 +123,6 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 </p>
               </div>
 
-              {/* 6. User Rights (California & EEA) */}
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   6. User Rights (California & EEA Residents)
@@ -165,7 +157,6 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 </div>
               </div>
 
-              {/* 7. Data Retention & Security */}
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   7. Data Retention & Security
@@ -175,7 +166,6 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 </p>
               </div>
 
-              {/* 8. Contact Us */}
               <div className="bg-primary/5 p-8 rounded-3xl border border-primary/20">
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   8. Contact Us

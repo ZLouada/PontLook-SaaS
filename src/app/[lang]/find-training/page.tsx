@@ -10,7 +10,7 @@ import {
   Target,
   Briefcase,
   Building2,
-  Sparkles,
+  CheckCircle2,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -68,7 +68,6 @@ export default async function FindTrainingPage({
 
   return (
     <>
-      {/* Hero Section */}
       <div className="bg-hero-gradient">
         <section className="container-site relative z-10 pt-36 pb-16 text-center sm:pt-40 sm:pb-20">
           <Reveal className="mx-auto max-w-3xl">
@@ -85,7 +84,6 @@ export default async function FindTrainingPage({
               Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds, and we&apos;ll introduce you only to proven GCC training providers matched to your exact domain and regional context.
             </p>
 
-            {/* Quick Metrics Bar */}
             <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
               {trustMetrics.map((m) => (
                 <div
@@ -101,17 +99,15 @@ export default async function FindTrainingPage({
         </section>
       </div>
 
-      {/* Main Guided Intake Funnel Section */}
       <section className="relative bg-slate-50/70 py-12 sm:py-16 border-t border-slate-100">
         <div className="container-site">
-          {/* Trust Guarantees header bar */}
           <div className="mx-auto mb-8 flex max-w-4xl flex-wrap items-center justify-center gap-6 text-xs font-semibold text-slate-700">
             <span className="flex items-center gap-1.5">
               <BadgeDollarSign size={16} className="text-primary" />
               <span>100% Free for Companies</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <Sparkles size={16} className="text-accent-secondary" />
+              <CheckCircle2 size={16} className="text-emerald-600" />
               <span>Zero Vendor Spam</span>
             </span>
             <span className="flex items-center gap-1.5">
@@ -120,14 +116,12 @@ export default async function FindTrainingPage({
             </span>
           </div>
 
-          {/* Interactive Multi-Step Funnel Container */}
           <div className="mx-auto max-w-4xl">
             <Suspense fallback={<FunnelLoadingFallback />}>
               <MultiStepFunnel initialLang={lang} />
             </Suspense>
           </div>
 
-          {/* Key Advantages Bento */}
           <div className="mx-auto mt-24 max-w-5xl">
             <SectionHeading
               eyebrow="Why PontLook"

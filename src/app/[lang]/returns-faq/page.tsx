@@ -37,7 +37,6 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
 
   return (
     <>
-      {/* Hero Section */}
       <section className="bg-hero-gradient pt-36 pb-16 relative overflow-hidden">
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6">
           <Reveal>
@@ -52,7 +51,6 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
         </div>
       </section>
 
-      {/* Quick Highlights Grid */}
       <section className="bg-white py-12 border-t border-slate-100">
         <div className="container-site max-w-5xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -76,12 +74,10 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
         </div>
       </section>
 
-      {/* Main Content */}
       <section className="bg-white py-16">
         <div className="container-site max-w-4xl mx-auto px-6">
           <Reveal>
             <div className="prose prose-slate max-w-none space-y-12 text-slate-700 leading-relaxed font-sans">
-              {/* 1. Made-to-Order Overview */}
               <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   1. Made-to-Order Fulfillment Policy
@@ -94,7 +90,6 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
                 </p>
               </div>
 
-              {/* 2. 30-Day Quality Issue Reporting */}
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   2. 30-Day Quality Guarantee & Defect Reporting
@@ -125,7 +120,6 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
                 </div>
               </div>
 
-              {/* 3. Cancellation Policy */}
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   3. Order Cancellation Policy
@@ -143,7 +137,6 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
                 </ul>
               </div>
 
-              {/* 4. Refund Processing */}
               <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   4. Refund Processing & Payment Authorization
@@ -164,7 +157,6 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
                 </ul>
               </div>
 
-              {/* 5. Fourthwall Fulfillment Partner Terms */}
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
                   5. Fourthwall Fulfillment Partner Terms
@@ -179,7 +171,6 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
                 </ul>
               </div>
 
-              {/* 6. Contact & Support */}
               <div className="bg-primary/5 p-8 rounded-3xl border border-primary/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                 <div>
                   <h2 className="text-2xl font-semibold text-slate-800 mb-2 font-heading">

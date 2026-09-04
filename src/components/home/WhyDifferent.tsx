@@ -7,7 +7,7 @@ import {
   ShieldCheck,
   Building2,
   Award,
-  Zap,
+  BadgeDollarSign,
   TrendingUp,
   ChevronRight,
   Search,
@@ -123,9 +123,9 @@ const items = [
     ),
   },
   {
-    icon: Zap,
+    icon: BadgeDollarSign,
     title: 'No retainers',
-    text: 'Pay per qualified lead delivered. Your investment directly tracks your revenue pipeline.',
+    text: 'Pay per qualified lead ($50–$200). Zero monthly retainers. Your investment directly tracks your qualified pipeline.',
     mockup: (
       <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-sm border border-slate-200/80 w-4/5 p-4 flex flex-col gap-2.5">
         <div className="flex justify-between items-center">
@@ -136,7 +136,7 @@ const items = [
         <div className="flex justify-between items-center text-[10px]">
           <span className="text-slate-500 font-medium">Pay per Qualified Lead</span>
           <span className="font-mono font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">
-            Fixed Fee
+            $50–$200
           </span>
         </div>
         <div className="flex justify-between items-center text-[10px]">
@@ -149,7 +149,7 @@ const items = [
   {
     icon: TrendingUp,
     title: 'GCC specialization',
-    text: 'Saudi Arabia, UAE, and the wider GCC: tailored to local market dynamics and corporate regulations.',
+    text: 'Saudi Arabia, UAE, and the GCC: aligned with Saudization, Emiratization compliance mandates, and regional corporate frameworks.',
     mockup: (
       <div className="relative w-4/5 aspect-[2/1] bg-slate-50/80 rounded-xl overflow-hidden border border-slate-200/80 flex items-center justify-center">
         <div className="flex flex-col items-center gap-1.5 z-10">
@@ -194,7 +194,6 @@ const cardVariants = {
 export default function WhyDifferent() {
   return (
     <section className="relative bg-white py-28 lg:py-40 border-t border-slate-200/60 overflow-hidden">
-      {/* Ambient glow mesh */}
       <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-r from-accent/10 via-accent-secondary/10 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
       <div className="container-site px-6 sm:px-8 lg:px-12">
@@ -229,7 +228,6 @@ export default function WhyDifferent() {
                     {it.text}
                   </p>
 
-                  {/* Mockup Frame */}
                   <div className="w-full aspect-[16/9] rounded-xl bg-slate-50/90 border border-slate-200/60 flex items-center justify-center overflow-hidden mb-6 relative z-10 shadow-inner">
                     {it.mockup}
                   </div>

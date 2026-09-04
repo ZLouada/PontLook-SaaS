@@ -10,7 +10,7 @@ export interface TrainingCategory {
   title: string;
   shortDescription: string;
   targetBuyers: string;
-  icon: string; // Lucide icon name (e.g., 'Users', 'Cpu', 'ShieldCheck', 'Lightbulb')
+  icon: string;
   badge: string;
   subDomains: SubDomain[];
 }

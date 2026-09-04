@@ -9,7 +9,7 @@ import {
   DollarSign,
   HelpCircle,
   Check,
-  Zap,
+  Clock,
 } from 'lucide-react';
 import {
   COHORT_SIZES,
@@ -29,7 +29,6 @@ type Step3Props = {
 };
 
 export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }: Step3Props) {
-  // Mapping legacy values if any
   const initialCohort =
     data.cohortSize ||
     (data.employeesToTrain
@@ -86,7 +85,6 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
       noValidate
       className="space-y-8"
     >
-      {/* 1. Target Cohort Size */}
       <section className="space-y-3">
         <div>
           <div className="flex items-center gap-2">
@@ -145,7 +143,6 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
         )}
       </section>
 
-      {/* 2. Target Start Horizon */}
       <section className="space-y-3">
         <div>
           <div className="flex items-center gap-2">
@@ -181,7 +178,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
                       {t.label}
                     </span>
                     {isUrgent && (
-                      <Zap size={14} className="text-amber-500" />
+                      <Clock size={14} className="text-amber-500" />
                     )}
                   </div>
                   <span className="mt-1 text-[11px] font-medium text-slate-500">
@@ -199,7 +196,6 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
         )}
       </section>
 
-      {/* 3. Budget Selector (Tiered Bands to Prevent Sticker Shock) */}
       <section className="space-y-3">
         <div>
           <div className="flex items-center gap-2">
@@ -262,7 +258,6 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
         )}
       </section>
 
-      {/* Optional Context */}
       <section>
         <label
           htmlFor="additionalContext"
@@ -280,7 +275,6 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
         />
       </section>
 
-      {/* Navigation */}
       <StepNavigation
         onBack={onBack}
         nextLabel="Continue to Enterprise Verification"

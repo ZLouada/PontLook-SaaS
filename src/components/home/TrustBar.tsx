@@ -13,7 +13,6 @@ const values = [
 export default function TrustBar() {
   return (
     <section className="relative bg-slate-50/80 text-slate-800 py-12 border-y border-slate-200/80 overflow-hidden">
-      {/* Ambient background glow */}
       <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-accent-secondary/5 to-accent/5 blur-xl pointer-events-none" />
 
       <div className="container-site relative z-10 px-6 sm:px-8 lg:px-12">

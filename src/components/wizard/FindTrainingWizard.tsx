@@ -34,7 +34,6 @@ export default function FindTrainingWizard() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Restore progress across page reloads from sessionStorage
   useEffect(() => {
     try {
       const raw = sessionStorage.getItem(STORAGE_KEY);
@@ -48,7 +47,6 @@ export default function FindTrainingWizard() {
         }
       }
     } catch {
-      // Corrupted storage: fallback to fresh state
     }
     setHydrated(true);
   }, []);
@@ -62,7 +60,6 @@ export default function FindTrainingWizard() {
       };
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
     } catch {
-      // Storage unavailable or disabled: continue safely in memory
     }
   };
 
@@ -80,7 +77,6 @@ export default function FindTrainingWizard() {
       const next = currentStep + 1;
       setCurrentStep(next);
       persistToStorage(next, updatedData);
-      // Smooth scroll to top of wizard on step advance
       if (typeof window !== 'undefined') {
         const wizardEl = document.getElementById('find-training-wizard-container');
         if (wizardEl) {
@@ -88,7 +84,6 @@ export default function FindTrainingWizard() {
         }
       }
     } else {
-      // Step 4 submitted: execute final intake submission
       await handleFinalSubmit(updatedData);
     }
   };
@@ -108,14 +103,12 @@ export default function FindTrainingWizard() {
     setIsSubmitting(true);
     setErrorMessage(null);
 
-    // Bot honeypot check
     if (finalData._gotcha) {
       setIsSubmitted(true);
       setIsSubmitting(false);
       return;
     }
 
-    // Format human-readable metadata for proposal matching desk
     const activeSelectedDomains = finalData.selectedDomains || formData.selectedDomains;
 
     const formattedSelectedDomains =
@@ -193,13 +186,11 @@ export default function FindTrainingWizard() {
         }
         setIsSubmitted(true);
       } else {
-        // Fallback: If Formspree fails (e.g. rate limit), allow graceful transition to confirmation
         console.warn('Formspree endpoint returned non-200 status, transitioning with local state.');
         setIsSubmitted(true);
       }
     } catch (err) {
       console.error('Submission network error:', err);
-      // Fallback: allow UX completion
       setIsSubmitted(true);
     } finally {
       setIsSubmitting(false);
@@ -220,7 +211,6 @@ export default function FindTrainingWizard() {
     );
   }
 
-  // Confirmation screen (Step 5)
   if (isSubmitted) {
     return (
       <div id="find-training-wizard-container" className="w-full">
@@ -233,7 +223,6 @@ export default function FindTrainingWizard() {
 
   return (
     <div id="find-training-wizard-container" className="w-full space-y-6">
-      {/* Progress Scaffolding Header */}
       <div className="rounded-3xl border border-slate-200/70 bg-white p-5 shadow-sm sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
@@ -260,7 +249,6 @@ export default function FindTrainingWizard() {
           </div>
         </div>
 
-        {/* Step Track Bars */}
         <div className="mt-4 grid grid-cols-4 gap-2">
           {STEP_DEFINITIONS.map((def) => {
             const isCompleted = def.step < currentStep;
@@ -299,7 +287,6 @@ export default function FindTrainingWizard() {
         </div>
       </div>
 
-      {/* Main Wizard Step Container */}
       <div className="relative rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
         {errorMessage && (
           <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-xs font-medium text-red-700" role="alert">

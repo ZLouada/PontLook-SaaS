@@ -116,7 +116,6 @@ export default function HowItWorks() {
       id="how-it-works"
       className="relative bg-slate-50/70 py-16 sm:py-28 lg:py-40 border-t border-slate-200/60 overflow-hidden"
     >
-      {/* Ambient background glow orb */}
       <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-r from-accent/10 via-accent-secondary/10 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
       <div className="container-site px-4 sm:px-8 lg:px-12">
@@ -129,7 +128,6 @@ export default function HowItWorks() {
         </div>
 
         <div ref={containerRef} className="relative space-y-8 sm:space-y-12 max-w-5xl mx-auto">
-          {/* Animated 3-Step Process Line */}
           <div className="absolute start-[2.25rem] lg:start-[3.75rem] top-12 bottom-12 w-1 bg-slate-200 hidden lg:block rounded-full">
             <m.div
               style={{ scaleY, transformOrigin: 'top' }}
@@ -152,7 +150,6 @@ export default function HowItWorks() {
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                   className="flex flex-col lg:flex-row items-center gap-6 sm:gap-10 lg:gap-16 bg-white rounded-3xl p-5 sm:p-8 lg:p-14 border border-slate-200/70 shadow-sm hover:border-slate-300 hover:shadow-md transition-all duration-300 relative z-20"
                 >
-                  {/* Step Number Circle */}
                   <div className="absolute -start-10 lg:-start-16 top-10 hidden lg:flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-800 text-white font-mono font-semibold text-base z-30 shadow-sm border-2 border-white">
                     0{i + 1}
                   </div>
