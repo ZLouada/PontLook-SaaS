@@ -13,7 +13,9 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Find Corporate Training: Get 3 Curated GCC Proposals',
+  title: {
+    absolute: 'Find Corporate Training: Get Matched with Top GCC Providers',
+  },
   description:
     'Submit your enterprise training scope and receive 2-3 itemized proposals from verified GCC training providers within 48 hours. 100% free for hiring organizations.',
 };

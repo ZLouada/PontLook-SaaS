@@ -54,7 +54,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           >
             <Image
               src="/PontLook-Logo.png"
-              alt="PontLook Logo"
+              alt="PontLook GCC Corporate Training Matchmaking Logo"
               fill
               className="object-contain"
               priority

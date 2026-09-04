@@ -24,8 +24,8 @@ export default function Footer() {
 
       <div className="container-site relative z-10 grid gap-10 py-20 md:grid-cols-4 px-6 sm:px-8 lg:px-12">
         <div className="md:col-span-2 space-y-5">
-          <Link href={`/${lang}`} className="inline-block transition-opacity hover:opacity-90">
-            <Image src="/PontLook-Logo.png" alt="PontLook Logo" width={52} height={52} className="object-contain" />
+          <Link href={`/${lang}`} className="inline-block transition-opacity hover:opacity-90" aria-label="PontLook home">
+            <Image src="/PontLook-Logo.png" alt="PontLook GCC Corporate Training Matchmaking Logo" width={52} height={52} className="object-contain" />
           </Link>
           <p className="max-w-md text-sm leading-relaxed text-slate-400 font-sans">
             {dict.footer.about}

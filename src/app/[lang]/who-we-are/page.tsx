@@ -17,8 +17,11 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Who We Are: GCC Corporate Training Matchmaking Platform',
-  description: 'Learn how PontLook connects GCC corporate buyers with verified training providers.',
+  title: {
+    absolute: 'Who We Are: The GCC Matchmaking Platform | PontLook',
+  },
+  description:
+    'Learn how PontLook connects GCC corporate buyers with verified training providers across Saudi Arabia, UAE, and the Gulf with zero retainers.',
 };
 
 const featureCards = [
@@ -187,21 +190,21 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                 <div className="flex items-start gap-3">
                   <CheckCircle2 size={22} className="text-primary-400 shrink-0 mt-1" />
                   <div>
-                    <h4 className="font-bold text-white text-base">Zero Retainers</h4>
+                    <h3 className="font-bold text-white text-base">Zero Retainers</h3>
                     <p className="text-slate-400 text-sm mt-1">No ongoing management or setup fees.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 size={22} className="text-primary-400 shrink-0 mt-1" />
                   <div>
-                    <h4 className="font-bold text-white text-base">Verified Buyers</h4>
+                    <h3 className="font-bold text-white text-base">Verified Buyers</h3>
                     <p className="text-slate-400 text-sm mt-1">Vetted HR & L&D leaders in the GCC.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 size={22} className="text-primary-400 shrink-0 mt-1" />
                   <div>
-                    <h4 className="font-bold text-white text-base">Replacement Guarantee</h4>
+                    <h3 className="font-bold text-white text-base">Replacement Guarantee</h3>
                     <p className="text-slate-400 text-sm mt-1">Full replacement if criteria are not met.</p>
                   </div>
                 </div>

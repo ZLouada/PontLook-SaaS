@@ -45,7 +45,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <Image
           src="/skyline-bg.jpg"
-          alt="GCC Skyline"
+          alt="GCC Corporate Business Skyline in Riyadh and Dubai"
           fill
           className="object-cover scale-105 opacity-45"
           priority

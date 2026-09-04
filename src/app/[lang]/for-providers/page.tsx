@@ -8,9 +8,11 @@ import { ShieldCheck, Target, DollarSign, Users, Award } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'For Training Providers | PontLook',
+  title: {
+    absolute: 'For Training Providers: B2B Lead Generation | PontLook',
+  },
   description:
-    'Receive verified corporate training opportunities across the GCC on a zero-retainer, pay-per-lead model.',
+    'Receive verified corporate training opportunities across Saudi Arabia and the UAE. Zero retainers or subscription fees—pay only for qualified decision-makers.',
 };
 
 export async function generateStaticParams() {
@@ -71,18 +73,25 @@ export default async function ForProvidersPage({
       <section className="bg-white py-20 border-t border-slate-100">
         <div className="container-site max-w-6xl mx-auto px-6 space-y-24">
           {/* 3 Quick Value Props */}
-          <div className="grid gap-6 md:grid-cols-3">
-            {providerBenefits.map((b, i) => (
-              <Reveal key={b.title} delay={i * 0.1}>
-                <div className="card h-full text-center flex flex-col items-center !p-8 bg-slate-50/80 border border-slate-200/80 rounded-3xl hover:bg-white hover:shadow-lg transition-all duration-300">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary mb-4">
-                    <b.icon size={24} />
-                  </span>
-                  <h3 className="text-lg font-bold text-slate-900">{b.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{b.text}</p>
-                </div>
-              </Reveal>
-            ))}
+          <div>
+            <SectionHeading
+              eyebrow="Why Partner with PontLook"
+              title="Predictable Enterprise Pipeline"
+              subtitle="Designed specifically for GCC training providers seeking verified opportunities without retainers."
+            />
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              {providerBenefits.map((b, i) => (
+                <Reveal key={b.title} delay={i * 0.1}>
+                  <div className="card h-full text-center flex flex-col items-center !p-8 bg-slate-50/80 border border-slate-200/80 rounded-3xl hover:bg-white hover:shadow-lg transition-all duration-300">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary mb-4">
+                      <b.icon size={24} />
+                    </span>
+                    <h3 className="text-lg font-bold text-slate-900">{b.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">{b.text}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
 
           {/* Lead Tiers Section */}

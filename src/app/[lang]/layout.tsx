@@ -44,18 +44,22 @@ export async function generateMetadata({
     metadataBase: new URL('https://pontlook.com'),
     title: {
       default: isAr
-        ? 'PontLook: منصة الربط بين شركات التدريب والشركات في الخليج'
+        ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات في الخليج'
         : 'PontLook: GCC Corporate Training Matchmaking Platform',
       template: '%s | PontLook',
     },
     description: isAr
-      ? 'ربط مديري HR والرؤساء التنفيذيين بشركات التدريب المعتمدة في السعودية والإمارات. فرص معتمدة بنسبة 100٪ بدون رسوم شهرية.'
-      : 'Connect corporate buyers with verified training providers across Saudi Arabia and the UAE. Qualified opportunities only, zero retainers or cold outreach.',
+      ? 'منصة ربط مديري الموارد البشرية والشركات بأفضل مزودي التدريب المعتمدين في السعودية والإمارات. فرص معتمدة 100% بدون رسوم شهرية.'
+      : 'Connect corporate buyers with verified training providers across Saudi Arabia and UAE. Qualified leads only—zero monthly retainers or cold outreach.',
     alternates: {
-      canonical: `https://pontlook.com/${isAr ? 'ar' : 'en'}`,
+      canonical: isAr ? 'https://pontlook.com/ar' : 'https://pontlook.com/en',
       languages: {
         'en': 'https://pontlook.com/en',
+        'en-SA': 'https://pontlook.com/en',
+        'en-AE': 'https://pontlook.com/en',
         'ar': 'https://pontlook.com/ar',
+        'ar-SA': 'https://pontlook.com/ar',
+        'ar-AE': 'https://pontlook.com/ar',
       },
     },
     icons: {
@@ -69,11 +73,11 @@ export async function generateMetadata({
     },
     openGraph: {
       title: isAr
-        ? 'PontLook: منصة الربط بين شركات التدريب والشركات في الخليج'
+        ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات في الخليج'
         : 'PontLook: GCC Corporate Training Matchmaking Platform',
       description: isAr
-        ? 'ربط مديري HR والرؤساء التنفيذيين بشركات التدريب المعتمدة في السعودية والإمارات. فرص معتمدة بنسبة 100٪ بدون رسوم شهرية.'
-        : 'Connect corporate buyers with verified training providers across Saudi Arabia and the UAE.',
+        ? 'منصة ربط مديري الموارد البشرية والشركات بأفضل مزودي التدريب المعتمدين في السعودية والإمارات. فرص معتمدة 100% بدون رسوم شهرية.'
+        : 'Connect corporate buyers with verified training providers across Saudi Arabia and UAE. Qualified leads only—zero monthly retainers or cold outreach.',
       url: `https://pontlook.com/${isAr ? 'ar' : 'en'}`,
       siteName: 'PontLook',
       images: [
@@ -82,8 +86,8 @@ export async function generateMetadata({
           width: 1200,
           height: 630,
           alt: isAr
-            ? 'PontLook: منصة الربط بين شركات التدريب والشركات في الخليج'
-            : 'PontLook GCC Corporate Training Matchmaking',
+            ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات في الخليج'
+            : 'PontLook GCC Corporate Training Matchmaking Logo',
         },
       ],
       locale: isAr ? 'ar_SA' : 'en_US',
@@ -113,15 +117,56 @@ export default async function RootLayout({
 
   const fontClass = `${inter.variable} ${jakarta.variable} ${poppins.variable} ${calistoga.variable} ${jetbrainsMono.variable}`;
 
-  const siteNavigationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    'itemListElement': [
-      { '@type': 'SiteNavigationElement', 'position': 1, 'name': 'Who We Are', 'url': 'https://pontlook.com/en/who-we-are' },
-      { '@type': 'SiteNavigationElement', 'position': 2, 'name': 'For Training Providers', 'url': 'https://pontlook.com/en/for-providers' },
-      { '@type': 'SiteNavigationElement', 'position': 3, 'name': 'Find Training', 'url': 'https://pontlook.com/en/find-training' },
-      { '@type': 'SiteNavigationElement', 'position': 4, 'name': 'Contact', 'url': 'https://pontlook.com/en/contact' },
-      { '@type': 'SiteNavigationElement', 'position': 5, 'name': 'Blog', 'url': 'https://blog.pontlook.com' }
+  const jsonLdGraph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://pontlook.com/#website",
+        "url": "https://pontlook.com",
+        "name": "PontLook",
+        "alternateName": ["Pont Look", "pontlook", "PontLook SaaS"],
+        "description": "GCC Corporate Training Matchmaking Platform & Pay-Per-Lead Engine",
+        "inLanguage": ["en", "ar"]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://pontlook.com/#organization",
+        "name": "PontLook",
+        "url": "https://pontlook.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://pontlook.com/PontlookIcon.png",
+          "width": 512,
+          "height": 512
+        },
+        "email": "contact@pontlook.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "31 Continental Dr",
+          "addressLocality": "Newark",
+          "addressRegion": "Delaware",
+          "postalCode": "19713",
+          "addressCountry": "US"
+        },
+        "areaServed": ["Saudi Arabia", "United Arab Emirates", "Qatar", "Kuwait", "Bahrain", "Oman"],
+        "sameAs": [
+          "https://www.linkedin.com/company/pontlook",
+          "https://x.com/pontlook"
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://pontlook.com/#navigation",
+        "name": "Main Navigation",
+        "itemListElement": [
+          { "@type": "SiteNavigationElement", "position": 1, "name": "Who We Are", "url": "https://pontlook.com/en/who-we-are" },
+          { "@type": "SiteNavigationElement", "position": 2, "name": "Find Training", "url": "https://pontlook.com/en/find-training" },
+          { "@type": "SiteNavigationElement", "position": 3, "name": "For Training Providers", "url": "https://pontlook.com/en/for-providers" },
+          { "@type": "SiteNavigationElement", "position": 4, "name": "Contact", "url": "https://pontlook.com/en/contact" },
+          { "@type": "SiteNavigationElement", "position": 5, "name": "Blog", "url": "https://blog.pontlook.com" }
+        ]
+      }
     ]
   };
 
@@ -131,46 +176,8 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@graph": [
-                {
-                  "@type": "WebSite",
-                  "@id": "https://pontlook.com/#website",
-                  "url": "https://pontlook.com",
-                  "name": "PontLook",
-                  "description": "GCC Corporate Training Matchmaking Platform",
-                  "inLanguage": ["en", "ar"]
-                },
-                {
-                  "@type": "Organization",
-                  "@id": "https://pontlook.com/#organization",
-                  "name": "PontLook",
-                  "alternateName": ["Pont Look", "pontlook", "PontLook SaaS"],
-                  "url": "https://pontlook.com",
-                  "logo": {
-                    "@type": "ImageObject",
-                    "url": "https://pontlook.com/PontlookIcon.png",
-                    "width": 512,
-                    "height": 512
-                  },
-                  "sameAs": [
-                    "https://www.linkedin.com/company/pontlook",
-                    "https://x.com/pontlook"
-                  ],
-                  "contactPoint": {
-                    "@type": "ContactPoint",
-                    "email": "contact@pontlook.com",
-                    "contactType": "customer service"
-                  }
-                }
-              ]
-            })
+            __html: JSON.stringify(jsonLdGraph),
           }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteNavigationSchema) }}
         />
       </head>
       <body>

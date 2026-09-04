@@ -4,8 +4,11 @@ import ContactForm from '@/components/contact/ContactForm';
 import { Mail, MapPin, Clock } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Contact | PontLook',
-  description: 'Talk to the PontLook team: providers, corporate buyers, and partners.',
+  title: {
+    absolute: 'Contact PontLook: Enterprise Partnerships & Support',
+  },
+  description:
+    'Get in touch with PontLook for corporate training inquiries, provider partnership applications, or enterprise support across Saudi Arabia, UAE, and the GCC.',
 };
 
 export default function ContactPage() {
