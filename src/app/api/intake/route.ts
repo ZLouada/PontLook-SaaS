@@ -11,27 +11,21 @@ export const dynamic = 'force-dynamic';
 // Incoming payload validation schema
 const intakePayloadSchema = z.object({
   fullName: z.string().trim().min(2, 'Name must be at least 2 characters'),
-  jobTitle: z.string().trim().min(2, 'Job title required'),
-  workEmail: z
-    .string()
-    .trim()
-    .email('Invalid email')
-    .refine((val) => isCorporateEmail(val), {
-      message: 'Must be a corporate domain email',
-    }),
-  organizationName: z.string().trim().min(2, 'Organization name required'),
+  jobTitle: z.string().trim().optional().or(z.literal('')),
+  workEmail: z.string().trim().email('Invalid email'),
+  organizationName: z.string().trim().optional().or(z.literal('')),
   country: z.string().min(1, 'Country required'),
   phoneCountryCode: z.string().default('+966'),
-  phoneNumber: z.string().trim().min(7, 'Valid phone number required'),
-  domains: z.array(z.string()).min(1, 'At least one domain required'),
+  phoneNumber: z.string().trim().optional().or(z.literal('')),
+  domains: z.array(z.string()).optional().default([]),
   otherDomainText: z.string().optional().or(z.literal('')),
-  deliveryMode: z.enum(['in_person', 'virtual', 'hybrid']),
+  deliveryMode: z.enum(['in_person', 'virtual', 'hybrid']).optional().default('virtual'),
   city: z.string().optional().or(z.literal('')),
-  language: z.enum(['arabic', 'english', 'bilingual']),
-  customization: z.enum(['tailored', 'standard']),
-  cohortSize: z.enum(['1_5_execs', '6_20_team', '21_50_dept', '50_plus_enterprise']),
-  timeline: z.enum(['immediate', 'within_30_days', 'next_quarter', 'planning']),
-  budgetBand: z.enum(['under_10k', '10k_25k', '25k_50k', '50k_plus', 'pending_guidance']),
+  language: z.enum(['arabic', 'english', 'bilingual']).optional().default('bilingual'),
+  customization: z.enum(['tailored', 'standard']).optional().default('tailored'),
+  cohortSize: z.enum(['1_5_execs', '6_20_team', '21_50_dept', '50_plus_enterprise']).optional().default('6_20_team'),
+  timeline: z.enum(['immediate', 'within_30_days', 'next_quarter', 'planning']).optional().default('within_30_days'),
+  budgetBand: z.enum(['under_10k', '10k_25k', '25k_50k', '50k_plus', 'pending_guidance']).optional().default('10k_25k'),
   additionalContext: z.string().optional().or(z.literal('')),
   _gotcha: z.string().optional().or(z.literal('')),
 });
@@ -85,34 +79,34 @@ export async function POST(req: NextRequest) {
     const leadScoreResult = calculateLeadScore({
       ...data,
       workEmail: data.workEmail,
-      jobTitle: data.jobTitle,
-      cohortSize: data.cohortSize,
-      budgetBand: data.budgetBand,
-      timeline: data.timeline,
-      additionalContext: data.additionalContext,
+      jobTitle: data.jobTitle || '',
+      cohortSize: data.cohortSize || '6_20_team',
+      budgetBand: data.budgetBand || '10k_25k',
+      timeline: data.timeline || 'within_30_days',
+      additionalContext: data.additionalContext || '',
     });
 
     // 2. Format Domain & Scope Labels
-    const domainNames = data.domains
+    const domainNames = ((data.domains && data.domains.length > 0) ? data.domains : ['general'])
       .map((dId) => {
         if (dId === 'other') return data.otherDomainText ? `Specialized (${data.otherDomainText})` : 'Specialized/Other';
         return resolveDomainLabel(dId) || TRAINING_DOMAINS.find((t) => t.id === dId)?.title || dId;
       })
-      .join(', ');
+      .join(', ') || 'General / Unspecified';
 
     const deliveryModeName =
-      DELIVERY_MODES.find((m) => m.id === data.deliveryMode)?.title || data.deliveryMode;
+      DELIVERY_MODES.find((m) => m.id === data.deliveryMode)?.title || data.deliveryMode || 'Virtual';
 
     const cohortLabel =
-      COHORT_SIZES.find((c) => c.id === data.cohortSize)?.label || data.cohortSize;
+      COHORT_SIZES.find((c) => c.id === data.cohortSize)?.label || data.cohortSize || '6–20 Team Members';
 
     const timelineLabel =
-      TIMELINES.find((t) => t.id === data.timeline)?.label || data.timeline;
+      TIMELINES.find((t) => t.id === data.timeline)?.label || data.timeline || 'Within 30 Days';
 
     const budgetLabel =
-      BUDGET_BANDS.find((b) => b.id === data.budgetBand)?.label || data.budgetBand;
+      BUDGET_BANDS.find((b) => b.id === data.budgetBand)?.label || data.budgetBand || '$10,000 – $25,000';
 
-    const fullPhoneNumber = `${data.phoneCountryCode} ${data.phoneNumber}`.trim();
+    const fullPhoneNumber = `${data.phoneCountryCode || ''} ${data.phoneNumber || ''}`.trim() || 'N/A';
 
     // 3. Automated Buyer Confirmation Email via Resend
     let emailSent = false;
@@ -252,11 +246,10 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Dispatch to CRM / Zapier / Formspree fallback
-    if (crmWebhookUrl || formspreeEndpoint) {
-      const targetUrl = crmWebhookUrl || formspreeEndpoint;
+    // Dispatch to CRM / Zapier webhook if explicitly configured
+    if (crmWebhookUrl) {
       try {
-        await fetch(targetUrl, {
+        await fetch(crmWebhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify({
@@ -265,9 +258,9 @@ export async function POST(req: NextRequest) {
             full_name: data.fullName,
             email: data.workEmail,
             work_email: data.workEmail,
-            company_name: data.organizationName,
-            organization: data.organizationName,
-            job_title: data.jobTitle,
+            company_name: data.organizationName || 'N/A',
+            organization: data.organizationName || 'N/A',
+            job_title: data.jobTitle || 'N/A',
             country: data.country,
             phone: fullPhoneNumber,
             training_domains: domainNames,
@@ -276,12 +269,12 @@ export async function POST(req: NextRequest) {
             cohort_size: cohortLabel,
             timeline: timelineLabel,
             budget_tier: budgetLabel,
-            message: `Lead ID: ${leadId} | Score: ${leadScoreResult.score}/100 (${leadScoreResult.tier})\nOrganization: ${data.organizationName} (${data.country})\nContact: ${data.fullName} (${data.jobTitle}) - ${data.workEmail}\nPhone: ${fullPhoneNumber}\nScope: ${domainNames}\nDelivery: ${deliveryModeName} ${data.city ? `(${data.city})` : ''}\nCohort: ${cohortLabel}\nBudget: ${budgetLabel}\nTimeline: ${timelineLabel}`,
+            message: `Lead ID: ${leadId} | Score: ${leadScoreResult.score}/100 (${leadScoreResult.tier})\nOrganization: ${data.organizationName || 'N/A'} (${data.country})\nContact: ${data.fullName} (${data.jobTitle || 'N/A'}) - ${data.workEmail}\nPhone: ${fullPhoneNumber}\nScope: ${domainNames}\nDelivery: ${deliveryModeName} ${data.city ? `(${data.city})` : ''}\nCohort: ${cohortLabel}\nBudget: ${budgetLabel}\nTimeline: ${timelineLabel}`,
             ...webhookPayload,
           }),
         });
       } catch (crmErr) {
-        console.error('CRM/Formspree webhook dispatch failed:', crmErr);
+        console.error('CRM webhook dispatch failed:', crmErr);
       }
     }
 

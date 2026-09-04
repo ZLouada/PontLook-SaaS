@@ -70,7 +70,20 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        handleSubmit((values) => onNext(values, e))(e);
+        handleSubmit(
+          (values) => onNext(values, e),
+          (validationErrors) => {
+            console.warn('Step 4 validation errors:', validationErrors);
+            const firstKey = Object.keys(validationErrors)[0];
+            if (firstKey) {
+              const el = document.querySelector(`[name="${firstKey}"]`) as HTMLElement;
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                el.focus();
+              }
+            }
+          }
+        )(e);
       }}
       noValidate
       className="space-y-6"
@@ -108,6 +121,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
           icon={<Briefcase size={18} />}
           registration={register('jobTitle')}
           error={errors.jobTitle}
+          optional
         />
 
         {/* Corporate Work Email */}
@@ -116,7 +130,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
           type="email"
           placeholder="name@company.com"
           autoComplete="email"
-          hint="Must be your official corporate domain (e.g., @aramco.com, @fab.ae)"
+          hint="Your official email address for receiving proposals"
           icon={<Mail size={18} />}
           registration={register('workEmail')}
           error={errors.workEmail}
@@ -130,6 +144,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
           icon={<Building2 size={18} />}
           registration={register('organizationName')}
           error={errors.organizationName}
+          optional
         />
 
         {/* Primary Country */}
@@ -173,9 +188,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
       </div>
 
       {/* Hidden honeypot field for bot protection */}
-      <div className="absolute left-[-9999px] top-[-9999px]" aria-hidden="true" tabIndex={-1}>
-        <input type="text" {...register('_gotcha')} tabIndex={-1} autoComplete="off" />
-      </div>
+      <input type="text" {...register('_gotcha')} style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 
       {/* Enterprise Confidentiality Guarantee Banner */}
       <div className="rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50/90 via-teal-50/60 to-emerald-50/40 p-5">

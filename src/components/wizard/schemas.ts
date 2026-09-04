@@ -264,29 +264,29 @@ export const step4ContactSchema = z.object({
   jobTitle: z
     .string()
     .trim()
-    .min(2, 'Please enter your official job title (e.g. VP of Human Capital).')
-    .max(120, 'Job title is too long.'),
+    .max(120, 'Job title is too long.')
+    .optional()
+    .or(z.literal('')),
   workEmail: z
     .string()
     .trim()
-    .email('Please enter a valid work email address.')
-    .refine((val) => isCorporateEmail(val), {
-      message: 'Please use your corporate work email (e.g. name@company.com). Consumer domains like Gmail/Yahoo are not accepted for enterprise verification.',
-    }),
+    .min(3, 'Please enter your work email.')
+    .email('Please enter a valid email address.'),
   organizationName: z
     .string()
     .trim()
-    .min(2, 'Please enter your organization name.')
-    .max(120, 'Organization name is too long.'),
+    .max(120, 'Organization name is too long.')
+    .optional()
+    .or(z.literal('')),
   country: z.string().min(1, 'Please select your primary country of operation.'),
-  phoneCountryCode: z.string().min(1, 'Country code is required.'),
+  phoneCountryCode: z.string().default('+966'),
   phoneNumber: z
     .string()
     .trim()
-    .min(7, 'Please enter a valid phone number (minimum 7 digits).')
-    .max(15, 'Phone number is too long.')
-    .regex(/^[0-9\s\-()+]+$/, 'Please enter a valid phone number with digits only.'),
-  _gotcha: z.string().optional(),
+    .max(25, 'Phone number is too long.')
+    .optional()
+    .or(z.literal('')),
+  _gotcha: z.string().optional().or(z.literal('')),
 });
 
 export type Step1Data = z.infer<typeof step1DomainSchema>;

@@ -232,17 +232,10 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
   };
 
   // Final submission handler: Dispatches directly to Formspree (matching PartnershipForm reliability)
-  // and concurrently informs /api/intake for lead scoring/telemetry.
+  // and dispatches non-blocking telemetry to /api/intake.
   const handleIntakeSubmission = async (finalData: WizardData) => {
     setIsSubmitting(true);
     setSubmissionError(null);
-
-    // Bot honeypot filter
-    if (finalData._gotcha) {
-      setIsSubmitted(true);
-      setIsSubmitting(false);
-      return;
-    }
 
     const domainNames = formatSelectedDomains(finalData.selectedDomains || finalData.domains);
 
@@ -279,6 +272,7 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       full_name: finalData.fullName || 'N/A',
       email: finalData.workEmail || 'N/A',
       business_email: finalData.workEmail || 'N/A',
+      _replyto: finalData.workEmail || undefined,
       company_name: finalData.organizationName || 'N/A',
       organization: finalData.organizationName || 'N/A',
       job_title: finalData.jobTitle || 'N/A',
@@ -298,8 +292,8 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
     };
 
     try {
-      // 1. Direct browser dispatch to Formspree (100% reliable email notification to PontLook admin)
-      const formspreePromise = fetch('https://formspree.io/f/xppawggd', {
+      // 1. Direct browser dispatch to Formspree (guarantees instant email to PontLook admin)
+      const res = await fetch('https://formspree.io/f/xppawggd', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -308,32 +302,35 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
         body: JSON.stringify(formspreePayload),
       });
 
-      // 2. Next.js /api/intake dispatch (for lead scoring & internal tracking)
-      const apiIntakePromise = fetch('/api/intake', {
+      // 2. Non-blocking telemetry to /api/intake in the background
+      fetch('/api/intake', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify(finalData),
-      }).catch((err) => {
-        console.warn('/api/intake dispatch error:', err);
-        return null;
+        body: JSON.stringify({
+          ...finalData,
+          domains: Array.isArray(finalData.domains) && finalData.domains.length > 0
+            ? finalData.domains
+            : Array.isArray(finalData.selectedDomains)
+            ? finalData.selectedDomains
+            : ['general'],
+        }),
+      }).catch((apiErr) => {
+        console.warn('/api/intake background dispatch:', apiErr);
       });
 
-      const [formspreeRes, apiIntakeRes] = await Promise.all([formspreePromise, apiIntakePromise]);
-      const apiData = apiIntakeRes ? await apiIntakeRes.json().catch(() => ({})) : {};
-
-      if (formspreeRes.ok || (apiIntakeRes && apiIntakeRes.ok)) {
+      if (res.ok) {
         try {
           sessionStorage.removeItem(STORAGE_KEY);
         } catch {
           // non-blocking
         }
-        analytics.trackFormSubmitted(finalData, apiData?.score, apiData?.tier);
+        analytics.trackFormSubmitted(finalData);
         setIsSubmitted(true);
       } else {
-        const errJson = await formspreeRes.json().catch(() => ({}));
+        const errJson = await res.json().catch(() => ({}));
         console.error('Submission failed:', errJson);
         setSubmissionError('Submission failed. Please verify your details and try again.');
       }
@@ -341,16 +338,20 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       console.error('Submission network error:', err);
       // Fallback: retry Formspree directly
       try {
-        await fetch('https://formspree.io/f/xppawggd', {
+        const retryRes = await fetch('https://formspree.io/f/xppawggd', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify(formspreePayload),
         });
-        sessionStorage.removeItem(STORAGE_KEY);
-        setIsSubmitted(true);
+        if (retryRes.ok) {
+          sessionStorage.removeItem(STORAGE_KEY);
+          setIsSubmitted(true);
+          return;
+        }
       } catch {
-        setSubmissionError('Network error. Please check your connection and try again.');
+        // ignore
       }
+      setSubmissionError('Network error. Please check your connection and try again.');
     } finally {
       setIsSubmitting(false);
     }
