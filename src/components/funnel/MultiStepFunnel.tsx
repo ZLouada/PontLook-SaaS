@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { AnimatePresence, m } from 'framer-motion';
 import { Clock, ShieldCheck } from 'lucide-react';
@@ -51,9 +51,16 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
   const [submissionError, setSubmissionError] = useState<string | null>(null);
 
   const analytics = useFunnelAnalytics();
+  const analyticsRef = useRef(analytics);
+  analyticsRef.current = analytics;
+
+  const hasInitializedRef = useRef(false);
 
   // 1. Pre-population: Parse URL parameters on mount and merge with sessionStorage
   useEffect(() => {
+    if (hasInitializedRef.current) return;
+    hasInitializedRef.current = true;
+
     let savedData: WizardData = {};
     let savedStep = 1;
 
@@ -156,8 +163,9 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
     setHydrated(true);
 
     // Sync telemetry state
-    analytics.syncState(savedStep, prefilledData);
-  }, [searchParams, analytics]);
+    analyticsRef.current.syncState(savedStep, prefilledData);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Persist current state to sessionStorage
   const persistSession = (step: number, data: WizardData) => {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useMemo } from 'react';
 import type { WizardData } from '@/components/wizard/schemas';
 
 export type FunnelEventName =
@@ -210,12 +210,15 @@ export function useFunnelAnalytics() {
     };
   }, [track]);
 
-  return {
-    track,
-    syncState,
-    trackStepCompleted,
-    trackStepBack,
-    trackFormSubmitted,
-    trackReportDownload,
-  };
+  return useMemo(
+    () => ({
+      track,
+      syncState,
+      trackStepCompleted,
+      trackStepBack,
+      trackFormSubmitted,
+      trackReportDownload,
+    }),
+    [track, syncState, trackStepCompleted, trackStepBack, trackFormSubmitted, trackReportDownload]
+  );
 }
