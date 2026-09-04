@@ -67,7 +67,7 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="card text-center !p-12">
+      <div className="card text-center !p-6 sm:!p-12">
         <CheckCircle2 size={48} className="mx-auto text-emerald-500" />
         <h3 className="mt-5 text-2xl font-bold text-slate-900">Message sent</h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
@@ -78,7 +78,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="card !p-8 sm:!p-10" noValidate>
+    <form onSubmit={handleSubmit(onSubmit)} className="card !p-5 sm:!p-10" noValidate>
       {/* Invisible spam honeypot */}
       <input type="text" {...register('_gotcha')} style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 
@@ -116,7 +116,7 @@ export default function ContactForm() {
         <textarea id="message" rows={5} className="field-input" {...register('message')} />
         {errors.message && <p className="field-error" role="alert">{errors.message.message}</p>}
       </div>
-      <button type="submit" disabled={isLoading} className="btn-primary mt-7 disabled:opacity-60 inline-flex items-center gap-2">
+      <button type="submit" disabled={isLoading} className="btn-primary mt-7 w-full sm:w-auto py-3.5 sm:py-3 disabled:opacity-60 inline-flex items-center justify-center gap-2 active:scale-[0.98] touch-manipulation">
         {isLoading ? (
           <>
             <span>Sending…</span>

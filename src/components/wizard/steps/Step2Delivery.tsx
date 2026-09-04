@@ -108,7 +108,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                 type="button"
                 onClick={() => setValue('deliveryMode', mode.id as any, { shouldValidate: true })}
                 aria-pressed={isSelected}
-                className={`relative flex flex-col justify-between rounded-2xl border p-5 text-start transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 ${
+                className={`relative flex flex-col justify-between rounded-2xl border p-4 sm:p-5 text-start transition-all duration-200 active:scale-[0.98] touch-manipulation focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 ${
                   isSelected
                     ? 'border-blue-600 bg-gradient-to-b from-blue-50/80 to-blue-50/30 shadow-md ring-1 ring-blue-600'
                     : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/60 hover:shadow-sm'
@@ -169,7 +169,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
 
       {/* 2. GCC Regional Location if In-Person or Hybrid */}
       {requiresLocation && (
-        <section className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
+        <section className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
           <div className="flex items-center gap-2">
             <MapPin size={18} className="text-blue-600" />
             <h3 className="text-sm font-bold text-slate-900">
@@ -188,7 +188,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                   key={city}
                   type="button"
                   onClick={() => setValue('city', city, { shouldValidate: true })}
-                  className={`rounded-xl px-3.5 py-2 text-xs font-medium transition-all ${
+                  className={`rounded-xl px-3.5 sm:px-4 py-2.5 text-xs sm:text-sm font-medium transition-all active:scale-95 touch-manipulation ${
                     isSelected
                       ? 'bg-blue-600 text-white shadow-sm ring-2 ring-blue-600 ring-offset-1'
                       : 'border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-100'
@@ -226,7 +226,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                 key={lang.id}
                 type="button"
                 onClick={() => setValue('language', lang.id as any, { shouldValidate: true })}
-                className={`flex items-center justify-between rounded-xl border p-4 text-start transition-all ${
+                className={`flex min-h-[52px] items-center justify-between rounded-xl border p-4 text-start transition-all active:scale-[0.98] touch-manipulation ${
                   isSelected
                     ? 'border-blue-600 bg-blue-50/60 shadow-sm ring-1 ring-blue-600'
                     : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
@@ -279,7 +279,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                 key={opt.id}
                 type="button"
                 onClick={() => setValue('customization', opt.id as any, { shouldValidate: true })}
-                className={`relative flex flex-col justify-between rounded-2xl border p-5 text-start transition-all ${
+                className={`relative flex flex-col justify-between rounded-2xl border p-4 sm:p-5 text-start transition-all active:scale-[0.98] touch-manipulation ${
                   isSelected
                     ? 'border-blue-600 bg-blue-50/60 shadow-sm ring-1 ring-blue-600'
                     : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'

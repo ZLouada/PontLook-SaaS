@@ -160,7 +160,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
               id="country"
               value={selectedCountry}
               onChange={handleCountryChange}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 ps-11 text-sm font-medium text-slate-900 shadow-sm transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 ps-11 text-base sm:text-sm font-medium text-slate-900 shadow-sm transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               {GCC_COUNTRIES.map((c) => (
                 <option key={c.code} value={c.name}>
@@ -191,7 +191,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
       <input type="text" {...register('_gotcha')} style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 
       {/* Enterprise Confidentiality Guarantee Banner */}
-      <div className="rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50/90 via-teal-50/60 to-emerald-50/40 p-5">
+      <div className="rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50/90 via-teal-50/60 to-emerald-50/40 p-4 sm:p-5">
         <div className="flex items-start gap-3.5">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-sm">
             <Lock size={18} />

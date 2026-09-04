@@ -359,7 +359,7 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
 
   if (!hydrated) {
     return (
-      <div className="w-full rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
+      <div className="w-full rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-12">
         <div className="flex animate-pulse flex-col items-center space-y-4">
           <div className="h-6 w-48 rounded-full bg-slate-200" />
           <div className="h-4 w-72 rounded-full bg-slate-100" />
@@ -381,20 +381,20 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
   return (
     <div
       id="multistep-funnel-container"
-      className={`w-full space-y-6 ${className}`}
+      className={`w-full space-y-4 sm:space-y-6 ${className}`}
       dir={dict.dir}
     >
       {/* Progress Scaffolding Header */}
-      <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-xs font-extrabold text-white">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-xs font-extrabold text-white">
               {currentStep}
             </span>
-            <span className="text-sm font-bold text-slate-900">
+            <span className="text-xs sm:text-sm font-bold text-slate-900 shrink-0">
               {lang === 'ar' ? `الخطوة ${currentStep} من 4:` : `Step ${currentStep} of 4:`}
             </span>
-            <span className="text-sm font-medium text-slate-600">
+            <span className="text-xs sm:text-sm font-medium text-slate-600 truncate">
               {lang === 'ar' ? STEP_TITLES[currentStep - 1]?.titleAr : STEP_TITLES[currentStep - 1]?.titleEn}
             </span>
           </div>
@@ -447,7 +447,7 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       </div>
 
       {/* Main Step Card Container */}
-      <div className="relative rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
+      <div className="relative rounded-3xl border border-slate-200 bg-white p-4 sm:p-8 md:p-10 shadow-sm">
         {submissionError && (
           <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-xs font-medium text-red-700" role="alert">
             {submissionError}

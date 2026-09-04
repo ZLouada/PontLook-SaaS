@@ -22,7 +22,7 @@ export default function Footer() {
       {/* Ambient background glow */}
       <div className="absolute top-0 start-1/4 w-[550px] h-[350px] bg-gradient-to-r from-accent/10 via-accent-secondary/5 to-accent/10 blur-3xl pointer-events-none" />
 
-      <div className="container-site relative z-10 grid gap-10 py-20 md:grid-cols-4 px-6 sm:px-8 lg:px-12">
+      <div className="container-site relative z-10 grid gap-8 sm:gap-10 py-12 sm:py-20 md:grid-cols-4 px-4 sm:px-8 lg:px-12">
         <div className="md:col-span-2 space-y-5">
           <Link href={`/${lang}`} className="inline-block transition-opacity hover:opacity-90" aria-label="PontLook home">
             <Image src="/PontLook-Logo.png" alt="PontLook GCC Corporate Training Matchmaking Logo" width={52} height={52} className="object-contain" />
@@ -87,7 +87,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-slate-800/80 py-6 bg-slate-950/80 backdrop-blur-md">
-        <div className="container-site flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500 px-6 sm:px-8 lg:px-12">
+        <div className="container-site flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500 px-4 sm:px-8 lg:px-12">
           <p className="text-xs text-slate-400">
             © 2025-2026 PontLook, operating under Firstnestcare, LLC. All rights reserved.
           </p>

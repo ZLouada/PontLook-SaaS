@@ -137,7 +137,7 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
 
   if (isSubmitted) {
     return (
-      <div className="bg-white border border-slate-200/80 rounded-3xl text-center p-10 sm:p-14 shadow-sm">
+      <div className="bg-white border border-slate-200/80 rounded-3xl text-center p-6 sm:p-14 shadow-sm">
         <CheckCircle2 size={48} className="mx-auto text-emerald-500" />
         <h3 className="mt-5 text-2xl font-bold text-slate-900 font-heading">{successTitle}</h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 font-sans">
@@ -148,7 +148,7 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
   }
 
   return (
-    <div className="bg-white border border-slate-200/80 rounded-3xl p-8 sm:p-12 shadow-sm">
+    <div className="bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-12 shadow-sm">
       <div className="mb-8 text-center sm:text-left">
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-heading">
           {formTitle}
@@ -274,7 +274,7 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
                   type="button"
                   onClick={(e) => toggleSpecialty(e, s)}
                   aria-pressed={active}
-                  className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`rounded-full border px-4 py-2.5 text-sm font-medium transition-all active:scale-95 touch-manipulation ${
                     active
                       ? 'border-primary bg-primary text-white'
                       : 'border-slate-200 bg-white text-body hover:border-primary-300'
@@ -319,7 +319,7 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
         <button
           type="submit"
           disabled={isLoading}
-          className="btn-primary mt-8 w-full disabled:opacity-60 sm:w-auto"
+          className="btn-primary mt-8 w-full py-3.5 sm:py-3 disabled:opacity-60 sm:w-auto"
         >
           {isLoading ? submittingLabel : submitLabel} <Send size={16} />
         </button>

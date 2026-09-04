@@ -307,7 +307,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder='Search topics, capabilities, or certifications e.g. "PMP", "Vision 2030", "Generative AI", "NEBOSH", "ISO", "Leadership"...'
-          className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3.5 ps-11 pe-10 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#2451BF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2451BF]/20 transition-all"
+          className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3.5 ps-11 pe-10 text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#2451BF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2451BF]/20 transition-all"
         />
         {searchQuery && (
           <button
@@ -350,8 +350,19 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                 }`}
               >
                 {/* Main Card Header Area */}
-                <div className="p-5 flex-1 flex flex-col justify-between">
-                  <div>
+                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                  <div
+                    onClick={() => toggleCategory(category.id)}
+                    className="cursor-pointer select-none"
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleCategory(category.id);
+                      }
+                    }}
+                  >
                     {/* Top Row: Icon, Monospace Badge, and Checkbox Indicator */}
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-3">
@@ -500,7 +511,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                             </div>
 
                             {/* Specific capability pills / tags */}
-                            <div className="mt-2 flex flex-wrap gap-1.5">
+                            <div className="mt-2.5 flex flex-wrap gap-2">
                               {subDomain.tags.map((tag) => {
                                 const isTagSelected = selectedSubDomains.includes(tag);
                                 const isTagSearchMatch =
@@ -515,7 +526,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                                       e.stopPropagation();
                                       toggleTag(tag, category.id);
                                     }}
-                                    className={`rounded-lg px-2.5 py-1 text-[11px] font-medium transition-all ${
+                                    className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all active:scale-95 touch-manipulation ${
                                       isTagSelected
                                         ? 'bg-[#2451BF] text-white shadow-xs'
                                         : isTagSearchMatch
@@ -558,7 +569,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                   setValue('otherDomainText', searchQuery, { shouldValidate: true });
                   setSearchQuery('');
                 }}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-[#2451BF] px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-blue-700"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-[#2451BF] px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-blue-700 active:scale-95 touch-manipulation"
               >
                 <Sliders size={14} />
                 <span>Add &quot;{searchQuery}&quot; as Specialized Topic</span>
@@ -570,7 +581,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                   e.stopPropagation();
                   setSearchQuery('');
                 }}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-xs font-medium text-slate-700 hover:bg-slate-50 active:scale-95 touch-manipulation"
               >
                 <span>Clear search</span>
               </button>
@@ -631,7 +642,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
               <input
                 type="text"
                 placeholder="e.g., ESG Reporting Frameworks, Supply Chain Optimization, Lean Six Sigma..."
-                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#2451BF] focus:outline-none focus:ring-2 focus:ring-[#2451BF]/20"
+                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 sm:py-3 text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:border-[#2451BF] focus:outline-none focus:ring-2 focus:ring-[#2451BF]/20"
                 {...register('otherDomainText')}
               />
               {errors.otherDomainText && (
@@ -642,8 +653,8 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
             </div>
 
             {/* Quick chip suggestions */}
-            <div className="mt-3 flex flex-wrap items-center gap-1.5">
-              <span className="text-[11px] font-medium text-slate-500">Suggestions:</span>
+            <div className="mt-3.5 flex flex-wrap items-center gap-2">
+              <span className="text-xs font-medium text-slate-500">Suggestions:</span>
               {SUGGESTED_OTHER_TOPICS.map((topic) => (
                 <button
                   key={topic}
@@ -653,7 +664,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                     e.stopPropagation();
                     setValue('otherDomainText', topic, { shouldValidate: true });
                   }}
-                  className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-700 hover:border-blue-400 hover:bg-blue-50"
+                  className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-blue-400 hover:bg-blue-50 active:scale-95 touch-manipulation"
                 >
                   + {topic}
                 </button>

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, Plus_Jakarta_Sans, Poppins, Calistoga, JetBrains_Mono } from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -6,6 +6,13 @@ import '../globals.css';
 import { getDictionary, Locale } from '@/i18n';
 import { DictionaryProvider } from '@/components/providers/DictionaryProvider';
 import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#0052FF',
+};
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 const poppins = Poppins({

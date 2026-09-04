@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Menu, X, ArrowRight, ShieldCheck, Globe } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Locale } from '@/i18n';
@@ -15,6 +15,11 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname() || `/${lang}`;
   const dict = useDictionary();
+
+  const otherLang = lang === 'en' ? 'ar' : 'en';
+  const switchHref = pathname.startsWith(`/${lang}`)
+    ? pathname.replace(`/${lang}`, `/${otherLang}`)
+    : `/${otherLang}`;
 
   const links = [
     { href: `/${lang}`, label: dict.nav.home },
@@ -88,8 +93,18 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           </ul>
         </div>
 
-        <div className="flex items-center gap-5">
-          <div className="hidden lg:flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
+          {/* Desktop Actions */}
+          <div className="hidden lg:flex items-center gap-3">
+            <Link
+              href={switchHref}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border border-slate-200/90 bg-white/90 text-slate-700 hover:text-accent hover:border-accent shadow-xs active:scale-95 transition-all"
+              aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
+            >
+              <Globe size={13} className="text-accent" />
+              <span>{lang === 'en' ? 'العربية' : 'English'}</span>
+            </Link>
+
             <Button
               href={`/${lang}/find-training`}
               variant="primary"
@@ -106,16 +121,25 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             </Button>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div className="flex items-center gap-4 lg:hidden">
+          {/* Mobile Actions: Lang Switch + Menu Toggle */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <Link
+              href={switchHref}
+              className="inline-flex items-center gap-1 px-3 py-2 rounded-full text-xs font-bold border border-slate-200/90 bg-white/95 text-slate-700 hover:text-accent shadow-xs active:scale-95 transition-all"
+              aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
+            >
+              <Globe size={13} className="text-accent" />
+              <span>{lang === 'en' ? 'العربية' : 'EN'}</span>
+            </Link>
+
             <button
               type="button"
-              className="rounded-full p-2.5 text-slate-700 bg-white/90 backdrop-blur-md shadow-sm border border-slate-200/80 transition-transform active:scale-95"
+              className="flex h-11 w-11 items-center justify-center rounded-full text-slate-700 bg-white/95 backdrop-blur-md shadow-xs border border-slate-200/90 transition-all active:scale-90 hover:bg-slate-50"
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-label="Toggle menu"
             >
-              {open ? <X size={20} /> : <Menu size={20} />}
+              {open ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
@@ -128,35 +152,50 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute inset-x-0 top-full border-b border-slate-200/80 bg-white/95 backdrop-blur-2xl p-6 lg:hidden shadow-xl transform-gpu"
+              className="absolute inset-x-0 top-full border-b border-slate-200/80 bg-white/95 backdrop-blur-2xl p-5 sm:p-6 lg:hidden shadow-xl transform-gpu"
             >
-              <ul className="flex flex-col gap-3">
-                {links.map((l) => (
-                  <li key={l.href}>
-                    <Link
-                      href={l.href}
-                      {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                      className={`block text-[15px] font-semibold tracking-wide transition-colors py-2.5 px-3.5 rounded-xl ${
-                        pathname === l.href
-                          ? 'text-accent bg-accent/5'
-                          : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
-                      }`}
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-                <li className="pt-4 border-t border-slate-100 mt-2">
+              <ul className="flex flex-col gap-2">
+                {links.map((l) => {
+                  const isActive = pathname === l.href;
+                  return (
+                    <li key={l.href}>
+                      <Link
+                        href={l.href}
+                        {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                        className={`flex items-center justify-between text-base font-semibold tracking-wide transition-colors py-3 px-4 rounded-2xl ${
+                          isActive
+                            ? 'text-accent bg-accent/5 font-bold'
+                            : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
+                        }`}
+                      >
+                        <span>{l.label}</span>
+                        {isActive && <span className="h-2 w-2 rounded-full bg-accent" />}
+                      </Link>
+                    </li>
+                  );
+                })}
+                <li className="pt-4 border-t border-slate-100 mt-2 space-y-3">
                   <Button
                     href={`/${lang}/find-training`}
                     variant="primary"
                     size="md"
-                    className="w-full"
+                    className="w-full justify-center shadow-md py-4 text-base font-bold"
                     leftIcon={<ShieldCheck size={18} className="text-white/90" />}
                     rightIcon={<ArrowRight size={17} className="rtl:-scale-x-100" />}
                   >
                     {dict.nav.get_matched}
                   </Button>
+
+                  <div className="flex items-center justify-between pt-2 px-1 text-xs text-slate-500">
+                    <span>Language / اللغة:</span>
+                    <Link
+                      href={switchHref}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors"
+                    >
+                      <Globe size={13} className="text-accent" />
+                      <span>{lang === 'en' ? 'العربية' : 'English'}</span>
+                    </Link>
+                  </div>
                 </li>
               </ul>
             </m.div>

@@ -109,7 +109,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
                 type="button"
                 onClick={() => setValue('cohortSize', size.id as any, { shouldValidate: true })}
                 aria-pressed={isSelected}
-                className={`relative flex flex-col justify-between rounded-2xl border p-4 text-start transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-600 ${
+                className={`relative flex flex-col justify-between rounded-2xl border p-4 text-start transition-all duration-200 active:scale-[0.98] touch-manipulation focus:outline-none focus:ring-2 focus:ring-blue-600 ${
                   isSelected
                     ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-1 ring-blue-600'
                     : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
@@ -169,7 +169,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
                 key={t.id}
                 type="button"
                 onClick={() => setValue('timeline', t.id as any, { shouldValidate: true })}
-                className={`relative flex flex-col justify-between rounded-xl border p-4 text-start transition-all ${
+                className={`relative flex flex-col justify-between rounded-xl border p-4 text-start transition-all active:scale-[0.98] touch-manipulation ${
                   isSelected
                     ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-1 ring-blue-600'
                     : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
@@ -223,7 +223,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
                 key={band.id}
                 type="button"
                 onClick={() => setValue('budgetBand', band.id as any, { shouldValidate: true })}
-                className={`relative flex flex-col justify-between rounded-xl border p-4 text-start transition-all ${
+                className={`relative flex flex-col justify-between rounded-xl border p-4 text-start transition-all active:scale-[0.98] touch-manipulation ${
                   isGuidance ? 'sm:col-span-2 lg:col-span-3' : ''
                 } ${
                   isSelected
@@ -275,7 +275,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
           id="additionalContext"
           rows={3}
           placeholder="e.g., We need to reduce manager turnover by 20%, prepare directors for Vision 2030 initiatives, or align sales teams with enterprise bidding..."
-          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 sm:py-3 text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
           {...register('additionalContext')}
         />
       </section>
