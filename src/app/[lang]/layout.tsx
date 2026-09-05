@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from 'next/font/google';
+import { Cairo, Plus_Jakarta_Sans, Inter, JetBrains_Mono } from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import '../globals.css';
@@ -13,6 +13,13 @@ export const viewport: Viewport = {
   maximumScale: 5,
   themeColor: '#0052FF',
 };
+
+const cairo = Cairo({
+  subsets: ['arabic', 'latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-cairo',
+  display: 'swap',
+});
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -101,7 +108,7 @@ export async function generateMetadata({
 }
 
 export function generateStaticParams() {
-  return [{ lang: 'en' }];
+  return [{ lang: 'en' }, { lang: 'ar' }];
 }
 
 export default async function RootLayout({
@@ -117,7 +124,7 @@ export default async function RootLayout({
   const dictionary = await getDictionary(lang);
   const dir = rawLang === 'ar' ? 'rtl' : 'ltr';
 
-  const fontClass = `${inter.variable} ${jakarta.variable} ${jetbrainsMono.variable}`;
+  const fontClass = `${inter.variable} ${jakarta.variable} ${jetbrainsMono.variable} ${cairo.variable}`;
 
   const jsonLdGraph = {
     "@context": "https://schema.org",
@@ -162,11 +169,11 @@ export default async function RootLayout({
         "@id": "https://pontlook.com/#navigation",
         "name": "Main Navigation",
         "itemListElement": [
-          { "@type": "SiteNavigationElement", "position": 1, "name": "Who We Are", "url": "https://pontlook.com/en/who-we-are" },
-          { "@type": "SiteNavigationElement", "position": 2, "name": "Find Training", "url": "https://pontlook.com/en/find-training" },
-          { "@type": "SiteNavigationElement", "position": 3, "name": "For Training Providers", "url": "https://pontlook.com/en/for-providers" },
-          { "@type": "SiteNavigationElement", "position": 4, "name": "Contact", "url": "https://pontlook.com/en/contact" },
-          { "@type": "SiteNavigationElement", "position": 5, "name": "Blog", "url": "https://blog.pontlook.com" }
+          { "@type": "SiteNavigationElement", "position": 1, "name": dictionary.nav.who_we_are, "url": `https://pontlook.com/${lang}/who-we-are` },
+          { "@type": "SiteNavigationElement", "position": 2, "name": dictionary.nav.find_training, "url": `https://pontlook.com/${lang}/find-training` },
+          { "@type": "SiteNavigationElement", "position": 3, "name": dictionary.nav.for_providers, "url": `https://pontlook.com/${lang}/for-providers` },
+          { "@type": "SiteNavigationElement", "position": 4, "name": dictionary.nav.contact, "url": `https://pontlook.com/${lang}/contact` },
+          { "@type": "SiteNavigationElement", "position": 5, "name": dictionary.nav.blog, "url": "https://blog.pontlook.com" }
         ]
       }
     ]
@@ -182,7 +189,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body>
+      <body className={lang === 'ar' ? 'font-arabic' : ''}>
         <DictionaryProvider dictionary={dictionary}>
           <FramerMotionProvider>
             <Navbar lang={lang} />

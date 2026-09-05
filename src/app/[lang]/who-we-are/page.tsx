@@ -16,6 +16,8 @@ import {
   ArrowRight
 } from 'lucide-react';
 
+import { Locale, i18n } from '@/i18n/config';
+
 export const metadata: Metadata = {
   title: {
     absolute: 'Who We Are: The GCC Matchmaking Platform | PontLook',
@@ -24,7 +26,11 @@ export const metadata: Metadata = {
     'Learn how PontLook connects GCC corporate buyers with verified training providers across Saudi Arabia, UAE, and the Gulf with zero retainers.',
 };
 
-const featureCards = [
+export async function generateStaticParams() {
+  return i18n.locales.map((lang) => ({ lang }));
+}
+
+const featureCardsEn = [
   {
     icon: TrendingUp,
     title: 'Stop relying on unpredictable referrals.',
@@ -52,7 +58,35 @@ const featureCards = [
   },
 ];
 
-const benefitPoints = [
+const featureCardsAr = [
+  {
+    icon: TrendingUp,
+    title: 'التوقف عن الاعتماد على التوصيات غير المستقرة',
+    description: 'تخلص من تذبذب الإيرادات عبر استبدال التوصيات العشوائية بمحرك نمو خارجي منظم ومستمر.',
+  },
+  {
+    icon: Clock,
+    title: 'استمرارية تدفق الفرص أثناء تقديم الدورات',
+    description: 'حافظ على استمرارية المبيعات حتى عندما يكون خبراؤك منشغلين بالكامل في تقديم البرامج وورش العمل.',
+  },
+  {
+    icon: Briefcase,
+    title: 'محرك نمو خارجي متكامل ومخصص',
+    description: 'وسّع نطاق مبيعاتك المؤسسية دون الحاجة إلى تكاليف توظيف وتدريب فرق مبيعات داخلية باهظة.',
+  },
+  {
+    icon: MessageSquare,
+    title: 'بدء محادثات هادفة وسريعة مع العملاء',
+    description: 'تواصل مع مدراء الموارد البشرية والتدريب في اللحظة الدقيقة التي يبحثون فيها عن حلول لتطوير فرقهم.',
+  },
+  {
+    icon: Award,
+    title: 'التركيز التام على ما تبدعون فيه',
+    description: 'كرّس وقتك لإغلاق العقود وتقديم تدريب رفيع المستوى، بينما نتولى نحن استكشاف وتأهيل الفرص.',
+  },
+];
+
+const benefitPointsEn = [
   {
     icon: ShieldCheck,
     title: 'Zero Retainer Risk',
@@ -85,21 +119,68 @@ const benefitPoints = [
   },
 ];
 
-export default async function WhoWeArePage({ params }: { params: Promise<{ lang: string }> }) {
+const benefitPointsAr = [
+  {
+    icon: ShieldCheck,
+    title: 'انعدام مخاطر الرسوم الشهرية',
+    desc: 'ادفع حصراً لكل فرصة مؤهلة ($50–$200) يتم تسليمها، لضمان مواءمة تامة مع نمو إيراداتك.',
+  },
+  {
+    icon: Users,
+    title: 'صناع قرار معتمدون في الخليج',
+    desc: 'ربط مباشر مع مدراء الموارد البشرية والتطوير الساعين لتحقيق مستهدفات التوطين والتحول الرقمي.',
+  },
+  {
+    icon: Target,
+    title: 'سياق وبيانات متكاملة لكل فرصة',
+    desc: 'تصلك كل فرصة مصحوبة ببيانات تفصيلية عن الشركة، وحجم الاحتياج، ونقاط الألم المحددة بدقة.',
+  },
+  {
+    icon: Clock,
+    title: 'كفاءة قصوى في الوقت والموارد',
+    desc: 'وفر مئات الساعات من البحث اليدوي بمتوسط 14 يوماً من استلام الطلب حتى التقديم المباشر.',
+  },
+  {
+    icon: BarChart3,
+    title: 'نمو مستدام ومستقر للأعمال',
+    desc: 'حافظ على تدفق منتظم لفرص الشركات طوال العام، بما في ذلك مواسم الذروة التدريبية.',
+  },
+  {
+    icon: DollarSign,
+    title: 'أعلى عائد على الاستثمار وسرعة إغلاق',
+    desc: 'تواصل مع عملاء لديهم احتياج تدريبي محدد مسبقاً، مما يقلص دورة المبيعات ويرفع نسب الفوز.',
+  },
+];
+
+export default async function WhoWeArePage({ params }: { params: Promise<{ lang: Locale }> | { lang: Locale } }) {
   const resolvedParams = await params;
-  const lang = resolvedParams.lang;
+  const lang = resolvedParams?.lang || 'en';
+  const isAr = lang === 'ar';
+
+  const featureCards = isAr ? featureCardsAr : featureCardsEn;
+  const benefitPoints = isAr ? benefitPointsAr : benefitPointsEn;
 
   return (
     <>
       <section className="bg-hero-gradient pt-36 pb-24 relative overflow-hidden">
         <div className="container-site max-w-5xl relative z-10 text-center mx-auto px-6">
           <Reveal>
-            <span className="chip mx-auto">Who We Are</span>
+            <span className="chip mx-auto">{isAr ? 'من نحن' : 'Who We Are'}</span>
             <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-slate-800 leading-[1.15] font-heading">
-              Who We Are: The GCC Corporate Training <span className="text-primary">Matchmaking Platform</span>
+              {isAr ? (
+                <>
+                  من نحن: منصة التوفيق والربط الرائدة لتدريب الشركات في <span className="text-primary">الخليج العربي</span>
+                </>
+              ) : (
+                <>
+                  Who We Are: The GCC Corporate Training <span className="text-primary">Matchmaking Platform</span>
+                </>
+              )}
             </h1>
             <p className="mt-6 text-xl leading-relaxed text-slate-600 max-w-3xl mx-auto font-normal">
-              We connect corporate training companies with GCC decision-makers who already have a real workforce challenge to solve.
+              {isAr
+                ? 'نربط شركات ومزودي التدريب بصناع القرار في الشركات والمؤسسات الخليجية الذين لديهم احتياجات وتحديات حقيقية يسعون لحلها.'
+                : 'We connect corporate training companies with GCC decision-makers who already have a real workforce challenge to solve.'}
             </p>
           </Reveal>
         </div>
@@ -110,13 +191,15 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
           <Reveal>
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-4 py-1.5 rounded-full">
-                Built for Training Companies
+                {isAr ? 'مخصص لشركات ومراكز التدريب' : 'Built for Training Companies'}
               </span>
               <h2 className="mt-4 text-3xl sm:text-4xl font-semibold text-slate-800 font-heading">
-                A Predictable Engine for Enterprise Growth
+                {isAr ? 'محرك متوقع وموثوق لنمو مبيعات الشركات' : 'A Predictable Engine for Enterprise Growth'}
               </h2>
               <p className="mt-4 text-lg text-slate-600">
-                Designed specifically for corporate training providers seeking sustainable, high-margin client acquisition across the GCC.
+                {isAr
+                  ? 'مصمم خصيصاً لمزودي التدريب المؤسسي الساعين لاكتساب عملاء بعوائد مستدامة وهوامش ربحية عالية في الخليج.'
+                  : 'Designed specifically for corporate training providers seeking sustainable, high-margin client acquisition across the GCC.'}
               </p>
             </div>
           </Reveal>
@@ -142,12 +225,12 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                         </div>
                         {isLarge && (
                           <span className="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider px-3 py-1 rounded-full bg-slate-100 border border-slate-200">
-                            Enterprise Engine
+                            {isAr ? 'محرك مبيعات مؤسسي' : 'Enterprise Engine'}
                           </span>
                         )}
                         {isFull && (
                           <span className="text-[11px] font-mono font-bold text-emerald-700 uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200">
-                            100% Risk-Free Model
+                            {isAr ? 'نموذج خالٍ تماماً من المخاطر' : '100% Risk-Free Model'}
                           </span>
                         )}
                       </div>
@@ -173,35 +256,57 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
             <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-10 md:p-14 shadow-2xl">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/20 text-primary-300 text-xs font-semibold uppercase tracking-wider mb-6 border border-primary/30">
                 <ShieldCheck size={14} />
-                <span>What We Do</span>
+                <span>{isAr ? 'ما نقوم به' : 'What We Do'}</span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-semibold text-white font-heading leading-tight mb-6">
-                Pay Only for <span className="text-primary-400">Qualified Leads</span>
+                {isAr ? (
+                  <>
+                    ادفع فقط مقابل <span className="text-primary-400">الفرص المؤهلة</span>
+                  </>
+                ) : (
+                  <>
+                    Pay Only for <span className="text-primary-400">Qualified Leads</span>
+                  </>
+                )}
               </h2>
               <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl mb-8">
-                We operate on a zero-retainer, pay-per-lead model designed to eliminate risk for training providers. No monthly setup fees, no promises of arbitrary outreach volume. You pay strictly when we deliver a verified decision-maker who has a confirmed corporate training need.
+                {isAr
+                  ? 'نعمل بنموذج الدفع لكل فرصة خالي من الاشتراكات الشهرية، مصمم لإلغاء المخاطر عن مزودي التدريب. بدون رسوم تأسيسية أو وعود عشوائية. تدفع فقط عندما نسلمك صانع قرار تم التحقق من هويته واحتياجه التدريبي الفعلي.'
+                  : 'We operate on a zero-retainer, pay-per-lead model designed to eliminate risk for training providers. No monthly setup fees, no promises of arbitrary outreach volume. You pay strictly when we deliver a verified decision-maker who has a confirmed corporate training need.'}
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-white/10">
                 <div className="flex items-start gap-3">
                   <CheckCircle2 size={22} className="text-primary-400 shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-white text-base">Zero Retainers</h3>
-                    <p className="text-slate-400 text-sm mt-1">No ongoing management or setup fees.</p>
+                    <h3 className="font-semibold text-white text-base">
+                      {isAr ? 'بدون اشتراكات ثابتة' : 'Zero Retainers'}
+                    </h3>
+                    <p className="text-slate-400 text-sm mt-1">
+                      {isAr ? 'لا توجد رسوم إدارة أو اشتراك دوري.' : 'No ongoing management or setup fees.'}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 size={22} className="text-primary-400 shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-white text-base">Verified Buyers</h3>
-                    <p className="text-slate-400 text-sm mt-1">Vetted HR & L&D leaders in the GCC.</p>
+                    <h3 className="font-semibold text-white text-base">
+                      {isAr ? 'صناع قرار مؤكدون' : 'Verified Buyers'}
+                    </h3>
+                    <p className="text-slate-400 text-sm mt-1">
+                      {isAr ? 'قادة الموارد البشرية والتدريب في كبرى الشركات.' : 'Vetted HR & L&D leaders in the GCC.'}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 size={22} className="text-primary-400 shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-white text-base">Replacement Guarantee</h3>
-                    <p className="text-slate-400 text-sm mt-1">Full replacement if criteria are not met.</p>
+                    <h3 className="font-semibold text-white text-base">
+                      {isAr ? 'ضمان الاستبدال' : 'Replacement Guarantee'}
+                    </h3>
+                    <p className="text-slate-400 text-sm mt-1">
+                      {isAr ? 'استبدال فوري للفرصة في حال عدم مطابقة المعايير.' : 'Full replacement if criteria are not met.'}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -215,13 +320,15 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
           <Reveal>
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-4 py-1.5 rounded-full">
-                Proven Advantages
+                {isAr ? 'مزايا مثبتة' : 'Proven Advantages'}
               </span>
               <h2 className="mt-4 text-3xl sm:text-4xl font-semibold text-slate-800 font-heading">
-                Why Our Clients Choose Us
+                {isAr ? 'لماذا يختار شركاؤنا العمل معنا' : 'Why Our Clients Choose Us'}
               </h2>
               <p className="mt-4 text-lg text-slate-600">
-                Here is why corporate training leaders partner with PontLook to accelerate their growth.
+                {isAr
+                  ? 'إليك الأسباب التي تجعل قادة تدريب الشركات يتعاونون مع بونت لوك لتسريع نمو أعمالهم.'
+                  : 'Here is why corporate training leaders partner with PontLook to accelerate their growth.'}
               </p>
             </div>
           </Reveal>
@@ -256,15 +363,25 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
               <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-2xl pointer-events-none" />
               
               <span className="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-4 py-1.5 rounded-full inline-block mb-6">
-                Our Guarantee
+                {isAr ? 'ضماننا' : 'Our Guarantee'}
               </span>
               
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-800 font-heading leading-tight mb-6">
-                Our Promise
+                {isAr ? 'وعدنا لك' : 'Our Promise'}
               </h2>
               
               <p className="text-xl md:text-2xl text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
-                We deliver verified GCC decision-makers with a confirmed corporate-training need... <span className="text-primary font-semibold">No retainer. No risk.</span>
+                {isAr ? (
+                  <>
+                    نسلمك صناع قرار موثوقين في الخليج مع احتياج تدريبي مؤسسي مؤكد...{' '}
+                    <span className="text-primary font-semibold">بدون اشتراك شهري. وبدون أي مخاطرة.</span>
+                  </>
+                ) : (
+                  <>
+                    We deliver verified GCC decision-makers with a confirmed corporate-training need...{' '}
+                    <span className="text-primary font-semibold">No retainer. No risk.</span>
+                  </>
+                )}
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -272,15 +389,15 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                   href={`/${lang}/for-providers`} 
                   className="btn-primary flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base rounded-full shadow-md hover:shadow-lg transition-all"
                 >
-                  Start Receiving Qualified Leads
-                  <ArrowRight size={18} className="ms-2 rtl:rotate-180" />
+                  {isAr ? 'ابدأ باستقبال الفرص المؤهلة' : 'Start Receiving Qualified Leads'}
+                  <ArrowRight size={18} className="ms-2 rtl:-scale-x-100" />
                 </Link>
                 
                 <Link 
                   href={`/${lang}/contact`} 
                   className="flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-full border border-slate-200 transition-all"
                 >
-                  Book a Discovery Call
+                  {isAr ? 'احجز جلسة استكشافية' : 'Book a Discovery Call'}
                 </Link>
               </div>
             </div>

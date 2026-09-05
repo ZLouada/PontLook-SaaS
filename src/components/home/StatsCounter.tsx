@@ -4,13 +4,7 @@ import { useEffect, useRef } from 'react';
 import { useInView, useMotionValue, useTransform, animate, m, useReducedMotion } from 'framer-motion';
 import { Building2, CheckCircle2, Clock, Globe } from 'lucide-react';
 import Card from '@/components/shared/Card';
-
-const stats = [
-  { icon: Building2, end: 500, suffix: '+', label: 'GCC companies monitored' },
-  { icon: CheckCircle2, end: 92, suffix: '%', label: 'leads reach a meeting' },
-  { icon: Clock, end: 14, suffix: ' Days', label: 'avg. match to intro' },
-  { icon: Globe, end: 6, suffix: ' Markets', label: 'GCC countries covered' },
-];
+import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 function Counter({ end, suffix }: { end: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -43,6 +37,15 @@ function Counter({ end, suffix }: { end: number; suffix: string }) {
 }
 
 export default function StatsCounter() {
+  const dict = useDictionary();
+
+  const stats = [
+    { icon: Building2, end: dict.stats.companies.value, suffix: dict.stats.companies.suffix, label: dict.stats.companies.label },
+    { icon: CheckCircle2, end: dict.stats.meetings.value, suffix: dict.stats.meetings.suffix, label: dict.stats.meetings.label },
+    { icon: Clock, end: dict.stats.turnaround.value, suffix: dict.stats.turnaround.suffix, label: dict.stats.turnaround.label },
+    { icon: Globe, end: dict.stats.markets.value, suffix: dict.stats.markets.suffix, label: dict.stats.markets.label },
+  ];
+
   return (
     <section className="relative bg-gradient-to-b from-white via-slate-50/50 to-white py-28 lg:py-40 border-t border-slate-200/60 overflow-hidden">
       <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[400px] bg-gradient-to-r from-accent/10 via-accent-secondary/10 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
@@ -75,7 +78,7 @@ export default function StatsCounter() {
         </div>
 
         <p className="mt-14 text-center text-xs font-mono font-medium text-slate-400 tracking-wider uppercase">
-          Verified GCC B2B intelligence & metrics
+          {dict.stats.caption}
         </p>
       </div>
     </section>

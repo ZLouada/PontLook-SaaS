@@ -35,15 +35,15 @@ export default function Footer() {
           </div>
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-400">
             <Link href={`/${lang}/privacy-policy`} className="hover:text-white transition-colors">
-              Privacy Policy
+              {dict.footer.privacy_policy || 'Privacy Policy'}
             </Link>
             <span>•</span>
             <Link href={`/${lang}/terms-of-service`} className="hover:text-white transition-colors">
-              Terms of Service
+              {dict.footer.terms_of_service || 'Terms of Service'}
             </Link>
             <span>•</span>
             <Link href={`/${lang}/returns-faq`} className="hover:text-white transition-colors">
-              Returns &amp; FAQ
+              {dict.footer.returns_faq || 'Returns & FAQ'}
             </Link>
           </div>
         </div>
@@ -80,11 +80,11 @@ export default function Footer() {
       <div className="border-t border-slate-800/80 py-6 bg-slate-950/80 backdrop-blur-md">
         <div className="container-site flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500 px-4 sm:px-8 lg:px-12">
           <p className="text-xs text-slate-400">
-            © 2025-2026 PontLook, operating under Firstnestcare, LLC. All rights reserved.
+            {dict.footer.rights}
           </p>
           <div className="flex items-center gap-2 text-slate-400">
             <ShieldCheck size={14} className="text-accent-secondary" />
-            <span>GCC B2B Corporate Matchmaking Platform</span>
+            <span>{dict.footer.badge || 'GCC B2B Corporate Matchmaking Platform'}</span>
           </div>
         </div>
       </div>

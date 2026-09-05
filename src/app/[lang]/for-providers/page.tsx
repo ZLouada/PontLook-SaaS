@@ -19,7 +19,7 @@ export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
 }
 
-const providerBenefits = [
+const providerBenefitsEn = [
   {
     icon: DollarSign,
     title: 'Zero Retainer Risk',
@@ -37,6 +37,24 @@ const providerBenefits = [
   },
 ];
 
+const providerBenefitsAr = [
+  {
+    icon: DollarSign,
+    title: 'انعدام مخاطر الرسوم الشهرية',
+    text: 'لا توجد رسوم إدارة أو اشتراكات شهرية ثابتة. الدفع يتم حصراً لكل صانع قرار مؤكد ومؤهل يتم تقديمه لك.',
+  },
+  {
+    icon: Target,
+    title: 'عملاء خليجيون تم تأهيل احتياجاتهم',
+    text: 'كل فرصة تدريبية تتضمن احتياجاً مؤسسياً مؤكداً، وصلاحية قرار واضحة، ومتطلبات متوافقة مع أهداف التوطين أو التحول الرقمي.',
+  },
+  {
+    icon: Award,
+    title: 'تدفق مستمر لفرص الأعمال',
+    text: 'حافظ على استمرارية ونمو أعمالك على مدار العام، حتى خلال مواسم التدريب والتنفيذ الميداني.',
+  },
+];
+
 export default async function ForProvidersPage({
   params,
 }: {
@@ -44,6 +62,7 @@ export default async function ForProvidersPage({
 }) {
   const resolvedParams = await params;
   const lang = resolvedParams?.lang || 'en';
+  const isAr = lang === 'ar';
   let dict: any = {};
 
   try {
@@ -52,17 +71,31 @@ export default async function ForProvidersPage({
     console.error('Error loading dictionary:', err);
   }
 
+  const providerBenefits = isAr ? providerBenefitsAr : providerBenefitsEn;
+
   return (
     <>
       <div className="bg-hero-gradient">
         <section className="container-site pt-36 pb-20">
           <Reveal className="mx-auto max-w-3xl text-center">
-            <span className="chip mx-auto">For Training Providers</span>
+            <span className="chip mx-auto">
+              {isAr ? 'لمزودي ومراكز التدريب' : 'For Training Providers'}
+            </span>
             <h1 className="mt-5 text-4xl font-semibold sm:text-5xl lg:text-6xl text-slate-800 leading-tight font-heading">
-              Enterprise Training Leads <span className="text-primary">On Demand</span>
+              {isAr ? (
+                <>
+                  فرص تدريبية للشركات والمؤسسات <span className="text-primary">حسب الطلب</span>
+                </>
+              ) : (
+                <>
+                  Enterprise Training Leads <span className="text-primary">On Demand</span>
+                </>
+              )}
             </h1>
             <p className="mt-5 text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
-              Connect directly with GCC corporate decision-makers actively seeking training solutions. Zero retainers, 100% pay-per-lead.
+              {isAr
+                ? 'تواصل مباشرة مع صناع القرار في الشركات الخليجية التي تبحث بنشاط عن حلول تدريبية. بدون رسوم شهرية ثابتة، الدفع فقط لكل فرصة مؤكدة ومؤهلة.'
+                : 'Connect directly with GCC corporate decision-makers actively seeking training solutions. Zero retainers, 100% pay-per-lead.'}
             </p>
           </Reveal>
         </section>
@@ -72,9 +105,13 @@ export default async function ForProvidersPage({
         <div className="container-site max-w-6xl mx-auto px-6 space-y-24">
           <div>
             <SectionHeading
-              eyebrow="Why Partner with PontLook"
-              title="Predictable Enterprise Pipeline"
-              subtitle="Designed specifically for GCC training providers seeking verified opportunities without retainers."
+              eyebrow={isAr ? 'لماذا الشراكة مع بونت لوك' : 'Why Partner with PontLook'}
+              title={isAr ? 'تدفق متوقع لفرص الشركات والمؤسسات' : 'Predictable Enterprise Pipeline'}
+              subtitle={
+                isAr
+                  ? 'مصمم خصيصاً لمزودي التدريب في الخليج الساعين للحصول على فرص موثقة دون أي اشتراكات دورية.'
+                  : 'Designed specifically for GCC training providers seeking verified opportunities without retainers.'
+              }
             />
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {providerBenefits.map((b, i) => (
@@ -95,9 +132,13 @@ export default async function ForProvidersPage({
 
           <div id="apply" className="scroll-mt-24">
             <SectionHeading
-              eyebrow="Provider Application"
-              title="Apply to Join Our Network"
-              subtitle="Submit your company credentials and training specializations to begin receiving qualified enterprise requests."
+              eyebrow={isAr ? 'طلب الانضمام للشراكة' : 'Provider Application'}
+              title={isAr ? 'قدم للانضمام إلى شبكتنا المعتمدة' : 'Apply to Join Our Network'}
+              subtitle={
+                isAr
+                  ? 'أرسل بيانات شركتك وتخصصاتكم التدريبية لتبدأ في استقبال طلبات التدريب المؤسسية المؤهلة.'
+                  : 'Submit your company credentials and training specializations to begin receiving qualified enterprise requests.'
+              }
             />
             <Reveal className="mx-auto mt-12 max-w-3xl">
               <PartnershipForm dict={dict} lang={lang} />

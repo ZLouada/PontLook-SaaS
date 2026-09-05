@@ -2,13 +2,18 @@ import type { Metadata } from 'next';
 import Reveal from '@/components/shared/Reveal';
 import FAQAccordion from '@/components/faq/FAQAccordion';
 import Link from 'next/link';
+import { Locale, i18n } from '@/i18n/config';
 
 export const metadata: Metadata = {
   title: 'Frequently Asked Questions',
   description: 'Frequently Asked Questions about PontLook and how we connect corporate training companies with qualified GCC decision-makers.',
 };
 
-const faqs = [
+export async function generateStaticParams() {
+  return i18n.locales.map((lang) => ({ lang }));
+}
+
+const faqsEn = [
   { question: "What does PontLook do?", answer: "We help corporate training providers reach verified GCC decision-makers who have a relevant training need and a reason to speak." },
   { question: "Do you provide corporate training?", answer: "No. We do not deliver training programmes; we connect specialist training companies with qualified corporate buyers." },
   { question: "Who do you help?", answer: "We work with mid-sized corporate training providers offering leadership, soft skills, digital transformation, compliance, onboarding, and workforce-development programmes." },
@@ -27,21 +32,54 @@ const faqs = [
   { question: "How quickly can we get started?", answer: "Once we agree on your targeting and lead criteria, we begin research and outreach to identify suitable opportunities." },
 ];
 
-export default async function FAQPage({ params }: { params: Promise<{ lang: string }> }) {
+const faqsAr = [
+  { question: "ما الذي تقوم به منصة بونت لوك بالضبط؟", answer: "نساعد مزودي ومراكز تدريب الشركات في الوصول إلى صناع قرار موثوقين ومؤهلين في منطقة الخليج ممن لديهم احتياج تدريبي فعلي واستعداد للتواصل." },
+  { question: "هل تقدمون برامج تدريب للشركات بأنفسكم؟", answer: "لا. نحن لا نقدم الدورات والبرامج بأنفسنا؛ بل نربط مزودي ومراكز التدريب المتخصصة بالجهات والشركات الطالبة للتدريب." },
+  { question: "من هي الفئات والشركات التي تخدمونها؟", answer: "نعمل مع مزودي ومراكز تدريب الشركات المتخصصة في القيادة التنفيذية، والمهارات الشخصية، والتحول الرقمي، والامتثال، والتأهيل الوظيفي وتطوير الكوادر." },
+  { question: "ما هي الفئات المستهدفة من صناع القرار؟", answer: "نحدد ونؤهل الرؤساء التنفيذيين، والمدراء العامين، ومدراء الموارد البشرية، ورؤساء قطاع رأس المال البشري، ومدراء التدريب والتطوير المؤثرين على قرارات الشراء التدريبي." },
+  { question: "ما هي الأسواق الجغرافية التي تغطونها؟", answer: "نركز على كافة دول مجلس التعاون الخليجي: المملكة العربية السعودية، والإمارات العربية المتحدة، وقطر، والكويت، والبحرين، وعُمان." },
+  { question: "ما هي القطاعات الاقتصادية التي تستهدفونها؟", answer: "نركز على قطاعات التشييد والمقاولات، والتطوير العقاري، والخدمات المالية، والتقنية، والرعاية الصحية، والضيافة، والصناعة، والخدمات اللوجستية." },
+  { question: "هل ما تقدمونه مجرد قوائم بيانات اتصال؟", answer: "إطلاقاً. قوائم الاتصال تمنحك فقط أسماء وإيميلات مجردة؛ نحن نقدم لك فرصاً مدروسة بعناية مع سياق كامل حول المنصب، والشركة، ونقاط الألم، ونوع الاحتياج التدريبي." },
+  { question: "كيف تقومون بتأهيل وتوثيق كل فرصة؟", answer: "نتحقق من المنصب الحالي للمسؤول، وملاءمة المنشأة، والقطاع، والتحدي المؤسسي القائم، ومؤشرات الحاجة التي تجعل عرضك التدريبي مناسباً وملائماً." },
+  { question: "كيف يعمل نموذج التسعير لديكم؟", answer: "تدفع فقط لكل فرصة مؤهلة ومقبولة يتم تسليمها لك، بدلاً من دفع رسوم شهرية ثابتة مقابل نشاطات أو وعود غير مؤكدة." },
+  { question: "هل يتطلب الأمر توقيع عقد التزام طويل الأجل؟", answer: "لا. نموذجنا مصمم بدون أي رسوم اشتراك شهرية أو التزامات طويلة الأجل؛ أنت تدفع حصراً مقابل الفرص المؤهلة المستلمة." },
+  { question: "ماذا يحدث إذا لم تطابق إحدى الفرص معاييرنا المتفق عليها؟", answer: "نلتزم باستبدال أي فرصة لا تطابق معايير التأهيل المحددة والمتفق عليها مسبقاً معك في بداية التعاقد." },
+  { question: "هل يمكننا استهداف السعودية أو الإمارات فقط؟", answer: "نعم بالتأكيد. يمكننا تركيز الحملات على دولة خليجية واحدة، أو مدن محددة كالرياض أو دبي، أو تغطية السوق الخليجي الأوسع بحسب نطاق عملكم." },
+  { question: "هل ستكون الفرص ملائمة لنوعية برامجنا؟", answer: "هذا هو جوهر خدمتنا: نقوم بمطابقة التحدي المؤسسي الموثق لدى العميل مع تخصصات وحلول التدريب التي تبرعون في تقديمها." },
+  { question: "هل تضمنون إغلاق الصفقات بنسبة 100%؟", answer: "لا توجد أي منصة مهنية ذات مصداقية تضمن نتائج البيع النهائية. نحن نضمن فرصاً مؤهلة ومدروسة مع صناع قرار؛ بينما يعتمد الإغلاق النهائي على عرضكم التجاري وسعركم وجودة متابعتكم." },
+  { question: "ما هي المتطلبات التي نحتاج تقديمها لبدء العمل؟", answer: "تزودنا بملف العميل المثالي لديكم، وحلولكم التدريبية، والقطاعات المستهدفة، والدول المفضلة، والمناصب المستهدفة، ومعايير تأهيل الفرص." },
+  { question: "كم يستغرق بدء استقبال الفرص؟", answer: "بمجرد الاتفاق على معايير الاستهداف وشروط التأهيل، يبدأ فريقنا فوراً بعمليات البحث والتواصل وتأهيل الفرص الملائمة." },
+];
+
+export default async function FAQPage({ params }: { params: Promise<{ lang: Locale }> | { lang: Locale } }) {
   const resolvedParams = await params;
-  const lang = resolvedParams.lang;
+  const lang = resolvedParams?.lang || 'en';
+  const isAr = lang === 'ar';
+  const faqs = isAr ? faqsAr : faqsEn;
 
   return (
     <>
       <section className="bg-hero-gradient pt-36 pb-20 relative overflow-hidden">
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto">
           <Reveal>
-            <span className="chip mx-auto">Help & Information</span>
+            <span className="chip mx-auto">
+              {isAr ? 'المساعدة والمعلومات' : 'Help & Information'}
+            </span>
             <h1 className="mt-6 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl text-slate-800 font-heading">
-              Frequently Asked <span className="text-primary">Questions</span>
+              {isAr ? (
+                <>
+                  الأسئلة الأكثر <span className="text-primary">شيوعاً وتكراراً</span>
+                </>
+              ) : (
+                <>
+                  Frequently Asked <span className="text-primary">Questions</span>
+                </>
+              )}
             </h1>
             <p className="mt-6 text-xl leading-relaxed text-slate-600 max-w-2xl mx-auto">
-              Everything you need to know about how PontLook connects corporate training companies with qualified GCC decision-makers.
+              {isAr
+                ? 'كل ما تحتاج معرفته حول كيفية قيام بونت لوك بربط مزودي تدريب الشركات بصناع القرار المؤهلين في دول الخليج.'
+                : 'Everything you need to know about how PontLook connects corporate training companies with qualified GCC decision-makers.'}
             </p>
           </Reveal>
         </div>
@@ -53,12 +91,16 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
 
           <Reveal delay={0.4}>
             <div className="mt-16 bg-gradient-to-br from-primary-50 to-white border border-primary-100 p-10 rounded-3xl text-center shadow-sm">
-              <h3 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">Still have questions?</h3>
+              <h3 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
+                {isAr ? 'هل ما زال لديك أي استفسار؟' : 'Still have questions?'}
+              </h3>
               <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
-                We&apos;re here to help. Reach out to our team to discuss your specific needs and how we can support your growth in the GCC.
+                {isAr
+                  ? 'فريقنا جاهز لمساعدتك دائماً. تواصل معنا لمناقشة متطلباتك المحددة وكيف يمكننا دعم نمو أعمالك في منطقة الخليج.'
+                  : 'We’re here to help. Reach out to our team to discuss your specific needs and how we can support your growth in the GCC.'}
               </p>
               <Link href={`/${lang}/contact`} className="btn-primary inline-flex">
-                Contact Us
+                {isAr ? 'تواصل معنا' : 'Contact Us'}
               </Link>
             </div>
           </Reveal>

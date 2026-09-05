@@ -17,9 +17,21 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const dict = useDictionary();
 
   const otherLang = lang === 'en' ? 'ar' : 'en';
-  const switchHref = pathname.startsWith(`/${lang}`)
-    ? pathname.replace(`/${lang}`, `/${otherLang}`)
-    : `/${otherLang}`;
+  const switchHref = (() => {
+    if (!pathname) return `/${otherLang}`;
+    if (pathname === `/${lang}` || pathname === `/${lang}/`) {
+      return `/${otherLang}`;
+    }
+    if (pathname.startsWith(`/${lang}/`)) {
+      return pathname.replace(`/${lang}/`, `/${otherLang}/`);
+    }
+    const segments = pathname.split('/').filter(Boolean);
+    if (segments[0] === 'en' || segments[0] === 'ar') {
+      segments[0] = otherLang;
+      return `/${segments.join('/')}`;
+    }
+    return `/${otherLang}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
+  })();
 
   const links = [
     { href: `/${lang}`, label: dict.nav.home },
@@ -127,7 +139,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
             >
               <Globe size={13} className="text-accent" />
-              <span>{lang === 'en' ? 'العربية' : 'EN'}</span>
+              <span>{lang === 'en' ? 'العربية' : 'English'}</span>
             </Link>
 
             <button

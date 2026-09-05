@@ -51,6 +51,24 @@
   :focus-visible {
     @apply outline-none ring-2 ring-accent ring-offset-2;
   }
+
+  [dir="rtl"],
+  [dir="rtl"] body {
+    font-family: var(--font-cairo), 'Cairo', system-ui, sans-serif;
+  }
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3,
+  [dir="rtl"] h4,
+  [dir="rtl"] h5,
+  [dir="rtl"] h6,
+  [dir="rtl"] .font-heading {
+    font-family: var(--font-cairo), 'Cairo', system-ui, sans-serif;
+    letter-spacing: normal;
+  }
+  .font-arabic {
+    font-family: var(--font-cairo), 'Cairo', system-ui, sans-serif !important;
+  }
 }
 
 @layer components {

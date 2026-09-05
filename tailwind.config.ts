@@ -50,6 +50,7 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-body)', 'Inter', 'system-ui', 'sans-serif'],
         heading: ['var(--font-heading)', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        arabic: ['var(--font-cairo)', 'Cairo', 'system-ui', 'sans-serif'],
         body: ['var(--font-body)', 'Inter', 'system-ui', 'sans-serif'],
         serif: ['var(--font-heading)', 'Plus Jakarta Sans', 'sans-serif'],
         mono: ['var(--font-mono)', 'JetBrains Mono', 'monospace'],

@@ -5,6 +5,11 @@ import WhyDifferent from '@/components/home/WhyDifferent';
 import StatsCounter from '@/components/home/StatsCounter';
 import ProviderTeaser from '@/components/home/ProviderTeaser';
 import FinalCta from '@/components/home/FinalCta';
+import { i18n } from '@/i18n/config';
+
+export async function generateStaticParams() {
+  return i18n.locales.map((lang) => ({ lang }));
+}
 
 export default function HomePage() {
   return (

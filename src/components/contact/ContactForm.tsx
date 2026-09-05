@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { CheckCircle2, Send, Loader2 } from 'lucide-react';
+import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 const schema = z.object({
   name: z.string().trim().min(2, 'Your name is required').max(100, 'Name is too long'),
@@ -20,6 +21,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export default function ContactForm() {
+  const dict = useDictionary();
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
@@ -91,9 +93,9 @@ export default function ContactForm() {
     return (
       <div className="card text-center !p-6 sm:!p-12">
         <CheckCircle2 size={48} className="mx-auto text-emerald-500" />
-        <h3 className="mt-5 text-2xl font-semibold text-slate-800 font-heading">Message sent</h3>
+        <h3 className="mt-5 text-2xl font-semibold text-slate-800 font-heading">{dict.contact.form.successTitle}</h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
-          Thanks for reaching out, we respond to every message within 1 business day.
+          {dict.contact.form.successMessage}
         </p>
       </div>
     );
@@ -106,48 +108,48 @@ export default function ContactForm() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor="name" className="field-label">Name</label>
-          <input id="name" className="field-input" {...register('name')} />
+          <label htmlFor="name" className="field-label">{dict.contact.form.name}</label>
+          <input id="name" placeholder={dict.contact.form.namePlaceholder} className="field-input" {...register('name')} />
           {errors.name && <p className="field-error" role="alert">{errors.name.message}</p>}
         </div>
         <div>
-          <label htmlFor="email" className="field-label">Email</label>
-          <input id="email" type="email" className="field-input" {...register('email')} />
+          <label htmlFor="email" className="field-label">{dict.contact.form.email}</label>
+          <input id="email" type="email" placeholder={dict.contact.form.emailPlaceholder} className="field-input" {...register('email')} />
           {errors.email && <p className="field-error" role="alert">{errors.email.message}</p>}
         </div>
         <div>
-          <label htmlFor="company" className="field-label">Company</label>
-          <input id="company" className="field-input" {...register('company')} />
+          <label htmlFor="company" className="field-label">{dict.contact.form.company}</label>
+          <input id="company" placeholder={dict.contact.form.companyPlaceholder} className="field-input" {...register('company')} />
           {errors.company && <p className="field-error" role="alert">{errors.company.message}</p>}
         </div>
         <div>
-          <label htmlFor="topic" className="field-label">Topic</label>
+          <label htmlFor="topic" className="field-label">{dict.contact.form.topic}</label>
           <select id="topic" className="field-input" {...register('topic')}>
-            <option value="">Select…</option>
-            <option value="provider">I’m a training provider</option>
-            <option value="company">I’m looking for training</option>
-            <option value="partnership">Strategic partnership</option>
-            <option value="media">Media / speaking</option>
-            <option value="other">Something else</option>
+            <option value="">{dict.contact.form.topicPlaceholder}</option>
+            <option value="provider">{dict.contact.form.topics.provider}</option>
+            <option value="company">{dict.contact.form.topics.company}</option>
+            <option value="partnership">{dict.contact.form.topics.partnership}</option>
+            <option value="media">{dict.contact.form.topics.media}</option>
+            <option value="other">{dict.contact.form.topics.other}</option>
           </select>
           {errors.topic && <p className="field-error" role="alert">{errors.topic.message}</p>}
         </div>
       </div>
       <div className="mt-5">
-        <label htmlFor="message" className="field-label">Message</label>
-        <textarea id="message" rows={5} className="field-input" {...register('message')} />
+        <label htmlFor="message" className="field-label">{dict.contact.form.message}</label>
+        <textarea id="message" rows={5} placeholder={dict.contact.form.messagePlaceholder} className="field-input" {...register('message')} />
         {errors.message && <p className="field-error" role="alert">{errors.message.message}</p>}
       </div>
       <button type="submit" disabled={isLoading} className="btn-primary mt-7 w-full sm:w-auto py-3.5 sm:py-3 disabled:opacity-60 inline-flex items-center justify-center gap-2 active:scale-[0.98] touch-manipulation">
         {isLoading ? (
           <>
-            <span>Sending…</span>
+            <span>{dict.contact.form.submitting}</span>
             <Loader2 size={16} className="animate-spin" />
           </>
         ) : (
           <>
-            <span>Send message</span>
-            <Send size={16} />
+            <span>{dict.contact.form.submit}</span>
+            <Send size={16} className="rtl:-scale-x-100" />
           </>
         )}
       </button>

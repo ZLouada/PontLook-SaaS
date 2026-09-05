@@ -2,26 +2,43 @@ import type { Metadata } from 'next';
 import Reveal from '@/components/shared/Reveal';
 import Link from 'next/link';
 
+import { Locale, i18n } from '@/i18n/config';
+
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'PontLook Privacy Policy: Information collection, usage, third-party disclosures (Fourthwall, Google Analytics), cookies, and user rights under Firstnestcare, LLC.',
 };
 
-export default async function PrivacyPolicyPage({ params }: { params: Promise<{ lang: string }> }) {
+export async function generateStaticParams() {
+  return i18n.locales.map((lang) => ({ lang }));
+}
+
+export default async function PrivacyPolicyPage({ params }: { params: Promise<{ lang: Locale }> | { lang: Locale } }) {
   const resolvedParams = await params;
-  const lang = resolvedParams.lang;
+  const lang = resolvedParams?.lang || 'en';
+  const isAr = lang === 'ar';
 
   return (
     <>
       <section className="bg-hero-gradient pt-36 pb-16 relative overflow-hidden">
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6">
           <Reveal>
-            <span className="chip mx-auto">Legal & Compliance</span>
+            <span className="chip mx-auto">{isAr ? 'الامتثال والخصوصية' : 'Legal & Compliance'}</span>
             <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-slate-800 leading-tight font-heading">
-              Privacy <span className="text-primary">Policy</span>
+              {isAr ? (
+                <>
+                  سياسة <span className="text-primary">الخصوصية</span>
+                </>
+              ) : (
+                <>
+                  Privacy <span className="text-primary">Policy</span>
+                </>
+              )}
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-              Effective Date: August 3, 2026 | Operates under Firstnestcare, LLC
+              {isAr
+                ? 'تاريخ السريان: 3 أغسطس 2026 | تعمل تحت إدارة Firstnestcare, LLC'
+                : 'Effective Date: August 3, 2026 | Operates under Firstnestcare, LLC'}
             </p>
           </Reveal>
         </div>

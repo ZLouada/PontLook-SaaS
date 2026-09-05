@@ -5,13 +5,13 @@ import Reveal from '@/components/shared/Reveal';
 import SectionHeading from '@/components/shared/SectionHeading';
 import {
   ShieldCheck,
-  Clock,
   BadgeDollarSign,
   Target,
   Briefcase,
   Building2,
   CheckCircle2,
 } from 'lucide-react';
+import { Locale, i18n } from '@/i18n/config';
 
 export const metadata: Metadata = {
   title: {
@@ -21,14 +21,25 @@ export const metadata: Metadata = {
     'Submit your enterprise training scope and receive 2-3 itemized proposals from verified GCC training providers within 48 hours. 100% free for hiring organizations.',
 };
 
-const trustMetrics = [
+export async function generateStaticParams() {
+  return i18n.locales.map((lang) => ({ lang }));
+}
+
+const trustMetricsEn = [
   { value: '120+', label: 'Vetted GCC Providers' },
   { value: '48 Hours', label: 'Proposal SLA' },
   { value: '$0 Cost', label: 'For Hiring Organizations' },
   { value: '100%', label: 'Confidentiality Guaranteed' },
 ];
 
-const keyAdvantages = [
+const trustMetricsAr = [
+  { value: '+120', label: 'مزود تدريب معتمد' },
+  { value: '48 ساعة', label: 'سرعة استلام العروض' },
+  { value: '0$ تكلفة', label: 'مجاناً للشركات والجهات' },
+  { value: '100%', label: 'سرية تامة ومضمونة' },
+];
+
+const keyAdvantagesEn = [
   {
     icon: Target,
     title: 'Precise GCC Domain Matching',
@@ -43,6 +54,24 @@ const keyAdvantages = [
     icon: Briefcase,
     title: 'Zero Obligation & Zero Cost',
     text: 'Our matchmaking service is 100% free for hiring companies. Review detailed proposals and interview lead facilitators with zero commitment.',
+  },
+];
+
+const keyAdvantagesAr = [
+  {
+    icon: Target,
+    title: 'مطابقة دقيقة لمتطلبات السوق الخليجي',
+    text: 'نربط أهدافك ومؤشرات أدائك التدريبية مباشرة مع مزودي تدريب في الرياض ودبي وأبوظبي والدوحة حققوا نتائج موثوقة.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'مدربون معتمدون ومراجع موثوقة',
+    text: 'يخضع كل مزود تدريب في شبكتنا لفحص صارم لاعتمادات المدربين، ومراجع العملاء السابقة، والتوافق التنظيمي المحلي.',
+  },
+  {
+    icon: Briefcase,
+    title: 'مجاني تماماً وبدون أي التزام',
+    text: 'خدمة الربط والترشيح مجانية 100% للجهات الطالبة للتدريب. راجع العروض التفصيلية وقابل مسؤولي البرامج بحرية كاملة.',
   },
 ];
 
@@ -61,10 +90,14 @@ function FunnelLoadingFallback() {
 export default async function FindTrainingPage({
   params,
 }: {
-  params: Promise<{ lang: string }>;
+  params: Promise<{ lang: Locale }> | { lang: Locale };
 }) {
   const resolvedParams = await params;
   const lang = resolvedParams?.lang || 'en';
+  const isAr = lang === 'ar';
+
+  const trustMetrics = isAr ? trustMetricsAr : trustMetricsEn;
+  const keyAdvantages = isAr ? keyAdvantagesAr : keyAdvantagesEn;
 
   return (
     <>
@@ -73,15 +106,29 @@ export default async function FindTrainingPage({
           <Reveal className="mx-auto max-w-3xl">
             <span className="chip mx-auto inline-flex items-center gap-2">
               <Building2 size={14} className="text-primary" />
-              <span>For GCC CHROs, L&D Directors & Enterprise Leaders</span>
+              <span>
+                {isAr
+                  ? 'لمدراء الموارد البشرية والتطوير وقادة المؤسسات في الخليج'
+                  : 'For GCC CHROs, L&D Directors & Enterprise Leaders'}
+              </span>
             </span>
 
             <h1 className="mt-6 text-3xl font-semibold tracking-normal sm:tracking-tight text-slate-800 sm:text-5xl sm:leading-[1.15] font-heading">
-              Get <span className="gradient-text">3 Curated Training Proposals</span> for Your Workforce
+              {isAr ? (
+                <>
+                  احصل على <span className="gradient-text">3 عروض تدريبية مخصصة</span> لتطوير كوادر منشأتك
+                </>
+              ) : (
+                <>
+                  Get <span className="gradient-text">3 Curated Training Proposals</span> for Your Workforce
+                </>
+              )}
             </h1>
 
             <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-              Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds, and we&apos;ll introduce you only to proven GCC training providers matched to your exact domain and regional context.
+              {isAr
+                ? 'لا داعي للبحث اليدوي بين مئات الكتالوجات العامة. حدد متطلباتك التدريبية في 60 ثانية، وسنصلك بأفضل مزودي التدريب المعتمدين في الخليج وفق متطلباتك الدقيقة.'
+                : 'Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds, and we’ll introduce you only to proven GCC training providers matched to your exact domain and regional context.'}
             </p>
 
             <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
@@ -104,15 +151,15 @@ export default async function FindTrainingPage({
           <div className="mx-auto mb-8 flex max-w-4xl flex-wrap items-center justify-center gap-6 text-xs font-semibold text-slate-700">
             <span className="flex items-center gap-1.5">
               <BadgeDollarSign size={16} className="text-primary" />
-              <span>100% Free for Companies</span>
+              <span>{isAr ? 'مجاني 100% للشركات والمؤسسات' : '100% Free for Companies'}</span>
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 size={16} className="text-emerald-600" />
-              <span>Zero Vendor Spam</span>
+              <span>{isAr ? 'بدون رسائل تسويقية عشوائية' : 'Zero Vendor Spam'}</span>
             </span>
             <span className="flex items-center gap-1.5">
               <ShieldCheck size={16} className="text-emerald-600" />
-              <span>Verified Decision-Maker Privacy</span>
+              <span>{isAr ? 'خصوصية تامة لصناع القرار' : 'Verified Decision-Maker Privacy'}</span>
             </span>
           </div>
 
@@ -124,9 +171,13 @@ export default async function FindTrainingPage({
 
           <div className="mx-auto mt-24 max-w-5xl">
             <SectionHeading
-              eyebrow="Why PontLook"
-              title="How GCC Enterprises Benefit"
-              subtitle="Designed specifically for enterprise procurement standards and high-impact human capital development."
+              eyebrow={isAr ? 'لماذا بونت لوك' : 'Why PontLook'}
+              title={isAr ? 'كيف تستفيد كبرى المنشآت الخليجية' : 'How GCC Enterprises Benefit'}
+              subtitle={
+                isAr
+                  ? 'مصمم خصيصاً لتلبية معايير المشتريات المؤسسية وتطوير رأس المال البشري بأعلى معايير الدقة.'
+                  : 'Designed specifically for enterprise procurement standards and high-impact human capital development.'
+              }
             />
 
             <div className="mt-10 grid gap-6 md:grid-cols-3">

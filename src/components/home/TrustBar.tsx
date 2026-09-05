@@ -2,15 +2,33 @@
 
 import { ShieldCheck, Building2, Target, TrendingUp } from 'lucide-react';
 import { m } from 'framer-motion';
-
-const values = [
-  { icon: ShieldCheck, title: 'Verified Needs', desc: 'Pre-qualified enterprise demand' },
-  { icon: Building2, title: 'Direct Access', desc: 'CHRO & L&D decision-makers' },
-  { icon: Target, title: 'Zero Retainers', desc: 'Pay per qualified opportunity' },
-  { icon: TrendingUp, title: 'GCC Focused', desc: 'Saudi Arabia, UAE & Gulf' },
-];
+import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 export default function TrustBar() {
+  const dict = useDictionary();
+
+  const values = [
+    {
+      icon: ShieldCheck,
+      title: dict.trust_bar?.needs?.title || 'Verified Needs',
+      desc: dict.trust_bar?.needs?.desc || 'Pre-qualified enterprise demand'
+    },
+    {
+      icon: Building2,
+      title: dict.trust_bar?.access?.title || 'Direct Access',
+      desc: dict.trust_bar?.access?.desc || 'CHRO & L&D decision-makers'
+    },
+    {
+      icon: Target,
+      title: dict.trust_bar?.retainers?.title || 'Zero Retainers',
+      desc: dict.trust_bar?.retainers?.desc || 'Pay per qualified opportunity'
+    },
+    {
+      icon: TrendingUp,
+      title: dict.trust_bar?.gcc?.title || 'GCC Focused',
+      desc: dict.trust_bar?.gcc?.desc || 'Saudi Arabia, UAE & Gulf'
+    },
+  ];
   return (
     <section className="relative bg-slate-50/80 text-slate-800 py-12 border-y border-slate-200/80 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-accent-secondary/5 to-accent/5 blur-xl pointer-events-none" />

@@ -116,23 +116,29 @@ export default function Hero() {
             <div>
               <div className="text-lg sm:text-2xl font-mono font-bold text-slate-800 flex items-center justify-center gap-1 sm:gap-1.5">
                 <ShieldCheck size={16} className="text-accent shrink-0 sm:h-[18px] sm:w-[18px]" />
-                <span>100%</span>
+                <span>{dict.hero.badges?.verified_deciders?.value || '100%'}</span>
               </div>
-              <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Verified Decision-Makers</p>
+              <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">
+                {dict.hero.badges?.verified_deciders?.label || 'Verified Decision-Makers'}
+              </p>
             </div>
             <div>
               <div className="text-lg sm:text-2xl font-mono font-bold text-slate-800 flex items-center justify-center gap-1 sm:gap-1.5">
                 <TrendingUp size={16} className="text-emerald-500 shrink-0 sm:h-[18px] sm:w-[18px]" />
-                <span>Zero</span>
+                <span>{dict.hero.badges?.zero_retainer?.value || 'Zero'}</span>
               </div>
-              <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">Monthly Retainer Risk</p>
+              <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">
+                {dict.hero.badges?.zero_retainer?.label || 'Monthly Retainer Risk'}
+              </p>
             </div>
             <div>
               <div className="text-lg sm:text-2xl font-mono font-bold text-slate-800 flex items-center justify-center gap-1 sm:gap-1.5">
                 <Building2 size={16} className="text-accent-secondary shrink-0 sm:h-[18px] sm:w-[18px]" />
-                <span>6</span>
+                <span>{dict.hero.badges?.markets_covered?.value || '6'}</span>
               </div>
-              <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">GCC Markets Covered</p>
+              <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">
+                {dict.hero.badges?.markets_covered?.label || 'GCC Markets Covered'}
+              </p>
             </div>
           </m.div>
         </m.div>

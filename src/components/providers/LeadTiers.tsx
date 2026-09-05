@@ -60,10 +60,65 @@ const defaultSignals = [
   'Depth and specificity of the challenge description',
 ];
 
+const signalsAr = [
+  'التحقق من هوية وصلاحية صانع القرار',
+  'حجم المنشأة ومستوى النضج المؤسسي',
+  'تحديد الميزانية ومراجعة واقعيتها',
+  'الجدول الزمني المستهدف لبدء التنفيذ',
+  'تحديد وتصنيف التحديات ونقاط الألم',
+  'عمق ودقة تفاصيل ومجالات الاحتياج التدريبي',
+];
+
 export default function LeadTiers({ dict, lang }: LeadTiersProps = {}) {
-  const eyebrow = dict?.provider_teaser?.badge || 'Lead Quality Tiers';
-  const title = 'You always know what you’re walking into';
-  const subtitle = 'Every opportunity is scored before delivery. The tier tells you exactly how ready the buyer is.';
+  const isAr = lang === 'ar';
+  const eyebrow = dict?.provider_teaser?.badge || (isAr ? 'مستويات جودة الفرص' : 'Lead Quality Tiers');
+  const title = isAr ? 'تعرف دائماً ما أنت مقبل عليه بدقة' : 'You always know what you’re walking into';
+  const subtitle = isAr
+    ? 'يتم تقييم وتصنيف كل فرصة قبل تقديمها، لتعرف درجة جاهزية العميل بدقة.'
+    : 'Every opportunity is scored before delivery. The tier tells you exactly how ready the buyer is.';
+
+  const tiers = isAr
+    ? [
+        {
+          icon: Flame,
+          name: dict?.provider_teaser?.tiers?.hot?.name || 'فرصة ساخنة',
+          range: '90–100',
+          pct: '95%',
+          cls: 'bg-rose-50 text-rose-600 border-rose-200',
+          barColor: 'from-rose-500 to-red-600',
+          desc: dict?.provider_teaser?.tiers?.hot?.desc || 'صانع قرار مؤكد، ميزانية معتمدة، بدء التدريب خلال 30 يوماً.',
+        },
+        {
+          icon: TrendingUp,
+          name: dict?.provider_teaser?.tiers?.warm?.name || 'فرصة دافئة',
+          range: '70–89',
+          pct: '80%',
+          cls: 'bg-amber-50 text-amber-600 border-amber-200',
+          barColor: 'from-amber-500 to-orange-500',
+          desc: dict?.provider_teaser?.tiers?.warm?.desc || 'احتياج وصلاحية مؤكدة، الميزانية أو الجدول قيد الإعداد.',
+        },
+        {
+          icon: ShieldCheck,
+          name: dict?.provider_teaser?.tiers?.qualified?.name || 'فرصة مؤهلة',
+          range: '50–69',
+          pct: '60%',
+          cls: 'bg-blue-50 text-blue-600 border-blue-200',
+          barColor: 'from-accent to-accent-secondary',
+          desc: dict?.provider_teaser?.tiers?.qualified?.desc || 'احتياج حقيقي موثق في مراحل الشراء الأولى.',
+        },
+        {
+          icon: CheckCircle2,
+          name: 'متابعة مستمرة',
+          range: '<50',
+          pct: '40%',
+          cls: 'bg-slate-100 text-slate-600 border-slate-200',
+          barColor: 'from-slate-400 to-slate-500',
+          desc: 'رصد مؤشرات مبدئية دون اكتمال التأهيل. نواصل المتابعة دون أي تكلفة عليك.',
+        },
+      ]
+    : defaultTiers;
+
+  const signals = isAr ? signalsAr : defaultSignals;
 
   return (
     <section className="relative bg-white py-12 lg:py-16 rounded-3xl overflow-hidden shadow-sm border border-slate-200/80" id="lead-quality">
@@ -77,7 +132,7 @@ export default function LeadTiers({ dict, lang }: LeadTiersProps = {}) {
         />
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {(defaultTiers || []).map((t, i) => {
+          {tiers.map((t, i) => {
             const Icon = t.icon;
             return (
               <Reveal key={t.name} delay={i * 0.1}>
@@ -93,7 +148,7 @@ export default function LeadTiers({ dict, lang }: LeadTiersProps = {}) {
                     </div>
 
                     <h3 className="font-heading text-xl font-semibold text-slate-800">
-                      {t.name} Tier
+                      {t.name} {isAr ? '' : 'Tier'}
                     </h3>
 
                     <div className="h-2 w-full bg-slate-200/70 rounded-full overflow-hidden my-3">
@@ -122,15 +177,16 @@ export default function LeadTiers({ dict, lang }: LeadTiersProps = {}) {
         >
           <div className="relative z-10">
             <h3 className="text-xl font-semibold text-slate-800 mb-2 font-heading">
-              What drives the score
+              {isAr ? 'عوامل احتساب درجة الفرصة' : 'What drives the score'}
             </h3>
             <p className="text-sm text-slate-600 leading-relaxed font-sans max-w-2xl">
-              We don’t publish exact point algorithms: the philosophy is simple: the more a buyer has
-              verified about their own readiness, the higher the score.
+              {isAr
+                ? 'لا ننشر خوارزمية النقاط التفصيلية: المبدأ بسيط وواضح؛ كلما كانت جاهزية ومعلومات المنشأة الطالبة أكثر توثيقاً ووضوحاً، ارتفعت درجة الفرصة وتصنيفها.'
+                : 'We don’t publish exact point algorithms: the philosophy is simple: the more a buyer has verified about their own readiness, the higher the score.'}
             </p>
 
             <ul className="mt-6 grid gap-3 text-sm sm:grid-cols-2">
-              {(defaultSignals || []).map((s) => (
+              {signals.map((s) => (
                 <li key={s} className="flex items-center gap-2.5 text-slate-700 font-medium">
                   <CheckCircle2 size={16} className="text-emerald-500 shrink-0" />
                   <span>{s}</span>

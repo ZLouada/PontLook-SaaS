@@ -28,7 +28,14 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
   const phoneLabel = dict?.forProviders?.form?.phone || 'Phone';
   const phonePlaceholder = dict?.forProviders?.form?.phonePlaceholder || '+966 …';
   const yearsInBusinessLabel = dict?.forProviders?.form?.yearsInBusiness || 'Years in business';
+  const yearsOptions = dict?.forProviders?.form?.yearsOptions || {
+    lessThan2: 'Less than 2',
+    twoToFive: '2–5',
+    fiveToTen: '5–10',
+    tenPlus: '10+',
+  };
   const specialtiesLabel = dict?.forProviders?.form?.specialties || 'Training specialties';
+  const specialtiesList: string[] = dict?.forProviders?.form?.specialtiesList || defaultSpecialties;
   const marketsLabel = dict?.forProviders?.form?.markets || 'GCC markets you serve';
   const marketsPlaceholder = dict?.forProviders?.form?.marketsPlaceholder || 'e.g., Saudi Arabia, UAE, Qatar';
   const messageLabel = dict?.forProviders?.form?.message || 'Tell us about your ideal client and track record';
@@ -157,7 +164,7 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
 
   return (
     <div className="bg-white border border-slate-200/70 rounded-3xl p-5 sm:p-12 shadow-sm">
-      <div className="mb-8 text-center sm:text-left">
+      <div className="mb-8 text-center sm:text-start">
         <h2 className="text-2xl sm:text-3xl font-semibold text-slate-800 font-heading">
           {formTitle}
         </h2>
@@ -260,11 +267,11 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
               onChange={handleChange}
               className="field-input"
             >
-              <option value="">Select…</option>
-              <option value="<2">Less than 2</option>
-              <option value="2-5">2–5</option>
-              <option value="5-10">5–10</option>
-              <option value="10+">10+</option>
+              <option value="">{dict?.contact?.form?.topicPlaceholder || 'Select…'}</option>
+              <option value="<2">{yearsOptions.lessThan2}</option>
+              <option value="2-5">{yearsOptions.twoToFive}</option>
+              <option value="5-10">{yearsOptions.fiveToTen}</option>
+              <option value="10+">{yearsOptions.tenPlus}</option>
             </select>
           </div>
         </div>
@@ -274,7 +281,7 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
             {specialtiesLabel}
           </legend>
           <div className="mt-1 flex flex-wrap gap-2">
-            {(defaultSpecialties || []).map((s) => {
+            {specialtiesList.map((s) => {
               const active = (formData?.specialties || []).includes(s);
               return (
                 <button
@@ -327,9 +334,9 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
         <button
           type="submit"
           disabled={isLoading}
-          className="btn-primary mt-8 w-full py-3.5 sm:py-3 disabled:opacity-60 sm:w-auto"
+          className="btn-primary mt-8 w-full py-3.5 sm:py-3 disabled:opacity-60 sm:w-auto inline-flex items-center justify-center gap-2 touch-manipulation"
         >
-          {isLoading ? submittingLabel : submitLabel} <Send size={16} />
+          {isLoading ? submittingLabel : submitLabel} <Send size={16} className="rtl:-scale-x-100" />
         </button>
       </form>
     </div>

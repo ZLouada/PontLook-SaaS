@@ -3,12 +3,18 @@ import Reveal from '@/components/shared/Reveal';
 import Link from 'next/link';
 import { PackageX, Clock, RefreshCw, CreditCard, ShieldCheck, Mail } from 'lucide-react';
 
+import { Locale, i18n } from '@/i18n/config';
+
 export const metadata: Metadata = {
   title: 'Returns & FAQ Policy',
   description: 'Official PontLook Returns & FAQ Policy covering made-to-order product resolutions, 30-day quality issue reporting, cancellation policies, refund processing (PayPal & Credit Cards), and Fourthwall fulfillment partner terms.',
 };
 
-const policyHighlights = [
+export async function generateStaticParams() {
+  return i18n.locales.map((lang) => ({ lang }));
+}
+
+const policyHighlightsEn = [
   {
     icon: PackageX,
     title: 'Made-to-Order Products',
@@ -31,21 +37,56 @@ const policyHighlights = [
   },
 ];
 
-export default async function ReturnsFAQPage({ params }: { params: Promise<{ lang: string }> }) {
+const policyHighlightsAr = [
+  {
+    icon: PackageX,
+    title: 'منتجات تصنع بالطلب',
+    desc: 'تتم طباعة وتجهيز كل منتج مادي أو تذكاري بصورة فردية بمجرد تأكيد الطلب.',
+  },
+  {
+    icon: Clock,
+    title: 'مهلة 30 يوماً للحل',
+    desc: 'يجب الإبلاغ عن أي منتج به عيب طباعة أو تلف خلال 30 يوماً من الاستلام للاستبدال أو الاسترداد.',
+  },
+  {
+    icon: RefreshCw,
+    title: 'إلغاء الطلبات',
+    desc: 'يمكن إلغاء الطلبات قبل إرسالها لمرحلة الإنتاج الفعلي. بمجرد بدء الإنتاج يتعذر الإلغاء.',
+  },
+  {
+    icon: CreditCard,
+    title: 'معالجة الاسترداد',
+    desc: 'تُعاد المبالغ المعتمدة إلى وسيلة الدفع الأصلية (البطاقة أو PayPal) خلال 3 إلى 7 أيام عمل.',
+  },
+];
+
+export default async function ReturnsFAQPage({ params }: { params: Promise<{ lang: Locale }> | { lang: Locale } }) {
   const resolvedParams = await params;
-  const lang = resolvedParams.lang;
+  const lang = resolvedParams?.lang || 'en';
+  const isAr = lang === 'ar';
+  const policyHighlights = isAr ? policyHighlightsAr : policyHighlightsEn;
 
   return (
     <>
       <section className="bg-hero-gradient pt-36 pb-16 relative overflow-hidden">
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6">
           <Reveal>
-            <span className="chip mx-auto">Customer Support & Policies</span>
+            <span className="chip mx-auto">{isAr ? 'دعم العملاء والسياسات' : 'Customer Support & Policies'}</span>
             <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-slate-800 leading-tight font-heading">
-              Returns &amp; FAQ <span className="text-primary">Policy</span>
+              {isAr ? (
+                <>
+                  سياسة الاسترجاع <span className="text-primary">والأسئلة الشائعة</span>
+                </>
+              ) : (
+                <>
+                  Returns &amp; FAQ <span className="text-primary">Policy</span>
+                </>
+              )}
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-              Clear, transparent guidelines for merchandise orders, quality assurance, cancellations, and refunds.
+              {isAr
+                ? 'إرشادات واضحة وشفافة لطلبات المنتجات وضمان الجودة والإلغاء والاسترداد المالي.'
+                : 'Clear, transparent guidelines for merchandise orders, quality assurance, cancellations, and refunds.'}
             </p>
           </Reveal>
         </div>

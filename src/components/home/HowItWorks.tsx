@@ -6,99 +6,105 @@ import { m, useScroll, useSpring } from 'framer-motion';
 import SectionHeading from '@/components/shared/SectionHeading';
 import Badge from '@/components/shared/Badge';
 
-const steps = [
-  {
-    icon: Building2,
-    badge: 'Step 01',
-    title: 'Detect Need',
-    subtitle:
-      'Market intelligence surfaces GCC companies with verified workforce challenges, before they start searching.',
-    mockup: (
-      <div className="w-full max-w-sm rounded-2xl border border-slate-200/70 bg-white/90 backdrop-blur-md shadow-sm p-5 flex flex-col gap-3 relative z-10">
-        <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-          <div className="h-10 w-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center font-bold">
-            <Building2 size={20} />
-          </div>
-          <div>
-            <div className="text-xs font-semibold text-slate-800 font-sans">Demand Signal Detected</div>
-            <div className="text-[11px] text-slate-500 font-medium">Verified Enterprise · Saudi Arabia</div>
-          </div>
-        </div>
-        <div className="space-y-2">
-          <div className="h-2 w-4/5 bg-slate-100 rounded-full" />
-          <div className="h-2 w-3/5 bg-slate-100 rounded-full" />
-        </div>
-        <div className="pt-2 flex items-center gap-2">
-          <span className="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 text-[11px] font-mono font-semibold border border-emerald-200/60 inline-flex items-center gap-1">
-            <CheckCircle2 size={12} /> High Intent
-          </span>
-          <span className="px-2.5 py-1 rounded-md bg-accent/10 text-accent text-[11px] font-mono font-semibold border border-accent/20">
-            Leadership Training
-          </span>
-        </div>
-      </div>
-    ),
-  },
-  {
-    icon: ShieldCheck,
-    badge: 'Step 02',
-    title: 'Qualify & Match',
-    subtitle:
-      'Decision-makers are validated, budgets and timelines confirmed, then matched to the right training provider.',
-    mockup: (
-      <div className="w-full max-w-sm rounded-2xl border border-slate-200/70 bg-white/90 backdrop-blur-md shadow-sm p-5 flex flex-col gap-3 relative z-10">
-        <div className="flex items-center justify-between pb-2">
-          <div className="text-xs font-semibold text-slate-800 font-sans">Match Quality Score</div>
-          <div className="text-xs font-mono font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-            94% Score
-          </div>
-        </div>
-        <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-          <m.div
-            initial={{ width: '0%' }}
-            whileInView={{ width: '94%' }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: 'easeOut', delay: 0.3 }}
-            className="h-full bg-emerald-500 rounded-full"
-          />
-        </div>
-        <div className="pt-2 flex items-center justify-between text-[11px] text-slate-500">
-          <span>Verified Criteria (4/4)</span>
-          <span className="text-emerald-600 font-semibold font-mono">Verified Match</span>
-        </div>
-      </div>
-    ),
-  },
-  {
-    icon: Award,
-    badge: 'Step 03',
-    title: 'Introduce & Close',
-    subtitle:
-      'Providers receive direct, warm introductions to corporate decision-makers ready for proposals.',
-    mockup: (
-      <div className="w-full max-w-sm rounded-2xl border border-slate-200/70 bg-white/90 backdrop-blur-md shadow-sm p-6 text-center flex flex-col items-center gap-4 relative z-10">
-        <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-accent to-accent-secondary p-[2px] shadow-sm">
-          <div className="h-full w-full rounded-[14px] bg-white flex items-center justify-center text-accent">
-            <Award size={26} />
-          </div>
-        </div>
-        <div>
-          <div className="text-sm font-semibold text-slate-800 font-sans">Warm Introduction Made</div>
-          <div className="text-xs text-slate-500 mt-1">Direct access to buyer decision-maker</div>
-        </div>
-        <div className="w-full pt-3 border-t border-slate-100 flex items-center justify-between px-2">
-          <span className="text-[11px] font-mono font-semibold text-slate-500 uppercase tracking-wider">Status</span>
-          <span className="text-xs font-mono font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-            Proposal Stage
-          </span>
-        </div>
-      </div>
-    ),
-  },
-];
+import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 export default function HowItWorks() {
+  const dict = useDictionary();
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const steps = [
+    {
+      icon: Building2,
+      badge: dict.how_it_works?.step1?.badge || 'Step 01',
+      title: dict.how_it_works?.step1?.title || 'Detect Need',
+      subtitle:
+        dict.how_it_works?.step1?.subtitle ||
+        'Market intelligence surfaces GCC companies with verified workforce challenges, before they start searching.',
+      mockup: (
+        <div className="w-full max-w-sm rounded-2xl border border-slate-200/70 bg-white/90 backdrop-blur-md shadow-sm p-5 flex flex-col gap-3 relative z-10">
+          <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
+            <div className="h-10 w-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center font-bold">
+              <Building2 size={20} />
+            </div>
+            <div>
+              <div className="text-xs font-semibold text-slate-800 font-sans">Demand Signal Detected</div>
+              <div className="text-[11px] text-slate-500 font-medium">Verified Enterprise · Saudi Arabia</div>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="h-2 w-4/5 bg-slate-100 rounded-full" />
+            <div className="h-2 w-3/5 bg-slate-100 rounded-full" />
+          </div>
+          <div className="pt-2 flex items-center gap-2">
+            <span className="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 text-[11px] font-mono font-semibold border border-emerald-200/60 inline-flex items-center gap-1">
+              <CheckCircle2 size={12} /> High Intent
+            </span>
+            <span className="px-2.5 py-1 rounded-md bg-accent/10 text-accent text-[11px] font-mono font-semibold border border-accent/20">
+              Leadership Training
+            </span>
+          </div>
+        </div>
+      ),
+    },
+    {
+      icon: ShieldCheck,
+      badge: dict.how_it_works?.step2?.badge || 'Step 02',
+      title: dict.how_it_works?.step2?.title || 'Qualify & Match',
+      subtitle:
+        dict.how_it_works?.step2?.subtitle ||
+        'Decision-makers are validated, budgets and timelines confirmed, then matched to the right training provider.',
+      mockup: (
+        <div className="w-full max-w-sm rounded-2xl border border-slate-200/70 bg-white/90 backdrop-blur-md shadow-sm p-5 flex flex-col gap-3 relative z-10">
+          <div className="flex items-center justify-between pb-2">
+            <div className="text-xs font-semibold text-slate-800 font-sans">Match Quality Score</div>
+            <div className="text-xs font-mono font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+              94% Score
+            </div>
+          </div>
+          <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+            <m.div
+              initial={{ width: '0%' }}
+              whileInView={{ width: '94%' }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: 'easeOut', delay: 0.3 }}
+              className="h-full bg-emerald-500 rounded-full"
+            />
+          </div>
+          <div className="pt-2 flex items-center justify-between text-[11px] text-slate-500">
+            <span>Verified Criteria (4/4)</span>
+            <span className="text-emerald-600 font-semibold font-mono">Verified Match</span>
+          </div>
+        </div>
+      ),
+    },
+    {
+      icon: Award,
+      badge: dict.how_it_works?.step3?.badge || 'Step 03',
+      title: dict.how_it_works?.step3?.title || 'Introduce & Close',
+      subtitle:
+        dict.how_it_works?.step3?.subtitle ||
+        'Providers receive direct, warm introductions to corporate decision-makers ready for proposals.',
+      mockup: (
+        <div className="w-full max-w-sm rounded-2xl border border-slate-200/70 bg-white/90 backdrop-blur-md shadow-sm p-6 text-center flex flex-col items-center gap-4 relative z-10">
+          <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-accent to-accent-secondary p-[2px] shadow-sm">
+            <div className="h-full w-full rounded-[14px] bg-white flex items-center justify-center text-accent">
+              <Award size={26} />
+            </div>
+          </div>
+          <div>
+            <div className="text-sm font-semibold text-slate-800 font-sans">Warm Introduction Made</div>
+            <div className="text-xs text-slate-500 mt-1">Direct access to buyer decision-maker</div>
+          </div>
+          <div className="w-full pt-3 border-t border-slate-100 flex items-center justify-between px-2">
+            <span className="text-[11px] font-mono font-semibold text-slate-500 uppercase tracking-wider">Status</span>
+            <span className="text-xs font-mono font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+              Proposal Stage
+            </span>
+          </div>
+        </div>
+      ),
+    },
+  ];
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -121,9 +127,9 @@ export default function HowItWorks() {
       <div className="container-site px-4 sm:px-8 lg:px-12">
         <div className="mb-12 sm:mb-20 text-center max-w-[820px] mx-auto">
           <SectionHeading
-            eyebrow="How It Works"
-            title="From verified pain point to signed contract"
-            subtitle="Three steps. Zero wasted meetings."
+            eyebrow={dict.how_it_works?.eyebrow || 'How It Works'}
+            title={dict.how_it_works?.title || 'From verified pain point to signed contract'}
+            subtitle={dict.how_it_works?.subtitle || 'Three steps. Zero wasted meetings.'}
           />
         </div>
 

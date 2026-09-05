@@ -40,9 +40,9 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
                 aria-expanded={isOpen}
                 aria-controls={`faq-answer-${i}`}
                 id={`faq-header-${i}`}
-                className="w-full text-left flex items-center justify-between gap-4 p-5 sm:p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-2xl cursor-pointer"
+                className="w-full text-start flex items-center justify-between gap-4 p-5 sm:p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-2xl cursor-pointer"
               >
-                <div className="flex gap-4 items-center min-w-0 pr-2">
+                <div className="flex gap-4 items-center min-w-0 pe-2">
                   <span
                     className={`shrink-0 w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300 ${
                       isOpen
@@ -79,7 +79,7 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <div className="px-5 pb-6 pt-1 sm:px-6 sm:pb-6 text-slate-600 font-sans leading-relaxed text-base sm:text-lg sm:pl-[4.5rem]">
+                  <div className="px-5 pb-6 pt-1 sm:px-6 sm:pb-6 text-slate-600 font-sans leading-relaxed text-base sm:text-lg sm:ps-[4.5rem]">
                     {faq.answer}
                   </div>
                 </div>
