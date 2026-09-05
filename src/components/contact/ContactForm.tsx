@@ -33,33 +33,55 @@ export default function ContactForm() {
     }
 
     setIsLoading(true);
+
+    const payload = {
+      access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '8b61988b-d8e3-414b-a843-5ea273292bb5',
+      from_name: 'PontLook Lead Engine',
+      subject: `New Lead Request from PontLook: Contact Form Inquiry (${data.company || data.name})`,
+      form_type: 'General Contact Request',
+      company_name: data.company,
+      company: data.company,
+      website: 'N/A',
+      full_name: data.name,
+      name: data.name,
+      business_email: data.email,
+      email: data.email,
+      phone_number: 'N/A',
+      topic: data.topic,
+      specialties: data.topic,
+      challenges: data.message,
+      challenge_notes: data.message,
+      headcount_tier: 'N/A',
+      budget: 'N/A',
+      timeline: 'N/A',
+      description: data.message,
+      message: data.message,
+      _gotcha: data._gotcha || '',
+      submitted_at: new Date().toISOString(),
+    };
+
     try {
-      const response = await fetch('https://formspree.io/f/xppawggd', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({
-          form_type: 'General Contact Request',
-          name: data.name,
-          email: data.email,
-          company: data.company,
-          topic: data.topic,
-          message: data.message,
-          _gotcha: data._gotcha || '',
-          submitted_at: new Date().toISOString(),
-        }),
+        body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
+      const result = await response.json().catch(() => null);
+
+      if (response.ok && result?.success !== false) {
         setSubmitted(true);
       } else {
-        alert('Message submission failed. Please verify your details and try again.');
+        const errorMsg = result?.message || 'Message submission failed. Please check your details and try again.';
+        console.error('Web3Forms contact submission error:', errorMsg);
+        alert('Message submission failed. Please check your details and try again.');
       }
     } catch (err) {
       console.error('Contact submission error:', err);
-      alert('Network error sending your message. Please try again.');
+      alert('Network error sending your message. Please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }

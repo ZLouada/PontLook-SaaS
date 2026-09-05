@@ -32,7 +32,6 @@ const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
 const crmWebhookUrl = process.env.CRM_WEBHOOK_URL;
-const formspreeEndpoint = process.env.FORMSPREE_ENDPOINT || 'https://formspree.io/f/xppawggd';
 
 export async function POST(req: NextRequest) {
   const startTime = Date.now();

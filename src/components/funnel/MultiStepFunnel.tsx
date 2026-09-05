@@ -248,7 +248,10 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       .filter(Boolean)
       .join('\n');
 
-    const formspreePayload = {
+    const web3formsPayload = {
+      access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '8b61988b-d8e3-414b-a843-5ea273292bb5',
+      from_name: 'PontLook Lead Engine',
+      subject: `New Lead Request from PontLook: Enterprise Training Intake (${finalData.organizationName || finalData.fullName || 'Enterprise Lead'})`,
       form_type: 'B2B Enterprise Training Intake',
       name: finalData.fullName || 'N/A',
       full_name: finalData.fullName || 'N/A',
@@ -257,31 +260,40 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       _replyto: finalData.workEmail || undefined,
       company_name: finalData.organizationName || 'N/A',
       organization: finalData.organizationName || 'N/A',
+      website: (finalData as any).website || 'N/A',
       job_title: finalData.jobTitle || 'N/A',
       country: finalData.country || 'N/A',
       phone: fullPhoneNumber,
+      phone_number: fullPhoneNumber,
       training_domains: domainNames,
+      specialties: domainNames,
       delivery_mode: deliveryModeName,
       city: finalData.city || 'N/A',
       language: finalData.language || 'bilingual',
       customization: finalData.customization || 'tailored',
       cohort_size: cohortLabel,
+      headcount_tier: cohortLabel,
+      headcount: cohortLabel,
       timeline: timelineLabel,
+      budget: budgetLabel,
       budget_tier: budgetLabel,
+      challenges: formattedMessage,
+      challenge_notes: formattedMessage,
+      description: formattedMessage,
       message: formattedMessage,
       _gotcha: finalData._gotcha || '',
       submitted_at: new Date().toISOString(),
     };
 
     try {
-      // 1. Direct browser dispatch to Formspree (guarantees instant email to PontLook admin)
-      const res = await fetch('https://formspree.io/f/xppawggd', {
+      // 1. Direct browser dispatch to Web3Forms (guarantees instant email to PontLook admin)
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify(formspreePayload),
+        body: JSON.stringify(web3formsPayload),
       });
 
       // 2. Non-blocking telemetry to /api/intake in the background
@@ -303,7 +315,9 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
         console.warn('/api/intake background dispatch:', apiErr);
       });
 
-      if (res.ok) {
+      const resData = await res.json().catch(() => null);
+
+      if (res.ok && resData?.success !== false) {
         try {
           sessionStorage.removeItem(STORAGE_KEY);
         } catch {
@@ -312,20 +326,22 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
         analytics.trackFormSubmitted(finalData);
         setIsSubmitted(true);
       } else {
-        const errJson = await res.json().catch(() => ({}));
-        console.error('Submission failed:', errJson);
-        setSubmissionError('Submission failed. Please verify your details and try again.');
+        const errMessage = resData?.message || 'Submission failed. Please verify your details and try again.';
+        console.error('Submission failed:', errMessage);
+        setSubmissionError(errMessage);
+        alert('Submission failed. Please check your details and try again.');
       }
     } catch (err) {
       console.error('Submission network error:', err);
-      // Fallback: retry Formspree directly
+      // Fallback: retry Web3Forms directly
       try {
-        const retryRes = await fetch('https://formspree.io/f/xppawggd', {
+        const retryRes = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(formspreePayload),
+          body: JSON.stringify(web3formsPayload),
         });
-        if (retryRes.ok) {
+        const retryData = await retryRes.json().catch(() => null);
+        if (retryRes.ok && retryData?.success !== false) {
           sessionStorage.removeItem(STORAGE_KEY);
           setIsSubmitted(true);
           return;
@@ -333,7 +349,9 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       } catch {
         // ignore
       }
-      setSubmissionError('Network error. Please check your connection and try again.');
+      const netErrorMsg = 'Network error. Please check your connection and try again.';
+      setSubmissionError(netErrorMsg);
+      alert(netErrorMsg);
     } finally {
       setIsSubmitting(false);
     }

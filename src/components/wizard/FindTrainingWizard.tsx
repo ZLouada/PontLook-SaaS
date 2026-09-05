@@ -145,31 +145,40 @@ export default function FindTrainingWizard() {
       BUDGET_BANDS.find((b) => b.id === finalData.budgetBand)?.label || finalData.budgetBand || 'N/A';
 
     const payload = {
+      access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '8b61988b-d8e3-414b-a843-5ea273292bb5',
+      from_name: 'PontLook Lead Engine',
+      subject: `New Lead Request from PontLook: Corporate Training Intake (${finalData.organizationName || finalData.fullName || 'Lead'})`,
       form_type: 'B2B Corporate Training Intake (4-Step Guided Funnel)',
-      full_name: finalData.fullName || 'N/A',
-      job_title: finalData.jobTitle || 'N/A',
-      work_email: finalData.workEmail || 'N/A',
+      company_name: finalData.organizationName || 'N/A',
       organization_name: finalData.organizationName || 'N/A',
-      country: finalData.country || 'Saudi Arabia',
+      website: (finalData as any).website || 'N/A',
+      full_name: finalData.fullName || 'N/A',
+      business_email: finalData.workEmail || 'N/A',
       phone_number: `${finalData.phoneCountryCode || '+966'} ${finalData.phoneNumber || ''}`.trim(),
-      selected_domains: (Array.isArray(formData.selectedDomains) ? formData.selectedDomains?.join(', ') : undefined) || formattedSelectedDomains || 'General / Unspecified',
+      job_title: finalData.jobTitle || 'N/A',
+      country: finalData.country || 'Saudi Arabia',
+      specialties: domainLabels || formattedSelectedDomains || 'General / Unspecified',
       training_domains: domainLabels || formattedSelectedDomains || 'General / Unspecified',
+      selected_domains: (Array.isArray(formData.selectedDomains) ? formData.selectedDomains?.join(', ') : undefined) || formattedSelectedDomains || 'General / Unspecified',
+      challenges: finalData.additionalContext || 'N/A',
+      challenge_notes: finalData.additionalContext || 'N/A',
+      headcount_tier: cohortLabel,
+      budget: budgetLabel,
+      timeline: timelineLabel,
+      description: finalData.additionalContext || 'N/A',
       delivery_mode: deliveryTitle,
       delivery_city: finalData.city || 'N/A',
       instruction_language: finalData.language || 'Bilingual',
       customization_level: finalData.customization === 'tailored' ? 'Tailored Cohort Program' : 'Standard Off-the-Shelf',
-      cohort_size: cohortLabel,
-      start_horizon: timelineLabel,
-      budget_tier: budgetLabel,
       additional_kpis: finalData.additionalContext || 'N/A',
       submitted_at: new Date().toISOString(),
       _gotcha: finalData._gotcha || '',
     };
 
-    console.log('Dispatching PontLook B2B intake payload:', payload);
+    console.log('Dispatching PontLook B2B intake payload to Web3Forms:', payload);
 
     try {
-      const response = await fetch('https://formspree.io/f/xppawggd', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -178,7 +187,9 @@ export default function FindTrainingWizard() {
         body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
+      const result = await response.json().catch(() => null);
+
+      if (response.ok && result?.success !== false) {
         try {
           sessionStorage.removeItem(STORAGE_KEY);
         } catch {
@@ -186,12 +197,16 @@ export default function FindTrainingWizard() {
         }
         setIsSubmitted(true);
       } else {
-        console.warn('Formspree endpoint returned non-200 status, transitioning with local state.');
-        setIsSubmitted(true);
+        const errorMsg = result?.message || 'Form submission failed. Please check your details and try again.';
+        console.error('Web3Forms submission failed:', errorMsg);
+        setErrorMessage(errorMsg);
+        alert('Submission failed. Please check your details and try again.');
       }
     } catch (err) {
       console.error('Submission network error:', err);
-      setIsSubmitted(true);
+      const networkErrorMsg = 'Network connection error. Please check your connection and try again.';
+      setErrorMessage(networkErrorMsg);
+      alert(networkErrorMsg);
     } finally {
       setIsSubmitting(false);
     }

@@ -91,15 +91,21 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
     setIsLoading(true);
 
     const payload = {
+      access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '8b61988b-d8e3-414b-a843-5ea273292bb5',
+      from_name: 'PontLook Lead Engine',
+      subject: `New Lead Request from PontLook: Training Provider Partnership (${formData.companyName || formData.fullName || 'Partner'})`,
       form_type: 'Training Provider Partnership Application',
       company_name: formData.companyName || 'N/A',
       website: formData.website || 'N/A',
       full_name: formData.fullName || 'N/A',
       business_email: formData.businessEmail || 'N/A',
+      phone_number: formData.phone || 'N/A',
       phone: formData.phone || 'N/A',
       years_in_business: formData.yearsInBusiness || 'N/A',
       specialties: (formData.specialties || []).join(', ') || 'N/A',
       challenges: (formData.challenges || []).join(', ') || 'N/A',
+      challenge_notes: formData.description || formData.message || 'N/A',
+      headcount_tier: formData.headcount || 'N/A',
       headcount: formData.headcount || 'N/A',
       budget: formData.budget || 'N/A',
       timeline: formData.timeline || 'N/A',
@@ -111,7 +117,7 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
     };
 
     try {
-      const res = await fetch('https://formspree.io/f/xppawggd', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -120,16 +126,18 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
         body: JSON.stringify(payload),
       });
 
-      if (res.ok) {
+      const data = await res.json().catch(() => null);
+
+      if (res.ok && data?.success !== false) {
         setIsSubmitted(true);
       } else {
-        const data = await res.json().catch(() => ({}));
-        console.error('Form submission error:', data);
-        alert('Form submission failed. Please verify your details.');
+        const errorMsg = data?.message || 'Form submission failed. Please check your details and try again.';
+        console.error('Web3Forms submission error:', errorMsg);
+        alert('Form submission failed. Please check your details and try again.');
       }
     } catch (err) {
       console.error('Submission error:', err);
-      alert('Network connection error. Please try again.');
+      alert('Network connection error. Please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }
