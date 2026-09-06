@@ -158,7 +158,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             })}
           </ul>
 
-          {/* Right Actions: Language Switcher & Magnetic Get Matched Pill */}
+          {/* Right Actions: Language Switcher */}
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href={switchHref}
@@ -167,15 +167,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             >
               <Globe size={13} className="text-[#0052FF]" />
               <span>{lang === 'en' ? 'العربية' : 'English'}</span>
-            </Link>
-
-            <Link
-              href={`/${lang}/find-training`}
-              className="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] text-white rounded-full px-5 py-2 text-xs font-semibold shadow-md shadow-blue-500/20 hover:shadow-blue-500/35 transition-all transform-gpu hover:scale-105 active:scale-95 group"
-            >
-              <ShieldCheck size={14} className="text-white/90" />
-              <span>{dict.nav.get_matched}</span>
-              <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100" />
             </Link>
 
             {/* Mobile Controls */}

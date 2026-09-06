@@ -217,23 +217,16 @@ export default function LeadTiers(_props?: { dict?: any; lang?: string; showSign
                       {tier.description}
                     </p>
 
-                    <div className="pt-2">
-                      {tier.isCtaCard ? (
+                    {tier.isCtaCard && (
+                      <div className="pt-2">
                         <Link
                           href={`/${lang}/for-providers#apply`}
                           className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] text-white font-medium shadow-md shadow-blue-500/20 hover:shadow-blue-500/35 transition-all"
                         >
                           {isAr ? 'قدم للانضمام إلى الشراكة ←' : 'Apply for partnership →'}
                         </Link>
-                      ) : (
-                        <Link
-                          href={`/${lang}/for-providers#apply`}
-                          className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-blue-600 text-white font-medium shadow-sm hover:bg-blue-700 transition-all"
-                        >
-                          {isAr ? 'استكشف نموذج الشراكة ←' : 'Explore the partnership →'}
-                        </Link>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Right Preview Card */}
