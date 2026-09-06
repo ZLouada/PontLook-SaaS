@@ -120,12 +120,12 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="relative bg-slate-50/70 py-16 sm:py-28 lg:py-40 border-t border-slate-200/60 overflow-hidden"
+      className="relative bg-slate-50/70 py-14 sm:py-20 lg:py-36 border-t border-slate-200/60 overflow-hidden"
     >
       <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-r from-accent/10 via-accent-secondary/10 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
       <div className="container-site px-4 sm:px-8 lg:px-12">
-        <div className="mb-12 sm:mb-20 text-center max-w-[820px] mx-auto">
+        <div className="mb-10 sm:mb-16 lg:mb-20 text-center max-w-[820px] mx-auto">
           <SectionHeading
             eyebrow={dict.how_it_works?.eyebrow || 'How It Works'}
             title={dict.how_it_works?.title || 'From verified pain point to signed contract'}

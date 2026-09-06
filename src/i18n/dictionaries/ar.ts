@@ -17,9 +17,10 @@ export const ar = {
     btn_provider: "أنا مزود تدريب",
     btn_buyer: "أبحث عن تدريب",
     badges: {
-      verified_deciders: { value: "100%", label: "صناع قرار معتمدون" },
-      zero_retainer: { value: "بدون", label: "رسوم شهرية" },
-      markets_covered: { value: "6", label: "تغطية 6 أسواق خليجية" }
+      verified_deciders: { value: "100%", label: "صناع قرار موثقون" },
+      zero_retainer: { value: "صفر", label: "مخاطرة اشتراك شهري" },
+      match_rate: { value: "%92", label: "تصل لاجتماع مباشر" },
+      markets_covered: { value: "6", label: "أسواق خليجية مغطاة" }
     }
   },
   trust_bar: {

@@ -186,7 +186,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                   key={city}
                   type="button"
                   onClick={() => setValue('city', city, { shouldValidate: true })}
-                  className={`rounded-xl px-3.5 sm:px-4 py-2.5 text-xs sm:text-sm font-medium transition-all active:scale-95 touch-manipulation ${
+                  className={`rounded-xl px-4 py-2.5 min-h-[44px] inline-flex items-center justify-center text-xs sm:text-sm font-medium transition-all active:scale-95 touch-manipulation ${
                     isSelected
                       ? 'bg-blue-600 text-white shadow-sm ring-2 ring-blue-600 ring-offset-1'
                       : 'border border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-100'

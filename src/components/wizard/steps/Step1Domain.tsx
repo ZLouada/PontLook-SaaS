@@ -401,7 +401,8 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                     </div>
                   </div>
 
-                              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                  {/* Category card bottom action bar */}
+                  <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
                     <button
                       type="button"
                       onClick={(e) => {
@@ -409,7 +410,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                         e.stopPropagation();
                         toggleCategory(category.id);
                       }}
-                      className="text-xs font-semibold text-slate-700 hover:text-[#2451BF] transition-colors"
+                      className="text-xs font-semibold text-slate-700 hover:text-[#2451BF] transition-colors py-2 px-1 min-h-[40px] inline-flex items-center touch-manipulation"
                     >
                       {isCategorySelected ? '✓ Category selected' : '+ Select category'}
                     </button>
@@ -477,7 +478,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                                   e.stopPropagation();
                                   toggleSubDomain(subDomain.id, category.id);
                                 }}
-                                className="flex items-center gap-2 text-start group/sub flex-1"
+                                className="flex items-center gap-2.5 text-start group/sub flex-1 min-h-[40px] py-1 touch-manipulation"
                               >
                                 <div
                                   className={`flex h-4 w-4 items-center justify-center rounded border transition-all shrink-0 ${
@@ -494,7 +495,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                               </button>
                             </div>
 
-                                                  <div className="mt-2.5 flex flex-wrap gap-2">
+                            <div className="mt-2.5 flex flex-wrap gap-2">
                               {subDomain.tags.map((tag) => {
                                 const isTagSelected = selectedSubDomains.includes(tag);
                                 const isTagSearchMatch =
@@ -509,7 +510,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                                       e.stopPropagation();
                                       toggleTag(tag, category.id);
                                     }}
-                                    className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all active:scale-95 touch-manipulation ${
+                                    className={`rounded-lg px-3.5 py-2 min-h-[38px] inline-flex items-center text-xs font-medium transition-all active:scale-95 touch-manipulation ${
                                       isTagSelected
                                         ? 'bg-[#2451BF] text-white shadow-xs'
                                         : isTagSearchMatch

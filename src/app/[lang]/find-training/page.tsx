@@ -102,7 +102,7 @@ export default async function FindTrainingPage({
   return (
     <>
       <div className="bg-hero-gradient">
-        <section className="container-site relative z-10 pt-36 pb-16 text-center sm:pt-40 sm:pb-20">
+        <section className="container-site relative z-10 pt-28 pb-12 text-center sm:pt-40 sm:pb-20 px-4 sm:px-6">
           <Reveal className="mx-auto max-w-3xl">
             <span className="chip mx-auto inline-flex items-center gap-2">
               <Building2 size={14} className="text-primary" />
@@ -113,7 +113,7 @@ export default async function FindTrainingPage({
               </span>
             </span>
 
-            <h1 className="mt-6 text-3xl font-semibold tracking-normal sm:tracking-tight text-slate-800 sm:text-5xl sm:leading-[1.15] font-heading">
+            <h1 className="mt-5 sm:mt-6 text-3xl font-semibold tracking-normal sm:tracking-tight text-slate-800 sm:text-5xl sm:leading-[1.15] font-heading">
               {isAr ? (
                 <>
                   احصل على <span className="gradient-text">3 عروض تدريبية مخصصة</span> لتطوير كوادر منشأتك
@@ -125,17 +125,17 @@ export default async function FindTrainingPage({
               )}
             </h1>
 
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+            <p className="mx-auto mt-4 sm:mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
               {isAr
                 ? 'لا داعي للبحث اليدوي بين مئات الكتالوجات العامة. حدد متطلباتك التدريبية في 60 ثانية، وسنصلك بأفضل مزودي التدريب المعتمدين في الخليج وفق متطلباتك الدقيقة.'
                 : 'Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds, and we’ll introduce you only to proven GCC training providers matched to your exact domain and regional context.'}
             </p>
 
-            <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+            <div className="mt-8 sm:mt-10 grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-4">
               {trustMetrics.map((m) => (
                 <div
                   key={m.label}
-                  className="rounded-2xl border border-slate-200/70 bg-white p-4 text-center shadow-sm"
+                  className="rounded-2xl border border-slate-200/70 bg-white p-3.5 sm:p-4 text-center shadow-sm"
                 >
                   <div className="text-xl font-semibold text-slate-800 sm:text-2xl">{m.value}</div>
                   <div className="mt-1 text-[11px] font-medium uppercase tracking-wider text-slate-500">{m.label}</div>
@@ -146,9 +146,9 @@ export default async function FindTrainingPage({
         </section>
       </div>
 
-      <section className="relative bg-slate-50/70 py-12 sm:py-16 border-t border-slate-100">
-        <div className="container-site">
-          <div className="mx-auto mb-8 flex max-w-4xl flex-wrap items-center justify-center gap-6 text-xs font-semibold text-slate-700">
+      <section className="relative bg-slate-50/70 py-10 sm:py-16 border-t border-slate-100">
+        <div className="container-site px-4 sm:px-6">
+          <div className="mx-auto mb-6 sm:mb-8 flex max-w-4xl flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs font-semibold text-slate-700">
             <span className="flex items-center gap-1.5">
               <BadgeDollarSign size={16} className="text-primary" />
               <span>{isAr ? 'مجاني 100% للشركات والمؤسسات' : '100% Free for Companies'}</span>
@@ -169,7 +169,7 @@ export default async function FindTrainingPage({
             </Suspense>
           </div>
 
-          <div className="mx-auto mt-24 max-w-5xl">
+          <div className="mx-auto mt-14 sm:mt-24 max-w-5xl">
             <SectionHeading
               eyebrow={isAr ? 'لماذا بونت لوك' : 'Why PontLook'}
               title={isAr ? 'كيف تستفيد كبرى المنشآت الخليجية' : 'How GCC Enterprises Benefit'}

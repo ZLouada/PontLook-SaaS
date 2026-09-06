@@ -289,7 +289,7 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
                   type="button"
                   onClick={(e) => toggleSpecialty(e, s)}
                   aria-pressed={active}
-                  className={`rounded-full border px-4 py-2.5 text-sm font-medium transition-all active:scale-95 touch-manipulation ${
+                  className={`rounded-full border px-4 py-2.5 min-h-[44px] inline-flex items-center justify-center text-sm font-medium transition-all active:scale-95 touch-manipulation ${
                     active
                       ? 'border-primary bg-primary text-white'
                       : 'border-slate-200 bg-white text-body hover:border-primary-300'
@@ -334,7 +334,7 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
         <button
           type="submit"
           disabled={isLoading}
-          className="btn-primary mt-8 w-full py-3.5 sm:py-3 disabled:opacity-60 sm:w-auto inline-flex items-center justify-center gap-2 touch-manipulation"
+          className="btn-primary mt-8 w-full py-3.5 sm:py-3 min-h-[48px] text-base sm:text-sm font-semibold disabled:opacity-60 sm:w-auto inline-flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98]"
         >
           {isLoading ? submittingLabel : submitLabel} <Send size={16} className="rtl:-scale-x-100" />
         </button>

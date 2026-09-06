@@ -19,6 +19,7 @@ export const en = {
     badges: {
       verified_deciders: { value: "100%", label: "Verified Decision-Makers" },
       zero_retainer: { value: "Zero", label: "Monthly Retainer Risk" },
+      match_rate: { value: "92%", label: "Leads Reach Meetings" },
       markets_covered: { value: "6", label: "GCC Markets Covered" }
     }
   },

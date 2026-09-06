@@ -249,53 +249,56 @@ export function StepNavigation({
   trustMessage?: string;
 }) {
   return (
-    <div className="mt-8 sm:mt-10 border-t border-slate-100 pt-6">
+    <div className="mt-8 sm:mt-10 border-t border-slate-100 pt-4 sm:pt-6">
       {trustMessage && (
-        <div className="mb-4 flex items-center justify-center gap-1.5 text-xs font-medium text-slate-500">
-          <Lock size={13} className="text-emerald-600" />
-          <span>{trustMessage}</span>
+        <div className="mb-3 sm:mb-4 flex items-center justify-center gap-1.5 text-xs font-medium text-slate-500">
+          <Lock size={13} className="text-emerald-600 shrink-0" />
+          <span className="text-center">{trustMessage}</span>
         </div>
       )}
 
-      <div className="flex flex-col-reverse items-center justify-between gap-3 sm:flex-row">
-        {onBack ? (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onBack(e);
-            }}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 shadow-xs transition-all hover:bg-slate-50 hover:text-slate-800 active:scale-[0.98] sm:w-auto"
-          >
-            <ArrowLeft size={16} className="rtl:rotate-180" />
-            <span>Back</span>
-          </button>
-        ) : (
-          <div className="hidden sm:block" />
-        )}
-
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className={`inline-flex w-full items-center justify-center gap-2.5 rounded-xl px-7 py-4 text-base sm:text-sm font-semibold shadow-sm transition-all hover:shadow active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:w-auto ${
-            isFinalStep
-              ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:from-emerald-500 hover:to-teal-500'
-              : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-500 hover:to-blue-600'
-          }`}
-        >
-          {isSubmitting ? (
-            <>
-              <Loader2 size={18} className="animate-spin" />
-              <span>Verifying & Submitting...</span>
-            </>
+      {/* Sticky action bar on mobile, standard layout on desktop */}
+      <div className="sticky bottom-0 -mx-4 sm:mx-0 px-4 sm:px-0 py-3 sm:py-0 bg-white/95 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border-t border-slate-200/80 sm:border-t-0 shadow-[0_-4px_12px_rgba(0,0,0,0.06)] sm:shadow-none pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:pb-0 z-20">
+        <div className="flex flex-col-reverse items-center justify-between gap-2.5 sm:gap-3 sm:flex-row">
+          {onBack ? (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onBack(e);
+              }}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-xs transition-all hover:bg-slate-50 hover:text-slate-800 active:scale-[0.98] sm:w-auto min-h-[44px] touch-manipulation"
+            >
+              <ArrowLeft size={16} className="rtl:rotate-180 shrink-0" />
+              <span>Back</span>
+            </button>
           ) : (
-            <>
-              <span>{nextLabel}</span>
-              <ArrowRight size={16} className="rtl:rotate-180" />
-            </>
+            <div className="hidden sm:block" />
           )}
-        </button>
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className={`inline-flex w-full items-center justify-center gap-2.5 rounded-xl px-7 py-3.5 sm:py-4 text-base sm:text-sm font-semibold shadow-sm transition-all hover:shadow active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:w-auto min-h-[48px] touch-manipulation ${
+              isFinalStep
+                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:from-emerald-500 hover:to-teal-500'
+                : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-500 hover:to-blue-600'
+            }`}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 size={18} className="animate-spin shrink-0" />
+                <span>Verifying & Submitting...</span>
+              </>
+            ) : (
+              <>
+                <span>{nextLabel}</span>
+                <ArrowRight size={16} className="rtl:rotate-180 shrink-0" />
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

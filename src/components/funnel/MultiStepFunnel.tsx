@@ -383,23 +383,23 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       className={`w-full space-y-4 sm:space-y-6 ${className}`}
       dir={dict.dir}
     >
-      <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-3.5 sm:p-6 shadow-sm">
+        <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-xs font-semibold text-white">
+            <span className="flex h-6 w-6 sm:h-7 sm:w-7 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-xs font-semibold text-white">
               {currentStep}
             </span>
             <span className="text-xs sm:text-sm font-semibold text-slate-800 shrink-0">
-              {lang === 'ar' ? `الخطوة ${currentStep} من 4:` : `Step ${currentStep} of 4:`}
+              {lang === 'ar' ? `الخطوة ${currentStep}/4:` : `Step ${currentStep}/4:`}
             </span>
             <span className="text-xs sm:text-sm font-medium text-slate-600 truncate">
               {lang === 'ar' ? STEP_TITLES[currentStep - 1]?.titleAr : STEP_TITLES[currentStep - 1]?.titleEn}
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500">
-              <Clock size={13} className="text-blue-600" />
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-slate-500">
+              <Clock size={12} className="text-blue-600 shrink-0" />
               <span>{dict.scaffolding.estimatedTime}</span>
             </span>
             <span className="hidden items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 sm:inline-flex">
@@ -409,14 +409,14 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-4 gap-2">
+        <div className="mt-3 sm:mt-4 grid grid-cols-4 gap-1.5 sm:gap-2">
           {STEP_TITLES.map((def) => {
             const isCompleted = def.step < currentStep;
             const isCurrent = def.step === currentStep;
 
             return (
-              <div key={def.step} className="space-y-1.5">
-                <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
+              <div key={def.step} className="space-y-1 sm:space-y-1.5">
+                <div className="h-1.5 sm:h-2 w-full overflow-hidden rounded-full bg-slate-100">
                   <div
                     className={`h-full transition-all duration-300 ${
                       isCompleted || isCurrent ? 'bg-blue-600' : 'bg-transparent'
@@ -443,7 +443,7 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
         </div>
       </div>
 
-      <div className="relative rounded-3xl border border-slate-200 bg-white p-4 sm:p-8 md:p-10 shadow-sm">
+      <div className="relative rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-4 sm:p-8 md:p-10 shadow-sm">
         {submissionError && (
           <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-xs font-medium text-red-700" role="alert">
             {submissionError}

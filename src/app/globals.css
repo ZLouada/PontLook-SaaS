@@ -13,6 +13,9 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+    max-width: 100%;
+    overflow-x: hidden;
   }
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -24,11 +27,17 @@
       scroll-behavior: auto !important;
     }
   }
-  html {
-    -webkit-tap-highlight-color: transparent;
-  }
-  button, a, input, select, textarea {
+  button, a {
     touch-action: manipulation;
+  }
+  input, select, textarea {
+    touch-action: manipulation;
+    font-size: 16px;
+  }
+  @media (min-width: 640px) {
+    input, select, textarea {
+      font-size: inherit;
+    }
   }
   body {
     @apply bg-background font-sans text-muted-foreground;
@@ -36,6 +45,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    max-width: 100%;
+    overflow-x: hidden;
   }
   h1,
   h2,
@@ -98,10 +109,14 @@
     @apply mb-1.5 block text-sm font-medium text-slate-700;
   }
   .field-input {
-    @apply w-full rounded-2xl border border-border bg-white px-4 py-3.5 sm:px-5 sm:py-4 text-base sm:text-sm text-slate-800 placeholder:text-slate-400 transition-colors focus:border-accent focus:ring-1 focus:ring-accent;
+    @apply w-full rounded-2xl border border-border bg-white px-4 py-3.5 sm:px-5 sm:py-4 text-[16px] sm:text-sm text-slate-800 placeholder:text-slate-400 transition-colors focus:border-accent focus:ring-1 focus:ring-accent;
   }
   .field-error {
     @apply mt-1.5 text-xs font-medium text-red-600;
+  }
+
+  .pb-safe {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
   }
 
   .prose-custom {

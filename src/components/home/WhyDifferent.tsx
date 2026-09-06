@@ -18,6 +18,7 @@ import {
   MapPin,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { m } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 
@@ -46,6 +47,8 @@ const cardVariants = {
 
 export default function WhyDifferent() {
   const dict = useDictionary();
+  const params = useParams();
+  const lang = (params?.lang as string) || 'en';
 
   const items = [
     {
@@ -196,11 +199,11 @@ export default function WhyDifferent() {
   ];
 
   return (
-    <section className="relative bg-white py-28 lg:py-40 border-t border-slate-200/60 overflow-hidden">
+    <section className="relative bg-white py-14 sm:py-20 lg:py-36 border-t border-slate-200/60 overflow-hidden">
       <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-r from-accent/10 via-accent-secondary/10 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
-      <div className="container-site px-6 sm:px-8 lg:px-12">
-        <div className="mb-16 lg:mb-24">
+      <div className="container-site px-4 sm:px-8 lg:px-12">
+        <div className="mb-10 sm:mb-16 lg:mb-24">
           <SectionHeading
             eyebrow={dict.why_different?.eyebrow || 'What You Can Expect'}
             title={dict.why_different?.title || 'Built for outcomes, not activity'}
@@ -212,7 +215,7 @@ export default function WhyDifferent() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
-          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3"
         >
           {items.map((it) => {
             const Icon = it.icon;
@@ -236,10 +239,10 @@ export default function WhyDifferent() {
                   </div>
 
                   <Link
-                    href="/en/for-providers"
+                    href={`/${lang}/for-providers`}
                     className="inline-flex items-center text-sm font-semibold text-accent group-hover:text-accent-secondary transition-colors"
                   >
-                    Explore how it works{' '}
+                    {lang === 'ar' ? 'اكتشف آلية العمل' : 'Explore how it works'}{' '}
                     <ChevronRight
                       size={16}
                       className="ms-1 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100"

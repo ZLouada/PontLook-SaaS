@@ -47,11 +47,11 @@ export default function StatsCounter() {
   ];
 
   return (
-    <section className="relative bg-gradient-to-b from-white via-slate-50/50 to-white py-28 lg:py-40 border-t border-slate-200/60 overflow-hidden">
+    <section className="relative bg-gradient-to-b from-white via-slate-50/50 to-white py-14 sm:py-20 lg:py-36 border-t border-slate-200/60 overflow-hidden">
       <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[400px] bg-gradient-to-r from-accent/10 via-accent-secondary/10 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
-      <div className="container-site px-6 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      <div className="container-site px-4 sm:px-8 lg:px-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {stats.map((s, i) => {
             const Icon = s.icon;
             return (
@@ -63,12 +63,12 @@ export default function StatsCounter() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="transform-gpu will-change-transform"
               >
-                <Card className="flex flex-col items-start p-8">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent mb-6 border border-accent/20">
-                    <Icon size={24} />
+                <Card className="flex flex-col items-start p-5 sm:p-8">
+                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent mb-4 sm:mb-6 border border-accent/20">
+                    <Icon size={22} />
                   </div>
                   <Counter end={s.end} suffix={s.suffix} />
-                  <p className="mt-3 text-sm font-medium text-slate-600 font-sans tracking-wide leading-snug">
+                  <p className="mt-2.5 sm:mt-3 text-sm font-medium text-slate-600 font-sans tracking-wide leading-snug">
                     {s.label}
                   </p>
                 </Card>
@@ -77,7 +77,7 @@ export default function StatsCounter() {
           })}
         </div>
 
-        <p className="mt-14 text-center text-xs font-mono font-medium text-slate-400 tracking-wider uppercase">
+        <p className="mt-8 sm:mt-14 text-center text-xs font-mono font-medium text-slate-400 tracking-wider uppercase">
           {dict.stats.caption}
         </p>
       </div>

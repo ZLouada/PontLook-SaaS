@@ -124,19 +124,19 @@ export default function LeadTiers({ dict, lang }: LeadTiersProps = {}) {
     <section className="relative bg-white py-12 lg:py-16 rounded-3xl overflow-hidden shadow-sm border border-slate-200/80" id="lead-quality">
       <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[750px] h-[450px] bg-gradient-to-r from-accent/5 via-accent-secondary/5 to-accent/5 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
-      <div className="container-site px-6 sm:px-8 lg:px-12">
+      <div className="container-site px-4 sm:px-8 lg:px-12">
         <SectionHeading
           eyebrow={eyebrow}
           title={title}
           subtitle={subtitle}
         />
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 sm:mt-14 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {tiers.map((t, i) => {
             const Icon = t.icon;
             return (
               <Reveal key={t.name} delay={i * 0.1}>
-                <div className="flex flex-col justify-between h-full bg-slate-50/80 border border-slate-200/80 rounded-2xl p-6 sm:p-7 hover:bg-white hover:shadow-lg hover:border-blue-500/30 transition-all duration-300">
+                <div className="flex flex-col justify-between h-full bg-slate-50/80 border border-slate-200/80 rounded-2xl p-5 sm:p-7 hover:bg-white hover:shadow-lg hover:border-blue-500/30 transition-all duration-300">
                   <div>
                     <div className="flex items-center justify-between mb-4">
                       <span
@@ -172,7 +172,7 @@ export default function LeadTiers({ dict, lang }: LeadTiersProps = {}) {
         </div>
 
         <Reveal
-          className="mx-auto mt-14 max-w-4xl rounded-3xl bg-slate-50 border border-slate-200/70 text-slate-800 p-8 md:p-12 shadow-sm relative overflow-hidden"
+          className="mx-auto mt-10 sm:mt-14 max-w-4xl rounded-3xl bg-slate-50 border border-slate-200/70 text-slate-800 p-5 sm:p-8 md:p-12 shadow-sm relative overflow-hidden"
           delay={0.1}
         >
           <div className="relative z-10">
