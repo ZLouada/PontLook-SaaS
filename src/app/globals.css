@@ -15,7 +15,7 @@
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -46,7 +46,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   h1,
   h2,
