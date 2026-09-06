@@ -14,6 +14,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
   const pathname = usePathname() || `/${lang}`;
   const dict = useDictionary();
 
@@ -44,10 +45,17 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   ];
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 25);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
   }, []);
 
   useEffect(() => {
@@ -67,24 +75,37 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   return (
     <m.header
       initial={false}
-      animate={{
-        y: scrolled ? 12 : 0,
-        width: scrolled ? '92%' : '100%',
-        maxWidth: scrolled ? 1060 : 1920,
-        borderRadius: scrolled ? 9999 : 0,
-        backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.92)' : 'rgba(255, 255, 255, 0.98)',
-        boxShadow: scrolled
-          ? '0 16px 36px -8px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.04)'
-          : '0 1px 0px 0px rgba(226, 232, 240, 0.8)',
-      }}
+      animate={
+        isDesktop
+          ? {
+              y: scrolled ? 12 : 0,
+              width: scrolled ? '90%' : '100%',
+              maxWidth: scrolled ? 1060 : 1920,
+              borderRadius: scrolled ? 9999 : 0,
+              backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.94)' : 'rgba(255, 255, 255, 0.98)',
+              boxShadow: scrolled
+                ? '0 16px 36px -8px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.04)'
+                : '0 1px 0px 0px rgba(226, 232, 240, 0.8)',
+            }
+          : {
+              y: 0,
+              width: '100%',
+              maxWidth: '100%',
+              borderRadius: 0,
+              backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.98)',
+              boxShadow: scrolled
+                ? '0 4px 20px -4px rgba(0, 0, 0, 0.08)'
+                : '0 1px 0px 0px rgba(226, 232, 240, 0.8)',
+            }
+      }
       transition={{
         type: 'spring',
         stiffness: 260,
         damping: 24,
         mass: 0.85,
       }}
-      className={`fixed top-0 inset-x-0 mx-auto z-50 backdrop-blur-xl border border-slate-200/80 transition-[padding] duration-300 transform-gpu will-change-transform ${
-        scrolled ? 'py-2 sm:py-2.5 px-3.5 sm:px-5' : 'py-3.5 sm:py-4 px-4 sm:px-8 lg:px-12'
+      className={`fixed top-0 inset-x-0 mx-auto z-50 backdrop-blur-xl border-b border-slate-200/80 transition-all duration-300 transform-gpu will-change-transform ${
+        isDesktop && scrolled ? 'lg:border lg:py-2.5 lg:px-5' : 'py-3 sm:py-3.5 px-4 sm:px-8 lg:px-12'
       }`}
     >
       <nav
@@ -92,19 +113,24 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
         className="container-site !px-0 flex items-center justify-between w-full"
         aria-label="Main navigation"
       >
-        {/* Brand Logo */}
+        {/* Brand Logo & Name */}
         <Link
           href={`/${lang}`}
-          className="relative flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center transition-transform duration-300 hover:scale-105"
+          className="flex items-center gap-2.5 transition-transform duration-200 hover:scale-[1.02] active:scale-95"
           aria-label="PontLook home"
         >
-          <Image
-            src="/PontLook-Logo.png"
-            alt="PontLook GCC Corporate Training Matchmaking Logo"
-            fill
-            className="object-contain"
-            priority
-          />
+          <div className="relative flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center">
+            <Image
+              src="/PontLook-Logo.png"
+              alt="PontLook GCC Corporate Training Matchmaking Logo"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+          <span className="font-heading font-bold text-lg sm:text-xl text-slate-900 tracking-tight">
+            PontLook
+          </span>
         </Link>
 
         {/* Center Navigation Links with Odysser Gliding Indicator Pill */}
@@ -176,7 +202,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           <div className="flex items-center gap-2 lg:hidden">
             <Link
               href={switchHref}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold border border-slate-200/80 bg-white/80 text-slate-700 hover:text-[#0052FF] shadow-2xs active:scale-95 transition-all min-h-[40px]"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-200/80 bg-white/90 text-slate-700 hover:text-[#0052FF] hover:border-[#0052FF]/30 shadow-2xs active:scale-95 transition-all min-h-[38px]"
               aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
             >
               <Globe size={13} className="text-[#0052FF]" />
@@ -185,12 +211,12 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
             <button
               type="button"
-              className="flex h-10 w-10 min-h-[40px] min-w-[40px] items-center justify-center rounded-full text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all active:scale-90 shadow-2xs"
+              className="flex h-10 w-10 min-h-[40px] min-w-[40px] items-center justify-center rounded-xl text-slate-800 bg-white/90 border border-slate-200/80 hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-90 shadow-2xs"
               onClick={() => setOpen(true)}
               aria-expanded={open}
               aria-label="Open navigation menu"
             >
-              <Menu size={19} />
+              <Menu size={20} />
             </button>
           </div>
         </div>
@@ -223,24 +249,29 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               aria-label="Mobile navigation"
             >
               <div>
-                <div className="flex items-center justify-between pb-6 border-b border-slate-100">
+                <div className="flex items-center justify-between pb-5 border-b border-slate-100">
                   <Link
                     href={`/${lang}`}
                     onClick={() => setOpen(false)}
-                    className="relative flex h-9 w-9 items-center"
+                    className="flex items-center gap-2.5"
                     aria-label="PontLook home"
                   >
-                    <Image
-                      src="/PontLook-Logo.png"
-                      alt="PontLook Logo"
-                      fill
-                      className="object-contain"
-                    />
+                    <div className="relative flex h-8 w-8 shrink-0 items-center">
+                      <Image
+                        src="/PontLook-Logo.png"
+                        alt="PontLook Logo"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    <span className="font-heading font-bold text-xl text-slate-900 tracking-tight">
+                      PontLook
+                    </span>
                   </Link>
                   <button
                     type="button"
                     onClick={() => setOpen(false)}
-                    className="flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors active:scale-90"
+                    className="flex h-10 w-10 min-h-[40px] min-w-[40px] items-center justify-center rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors active:scale-90"
                     aria-label="Close menu"
                   >
                     <X size={20} />
@@ -258,12 +289,16 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                           {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                           className={`flex min-h-[50px] items-center justify-between px-4 py-3 rounded-2xl text-base font-semibold tracking-wide transition-all active:scale-[0.98] ${
                             isActive
-                              ? 'text-[#0052FF] bg-[#0052FF]/10 font-bold'
+                              ? 'text-[#0052FF] bg-[#0052FF]/10 font-bold border border-[#0052FF]/20'
                               : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
                           }`}
                         >
                           <span>{l.label}</span>
-                          {isActive && <span className="h-2 w-2 rounded-full bg-[#0052FF]" />}
+                          {isActive && (
+                            <span className="text-[11px] font-mono font-bold text-[#0052FF] bg-white px-2 py-0.5 rounded-md shadow-2xs">
+                              {lang === 'ar' ? 'الحالي' : 'Active'}
+                            </span>
+                          )}
                         </Link>
                       </li>
                     );
@@ -271,7 +306,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 </ul>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-slate-200/80 space-y-4 pb-safe">
+              <div className="mt-8 pt-6 border-t border-slate-200/80 space-y-4 pb-8">
                 <Button
                   href={`/${lang}/find-training`}
                   onClick={() => setOpen(false)}
