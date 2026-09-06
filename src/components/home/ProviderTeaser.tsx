@@ -96,19 +96,19 @@ export default function ProviderTeaser() {
         </div>
 
         {/* Odysser Stacking Cards Container */}
-        <div className="relative space-y-6 sm:space-y-10 max-w-5xl mx-auto pb-12">
+        <div className="relative space-y-6 sm:space-y-8 lg:space-y-12 max-w-5xl mx-auto pb-12">
           {cards.map((card, i) => (
             <div
               key={card.step}
               style={{ zIndex: card.zIndex }}
-              className={`sticky ${card.stickyTop} transform-gpu will-change-transform transition-all duration-300`}
+              className={`relative lg:sticky ${card.stickyTop} transform-gpu will-change-transform transition-all duration-300`}
             >
-              <div className="rounded-[28px] sm:rounded-[36px] border border-slate-200/80 bg-white shadow-apple hover:shadow-xl p-6 sm:p-10 lg:p-12 transition-all duration-300">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              <div className="rounded-[24px] sm:rounded-[32px] lg:rounded-[36px] border border-slate-200/80 bg-white shadow-apple hover:shadow-xl p-5 sm:p-8 lg:p-12 transition-all duration-300">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
                   
                   {/* Left Column: Typography & Action */}
-                  <div className="lg:col-span-6 space-y-4">
-                    <div className="flex items-center gap-2">
+                  <div className="lg:col-span-6 space-y-3.5 sm:space-y-4">
+                    <div className="flex flex-wrap items-center gap-2">
                       <span className="px-3 py-1 rounded-full bg-[#0052FF] text-white text-xs font-semibold shadow-2xs">
                         {card.step}
                       </span>
@@ -117,7 +117,7 @@ export default function ProviderTeaser() {
                       </span>
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight leading-snug">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 tracking-tight leading-snug">
                       {card.title}
                     </h3>
 
@@ -125,12 +125,12 @@ export default function ProviderTeaser() {
                       {card.desc}
                     </p>
 
-                    <div className="pt-3">
+                    <div className="pt-2 sm:pt-3">
                       <Button
                         href={`/${lang}/for-providers`}
                         variant="primary"
                         size="md"
-                        className="rounded-full shadow-sm hover:scale-[1.02] text-sm"
+                        className="w-full sm:w-auto justify-center rounded-full shadow-sm hover:scale-[1.02] text-sm min-h-[44px]"
                         rightIcon={<ArrowRight size={15} className="rtl:-scale-x-100" />}
                       >
                         {dict.provider_teaser?.btn || 'Explore the partnership'}
@@ -141,7 +141,7 @@ export default function ProviderTeaser() {
                   {/* Right Column: Light Odysser Visual Showcase Canvas */}
                   <div className="lg:col-span-6 w-full">
                     <div
-                      className={`w-full rounded-2xl sm:rounded-3xl border border-slate-200/80 ${card.canvasBg} p-6 sm:p-8 flex flex-col items-center justify-center relative overflow-hidden min-h-[250px] sm:min-h-[290px] shadow-inner`}
+                      className={`w-full rounded-2xl sm:rounded-3xl border border-slate-200/80 ${card.canvasBg} p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center relative overflow-hidden min-h-[230px] sm:min-h-[280px] shadow-inner`}
                     >
                       {/* Subtle micro dot texture overlay */}
                       <div className="absolute inset-0 bg-dot-matrix opacity-10 pointer-events-none" />

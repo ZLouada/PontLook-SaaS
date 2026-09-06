@@ -69,7 +69,7 @@ function SpotlightCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-apple transition-all duration-300 hover:shadow-xl hover:border-[#0052FF]/30 ${className}`}
+      className={`group relative flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-8 shadow-apple transition-all duration-300 hover:shadow-xl hover:border-[#0052FF]/30 ${className}`}
     >
       <div
         className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -228,8 +228,8 @@ export default function WhyDifferent() {
       title: dict.why_different?.cards?.gcc?.title || 'Pure GCC Focus',
       text: dict.why_different?.cards?.gcc?.text || 'Saudi Arabia, UAE, Qatar, Kuwait, Bahrain, Oman. Built specifically for GCC market dynamics, localization mandates, and Vision 2030 initiatives.',
       mockup: (
-        <div className="relative w-full aspect-[2/1] bg-slate-50/80 rounded-2xl overflow-hidden border border-slate-200/80 flex items-center justify-center">
-          <div className="flex flex-col items-center gap-1.5 z-10">
+        <div className="relative w-full py-5 sm:py-6 px-3 bg-slate-50/80 rounded-2xl overflow-hidden border border-slate-200/80 flex items-center justify-center min-h-[120px]">
+          <div className="flex flex-col items-center gap-2 z-10">
             <MapPin size={20} className="text-accent" />
             <div className="flex flex-wrap justify-center gap-1.5">
               <span className="px-2 py-0.5 bg-white border border-slate-200 shadow-2xs rounded-md text-[10px] font-bold text-slate-800">
@@ -249,7 +249,7 @@ export default function WhyDifferent() {
   ];
 
   return (
-    <section className="relative bg-white py-14 sm:py-20 lg:py-36 border-t border-slate-200/60 overflow-hidden">
+    <section className="relative bg-white py-12 sm:py-20 lg:py-36 border-t border-slate-200/60 overflow-hidden">
       <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-r from-accent/10 via-accent-secondary/10 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
       <div className="container-site px-4 sm:px-8 lg:px-12">
@@ -265,7 +265,7 @@ export default function WhyDifferent() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
-          className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8"
+          className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-8"
         >
           {items.map((it) => {
             const Icon = it.icon;
@@ -277,27 +277,28 @@ export default function WhyDifferent() {
               >
                 <SpotlightCard className="h-full">
                   <div>
-                    <div className="mb-5 sm:mb-6">
-                      <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent transition-colors duration-200 group-hover:bg-accent group-hover:text-white border border-accent/20">
-                        <Icon size={24} />
+                    <div className="mb-4 sm:mb-6">
+                      <span className="inline-flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent transition-colors duration-200 group-hover:bg-accent group-hover:text-white border border-accent/20">
+                        <Icon size={22} className="sm:hidden" />
+                        <Icon size={24} className="hidden sm:block" />
                       </span>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-heading font-semibold text-slate-900 leading-tight mb-3 transition-colors">
+                    <h3 className="text-lg sm:text-2xl font-heading font-semibold text-slate-900 leading-tight mb-2 sm:mb-3 transition-colors">
                       {it.title}
                     </h3>
-                    <p className="text-base text-slate-600 font-sans leading-relaxed tracking-normal mb-6">
+                    <p className="text-sm sm:text-base text-slate-600 font-sans leading-relaxed tracking-normal mb-5 sm:mb-6">
                       {it.text}
                     </p>
                   </div>
 
                   <div className="mt-auto pt-2">
-                    <div className="w-full rounded-2xl bg-slate-50/80 border border-slate-200/60 p-2 sm:p-3 flex items-center justify-center overflow-hidden mb-6 shadow-inner">
+                    <div className="w-full rounded-2xl bg-slate-50/80 border border-slate-200/60 p-2 sm:p-3 flex items-center justify-center overflow-hidden mb-5 sm:mb-6 shadow-inner">
                       {it.mockup}
                     </div>
 
                     <Link
                       href={`/${lang}/for-providers`}
-                      className="inline-flex items-center text-sm font-semibold text-accent group-hover:text-accent-secondary transition-colors"
+                      className="inline-flex items-center text-sm font-semibold text-accent group-hover:text-accent-secondary transition-colors min-h-[36px] py-1"
                     >
                       {lang === 'ar' ? 'اكتشف آلية العمل' : 'Explore how it works'}{' '}
                       <ChevronRight

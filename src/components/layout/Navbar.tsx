@@ -173,24 +173,24 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           </Link>
 
           {/* Mobile Controls */}
-          <div className="flex items-center gap-1.5 lg:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
             <Link
               href={switchHref}
-              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[11px] font-bold border border-slate-200/80 bg-white/70 text-slate-700 hover:text-[#0052FF] shadow-2xs active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold border border-slate-200/80 bg-white/80 text-slate-700 hover:text-[#0052FF] shadow-2xs active:scale-95 transition-all min-h-[40px]"
               aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
             >
-              <Globe size={12} className="text-[#0052FF]" />
+              <Globe size={13} className="text-[#0052FF]" />
               <span>{lang === 'en' ? 'العربية' : 'EN'}</span>
             </Link>
 
             <button
               type="button"
-              className="flex h-9 w-9 items-center justify-center rounded-full text-slate-700 bg-slate-100/90 hover:bg-slate-200/90 transition-all active:scale-90"
+              className="flex h-10 w-10 min-h-[40px] min-w-[40px] items-center justify-center rounded-full text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all active:scale-90 shadow-2xs"
               onClick={() => setOpen(true)}
               aria-expanded={open}
               aria-label="Open navigation menu"
             >
-              <Menu size={18} />
+              <Menu size={19} />
             </button>
           </div>
         </div>
@@ -217,7 +217,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               animate={{ x: 0 }}
               exit={slideExit}
               transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-              className="fixed inset-y-0 end-0 z-50 flex h-full w-[85vw] max-w-[360px] flex-col justify-between border-s border-slate-200/80 bg-white/95 backdrop-blur-2xl p-6 shadow-2xl overflow-y-auto transform-gpu"
+              className="fixed inset-y-0 end-0 z-50 flex h-full w-[88vw] max-w-[370px] flex-col justify-between border-s border-slate-200/80 bg-white/95 backdrop-blur-2xl p-6 shadow-2xl overflow-y-auto transform-gpu"
               role="dialog"
               aria-modal="true"
               aria-label="Mobile navigation"
@@ -240,7 +240,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   <button
                     type="button"
                     onClick={() => setOpen(false)}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors active:scale-90"
+                    className="flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors active:scale-90"
                     aria-label="Close menu"
                   >
                     <X size={20} />
@@ -256,7 +256,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                           href={l.href}
                           onClick={() => setOpen(false)}
                           {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                          className={`flex min-h-[48px] items-center justify-between px-4 py-3 rounded-2xl text-base font-semibold tracking-wide transition-all active:scale-[0.98] ${
+                          className={`flex min-h-[50px] items-center justify-between px-4 py-3 rounded-2xl text-base font-semibold tracking-wide transition-all active:scale-[0.98] ${
                             isActive
                               ? 'text-[#0052FF] bg-[#0052FF]/10 font-bold'
                               : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
@@ -277,7 +277,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   onClick={() => setOpen(false)}
                   variant="primary"
                   size="md"
-                  className="w-full justify-center shadow-md py-4 text-base font-bold min-h-[50px] rounded-2xl"
+                  className="w-full justify-center shadow-md py-4 text-base font-bold min-h-[52px] rounded-2xl"
                   leftIcon={<ShieldCheck size={18} className="text-white/90" />}
                   rightIcon={<ArrowRight size={17} className="rtl:-scale-x-100" />}
                 >
@@ -291,9 +291,9 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   <Link
                     href={switchHref}
                     onClick={() => setOpen(false)}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-bold text-xs text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all active:scale-95 min-h-[38px]"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-bold text-xs text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all active:scale-95 min-h-[42px]"
                   >
-                    <Globe size={13} className="text-[#0052FF]" />
+                    <Globe size={14} className="text-[#0052FF]" />
                     <span>{lang === 'en' ? 'العربية' : 'English'}</span>
                   </Link>
                 </div>
