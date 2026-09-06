@@ -18,7 +18,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="relative border-t border-slate-800 bg-slate-950 text-white overflow-hidden">
+    <footer data-nav-dark="true" className="relative border-t border-slate-800 bg-slate-950 text-white overflow-hidden">
       {/* Ambient background glow */}
       <div className="absolute top-0 start-1/4 w-[600px] h-[350px] bg-accent/10 blur-[120px] pointer-events-none rounded-full" />
 

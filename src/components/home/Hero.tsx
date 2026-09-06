@@ -3,7 +3,7 @@
 import { m } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { ShieldCheck, Building2, TrendingUp, ArrowRight, Target, CheckCircle2 } from 'lucide-react';
+import { Building2, ArrowRight, Target } from 'lucide-react';
 import Button from '@/components/shared/Button';
 import Badge from '@/components/shared/Badge';
 
@@ -88,48 +88,6 @@ export default function Hero() {
             >
               {dict.hero.btn_buyer}
             </Button>
-          </div>
-
-          {/* Value proposition badges */}
-          <div
-            className="mt-8 sm:mt-12 pt-4 sm:pt-6 border-t border-slate-200/70 w-full max-w-2xl grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 text-center"
-          >
-            <div className="bg-white/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-slate-200/80 shadow-apple">
-              <div className="text-base sm:text-2xl font-mono font-bold text-slate-900 flex items-center justify-center gap-1 sm:gap-1.5">
-                <ShieldCheck size={15} className="text-accent shrink-0 sm:h-[18px] sm:w-[18px]" />
-                <span>{dict.hero.badges?.verified_deciders?.value || '100%'}</span>
-              </div>
-              <p className="text-[10px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">
-                {dict.hero.badges?.verified_deciders?.label || 'Verified Decision-Makers'}
-              </p>
-            </div>
-            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 border border-slate-200/80 shadow-apple">
-              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-900 flex items-center justify-center gap-1 sm:gap-1.5">
-                <TrendingUp size={16} className="text-emerald-500 shrink-0 sm:h-[18px] sm:w-[18px]" />
-                <span>{dict.hero.badges?.zero_retainer?.value || 'Zero'}</span>
-              </div>
-              <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">
-                {dict.hero.badges?.zero_retainer?.label || 'Monthly Retainer Risk'}
-              </p>
-            </div>
-            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 border border-slate-200/80 shadow-apple">
-              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-900 flex items-center justify-center gap-1 sm:gap-1.5">
-                <CheckCircle2 size={16} className="text-blue-500 shrink-0 sm:h-[18px] sm:w-[18px]" />
-                <span>{dict.hero.badges?.match_rate?.value || '92%'}</span>
-              </div>
-              <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">
-                {dict.hero.badges?.match_rate?.label || 'Leads Reach Meetings'}
-              </p>
-            </div>
-            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 border border-slate-200/80 shadow-apple">
-              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-900 flex items-center justify-center gap-1 sm:gap-1.5">
-                <Building2 size={16} className="text-accent-secondary shrink-0 sm:h-[18px] sm:w-[18px]" />
-                <span>{dict.hero.badges?.markets_covered?.value || '6'}</span>
-              </div>
-              <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-1 leading-snug">
-                {dict.hero.badges?.markets_covered?.label || 'GCC Markets Covered'}
-              </p>
-            </div>
           </div>
         </div>
       </div>

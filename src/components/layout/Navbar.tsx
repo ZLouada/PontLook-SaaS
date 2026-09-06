@@ -17,6 +17,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isDarkSection, setIsDarkSection] = useState(false);
   const pathname = usePathname() || `/${lang}`;
   const dict = useDictionary();
 
@@ -51,11 +52,35 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   }, []);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+
+      // Detect if navbar is currently positioned over a dark section
+      const darkElements = document.querySelectorAll(
+        '[data-nav-dark="true"], section.bg-slate-950, footer.bg-slate-950, section.bg-slate-900, footer.bg-slate-900'
+      );
+      const navCenterY = 45;
+      let overDark = false;
+
+      for (let i = 0; i < darkElements.length; i++) {
+        const rect = darkElements[i].getBoundingClientRect();
+        if (rect.top <= navCenterY && rect.bottom >= navCenterY) {
+          overDark = true;
+          break;
+        }
+      }
+
+      setIsDarkSection(overDark);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
@@ -83,8 +108,12 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
       <header
         className={`fixed inset-x-0 mx-auto z-50 transition-all duration-300 ${
           scrolled
-            ? 'top-2 sm:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full bg-white/94 backdrop-blur-xl border border-slate-200/80 shadow-apple py-2 sm:py-2.5 px-3.5 sm:px-6'
-            : 'top-0 w-full max-w-full rounded-none bg-white/98 backdrop-blur-xl border-b border-slate-200/80 py-3 sm:py-4 px-4 sm:px-8 lg:px-12'
+            ? isDarkSection
+              ? 'top-2 sm:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full bg-slate-900/80 backdrop-blur-xl border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.5)] py-2 sm:py-2.5 px-3.5 sm:px-6'
+              : 'top-2 sm:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full bg-white/94 backdrop-blur-xl border border-slate-200/80 shadow-apple py-2 sm:py-2.5 px-3.5 sm:px-6'
+            : isDarkSection
+              ? 'top-0 w-full max-w-full rounded-none bg-slate-950/90 backdrop-blur-xl border-b border-white/10 py-3 sm:py-4 px-4 sm:px-8 lg:px-12'
+              : 'top-0 w-full max-w-full rounded-none bg-white/98 backdrop-blur-xl border-b border-slate-200/80 py-3 sm:py-4 px-4 sm:px-8 lg:px-12'
         }`}
       >
         <nav
@@ -100,15 +129,17 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           >
             <div className="relative flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center">
               <Image
-                src="/PontLook-Logo-nav.webp"
+                src={isDarkSection ? '/PontLook-Logo-White.png' : '/PontLook-Logo-nav.webp'}
                 alt="PontLook GCC Corporate Training Matchmaking Logo"
                 width={32}
                 height={32}
-                className="object-contain h-7 w-7 sm:h-8 sm:w-8"
+                className="object-contain h-7 w-7 sm:h-8 sm:w-8 transition-opacity duration-200"
                 priority
               />
             </div>
-            <span className="font-heading font-bold text-lg sm:text-xl text-slate-900 tracking-tight">
+            <span className={`font-heading font-bold text-lg sm:text-xl tracking-tight transition-colors duration-200 ${
+              isDarkSection ? 'text-white' : 'text-slate-900'
+            }`}>
               PontLook
             </span>
           </Link>
@@ -127,9 +158,15 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                     {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                     className={`relative z-10 block px-3.5 py-1.5 text-xs font-semibold transition-colors duration-200 ${
                       isActive
-                        ? 'text-[#0052FF]'
+                        ? isDarkSection
+                          ? 'text-[#4D7CFF]'
+                          : 'text-[#0052FF]'
                         : isHovered
-                        ? 'text-slate-900'
+                        ? isDarkSection
+                          ? 'text-white'
+                          : 'text-slate-900'
+                        : isDarkSection
+                        ? 'text-slate-300 hover:text-white'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
@@ -140,7 +177,9 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   {isHovered && (
                     <m.div
                       layoutId="nav-pill"
-                      className="absolute inset-0 z-0 rounded-full bg-slate-100/90"
+                      className={`absolute inset-0 z-0 rounded-full transition-colors ${
+                        isDarkSection ? 'bg-white/15' : 'bg-slate-100/90'
+                      }`}
                       transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -149,7 +188,9 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   {isActive && !isHovered && (
                     <m.div
                       layoutId="nav-active-indicator"
-                      className="absolute bottom-0 inset-x-3 h-0.5 rounded-full bg-[#0052FF]"
+                      className={`absolute bottom-0 inset-x-3 h-0.5 rounded-full ${
+                        isDarkSection ? 'bg-[#4D7CFF]' : 'bg-[#0052FF]'
+                      }`}
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -162,10 +203,14 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href={switchHref}
-              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border border-slate-200/80 bg-white/70 text-slate-700 hover:text-[#0052FF] hover:border-[#0052FF]/40 shadow-2xs active:scale-95 transition-all duration-200"
+              className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border shadow-2xs active:scale-95 transition-all duration-200 ${
+                isDarkSection
+                  ? 'border-white/20 bg-white/10 text-white hover:text-white hover:bg-white/20 hover:border-white/30'
+                  : 'border-slate-200/80 bg-white/70 text-slate-700 hover:text-[#0052FF] hover:border-[#0052FF]/40'
+              }`}
               aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
             >
-              <Globe size={13} className="text-[#0052FF]" />
+              <Globe size={13} className={isDarkSection ? 'text-[#4D7CFF]' : 'text-[#0052FF]'} />
               <span>{lang === 'en' ? 'العربية' : 'English'}</span>
             </Link>
 
@@ -173,7 +218,11 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
               <button
                 type="button"
-                className="flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full text-slate-800 bg-white/90 border border-slate-200/80 hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-90 shadow-2xs"
+                className={`flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full transition-all active:scale-90 shadow-2xs ${
+                  isDarkSection
+                    ? 'text-white bg-white/10 border border-white/20 hover:bg-white/20'
+                    : 'text-slate-800 bg-white/90 border border-slate-200/80 hover:bg-slate-50 hover:border-slate-300'
+                }`}
                 onClick={() => setOpen(true)}
                 aria-expanded={open}
                 aria-label="Open navigation menu"

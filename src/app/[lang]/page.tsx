@@ -5,7 +5,6 @@ import { i18n } from '@/i18n/config';
 
 const HowItWorks = dynamic(() => import('@/components/home/HowItWorks'));
 const WhyDifferent = dynamic(() => import('@/components/home/WhyDifferent'));
-const StatsCounter = dynamic(() => import('@/components/home/StatsCounter'));
 const ProviderTeaser = dynamic(() => import('@/components/home/ProviderTeaser'));
 const FinalCta = dynamic(() => import('@/components/home/FinalCta'));
 
@@ -20,7 +19,6 @@ export default function HomePage() {
       <TrustBar />
       <HowItWorks />
       <WhyDifferent />
-      <StatsCounter />
       <ProviderTeaser />
       <FinalCta />
     </>

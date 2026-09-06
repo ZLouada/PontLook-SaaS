@@ -13,7 +13,7 @@ export default function FinalCta() {
   const lang = pathname.startsWith('/ar') ? 'ar' : 'en';
 
   return (
-    <section className="relative overflow-hidden bg-slate-950 text-white pt-16 pb-14 sm:pt-32 sm:pb-24 lg:pt-40 lg:pb-28 border-t border-slate-900">
+    <section data-nav-dark="true" className="relative overflow-hidden bg-slate-950 text-white pt-16 pb-14 sm:pt-32 sm:pb-24 lg:pt-40 lg:pb-28 border-t border-slate-900">
       {/* Ambient glowing radial backlight */}
       <div className="absolute top-1/3 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[400px] bg-accent/20 blur-[140px] pointer-events-none rounded-full transform-gpu" />
 
