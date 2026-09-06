@@ -36,6 +36,7 @@ next-env.d.ts
 /home/
 scripts/
 .agents/
+.remote_theme_backup/
 
 # Misplaced root-level static assets (belong in /public)
 /PontlookIcon.png

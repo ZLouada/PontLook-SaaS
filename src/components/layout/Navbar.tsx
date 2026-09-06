@@ -162,7 +162,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href={switchHref}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border border-slate-200/80 bg-white/70 text-slate-700 hover:text-[#0052FF] hover:border-[#0052FF]/40 shadow-2xs active:scale-95 transition-all duration-200"
+              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border border-slate-200/80 bg-white/70 text-slate-700 hover:text-[#0052FF] hover:border-[#0052FF]/40 shadow-2xs active:scale-95 transition-all duration-200"
               aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
             >
               <Globe size={13} className="text-[#0052FF]" />
@@ -180,15 +180,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
             {/* Mobile Controls */}
             <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
-              <Link
-                href={switchHref}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-bold border border-slate-200/80 bg-white/90 text-slate-700 hover:text-[#0052FF] hover:border-[#0052FF]/30 shadow-2xs active:scale-95 transition-all min-h-[36px]"
-                aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
-              >
-                <Globe size={13} className="text-[#0052FF]" />
-                <span>{lang === 'en' ? 'العربية' : 'EN'}</span>
-              </Link>
-
               <button
                 type="button"
                 className="flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full text-slate-800 bg-white/90 border border-slate-200/80 hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-90 shadow-2xs"
