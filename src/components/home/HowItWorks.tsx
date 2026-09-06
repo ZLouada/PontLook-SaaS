@@ -4,8 +4,6 @@ import { useRef } from 'react';
 import { Building2, ShieldCheck, Award, CheckCircle2 } from 'lucide-react';
 import { m, useScroll, useSpring } from 'framer-motion';
 import SectionHeading from '@/components/shared/SectionHeading';
-import Badge from '@/components/shared/Badge';
-
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 export default function HowItWorks() {
@@ -164,11 +162,10 @@ export default function HowItWorks() {
                   </div>
 
                   <div className="flex-1 space-y-3 sm:space-y-4 w-full">
-                    <div className="flex items-center gap-2">
-                      <span className="lg:hidden flex h-6 w-6 items-center justify-center rounded-md bg-slate-900 text-white font-mono font-bold text-[11px]">
-                        0{i + 1}
+                    <div>
+                      <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0052FF] text-white text-xs font-semibold shadow-2xs">
+                        {s.badge}
                       </span>
-                      <Badge variant="accent">{s.badge}</Badge>
                     </div>
                     <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 tracking-[-0.02em] leading-tight">
                       {s.title}
