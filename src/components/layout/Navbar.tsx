@@ -82,11 +82,9 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
     <>
       <header
         className={`fixed inset-x-0 mx-auto z-50 transition-all duration-300 ${
-          isDesktop
-            ? scrolled
-              ? 'top-3 w-[90%] max-w-5xl rounded-full bg-white/94 backdrop-blur-xl border border-slate-200/80 shadow-apple py-2.5 px-6'
-              : 'top-0 w-full max-w-full rounded-none bg-white/98 backdrop-blur-xl border-b border-slate-200/80 py-4 px-8 lg:px-12'
-            : 'top-0 w-full rounded-none bg-white/95 backdrop-blur-xl border-b border-slate-200/80 py-3 px-4 sm:px-6 shadow-xs'
+          scrolled
+            ? 'top-2 sm:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full bg-white/94 backdrop-blur-xl border border-slate-200/80 shadow-apple py-2 sm:py-2.5 px-3.5 sm:px-6'
+            : 'top-0 w-full max-w-full rounded-none bg-white/98 backdrop-blur-xl border-b border-slate-200/80 py-3 sm:py-4 px-4 sm:px-8 lg:px-12'
         }`}
       >
         <nav
@@ -97,15 +95,16 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           {/* Brand Logo & Name */}
           <Link
             href={`/${lang}`}
-            className="flex items-center gap-2.5 transition-transform duration-200 hover:scale-[1.02] active:scale-95"
+            className="flex items-center gap-2 sm:gap-2.5 transition-transform duration-200 hover:scale-[1.02] active:scale-95"
             aria-label="PontLook home"
           >
-            <div className="relative flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center">
+            <div className="relative flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center">
               <Image
-                src="/PontLook-Logo.png"
+                src="/PontLook-Logo-nav.webp"
                 alt="PontLook GCC Corporate Training Matchmaking Logo"
-                fill
-                className="object-contain"
+                width={32}
+                height={32}
+                className="object-contain h-7 w-7 sm:h-8 sm:w-8"
                 priority
               />
             </div>
@@ -180,10 +179,10 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             </Link>
 
             {/* Mobile Controls */}
-            <div className="flex items-center gap-2 lg:hidden">
+            <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
               <Link
                 href={switchHref}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-200/80 bg-white/90 text-slate-700 hover:text-[#0052FF] hover:border-[#0052FF]/30 shadow-2xs active:scale-95 transition-all min-h-[38px]"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-bold border border-slate-200/80 bg-white/90 text-slate-700 hover:text-[#0052FF] hover:border-[#0052FF]/30 shadow-2xs active:scale-95 transition-all min-h-[36px]"
                 aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
               >
                 <Globe size={13} className="text-[#0052FF]" />
@@ -192,12 +191,12 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
               <button
                 type="button"
-                className="flex h-10 w-10 min-h-[40px] min-w-[40px] items-center justify-center rounded-xl text-slate-800 bg-white/90 border border-slate-200/80 hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-90 shadow-2xs"
+                className="flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full text-slate-800 bg-white/90 border border-slate-200/80 hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-90 shadow-2xs"
                 onClick={() => setOpen(true)}
                 aria-expanded={open}
                 aria-label="Open navigation menu"
               >
-                <Menu size={20} />
+                <Menu size={18} />
               </button>
             </div>
           </div>
@@ -242,9 +241,10 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       >
                         <div className="relative flex h-8 w-8 shrink-0 items-center">
                           <Image
-                            src="/PontLook-Logo.png"
+                            src="/PontLook-Logo-nav.webp"
                             alt="PontLook Logo"
-                            fill
+                            width={32}
+                            height={32}
                             className="object-contain"
                           />
                         </div>

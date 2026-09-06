@@ -8,32 +8,6 @@ import { ShieldCheck, Building2, TrendingUp, ArrowRight, Target, CheckCircle2 } 
 import Button from '@/components/shared/Button';
 import Badge from '@/components/shared/Badge';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.05,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 24, filter: 'blur(4px)' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: {
-      type: 'spring',
-      stiffness: 120,
-      damping: 25,
-      mass: 0.8,
-    },
-  },
-};
-
 export default function Hero() {
   const dict = useDictionary();
   const params = useParams();
@@ -43,9 +17,10 @@ export default function Hero() {
     <section className="relative overflow-hidden bg-white pt-20 pb-10 sm:pt-24 sm:pb-14 lg:pt-24 lg:pb-16 min-h-[80vh] sm:min-h-[85vh] flex flex-col justify-center">
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <Image
-          src="/skyline-bg.jpg"
+          src="/skyline-bg.webp"
           alt="GCC Corporate Business Skyline in Riyadh and Dubai"
           fill
+          sizes="100vw"
           className="object-cover scale-105 opacity-30"
           priority
         />
@@ -63,15 +38,9 @@ export default function Hero() {
       </div>
 
       <div className="container-site relative z-10 mx-auto flex flex-col items-center text-center px-4 sm:px-8 lg:px-12">
-        <m.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="max-w-[960px] flex flex-col items-center transform-gpu will-change-transform"
-        >
+        <div className="max-w-[960px] flex flex-col items-center">
           {/* Floating live GCC demand badge with vertical harmonic sine motion */}
           <m.div
-            variants={itemVariants}
             animate={{ y: [0, -6, 0] }}
             transition={{ duration: 6, ease: 'easeInOut', repeat: Infinity }}
             className="mb-4 sm:mb-5 inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-white/90 px-3.5 sm:px-4 py-1.5 shadow-xs backdrop-blur-md"
@@ -85,24 +54,21 @@ export default function Hero() {
             </span>
           </m.div>
 
-          {/* Apple-grade Display Headline */}
-          <m.h1
-            variants={itemVariants}
+          {/* Apple-grade Display Headline - immediately painted for instant LCP */}
+          <h1
             className="font-heading text-[30px] sm:text-5xl lg:text-6xl xl:text-[68px] font-semibold tracking-[-0.03em] leading-[1.12] sm:leading-[1.08] text-slate-900"
           >
             {dict.hero.headline}
-          </m.h1>
+          </h1>
 
           {/* Optical Subtitle */}
-          <m.p
-            variants={itemVariants}
+          <p
             className="mt-3.5 sm:mt-4 text-sm sm:text-base lg:text-lg text-slate-600 font-normal leading-relaxed max-w-2xl px-1 sm:px-0"
           >
             {dict.hero.subtitle}
-          </m.p>
+          </p>
 
-          <m.div
-            variants={itemVariants}
+          <div
             className="mt-6 sm:mt-8 flex flex-col w-full sm:w-auto sm:flex-row items-center gap-3 sm:gap-4"
           >
             <Button
@@ -125,11 +91,10 @@ export default function Hero() {
             >
               {dict.hero.btn_buyer}
             </Button>
-          </m.div>
+          </div>
 
           {/* Value proposition badges */}
-          <m.div
-            variants={itemVariants}
+          <div
             className="mt-8 sm:mt-12 pt-4 sm:pt-6 border-t border-slate-200/70 w-full max-w-2xl grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 text-center"
           >
             <div className="bg-white/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-slate-200/80 shadow-apple">
@@ -168,8 +133,8 @@ export default function Hero() {
                 {dict.hero.badges?.markets_covered?.label || 'GCC Markets Covered'}
               </p>
             </div>
-          </m.div>
-        </m.div>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, IBM_Plex_Sans_Arabic, Cairo, JetBrains_Mono } from 'next/font/google';
+import { Inter, IBM_Plex_Sans_Arabic, JetBrains_Mono } from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import '../globals.css';
@@ -16,7 +16,6 @@ export const viewport: Viewport = {
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
   variable: '--font-sans',
   display: 'swap',
 });
@@ -25,13 +24,6 @@ const ibmPlexArabic = IBM_Plex_Sans_Arabic({
   subsets: ['arabic'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-arabic',
-  display: 'swap',
-});
-
-const cairo = Cairo({
-  subsets: ['arabic'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-cairo',
   display: 'swap',
 });
 
@@ -124,7 +116,7 @@ export default async function RootLayout({
   const dictionary = await getDictionary(lang);
   const dir = rawLang === 'ar' ? 'rtl' : 'ltr';
 
-  const fontClass = `${inter.variable} ${ibmPlexArabic.variable} ${cairo.variable} ${jetbrainsMono.variable}`;
+  const fontClass = `${inter.variable} ${ibmPlexArabic.variable} ${jetbrainsMono.variable}`;
 
   const jsonLdGraph = {
     "@context": "https://schema.org",

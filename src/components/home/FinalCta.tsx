@@ -26,7 +26,6 @@ export default function FinalCta() {
               alt="PontLook Brand"
               fill
               className="object-contain"
-              priority
             />
           </div>
           <span className="text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight bg-gradient-to-b from-white/90 via-white/50 to-white/10 bg-clip-text text-transparent">

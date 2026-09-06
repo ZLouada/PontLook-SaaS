@@ -50,7 +50,7 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-sans)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
         heading: ['var(--font-sans)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-        arabic: ['var(--font-arabic)', 'var(--font-cairo)', 'Cairo', 'system-ui', 'sans-serif'],
+        arabic: ['var(--font-arabic)', 'system-ui', 'sans-serif'],
         body: ['var(--font-sans)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         mono: ['var(--font-mono)', 'JetBrains Mono', 'monospace'],
       },

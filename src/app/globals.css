@@ -65,7 +65,7 @@
 
   [dir="rtl"],
   [dir="rtl"] body {
-    font-family: var(--font-arabic), var(--font-cairo), 'Cairo', system-ui, sans-serif;
+    font-family: var(--font-arabic), system-ui, sans-serif;
   }
   [dir="rtl"] h1,
   [dir="rtl"] h2,
@@ -74,11 +74,11 @@
   [dir="rtl"] h5,
   [dir="rtl"] h6,
   [dir="rtl"] .font-heading {
-    font-family: var(--font-arabic), var(--font-cairo), 'Cairo', system-ui, sans-serif;
+    font-family: var(--font-arabic), system-ui, sans-serif;
     letter-spacing: normal;
   }
   .font-arabic {
-    font-family: var(--font-arabic), var(--font-cairo), 'Cairo', system-ui, sans-serif !important;
+    font-family: var(--font-arabic), system-ui, sans-serif !important;
   }
 }
 
