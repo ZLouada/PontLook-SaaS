@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { m } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
@@ -15,14 +14,12 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-white pt-20 pb-10 sm:pt-24 sm:pb-14 lg:pt-24 lg:pb-16 min-h-[80vh] sm:min-h-[85vh] flex flex-col justify-center">
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <Image
-          src="/skyline-bg.webp"
-          alt="GCC Corporate Business Skyline in Riyadh and Dubai"
-          fill
-          sizes="100vw"
-          className="object-cover scale-105 opacity-30"
-          priority
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div
+          className="absolute inset-0 bg-cover bg-center scale-105 opacity-30"
+          style={{
+            backgroundImage: "url('/skyline-bg.webp')",
+          }}
         />
         <div
           className="absolute inset-0 bg-white"
