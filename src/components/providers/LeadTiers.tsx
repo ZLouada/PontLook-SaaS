@@ -184,15 +184,17 @@ export default function LeadTiers({ dict, lang, showSignals = true }: LeadTiersP
   });
 
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    let step = 0;
     if (latest < 0.25) {
-      setActiveStep(0);
+      step = 0;
     } else if (latest < 0.50) {
-      setActiveStep(1);
+      step = 1;
     } else if (latest < 0.75) {
-      setActiveStep(2);
+      step = 2;
     } else {
-      setActiveStep(3);
+      step = 3;
     }
+    setActiveStep((prev) => (prev !== step ? step : prev));
   });
 
   const handleStepClick = (index: number) => {
@@ -201,7 +203,9 @@ export default function LeadTiers({ dict, lang, showSignals = true }: LeadTiersP
       const containerTop = containerRef.current.offsetTop;
       const containerHeight = containerRef.current.offsetHeight - window.innerHeight;
       if (containerHeight > 0) {
-        const targetScroll = containerTop + (index / 3.2) * containerHeight;
+        // Position at the center of each step's quadrant: 12.5%, 37.5%, 62.5%, 87.5%
+        const targetFraction = (index + 0.5) / 4;
+        const targetScroll = containerTop + targetFraction * containerHeight;
         window.scrollTo({ top: targetScroll, behavior: 'smooth' });
       }
     }
@@ -220,23 +224,23 @@ export default function LeadTiers({ dict, lang, showSignals = true }: LeadTiersP
       {/* =========================================================================
           DESKTOP: Odysser Sticky Scroll-Driven Feature Showcase (md:block)
       ========================================================================= */}
-      <div ref={containerRef} className="relative h-[380vh] hidden md:block">
-        <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden py-8 px-4 sm:px-6 lg:px-8">
+      <div ref={containerRef} className="relative h-[400vh] hidden md:block">
+        <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center overflow-hidden px-4 sm:px-6 lg:px-8">
           
-          {/* Section Header */}
-          <div className="text-center max-w-2xl mx-auto mb-4 sm:mb-6 shrink-0">
-            <span className="chip mx-auto text-xs py-1 px-3.5 mb-2.5">
+          {/* Section Header (Fixed at the top of the sticky container) */}
+          <div className="text-center max-w-2xl mx-auto mb-3 shrink-0">
+            <span className="chip mx-auto text-xs py-1 px-3.5 mb-2">
               {eyebrow}
             </span>
             <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 font-heading tracking-tight leading-snug">
               {title}
             </h2>
-            <p className="mt-2 text-xs lg:text-sm text-slate-600 max-w-lg mx-auto">
+            <p className="mt-1 text-xs lg:text-sm text-slate-600 max-w-lg mx-auto">
               {subtitle}
             </p>
           </div>
 
-          {/* Interactive Step Indicator Pills */}
+          {/* Interactive Step Tabs (Fixed above the card) */}
           <div className="flex items-center justify-center gap-2 mb-6 shrink-0">
             {cards.map((c, idx) => {
               const isActive = activeStep === idx;
@@ -285,14 +289,14 @@ export default function LeadTiers({ dict, lang, showSignals = true }: LeadTiersP
               }}
             />
 
-            {/* Active Card Body */}
-            <div className="rounded-[32px] lg:rounded-[36px] border border-slate-200/80 bg-white shadow-apple p-6 sm:p-8 lg:p-12 overflow-hidden relative min-h-[440px] flex items-center">
-              <AnimatePresence mode="wait">
+            {/* Active Card Body with AnimatePresence mode="popLayout" */}
+            <div className="rounded-[32px] lg:rounded-[36px] border border-slate-200/80 bg-white shadow-apple p-6 sm:p-8 lg:p-10 relative min-h-[460px] flex items-center overflow-hidden">
+              <AnimatePresence mode="popLayout" initial={false}>
                 <m.div
                   key={activeStep}
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -16 }}
+                  exit={{ opacity: 0, y: -30 }}
                   transition={{ duration: 0.35, ease: 'easeOut' }}
                   className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full transform-gpu will-change-transform"
                 >
@@ -482,13 +486,13 @@ export default function LeadTiers({ dict, lang, showSignals = true }: LeadTiersP
         </div>
 
         {/* Active Mobile Card */}
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="popLayout" initial={false}>
           <m.div
             key={mobileStep}
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
             className="rounded-2xl border border-slate-200/80 bg-white shadow-apple p-5 space-y-5"
           >
             <div className="space-y-3">
