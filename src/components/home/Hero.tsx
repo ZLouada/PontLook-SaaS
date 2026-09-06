@@ -40,7 +40,7 @@ export default function Hero() {
   const lang = (params?.lang as string) || 'en';
 
   return (
-    <section className="relative overflow-hidden bg-white pt-24 pb-12 sm:pt-32 sm:pb-20 lg:pt-40 lg:pb-32 min-h-[85vh] sm:min-h-[90vh] flex flex-col justify-center">
+    <section className="relative overflow-hidden bg-white pt-20 pb-10 sm:pt-24 sm:pb-14 lg:pt-24 lg:pb-16 min-h-[80vh] sm:min-h-[85vh] flex flex-col justify-center">
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <Image
           src="/skyline-bg.jpg"
@@ -74,7 +74,7 @@ export default function Hero() {
             variants={itemVariants}
             animate={{ y: [0, -6, 0] }}
             transition={{ duration: 6, ease: 'easeInOut', repeat: Infinity }}
-            className="mb-5 sm:mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-white/90 px-3.5 sm:px-4 py-1.5 shadow-xs backdrop-blur-md"
+            className="mb-4 sm:mb-5 inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-white/90 px-3.5 sm:px-4 py-1.5 shadow-xs backdrop-blur-md"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -88,7 +88,7 @@ export default function Hero() {
           {/* Apple-grade Display Headline */}
           <m.h1
             variants={itemVariants}
-            className="font-heading text-[32px] sm:text-5xl lg:text-7xl font-semibold tracking-[-0.03em] leading-[1.12] sm:leading-[1.08] text-slate-900"
+            className="font-heading text-[30px] sm:text-5xl lg:text-6xl xl:text-[68px] font-semibold tracking-[-0.03em] leading-[1.12] sm:leading-[1.08] text-slate-900"
           >
             {dict.hero.headline}
           </m.h1>
@@ -96,14 +96,14 @@ export default function Hero() {
           {/* Optical Subtitle */}
           <m.p
             variants={itemVariants}
-            className="mt-4 sm:mt-6 text-sm sm:text-lg text-slate-600 font-normal leading-[1.65] max-w-2xl px-1 sm:px-0"
+            className="mt-3.5 sm:mt-4 text-sm sm:text-base lg:text-lg text-slate-600 font-normal leading-relaxed max-w-2xl px-1 sm:px-0"
           >
             {dict.hero.subtitle}
           </m.p>
 
           <m.div
             variants={itemVariants}
-            className="mt-7 sm:mt-10 flex flex-col w-full sm:w-auto sm:flex-row items-center gap-3 sm:gap-4"
+            className="mt-6 sm:mt-8 flex flex-col w-full sm:w-auto sm:flex-row items-center gap-3 sm:gap-4"
           >
             <Button
               href={`/${lang}/for-providers`}
@@ -130,7 +130,7 @@ export default function Hero() {
           {/* Value proposition badges */}
           <m.div
             variants={itemVariants}
-            className="mt-10 sm:mt-16 pt-5 sm:pt-8 border-t border-slate-200/70 w-full max-w-2xl grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 text-center"
+            className="mt-8 sm:mt-12 pt-4 sm:pt-6 border-t border-slate-200/70 w-full max-w-2xl grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 text-center"
           >
             <div className="bg-white/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-slate-200/80 shadow-apple">
               <div className="text-base sm:text-2xl font-mono font-bold text-slate-900 flex items-center justify-center gap-1 sm:gap-1.5">
