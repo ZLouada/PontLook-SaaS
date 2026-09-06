@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Cairo, Plus_Jakarta_Sans, Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter, IBM_Plex_Sans_Arabic, Cairo, JetBrains_Mono } from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import '../globals.css';
@@ -14,24 +14,24 @@ export const viewport: Viewport = {
   themeColor: '#0052FF',
 };
 
-const cairo = Cairo({
-  subsets: ['arabic', 'latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-cairo',
-  display: 'swap',
-});
-
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  variable: '--font-heading',
-  display: 'swap',
-});
-
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-body',
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const ibmPlexArabic = IBM_Plex_Sans_Arabic({
+  subsets: ['arabic'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-arabic',
+  display: 'swap',
+});
+
+const cairo = Cairo({
+  subsets: ['arabic'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-cairo',
   display: 'swap',
 });
 
@@ -124,7 +124,7 @@ export default async function RootLayout({
   const dictionary = await getDictionary(lang);
   const dir = rawLang === 'ar' ? 'rtl' : 'ltr';
 
-  const fontClass = `${inter.variable} ${jakarta.variable} ${jetbrainsMono.variable} ${cairo.variable}`;
+  const fontClass = `${inter.variable} ${ibmPlexArabic.variable} ${cairo.variable} ${jetbrainsMono.variable}`;
 
   const jsonLdGraph = {
     "@context": "https://schema.org",

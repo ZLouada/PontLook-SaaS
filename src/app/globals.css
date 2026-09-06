@@ -54,8 +54,8 @@
   h4,
   h5,
   h6 {
-    @apply font-heading text-slate-800 font-semibold;
-    letter-spacing: normal;
+    @apply font-heading text-slate-900 font-semibold;
+    letter-spacing: -0.025em;
     font-feature-settings: "kern" 1, "liga" 1;
     font-stretch: normal;
   }
@@ -65,7 +65,7 @@
 
   [dir="rtl"],
   [dir="rtl"] body {
-    font-family: var(--font-cairo), 'Cairo', system-ui, sans-serif;
+    font-family: var(--font-arabic), var(--font-cairo), 'Cairo', system-ui, sans-serif;
   }
   [dir="rtl"] h1,
   [dir="rtl"] h2,
@@ -74,11 +74,11 @@
   [dir="rtl"] h5,
   [dir="rtl"] h6,
   [dir="rtl"] .font-heading {
-    font-family: var(--font-cairo), 'Cairo', system-ui, sans-serif;
+    font-family: var(--font-arabic), var(--font-cairo), 'Cairo', system-ui, sans-serif;
     letter-spacing: normal;
   }
   .font-arabic {
-    font-family: var(--font-cairo), 'Cairo', system-ui, sans-serif !important;
+    font-family: var(--font-arabic), var(--font-cairo), 'Cairo', system-ui, sans-serif !important;
   }
 }
 
@@ -98,7 +98,7 @@
   }
 
   .card {
-    @apply rounded-2xl border border-slate-200/70 bg-card p-5 sm:p-8 shadow-sm transition-all duration-300 hover:shadow hover:border-slate-300;
+    @apply rounded-3xl border border-slate-200/80 bg-card p-6 sm:p-8 shadow-apple transition-all duration-300 hover:shadow-lg hover:border-slate-300;
   }
 
   .chip {
@@ -164,6 +164,11 @@
 .bg-dot-grid {
   background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
   background-size: 32px 32px;
+}
+
+.bg-dot-matrix {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 .glow-accent {

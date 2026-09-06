@@ -120,12 +120,13 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="relative bg-slate-50/70 py-14 sm:py-20 lg:py-36 border-t border-slate-200/60 overflow-hidden"
+      className="relative bg-slate-50/70 py-16 sm:py-24 lg:py-36 border-t border-slate-200/60 overflow-hidden"
     >
-      <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-r from-accent/10 via-accent-secondary/10 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
+      {/* Background subtle ambient gradient */}
+      <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] bg-gradient-to-r from-accent/[0.06] via-accent-secondary/[0.06] to-accent/[0.06] blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
       <div className="container-site px-4 sm:px-8 lg:px-12">
-        <div className="mb-10 sm:mb-16 lg:mb-20 text-center max-w-[820px] mx-auto">
+        <div className="mb-12 sm:mb-16 lg:mb-24 text-center max-w-[820px] mx-auto">
           <SectionHeading
             eyebrow={dict.how_it_works?.eyebrow || 'How It Works'}
             title={dict.how_it_works?.title || 'From verified pain point to signed contract'}
@@ -134,10 +135,11 @@ export default function HowItWorks() {
         </div>
 
         <div ref={containerRef} className="relative space-y-8 sm:space-y-12 max-w-5xl mx-auto">
-          <div className="absolute start-[2.25rem] lg:start-[3.75rem] top-12 bottom-12 w-1 bg-slate-200 hidden lg:block rounded-full">
+          {/* Vertical scroll pipeline */}
+          <div className="absolute start-[2.25rem] lg:start-[3.75rem] top-12 bottom-12 w-[3px] bg-slate-200 hidden lg:block rounded-full">
             <m.div
               style={{ scaleY, transformOrigin: 'top' }}
-              className="w-full h-full bg-gradient-to-b from-accent via-accent-secondary to-emerald-500 rounded-full"
+              className="w-full h-full bg-gradient-to-b from-[#0052FF] via-[#4D7CFF] to-emerald-500 rounded-full shadow-[0_0_12px_rgba(0,82,255,0.4)]"
             />
           </div>
 
@@ -148,30 +150,31 @@ export default function HowItWorks() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: i * 0.15 }}
+                transition={{ duration: 0.6, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
                 className="transform-gpu will-change-transform"
               >
                 <m.div
                   whileHover={{ y: -4 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                  className="flex flex-col lg:flex-row items-center gap-6 sm:gap-10 lg:gap-16 bg-white rounded-3xl p-5 sm:p-8 lg:p-14 border border-slate-200/70 shadow-sm hover:border-slate-300 hover:shadow-md transition-all duration-300 relative z-20"
+                  transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+                  className="group flex flex-col lg:flex-row items-center gap-6 sm:gap-10 lg:gap-16 bg-white/95 rounded-3xl p-6 sm:p-10 lg:p-14 border border-slate-200/80 shadow-apple hover:shadow-xl hover:border-accent/40 transition-all duration-500 relative z-20"
                 >
-                  <div className="absolute -start-10 lg:-start-16 top-10 hidden lg:flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-800 text-white font-mono font-semibold text-base z-30 shadow-sm border-2 border-white">
+                  {/* Step counter pill */}
+                  <div className="absolute -start-10 lg:-start-16 top-10 hidden lg:flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-white font-mono font-semibold text-base z-30 shadow-apple border-2 border-white ring-1 ring-slate-200/70 group-hover:bg-accent group-hover:scale-105 transition-all duration-300">
                     0{i + 1}
                   </div>
 
                   <div className="flex-1 space-y-4">
                     <Badge variant="accent">{s.badge}</Badge>
-                    <h3 className="text-2xl sm:text-3xl font-heading font-semibold text-slate-800">
+                    <h3 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-[-0.02em] leading-tight">
                       {s.title}
                     </h3>
-                    <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-lg font-sans">
+                    <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-lg font-normal">
                       {s.subtitle}
                     </p>
                   </div>
 
                   <div className="flex-1 w-full flex justify-center lg:justify-end">
-                    <div className="w-full max-w-[420px] aspect-[4/3] rounded-2xl bg-slate-50/80 border border-slate-200/60 flex items-center justify-center p-4 sm:p-6 relative overflow-hidden">
+                    <div className="w-full max-w-[420px] aspect-[4/3] rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/60 border border-slate-200/70 flex items-center justify-center p-4 sm:p-6 relative overflow-hidden group-hover:border-accent/30 transition-colors duration-300">
                       {s.mockup}
                     </div>
                   </div>

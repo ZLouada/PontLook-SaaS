@@ -1,123 +1,203 @@
 'use client';
 
-import Reveal from '@/components/shared/Reveal';
-import Badge from '@/components/shared/Badge';
-import Button from '@/components/shared/Button';
-import { ArrowRight, Flame, ShieldCheck, TrendingUp, Award } from 'lucide-react';
+import { m } from 'framer-motion';
+import { ArrowRight, CheckCircle2, Clock, Zap, TrendingUp, ShieldCheck } from 'lucide-react';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { usePathname } from 'next/navigation';
-import { m } from 'framer-motion';
+import Badge from '@/components/shared/Badge';
+import Button from '@/components/shared/Button';
+import SectionHeading from '@/components/shared/SectionHeading';
 
 export default function ProviderTeaser() {
   const dict = useDictionary();
   const pathname = usePathname() || '/en';
   const lang = pathname.startsWith('/ar') ? 'ar' : 'en';
+  const isRtl = lang === 'ar';
 
-  const tiers = [
+  const cards = [
     {
-      icon: Flame,
-      name: dict.provider_teaser.tiers.hot.name,
-      range: '90–100',
-      pct: '95%',
-      desc: dict.provider_teaser.tiers.hot.desc,
-      cls: 'bg-rose-50 text-rose-600 border-rose-200',
-      barColor: 'from-rose-500 to-red-600',
-      borderCls: 'border-s-rose-500',
+      step: lang === 'ar' ? 'المرحلة 01' : 'Step 1',
+      tierBadge: lang === 'ar' ? 'طلب عاجل · تطابق 95%' : 'Hot · 95% Match',
+      title: lang === 'ar'
+        ? 'فرص تدريبية ذات طلب عاجل وميزانية معتمدة'
+        : 'High-intent enterprise demand with confirmed budget',
+      desc:
+        dict.provider_teaser?.tiers?.hot?.desc ||
+        'Verified decision-maker, confirmed budget, starts within 30 days.',
+      canvasBg: 'bg-[#F2EFE9]', // warm sandstone from Odysser
+      progressColor: 'bg-[#0052FF]',
+      matchPct: '95%',
+      targetOrg: lang === 'ar' ? 'منشأة كبرى بالرياض · مشروع #01' : 'Riyadh Enterprise · Project #01',
+      criteria: [
+        { label: lang === 'ar' ? 'صاحب القرار معتمد (CHRO)' : 'Verified Decision-Maker (CHRO)', done: true },
+        { label: lang === 'ar' ? 'الميزانية معتمدة (+300 ألف ريال)' : 'Confirmed Budget (SAR 300k+)', done: true },
+        { label: lang === 'ar' ? 'نافذة البدء: خلال 30 يوماً' : 'Immediate 30-Day Window', done: true },
+      ],
+      stickyTop: 'top-24 sm:top-28',
+      zIndex: 10,
     },
     {
-      icon: TrendingUp,
-      name: dict.provider_teaser.tiers.warm.name,
-      range: '70–89',
-      pct: '80%',
-      desc: dict.provider_teaser.tiers.warm.desc,
-      cls: 'bg-amber-50 text-amber-600 border-amber-200',
-      barColor: 'from-amber-500 to-orange-500',
-      borderCls: 'border-s-amber-500',
+      step: lang === 'ar' ? 'المرحلة 02' : 'Step 2',
+      tierBadge: lang === 'ar' ? 'طلب متوسط · تطابق 80%' : 'Warm · 80% Match',
+      title: lang === 'ar'
+        ? 'احتياج مؤسسي حقيقي قيد إعداد الميزانية'
+        : 'Confirmed workforce pain; budget & timeline forming',
+      desc:
+        dict.provider_teaser?.tiers?.warm?.desc ||
+        'Confirmed pain and authority; budget or timeline still forming. We stay engaged to pass the lead when ready.',
+      canvasBg: 'bg-[#EAEFF5]', // soft blue-gray light tone
+      progressColor: 'bg-amber-500',
+      matchPct: '80%',
+      targetOrg: lang === 'ar' ? 'منشأة كبرى بدبي · مشروع #02' : 'Dubai Enterprise · Project #02',
+      criteria: [
+        { label: lang === 'ar' ? 'التحقق من الإدارة التنفيذية' : 'Executive Authority Validated', done: true },
+        { label: lang === 'ar' ? 'حجم المنشأة: +500 موظف' : '500+ Enterprise Workforce', done: true },
+        { label: lang === 'ar' ? 'الميزانية مجدولة للربع القادم' : 'Budget Staged for Q3', done: false },
+      ],
+      stickyTop: 'top-28 sm:top-36',
+      zIndex: 20,
     },
     {
-      icon: ShieldCheck,
-      name: dict.provider_teaser.tiers.qualified.name,
-      range: '50–69',
-      pct: '60%',
-      desc: dict.provider_teaser.tiers.qualified.desc,
-      cls: 'bg-accent/10 text-accent border-accent/20',
-      barColor: 'from-accent to-accent-secondary',
-      borderCls: 'border-s-accent',
+      step: lang === 'ar' ? 'المرحلة 03' : 'Step 3',
+      tierBadge: lang === 'ar' ? 'طلب مبكر · تطابق 60%' : 'Qualified · 60% Match',
+      title: lang === 'ar'
+        ? 'فرص تدريبية متوسطة المدى تتيح التمركز المبكر'
+        : 'Genuine need verified; earlier in the buying journey',
+      desc:
+        dict.provider_teaser?.tiers?.qualified?.desc ||
+        'Genuine need verified; earlier in the buying journey.',
+      canvasBg: 'bg-[#F0F2ED]', // soft sage-sand light tone
+      progressColor: 'bg-blue-500',
+      matchPct: '60%',
+      targetOrg: lang === 'ar' ? 'منشأة بالدوحة · مشروع #03' : 'Doha Enterprise · Project #03',
+      criteria: [
+        { label: lang === 'ar' ? 'توجه تدريبي استراتيجي محدد' : 'Strategic Training Need Identified', done: true },
+        { label: lang === 'ar' ? 'قطاع البنوك والخدمات المالية' : 'Banking & Financial Sector', done: true },
+        { label: lang === 'ar' ? 'نافذة تمركز وتسويق مبكر' : 'Early Positioning Window', done: false },
+      ],
+      stickyTop: 'top-32 sm:top-44',
+      zIndex: 30,
     },
   ];
 
   return (
-    <section className="relative bg-gradient-to-b from-white via-slate-50/70 to-white py-28 lg:py-40 overflow-hidden border-y border-slate-200/60">
-      <div className="absolute top-1/2 end-10 -translate-y-1/2 w-[650px] h-[450px] bg-gradient-to-r from-accent/10 via-accent-secondary/10 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
+    <section className="relative bg-gradient-to-b from-white via-slate-50/60 to-white py-20 sm:py-28 lg:py-36 overflow-hidden border-y border-slate-200/60">
+      {/* Subtle ambient light glow */}
+      <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-gradient-to-r from-accent/[0.04] via-accent-secondary/[0.03] to-accent/[0.04] blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
-      <div className="container-site relative z-10 grid items-center gap-14 lg:grid-cols-2 px-6 sm:px-8 lg:px-12">
-        <Reveal>
-          <div className="mb-6 inline-block">
-            <Badge variant="accent" icon={<Award size={14} className="text-accent" />}>
-              {dict.provider_teaser.badge}
-            </Badge>
-          </div>
-          <h2 className="text-3xl font-heading font-semibold sm:text-5xl text-slate-800 tracking-tight leading-[1.12]">
-            {dict.provider_teaser.headline}
-          </h2>
-          <p className="mt-6 text-lg leading-relaxed text-slate-600 font-sans">
-            {dict.provider_teaser.subtitle}
-          </p>
-          <div className="mt-10 flex gap-4">
-            <Button
-              href={`/${lang}/for-providers`}
-              variant="primary"
-              size="lg"
-              rightIcon={<ArrowRight size={17} className="rtl:-scale-x-100" />}
+      <div className="container-site relative z-10 px-4 sm:px-8 lg:px-12 mx-auto">
+        {/* Section Heading */}
+        <div className="mb-12 sm:mb-16 lg:mb-20 text-center max-w-[820px] mx-auto">
+          <SectionHeading
+            eyebrow={dict.provider_teaser?.badge || 'For Training Providers'}
+            title={dict.provider_teaser?.headline || 'A predictable pipeline of enterprise opportunities'}
+            subtitle={dict.provider_teaser?.subtitle || 'Every lead is scored on decision-maker verification, company size, budget, timeline, and depth of need.'}
+          />
+        </div>
+
+        {/* Odysser Stacking Cards Container */}
+        <div className="relative space-y-6 sm:space-y-10 max-w-5xl mx-auto pb-12">
+          {cards.map((card, i) => (
+            <div
+              key={card.step}
+              style={{ zIndex: card.zIndex }}
+              className={`sticky ${card.stickyTop} transform-gpu will-change-transform transition-all duration-300`}
             >
-              {dict.provider_teaser.btn}
-            </Button>
-          </div>
-        </Reveal>
-
-        <div className="space-y-5">
-          {tiers.map((t, i) => {
-            const Icon = t.icon;
-            return (
-              <Reveal key={t.name} delay={i * 0.12}>
-                <m.div
-                  whileHover={{ y: -4 }}
-                  className={`flex flex-col gap-3 p-6 rounded-2xl bg-white border border-slate-200/70 shadow-sm hover:border-slate-300 hover:shadow transition-all duration-300 border-s-4 ${t.borderCls} relative z-20 transform-gpu will-change-transform`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3.5">
-                      <span
-                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${t.cls}`}
-                      >
-                        <Icon size={20} />
+              <div className="rounded-[28px] sm:rounded-[36px] border border-slate-200/80 bg-white shadow-apple hover:shadow-xl p-6 sm:p-10 lg:p-12 transition-all duration-300">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                  
+                  {/* Left Column: Typography & Action */}
+                  <div className="lg:col-span-6 space-y-4">
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 rounded-full bg-[#0052FF] text-white text-xs font-semibold shadow-2xs">
+                        {card.step}
                       </span>
-                      <div>
-                        <p className="font-heading font-semibold text-lg text-slate-800 flex items-center gap-2">
-                          <span>{t.name}</span>
-                          <span className="text-xs font-mono font-medium text-slate-500 uppercase tracking-wide">
-                            Score {t.range}
-                          </span>
-                        </p>
-                      </div>
+                      <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-200/70">
+                        {card.tierBadge}
+                      </span>
                     </div>
-                    <Badge variant="slate">{t.pct} Match</Badge>
+
+                    <h3 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight leading-snug">
+                      {card.title}
+                    </h3>
+
+                    <p className="text-sm sm:text-base text-slate-600 font-normal leading-relaxed max-w-md">
+                      {card.desc}
+                    </p>
+
+                    <div className="pt-3">
+                      <Button
+                        href={`/${lang}/for-providers`}
+                        variant="primary"
+                        size="md"
+                        className="rounded-full shadow-sm hover:scale-[1.02] text-sm"
+                        rightIcon={<ArrowRight size={15} className="rtl:-scale-x-100" />}
+                      >
+                        {dict.provider_teaser?.btn || 'Explore the partnership'}
+                      </Button>
+                    </div>
                   </div>
 
-                  <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden mt-1">
-                    <m.div
-                      initial={{ width: '0%' }}
-                      whileInView={{ width: t.pct }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: i * 0.15 + 0.2 }}
-                      className={`h-full bg-gradient-to-r ${t.barColor} rounded-full`}
-                    />
+                  {/* Right Column: Light Odysser Visual Showcase Canvas */}
+                  <div className="lg:col-span-6 w-full">
+                    <div
+                      className={`w-full rounded-2xl sm:rounded-3xl border border-slate-200/80 ${card.canvasBg} p-6 sm:p-8 flex flex-col items-center justify-center relative overflow-hidden min-h-[250px] sm:min-h-[290px] shadow-inner`}
+                    >
+                      {/* Subtle micro dot texture overlay */}
+                      <div className="absolute inset-0 bg-dot-matrix opacity-10 pointer-events-none" />
+
+                      {/* Pure White Floating Glass Card */}
+                      <m.div
+                        initial={{ opacity: 0, y: 12 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        className="relative z-10 w-full max-w-xs rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-md p-5 sm:p-6 space-y-4"
+                      >
+                        <div className="pb-2 border-b border-slate-100">
+                          <span className="text-xs font-semibold text-slate-800">
+                            {card.targetOrg}
+                          </span>
+                        </div>
+
+                        {/* Animated Progress Bar */}
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between text-[11px] text-slate-500 font-medium">
+                            <span>{lang === 'ar' ? 'دقة التطابق' : 'Match Accuracy'}</span>
+                            <span className="font-mono font-semibold text-slate-800">{card.matchPct}</span>
+                          </div>
+                          <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                            <m.div
+                              initial={{ width: 0 }}
+                              whileInView={{ width: card.matchPct }}
+                              viewport={{ once: true }}
+                              transition={{ duration: 1.1, ease: 'easeOut', delay: 0.2 }}
+                              className={`h-full ${card.progressColor} rounded-full`}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Scored Criteria Checklist */}
+                        <div className="space-y-2 pt-1">
+                          {card.criteria.map((c) => (
+                            <div key={c.label} className="flex items-center gap-2 text-xs text-slate-600">
+                              {c.done ? (
+                                <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
+                              ) : (
+                                <Clock size={14} className="text-slate-400 shrink-0" />
+                              )}
+                              <span className="truncate">{c.label}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </m.div>
+                    </div>
                   </div>
 
-                  <p className="mt-1 text-sm leading-relaxed text-slate-600 font-sans">{t.desc}</p>
-                </m.div>
-              </Reveal>
-            );
-          })}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

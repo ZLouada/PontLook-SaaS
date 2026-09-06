@@ -48,13 +48,11 @@ const config: Config = {
         body: '#475569',
       },
       fontFamily: {
-        sans: ['var(--font-body)', 'Inter', 'system-ui', 'sans-serif'],
-        heading: ['var(--font-heading)', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-        arabic: ['var(--font-cairo)', 'Cairo', 'system-ui', 'sans-serif'],
-        body: ['var(--font-body)', 'Inter', 'system-ui', 'sans-serif'],
-        serif: ['var(--font-heading)', 'Plus Jakarta Sans', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        heading: ['var(--font-sans)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        arabic: ['var(--font-arabic)', 'var(--font-cairo)', 'Cairo', 'system-ui', 'sans-serif'],
+        body: ['var(--font-sans)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         mono: ['var(--font-mono)', 'JetBrains Mono', 'monospace'],
-        poppins: ['var(--font-heading)', 'Plus Jakarta Sans', 'sans-serif'],
       },
       boxShadow: {
         sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
@@ -66,6 +64,9 @@ const config: Config = {
         lifted: '0 10px 15px -3px rgba(0, 0, 0, 0.05)',
         accent: '0 2px 8px rgba(0, 82, 255, 0.2)',
         'accent-lg': '0 4px 14px rgba(0, 82, 255, 0.25)',
+        apple: '0 2px 12px rgba(0, 0, 0, 0.04), 0 20px 40px rgba(0, 0, 0, 0.03)',
+        pill: '0 8px 30px rgba(0, 0, 0, 0.07)',
+        'pill-scrolled': '0 12px 40px rgba(0, 0, 0, 0.12)',
       },
       borderRadius: {
         '2xl': '1rem',

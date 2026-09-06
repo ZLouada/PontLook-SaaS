@@ -101,6 +101,9 @@ export const en = {
   },
   final_cta: {
     badge: "Outsourced Growth Engine",
+    card_title: "Ready to discuss your training objectives?",
+    card_subtitle: "Connect directly with our enterprise advisory team to explore verified provider matching or discuss partnership opportunities across the GCC.",
+    btn_call: "Book a consultation",
     title: "Stop chasing. Start closing with companies that already need you.",
     subtitle: "Join the GCC’s intelligence-driven training marketplace — as a provider or as a buyer.",
     btn_provider: "Become a partner provider",

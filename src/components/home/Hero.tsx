@@ -13,8 +13,8 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.08,
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
     },
   },
 };
@@ -27,9 +27,9 @@ const itemVariants = {
     filter: 'blur(0px)',
     transition: {
       type: 'spring',
-      stiffness: 100,
-      damping: 18,
-      mass: 0.9,
+      stiffness: 120,
+      damping: 25,
+      mass: 0.8,
     },
   },
 };
@@ -40,26 +40,26 @@ export default function Hero() {
   const lang = (params?.lang as string) || 'en';
 
   return (
-    <section className="relative overflow-hidden bg-background pt-24 pb-14 sm:pt-28 sm:pb-20 lg:pt-36 lg:pb-36 min-h-[85vh] sm:min-h-[90vh] flex flex-col justify-center">
+    <section className="relative overflow-hidden bg-white pt-28 pb-14 sm:pt-32 sm:pb-20 lg:pt-40 lg:pb-32 min-h-[85vh] sm:min-h-[90vh] flex flex-col justify-center">
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <Image
           src="/skyline-bg.jpg"
           alt="GCC Corporate Business Skyline in Riyadh and Dubai"
           fill
-          className="object-cover scale-105 opacity-45"
+          className="object-cover scale-105 opacity-30"
           priority
         />
         <div
-          className="absolute inset-0 bg-background"
+          className="absolute inset-0 bg-white"
           style={{
-            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 50%, black 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 50%, black 100%)',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 50%, white 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 50%, white 100%)',
           }}
         />
 
-        <div className="absolute top-1/4 start-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-r from-accent/15 via-accent-secondary/10 to-accent/15 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
-        <div className="absolute top-10 start-1/4 w-[380px] h-[380px] bg-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
-        <div className="absolute bottom-10 end-1/4 w-[420px] h-[420px] bg-accent-secondary/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
+        <div className="absolute top-1/4 start-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-r from-accent/10 via-accent-secondary/5 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
+        <div className="absolute top-10 start-1/4 w-[380px] h-[380px] bg-accent/5 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
+        <div className="absolute bottom-10 end-1/4 w-[420px] h-[420px] bg-accent-secondary/5 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
       </div>
 
       <div className="container-site relative z-10 mx-auto flex flex-col items-center text-center px-4 sm:px-8 lg:px-12">
@@ -69,29 +69,47 @@ export default function Hero() {
           animate="visible"
           className="max-w-[960px] flex flex-col items-center transform-gpu will-change-transform"
         >
+          {/* Floating live GCC demand badge with vertical harmonic sine motion */}
+          <m.div
+            variants={itemVariants}
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 6, ease: 'easeInOut', repeat: Infinity }}
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-white/90 px-4 py-1.5 shadow-xs backdrop-blur-md"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
+            <span className="font-mono text-[11px] font-semibold text-slate-700 uppercase tracking-wider">
+              {lang === 'ar' ? 'طلبات تدريب مؤسسية نشطة في الخليج' : 'Live GCC Enterprise Training Demand'}
+            </span>
+          </m.div>
+
+          {/* Apple-grade Display Headline */}
           <m.h1
             variants={itemVariants}
-            className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-[72px] font-semibold tracking-normal sm:tracking-tight text-slate-800 leading-[1.18] sm:leading-[1.1]"
+            className="font-heading text-4xl sm:text-5xl lg:text-7xl font-semibold tracking-[-0.03em] leading-[1.08] text-slate-900"
           >
             {dict.hero.headline}
           </m.h1>
 
+          {/* Optical Subtitle */}
           <m.p
             variants={itemVariants}
-            className="mt-4 sm:mt-8 text-base sm:text-lg md:text-xl text-slate-600 max-w-[780px] leading-relaxed font-sans font-normal px-2 sm:px-0"
+            className="mt-5 sm:mt-6 text-base sm:text-lg text-slate-600 font-normal leading-[1.65] max-w-2xl px-2 sm:px-0"
           >
             {dict.hero.subtitle}
           </m.p>
 
           <m.div
             variants={itemVariants}
-            className="mt-7 sm:mt-10 flex flex-col w-full sm:w-auto sm:flex-row items-center gap-3 sm:gap-5"
+            className="mt-8 sm:mt-10 flex flex-col w-full sm:w-auto sm:flex-row items-center gap-3 sm:gap-4"
           >
             <Button
               href={`/${lang}/for-providers`}
               variant="primary"
               size="lg"
-              className="w-full sm:w-auto py-4 sm:py-3.5 justify-center"
+              className="w-full sm:w-auto py-4 sm:py-3.5 justify-center min-h-[48px]"
               leftIcon={<Building2 size={18} className="text-white/90" />}
               rightIcon={<ArrowRight size={17} className="rtl:-scale-x-100" />}
             >
@@ -102,19 +120,20 @@ export default function Hero() {
               href={`/${lang}/find-training`}
               variant="secondary"
               size="lg"
-              className="w-full sm:w-auto py-4 sm:py-3.5 justify-center"
+              className="w-full sm:w-auto py-4 sm:py-3.5 justify-center min-h-[48px]"
               leftIcon={<Target size={18} className="text-slate-700" />}
             >
               {dict.hero.btn_buyer}
             </Button>
           </m.div>
 
+          {/* Value proposition badges */}
           <m.div
             variants={itemVariants}
-            className="mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-slate-200/70 w-full max-w-2xl grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 text-center"
+            className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-slate-200/70 w-full max-w-2xl grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 text-center"
           >
-            <div className="bg-slate-50/70 sm:bg-transparent rounded-2xl p-3 sm:p-0 border border-slate-200/60 sm:border-0">
-              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-800 flex items-center justify-center gap-1 sm:gap-1.5">
+            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 border border-slate-200/80 shadow-apple">
+              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-900 flex items-center justify-center gap-1 sm:gap-1.5">
                 <ShieldCheck size={16} className="text-accent shrink-0 sm:h-[18px] sm:w-[18px]" />
                 <span>{dict.hero.badges?.verified_deciders?.value || '100%'}</span>
               </div>
@@ -122,8 +141,8 @@ export default function Hero() {
                 {dict.hero.badges?.verified_deciders?.label || 'Verified Decision-Makers'}
               </p>
             </div>
-            <div className="bg-slate-50/70 sm:bg-transparent rounded-2xl p-3 sm:p-0 border border-slate-200/60 sm:border-0">
-              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-800 flex items-center justify-center gap-1 sm:gap-1.5">
+            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 border border-slate-200/80 shadow-apple">
+              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-900 flex items-center justify-center gap-1 sm:gap-1.5">
                 <TrendingUp size={16} className="text-emerald-500 shrink-0 sm:h-[18px] sm:w-[18px]" />
                 <span>{dict.hero.badges?.zero_retainer?.value || 'Zero'}</span>
               </div>
@@ -131,8 +150,8 @@ export default function Hero() {
                 {dict.hero.badges?.zero_retainer?.label || 'Monthly Retainer Risk'}
               </p>
             </div>
-            <div className="bg-slate-50/70 sm:bg-transparent rounded-2xl p-3 sm:p-0 border border-slate-200/60 sm:border-0">
-              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-800 flex items-center justify-center gap-1 sm:gap-1.5">
+            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 border border-slate-200/80 shadow-apple">
+              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-900 flex items-center justify-center gap-1 sm:gap-1.5">
                 <CheckCircle2 size={16} className="text-blue-500 shrink-0 sm:h-[18px] sm:w-[18px]" />
                 <span>{dict.hero.badges?.match_rate?.value || '92%'}</span>
               </div>
@@ -140,8 +159,8 @@ export default function Hero() {
                 {dict.hero.badges?.match_rate?.label || 'Leads Reach Meetings'}
               </p>
             </div>
-            <div className="bg-slate-50/70 sm:bg-transparent rounded-2xl p-3 sm:p-0 border border-slate-200/60 sm:border-0">
-              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-800 flex items-center justify-center gap-1 sm:gap-1.5">
+            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 border border-slate-200/80 shadow-apple">
+              <div className="text-lg sm:text-2xl font-mono font-bold text-slate-900 flex items-center justify-center gap-1 sm:gap-1.5">
                 <Building2 size={16} className="text-accent-secondary shrink-0 sm:h-[18px] sm:w-[18px]" />
                 <span>{dict.hero.badges?.markets_covered?.value || '6'}</span>
               </div>

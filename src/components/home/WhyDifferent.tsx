@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import SectionHeading from '@/components/shared/SectionHeading';
 import Card from '@/components/shared/Card';
 import {
@@ -45,6 +46,46 @@ const cardVariants = {
   },
 };
 
+function SpotlightCard({
+  children,
+  className = '',
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  return (
+    <div
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-apple transition-all duration-300 hover:shadow-xl hover:border-[#0052FF]/30 ${className}`}
+    >
+      <div
+        className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{
+          background: isHovered
+            ? `radial-gradient(450px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 82, 255, 0.08), transparent 70%)`
+            : undefined,
+        }}
+      />
+      <div className="relative z-10 flex flex-col h-full justify-between">
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export default function WhyDifferent() {
   const dict = useDictionary();
   const params = useParams();
@@ -53,10 +94,11 @@ export default function WhyDifferent() {
   const items = [
     {
       icon: Target,
+      span: 'lg:col-span-8',
       title: dict.why_different?.cards?.evidence?.title || 'Intelligence-driven targeting',
       text: dict.why_different?.cards?.evidence?.text || 'We find demand signals in the market, not lists to spam. Every opportunity starts with evidence.',
       mockup: (
-        <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-sm border border-slate-200/80 w-4/5 p-4 flex flex-col gap-2.5">
+        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 w-full p-4 flex flex-col gap-2.5">
           <div className="flex items-center gap-3 mb-1">
             <div className="h-8 w-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center font-bold">
               <Search size={14} />
@@ -67,10 +109,10 @@ export default function WhyDifferent() {
             </div>
           </div>
           <div className="flex gap-2">
-            <span className="px-2 py-0.5 rounded-md bg-accent/10 text-accent text-[10px] font-mono font-bold border border-accent/20">
+            <span className="px-2.5 py-0.5 rounded-md bg-accent/10 text-accent text-[10px] font-mono font-bold border border-accent/20">
               Leadership Need
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-600 text-[10px] font-mono font-bold border border-emerald-100">
+            <span className="px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-600 text-[10px] font-mono font-bold border border-emerald-100">
               Verified Budget
             </span>
           </div>
@@ -79,10 +121,11 @@ export default function WhyDifferent() {
     },
     {
       icon: ShieldCheck,
+      span: 'lg:col-span-4',
       title: dict.why_different?.cards?.pain?.title || 'Verified business pain',
       text: dict.why_different?.cards?.pain?.text || 'Each challenge is confirmed directly with the company before it ever reaches a provider.',
       mockup: (
-        <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-sm border border-slate-200/80 w-4/5 p-4 flex flex-col gap-2">
+        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 w-full p-4 flex flex-col gap-2">
           <div className="text-[11px] font-bold text-slate-800 mb-1 border-b border-slate-100 pb-2 font-sans">
             Verification Status
           </div>
@@ -103,10 +146,11 @@ export default function WhyDifferent() {
     },
     {
       icon: Building2,
+      span: 'lg:col-span-4',
       title: dict.why_different?.cards?.deciders?.title || 'Validated decision-makers',
       text: dict.why_different?.cards?.deciders?.text || 'You talk to the CHRO, CEO, or L&D owner with authority to buy, not a gatekeeper.',
       mockup: (
-        <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-sm border border-slate-200/70 w-4/5 p-4 flex items-center gap-3.5">
+        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/70 w-full p-4 flex items-center gap-3.5">
           <div className="h-10 w-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center font-bold relative shrink-0">
             <User size={18} />
             <div className="absolute -bottom-1 -right-1 bg-emerald-500 text-white rounded-full p-0.5 border border-white">
@@ -127,10 +171,11 @@ export default function WhyDifferent() {
     },
     {
       icon: Award,
+      span: 'lg:col-span-8',
       title: dict.why_different?.cards?.qualified?.title || 'Qualified opportunities only',
       text: dict.why_different?.cards?.qualified?.text || 'Budget, timeline, and scope checked. If it does not meet the bar, you never see it.',
       mockup: (
-        <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-sm border border-emerald-200/80 w-4/5 p-4 relative overflow-hidden">
+        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-emerald-200/80 w-full p-4 relative overflow-hidden">
           <div className="text-[11px] font-bold text-emerald-700 mb-2 font-sans flex items-center justify-between">
             <span>Ready for Matching</span>
             <CheckSquare size={13} className="text-emerald-600" />
@@ -154,10 +199,11 @@ export default function WhyDifferent() {
     },
     {
       icon: BadgeDollarSign,
+      span: 'lg:col-span-6',
       title: dict.why_different?.cards?.retainers?.title || 'No retainers',
       text: dict.why_different?.cards?.retainers?.text || 'Pay per qualified lead ($50–$200). Zero monthly retainers. Your investment directly tracks your qualified pipeline.',
       mockup: (
-        <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-sm border border-slate-200/80 w-4/5 p-4 flex flex-col gap-2.5">
+        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 w-full p-4 flex flex-col gap-2.5">
           <div className="flex justify-between items-center">
             <span className="text-[11px] font-bold text-slate-800 font-sans">Pricing Model</span>
             <FileText size={13} className="text-accent" />
@@ -178,18 +224,22 @@ export default function WhyDifferent() {
     },
     {
       icon: TrendingUp,
-      title: dict.why_different?.cards?.gcc?.title || 'GCC specialization',
-      text: dict.why_different?.cards?.gcc?.text || 'Saudi Arabia, UAE, and the GCC: aligned with Saudization, Emiratization compliance mandates, and regional corporate frameworks.',
+      span: 'lg:col-span-6',
+      title: dict.why_different?.cards?.gcc?.title || 'Pure GCC Focus',
+      text: dict.why_different?.cards?.gcc?.text || 'Saudi Arabia, UAE, Qatar, Kuwait, Bahrain, Oman. Built specifically for GCC market dynamics, localization mandates, and Vision 2030 initiatives.',
       mockup: (
-        <div className="relative w-4/5 aspect-[2/1] bg-slate-50/80 rounded-xl overflow-hidden border border-slate-200/80 flex items-center justify-center">
+        <div className="relative w-full aspect-[2/1] bg-slate-50/80 rounded-2xl overflow-hidden border border-slate-200/80 flex items-center justify-center">
           <div className="flex flex-col items-center gap-1.5 z-10">
             <MapPin size={20} className="text-accent" />
-            <div className="flex gap-2">
-              <span className="px-2 py-0.5 bg-white border border-slate-200 shadow-xs rounded text-[9px] font-bold text-slate-800">
+            <div className="flex flex-wrap justify-center gap-1.5">
+              <span className="px-2 py-0.5 bg-white border border-slate-200 shadow-2xs rounded-md text-[10px] font-bold text-slate-800">
                 Saudi Arabia
               </span>
-              <span className="px-2 py-0.5 bg-white border border-slate-200 shadow-xs rounded text-[9px] font-bold text-slate-800">
+              <span className="px-2 py-0.5 bg-white border border-slate-200 shadow-2xs rounded-md text-[10px] font-bold text-slate-800">
                 UAE
+              </span>
+              <span className="px-2 py-0.5 bg-white border border-slate-200 shadow-2xs rounded-md text-[10px] font-bold text-slate-800">
+                Qatar & GCC
               </span>
             </div>
           </div>
@@ -215,40 +265,48 @@ export default function WhyDifferent() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
-          className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3"
+          className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8"
         >
           {items.map((it) => {
             const Icon = it.icon;
             return (
-              <m.div key={it.title} variants={cardVariants} className="transform-gpu will-change-transform">
-                <Card className="flex flex-col h-full group cursor-pointer">
-                  <div className="mb-6">
-                    <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent transition-colors duration-200 group-hover:bg-accent group-hover:text-white border border-accent/20">
-                      <Icon size={24} />
-                    </span>
+              <m.div
+                key={it.title}
+                variants={cardVariants}
+                className={`md:col-span-12 ${it.span} transform-gpu will-change-transform flex flex-col`}
+              >
+                <SpotlightCard className="h-full">
+                  <div>
+                    <div className="mb-5 sm:mb-6">
+                      <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent transition-colors duration-200 group-hover:bg-accent group-hover:text-white border border-accent/20">
+                        <Icon size={24} />
+                      </span>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-heading font-semibold text-slate-900 leading-tight mb-3 transition-colors">
+                      {it.title}
+                    </h3>
+                    <p className="text-base text-slate-600 font-sans leading-relaxed tracking-normal mb-6">
+                      {it.text}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-heading font-semibold text-slate-800 leading-tight mb-3 transition-colors">
-                    {it.title}
-                  </h3>
-                  <p className="text-base text-slate-600 font-sans leading-relaxed tracking-wide mb-8 flex-1">
-                    {it.text}
-                  </p>
 
-                  <div className="w-full aspect-[16/9] rounded-xl bg-slate-50/90 border border-slate-200/60 flex items-center justify-center overflow-hidden mb-6 relative z-10 shadow-inner">
-                    {it.mockup}
+                  <div className="mt-auto pt-2">
+                    <div className="w-full rounded-2xl bg-slate-50/80 border border-slate-200/60 p-2 sm:p-3 flex items-center justify-center overflow-hidden mb-6 shadow-inner">
+                      {it.mockup}
+                    </div>
+
+                    <Link
+                      href={`/${lang}/for-providers`}
+                      className="inline-flex items-center text-sm font-semibold text-accent group-hover:text-accent-secondary transition-colors"
+                    >
+                      {lang === 'ar' ? 'اكتشف آلية العمل' : 'Explore how it works'}{' '}
+                      <ChevronRight
+                        size={16}
+                        className="ms-1 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100"
+                      />
+                    </Link>
                   </div>
-
-                  <Link
-                    href={`/${lang}/for-providers`}
-                    className="inline-flex items-center text-sm font-semibold text-accent group-hover:text-accent-secondary transition-colors"
-                  >
-                    {lang === 'ar' ? 'اكتشف آلية العمل' : 'Explore how it works'}{' '}
-                    <ChevronRight
-                      size={16}
-                      className="ms-1 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100"
-                    />
-                  </Link>
-                </Card>
+                </SpotlightCard>
               </m.div>
             );
           })}
