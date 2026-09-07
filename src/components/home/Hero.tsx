@@ -1,11 +1,9 @@
 'use client';
 
-import { m } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Building2, ArrowRight, Target } from 'lucide-react';
 import Button from '@/components/shared/Button';
-import Badge from '@/components/shared/Badge';
 
 export default function Hero() {
   const dict = useDictionary();
@@ -36,21 +34,6 @@ export default function Hero() {
 
       <div className="container-site relative z-10 mx-auto flex flex-col items-center text-center px-4 sm:px-8 lg:px-12">
         <div className="max-w-[960px] flex flex-col items-center">
-          {/* Floating live GCC demand badge with vertical harmonic sine motion */}
-          <m.div
-            animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 6, ease: 'easeInOut', repeat: Infinity }}
-            className="mb-4 sm:mb-5 inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-white/90 px-3.5 sm:px-4 py-1.5 shadow-xs backdrop-blur-md"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            <span className="font-mono text-[10px] sm:text-[11px] font-semibold text-slate-700 uppercase tracking-wider">
-              {lang === 'ar' ? 'طلبات تدريب مؤسسية نشطة في الخليج' : 'Live GCC Enterprise Training Demand'}
-            </span>
-          </m.div>
-
           {/* Apple-grade Display Headline - immediately painted for instant LCP */}
           <h1
             className="font-heading text-[30px] sm:text-5xl lg:text-6xl xl:text-[68px] font-semibold tracking-[-0.03em] leading-[1.12] sm:leading-[1.08] text-slate-900"
