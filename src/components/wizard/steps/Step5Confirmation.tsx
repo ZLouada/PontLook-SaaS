@@ -134,71 +134,71 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
       transition={{ duration: 0.4 }}
       className="space-y-8"
     >
-      <div className="rounded-3xl border border-emerald-500/30 bg-gradient-to-b from-emerald-950/40 to-slate-900/60 p-6 text-center sm:p-8 backdrop-blur-xl">
-        <div className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-slate-900/80 px-4 py-1.5 shadow-sm">
+      <div className="rounded-3xl border border-emerald-200 bg-gradient-to-b from-emerald-50/90 to-teal-50/40 p-6 text-center sm:p-8">
+        <div className="inline-flex items-center gap-2.5 rounded-full border border-emerald-300/80 bg-white px-4 py-1.5 shadow-sm">
           <span className="relative flex h-3 w-3">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500" />
           </span>
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
             Matching in Progress · 120+ Vetted GCC Providers
           </span>
         </div>
 
-        <h2 className="font-heading mt-5 text-2xl font-semibold tracking-normal text-white sm:text-3xl">
+        <h2 className="font-heading mt-5 text-2xl font-semibold tracking-normal text-slate-800 sm:text-3xl">
           Enterprise Scope Received. Matching Begins Now.
         </h2>
-        <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-slate-300">
-          Thank you, <strong className="text-white">{data.fullName || 'Leader'}</strong>. Your training specifications for <strong className="text-white">{data.organizationName || 'your organization'}</strong> have been prioritized in our qualification queue.
+        <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-slate-600">
+          Thank you, <strong className="text-slate-800">{data.fullName || 'Leader'}</strong>. Your training specifications for <strong className="text-slate-800">{data.organizationName || 'your organization'}</strong> have been prioritized in our qualification queue.
         </p>
 
         <div className="mt-8 grid gap-4 text-start sm:grid-cols-3">
-          <div className="relative rounded-2xl border border-white/10 bg-slate-900/80 backdrop-blur-xl p-5 shadow-sm">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-900/40 text-blue-400">
+          <div className="relative rounded-2xl border border-emerald-100 bg-white/90 p-5 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
               <Clock size={20} />
             </div>
             <div className="mt-3">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-400">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-600">
                 Milestone 1 · Within 24 Hours
               </span>
-              <h3 className="font-heading mt-0.5 text-sm font-semibold text-white">
+              <h3 className="font-heading mt-0.5 text-sm font-semibold text-slate-800">
                 Partner Availability Check
               </h3>
-              <p className="mt-1 text-xs text-slate-300">
+              <p className="mt-1 text-xs text-slate-600">
                 Our GCC matching team audits trainer accreditations and schedule slots.
               </p>
             </div>
           </div>
 
-          <div className="relative rounded-2xl border border-white/10 bg-slate-900/80 backdrop-blur-xl p-5 shadow-sm">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-900/40 text-emerald-400">
+          <div className="relative rounded-2xl border border-emerald-100 bg-white/90 p-5 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
               <MailCheck size={20} />
             </div>
             <div className="mt-3">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-400">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600">
                 Milestone 2 · Within 48 Hours
               </span>
-              <h3 className="font-heading mt-0.5 text-sm font-semibold text-white">
+              <h3 className="font-heading mt-0.5 text-sm font-semibold text-slate-800">
                 2–3 Itemized Proposals
               </h3>
-              <p className="mt-1 text-xs text-slate-300">
+              <p className="mt-1 text-xs text-slate-600">
                 Receive customized syllabi, pricing breakdown, and lead instructor bios.
               </p>
             </div>
           </div>
 
-          <div className="relative rounded-2xl border border-white/10 bg-slate-900/80 backdrop-blur-xl p-5 shadow-sm">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-900/40 text-purple-400">
+          <div className="relative rounded-2xl border border-emerald-100 bg-white/90 p-5 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <ShieldCheck size={20} />
             </div>
             <div className="mt-3">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-400">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-primary">
                 Milestone 3 · Zero Obligation
               </span>
-              <h3 className="font-heading mt-0.5 text-sm font-semibold text-white">
+              <h3 className="font-heading mt-0.5 text-sm font-semibold text-slate-800">
                 Instructor Interview & Terms
               </h3>
-              <p className="mt-1 text-xs text-slate-300">
+              <p className="mt-1 text-xs text-slate-600">
                 Interview lead facilitators before committing. 100% free service for companies.
               </p>
             </div>
@@ -206,23 +206,23 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
         </div>
       </div>
 
-      <div className="rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6 shadow-xl sm:p-7">
+      <div className="rounded-3xl border border-slate-200/70 bg-white p-6 shadow-sm sm:p-7">
         <div className="flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
           <div className="flex items-start gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-900/40 text-blue-400">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
               <FileText size={24} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="rounded-full bg-blue-900/60 border border-blue-500/30 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-blue-300">
+                <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-blue-800">
                   Instant Executive Resource
                 </span>
                 <span className="text-xs text-slate-400">PDF Report</span>
               </div>
-              <h3 className="font-heading mt-1 text-base font-semibold text-white">
+              <h3 className="font-heading mt-1 text-base font-semibold text-slate-800">
                 PontLook 2026 GCC Corporate Training Benchmark Report
               </h3>
-              <p className="mt-0.5 text-xs text-slate-300">
+              <p className="mt-0.5 text-xs text-slate-600">
                 Comprehensive data on enterprise training rates, instructor accreditations, and Saudization/Emiratization ROI.
               </p>
             </div>
@@ -232,13 +232,13 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
             type="button"
             onClick={handleDownloadReport}
             disabled={downloading}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-5 py-3.5 text-xs font-bold text-slate-950 shadow-xl transition-all hover:bg-slate-100 active:scale-[0.99] sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3.5 text-xs font-bold text-white shadow transition-all hover:bg-slate-800 active:scale-[0.99] sm:w-auto"
           >
             {downloading ? (
               <span>Preparing Report...</span>
             ) : downloadSuccess ? (
               <>
-                <CheckCircle2 size={16} className="text-emerald-500" />
+                <CheckCircle2 size={16} className="text-emerald-400" />
                 <span>Downloaded Successfully</span>
               </>
             ) : (
@@ -251,50 +251,50 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
         </div>
       </div>
 
-      <div className="rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6 sm:p-7">
-        <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-slate-400">
+      <div className="rounded-3xl border border-slate-200/70 bg-slate-50/70 p-6 sm:p-7">
+        <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-slate-600">
           Submitted Request Scope
         </h3>
 
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3.5 shadow-sm">
+          <div className="rounded-xl border border-slate-200/70 bg-white p-3.5 shadow-sm">
             <span className="text-[11px] font-medium text-slate-400">Training Domains</span>
-            <p className="mt-1 text-xs font-semibold text-white">
+            <p className="mt-1 text-xs font-semibold text-slate-800">
               {selectedDomainNames.join(', ') || 'Leadership Development'}
             </p>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3.5 shadow-sm">
+          <div className="rounded-xl border border-slate-200/70 bg-white p-3.5 shadow-sm">
             <span className="text-[11px] font-medium text-slate-400">Format & Location</span>
-            <p className="mt-1 text-xs font-semibold text-white">
+            <p className="mt-1 text-xs font-semibold text-slate-800">
               {deliveryModeName} {data.city ? `· ${data.city}` : ''}
             </p>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3.5 shadow-sm">
+          <div className="rounded-xl border border-slate-200/70 bg-white p-3.5 shadow-sm">
             <span className="text-[11px] font-medium text-slate-400">Cohort Scale & Horizon</span>
-            <p className="mt-1 text-xs font-semibold text-white">
+            <p className="mt-1 text-xs font-semibold text-slate-800">
               {cohortName} · {timelineName}
             </p>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3.5 shadow-sm">
+          <div className="rounded-xl border border-slate-200/70 bg-white p-3.5 shadow-sm">
             <span className="text-[11px] font-medium text-slate-400">Budget Tier</span>
-            <p className="mt-1 text-xs font-semibold text-white">
+            <p className="mt-1 text-xs font-semibold text-slate-800">
               {budgetName}
             </p>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3.5 shadow-sm">
+          <div className="rounded-xl border border-slate-200/70 bg-white p-3.5 shadow-sm">
             <span className="text-[11px] font-medium text-slate-400">Organization</span>
-            <p className="mt-1 text-xs font-semibold text-white">
+            <p className="mt-1 text-xs font-semibold text-slate-800">
               {data.organizationName || 'N/A'} · {data.country || 'GCC'}
             </p>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3.5 shadow-sm">
+          <div className="rounded-xl border border-slate-200/70 bg-white p-3.5 shadow-sm">
             <span className="text-[11px] font-medium text-slate-400">Verification Email</span>
-            <p className="mt-1 text-xs font-semibold text-white">
+            <p className="mt-1 text-xs font-semibold text-slate-800">
               {data.workEmail || 'N/A'}
             </p>
           </div>
@@ -304,16 +304,16 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
       <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-blue-400 hover:text-blue-300"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700"
         >
           <span>← Back to PontLook Home</span>
         </Link>
 
-        <div className="flex items-center gap-4 text-xs text-slate-400">
+        <div className="flex items-center gap-4 text-xs text-slate-500">
           <span>Need immediate assistance?</span>
           <Link
             href="/contact"
-            className="font-semibold text-slate-200 underline hover:text-blue-400"
+            className="font-semibold text-slate-800 underline hover:text-blue-600"
           >
             Contact Matching Desk
           </Link>

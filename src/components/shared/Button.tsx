@@ -43,11 +43,11 @@ export default function Button({
     primary:
       'bg-gradient-to-r from-accent to-accent-secondary text-white shadow-sm hover:shadow border border-transparent',
     secondary:
-      'bg-white text-slate-950 border border-white/10 shadow-xl hover:bg-slate-100 hover:shadow-2xl font-semibold',
+      'bg-white text-slate-800 border border-slate-200/90 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:shadow',
     outline:
-      'bg-transparent border border-white/20 text-white hover:bg-white/10',
+      'bg-transparent border border-slate-200/80 text-slate-800 hover:bg-slate-50 hover:border-slate-300',
     dark:
-      'bg-slate-800 text-white border border-white/10 shadow-sm hover:bg-slate-700',
+      'bg-slate-800 text-white border border-slate-700 shadow-sm hover:bg-slate-700',
   }[variant];
 
   const baseClasses = `inline-flex items-center justify-center rounded-full transition-all duration-300 transform-gpu cursor-pointer select-none ${sizeClasses} ${variantClasses} ${className}`;

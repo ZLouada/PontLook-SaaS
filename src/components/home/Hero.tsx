@@ -11,39 +11,39 @@ export default function Hero() {
   const lang = (params?.lang as string) || 'en';
 
   return (
-    <section className="relative overflow-hidden bg-transparent pt-28 pb-12 sm:pt-36 sm:pb-16 min-h-[70vh] sm:min-h-[75vh] flex flex-col justify-center">
+    <section className="relative overflow-hidden bg-white pt-28 pb-10 sm:pt-32 sm:pb-12 lg:pt-36 lg:pb-14 flex flex-col justify-center">
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div
-          className="absolute inset-0 bg-cover bg-center scale-105 opacity-20"
+          className="absolute inset-0 bg-cover bg-center scale-105 opacity-30"
           style={{
             backgroundImage: "url('/skyline-bg.webp')",
           }}
         />
         <div
-          className="absolute inset-0 bg-[#020617]/70"
+          className="absolute inset-0 bg-white"
           style={{
-            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 50%, #020617 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 50%, #020617 100%)',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 50%, white 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 50%, white 100%)',
           }}
         />
 
-        <div className="absolute top-1/4 start-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-r from-blue-600/20 via-blue-400/10 to-blue-600/20 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
-        <div className="absolute top-10 start-1/4 w-[380px] h-[380px] bg-blue-500/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
-        <div className="absolute bottom-10 end-1/4 w-[420px] h-[420px] bg-blue-600/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
+        <div className="absolute top-1/4 start-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-r from-accent/10 via-accent-secondary/5 to-accent/10 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
+        <div className="absolute top-10 start-1/4 w-[380px] h-[380px] bg-accent/5 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
+        <div className="absolute bottom-10 end-1/4 w-[420px] h-[420px] bg-accent-secondary/5 blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
       </div>
 
       <div className="container-site relative z-10 mx-auto flex flex-col items-center text-center px-4 sm:px-8 lg:px-12">
         <div className="max-w-[960px] flex flex-col items-center pt-2 sm:pt-4 lg:pt-6">
           {/* Apple-grade Display Headline - immediately painted for instant LCP */}
           <h1
-            className="font-heading text-[30px] sm:text-5xl lg:text-6xl xl:text-[68px] font-semibold tracking-tight leading-[1.12] sm:leading-[1.08] text-white"
+            className="font-heading text-[30px] sm:text-5xl lg:text-6xl xl:text-[68px] font-semibold tracking-[-0.03em] leading-[1.12] sm:leading-[1.08] text-slate-900"
           >
             {dict.hero.headline}
           </h1>
 
           {/* Optical Subtitle */}
           <p
-            className="mt-3.5 sm:mt-4 text-sm sm:text-base lg:text-lg text-slate-300 font-normal leading-relaxed max-w-2xl px-1 sm:px-0"
+            className="mt-3.5 sm:mt-4 text-sm sm:text-base lg:text-lg text-slate-600 font-normal leading-relaxed max-w-2xl px-1 sm:px-0"
           >
             {dict.hero.subtitle}
           </p>
@@ -67,7 +67,7 @@ export default function Hero() {
               variant="secondary"
               size="lg"
               className="w-full sm:w-auto py-4 sm:py-3.5 justify-center min-h-[48px] active:scale-[0.98]"
-              leftIcon={<Target size={18} className="text-slate-950" />}
+              leftIcon={<Target size={18} className="text-slate-700" />}
             >
               {dict.hero.btn_buyer}
             </Button>

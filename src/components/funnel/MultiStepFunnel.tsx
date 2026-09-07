@@ -359,11 +359,11 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
 
   if (!hydrated) {
     return (
-      <div className="w-full rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-5 shadow-2xl sm:p-12">
+      <div className="w-full rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-12">
         <div className="flex animate-pulse flex-col items-center space-y-4">
-          <div className="h-6 w-48 rounded-full bg-slate-700" />
-          <div className="h-4 w-72 rounded-full bg-slate-800" />
-          <div className="mt-8 h-64 w-full rounded-2xl bg-slate-800/60" />
+          <div className="h-6 w-48 rounded-full bg-slate-200" />
+          <div className="h-4 w-72 rounded-full bg-slate-100" />
+          <div className="mt-8 h-64 w-full rounded-2xl bg-slate-100" />
         </div>
       </div>
     );
@@ -383,26 +383,26 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       className={`w-full space-y-4 sm:space-y-6 ${className}`}
       dir={dict.dir}
     >
-      <div className="rounded-2xl sm:rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-3.5 sm:p-6 shadow-2xl text-white">
+      <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-3.5 sm:p-6 shadow-sm">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="flex h-6 w-6 sm:h-7 sm:w-7 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-xs font-semibold text-white shadow-sm">
+            <span className="flex h-6 w-6 sm:h-7 sm:w-7 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-xs font-semibold text-white">
               {currentStep}
             </span>
-            <span className="text-xs sm:text-sm font-semibold text-white shrink-0">
+            <span className="text-xs sm:text-sm font-semibold text-slate-800 shrink-0">
               {lang === 'ar' ? `الخطوة ${currentStep}/4:` : `Step ${currentStep}/4:`}
             </span>
-            <span className="text-xs sm:text-sm font-medium text-slate-300 truncate">
+            <span className="text-xs sm:text-sm font-medium text-slate-600 truncate">
               {lang === 'ar' ? STEP_TITLES[currentStep - 1]?.titleAr : STEP_TITLES[currentStep - 1]?.titleEn}
             </span>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-slate-400">
-              <Clock size={12} className="text-blue-400 shrink-0" />
+            <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-slate-500">
+              <Clock size={12} className="text-blue-600 shrink-0" />
               <span>{dict.scaffolding.estimatedTime}</span>
             </span>
-            <span className="hidden items-center gap-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-400 sm:inline-flex">
+            <span className="hidden items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 sm:inline-flex">
               <ShieldCheck size={12} />
               <span>{dict.scaffolding.autoSaving}</span>
             </span>
@@ -416,7 +416,7 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
 
             return (
               <div key={def.step} className="space-y-1 sm:space-y-1.5">
-                <div className="h-1.5 sm:h-2 w-full overflow-hidden rounded-full bg-slate-800">
+                <div className="h-1.5 sm:h-2 w-full overflow-hidden rounded-full bg-slate-100">
                   <div
                     className={`h-full transition-all duration-300 ${
                       isCompleted || isCurrent ? 'bg-blue-600' : 'bg-transparent'
@@ -428,10 +428,10 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
                   <span
                     className={`text-[11px] font-semibold uppercase tracking-wider ${
                       isCurrent
-                        ? 'text-blue-400'
+                        ? 'text-blue-600'
                         : isCompleted
-                        ? 'text-slate-300'
-                        : 'text-slate-500'
+                        ? 'text-slate-700'
+                        : 'text-slate-400'
                     }`}
                   >
                     {lang === 'ar' ? def.titleAr : def.titleEn}
@@ -443,9 +443,9 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
         </div>
       </div>
 
-      <div className="relative rounded-2xl sm:rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-4 sm:p-8 md:p-10 shadow-2xl text-white">
+      <div className="relative rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-4 sm:p-8 md:p-10 shadow-sm">
         {submissionError && (
-          <div className="mb-6 rounded-xl border border-red-500/30 bg-red-950/40 p-4 text-xs font-medium text-red-400" role="alert">
+          <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-xs font-medium text-red-700" role="alert">
             {submissionError}
           </div>
         )}

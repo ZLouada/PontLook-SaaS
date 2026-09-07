@@ -88,12 +88,12 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
     >
       <div>
         <div className="flex items-center gap-2">
-          <ShieldCheck size={22} className="text-emerald-400" />
-          <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
+          <ShieldCheck size={22} className="text-emerald-600" />
+          <h2 className="font-heading text-xl font-semibold tracking-normal text-slate-800 sm:text-2xl">
             Enterprise Verification & Contact Details
           </h2>
         </div>
-        <p className="mt-1 text-sm text-slate-300">
+        <p className="mt-1 text-sm text-slate-600">
           We only release curated proposals to verified corporate decision-makers.
         </p>
       </div>
@@ -140,7 +140,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
         />
 
         <div className="w-full">
-          <label htmlFor="country" className="mb-2 block text-sm font-semibold text-white">
+          <label htmlFor="country" className="mb-2 block text-sm font-semibold text-slate-800">
             Primary Country of Operation
           </label>
           <div className="relative">
@@ -151,17 +151,17 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
               id="country"
               value={selectedCountry}
               onChange={handleCountryChange}
-              className="w-full rounded-xl border border-white/10 bg-slate-800/80 px-4 py-3.5 ps-11 text-base sm:text-sm font-medium text-white shadow-sm transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 ps-11 text-base sm:text-sm font-medium text-slate-800 shadow-sm transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               {GCC_COUNTRIES.map((c) => (
-                <option key={c.code} value={c.name} className="bg-slate-900 text-white">
+                <option key={c.code} value={c.name}>
                   {c.flag} {c.name}
                 </option>
               ))}
             </select>
           </div>
           {errors.country && (
-            <p className="mt-1.5 text-xs font-medium text-red-400" role="alert">
+            <p className="mt-1.5 text-xs font-medium text-red-600" role="alert">
               {errors.country.message}
             </p>
           )}
@@ -179,17 +179,17 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
 
       <input type="text" {...register('_gotcha')} style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 
-      <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/20 backdrop-blur-xl p-4 sm:p-5">
+      <div className="rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50/90 via-teal-50/60 to-emerald-50/40 p-4 sm:p-5">
         <div className="flex items-start gap-3.5">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-sm">
             <Lock size={18} />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-emerald-300">
+            <h4 className="text-sm font-bold text-emerald-950">
               Enterprise Confidentiality Guarantee
             </h4>
-            <p className="mt-1 text-xs leading-relaxed text-emerald-200/80">
-              🔒 Your request is private and shared with a <strong className="text-white font-semibold">maximum of 3 matched providers</strong> who fit your exact domain and procurement specifications. Zero vendor spam or unsolicited cold calls.
+            <p className="mt-1 text-xs leading-relaxed text-emerald-900/80">
+              🔒 Your request is private and shared with a <strong>maximum of 3 matched providers</strong> who fit your exact domain and procurement specifications. Zero vendor spam or unsolicited cold calls.
             </p>
           </div>
         </div>

@@ -88,12 +88,12 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
       <section className="space-y-3">
         <div>
           <div className="flex items-center gap-2">
-            <Users size={20} className="text-blue-400" />
-            <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
+            <Users size={20} className="text-blue-600" />
+            <h2 className="font-heading text-xl font-semibold tracking-normal text-slate-800 sm:text-2xl">
               Target Cohort Size
             </h2>
           </div>
-          <p className="mt-1 text-sm text-slate-300">
+          <p className="mt-1 text-sm text-slate-600">
             How many participants or leaders will be trained in this intake cycle?
           </p>
         </div>
@@ -107,28 +107,28 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
                 type="button"
                 onClick={() => setValue('cohortSize', size.id as any, { shouldValidate: true })}
                 aria-pressed={isSelected}
-                className={`relative flex flex-col justify-between rounded-2xl border p-4 text-start transition-all duration-200 active:scale-[0.98] touch-manipulation focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`relative flex flex-col justify-between rounded-2xl border p-4 text-start transition-all duration-200 active:scale-[0.98] touch-manipulation focus:outline-none focus:ring-2 focus:ring-blue-600 ${
                   isSelected
-                    ? 'border-blue-500 bg-blue-950/40 shadow-sm ring-1 ring-blue-500'
-                    : 'border-white/10 bg-slate-900/60 backdrop-blur-xl hover:border-white/20 hover:bg-slate-800/60'
+                    ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-1 ring-blue-600'
+                    : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-white">
+                    <span className="text-sm font-semibold text-slate-800">
                       {size.label}
                     </span>
                     <div
                       className={`flex h-4 w-4 items-center justify-center rounded-full border ${
                         isSelected
-                          ? 'border-blue-500 bg-blue-600 text-white'
-                          : 'border-white/20 bg-slate-900'
+                          ? 'border-blue-600 bg-blue-600 text-white'
+                          : 'border-slate-300 bg-white'
                       }`}
                     >
                       {isSelected && <Check size={10} strokeWidth={3} />}
                     </div>
                   </div>
-                  <p className="mt-2 text-xs text-slate-300">
+                  <p className="mt-2 text-xs text-slate-600">
                     {size.sublabel}
                   </p>
                 </div>
@@ -137,7 +137,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
           })}
         </div>
         {errors.cohortSize && (
-          <p className="text-xs font-medium text-red-400" role="alert">
+          <p className="text-xs font-medium text-red-600" role="alert">
             {errors.cohortSize.message}
           </p>
         )}
@@ -146,12 +146,12 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
       <section className="space-y-3">
         <div>
           <div className="flex items-center gap-2">
-            <Calendar size={18} className="text-blue-400" />
-            <h3 className="font-heading text-base font-semibold text-white">
+            <Calendar size={18} className="text-blue-600" />
+            <h3 className="font-heading text-base font-semibold text-slate-800">
               Target Start Horizon
             </h3>
           </div>
-          <p className="mt-0.5 text-xs text-slate-300">
+          <p className="mt-0.5 text-xs text-slate-600">
             When do you expect instruction or onboarding to commence?
           </p>
         </div>
@@ -168,20 +168,20 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
                 onClick={() => setValue('timeline', t.id as any, { shouldValidate: true })}
                 className={`relative flex flex-col justify-between rounded-xl border p-4 text-start transition-all active:scale-[0.98] touch-manipulation ${
                   isSelected
-                    ? 'border-blue-500 bg-blue-950/40 shadow-sm ring-1 ring-blue-500'
-                    : 'border-white/10 bg-slate-900/60 backdrop-blur-xl hover:border-white/20 hover:bg-slate-800/60'
+                    ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-1 ring-blue-600'
+                    : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-white">
+                    <span className="text-sm font-semibold text-slate-800">
                       {t.label}
                     </span>
                     {isUrgent && (
-                      <Clock size={14} className="text-amber-400" />
+                      <Clock size={14} className="text-amber-500" />
                     )}
                   </div>
-                  <span className="mt-1 text-[11px] font-medium text-slate-400">
+                  <span className="mt-1 text-[11px] font-medium text-slate-500">
                     {t.priority}
                   </span>
                 </div>
@@ -190,7 +190,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
           })}
         </div>
         {errors.timeline && (
-          <p className="text-xs font-medium text-red-400" role="alert">
+          <p className="text-xs font-medium text-red-600" role="alert">
             {errors.timeline.message}
           </p>
         )}
@@ -199,12 +199,12 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
       <section className="space-y-3">
         <div>
           <div className="flex items-center gap-2">
-            <DollarSign size={18} className="text-blue-400" />
-            <h3 className="font-heading text-base font-semibold text-white">
+            <DollarSign size={18} className="text-blue-600" />
+            <h3 className="font-heading text-base font-semibold text-slate-800">
               Estimated Budget Allocation (USD)
             </h3>
           </div>
-          <p className="mt-0.5 text-xs text-slate-300">
+          <p className="mt-0.5 text-xs text-slate-600">
             Helps us shortlist providers within your approved procurement tier.
           </p>
         </div>
@@ -223,27 +223,27 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
                   isGuidance ? 'sm:col-span-2 lg:col-span-3' : ''
                 } ${
                   isSelected
-                    ? 'border-blue-500 bg-blue-950/40 shadow-sm ring-1 ring-blue-500'
-                    : 'border-white/10 bg-slate-900/60 backdrop-blur-xl hover:border-white/20 hover:bg-slate-800/60'
+                    ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-1 ring-blue-600'
+                    : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5 font-semibold text-white">
-                      {isGuidance && <HelpCircle size={15} className="text-blue-400" />}
+                    <div className="flex items-center gap-1.5 font-semibold text-slate-800">
+                      {isGuidance && <HelpCircle size={15} className="text-blue-600" />}
                       <span className="text-sm">{band.label}</span>
                     </div>
                     <div
                       className={`flex h-4 w-4 items-center justify-center rounded-full border ${
                         isSelected
-                          ? 'border-blue-500 bg-blue-600 text-white'
-                          : 'border-white/20 bg-slate-900'
+                          ? 'border-blue-600 bg-blue-600 text-white'
+                          : 'border-slate-300 bg-white'
                       }`}
                     >
                       {isSelected && <Check size={10} strokeWidth={3} />}
                     </div>
                   </div>
-                  <p className="mt-1 text-xs text-slate-300">
+                  <p className="mt-1 text-xs text-slate-600">
                     {band.sublabel}
                   </p>
                 </div>
@@ -252,7 +252,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
           })}
         </div>
         {errors.budgetBand && (
-          <p className="text-xs font-medium text-red-400" role="alert">
+          <p className="text-xs font-medium text-red-600" role="alert">
             {errors.budgetBand.message}
           </p>
         )}
@@ -261,7 +261,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
       <section>
         <label
           htmlFor="additionalContext"
-          className="mb-1.5 flex items-center justify-between text-sm font-semibold text-white"
+          className="mb-1.5 flex items-center justify-between text-sm font-semibold text-slate-800"
         >
           <span>Specific Outcomes or KPIs to Target</span>
           <span className="text-xs font-normal text-slate-400">Optional</span>
@@ -270,7 +270,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
           id="additionalContext"
           rows={3}
           placeholder="e.g., We need to reduce manager turnover by 20%, prepare directors for Vision 2030 initiatives, or align sales teams with enterprise bidding..."
-          className="w-full rounded-xl border border-white/10 bg-slate-800/80 px-4 py-3.5 sm:py-3 text-base sm:text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 sm:py-3 text-base sm:text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
           {...register('additionalContext')}
         />
       </section>

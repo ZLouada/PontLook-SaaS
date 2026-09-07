@@ -183,22 +183,22 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="relative overflow-hidden bg-transparent">
+      <div className="relative overflow-hidden bg-white">
         {/* =========================================================================
             1. BREADCRUMBS NAVIGATION
            ========================================================================= */}
-        <div className="border-b border-white/10 bg-slate-950/40 pt-24 sm:pt-28 pb-3">
+        <div className="border-b border-slate-100 bg-slate-50/60 pt-24 sm:pt-28 pb-3">
           <div className="container-site px-4 sm:px-6">
-            <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-slate-400">
-              <Link href={`/${lang}`} className="hover:text-blue-400 transition-colors">
+            <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-slate-500">
+              <Link href={`/${lang}`} className="hover:text-primary transition-colors">
                 {isAr ? 'الرئيسية' : 'Home'}
               </Link>
-              <ChevronRight size={13} className="text-slate-500 rtl:rotate-180 shrink-0" />
-              <span className="text-slate-400 font-medium">
+              <ChevronRight size={13} className="text-slate-400 rtl:rotate-180 shrink-0" />
+              <span className="text-slate-500 font-medium">
                 {isAr ? 'الحلول' : 'Solutions'}
               </span>
-              <ChevronRight size={13} className="text-slate-500 rtl:rotate-180 shrink-0" />
-              <span className="text-white font-semibold truncate max-w-[220px] sm:max-w-none">
+              <ChevronRight size={13} className="text-slate-400 rtl:rotate-180 shrink-0" />
+              <span className="text-slate-800 font-semibold truncate max-w-[220px] sm:max-w-none">
                 {content.h1}
               </span>
             </nav>
@@ -208,27 +208,27 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         {/* =========================================================================
             2. HERO SECTION
            ========================================================================= */}
-        <section className="relative pt-10 pb-12 sm:pt-16 sm:pb-20 border-b border-white/10">
+        <section className="relative pt-10 pb-12 sm:pt-16 sm:pb-20 border-b border-slate-100">
           <div className="container-site px-4 sm:px-6 text-center max-w-4xl mx-auto">
             <Reveal>
               {/* Regional / Pillar Badge */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 shadow-2xs mb-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-blue-200/80 bg-blue-50/70 px-4 py-1.5 shadow-2xs mb-6">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
                 </span>
-                <span className="font-mono text-xs font-semibold text-blue-400 uppercase tracking-wide">
+                <span className="font-mono text-xs font-semibold text-primary uppercase tracking-wide">
                   {badge}
                 </span>
               </div>
 
               {/* Dynamic H1 */}
-              <h1 className="font-heading text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.025em] text-white leading-[1.14]">
+              <h1 className="font-heading text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.025em] text-slate-900 leading-[1.14]">
                 {content.h1}
               </h1>
 
               {/* Subtitle */}
-              <p className="mt-5 text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
+              <p className="mt-5 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto">
                 {content.subtitle}
               </p>
 
@@ -238,7 +238,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
                   href={`/${lang}/find-training`}
                   variant="primary"
                   size="lg"
-                  className="w-full sm:w-auto py-4 sm:py-3.5 px-7 justify-center min-h-[50px] font-bold shadow-xl"
+                  className="w-full sm:w-auto py-4 sm:py-3.5 px-7 justify-center min-h-[50px] font-bold shadow-md shadow-blue-500/20"
                   leftIcon={<Building2 size={18} className="text-white/90" />}
                   rightIcon={<ArrowRight size={17} className="rtl:-scale-x-100" />}
                 >
@@ -249,25 +249,25 @@ export default async function SolutionLandingPage({ params }: PageProps) {
                   href={`/${lang}/for-providers`}
                   variant="secondary"
                   size="lg"
-                  className="w-full sm:w-auto py-4 sm:py-3.5 px-6 justify-center min-h-[50px] font-semibold"
-                  leftIcon={<ShieldCheck size={18} className="text-slate-950" />}
+                  className="w-full sm:w-auto py-4 sm:py-3.5 px-6 justify-center min-h-[50px] font-semibold border-slate-200 hover:bg-slate-50"
+                  leftIcon={<ShieldCheck size={18} className="text-slate-700" />}
                 >
                   {isAr ? 'انضم كمركز تدريب معتمد' : "I'm a Training Provider"}
                 </Button>
               </div>
 
               {/* Trust Checkmarks */}
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-5 sm:gap-7 text-xs font-medium text-slate-400">
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-5 sm:gap-7 text-xs font-medium text-slate-500">
                 <span className="inline-flex items-center gap-1.5">
-                  <BadgeDollarSign size={15} className="text-blue-400 shrink-0" />
+                  <BadgeDollarSign size={15} className="text-primary shrink-0" />
                   <span>{isAr ? 'مجاني 100% للشركات والمؤسسات' : '100% Free for Corporate Buyers'}</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <CheckCircle2 size={15} className="text-emerald-400 shrink-0" />
+                  <CheckCircle2 size={15} className="text-emerald-500 shrink-0" />
                   <span>{isAr ? 'بدون رسائل تسويقية عشوائية' : 'Zero Cold Vendor Spam'}</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <ShieldCheck size={15} className="text-blue-400 shrink-0" />
+                  <ShieldCheck size={15} className="text-blue-500 shrink-0" />
                   <span>{isAr ? 'تأكيد هوية واختيار دقيق' : 'Verified Decision-Maker Privacy'}</span>
                 </span>
               </div>
@@ -278,33 +278,33 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         {/* =========================================================================
             3. GEO ANSWER BOX (AI Search Engine & Entity Authority Synthesizer)
            ========================================================================= */}
-        <section className="py-16 md:py-24 bg-transparent border-b border-white/10">
+        <section className="py-12 sm:py-16 bg-slate-50/70 border-b border-slate-200/80">
           <div className="container-site px-4 sm:px-6 max-w-4xl mx-auto">
             <Reveal>
-              <div className="relative rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6 sm:p-9 shadow-2xl overflow-hidden">
+              <div className="relative rounded-3xl border border-blue-200/90 bg-white p-6 sm:p-9 shadow-apple overflow-hidden">
                 {/* Visual Decorative Accent */}
-                <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-blue-600 via-cyan-400 to-blue-600" />
+                <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-primary via-blue-400 to-primary" />
 
-                <div className="flex items-center justify-between gap-3 pb-4 border-b border-white/10">
+                <div className="flex items-center justify-between gap-3 pb-4 border-b border-slate-100">
                   <div className="inline-flex items-center gap-2">
-                    <Sparkles size={18} className="text-blue-400" />
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-white">
+                    <Sparkles size={18} className="text-primary" />
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-800">
                       {isAr ? 'ملخص تحليلي تنفيذي (GEO Synthesis)' : 'Executive Briefing & Market Synthesis'}
                     </span>
                   </div>
-                  <span className="text-[11px] font-mono font-bold bg-blue-500/10 text-blue-400 px-2.5 py-1 rounded-full border border-blue-500/20">
+                  <span className="text-[11px] font-mono font-bold bg-blue-50 text-primary px-2.5 py-1 rounded-full border border-blue-200/60">
                     {isAr ? 'مستند حقائق موثق' : 'Verified Entity Fact'}
                   </span>
                 </div>
 
                 <div className="mt-5 space-y-4">
-                  <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
+                  <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-normal">
                     {content.geoAnswer.summary}
                   </p>
 
-                  <div className="mt-4 rounded-2xl bg-blue-950/40 p-4 sm:p-5 border border-blue-500/20 flex items-start gap-3.5">
-                    <Quote size={22} className="text-blue-400 shrink-0 mt-0.5" />
-                    <p className="text-sm sm:text-base font-semibold text-white italic leading-relaxed">
+                  <div className="mt-4 rounded-2xl bg-blue-50/50 p-4 sm:p-5 border border-blue-100 flex items-start gap-3.5">
+                    <Quote size={22} className="text-primary shrink-0 mt-0.5" />
+                    <p className="text-sm sm:text-base font-semibold text-slate-800 italic leading-relaxed">
                       {content.geoAnswer.quote}
                     </p>
                   </div>
@@ -317,7 +317,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         {/* =========================================================================
             4. KEY GCC MARKET DATA TABLE / METRICS GRID
            ========================================================================= */}
-        <section className="py-16 md:py-24 bg-transparent border-b border-white/10">
+        <section className="py-14 sm:py-20 bg-white border-b border-slate-100">
           <div className="container-site px-4 sm:px-6 max-w-5xl mx-auto">
             <SectionHeading
               eyebrow={isAr ? 'مؤشرات وبيانات السوق' : 'Market Intelligence & Benchmarks'}
@@ -332,16 +332,16 @@ export default async function SolutionLandingPage({ params }: PageProps) {
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {content.marketStats.map((stat, i) => (
                 <Reveal key={stat.metric} delay={i * 0.08}>
-                  <div className="h-full flex flex-col justify-between rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-5 sm:p-6 transition-all hover:border-blue-500/40 shadow-2xl">
+                  <div className="h-full flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-slate-50/50 p-5 sm:p-6 transition-all hover:bg-white hover:shadow-apple hover:border-blue-200">
                     <div>
-                      <div className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
+                      <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
                         {stat.metric}
                       </div>
-                      <div className="mt-3 font-mono text-2xl sm:text-3xl font-bold text-blue-400 tracking-tight">
+                      <div className="mt-3 font-mono text-2xl sm:text-3xl font-bold text-primary tracking-tight">
                         {stat.value}
                       </div>
                     </div>
-                    <p className="mt-4 text-xs text-slate-300 leading-relaxed border-t border-white/10 pt-3">
+                    <p className="mt-4 text-xs text-slate-600 leading-relaxed border-t border-slate-200/60 pt-3">
                       {stat.context}
                     </p>
                   </div>
@@ -354,7 +354,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         {/* =========================================================================
             5. TAILORED 3-STEP MATCHMAKING WORKFLOW
            ========================================================================= */}
-        <section className="py-16 md:py-24 bg-transparent border-b border-white/10">
+        <section className="py-14 sm:py-20 bg-slate-50/60 border-b border-slate-100">
           <div className="container-site px-4 sm:px-6 max-w-5xl mx-auto">
             <SectionHeading
               eyebrow={isAr ? 'آلية العمل والمطابقة' : 'How It Works'}
@@ -369,14 +369,14 @@ export default async function SolutionLandingPage({ params }: PageProps) {
             <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
               {content.workflow.map((item, i) => (
                 <Reveal key={item.step} delay={i * 0.1}>
-                  <div className="relative h-full flex flex-col rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6 sm:p-8 shadow-2xl hover:border-blue-500/40 transition-all">
-                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white font-mono font-bold text-sm shadow-sm mb-5">
+                  <div className="relative h-full flex flex-col rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm hover:shadow-md transition-all">
+                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white font-mono font-bold text-sm shadow-sm mb-5">
                       {item.step}
                     </div>
-                    <h3 className="font-heading text-lg font-semibold text-white leading-snug">
+                    <h3 className="font-heading text-lg font-semibold text-slate-900 leading-snug">
                       {item.title}
                     </h3>
-                    <p className="mt-3 text-xs sm:text-sm text-slate-300 leading-relaxed flex-1">
+                    <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed flex-1">
                       {item.desc}
                     </p>
                   </div>
@@ -389,7 +389,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         {/* =========================================================================
             6. DEDICATED FAQ SECTION WITH RICH ACCORDION
            ========================================================================= */}
-        <section className="py-16 md:py-24 bg-transparent border-b border-white/10">
+        <section className="py-14 sm:py-20 bg-white border-b border-slate-100">
           <div className="container-site px-4 sm:px-6 max-w-4xl mx-auto">
             <SectionHeading
               eyebrow={isAr ? 'الأسئلة الشائعة' : 'Frequently Asked Questions'}
@@ -415,10 +415,10 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         {/* =========================================================================
             7. FINAL ACTION CALLOUT BANNER
            ========================================================================= */}
-        <section className="py-16 md:py-24 bg-transparent text-white relative overflow-hidden border-t border-white/10">
+        <section className="py-14 sm:py-20 bg-slate-950 text-white relative overflow-hidden">
           {/* Subtle Ambient Radial Glow */}
           <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-blue-600 blur-[120px] rounded-full" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary blur-[120px] rounded-full" />
           </div>
 
           <div className="container-site relative z-10 px-4 sm:px-6 max-w-4xl mx-auto text-center">
@@ -447,7 +447,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
                   href={`/${lang}/find-training`}
                   variant="primary"
                   size="lg"
-                  className="w-full sm:w-auto py-4 px-8 justify-center min-h-[50px] font-bold shadow-xl"
+                  className="w-full sm:w-auto py-4 px-8 justify-center min-h-[50px] font-bold shadow-lg shadow-blue-500/30"
                   leftIcon={<Building2 size={18} />}
                   rightIcon={<ArrowRight size={17} className="rtl:-scale-x-100" />}
                 >
@@ -458,7 +458,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
                   href={`/${lang}/for-providers`}
                   variant="secondary"
                   size="lg"
-                  className="w-full sm:w-auto py-4 px-6 justify-center min-h-[50px] font-semibold"
+                  className="w-full sm:w-auto py-4 px-6 justify-center min-h-[50px] bg-slate-900 border-slate-700 text-slate-200 hover:bg-slate-800 hover:text-white"
                 >
                   {isAr ? 'تسجيل مزود تدريب جديد' : 'Register as a Training Academy'}
                 </Button>

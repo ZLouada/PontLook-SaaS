@@ -17,7 +17,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer data-nav-dark="true" className="relative border-t border-white/10 bg-[#020617] text-white overflow-hidden">
+    <footer data-nav-dark="true" className="relative border-t border-slate-800 bg-slate-950 text-white overflow-hidden">
       {/* Ambient background glow */}
       <div className="absolute top-0 start-1/4 w-[600px] h-[350px] bg-accent/10 blur-[120px] pointer-events-none rounded-full" />
 
@@ -96,7 +96,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-white/10 py-6 bg-[#020617]/90 backdrop-blur-md">
+      <div className="border-t border-slate-800/80 py-6 bg-slate-950/90 backdrop-blur-md">
         <div className="container-site flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500 px-4 sm:px-8 lg:px-12 text-center sm:text-start">
           <p className="text-xs text-slate-400">
             {dict.footer.rights}

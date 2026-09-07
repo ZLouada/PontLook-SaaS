@@ -15,7 +15,6 @@ import {
   ChevronUp,
   Sliders,
   Layers,
-  Plus,
   type LucideIcon,
 } from 'lucide-react';
 import {
@@ -277,17 +276,17 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
     >
       <div>
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
+          <h2 className="font-heading text-xl font-semibold tracking-normal text-slate-800 sm:text-2xl">
             What training domains do you need?
           </h2>
           {selectedCount > 0 && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-900/60 border border-blue-500/30 px-3 py-1 text-xs font-semibold text-blue-300">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-[#2451BF]">
               <Layers size={13} />
               {selectedCount} {selectedCount === 1 ? 'domain' : 'domains'} selected
             </span>
           )}
         </div>
-        <p className="mt-1 text-sm text-slate-300">
+        <p className="mt-1 text-sm text-slate-600">
           Select all target capabilities for your enterprise cohort. We’ll match specialized GCC providers with proven ROI.
         </p>
       </div>
@@ -301,7 +300,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder='Search topics, capabilities, or certifications e.g. "PMP", "Vision 2030", "Generative AI", "NEBOSH", "ISO", "Leadership"...'
-          className="w-full rounded-xl border border-white/10 bg-slate-800/80 px-4 py-3.5 ps-11 pe-10 text-base sm:text-sm text-white placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
+          className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3.5 ps-11 pe-10 text-base sm:text-sm text-slate-800 placeholder:text-slate-400 focus:border-[#2451BF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2451BF]/20 transition-all"
         />
         {searchQuery && (
           <button
@@ -311,7 +310,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
               e.stopPropagation();
               setSearchQuery('');
             }}
-            className="absolute inset-y-0 end-0 flex items-center pe-3 text-slate-400 hover:text-slate-200"
+            className="absolute inset-y-0 end-0 flex items-center pe-3 text-slate-400 hover:text-slate-600"
             aria-label="Clear search"
           >
             <X size={16} />
@@ -326,7 +325,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
             const isExpanded = expandedCategories.includes(category.id);
             const IconComponent = ICON_MAP[category.icon] || Layers;
 
-            const hasSubSelected = category.subDomains.some(
+                  const hasSubSelected = category.subDomains.some(
               (s) => selectedSubDomains.includes(s.id) || s.tags.some((t) => selectedSubDomains.includes(t))
             );
 
@@ -337,11 +336,11 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                 key={category.id}
                 className={`relative flex flex-col rounded-2xl transition-all duration-200 overflow-hidden ${
                   isCardActive
-                    ? 'border-2 border-blue-500 bg-blue-950/30 shadow-md ring-1 ring-blue-500/20'
-                    : 'border border-white/10 bg-slate-900/60 hover:border-white/20 hover:shadow-sm'
+                    ? 'border-2 border-[#2451BF] bg-blue-50/30 dark:bg-blue-950/20 shadow-md ring-1 ring-[#2451BF]/20'
+                    : 'border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-sm'
                 }`}
               >
-                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                          <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
                   <div
                     onClick={() => toggleCategory(category.id)}
                     className="cursor-pointer select-none"
@@ -354,17 +353,17 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                       }
                     }}
                   >
-                    <div className="flex items-start justify-between gap-3">
+                                  <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400 shrink-0 border border-blue-500/20">
+                        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-[#2451BF] shrink-0">
                           <IconComponent size={22} />
                         </div>
-                        <span className="font-mono text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 border border-white/10">
+                        <span className="font-mono text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200/70">
                           {category.badge}
                         </span>
                       </div>
 
-                      <button
+                                      <button
                         type="button"
                         onClick={(e) => {
                           e.preventDefault();
@@ -374,28 +373,28 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                         aria-label={`Toggle ${category.title}`}
                         className={`flex h-6 w-6 items-center justify-center rounded-full border transition-all ${
                           isCardActive
-                            ? 'border-blue-500 bg-blue-600 text-white shadow-sm'
-                            : 'border-slate-600 bg-slate-800 hover:border-blue-500'
+                            ? 'border-[#2451BF] bg-[#2451BF] text-white shadow-sm'
+                            : 'border-slate-300 bg-white hover:border-[#2451BF]'
                         }`}
                       >
                         {isCardActive ? (
                           <Check size={14} strokeWidth={3} />
                         ) : (
-                          <Plus size={14} className="text-slate-400" />
+                          <div className="h-2 w-2 rounded-full bg-transparent" />
                         )}
                       </button>
                     </div>
 
-                    <div className="mt-3.5">
-                      <h3 className="font-heading text-base font-semibold text-white">
+                                  <div className="mt-3.5">
+                      <h3 className="font-heading text-base font-semibold text-slate-800">
                         {category.title}
                       </h3>
-                      <p className="mt-1 text-xs leading-relaxed text-slate-300">
+                      <p className="mt-1 text-xs leading-relaxed text-slate-600">
                         {category.shortDescription}
                       </p>
                     </div>
 
-                    <div className="mt-3">
+                                  <div className="mt-3">
                       <p className="text-[11px] text-slate-500 font-medium italic">
                         Target Buyers: {category.targetBuyers}
                       </p>
@@ -403,7 +402,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                   </div>
 
                   {/* Category card bottom action bar */}
-                  <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+                  <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
                     <button
                       type="button"
                       onClick={(e) => {
@@ -411,7 +410,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                         e.stopPropagation();
                         toggleCategory(category.id);
                       }}
-                      className="text-xs font-semibold text-slate-300 hover:text-blue-400 transition-colors py-2 px-1 min-h-[40px] inline-flex items-center touch-manipulation"
+                      className="text-xs font-semibold text-slate-700 hover:text-[#2451BF] transition-colors py-2 px-1 min-h-[40px] inline-flex items-center touch-manipulation"
                     >
                       {isCategorySelected ? '✓ Category selected' : '+ Select category'}
                     </button>
@@ -423,7 +422,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                         e.stopPropagation();
                         toggleAccordion(category.id);
                       }}
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-blue-400 hover:text-blue-300 hover:underline"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-[#2451BF] hover:underline"
                     >
                       <span>
                         {isExpanded
@@ -435,9 +434,9 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                   </div>
                 </div>
 
-                {isExpanded && (
-                  <div className="border-t border-white/10 bg-slate-900/40 p-4 space-y-3">
-                    <div className="flex items-center justify-between text-[11px] text-slate-400">
+                          {isExpanded && (
+                  <div className="border-t border-slate-200/80 bg-slate-50/70 p-4 space-y-3">
+                    <div className="flex items-center justify-between text-[11px] text-slate-500">
                       <span>Specific sub-domains & capability tags:</span>
                       <button
                         type="button"
@@ -446,7 +445,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                           e.stopPropagation();
                           toggleAllSubDomainsForCategory(category);
                         }}
-                        className="font-semibold text-blue-400 hover:text-blue-300 hover:underline"
+                        className="font-semibold text-[#2451BF] hover:underline"
                       >
                         {areAllSubDomainsSelected(category) ? 'Deselect all' : 'Select all'}
                       </button>
@@ -465,10 +464,10 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                             key={subDomain.id}
                             className={`rounded-xl border p-3 transition-all ${
                               isSubSelected
-                                ? 'border-blue-500/50 bg-blue-950/40 text-white shadow-2xs'
+                                ? 'border-blue-300 bg-blue-50/60 shadow-2xs'
                                 : isQueryMatched
-                                ? 'border-blue-500/30 bg-slate-800/80 text-white'
-                                : 'border-white/10 bg-slate-800/60 text-white'
+                                ? 'border-blue-200 bg-white'
+                                : 'border-slate-200/90 bg-white'
                             }`}
                           >
                             <div className="flex items-center justify-between gap-2">
@@ -484,13 +483,13 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                                 <div
                                   className={`flex h-4 w-4 items-center justify-center rounded border transition-all shrink-0 ${
                                     isSubSelected
-                                      ? 'border-blue-500 bg-blue-600 text-white'
-                                      : 'border-white/20 bg-slate-900 group-hover/sub:border-blue-400'
+                                      ? 'border-[#2451BF] bg-[#2451BF] text-white'
+                                      : 'border-slate-300 bg-white group-hover/sub:border-[#2451BF]'
                                   }`}
                                 >
                                   {isSubSelected && <Check size={11} strokeWidth={3} />}
                                 </div>
-                                <span className="text-xs font-bold text-slate-200 group-hover/sub:text-blue-400">
+                                <span className="text-xs font-bold text-slate-800 group-hover/sub:text-[#2451BF]">
                                   {subDomain.title}
                                 </span>
                               </button>
@@ -513,10 +512,10 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                                     }}
                                     className={`rounded-lg px-3.5 py-2 min-h-[38px] inline-flex items-center text-xs font-medium transition-all active:scale-95 touch-manipulation ${
                                       isTagSelected
-                                        ? 'bg-blue-600 text-white shadow-xs'
+                                        ? 'bg-[#2451BF] text-white shadow-xs'
                                         : isTagSearchMatch
-                                        ? 'border border-blue-500/40 bg-blue-950/60 text-blue-300'
-                                        : 'bg-slate-700/60 text-slate-300 hover:bg-blue-900/40 hover:text-white border border-white/5'
+                                        ? 'border border-[#2451BF] bg-blue-100 text-[#2451BF]'
+                                        : 'bg-slate-100 text-slate-700 hover:bg-blue-50 hover:text-[#2451BF]'
                                     }`}
                                   >
                                     {tag}
@@ -535,12 +534,12 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
           })}
         </div>
 
-        {filteredCategories.length === 0 && (
-          <div className="rounded-2xl border border-dashed border-white/20 bg-slate-900/40 p-8 text-center">
-            <p className="text-sm font-semibold text-white">
+          {filteredCategories.length === 0 && (
+          <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+            <p className="text-sm font-semibold text-slate-700">
               No standard catalog match for &quot;{searchQuery}&quot;
             </p>
-            <p className="mt-1 text-xs text-slate-400">
+            <p className="mt-1 text-xs text-slate-500">
               You can enter custom workforce requirements or add this topic directly below.
             </p>
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
@@ -553,7 +552,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                   setValue('otherDomainText', searchQuery, { shouldValidate: true });
                   setSearchQuery('');
                 }}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-blue-500 active:scale-95 touch-manipulation"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-[#2451BF] px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-blue-700 active:scale-95 touch-manipulation"
               >
                 <Sliders size={14} />
                 <span>Add &quot;{searchQuery}&quot; as Specialized Topic</span>
@@ -565,7 +564,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                   e.stopPropagation();
                   setSearchQuery('');
                 }}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-slate-800 px-4 py-2.5 text-xs font-medium text-slate-300 hover:bg-slate-700 active:scale-95 touch-manipulation"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-xs font-medium text-slate-700 hover:bg-slate-50 active:scale-95 touch-manipulation"
               >
                 <span>Clear search</span>
               </button>
@@ -574,7 +573,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
         )}
 
         {errors.domains && (
-          <p className="text-xs font-medium text-red-400" role="alert">
+          <p className="text-xs font-medium text-red-600" role="alert">
             {errors.domains.message}
           </p>
         )}
@@ -589,17 +588,17 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
               e.stopPropagation();
               setIsOtherOpen(true);
             }}
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-blue-400"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-[#2451BF]"
           >
             <Sliders size={14} />
             <span>Need a custom framework, niche certification, or specialized skill not listed above?</span>
           </button>
         ) : (
-          <div className="rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-5">
+          <div className="rounded-2xl border border-blue-200 bg-blue-50/40 p-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Sliders size={18} className="text-blue-400" />
-                <h4 className="font-heading text-sm font-semibold text-white">
+                <Sliders size={18} className="text-[#2451BF]" />
+                <h4 className="font-heading text-sm font-semibold text-slate-800">
                   Specify Custom Training Topic or Industry Certification
                 </h4>
               </div>
@@ -611,13 +610,13 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                   setIsOtherOpen(false);
                   setValue('otherDomainText', '', { shouldValidate: true });
                 }}
-                className="text-slate-400 hover:text-white"
+                className="text-slate-400 hover:text-slate-600"
                 aria-label="Close specialized input"
               >
                 <X size={16} />
               </button>
             </div>
-            <p className="mt-1 text-xs text-slate-400">
+            <p className="mt-1 text-xs text-slate-600">
               Provide the exact framework, technical skill, or business objective you need covered:
             </p>
 
@@ -625,18 +624,18 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
               <input
                 type="text"
                 placeholder="e.g., ESG Reporting Frameworks, Supply Chain Optimization, Lean Six Sigma..."
-                className="w-full rounded-xl border border-white/10 bg-slate-800/80 px-4 py-3.5 sm:py-3 text-base sm:text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 sm:py-3 text-base sm:text-sm text-slate-800 placeholder:text-slate-400 focus:border-[#2451BF] focus:outline-none focus:ring-2 focus:ring-[#2451BF]/20"
                 {...register('otherDomainText')}
               />
               {errors.otherDomainText && (
-                <p className="mt-1.5 text-xs font-medium text-red-400" role="alert">
+                <p className="mt-1.5 text-xs font-medium text-red-600" role="alert">
                   {errors.otherDomainText.message}
                 </p>
               )}
             </div>
 
-            <div className="mt-3.5 flex flex-wrap items-center gap-2">
-              <span className="text-xs font-medium text-slate-400">Suggestions:</span>
+                  <div className="mt-3.5 flex flex-wrap items-center gap-2">
+              <span className="text-xs font-medium text-slate-500">Suggestions:</span>
               {SUGGESTED_OTHER_TOPICS.map((topic) => (
                 <button
                   key={topic}
@@ -646,7 +645,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                     e.stopPropagation();
                     setValue('otherDomainText', topic, { shouldValidate: true });
                   }}
-                  className="rounded-lg border border-white/10 bg-slate-800/80 px-3 py-1.5 text-xs font-medium text-slate-300 hover:border-blue-400 hover:bg-slate-700 active:scale-95 touch-manipulation"
+                  className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-blue-400 hover:bg-blue-50 active:scale-95 touch-manipulation"
                 >
                   + {topic}
                 </button>

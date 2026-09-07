@@ -30,8 +30,8 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
             <div
               className={`border rounded-2xl transition-all duration-300 overflow-hidden group ${
                 isOpen
-                  ? 'bg-slate-900/90 border-blue-500/40 shadow-2xl ring-1 ring-blue-500/20'
-                  : 'bg-slate-900/60 backdrop-blur-xl border-white/10 shadow-xl hover:border-white/20 hover:bg-slate-900/80'
+                  ? 'bg-white border-primary/30 shadow-md ring-1 ring-primary/10'
+                  : 'bg-slate-50/80 border-slate-200/80 shadow-sm hover:shadow-md hover:bg-white hover:border-slate-300'
               }`}
             >
               <button
@@ -40,25 +40,25 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
                 aria-expanded={isOpen}
                 aria-controls={`faq-answer-${i}`}
                 id={`faq-header-${i}`}
-                className="w-full text-start flex items-center justify-between gap-4 p-5 sm:p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded-2xl cursor-pointer"
+                className="w-full text-start flex items-center justify-between gap-4 p-5 sm:p-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-2xl cursor-pointer"
               >
                 <div className="flex gap-4 items-center min-w-0 pe-2">
                   <span
                     className={`shrink-0 w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300 ${
                       isOpen
-                        ? 'bg-blue-600 text-white shadow-sm'
-                        : 'bg-blue-500/10 text-blue-400 group-hover:bg-blue-600 group-hover:text-white border border-blue-500/20'
+                        ? 'bg-primary text-white shadow-sm'
+                        : 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white'
                     }`}
                   >
                     <HelpCircle size={20} strokeWidth={2} />
                   </span>
-                  <h3 className="text-base sm:text-lg font-semibold text-white leading-snug font-heading">
+                  <h3 className="text-base sm:text-lg font-semibold text-slate-800 leading-snug font-heading">
                     {faq.question}
                   </h3>
                 </div>
                 <span
                   className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-full transition-colors duration-300 ${
-                    isOpen ? 'bg-blue-500/20 text-blue-400' : 'text-slate-400 group-hover:text-slate-200'
+                    isOpen ? 'bg-primary/10 text-primary' : 'text-slate-400 group-hover:text-slate-600'
                   }`}
                 >
                   <ChevronDown
@@ -79,7 +79,7 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <div className="px-5 pb-6 pt-1 sm:px-6 sm:pb-6 text-slate-300 font-sans leading-relaxed text-base sm:text-lg sm:ps-[4.5rem]">
+                  <div className="px-5 pb-6 pt-1 sm:px-6 sm:pb-6 text-slate-600 font-sans leading-relaxed text-base sm:text-lg sm:ps-[4.5rem]">
                     {faq.answer}
                   </div>
                 </div>

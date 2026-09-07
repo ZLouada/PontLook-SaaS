@@ -162,22 +162,22 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
 
   return (
     <>
-      <section className="bg-transparent pt-32 pb-20 relative overflow-hidden">
+      <section className="bg-hero-gradient pt-36 pb-24 relative overflow-hidden">
         <div className="container-site max-w-5xl relative z-10 text-center mx-auto px-6">
           <Reveal>
             <span className="chip mx-auto">{isAr ? 'من نحن' : 'Who We Are'}</span>
-            <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-white leading-[1.15] font-heading">
+            <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-slate-800 leading-[1.15] font-heading">
               {isAr ? (
                 <>
-                  من نحن: منصة التوفيق والربط الرائدة لتدريب الشركات في <span className="text-blue-400">الخليج العربي</span>
+                  من نحن: منصة التوفيق والربط الرائدة لتدريب الشركات في <span className="text-primary">الخليج العربي</span>
                 </>
               ) : (
                 <>
-                  Who We Are: The GCC Corporate Training <span className="text-blue-400">Matchmaking Platform</span>
+                  Who We Are: The GCC Corporate Training <span className="text-primary">Matchmaking Platform</span>
                 </>
               )}
             </h1>
-            <p className="mt-6 text-xl leading-relaxed text-slate-300 max-w-3xl mx-auto font-normal">
+            <p className="mt-6 text-xl leading-relaxed text-slate-600 max-w-3xl mx-auto font-normal">
               {isAr
                 ? 'نربط شركات ومزودي التدريب بصناع القرار في الشركات والمؤسسات الخليجية الذين لديهم احتياجات وتحديات حقيقية يسعون لحلها.'
                 : 'We connect corporate training companies with GCC decision-makers who already have a real workforce challenge to solve.'}
@@ -186,17 +186,17 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
         </div>
       </section>
 
-      <section className="bg-transparent py-20 border-t border-white/10">
+      <section className="bg-white py-24 border-t border-slate-100">
         <div className="container-site mx-auto px-6">
           <Reveal>
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full">
+              <span className="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-4 py-1.5 rounded-full">
                 {isAr ? 'مخصص لشركات ومراكز التدريب' : 'Built for Training Companies'}
               </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-semibold text-white font-heading">
+              <h2 className="mt-4 text-3xl sm:text-4xl font-semibold text-slate-800 font-heading">
                 {isAr ? 'محرك متوقع وموثوق لنمو مبيعات الشركات' : 'A Predictable Engine for Enterprise Growth'}
               </h2>
-              <p className="mt-4 text-lg text-slate-300">
+              <p className="mt-4 text-lg text-slate-600">
                 {isAr
                   ? 'مصمم خصيصاً لمزودي التدريب المؤسسي الساعين لاكتساب عملاء بعوائد مستدامة وهوامش ربحية عالية في الخليج.'
                   : 'Designed specifically for corporate training providers seeking sustainable, high-margin client acquisition across the GCC.'}
@@ -210,34 +210,34 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
               const isLarge = index === 0 || index === 3;
               const isFull = index === 4;
               const spanClass = isFull
-                ? 'md:col-span-2 lg:col-span-3 rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl shadow-2xl'
+                ? 'md:col-span-2 lg:col-span-3 rounded-3xl border border-blue-200/80 bg-gradient-to-r from-slate-50 via-blue-50/30 to-slate-50'
                 : isLarge
-                ? 'md:col-span-2 lg:col-span-2 rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl shadow-2xl'
-                : 'md:col-span-1 lg:col-span-1 rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl shadow-2xl';
+                ? 'md:col-span-2 lg:col-span-2 rounded-3xl border border-slate-200/90 bg-white shadow-sm'
+                : 'md:col-span-1 lg:col-span-1 rounded-3xl border border-slate-200/80 bg-slate-50/80';
 
               return (
                 <Reveal key={index} delay={index * 0.08} className={spanClass}>
-                  <div className="h-full p-8 md:p-10 transition-all duration-300 hover:shadow-2xl hover:border-blue-500/40 hover:-translate-y-0.5 group flex flex-col justify-between">
+                  <div className="h-full p-8 md:p-10 transition-all duration-300 hover:shadow-xl hover:border-primary/40 hover:-translate-y-0.5 group flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between mb-6">
-                        <div className="w-13 h-13 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 p-3 border border-blue-500/20">
+                        <div className="w-13 h-13 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors duration-300 p-3">
                           <Icon size={26} />
                         </div>
                         {isLarge && (
-                          <span className="text-[11px] font-mono font-bold text-slate-300 uppercase tracking-wider px-3 py-1 rounded-full bg-slate-800 border border-white/10">
+                          <span className="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider px-3 py-1 rounded-full bg-slate-100 border border-slate-200">
                             {isAr ? 'محرك مبيعات مؤسسي' : 'Enterprise Engine'}
                           </span>
                         )}
                         {isFull && (
-                          <span className="text-[11px] font-mono font-bold text-emerald-400 uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30">
+                          <span className="text-[11px] font-mono font-bold text-emerald-700 uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200">
                             {isAr ? 'نموذج خالٍ تماماً من المخاطر' : '100% Risk-Free Model'}
                           </span>
                         )}
                       </div>
-                      <h3 className={`font-semibold text-white mb-3 font-heading leading-snug ${isLarge ? 'text-2xl' : 'text-xl'}`}>
+                      <h3 className={`font-semibold text-slate-800 mb-3 font-heading leading-snug ${isLarge ? 'text-2xl' : 'text-xl'}`}>
                         {card.title}
                       </h3>
-                      <p className={`text-slate-300 leading-relaxed ${isLarge ? 'text-base max-w-2xl' : 'text-sm'}`}>
+                      <p className={`text-slate-600 leading-relaxed ${isLarge ? 'text-base max-w-2xl' : 'text-sm'}`}>
                         {card.description}
                       </p>
                     </div>
@@ -249,23 +249,23 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
         </div>
       </section>
 
-      <section className="bg-transparent text-white py-20 border-t border-white/10 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-900/0 to-transparent pointer-events-none" />
+      <section className="bg-slate-900 text-white py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800 via-slate-900 to-black opacity-80" />
         <div className="container-site max-w-5xl mx-auto px-6 relative z-10">
           <Reveal>
-            <div className="bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-10 md:p-14 shadow-2xl">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/20 text-blue-300 text-xs font-semibold uppercase tracking-wider mb-6 border border-blue-500/30">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-10 md:p-14 shadow-2xl">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/20 text-primary-300 text-xs font-semibold uppercase tracking-wider mb-6 border border-primary/30">
                 <ShieldCheck size={14} />
                 <span>{isAr ? 'ما نقوم به' : 'What We Do'}</span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-semibold text-white font-heading leading-tight mb-6">
                 {isAr ? (
                   <>
-                    ادفع فقط مقابل <span className="text-blue-400">الفرص المؤهلة</span>
+                    ادفع فقط مقابل <span className="text-primary-400">الفرص المؤهلة</span>
                   </>
                 ) : (
                   <>
-                    Pay Only for <span className="text-blue-400">Qualified Leads</span>
+                    Pay Only for <span className="text-primary-400">Qualified Leads</span>
                   </>
                 )}
               </h2>
@@ -277,7 +277,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-white/10">
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 size={22} className="text-blue-400 shrink-0 mt-1" />
+                  <CheckCircle2 size={22} className="text-primary-400 shrink-0 mt-1" />
                   <div>
                     <h3 className="font-semibold text-white text-base">
                       {isAr ? 'بدون اشتراكات ثابتة' : 'Zero Retainers'}
@@ -288,7 +288,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 size={22} className="text-blue-400 shrink-0 mt-1" />
+                  <CheckCircle2 size={22} className="text-primary-400 shrink-0 mt-1" />
                   <div>
                     <h3 className="font-semibold text-white text-base">
                       {isAr ? 'صناع قرار مؤكدون' : 'Verified Buyers'}
@@ -299,7 +299,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 size={22} className="text-blue-400 shrink-0 mt-1" />
+                  <CheckCircle2 size={22} className="text-primary-400 shrink-0 mt-1" />
                   <div>
                     <h3 className="font-semibold text-white text-base">
                       {isAr ? 'ضمان الاستبدال' : 'Replacement Guarantee'}
@@ -315,17 +315,17 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
         </div>
       </section>
 
-      <section className="bg-transparent py-20 border-t border-white/10">
+      <section className="bg-white py-24">
         <div className="container-site mx-auto px-6 max-w-6xl">
           <Reveal>
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full">
+              <span className="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-4 py-1.5 rounded-full">
                 {isAr ? 'مزايا مثبتة' : 'Proven Advantages'}
               </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-semibold text-white font-heading">
+              <h2 className="mt-4 text-3xl sm:text-4xl font-semibold text-slate-800 font-heading">
                 {isAr ? 'لماذا يختار شركاؤنا العمل معنا' : 'Why Our Clients Choose Us'}
               </h2>
-              <p className="mt-4 text-lg text-slate-300">
+              <p className="mt-4 text-lg text-slate-600">
                 {isAr
                   ? 'إليك الأسباب التي تجعل قادة تدريب الشركات يتعاونون مع بونت لوك لتسريع نمو أعمالهم.'
                   : 'Here is why corporate training leaders partner with PontLook to accelerate their growth.'}
@@ -338,14 +338,14 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
               const Icon = point.icon;
               return (
                 <Reveal key={index} delay={index * 0.08}>
-                  <div className="p-8 rounded-3xl bg-slate-900/60 backdrop-blur-xl border border-white/10 hover:border-blue-500/40 transition-all duration-300 shadow-2xl">
-                    <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-5 border border-blue-500/20">
+                  <div className="p-8 rounded-3xl bg-slate-50 border border-slate-200/70 hover:border-primary/40 hover:bg-white transition-all duration-300 shadow-sm hover:shadow-md">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-5">
                       <Icon size={24} />
                     </div>
-                    <h3 className="text-lg font-semibold text-white mb-2 font-heading">
+                    <h3 className="text-lg font-semibold text-slate-800 mb-2 font-heading">
                       {point.title}
                     </h3>
-                    <p className="text-slate-300 text-sm leading-relaxed">
+                    <p className="text-slate-600 text-sm leading-relaxed">
                       {point.desc}
                     </p>
                   </div>
@@ -356,30 +356,30 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
         </div>
       </section>
 
-      <section className="bg-transparent py-20 border-t border-white/10">
+      <section className="bg-gradient-to-b from-slate-50 to-primary-50/40 py-24 border-t border-slate-200/60">
         <div className="container-site max-w-4xl mx-auto px-6 text-center">
           <Reveal>
-            <div className="bg-slate-900/60 backdrop-blur-xl border border-white/10 p-10 md:p-16 rounded-3xl shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
+            <div className="bg-white border border-primary-100 p-10 md:p-16 rounded-3xl shadow-sm relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-2xl pointer-events-none" />
               
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full inline-block mb-6">
+              <span className="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 px-4 py-1.5 rounded-full inline-block mb-6">
                 {isAr ? 'ضماننا' : 'Our Guarantee'}
               </span>
               
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-800 font-heading leading-tight mb-6">
                 {isAr ? 'وعدنا لك' : 'Our Promise'}
               </h2>
               
-              <p className="text-xl md:text-2xl text-slate-300 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
+              <p className="text-xl md:text-2xl text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
                 {isAr ? (
                   <>
                     نسلمك صناع قرار موثوقين في الخليج مع احتياج تدريبي مؤسسي مؤكد...{' '}
-                    <span className="text-blue-400 font-semibold">بدون اشتراك شهري. وبدون أي مخاطرة.</span>
+                    <span className="text-primary font-semibold">بدون اشتراك شهري. وبدون أي مخاطرة.</span>
                   </>
                 ) : (
                   <>
                     We deliver verified GCC decision-makers with a confirmed corporate-training need...{' '}
-                    <span className="text-blue-400 font-semibold">No retainer. No risk.</span>
+                    <span className="text-primary font-semibold">No retainer. No risk.</span>
                   </>
                 )}
               </p>
@@ -387,7 +387,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link 
                   href={`/${lang}/for-providers`} 
-                  className="btn-primary flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base rounded-full shadow-xl hover:scale-105 transition-all"
+                  className="btn-primary flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base rounded-full shadow-md hover:shadow-lg transition-all"
                 >
                   {isAr ? 'ابدأ باستقبال الفرص المؤهلة' : 'Start Receiving Qualified Leads'}
                   <ArrowRight size={18} className="ms-2 rtl:-scale-x-100" />
@@ -395,7 +395,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                 
                 <Link 
                   href={`/${lang}/contact`} 
-                  className="flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-slate-950 bg-white hover:bg-slate-100 rounded-full border border-white/10 shadow-xl transition-all"
+                  className="flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-full border border-slate-200 transition-all"
                 >
                   {isAr ? 'احجز جلسة استكشافية' : 'Book a Discovery Call'}
                 </Link>

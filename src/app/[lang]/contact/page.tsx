@@ -42,36 +42,36 @@ export default async function ContactPage({
   };
 
   return (
-    <div className="bg-transparent">
-      <section className="container-site grid gap-14 pt-32 pb-20 lg:grid-cols-5">
+    <div className="bg-hero-gradient">
+      <section className="container-site grid gap-14 pt-36 pb-24 lg:grid-cols-5">
         <Reveal className="lg:col-span-2">
           <span className="chip">{contactData.chip}</span>
-          <h1 className="mt-5 text-4xl font-semibold leading-tight text-white font-heading">
+          <h1 className="mt-5 text-4xl font-semibold leading-tight text-slate-800 font-heading">
             {contactData.title}
           </h1>
-          <p className="mt-4 text-lg leading-relaxed text-slate-300">
+          <p className="mt-4 text-lg leading-relaxed text-slate-600">
             {contactData.subtitle}
           </p>
           <ul className="mt-8 space-y-4 text-sm">
             <li className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-50 text-primary">
                 <Mail size={18} />
               </span>
-              <a href="mailto:contact@pontlook.com" className="font-medium text-white hover:text-blue-400">
+              <a href="mailto:contact@pontlook.com" className="font-medium text-ink hover:text-primary">
                 {contactData.emailLabel}
               </a>
             </li>
             <li className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-50 text-primary">
                 <MapPin size={18} />
               </span>
-              <span className="text-slate-300">{contactData.location}</span>
+              <span>{contactData.location}</span>
             </li>
             <li className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-50 text-primary">
                 <Clock size={18} />
               </span>
-              <span className="text-slate-300">{contactData.hours}</span>
+              <span>{contactData.hours}</span>
             </li>
           </ul>
         </Reveal>

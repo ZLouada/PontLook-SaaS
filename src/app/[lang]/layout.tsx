@@ -174,7 +174,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang={lang} dir={dir} className={`dark ${fontClass}`}>
+    <html lang={lang} dir={dir} className={fontClass}>
       <head>
         <script
           type="application/ld+json"
@@ -183,11 +183,11 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`bg-gradient-to-b from-[#020617] via-[#0B1528] to-[#020617] text-white ${lang === 'ar' ? 'font-arabic' : ''}`}>
+      <body className={lang === 'ar' ? 'font-arabic' : ''}>
         <DictionaryProvider dictionary={dictionary}>
           <FramerMotionProvider>
             <Navbar lang={lang} />
-            <main className="min-h-screen bg-gradient-to-b from-[#020617] via-[#0B1528] to-[#020617] text-white selection:bg-blue-500 selection:text-white">{children}</main>
+            <main className="min-h-screen">{children}</main>
             <Footer />
           </FramerMotionProvider>
         </DictionaryProvider>

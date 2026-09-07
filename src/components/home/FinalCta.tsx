@@ -12,9 +12,9 @@ export default function FinalCta() {
   const lang = pathname.startsWith('/ar') ? 'ar' : 'en';
 
   return (
-    <section data-nav-dark="true" className="relative overflow-hidden bg-transparent text-white py-16 md:py-24 border-t border-white/10">
+    <section data-nav-dark="true" className="relative overflow-hidden bg-slate-950 text-white pt-12 pb-12 sm:pt-16 sm:pb-16 lg:pt-20 lg:pb-20 border-t border-slate-900">
       {/* Ambient glowing radial backlight */}
-      <div className="absolute top-1/3 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[400px] bg-blue-600/20 blur-[140px] pointer-events-none rounded-full transform-gpu" />
+      <div className="absolute top-1/3 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[400px] bg-accent/20 blur-[140px] pointer-events-none rounded-full transform-gpu" />
 
       <div className="container-site relative z-10 px-4 sm:px-8 lg:px-12 mx-auto">
         {/* Giant Odysser-Style Watermark Brand Identity */}
@@ -31,13 +31,13 @@ export default function FinalCta() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ y: -4 }}
-          className="max-w-3xl mx-auto rounded-2xl sm:rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6 sm:p-10 shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-8 relative z-20 transform-gpu will-change-transform"
+          className="max-w-3xl mx-auto rounded-2xl sm:rounded-3xl border border-white/10 bg-slate-900/85 backdrop-blur-2xl p-5 sm:p-10 shadow-[0_24px_60px_-15px_rgba(0,0,0,0.8)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-8 relative z-20 transform-gpu will-change-transform"
         >
           <div className="space-y-2 text-start max-w-lg">
             <h3 className="text-lg sm:text-2xl font-semibold text-white tracking-tight">
               {dict.final_cta?.card_title || 'Ready to discuss your training objectives?'}
             </h3>
-            <p className="text-xs sm:text-base text-slate-300 font-normal leading-relaxed">
+            <p className="text-xs sm:text-base text-slate-400 font-normal leading-relaxed">
               {dict.final_cta?.card_subtitle || 'Connect directly with our enterprise advisory team to explore verified provider matching or discuss partnership opportunities across the GCC.'}
             </p>
           </div>

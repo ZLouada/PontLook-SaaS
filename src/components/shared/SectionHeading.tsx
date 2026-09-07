@@ -27,11 +27,11 @@ export default function SectionHeading({
           <Badge variant="accent">{eyebrow}</Badge>
         </div>
       )}
-      <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.12]">
+      <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-semibold text-slate-900 tracking-[-0.025em] leading-[1.12]">
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-4 sm:mt-5 text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-2xl mx-auto">
+        <p className="mt-4 sm:mt-5 text-base sm:text-lg text-slate-600 font-normal leading-[1.65] max-w-2xl mx-auto">
           {subtitle}
         </p>
       )}

@@ -216,11 +216,11 @@ export default function FindTrainingWizard() {
 
   if (!hydrated) {
     return (
-      <div className="w-full rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-8 shadow-2xl sm:p-12">
+      <div className="w-full rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
         <div className="flex animate-pulse flex-col items-center space-y-4">
-          <div className="h-6 w-48 rounded-full bg-slate-700" />
-          <div className="h-4 w-72 rounded-full bg-slate-800" />
-          <div className="mt-8 h-64 w-full rounded-2xl bg-slate-800/60" />
+          <div className="h-6 w-48 rounded-full bg-slate-200" />
+          <div className="h-4 w-72 rounded-full bg-slate-100" />
+          <div className="mt-8 h-64 w-full rounded-2xl bg-slate-100" />
         </div>
       </div>
     );
@@ -238,26 +238,26 @@ export default function FindTrainingWizard() {
 
   return (
     <div id="find-training-wizard-container" className="w-full space-y-6">
-      <div className="rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-5 shadow-2xl sm:p-6 text-white">
+      <div className="rounded-3xl border border-slate-200/70 bg-white p-5 shadow-sm sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-xs font-semibold text-white">
               {currentStep}
             </span>
-            <span className="text-sm font-semibold text-white">
+            <span className="text-sm font-semibold text-slate-800">
               Step {currentStep} of 4:
             </span>
-            <span className="text-sm font-medium text-slate-300">
+            <span className="text-sm font-medium text-slate-600">
               {STEP_DEFINITIONS[currentStep - 1]?.title}
             </span>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-400">
-              <Clock size={13} className="text-blue-400" />
+            <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500">
+              <Clock size={13} className="text-blue-600" />
               <span>(~60 seconds)</span>
             </span>
-            <span className="hidden items-center gap-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-400 sm:inline-flex">
+            <span className="hidden items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 sm:inline-flex">
               <ShieldCheck size={12} />
               <span>Auto-saving</span>
             </span>
@@ -271,7 +271,7 @@ export default function FindTrainingWizard() {
 
             return (
               <div key={def.step} className="space-y-1.5">
-                <div className="h-2 w-full overflow-hidden rounded-full bg-slate-800">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
                   <div
                     className={`h-full transition-all duration-300 ${
                       isCompleted
@@ -287,10 +287,10 @@ export default function FindTrainingWizard() {
                   <span
                     className={`text-[11px] font-semibold uppercase tracking-wider ${
                       isCurrent
-                        ? 'text-blue-400'
+                        ? 'text-blue-600'
                         : isCompleted
-                        ? 'text-slate-300'
-                        : 'text-slate-500'
+                        ? 'text-slate-700'
+                        : 'text-slate-400'
                     }`}
                   >
                     {def.short}
@@ -302,9 +302,9 @@ export default function FindTrainingWizard() {
         </div>
       </div>
 
-      <div className="relative rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-6 shadow-2xl sm:p-10 text-white">
+      <div className="relative rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
         {errorMessage && (
-          <div className="mb-6 rounded-xl border border-red-500/30 bg-red-950/40 p-4 text-xs font-medium text-red-400" role="alert">
+          <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-xs font-medium text-red-700" role="alert">
             {errorMessage}
           </div>
         )}
