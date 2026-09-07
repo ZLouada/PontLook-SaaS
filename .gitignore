@@ -11,7 +11,6 @@ _next/
 *.html
 *.txt
 !src/**/*.html
-!public/robots.txt
 
 # Sitemap & robots generated at root by export
 sitemap.xml
@@ -28,7 +27,8 @@ sitemap.xml
 # Auto-generated
 next-env.d.ts
 
-# Archives & Logs
+# Archives, Documents & Logs
+*.docx
 *.zip
 *.log
 
