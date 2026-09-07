@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { m } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
@@ -23,25 +22,11 @@ export default function FinalCta() {
       {/* Top shadow gradient overlay blending into the horizon line */}
       <div className="absolute top-0 inset-x-0 h-6 sm:h-10 bg-gradient-to-b from-black/50 via-black/15 to-transparent pointer-events-none z-10" />
 
-      {/* Horizon Logo + Wordmark Lockup (just a subtle portion peeking under the top border line) */}
+      {/* Horizon Wordmark (just a subtle portion peeking under the top border line) */}
       <div className="relative -mt-2 sm:-mt-3 md:-mt-4 lg:-mt-5 overflow-hidden select-none pointer-events-none transform-gpu flex items-center justify-center">
-        <div className="flex items-center justify-center gap-4 sm:gap-6 md:gap-8 px-4">
-          {/* Logo Icon Mark */}
-          <div className="relative w-16 h-16 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 flex-shrink-0">
-            <Image
-              src="/PontLook-Logo-White.png"
-              alt="PontLook Logo Mark"
-              fill
-              className="object-contain drop-shadow-[0_0_35px_rgba(0,82,255,0.4)]"
-              priority
-            />
-          </div>
-
-          {/* Massive Gradient Wordmark */}
-          <span className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[10.5rem] font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white/95 via-white/60 to-white/10 leading-none">
-            PontLook
-          </span>
-        </div>
+        <span className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[10.5rem] font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white/95 via-white/60 to-white/10 leading-none">
+          PontLook
+        </span>
       </div>
 
       <div className="container-site relative z-20 px-4 sm:px-8 lg:px-12 mx-auto">
