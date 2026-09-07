@@ -152,10 +152,10 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
 
   if (isSubmitted) {
     return (
-      <div className="bg-white border border-slate-200/70 rounded-3xl text-center p-6 sm:p-14 shadow-sm">
-        <CheckCircle2 size={48} className="mx-auto text-emerald-500" />
-        <h3 className="mt-5 text-2xl font-semibold text-slate-800 font-heading">{successTitle}</h3>
-        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 font-sans">
+      <div className="bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl text-center p-6 sm:p-14 shadow-2xl text-white">
+        <CheckCircle2 size={48} className="mx-auto text-emerald-400" />
+        <h3 className="mt-5 text-2xl font-semibold text-white font-heading">{successTitle}</h3>
+        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-300 font-sans">
           {successMessage}
         </p>
       </div>
@@ -163,12 +163,12 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
   }
 
   return (
-    <div className="bg-white border border-slate-200/70 rounded-3xl p-5 sm:p-12 shadow-sm">
+    <div className="bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-5 sm:p-12 shadow-2xl text-white">
       <div className="mb-8 text-center sm:text-start">
-        <h2 className="text-2xl sm:text-3xl font-semibold text-slate-800 font-heading">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-white font-heading">
           {formTitle}
         </h2>
-        <p className="mt-2 text-sm text-slate-600 font-sans">
+        <p className="mt-2 text-sm text-slate-300 font-sans">
           {formSubtitle}
         </p>
       </div>
@@ -265,13 +265,13 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
               name="yearsInBusiness"
               value={formData.yearsInBusiness}
               onChange={handleChange}
-              className="field-input"
+              className="field-input bg-slate-800/80 text-white"
             >
-              <option value="">{dict?.contact?.form?.topicPlaceholder || 'Select…'}</option>
-              <option value="<2">{yearsOptions.lessThan2}</option>
-              <option value="2-5">{yearsOptions.twoToFive}</option>
-              <option value="5-10">{yearsOptions.fiveToTen}</option>
-              <option value="10+">{yearsOptions.tenPlus}</option>
+              <option value="" className="bg-slate-900 text-white">{dict?.contact?.form?.topicPlaceholder || 'Select…'}</option>
+              <option value="<2" className="bg-slate-900 text-white">{yearsOptions.lessThan2}</option>
+              <option value="2-5" className="bg-slate-900 text-white">{yearsOptions.twoToFive}</option>
+              <option value="5-10" className="bg-slate-900 text-white">{yearsOptions.fiveToTen}</option>
+              <option value="10+" className="bg-slate-900 text-white">{yearsOptions.tenPlus}</option>
             </select>
           </div>
         </div>
@@ -291,8 +291,8 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
                   aria-pressed={active}
                   className={`rounded-full border px-4 py-2.5 min-h-[44px] inline-flex items-center justify-center text-sm font-medium transition-all active:scale-95 touch-manipulation ${
                     active
-                      ? 'border-primary bg-primary text-white'
-                      : 'border-slate-200 bg-white text-body hover:border-primary-300'
+                      ? 'border-blue-500 bg-blue-600 text-white shadow-md shadow-blue-500/30'
+                      : 'border-white/10 bg-slate-800/80 text-slate-300 hover:border-white/20 hover:text-white'
                   }`}
                 >
                   {s}

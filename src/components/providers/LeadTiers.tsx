@@ -147,23 +147,23 @@ const TIERS_AR: TierData[] = [
 const CARD_CONFIGS = [
   {
     zIndexClass: 'z-10',
-    spacingClass: 'mb-[25vh]',
-    shadowClass: 'shadow-xl shadow-[0_-8px_30px_rgba(0,0,0,0.08)]'
+    spacingClass: 'mb-6 sm:mb-8',
+    shadowClass: 'shadow-2xl shadow-black/40'
   },
   {
     zIndexClass: 'z-20',
-    spacingClass: 'mb-[25vh]',
-    shadowClass: 'shadow-2xl shadow-[0_-8px_30px_rgba(0,0,0,0.08)]'
+    spacingClass: 'mb-6 sm:mb-8',
+    shadowClass: 'shadow-2xl shadow-black/40'
   },
   {
     zIndexClass: 'z-30',
-    spacingClass: 'mb-[25vh]',
-    shadowClass: 'shadow-2xl shadow-[0_-8px_30px_rgba(0,0,0,0.08)]'
+    spacingClass: 'mb-6 sm:mb-8',
+    shadowClass: 'shadow-2xl shadow-black/40'
   },
   {
     zIndexClass: 'z-40',
     spacingClass: '',
-    shadowClass: 'shadow-2xl shadow-[0_-8px_30px_rgba(0,0,0,0.08)]'
+    shadowClass: 'shadow-2xl shadow-black/40'
   }
 ];
 
@@ -173,14 +173,14 @@ export default function LeadTiers(_props?: { dict?: any; lang?: string; showSign
   const tiers = isAr ? TIERS_AR : TIERS_EN;
 
   return (
-    <section className="py-20 bg-slate-50/50 dark:bg-slate-950/50">
+    <section className="py-16 md:py-24 bg-transparent border-t border-white/10">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl font-semibold text-slate-900 dark:text-white tracking-tight">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight">
             {isAr ? 'تدفق متوقع لفرص الشركات والمؤسسات' : 'A predictable pipeline of enterprise opportunities'}
           </h2>
-          <p className="mt-4 text-base text-slate-600 dark:text-slate-400">
+          <p className="mt-4 text-base text-slate-300">
             {isAr
               ? 'يتم تقييم كل فرصة بناءً على التحقق من صانع القرار، وحجم الشركة، والميزانية، والجدول الزمني، وعمق الاحتياج لتكون على دراية تامة بتفاصيل كل فرصة.'
               : "Every lead is scored on decision-maker verification, company size, budget, timeline, and depth of need, so you always know exactly what you're walking into."}
@@ -188,32 +188,32 @@ export default function LeadTiers(_props?: { dict?: any; lang?: string; showSign
         </div>
 
         {/* Sticky Stacked Cards Container */}
-        <div className="relative max-w-5xl mx-auto pb-32">
+        <div className="relative max-w-5xl mx-auto pb-6">
           {tiers.map((tier, idx) => {
             const config = CARD_CONFIGS[idx] || CARD_CONFIGS[0];
 
             return (
               <div
                 key={tier.step}
-                className={`sticky top-28 ${config.zIndexClass} ${config.spacingClass} bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-10 ${config.shadowClass} transition-transform duration-200`}
+                className={`sticky top-28 ${config.zIndexClass} ${config.spacingClass} bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-white/10 p-6 sm:p-10 ${config.shadowClass} transition-transform duration-200 text-white`}
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                   {/* Left Details */}
                   <div className="lg:col-span-7 space-y-4">
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white shadow-sm">
                         {tier.step}
                       </span>
-                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-800/80 border border-white/10 text-slate-300">
                         {tier.badge}
                       </span>
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white tracking-tight leading-snug">
+                    <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-snug">
                       {tier.title}
                     </h3>
 
-                    <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
                       {tier.description}
                     </p>
 
@@ -231,25 +231,25 @@ export default function LeadTiers(_props?: { dict?: any; lang?: string; showSign
 
                   {/* Right Preview Card */}
                   <div className="lg:col-span-5">
-                    <div className="rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/50 p-6 space-y-4">
-                      <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 tracking-wide uppercase">
+                    <div className="rounded-2xl bg-slate-800/60 backdrop-blur-md border border-white/10 p-6 space-y-4 text-white">
+                      <div className="text-xs font-semibold text-slate-400 tracking-wide uppercase">
                         {tier.project}
                       </div>
 
                       <div>
-                        <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+                        <div className="flex justify-between text-xs font-semibold text-slate-300 mb-1.5">
                           <span>{isAr ? 'دقة التطابق' : 'Match Accuracy'}</span>
-                          <span className="font-mono font-bold text-slate-900 dark:text-white">{tier.accuracy}</span>
+                          <span className="font-mono font-bold text-white">{tier.accuracy}</span>
                         </div>
-                        <div className="h-2 w-full rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                        <div className="h-2 w-full rounded-full bg-slate-700/60 overflow-hidden">
                           <div className={`h-full rounded-full ${tier.barColor} ${tier.barWidth}`} />
                         </div>
                       </div>
 
-                      <ul className="space-y-2.5 pt-2 text-xs text-slate-700 dark:text-slate-300">
+                      <ul className="space-y-2.5 pt-2 text-xs text-slate-300">
                         {tier.checklist.map((item, cIdx) => (
                           <li key={cIdx} className="flex items-center gap-2">
-                            <span className="flex-shrink-0 text-emerald-600 dark:text-emerald-400 font-bold">✓</span>
+                            <span className="flex-shrink-0 text-emerald-400 font-bold">✓</span>
                             <span>{item}</span>
                           </li>
                         ))}

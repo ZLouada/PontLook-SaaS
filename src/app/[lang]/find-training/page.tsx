@@ -77,11 +77,11 @@ const keyAdvantagesAr = [
 
 function FunnelLoadingFallback() {
   return (
-    <div className="w-full rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
+    <div className="w-full rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-8 shadow-2xl sm:p-12">
       <div className="flex animate-pulse flex-col items-center space-y-4">
-        <div className="h-6 w-48 rounded-full bg-slate-200" />
-        <div className="h-4 w-72 rounded-full bg-slate-100" />
-        <div className="mt-8 h-64 w-full rounded-2xl bg-slate-100" />
+        <div className="h-6 w-48 rounded-full bg-slate-700" />
+        <div className="h-4 w-72 rounded-full bg-slate-800" />
+        <div className="mt-8 h-64 w-full rounded-2xl bg-slate-800/60" />
       </div>
     </div>
   );
@@ -101,11 +101,11 @@ export default async function FindTrainingPage({
 
   return (
     <>
-      <div className="bg-hero-gradient">
-        <section className="container-site relative z-10 pt-28 pb-12 text-center sm:pt-40 sm:pb-20 px-4 sm:px-6">
+      <div className="bg-transparent">
+        <section className="container-site relative z-10 pt-28 pb-12 text-center sm:pt-36 sm:pb-16 px-4 sm:px-6">
           <Reveal className="mx-auto max-w-3xl">
             <span className="chip mx-auto inline-flex items-center gap-2">
-              <Building2 size={14} className="text-primary" />
+              <Building2 size={14} className="text-blue-400" />
               <span>
                 {isAr
                   ? 'لمدراء الموارد البشرية والتطوير وقادة المؤسسات في الخليج'
@@ -113,19 +113,19 @@ export default async function FindTrainingPage({
               </span>
             </span>
 
-            <h1 className="mt-5 sm:mt-6 text-3xl font-semibold tracking-normal sm:tracking-tight text-slate-800 sm:text-5xl sm:leading-[1.15] font-heading">
+            <h1 className="mt-5 sm:mt-6 text-3xl font-semibold tracking-normal sm:tracking-tight text-white sm:text-5xl sm:leading-[1.15] font-heading">
               {isAr ? (
                 <>
-                  احصل على <span className="gradient-text">3 عروض تدريبية مخصصة</span> لتطوير كوادر منشأتك
+                  احصل على <span className="text-blue-400">3 عروض تدريبية مخصصة</span> لتطوير كوادر منشأتك
                 </>
               ) : (
                 <>
-                  Get <span className="gradient-text">3 Curated Training Proposals</span> for Your Workforce
+                  Get <span className="text-blue-400">3 Curated Training Proposals</span> for Your Workforce
                 </>
               )}
             </h1>
 
-            <p className="mx-auto mt-4 sm:mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+            <p className="mx-auto mt-4 sm:mt-5 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
               {isAr
                 ? 'لا داعي للبحث اليدوي بين مئات الكتالوجات العامة. حدد متطلباتك التدريبية في 60 ثانية، وسنصلك بأفضل مزودي التدريب المعتمدين في الخليج وفق متطلباتك الدقيقة.'
                 : 'Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds, and we’ll introduce you only to proven GCC training providers matched to your exact domain and regional context.'}
@@ -135,10 +135,10 @@ export default async function FindTrainingPage({
               {trustMetrics.map((m) => (
                 <div
                   key={m.label}
-                  className="rounded-2xl border border-slate-200/70 bg-white p-3.5 sm:p-4 text-center shadow-sm"
+                  className="rounded-2xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-3.5 sm:p-4 text-center shadow-2xl"
                 >
-                  <div className="text-xl font-semibold text-slate-800 sm:text-2xl">{m.value}</div>
-                  <div className="mt-1 text-[11px] font-medium uppercase tracking-wider text-slate-500">{m.label}</div>
+                  <div className="text-xl font-semibold text-white sm:text-2xl">{m.value}</div>
+                  <div className="mt-1 text-[11px] font-medium uppercase tracking-wider text-slate-400">{m.label}</div>
                 </div>
               ))}
             </div>
@@ -146,19 +146,19 @@ export default async function FindTrainingPage({
         </section>
       </div>
 
-      <section className="relative bg-slate-50/70 py-10 sm:py-16 border-t border-slate-100">
+      <section className="relative bg-transparent py-16 md:py-24 border-t border-white/10">
         <div className="container-site px-4 sm:px-6">
-          <div className="mx-auto mb-6 sm:mb-8 flex max-w-4xl flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs font-semibold text-slate-700">
+          <div className="mx-auto mb-6 sm:mb-8 flex max-w-4xl flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs font-semibold text-slate-300">
             <span className="flex items-center gap-1.5">
-              <BadgeDollarSign size={16} className="text-primary" />
+              <BadgeDollarSign size={16} className="text-blue-400" />
               <span>{isAr ? 'مجاني 100% للشركات والمؤسسات' : '100% Free for Companies'}</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 size={16} className="text-emerald-600" />
+              <CheckCircle2 size={16} className="text-emerald-400" />
               <span>{isAr ? 'بدون رسائل تسويقية عشوائية' : 'Zero Vendor Spam'}</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <ShieldCheck size={16} className="text-emerald-600" />
+              <ShieldCheck size={16} className="text-emerald-400" />
               <span>{isAr ? 'خصوصية تامة لصناع القرار' : 'Verified Decision-Maker Privacy'}</span>
             </span>
           </div>
@@ -183,14 +183,14 @@ export default async function FindTrainingPage({
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {keyAdvantages.map((adv, i) => (
                 <Reveal key={adv.title} delay={i * 0.1}>
-                  <div className="flex h-full flex-col rounded-3xl border border-slate-200/70 bg-white p-7 shadow-sm transition-all hover:border-slate-300 hover:shadow">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary">
+                  <div className="flex h-full flex-col rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-xl p-7 shadow-2xl transition-all hover:border-blue-500/40 hover:shadow-2xl">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
                       <adv.icon size={24} />
                     </div>
-                    <h3 className="mt-5 text-base font-semibold text-slate-800 font-heading">
+                    <h3 className="mt-5 text-base font-semibold text-white font-heading">
                       {adv.title}
                     </h3>
-                    <p className="mt-2 text-xs leading-relaxed text-slate-600">
+                    <p className="mt-2 text-xs leading-relaxed text-slate-300">
                       {adv.text}
                     </p>
                   </div>

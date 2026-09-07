@@ -106,15 +106,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   return (
     <>
       <header
-        className={`fixed inset-x-0 mx-auto z-50 transition-all duration-300 ${
-          scrolled
-            ? isDarkSection
-              ? 'top-2 sm:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full bg-slate-900/80 backdrop-blur-xl border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.5)] py-2 sm:py-2.5 px-3.5 sm:px-6'
-              : 'top-2 sm:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full bg-white/94 backdrop-blur-xl border border-slate-200/80 shadow-apple py-2 sm:py-2.5 px-3.5 sm:px-6'
-            : isDarkSection
-              ? 'top-0 w-full max-w-full rounded-none bg-slate-950/90 backdrop-blur-xl border-b border-white/10 py-3 sm:py-4 px-4 sm:px-8 lg:px-12'
-              : 'top-0 w-full max-w-full rounded-none bg-white/98 backdrop-blur-xl border-b border-slate-200/80 py-3 sm:py-4 px-4 sm:px-8 lg:px-12'
-        }`}
+        className="fixed inset-x-0 mx-auto z-50 transition-all duration-300 top-2 sm:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full bg-slate-900/80 border border-white/10 backdrop-blur-xl text-white shadow-xl py-2 sm:py-2.5 px-3.5 sm:px-6"
       >
         <nav
           onMouseLeave={() => setHoveredIndex(null)}
@@ -129,7 +121,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           >
             <div className="relative flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center">
               <Image
-                src={isDarkSection ? '/PontLook-Logo-White.png' : '/PontLook-Logo-nav.webp'}
+                src="/PontLook-Logo-White.png"
                 alt="PontLook GCC Corporate Training Matchmaking Logo"
                 width={32}
                 height={32}
@@ -137,14 +129,12 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 priority
               />
             </div>
-            <span className={`font-heading font-bold text-lg sm:text-xl tracking-tight transition-colors duration-200 ${
-              isDarkSection ? 'text-white' : 'text-slate-900'
-            }`}>
+            <span className="font-heading font-bold text-lg sm:text-xl tracking-tight text-white transition-colors duration-200">
               PontLook
             </span>
           </Link>
 
-          {/* Center Navigation Links with Odysser Gliding Indicator Pill */}
+          {/* Center Navigation Links with Gliding Indicator Pill */}
           <ul className="hidden lg:flex items-center gap-1 relative px-2">
             {links.map((l, index) => {
               const isActive = pathname === l.href;
@@ -158,16 +148,10 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                     {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                     className={`relative z-10 block px-3.5 py-1.5 text-xs font-semibold transition-colors duration-200 ${
                       isActive
-                        ? isDarkSection
-                          ? 'text-[#4D7CFF]'
-                          : 'text-[#0052FF]'
+                        ? 'text-[#4D7CFF]'
                         : isHovered
-                        ? isDarkSection
-                          ? 'text-white'
-                          : 'text-slate-900'
-                        : isDarkSection
-                        ? 'text-slate-300 hover:text-white'
-                        : 'text-slate-600 hover:text-slate-900'
+                        ? 'text-white'
+                        : 'text-slate-300 hover:text-white'
                     }`}
                   >
                     {l.label}
@@ -177,9 +161,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   {isHovered && (
                     <m.div
                       layoutId="nav-pill"
-                      className={`absolute inset-0 z-0 rounded-full transition-colors ${
-                        isDarkSection ? 'bg-white/15' : 'bg-slate-100/90'
-                      }`}
+                      className="absolute inset-0 z-0 rounded-full bg-white/15 transition-colors"
                       transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -188,9 +170,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   {isActive && !isHovered && (
                     <m.div
                       layoutId="nav-active-indicator"
-                      className={`absolute bottom-0 inset-x-3 h-0.5 rounded-full ${
-                        isDarkSection ? 'bg-[#4D7CFF]' : 'bg-[#0052FF]'
-                      }`}
+                      className="absolute bottom-0 inset-x-3 h-0.5 rounded-full bg-[#4D7CFF]"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -203,14 +183,10 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href={switchHref}
-              className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border shadow-2xs active:scale-95 transition-all duration-200 ${
-                isDarkSection
-                  ? 'border-white/20 bg-white/10 text-white hover:text-white hover:bg-white/20 hover:border-white/30'
-                  : 'border-slate-200/80 bg-white/70 text-slate-700 hover:text-[#0052FF] hover:border-[#0052FF]/40'
-              }`}
+              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border border-white/20 bg-white/10 text-white hover:text-white hover:bg-white/20 hover:border-white/30 shadow-2xs active:scale-95 transition-all duration-200"
               aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
             >
-              <Globe size={13} className={isDarkSection ? 'text-[#4D7CFF]' : 'text-[#0052FF]'} />
+              <Globe size={13} className="text-[#4D7CFF]" />
               <span>{lang === 'en' ? 'العربية' : 'English'}</span>
             </Link>
 
@@ -218,11 +194,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
               <button
                 type="button"
-                className={`flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full transition-all active:scale-90 shadow-2xs ${
-                  isDarkSection
-                    ? 'text-white bg-white/10 border border-white/20 hover:bg-white/20'
-                    : 'text-slate-800 bg-white/90 border border-slate-200/80 hover:bg-slate-50 hover:border-slate-300'
-                }`}
+                className="flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full text-white bg-white/10 border border-white/20 hover:bg-white/20 transition-all active:scale-90 shadow-2xs"
                 onClick={() => setOpen(true)}
                 aria-expanded={open}
                 aria-label="Open navigation menu"
@@ -257,13 +229,13 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   animate={{ x: 0 }}
                   exit={slideExit}
                   transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                  className="fixed inset-y-0 end-0 z-[9999] flex h-full h-[100dvh] w-[85vw] max-w-[340px] flex-col justify-between border-s border-slate-200/80 bg-white p-5 sm:p-6 shadow-2xl overflow-y-auto"
+                  className="fixed inset-y-0 end-0 z-[9999] flex h-full h-[100dvh] w-[85vw] max-w-[340px] flex-col justify-between border-s border-white/10 bg-slate-900/95 backdrop-blur-2xl p-5 sm:p-6 shadow-2xl overflow-y-auto text-white"
                   role="document"
                   aria-label="Mobile navigation"
                 >
                   <div>
                     {/* Drawer Header */}
-                    <div className="flex items-center justify-between pb-5 border-b border-slate-100">
+                    <div className="flex items-center justify-between pb-5 border-b border-white/10">
                       <Link
                         href={`/${lang}`}
                         onClick={() => setOpen(false)}
@@ -272,21 +244,21 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       >
                         <div className="relative flex h-8 w-8 shrink-0 items-center">
                           <Image
-                            src="/PontLook-Logo-nav.webp"
+                            src="/PontLook-Logo-White.png"
                             alt="PontLook Logo"
                             width={32}
                             height={32}
                             className="object-contain"
                           />
                         </div>
-                        <span className="font-heading font-bold text-xl text-slate-900 tracking-tight">
+                        <span className="font-heading font-bold text-xl text-white tracking-tight">
                           PontLook
                         </span>
                       </Link>
                       <button
                         type="button"
                         onClick={() => setOpen(false)}
-                        className="flex h-10 w-10 min-h-[40px] min-w-[40px] items-center justify-center rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors active:scale-90"
+                        className="flex h-10 w-10 min-h-[40px] min-w-[40px] items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 transition-colors active:scale-90"
                         aria-label="Close menu"
                       >
                         <X size={20} />
@@ -305,13 +277,13 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                               {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                               className={`flex min-h-[48px] items-center justify-between px-4 py-3 rounded-2xl text-base font-semibold tracking-wide transition-all active:scale-[0.98] ${
                                 isActive
-                                  ? 'text-[#0052FF] bg-[#0052FF]/10 font-bold border border-[#0052FF]/20'
-                                  : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
+                                  ? 'text-[#4D7CFF] bg-blue-500/15 font-bold border border-blue-500/30'
+                                  : 'text-slate-300 hover:bg-white/10 hover:text-white'
                               }`}
                             >
                               <span>{l.label}</span>
                               {isActive && (
-                                <span className="text-[11px] font-mono font-bold text-[#0052FF] bg-white px-2 py-0.5 rounded-md shadow-2xs">
+                                <span className="text-[11px] font-mono font-bold text-[#4D7CFF] bg-blue-500/20 px-2 py-0.5 rounded-md">
                                   {lang === 'ar' ? 'الحالي' : 'Active'}
                                 </span>
                               )}
@@ -323,7 +295,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   </div>
 
                   {/* Drawer Footer Actions */}
-                  <div className="mt-8 pt-6 border-t border-slate-100 space-y-4 pb-8">
+                  <div className="mt-8 pt-6 border-t border-white/10 space-y-4 pb-8">
                     <Button
                       href={`/${lang}/find-training`}
                       onClick={() => setOpen(false)}
@@ -337,15 +309,15 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                     </Button>
 
                     <div className="flex items-center justify-between pt-2 px-1">
-                      <span className="text-xs font-semibold text-slate-500">
+                      <span className="text-xs font-semibold text-slate-400">
                         {lang === 'ar' ? 'اللغة / Language:' : 'Language / اللغة:'}
                       </span>
                       <Link
                         href={switchHref}
                         onClick={() => setOpen(false)}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-bold text-xs text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all active:scale-95 min-h-[40px]"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-bold text-xs text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all active:scale-95 min-h-[40px]"
                       >
-                        <Globe size={14} className="text-[#0052FF]" />
+                        <Globe size={14} className="text-[#4D7CFF]" />
                         <span>{lang === 'en' ? 'العربية' : 'English'}</span>
                       </Link>
                     </div>

@@ -75,24 +75,24 @@ export default async function ForProvidersPage({
 
   return (
     <>
-      <div className="bg-hero-gradient">
+      <div className="bg-transparent">
         <section className="container-site pt-28 sm:pt-36 pb-12 sm:pb-20 px-4 sm:px-6">
           <Reveal className="mx-auto max-w-3xl text-center">
             <span className="chip mx-auto">
               {isAr ? 'لمزودي ومراكز التدريب' : 'For Training Providers'}
             </span>
-            <h1 className="mt-5 text-3xl sm:text-5xl lg:text-6xl font-semibold text-slate-800 leading-tight font-heading">
+            <h1 className="mt-5 text-3xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight font-heading">
               {isAr ? (
                 <>
-                  فرص تدريبية للشركات والمؤسسات <span className="text-primary">حسب الطلب</span>
+                  فرص تدريبية للشركات والمؤسسات <span className="text-blue-400">حسب الطلب</span>
                 </>
               ) : (
                 <>
-                  Enterprise Training Leads <span className="text-primary">On Demand</span>
+                  Enterprise Training Leads <span className="text-blue-400">On Demand</span>
                 </>
               )}
             </h1>
-            <p className="mt-4 sm:mt-5 text-base sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
+            <p className="mt-4 sm:mt-5 text-base sm:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto">
               {isAr
                 ? 'تواصل مباشرة مع صناع القرار في الشركات الخليجية التي تبحث بنشاط عن حلول تدريبية. بدون رسوم شهرية ثابتة، الدفع فقط لكل فرصة مؤكدة ومؤهلة.'
                 : 'Connect directly with GCC corporate decision-makers actively seeking training solutions. Zero retainers, 100% pay-per-lead.'}
@@ -101,7 +101,7 @@ export default async function ForProvidersPage({
         </section>
       </div>
 
-      <section className="bg-white py-12 sm:py-20 border-t border-slate-100">
+      <section className="bg-transparent py-16 md:py-24 border-t border-white/10">
         <div className="container-site max-w-6xl mx-auto px-4 sm:px-6 space-y-14 sm:space-y-24">
           <div>
             <SectionHeading
@@ -116,12 +116,12 @@ export default async function ForProvidersPage({
             <div className="mt-8 sm:mt-10 grid gap-5 sm:gap-6 md:grid-cols-3">
               {providerBenefits.map((b, i) => (
                 <Reveal key={b.title} delay={i * 0.1}>
-                  <div className="card h-full text-center flex flex-col items-center !p-6 sm:!p-8 bg-slate-50/80 border border-slate-200/70 rounded-3xl hover:bg-white hover:shadow-md transition-all duration-300">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary mb-4">
+                  <div className="card h-full text-center flex flex-col items-center !p-6 sm:!p-8 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl hover:border-blue-500/40 shadow-2xl transition-all duration-300">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400 mb-4 border border-blue-500/20">
                       <b.icon size={24} />
                     </span>
-                    <h3 className="text-lg font-semibold text-slate-800 font-heading">{b.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-600">{b.text}</p>
+                    <h3 className="text-lg font-semibold text-white font-heading">{b.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-300">{b.text}</p>
                   </div>
                 </Reveal>
               ))}
