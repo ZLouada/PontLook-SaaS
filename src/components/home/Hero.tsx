@@ -11,7 +11,7 @@ export default function Hero() {
   const lang = (params?.lang as string) || 'en';
 
   return (
-    <section className="relative overflow-hidden bg-white pt-20 pb-10 sm:pt-24 sm:pb-14 lg:pt-24 lg:pb-16 min-h-[80vh] sm:min-h-[85vh] flex flex-col justify-center">
+    <section className="relative overflow-hidden bg-white pt-24 pb-12 sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-20 min-h-[80vh] sm:min-h-[85vh] flex flex-col justify-center">
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div
           className="absolute inset-0 bg-cover bg-center scale-105 opacity-30"
@@ -33,7 +33,7 @@ export default function Hero() {
       </div>
 
       <div className="container-site relative z-10 mx-auto flex flex-col items-center text-center px-4 sm:px-8 lg:px-12">
-        <div className="max-w-[960px] flex flex-col items-center">
+        <div className="max-w-[960px] flex flex-col items-center pt-2 sm:pt-4 lg:pt-6">
           {/* Apple-grade Display Headline - immediately painted for instant LCP */}
           <h1
             className="font-heading text-[30px] sm:text-5xl lg:text-6xl xl:text-[68px] font-semibold tracking-[-0.03em] leading-[1.12] sm:leading-[1.08] text-slate-900"
