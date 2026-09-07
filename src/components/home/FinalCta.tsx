@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { m } from 'framer-motion';
 import { ArrowRight, PhoneCall } from 'lucide-react';
@@ -19,15 +18,7 @@ export default function FinalCta() {
 
       <div className="container-site relative z-10 px-4 sm:px-8 lg:px-12 mx-auto">
         {/* Giant Odysser-Style Watermark Brand Identity */}
-        <div className="flex items-center justify-center gap-3 sm:gap-6 lg:gap-8 select-none pointer-events-none mb-8 sm:mb-16 transform-gpu">
-          <div className="relative h-12 w-12 xs:h-16 xs:w-16 sm:h-24 sm:w-24 lg:h-32 lg:w-32 shrink-0 opacity-80 filter brightness-125">
-            <Image
-              src="/PontLook-Logo-White.png"
-              alt="PontLook Brand"
-              fill
-              className="object-contain"
-            />
-          </div>
+        <div className="flex items-center justify-center select-none pointer-events-none mb-8 sm:mb-16 transform-gpu">
           <span className="text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight bg-gradient-to-b from-white/90 via-white/50 to-white/10 bg-clip-text text-transparent">
             PontLook
           </span>

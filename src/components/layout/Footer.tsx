@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Linkedin, Mail, MapPin, ShieldCheck } from 'lucide-react';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
@@ -25,10 +24,6 @@ export default function Footer() {
       <div className="container-site relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 py-12 sm:py-20 px-4 sm:px-8 lg:px-12">
         {/* Column 1: Brand & Delaware Office */}
         <div className="space-y-4">
-          <Link href={`/${lang}`} className="inline-flex items-center gap-2.5 transition-opacity hover:opacity-90 min-h-[44px]" aria-label="PontLook home">
-            <Image src="/PontLook-Logo-White.png" alt="PontLook GCC Corporate Training Matchmaking Logo" width={40} height={40} className="object-contain" />
-            <span className="text-xl font-bold tracking-tight text-white font-heading">PontLook</span>
-          </Link>
           <p className="text-xs sm:text-sm leading-relaxed text-slate-400 font-normal">
             {dict.footer.about}
           </p>
