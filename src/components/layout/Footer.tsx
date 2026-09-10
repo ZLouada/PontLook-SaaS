@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Linkedin, Mail, MapPin, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
@@ -27,19 +26,9 @@ export default function Footer() {
         {/* Top shadow gradient overlay blending into the horizon line */}
         <div className="absolute top-0 inset-x-0 h-6 sm:h-10 bg-gradient-to-b from-black/50 via-black/15 to-transparent pointer-events-none z-10" />
 
-        {/* Horizon Logo + Wordmark Lockup (subtle negative margin clipping so it emerges beneath horizon border) */}
+        {/* Horizon Wordmark Lockup (subtle negative margin clipping so it emerges beneath horizon border) */}
         <div className="relative -mt-2 sm:-mt-3 md:-mt-4 lg:-mt-5 overflow-hidden select-none pointer-events-none transform-gpu flex items-center justify-center">
-          <div className="flex items-center justify-center gap-3 sm:gap-6 md:gap-8 px-4">
-            {/* PontLook 'PL' Logo mark */}
-            <div className="relative w-14 h-14 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 flex-shrink-0">
-              <Image
-                src="/PontLook-Logo-White.png"
-                alt="PontLook Logo Mark"
-                fill
-                className="object-contain drop-shadow-[0_0_35px_rgba(0,82,255,0.4)]"
-                priority
-              />
-            </div>
+          <div className="flex items-center justify-center px-4">
             {/* Giant Metallic Gradient Wordmark */}
             <span className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[10.5rem] font-bold tracking-[-0.03em] text-transparent bg-clip-text bg-gradient-to-b from-white/95 via-white/40 to-white/5 leading-none font-sans">
               PontLook
