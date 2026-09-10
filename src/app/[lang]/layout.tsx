@@ -54,17 +54,7 @@ export async function generateMetadata({
     description: isAr
       ? 'منصة ربط مديري الموارد البشرية والشركات بأفضل مزودي التدريب المعتمدين في السعودية والإمارات. فرص معتمدة 100% بدون رسوم شهرية.'
       : 'Connect corporate buyers with verified training providers across Saudi Arabia and UAE. Qualified leads only—zero monthly retainers or cold outreach.',
-    alternates: {
-      canonical: isAr ? 'https://pontlook.com/ar' : 'https://pontlook.com/en',
-      languages: {
-        'en': 'https://pontlook.com/en',
-        'en-SA': 'https://pontlook.com/en',
-        'en-AE': 'https://pontlook.com/en',
-        'ar': 'https://pontlook.com/ar',
-        'ar-SA': 'https://pontlook.com/ar',
-        'ar-AE': 'https://pontlook.com/ar',
-      },
-    },
+
     icons: {
       icon: [
         { url: '/favicon.ico', sizes: 'any' },
@@ -136,6 +126,7 @@ export default async function RootLayout({
         "@type": "Organization",
         "@id": "https://pontlook.com/#organization",
         "name": "PontLook",
+        "legalName": "Firstnestcare, LLC",
         "url": "https://pontlook.com",
         "logo": {
           "@type": "ImageObject",
@@ -143,7 +134,14 @@ export default async function RootLayout({
           "width": 512,
           "height": 512
         },
+        "description": "B2B Corporate Training Matchmaking Platform connecting enterprise buyers with verified training providers across Saudi Arabia and the UAE.",
         "email": "contact@pontlook.com",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "email": "contact@pontlook.com",
+          "availableLanguage": ["English", "Arabic"]
+        },
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "31 Continental Dr",

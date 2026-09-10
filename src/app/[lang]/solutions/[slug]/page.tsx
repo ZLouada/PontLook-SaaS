@@ -20,6 +20,7 @@ import FAQAccordion from '@/components/faq/FAQAccordion';
 import Button from '@/components/shared/Button';
 import SectionHeading from '@/components/shared/SectionHeading';
 import Reveal from '@/components/shared/Reveal';
+import { constructAlternates } from '@/lib/seo';
 
 export const dynamic = 'force-static';
 
@@ -57,17 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: content.title,
     description: content.metaDescription,
-    alternates: {
-      canonical: canonicalUrl,
-      languages: {
-        en: `https://pontlook.com/en/solutions/${slug}`,
-        'en-SA': `https://pontlook.com/en/solutions/${slug}`,
-        'en-AE': `https://pontlook.com/en/solutions/${slug}`,
-        ar: `https://pontlook.com/ar/solutions/${slug}`,
-        'ar-SA': `https://pontlook.com/ar/solutions/${slug}`,
-        'ar-AE': `https://pontlook.com/ar/solutions/${slug}`,
-      },
-    },
+    alternates: constructAlternates(lang, `solutions/${slug}`),
     openGraph: {
       title: content.title,
       description: content.metaDescription,

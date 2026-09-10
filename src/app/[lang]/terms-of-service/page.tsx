@@ -4,10 +4,48 @@ import Link from 'next/link';
 
 import { Locale, i18n } from '@/i18n/config';
 
-export const metadata: Metadata = {
-  title: 'Terms of Service',
-  description: 'PontLook Terms of Service covering service overview, eligibility (13+), account registration, payment authorization, limited license, disclaimers, and governing law (San Francisco, CA / Delaware).',
-};
+import { constructAlternates } from '@/lib/seo';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: Locale }> | { lang: Locale };
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const lang = (resolvedParams?.lang as Locale) || 'en';
+  const isAr = lang === 'ar';
+
+  const title = isAr
+    ? 'شروط الخدمة | منصة PontLook للتدريب المؤسسي'
+    : 'Terms of Service | PontLook B2B Matchmaking';
+  const description = isAr
+    ? 'شروط الخدمة الرسمية لمنصة PontLook: اتفاقية الاستخدام، أهلية المطابقة، معايير قبول طلبات التدريب، والضوابط القانونية المعتمدة.'
+    : 'PontLook Terms of Service covering service agreements, matchmaking eligibility, verified lead acceptance, payments, and legal governing laws.';
+
+  return {
+    title: {
+      absolute: title,
+    },
+    description,
+    alternates: constructAlternates(lang, 'terms-of-service'),
+    openGraph: {
+      title,
+      description,
+      url: `https://pontlook.com/${lang}/terms-of-service`,
+      siteName: 'PontLook',
+      locale: isAr ? 'ar_SA' : 'en_US',
+      type: 'website',
+      images: [
+        {
+          url: '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+  };
+}
 
 export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));

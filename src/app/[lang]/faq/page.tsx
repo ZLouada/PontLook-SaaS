@@ -4,10 +4,48 @@ import FAQAccordion from '@/components/faq/FAQAccordion';
 import Link from 'next/link';
 import { Locale, i18n } from '@/i18n/config';
 
-export const metadata: Metadata = {
-  title: 'Frequently Asked Questions',
-  description: 'Frequently Asked Questions about PontLook and how we connect corporate training companies with qualified enterprise decision-makers.',
-};
+import { constructAlternates } from '@/lib/seo';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: Locale }> | { lang: Locale };
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const lang = (resolvedParams?.lang as Locale) || 'en';
+  const isAr = lang === 'ar';
+
+  const title = isAr
+    ? 'الأسئلة الشائعة | منصة PontLook للتدريب المؤسسي'
+    : 'Frequently Asked Questions | PontLook B2B Matching';
+  const description = isAr
+    ? 'إجابات شاملة عن كيفية عمل منصة PontLook، معايير تأهيل طلبات التدريب، تسعير الفرص، ونطاق تغطيتنا في السعودية والإمارات والخليج.'
+    : "Find answers to common questions about PontLook's corporate training matchmaking platform, lead qualification process, pricing, and GCC coverage.";
+
+  return {
+    title: {
+      absolute: title,
+    },
+    description,
+    alternates: constructAlternates(lang, 'faq'),
+    openGraph: {
+      title,
+      description,
+      url: `https://pontlook.com/${lang}/faq`,
+      siteName: 'PontLook',
+      locale: isAr ? 'ar_SA' : 'en_US',
+      type: 'website',
+      images: [
+        {
+          url: '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+  };
+}
 
 export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
@@ -57,8 +95,26 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: Loca
   const isAr = lang === 'ar';
   const faqs = isAr ? faqsAr : faqsEn;
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `https://pontlook.com/${lang}/faq#faqpage`,
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <section className="bg-hero-gradient pt-36 pb-20 relative overflow-hidden">
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto">
           <Reveal>

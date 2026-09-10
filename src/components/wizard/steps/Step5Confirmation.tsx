@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { m } from 'framer-motion';
 import {
   CheckCircle2,
@@ -34,6 +35,8 @@ type Step5Props = {
 };
 
 export default function Step5Confirmation({ data }: Step5Props) {
+  const pathname = usePathname() || '/en';
+  const lang = pathname.split('/')[1] === 'ar' ? 'ar' : 'en';
   const [downloading, setDownloading] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
 
@@ -303,7 +306,7 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
 
       <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
         <Link
-          href="/"
+          href={`/${lang}`}
           className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700"
         >
           <span>← Back to PontLook Home</span>
@@ -312,7 +315,7 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
         <div className="flex items-center gap-4 text-xs text-slate-500">
           <span>Need immediate assistance?</span>
           <Link
-            href="/contact"
+            href={`/${lang}/contact`}
             className="font-semibold text-slate-800 underline hover:text-blue-600"
           >
             Contact Matching Desk

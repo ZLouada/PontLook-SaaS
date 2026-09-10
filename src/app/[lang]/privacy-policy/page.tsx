@@ -4,10 +4,48 @@ import Link from 'next/link';
 
 import { Locale, i18n } from '@/i18n/config';
 
-export const metadata: Metadata = {
-  title: 'Privacy Policy',
-  description: 'PontLook Privacy Policy: Information collection, usage, third-party disclosures (Fourthwall, Google Analytics), cookies, and user rights under Firstnestcare, LLC.',
-};
+import { constructAlternates } from '@/lib/seo';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: Locale }> | { lang: Locale };
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const lang = (resolvedParams?.lang as Locale) || 'en';
+  const isAr = lang === 'ar';
+
+  const title = isAr
+    ? 'سياسة الخصوصية | منصة PontLook للتدريب'
+    : 'Privacy Policy | PontLook B2B Matchmaking';
+  const description = isAr
+    ? 'سياسة الخصوصية الرسمية لمنصة PontLook: كيف نحمي بيانات العملاء، إدارة ملفات تعريف الارتباط، والامتثال للأنظمة القانونية.'
+    : 'PontLook Privacy Policy: Read how we protect data, handle enterprise business inquiries, manage cookies, and adhere to privacy regulations.';
+
+  return {
+    title: {
+      absolute: title,
+    },
+    description,
+    alternates: constructAlternates(lang, 'privacy-policy'),
+    openGraph: {
+      title,
+      description,
+      url: `https://pontlook.com/${lang}/privacy-policy`,
+      siteName: 'PontLook',
+      locale: isAr ? 'ar_SA' : 'en_US',
+      type: 'website',
+      images: [
+        {
+          url: '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+  };
+}
 
 export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));

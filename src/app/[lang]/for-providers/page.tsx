@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import PartnershipForm from '@/components/providers/PartnershipForm';
@@ -5,15 +6,48 @@ import LeadTiers from '@/components/providers/LeadTiers';
 import Reveal from '@/components/shared/Reveal';
 import SectionHeading from '@/components/shared/SectionHeading';
 import { ShieldCheck, Target, DollarSign, Users, Award } from 'lucide-react';
-import type { Metadata } from 'next';
+import { constructAlternates } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: {
-    absolute: 'For Training Providers: B2B Lead Generation | PontLook',
-  },
-  description:
-    'Receive verified corporate training opportunities across Saudi Arabia and the UAE. Zero retainers or subscription fees—pay only for qualified decision-makers.',
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: Locale }> | { lang: Locale };
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const lang = (resolvedParams?.lang as Locale) || 'en';
+  const isAr = lang === 'ar';
+
+  const title = isAr
+    ? 'فرص وعملاء تدريب معتمدين للشركات | PontLook'
+    : 'Corporate Training Leads & Matchmaking | PontLook';
+  const description = isAr
+    ? 'احصل على فرص تعاقد وتدريب معتمدة مع كبرى الشركات في السعودية والإمارات. بدون اشتراكات شهرية أو رسوم احتجاز—ادفع فقط مقابل كل عميل مهتم ومؤهل.'
+    : 'Acquire pre-vetted enterprise corporate training leads in Saudi Arabia and the UAE. Zero retainers or monthly fees—pay strictly per qualified decision-maker.';
+
+  return {
+    title: {
+      absolute: title,
+    },
+    description,
+    alternates: constructAlternates(lang, 'for-providers'),
+    openGraph: {
+      title,
+      description,
+      url: `https://pontlook.com/${lang}/for-providers`,
+      siteName: 'PontLook',
+      locale: isAr ? 'ar_SA' : 'en_US',
+      type: 'website',
+      images: [
+        {
+          url: '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+  };
+}
 
 export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));

@@ -5,10 +5,48 @@ import { PackageX, Clock, RefreshCw, CreditCard, ShieldCheck, Mail } from 'lucid
 
 import { Locale, i18n } from '@/i18n/config';
 
-export const metadata: Metadata = {
-  title: 'Returns & FAQ Policy',
-  description: 'Official PontLook Returns & FAQ Policy covering made-to-order product resolutions, 30-day quality issue reporting, cancellation policies, refund processing (PayPal & Credit Cards), and Fourthwall fulfillment partner terms.',
-};
+import { constructAlternates } from '@/lib/seo';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: Locale }> | { lang: Locale };
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const lang = (resolvedParams?.lang as Locale) || 'en';
+  const isAr = lang === 'ar';
+
+  const title = isAr
+    ? 'سياسة الاسترجاع والأسئلة الشائعة | PontLook'
+    : 'Returns & FAQ Policy | PontLook Enterprise Guarantee';
+  const description = isAr
+    ? 'سياسة الاسترجاع والضمانات الرسمية في PontLook، بما في ذلك ضمان استبدال العملاء المحتملين وشروط الفواتير وسياسات حل المشكلات.'
+    : 'Official PontLook Returns & FAQ Policy covering order resolutions, 30-day quality reviews, lead replacement guarantees, and billing terms.';
+
+  return {
+    title: {
+      absolute: title,
+    },
+    description,
+    alternates: constructAlternates(lang, 'returns-faq'),
+    openGraph: {
+      title,
+      description,
+      url: `https://pontlook.com/${lang}/returns-faq`,
+      siteName: 'PontLook',
+      locale: isAr ? 'ar_SA' : 'en_US',
+      type: 'website',
+      images: [
+        {
+          url: '/og-image.png',
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+  };
+}
 
 export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
@@ -66,8 +104,71 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
   const isAr = lang === 'ar';
   const policyHighlights = isAr ? policyHighlightsAr : policyHighlightsEn;
 
+  const returnsFaqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `https://pontlook.com/${lang}/returns-faq#faqpage`,
+    mainEntity: isAr
+      ? [
+          {
+            '@type': 'Question',
+            name: 'ما هي سياسة التصنيع والتنفيذ حسب الطلب؟',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'تتم طباعة وتصنيع كل منتج أو مادة ترويجية بصورة فردية ومخصصة عند تأكيد الطلب، لذلك لا يتم قبول الاسترجاع لتغيير الرأي أو المقاس الشخصي.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'ما هي مهلة الإبلاغ عن المنتجات المعيبة أو التالفة؟',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'يحق للعميل الإبلاغ عن أي عيب صناعة أو تلف شحن خلال 30 يوماً من تاريخ الاستلام للحصول على استبدال فوري أو استرداد كامل للمبلغ.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'كيف يتم إلغاء الطلبات واسترداد الأموال؟',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'يمكن إلغاء الطلب قبل بدء خط الإنتاج الفعلي. وتتم معالجة الاسترداد وإعادته إلى وسيلة الدفع الأصلية خلال 3 إلى 7 أيام عمل.',
+            },
+          },
+        ]
+      : [
+          {
+            '@type': 'Question',
+            name: 'What is the made-to-order fulfillment policy?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'All PontLook custom products are printed and fulfilled on-demand upon order confirmation. We do not accept returns or exchanges for preference changes or sizing mistakes.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What is the quality guarantee window for defective items?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Misprinted, defective, or transit-damaged items reported within 30 days of delivery are eligible for an immediate free replacement or full refund.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'How do cancellations and refunds work?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Orders can be cancelled prior to production entering fulfillment. Approved refunds are credited back to the original payment method within 3-7 business days.',
+            },
+          },
+        ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(returnsFaqSchema) }}
+      />
       <section className="bg-hero-gradient pt-36 pb-16 relative overflow-hidden">
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6">
           <Reveal>
