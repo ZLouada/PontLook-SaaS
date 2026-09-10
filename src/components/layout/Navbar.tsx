@@ -109,11 +109,11 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
         className={`fixed inset-x-0 mx-auto z-50 transition-all duration-300 ${
           scrolled
             ? isDarkSection
-              ? 'top-2 sm:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full bg-slate-900/80 backdrop-blur-xl border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.5)] py-2 sm:py-2.5 px-3.5 sm:px-6'
-              : 'top-2 sm:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full bg-white/94 backdrop-blur-xl border border-slate-200/80 shadow-apple py-2 sm:py-2.5 px-3.5 sm:px-6'
+              ? 'top-2 sm:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full py-2 sm:py-2.5 px-3.5 sm:px-6 liquid-glass-capsule-dark'
+              : 'top-2 sm:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full py-2 sm:py-2.5 px-3.5 sm:px-6 liquid-glass-capsule-light'
             : isDarkSection
-              ? 'top-0 w-full max-w-full rounded-none bg-slate-950/90 backdrop-blur-xl border-b border-white/10 py-3 sm:py-4 px-4 sm:px-8 lg:px-12'
-              : 'top-0 w-full max-w-full rounded-none bg-white/98 backdrop-blur-xl border-b border-slate-200/80 py-3 sm:py-4 px-4 sm:px-8 lg:px-12'
+              ? 'top-0 w-full max-w-full rounded-none py-3.5 sm:py-4 px-4 sm:px-8 lg:px-12 liquid-glass-top-dark'
+              : 'top-0 w-full max-w-full rounded-none py-3.5 sm:py-4 px-4 sm:px-8 lg:px-12 liquid-glass-top-light'
         }`}
       >
         <nav
@@ -173,12 +173,14 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                     {l.label}
                   </Link>
 
-                  {/* Kinetic Morphing Pill Indicator */}
+                  {/* Kinetic Morphing Pill Indicator (Liquid Glass Meniscus) */}
                   {isHovered && (
                     <m.div
                       layoutId="nav-pill"
-                      className={`absolute inset-0 z-0 rounded-full transition-colors ${
-                        isDarkSection ? 'bg-white/15' : 'bg-slate-100/90'
+                      className={`absolute inset-0 z-0 rounded-full ${
+                        isDarkSection
+                          ? 'bg-white/15 border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_2px_8px_rgba(0,0,0,0.2)]'
+                          : 'bg-[linear-gradient(135deg,rgba(0,82,255,0.08)_0%,rgba(77,124,255,0.04)_100%)] backdrop-blur-md border border-[#0052FF]/15 shadow-[inset_0_1px_1px_rgba(255,255,255,0.85),0_2px_8px_rgba(0,82,255,0.07)]'
                       }`}
                       transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                     />
@@ -189,7 +191,9 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                     <m.div
                       layoutId="nav-active-indicator"
                       className={`absolute bottom-0 inset-x-3 h-0.5 rounded-full ${
-                        isDarkSection ? 'bg-[#4D7CFF]' : 'bg-[#0052FF]'
+                        isDarkSection
+                          ? 'bg-[#4D7CFF] shadow-[0_0_8px_rgba(77,124,255,0.6)]'
+                          : 'bg-[#0052FF] shadow-[0_0_8px_rgba(0,82,255,0.4)]'
                       }`}
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
@@ -199,14 +203,14 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             })}
           </ul>
 
-          {/* Right Actions: Language Switcher */}
+          {/* Right Actions: Language Switcher in Liquid Glass */}
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href={switchHref}
-              className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border shadow-2xs active:scale-95 transition-all duration-200 ${
+              className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border active:scale-95 transition-all duration-200 ${
                 isDarkSection
-                  ? 'border-white/20 bg-white/10 text-white hover:text-white hover:bg-white/20 hover:border-white/30'
-                  : 'border-slate-200/80 bg-white/70 text-slate-700 hover:text-[#0052FF] hover:border-[#0052FF]/40'
+                  ? 'border-white/20 bg-white/10 backdrop-blur-md text-white hover:bg-white/20 hover:border-white/30 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)]'
+                  : 'border-white/80 bg-white/70 backdrop-blur-md text-slate-700 hover:text-[#0052FF] hover:border-[#0052FF]/30 hover:bg-white/90 shadow-[inset_0_1px_1px_rgba(255,255,255,0.95),0_2px_6px_rgba(0,0,0,0.04)]'
               }`}
               aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
             >
@@ -214,14 +218,14 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               <span>{lang === 'en' ? 'العربية' : 'English'}</span>
             </Link>
 
-            {/* Mobile Controls */}
+            {/* Mobile Controls in Liquid Glass */}
             <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
               <button
                 type="button"
-                className={`flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full transition-all active:scale-90 shadow-2xs ${
+                className={`flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full transition-all active:scale-90 ${
                   isDarkSection
-                    ? 'text-white bg-white/10 border border-white/20 hover:bg-white/20'
-                    : 'text-slate-800 bg-white/90 border border-slate-200/80 hover:bg-slate-50 hover:border-slate-300'
+                    ? 'text-white bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)]'
+                    : 'text-slate-800 bg-white/75 backdrop-blur-md border border-white/85 hover:bg-white/95 hover:border-[#0052FF]/30 hover:text-[#0052FF] shadow-[inset_0_1px_1px_rgba(255,255,255,0.95),0_2px_6px_rgba(0,0,0,0.04)]'
                 }`}
                 onClick={() => setOpen(true)}
                 aria-expanded={open}
@@ -251,13 +255,13 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   aria-hidden="true"
                 />
 
-                {/* Slide-over Drawer Sheet spanning full 100dvh */}
+                {/* Slide-over Drawer Sheet spanning full 100dvh in Liquid Glass */}
                 <m.div
                   initial={slideInitial}
                   animate={{ x: 0 }}
                   exit={slideExit}
                   transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                  className="fixed inset-y-0 end-0 z-[9999] flex h-full h-[100dvh] w-[85vw] max-w-[340px] flex-col justify-between border-s border-slate-200/80 bg-white p-5 sm:p-6 shadow-2xl overflow-y-auto"
+                  className="fixed inset-y-0 end-0 z-[9999] flex h-full h-[100dvh] w-[85vw] max-w-[340px] flex-col justify-between border-s border-white/80 bg-white/95 backdrop-blur-2xl p-5 sm:p-6 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3),inset_1px_0_0_rgba(255,255,255,0.9)] overflow-y-auto"
                   role="document"
                   aria-label="Mobile navigation"
                 >
@@ -286,7 +290,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       <button
                         type="button"
                         onClick={() => setOpen(false)}
-                        className="flex h-10 w-10 min-h-[40px] min-w-[40px] items-center justify-center rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors active:scale-90"
+                        className="flex h-10 w-10 min-h-[40px] min-w-[40px] items-center justify-center rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 transition-colors active:scale-90 border border-slate-200/60 shadow-[inset_0_1px_1px_rgba(255,255,255,0.9)]"
                         aria-label="Close menu"
                       >
                         <X size={20} />
