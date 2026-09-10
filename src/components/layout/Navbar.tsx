@@ -106,7 +106,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   return (
     <>
       <header
-        className={`fixed inset-x-0 mx-auto z-50 transition-all duration-300 ${
+        className={`fixed inset-x-0 mx-auto z-50 transition-all duration-500 ease-out ${
           scrolled
             ? isDarkSection
               ? 'top-2 sm:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full py-2 sm:py-2.5 px-3.5 sm:px-6 liquid-glass-capsule-dark'
