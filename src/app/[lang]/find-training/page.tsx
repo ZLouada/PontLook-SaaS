@@ -15,10 +15,10 @@ import { Locale, i18n } from '@/i18n/config';
 
 export const metadata: Metadata = {
   title: {
-    absolute: 'Find Corporate Training: Get Matched with Top GCC Providers',
+    absolute: 'Find Corporate Training: Get Matched with Top Providers',
   },
   description:
-    'Submit your enterprise training scope and receive 2-3 itemized proposals from verified GCC training providers within 48 hours. 100% free for hiring organizations.',
+    'Submit your enterprise training scope and receive 2-3 itemized proposals from verified training providers within 48 hours. 100% free for hiring organizations.',
 };
 
 export async function generateStaticParams() {
@@ -26,7 +26,7 @@ export async function generateStaticParams() {
 }
 
 const trustMetricsEn = [
-  { value: '120+', label: 'Vetted GCC Providers' },
+  { value: '120+', label: 'Vetted Providers' },
   { value: '48 Hours', label: 'Proposal SLA' },
   { value: '$0 Cost', label: 'For Hiring Organizations' },
   { value: '100%', label: 'Confidentiality Guaranteed' },
@@ -42,7 +42,7 @@ const trustMetricsAr = [
 const keyAdvantagesEn = [
   {
     icon: Target,
-    title: 'Precise GCC Domain Matching',
+    title: 'Precise Enterprise Domain Matching',
     text: 'We match your exact workforce transformation KPIs with specialized providers in Riyadh, Dubai, Abu Dhabi, and Doha who have delivered verified outcomes.',
   },
   {
@@ -60,7 +60,7 @@ const keyAdvantagesEn = [
 const keyAdvantagesAr = [
   {
     icon: Target,
-    title: 'مطابقة دقيقة لمتطلبات السوق الخليجي',
+    title: 'مطابقة دقيقة لمتطلبات المنشآت الإقليمية',
     text: 'نربط أهدافك ومؤشرات أدائك التدريبية مباشرة مع مزودي تدريب في الرياض ودبي وأبوظبي والدوحة حققوا نتائج موثوقة.',
   },
   {
@@ -108,8 +108,8 @@ export default async function FindTrainingPage({
               <Building2 size={14} className="text-primary" />
               <span>
                 {isAr
-                  ? 'لمدراء الموارد البشرية والتطوير وقادة المؤسسات في الخليج'
-                  : 'For GCC CHROs, L&D Directors & Enterprise Leaders'}
+                  ? 'لمدراء الموارد البشرية والتطوير وقادة المؤسسات'
+                  : 'For CHROs, L&D Directors & Enterprise Leaders'}
               </span>
             </span>
 
@@ -127,8 +127,8 @@ export default async function FindTrainingPage({
 
             <p className="mx-auto mt-4 sm:mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
               {isAr
-                ? 'لا داعي للبحث اليدوي بين مئات الكتالوجات العامة. حدد متطلباتك التدريبية في 60 ثانية، وسنصلك بأفضل مزودي التدريب المعتمدين في الخليج وفق متطلباتك الدقيقة.'
-                : 'Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds, and we’ll introduce you only to proven GCC training providers matched to your exact domain and regional context.'}
+                ? 'لا داعي للبحث اليدوي بين مئات الكتالوجات العامة. حدد متطلباتك التدريبية في 60 ثانية، وسنصلك بأفضل مزودي التدريب المعتمدين وفق متطلباتك الدقيقة.'
+                : 'Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds, and we’ll introduce you only to proven training providers matched to your exact domain and regional context.'}
             </p>
 
             <div className="mt-8 sm:mt-10 grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-4">
@@ -172,7 +172,7 @@ export default async function FindTrainingPage({
           <div className="mx-auto mt-14 sm:mt-24 max-w-5xl">
             <SectionHeading
               eyebrow={isAr ? 'لماذا بونت لوك' : 'Why PontLook'}
-              title={isAr ? 'كيف تستفيد كبرى المنشآت الخليجية' : 'How GCC Enterprises Benefit'}
+              title={isAr ? 'كيف تستفيد كبرى المنشآت والشركات' : 'How Leading Enterprises Benefit'}
               subtitle={
                 isAr
                   ? 'مصمم خصيصاً لتلبية معايير المشتريات المؤسسية وتطوير رأس المال البشري بأعلى معايير الدقة.'

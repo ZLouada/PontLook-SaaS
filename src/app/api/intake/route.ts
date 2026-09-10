@@ -134,13 +134,13 @@ export async function POST(req: NextRequest) {
   <div class="container">
     <div class="header">
       <h1>PontLook Matching Desk</h1>
-      <p style="margin: 6px 0 0; color: #94A3B8; font-size: 13px;">GCC Corporate Training Intake &middot; Ref ${leadId}</p>
+      <p style="margin: 6px 0 0; color: #94A3B8; font-size: 13px;">Corporate Training Intake &middot; Ref ${leadId}</p>
     </div>
     <div class="content">
       <span class="badge">&#10003; Verification Confirmed</span>
       <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 8px; color: #0F172A;">Hello ${data.fullName},</h2>
       <p style="font-size: 14px; margin: 0 0 20px; color: #475569;">
-        We have received your corporate training specifications for <strong>${data.organizationName}</strong>. Our GCC qualification team is currently verifying faculty capacity across our network of 120+ vetted providers.
+        We have received your corporate training specifications for <strong>${data.organizationName}</strong>. Our qualification team is currently verifying faculty capacity across our network of 120+ vetted providers.
       </p>
 
       <div class="roadmap">

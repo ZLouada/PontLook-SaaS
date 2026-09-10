@@ -13,21 +13,21 @@ export const en = {
   },
   hero: {
     headline: "Stop chasing companies. Start talking to the ones that already need training.",
-    subtitle: "We identify GCC organizations experiencing real workforce challenges and connect them with the corporate training providers most equipped to solve them.",
+    subtitle: "We identify enterprise organizations experiencing real workforce challenges and connect them with the corporate training providers most equipped to solve them.",
     btn_provider: "I'm a training provider",
     btn_buyer: "I'm looking for training",
     badges: {
       verified_deciders: { value: "100%", label: "Verified Decision-Makers" },
       zero_retainer: { value: "Zero", label: "Monthly Retainer Risk" },
       match_rate: { value: "92%", label: "Leads Reach Meetings" },
-      markets_covered: { value: "6", label: "GCC Markets Covered" }
+      markets_covered: { value: "6", label: "Regional Markets Covered" }
     }
   },
   trust_bar: {
     needs: { title: "Verified Needs", desc: "Pre-qualified enterprise demand" },
     access: { title: "Direct Access", desc: "CHRO & L&D decision-makers" },
     retainers: { title: "Zero Retainers", desc: "Pay per qualified opportunity" },
-    gcc: { title: "GCC Focused", desc: "Saudi Arabia, UAE & Gulf" }
+    gcc: { title: "Regional Focus", desc: "Saudi Arabia, UAE & Gulf" }
   },
   how_it_works: {
     eyebrow: "How It Works",
@@ -36,7 +36,7 @@ export const en = {
     step1: {
       badge: "Step 01",
       title: "Detect Need",
-      subtitle: "Market intelligence surfaces GCC companies with verified workforce challenges, before they start searching."
+      subtitle: "Market intelligence surfaces enterprises with verified workforce challenges, before they start searching."
     },
     step2: {
       badge: "Step 02",
@@ -51,7 +51,7 @@ export const en = {
   },
   why_different: {
     eyebrow: "Why We're Different",
-    title: "Built for How GCC Enterprise Training Is Actually Bought",
+    title: "Built for How Enterprise Training Is Actually Bought",
     subtitle: "Generic directories give you contact lists. We deliver pre-qualified demand.",
     cards: {
       evidence: {
@@ -75,17 +75,17 @@ export const en = {
         text: "Pay per qualified lead ($50–$200). Zero monthly retainers. Your investment directly tracks your qualified pipeline."
       },
       gcc: {
-        title: "GCC specialization",
-        text: "Saudi Arabia, UAE, and the GCC: aligned with Saudization, Emiratization compliance mandates, and regional corporate frameworks."
+        title: "Regional specialization",
+        text: "Deep localization across Saudi Arabia, UAE, and Gulf markets: aligned with Saudization, Emiratization quotas, and regional corporate frameworks."
       }
     }
   },
   stats: {
-    caption: "Verified GCC B2B intelligence & metrics",
-    companies: { value: 500, suffix: "+", label: "GCC companies monitored" },
+    caption: "Verified B2B market intelligence & metrics",
+    companies: { value: 500, suffix: "+", label: "Enterprises monitored" },
     meetings: { value: 92, suffix: "%", label: "leads reach a meeting" },
     turnaround: { value: 14, suffix: " Days", label: "avg. match to intro" },
-    markets: { value: 6, suffix: " Markets", label: "GCC countries covered" }
+    markets: { value: 6, suffix: " Markets", label: "Regional markets covered" }
   },
   provider_teaser: {
     badge: "For training providers",
@@ -102,17 +102,17 @@ export const en = {
   final_cta: {
     badge: "Outsourced Growth Engine",
     card_title: "Ready to discuss your training objectives?",
-    card_subtitle: "Connect directly with our enterprise advisory team to explore verified provider matching or discuss partnership opportunities across the GCC.",
+    card_subtitle: "Connect directly with our enterprise advisory team to explore verified provider matching or discuss partnership opportunities across the region.",
     btn_call: "Book a consultation",
     title: "Stop chasing. Start closing with companies that already need you.",
-    subtitle: "Join the GCC’s intelligence-driven training marketplace — as a provider or as a buyer.",
+    subtitle: "Join the region’s intelligence-driven training marketplace — as a provider or as a buyer.",
     btn_provider: "Become a partner provider",
     btn_buyer: "Find corporate training"
   },
   forProviders: {
     badge: "For training providers",
     headline: "Predictable revenue from buyers who are already looking",
-    subtitle: "Referrals are unpredictable. Cold outreach is expensive. We deliver verified, decision-maker-confirmed opportunities from GCC companies with real budgets, and you only pay when a lead is qualified.",
+    subtitle: "Referrals are unpredictable. Cold outreach is expensive. We deliver verified, decision-maker-confirmed opportunities from enterprises with real budgets, and you only pay when a lead is qualified.",
     applyBtn: "Apply for partnership",
     form: {
       title: "Partnership application",
@@ -145,7 +145,7 @@ export const en = {
         "Safety Training",
         "Executive Coaching"
       ],
-      markets: "GCC markets you serve",
+      markets: "Target markets you serve",
       marketsPlaceholder: "e.g., Saudi Arabia, UAE, Qatar",
       message: "Tell us about your ideal client and track record",
       messagePlaceholder: "Typical engagement size, notable clients, differentiators…",
@@ -160,7 +160,7 @@ export const en = {
     title: "Let’s talk",
     subtitle: "Whether you deliver training or need it, we’ll point you in the right direction, usually within one business day.",
     emailLabel: "contact@pontlook.com",
-    location: "Riyadh · Dubai · Serving the GCC",
+    location: "Riyadh · Dubai · Regional Advisory",
     hours: "Sunday–Thursday · 9:00–18:00 (GST)",
     form: {
       name: "Name",
@@ -187,14 +187,14 @@ export const en = {
     }
   },
   footer: {
-    about: "We identify GCC organizations experiencing verified workforce challenges and connect them with the right corporate training providers. Qualified opportunities only, no retainers, no cold outreach.",
+    about: "We identify organizations experiencing verified workforce challenges and connect them with the right corporate training providers. Qualified opportunities only, no retainers, no cold outreach.",
     location: "31 Continental Dr, Newark, Delaware 19713, US",
     platform: "Platform",
     get_in_touch: "Get in touch",
     privacy_policy: "Privacy Policy",
     terms_of_service: "Terms of Service",
     returns_faq: "Returns & FAQ",
-    badge: "GCC B2B Corporate Matchmaking Platform",
+    badge: "B2B Corporate Matchmaking Platform",
     rights: "© 2025-2026 PontLook, operating under Firstnestcare, LLC. All rights reserved."
   },
   trainingCategories: {

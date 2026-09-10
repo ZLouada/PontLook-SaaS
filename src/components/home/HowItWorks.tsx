@@ -17,7 +17,7 @@ export default function HowItWorks() {
       title: dict.how_it_works?.step1?.title || 'Detect Need',
       subtitle:
         dict.how_it_works?.step1?.subtitle ||
-        'Market intelligence surfaces GCC companies with verified workforce challenges, before they start searching.',
+        'Market intelligence surfaces enterprise organizations with verified workforce challenges, before they start searching.',
       mockup: (
         <div className="w-full max-w-sm rounded-2xl border border-slate-200/70 bg-white/90 backdrop-blur-md shadow-sm p-5 flex flex-col gap-3 relative z-10">
           <div className="flex items-center gap-3 pb-3 border-b border-slate-100">

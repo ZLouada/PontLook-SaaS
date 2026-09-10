@@ -182,7 +182,7 @@ export function PhoneInputWithCountry({
         <label htmlFor={phoneId} className="text-sm font-semibold text-slate-800">
           {label}
         </label>
-        <span className="text-xs font-medium text-slate-400">Direct GCC verification line</span>
+        <span className="text-xs font-medium text-slate-400">Direct verification line</span>
       </div>
 
       <div className="flex gap-2">

@@ -130,7 +130,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             <div className="relative flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center">
               <Image
                 src={isDarkSection ? '/PontLook-Logo-White.png' : '/PontLook-Logo-nav.webp'}
-                alt="PontLook GCC Corporate Training Matchmaking Logo"
+                alt="PontLook Corporate Training Matchmaking Logo"
                 width={32}
                 height={32}
                 className="object-contain h-7 w-7 sm:h-8 sm:w-8 transition-opacity duration-200"

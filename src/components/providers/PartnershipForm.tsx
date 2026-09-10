@@ -15,7 +15,7 @@ const defaultSpecialties = [
 
 export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {}) {
   const formTitle = dict?.forProviders?.form?.title || 'Apply for Partnership';
-  const formSubtitle = dict?.forProviders?.form?.subtitle || 'Join our network of verified GCC training providers.';
+  const formSubtitle = dict?.forProviders?.form?.subtitle || 'Join our network of verified corporate training providers.';
 
   const companyNameLabel = dict?.forProviders?.form?.companyName || 'Company name';
   const companyNamePlaceholder = dict?.forProviders?.form?.companyNamePlaceholder || 'Acme Training Group';
@@ -36,7 +36,7 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
   };
   const specialtiesLabel = dict?.forProviders?.form?.specialties || 'Training specialties';
   const specialtiesList: string[] = dict?.forProviders?.form?.specialtiesList || defaultSpecialties;
-  const marketsLabel = dict?.forProviders?.form?.markets || 'GCC markets you serve';
+  const marketsLabel = dict?.forProviders?.form?.markets || 'Target markets you serve';
   const marketsPlaceholder = dict?.forProviders?.form?.marketsPlaceholder || 'e.g., Saudi Arabia, UAE, Qatar';
   const messageLabel = dict?.forProviders?.form?.message || 'Tell us about your ideal client and track record';
   const messagePlaceholder = dict?.forProviders?.form?.messagePlaceholder || 'Typical engagement size, notable clients, differentiators…';

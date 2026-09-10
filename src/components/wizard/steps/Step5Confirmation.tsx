@@ -141,7 +141,7 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
             <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500" />
           </span>
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
-            Matching in Progress · 120+ Vetted GCC Providers
+            Matching in Progress · 120+ Vetted Providers
           </span>
         </div>
 
@@ -165,7 +165,7 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
                 Partner Availability Check
               </h3>
               <p className="mt-1 text-xs text-slate-600">
-                Our GCC matching team audits trainer accreditations and schedule slots.
+                Our matching team audits trainer accreditations and schedule slots.
               </p>
             </div>
           </div>

@@ -225,8 +225,8 @@ export default function WhyDifferent() {
     {
       icon: TrendingUp,
       span: 'lg:col-span-6',
-      title: dict.why_different?.cards?.gcc?.title || 'Pure GCC Focus',
-      text: dict.why_different?.cards?.gcc?.text || 'Saudi Arabia, UAE, Qatar, Kuwait, Bahrain, Oman. Built specifically for GCC market dynamics, localization mandates, and Vision 2030 initiatives.',
+      title: dict.why_different?.cards?.gcc?.title || 'Regional Specialization',
+      text: dict.why_different?.cards?.gcc?.text || 'Saudi Arabia, UAE, Qatar, Kuwait, Bahrain, and Oman. Built specifically for local market dynamics, nationalization mandates, and Vision 2030 initiatives.',
       mockup: (
         <div className="relative w-full py-5 sm:py-6 px-3 bg-slate-50/80 rounded-2xl overflow-hidden border border-slate-200/80 flex items-center justify-center min-h-[120px]">
           <div className="flex flex-col items-center gap-2 z-10">
@@ -239,7 +239,7 @@ export default function WhyDifferent() {
                 UAE
               </span>
               <span className="px-2 py-0.5 bg-white border border-slate-200 shadow-2xs rounded-md text-[10px] font-bold text-slate-800">
-                Qatar & GCC
+                Qatar & Gulf Markets
               </span>
             </div>
           </div>

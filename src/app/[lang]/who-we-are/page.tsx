@@ -20,10 +20,10 @@ import { Locale, i18n } from '@/i18n/config';
 
 export const metadata: Metadata = {
   title: {
-    absolute: 'Who We Are: The GCC Matchmaking Platform | PontLook',
+    absolute: 'Who We Are: Corporate Training Matchmaking Platform | PontLook',
   },
   description:
-    'Learn how PontLook connects GCC corporate buyers with verified training providers across Saudi Arabia, UAE, and the Gulf with zero retainers.',
+    'Learn how PontLook connects corporate enterprise buyers with verified training providers across Saudi Arabia, UAE, and the Gulf with zero retainers.',
 };
 
 export async function generateStaticParams() {
@@ -94,7 +94,7 @@ const benefitPointsEn = [
   },
   {
     icon: Users,
-    title: 'Verified GCC Decision-Makers',
+    title: 'Verified Enterprise Decision-Makers',
     desc: 'Direct connections with HR Directors, CHROs, and L&D heads navigating Saudization and Emiratization compliance mandates.',
   },
   {
@@ -169,18 +169,18 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
             <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-slate-800 leading-[1.15] font-heading">
               {isAr ? (
                 <>
-                  من نحن: منصة التوفيق والربط الرائدة لتدريب الشركات في <span className="text-primary">الخليج العربي</span>
+                  من نحن: منصة التوفيق والربط الرائدة لتدريب الشركات في <span className="text-primary">المنطقة</span>
                 </>
               ) : (
                 <>
-                  Who We Are: The GCC Corporate Training <span className="text-primary">Matchmaking Platform</span>
+                  Who We Are: The Corporate Training <span className="text-primary">Matchmaking Platform</span>
                 </>
               )}
             </h1>
             <p className="mt-6 text-xl leading-relaxed text-slate-600 max-w-3xl mx-auto font-normal">
               {isAr
-                ? 'نربط شركات ومزودي التدريب بصناع القرار في الشركات والمؤسسات الخليجية الذين لديهم احتياجات وتحديات حقيقية يسعون لحلها.'
-                : 'We connect corporate training companies with GCC decision-makers who already have a real workforce challenge to solve.'}
+                ? 'نربط شركات ومزودي التدريب بصناع القرار في كبرى المؤسسات الذين لديهم احتياجات وتحديات حقيقية يسعون لحلها.'
+                : 'We connect corporate training companies with enterprise decision-makers who already have a real workforce challenge to solve.'}
             </p>
           </Reveal>
         </div>
@@ -198,8 +198,8 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
               </h2>
               <p className="mt-4 text-lg text-slate-600">
                 {isAr
-                  ? 'مصمم خصيصاً لمزودي التدريب المؤسسي الساعين لاكتساب عملاء بعوائد مستدامة وهوامش ربحية عالية في الخليج.'
-                  : 'Designed specifically for corporate training providers seeking sustainable, high-margin client acquisition across the GCC.'}
+                  ? 'مصمم خصيصاً لمزودي التدريب المؤسسي الساعين لاكتساب عملاء بعوائد مستدامة وهوامش ربحية عالية في المنطقة.'
+                  : 'Designed specifically for corporate training providers seeking sustainable, high-margin client acquisition across regional markets.'}
               </p>
             </div>
           </Reveal>
@@ -294,7 +294,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                       {isAr ? 'صناع قرار مؤكدون' : 'Verified Buyers'}
                     </h3>
                     <p className="text-slate-400 text-sm mt-1">
-                      {isAr ? 'قادة الموارد البشرية والتدريب في كبرى الشركات.' : 'Vetted HR & L&D leaders in the GCC.'}
+                      {isAr ? 'قادة الموارد البشرية والتدريب في كبرى الشركات.' : 'Vetted HR & L&D leaders across regional enterprises.'}
                     </p>
                   </div>
                 </div>
@@ -373,12 +373,12 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
               <p className="text-xl md:text-2xl text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
                 {isAr ? (
                   <>
-                    نسلمك صناع قرار موثوقين في الخليج مع احتياج تدريبي مؤسسي مؤكد...{' '}
+                    نسلمك صناع قرار موثوقين مع احتياج تدريبي مؤسسي مؤكد...{' '}
                     <span className="text-primary font-semibold">بدون اشتراك شهري. وبدون أي مخاطرة.</span>
                   </>
                 ) : (
                   <>
-                    We deliver verified GCC decision-makers with a confirmed corporate-training need...{' '}
+                    We deliver verified enterprise decision-makers with a confirmed corporate-training need...{' '}
                     <span className="text-primary font-semibold">No retainer. No risk.</span>
                   </>
                 )}

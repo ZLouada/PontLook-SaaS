@@ -56,7 +56,7 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                   These Terms of Service (&quot;Terms&quot;) govern your access to and use of the website, services, applications, and tools offered by PontLook (&quot;PontLook,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), operated under <strong>Firstnestcare, LLC</strong>.
                 </p>
                 <p>
-                  PontLook is a B2B corporate training matchmaking platform designed to identify GCC organizations with active workforce challenges and connect them with qualified corporate training providers. By accessing or using our platform, you agree to be bound by these Terms and our <Link href={`/${lang}/privacy-policy`} className="text-primary hover:underline">Privacy Policy</Link>.
+                  PontLook is a B2B corporate training matchmaking platform designed to identify enterprise organizations with active workforce challenges and connect them with qualified corporate training providers. By accessing or using our platform, you agree to be bound by these Terms and our <Link href={`/${lang}/privacy-policy`} className="text-primary hover:underline">Privacy Policy</Link>.
                 </p>
               </div>
 

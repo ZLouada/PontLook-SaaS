@@ -88,7 +88,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                   We utilize the collected information for legitimate business purposes, including:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-slate-600">
-                  <li>Facilitating B2B matchmaking between verified GCC corporate buyers and corporate training providers.</li>
+                  <li>Facilitating B2B matchmaking between verified corporate buyers and qualified training providers.</li>
                   <li>Processing orders, invoicing, and managing customer account records.</li>
                   <li>Responding to inquiries, customer support requests, and scheduling discovery calls.</li>
                   <li>Optimizing website functionality, service performance, and user experience.</li>

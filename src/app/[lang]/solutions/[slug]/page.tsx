@@ -156,8 +156,8 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         audience: {
           '@type': 'Audience',
           audienceType: isAr
-            ? 'مدراء الموارد البشرية، رؤساء قطاعات التدريب، والمدراء التنفيذيون في الخليج'
-            : 'Enterprise CHROs, HR Directors, and L&D Leaders in the GCC',
+            ? 'مدراء الموارد البشرية، رؤساء قطاعات التدريب، والمدراء التنفيذيون في كبرى الشركات'
+            : 'Enterprise CHROs, HR Directors, and Regional L&D Leaders',
         },
       },
       {
@@ -321,7 +321,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
           <div className="container-site px-4 sm:px-6 max-w-5xl mx-auto">
             <SectionHeading
               eyebrow={isAr ? 'مؤشرات وبيانات السوق' : 'Market Intelligence & Benchmarks'}
-              title={isAr ? 'بيانات وإحصاءات الأداء الإقليمي' : 'Key GCC Regional Performance Benchmarks'}
+              title={isAr ? 'بيانات وإحصاءات الأداء الإقليمي' : 'Key Regional Performance Benchmarks'}
               subtitle={
                 isAr
                   ? 'مؤشرات دقيقة مستخلصة من متطلبات الامتثال والإنفاق المؤسسي لتطوير رأس المال البشري.'
@@ -438,8 +438,8 @@ export default async function SolutionLandingPage({ params }: PageProps) {
 
               <p className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto">
                 {isAr
-                  ? 'انضم إلى مئات الشركات والمؤسسات الخليجية التي تستخدم بونت لوك للوصول المباشر إلى أفضل الأكاديميات ومراكز التدريب المعتمدة.'
-                  : 'Join hundreds of GCC corporate decision-makers who utilize PontLook to bypass vendor noise and secure verified corporate training proposals.'}
+                  ? 'انضم إلى مئات الشركات والمؤسسات التي تستخدم بونت لوك للوصول المباشر إلى أفضل الأكاديميات ومراكز التدريب المعتمدة.'
+                  : 'Join hundreds of corporate decision-makers who utilize PontLook to bypass vendor noise and secure verified corporate training proposals.'}
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">

@@ -45,7 +45,7 @@ export default function FinalCta() {
             </h3>
             <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
               {dict.final_cta?.card_subtitle ||
-                'Connect directly with our enterprise advisory team to explore verified provider matching or discuss partnership opportunities across the GCC.'}
+                'Connect directly with our enterprise advisory team to explore verified provider matching or discuss partnership opportunities across the region.'}
             </p>
           </div>
 

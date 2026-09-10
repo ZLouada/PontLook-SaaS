@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     absolute: 'Contact PontLook: Enterprise Partnerships & Support',
   },
   description:
-    'Get in touch with PontLook for corporate training inquiries, provider partnership applications, or enterprise support across Saudi Arabia, UAE, and the GCC.',
+    'Get in touch with PontLook for corporate training inquiries, provider partnership applications, or enterprise support across Saudi Arabia, UAE, and regional markets.',
 };
 
 export async function generateStaticParams() {
@@ -37,7 +37,7 @@ export default async function ContactPage({
     title: 'Let’s talk',
     subtitle: 'Whether you deliver training or need it, we’ll point you in the right direction, usually within one business day.',
     emailLabel: 'contact@pontlook.com',
-    location: 'Riyadh · Dubai · Serving the GCC',
+    location: 'Riyadh · Dubai · Serving the Region',
     hours: 'Sunday–Thursday · 9:00–18:00 (GST)',
   };
 

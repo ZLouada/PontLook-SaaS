@@ -57,7 +57,7 @@ export const TRAINING_DOMAINS: TrainingDomainItem[] = [
   {
     id: 'grc_compliance',
     title: 'Governance, Risk & Compliance (GRC)',
-    subtitle: 'GCC Regulatory Mandates, Board Oversight, Internal Audit & Risk Frameworks',
+    subtitle: 'Regional Regulatory Mandates, Board Oversight, Internal Audit & Risk Frameworks',
     keywords: ['grc', 'governance', 'risk', 'compliance', 'audit', 'esg', 'regulatory', 'cybersecurity', 'anti-money laundering', 'aml', 'sama', 'cma'],
     iconName: 'ShieldAlert',
   },
@@ -81,7 +81,7 @@ export const DELIVERY_MODES = [
   {
     id: 'in_person',
     title: 'In-Person / Onsite',
-    description: 'On-premises at your company HQ or dedicated GCC training venue.',
+    description: 'On-premises at your company HQ or dedicated corporate training venue.',
     badge: 'Popular for Executive Cohorts',
   },
   {
@@ -101,14 +101,14 @@ export const DELIVERY_MODES = [
 export const DELIVERY_LANGUAGES = [
   { id: 'arabic', label: 'Arabic Only', sublabel: 'العربية' },
   { id: 'english', label: 'English Only', sublabel: 'Global Standard' },
-  { id: 'bilingual', label: 'Bilingual (Arabic & English)', sublabel: 'Most Popular for GCC Multinationals' },
+  { id: 'bilingual', label: 'Bilingual (Arabic & English)', sublabel: 'Most Popular for Regional Multinationals' },
 ] as const;
 
 export const CUSTOMIZATION_OPTIONS = [
   {
     id: 'tailored',
     title: 'Tailored Cohort Program',
-    description: 'Customized to your internal KPIs, proprietary case studies, and GCC organizational culture.',
+    description: 'Customized to your internal KPIs, proprietary case studies, and organizational culture.',
     recommended: true,
   },
   {
@@ -237,7 +237,7 @@ export const step2DeliverySchema = z
       return true;
     },
     {
-      message: 'Please select target GCC city for on-site sessions.',
+      message: 'Please select target city for on-site sessions.',
       path: ['city'],
     }
   );

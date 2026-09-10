@@ -45,7 +45,7 @@ export default function Footer() {
               </h3>
               <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
                 {dict.final_cta?.card_subtitle ||
-                  'Connect directly with our enterprise advisory team to explore verified provider matching or discuss partnership opportunities across the GCC.'}
+                  'Connect directly with our enterprise advisory team to explore verified provider matching or discuss partnership opportunities across the region.'}
               </p>
             </div>
 
@@ -67,7 +67,7 @@ export default function Footer() {
           <div className="space-y-4">
             <p className="text-xs sm:text-sm leading-relaxed text-slate-400 font-normal">
               {dict.footer?.about ||
-                'We identify GCC organizations experiencing verified workforce challenges and connect them with the right corporate training providers. Qualified opportunities only, no retainers, no cold outreach.'}
+                'We identify enterprise organizations experiencing verified workforce challenges and connect them with the right corporate training providers. Qualified opportunities only, no retainers, no cold outreach.'}
             </p>
             <div className="pt-2 flex items-start gap-2.5 text-xs text-slate-300 font-medium leading-snug">
               <MapPin size={15} className="text-[#0052FF] shrink-0 mt-0.5" />
@@ -164,7 +164,7 @@ export default function Footer() {
           </p>
           <div className="flex items-center justify-center gap-2 text-slate-400">
             <ShieldCheck size={14} className="text-[#0052FF]" />
-            <span>{dict.footer?.badge || 'GCC B2B Corporate Matchmaking Platform'}</span>
+            <span>{dict.footer?.badge || 'B2B Corporate Matchmaking Platform'}</span>
           </div>
         </div>
       </div>

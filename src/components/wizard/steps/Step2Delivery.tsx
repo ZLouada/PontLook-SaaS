@@ -171,7 +171,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
           <div className="flex items-center gap-2">
             <MapPin size={18} className="text-blue-600" />
             <h3 className="font-heading text-sm font-semibold text-slate-800">
-              Primary GCC Location for In-Person Sessions
+              Primary Location for In-Person Sessions
             </h3>
           </div>
           <p className="mt-1 text-xs text-slate-600">
@@ -313,7 +313,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                 {opt.recommended && (
                   <div className="mt-3">
                     <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-bold text-amber-800">
-                      ★ Recommended for GCC Enterprises
+                      ★ Recommended for Enterprise Organizations
                     </span>
                   </div>
                 )}

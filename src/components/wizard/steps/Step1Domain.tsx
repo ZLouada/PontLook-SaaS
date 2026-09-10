@@ -287,7 +287,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
           )}
         </div>
         <p className="mt-1 text-sm text-slate-600">
-          Select all target capabilities for your enterprise cohort. We’ll match specialized GCC providers with proven ROI.
+          Select all target capabilities for your enterprise cohort. We’ll match specialized providers with proven ROI.
         </p>
       </div>
 
@@ -658,7 +658,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
       <StepNavigation
         nextLabel="Continue to Delivery & Region"
         isSubmitting={isSubmitting}
-        trustMessage="Verified GCC providers · 100% Free for hiring enterprises"
+        trustMessage="Verified providers · 100% Free for hiring enterprises"
       />
     </form>
   );

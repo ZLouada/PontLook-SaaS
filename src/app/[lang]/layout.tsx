@@ -47,8 +47,8 @@ export async function generateMetadata({
     metadataBase: new URL('https://pontlook.com'),
     title: {
       default: isAr
-        ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات في الخليج'
-        : 'PontLook: GCC Corporate Training Matchmaking Platform',
+        ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات'
+        : 'PontLook: Corporate Training Matchmaking Platform',
       template: '%s | PontLook',
     },
     description: isAr
@@ -76,8 +76,8 @@ export async function generateMetadata({
     },
     openGraph: {
       title: isAr
-        ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات في الخليج'
-        : 'PontLook: GCC Corporate Training Matchmaking Platform',
+        ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات'
+        : 'PontLook: Corporate Training Matchmaking Platform',
       description: isAr
         ? 'منصة ربط مديري الموارد البشرية والشركات بأفضل مزودي التدريب المعتمدين في السعودية والإمارات. فرص معتمدة 100% بدون رسوم شهرية.'
         : 'Connect corporate buyers with verified training providers across Saudi Arabia and UAE. Qualified leads only—zero monthly retainers or cold outreach.',
@@ -89,8 +89,8 @@ export async function generateMetadata({
           width: 1200,
           height: 630,
           alt: isAr
-            ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات في الخليج'
-            : 'PontLook GCC Corporate Training Matchmaking Logo',
+            ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات'
+            : 'PontLook Corporate Training Matchmaking Logo',
         },
       ],
       locale: isAr ? 'ar_SA' : 'en_US',
@@ -129,7 +129,7 @@ export default async function RootLayout({
         "url": "https://pontlook.com",
         "name": "PontLook",
         "alternateName": ["Pont Look", "pontlook", "PontLook SaaS"],
-        "description": "GCC Corporate Training Matchmaking Platform & Pay-Per-Lead Engine",
+        "description": "B2B Corporate Training Matchmaking Platform & Pay-Per-Lead Engine",
         "inLanguage": ["en", "ar"]
       },
       {

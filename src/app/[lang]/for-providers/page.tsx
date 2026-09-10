@@ -27,7 +27,7 @@ const providerBenefitsEn = [
   },
   {
     icon: Target,
-    title: 'Pre-Qualified GCC Buyers',
+    title: 'Pre-Qualified Enterprise Buyers',
     text: 'Every lead has confirmed corporate training needs, authority, and explicit problem definitions tied to Saudization, Emiratization, or digital upskilling.',
   },
   {
@@ -45,7 +45,7 @@ const providerBenefitsAr = [
   },
   {
     icon: Target,
-    title: 'عملاء خليجيون تم تأهيل احتياجاتهم',
+    title: 'عملاء مؤسسيون تم تأهيل احتياجاتهم',
     text: 'كل فرصة تدريبية تتضمن احتياجاً مؤسسياً مؤكداً، وصلاحية قرار واضحة، ومتطلبات متوافقة مع أهداف التوطين أو التحول الرقمي.',
   },
   {
@@ -94,8 +94,8 @@ export default async function ForProvidersPage({
             </h1>
             <p className="mt-4 sm:mt-5 text-base sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
               {isAr
-                ? 'تواصل مباشرة مع صناع القرار في الشركات الخليجية التي تبحث بنشاط عن حلول تدريبية. بدون رسوم شهرية ثابتة، الدفع فقط لكل فرصة مؤكدة ومؤهلة.'
-                : 'Connect directly with GCC corporate decision-makers actively seeking training solutions. Zero retainers, 100% pay-per-lead.'}
+                ? 'تواصل مباشرة مع صناع القرار في كبرى المنشآت والشركات التي تبحث بنشاط عن حلول تدريبية. بدون رسوم شهرية ثابتة، الدفع فقط لكل فرصة مؤكدة ومؤهلة.'
+                : 'Connect directly with verified corporate decision-makers actively seeking training solutions. Zero retainers, 100% pay-per-lead.'}
             </p>
           </Reveal>
         </section>
@@ -109,8 +109,8 @@ export default async function ForProvidersPage({
               title={isAr ? 'تدفق متوقع لفرص الشركات والمؤسسات' : 'Predictable Enterprise Pipeline'}
               subtitle={
                 isAr
-                  ? 'مصمم خصيصاً لمزودي التدريب في الخليج الساعين للحصول على فرص موثقة دون أي اشتراكات دورية.'
-                  : 'Designed specifically for GCC training providers seeking verified opportunities without retainers.'
+                  ? 'مصمم خصيصاً لمزودي التدريب الساعين للحصول على فرص موثقة دون أي اشتراكات دورية.'
+                  : 'Designed specifically for professional training providers seeking verified opportunities without retainers.'
               }
             />
             <div className="mt-8 sm:mt-10 grid gap-5 sm:gap-6 md:grid-cols-3">

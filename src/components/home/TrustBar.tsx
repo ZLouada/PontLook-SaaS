@@ -25,7 +25,7 @@ export default function TrustBar() {
     },
     {
       icon: TrendingUp,
-      title: dict.trust_bar?.gcc?.title || 'GCC Focused',
+      title: dict.trust_bar?.gcc?.title || 'Regional Focus',
       desc: dict.trust_bar?.gcc?.desc || 'Saudi Arabia, UAE & Gulf'
     },
   ];
