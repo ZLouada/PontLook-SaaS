@@ -6,7 +6,6 @@ import { i18n } from '@/i18n/config';
 const HowItWorks = dynamic(() => import('@/components/home/HowItWorks'));
 const WhyDifferent = dynamic(() => import('@/components/home/WhyDifferent'));
 const ProviderTeaser = dynamic(() => import('@/components/home/ProviderTeaser'));
-const FinalCta = dynamic(() => import('@/components/home/FinalCta'));
 
 export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
@@ -20,7 +19,6 @@ export default function HomePage() {
       <HowItWorks />
       <WhyDifferent />
       <ProviderTeaser />
-      <FinalCta />
     </>
   );
 }
