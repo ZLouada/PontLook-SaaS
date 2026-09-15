@@ -162,7 +162,7 @@ export default async function ForProvidersPage({
             </div>
           </div>
 
-          <LeadTiers dict={dict} lang={lang} />
+          <LeadTiers mode="providers" dict={dict} lang={lang} />
 
           <div id="apply" className="scroll-mt-24">
             <SectionHeading

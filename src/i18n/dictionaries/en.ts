@@ -12,8 +12,8 @@ export const en = {
     switch_lang: "العربية"
   },
   hero: {
-    headline: "Stop chasing companies. Start talking to the ones that already need training.",
-    subtitle: "We identify enterprise organizations experiencing real workforce challenges and connect them with the corporate training providers most equipped to solve them.",
+    headline: "Your direct bridge to top corporate training providers.",
+    subtitle: "We identify organizational skill gaps and match decision-makers with the training experts equipped to resolve them.",
     btn_provider: "I'm a training provider",
     btn_buyer: "I'm looking for training",
     badges: {
@@ -26,13 +26,13 @@ export const en = {
   trust_bar: {
     needs: { title: "Verified Needs", desc: "Pre-qualified enterprise demand" },
     access: { title: "Direct Access", desc: "CHRO & L&D decision-makers" },
-    retainers: { title: "Zero Retainers", desc: "Pay per qualified opportunity" },
+    insights: { title: "Actionable L&D guides & insights", desc: "Real-time industry & skill research" },
     gcc: { title: "Regional Focus", desc: "Saudi Arabia, UAE & Gulf" }
   },
   how_it_works: {
-    eyebrow: "How It Works",
-    title: "From Demand Signal to Closed Engagement",
-    subtitle: "We replace cold outreach with a verified, structured pipeline in three steps.",
+    eyebrow: "Just in three steps",
+    title: "We pinpoint organizations facing real skill and training gaps",
+    subtitle: "OUR APPROACH : How We Connect the Market: Learn, Diagnose, and Get Matched",
     step1: {
       badge: "Step 01",
       title: "Detect Need",
@@ -50,33 +50,134 @@ export const en = {
     }
   },
   why_different: {
-    eyebrow: "Why We're Different",
-    title: "Built for How Enterprise Training Is Actually Bought",
-    subtitle: "Generic directories give you contact lists. We deliver pre-qualified demand.",
+    eyebrow: "ACTIONABLE MARKET INTELLIGENCE",
+    title: "Real Solutions on Our Blog. Verified Connections on Our Platform.",
+    subtitle: "We analyze real GCC workplace challenges to deliver free, actionable problem-solving guides on our blog—and directly connect corporate leaders with the verified training providers ready to implement the solution.",
     cards: {
-      evidence: {
-        title: "Intelligence-driven targeting",
-        text: "We find demand signals in the market, not lists to spam. Every opportunity starts with evidence."
+      diagnose: {
+        title: "Diagnose Your Skill Gaps",
+        text: "We help you identify hidden capability gaps and workforce challenges across your teams—turning vague training requests into clear, actionable development priorities.",
+        cta: "Explore our L&D guides & blog",
+        mockupHeader: "Skill Gap Assessment",
+        mockupSubheader: "Enterprise Department Level",
+        tag1: "# Leadership & Tech Gaps",
+        tag2: "Priority Roadmap"
       },
-      pain: {
-        title: "Verified business pain",
-        text: "Each challenge is confirmed directly with the company before it ever reaches a provider."
+      match: {
+        title: "Matched Directly with the Right Training Partner",
+        text: "No endless searching or cold sales pitches. We match your specific requirements directly with pre-vetted corporate training firms proven to deliver measurable results.",
+        cta: "Get matched for training",
+        mockupHeader: "Partner Fit Checklist",
+        check1: "Specialized in your industry",
+        check2: "Verified delivery track record",
+        check3: "Aligned with your timeline & budget"
       },
-      deciders: {
-        title: "Validated decision-makers",
-        text: "You talk to the CHRO, CEO, or L&D owner with authority to buy, not a gatekeeper."
+      access: {
+        title: "Direct Access to Verified Decision-Makers",
+        angle: "Skip the Gatekeepers. Talk Directly to the Budget Owners.",
+        text: "Stop wasting time with dead-end outreach. We connect you directly with CHROs, VPs of Talent, and C-Level executives who hold verified purchasing authority and active L&D needs.",
+        cta: "Apply as a Provider",
+        clientTag: "Enterprise Client · GRC",
+        role: "Chief Human Resources Officer (CHRO)",
+        statusBadge: "Budget Authority: Confirmed"
       },
-      qualified: {
-        title: "Qualified opportunities only",
-        text: "Budget, timeline, and scope checked. If it does not meet the bar, you never see it."
+      ready: {
+        title: "Ready-to-Partner Clients",
+        text: "We respect your expertise. Instead of speculative leads, we bring you serious organizations that are ready to invest, with defined budgets and clear goals—creating partnerships where both sides succeed.",
+        cta: "Connect with Ready Clients",
+        mockupHeader: "Partnership Readiness | Verified",
+        needLabel: "Client Need",
+        needVal: "Executive Leadership Program",
+        budgetLabel: "Budget & Scope",
+        budgetVal: "Confirmed ($50k - $100k)",
+        fitLabel: "Mutual Fit",
+        fitVal: "Aligned on timeline & methodology"
       },
-      retainers: {
-        title: "No retainers",
-        text: "Pay per qualified lead ($50–$200). Zero monthly retainers. Your investment directly tracks your qualified pipeline."
+      hub: {
+        title: "L&D Knowledge Hub",
+        text: "We continuously analyze corporate training trends across the region and share fresh, actionable insights on our blog—providing free frameworks, guides, and research to help you make smarter L&D decisions.",
+        cta: "Explore our blog & resources",
+        mockupHeader: "Latest L&D Resources",
+        item1Title: "GCC Workforce Skill Gaps Report",
+        item1Badge: "New Guide",
+        item2Title: "Diagnostic Guide to Corporate Training ROI",
+        item2Badge: "Free Resource"
+      }
+    }
+  },
+  experience_cards: {
+    title: "Start with Our Insights. Partner for Real Impact.",
+    subtitle: "We don't just bridge corporate needs with expert providers on the ground. Explore our blog for free, in-depth L&D guides, regional skill benchmarks, and diagnostic frameworks—and whenever you're ready, let us match you directly with the verified training experts who execute the solution.",
+    btn_blog: "Explore the Blog & Resources",
+    btn_match: "Get Matched for Training",
+    cards: {
+      provider: {
+        badgePersona: "For Training Providers",
+        badgeOption: "Option 1",
+        title: "Connect Directly with Ready Corporate Clients",
+        subtitle: "Partner with pre-qualified GCC enterprises that have active training budgets and executive buy-in.",
+        previewHeader: "PARTNER PIPELINE · ACTIVE ENGAGEMENTS",
+        metricLabel: "Lead Quality Score",
+        metricValue: "98%",
+        metricWidth: "w-[98%]",
+        checklist: [
+          "Verified Budget: Pre-approved corporate funding (SAR / AED)",
+          "Direct Executive Access: Meet CHROs & CLOs directly",
+          "Zero Cold Prospecting: Qualified demand delivered to you"
+        ],
+        cta: "Join the Provider Network",
+        href: "/for-providers"
       },
-      gcc: {
-        title: "Regional specialization",
-        text: "Deep localization across Saudi Arabia, UAE, and Gulf markets: aligned with Saudization, Emiratization quotas, and regional corporate frameworks."
+      enterprise: {
+        badgePersona: "For Enterprises",
+        badgeOption: "Option 2",
+        title: "Find & Match with Vetted Training Specialists",
+        subtitle: "Tell us your workforce challenge and get directly matched with verified providers equipped to solve it.",
+        previewHeader: "ENTERPRISE MATCHING · CUSTOM PROGRAM",
+        metricLabel: "Provider Fit Score",
+        metricValue: "96%",
+        metricWidth: "w-[96%]",
+        checklist: [
+          "Vetted Track Record: Proven regional corporate experience",
+          "Tailored Curriculum: Aligned with your specific skill gaps",
+          "Zero Procurement Risk: Transparent, competitive proposals"
+        ],
+        cta: "Get Matched for Training",
+        href: "/find-training"
+      },
+      hub: {
+        badgePersona: "Knowledge & Research",
+        badgeOption: "Option 3",
+        title: "Explore Actionable L&D Insights & Guides",
+        subtitle: "Dive into free, research-backed frameworks, workforce reports, and practical guides on regional talent trends.",
+        previewHeader: "KNOWLEDGE HUB · LATEST RESOURCES",
+        metricLabel: "Practical Value",
+        metricValue: "Free Access",
+        metricWidth: "w-full",
+        checklist: [
+          "Workforce Benchmarks: GCC skill shortage & talent reports",
+          "Diagnostic Frameworks: Step-by-step L&D audit templates",
+          "Best Practices: Practical case studies on corporate ROI"
+        ],
+        cta: "Explore the Blog & Resources",
+        href: "https://blog.pontlook.com"
+      },
+      consultation: {
+        badgePersona: "Personal Consultation",
+        badgeOption: "Option 4",
+        title: "Need Guidance? Speak Directly with Our Team",
+        subtitle: "Have unique workforce requirements or want to learn how PontLook works for your organization? We're here to help.",
+        previewHeader: "DIRECT ADVISORY · CONSULTATION",
+        metricLabel: "Response Time",
+        metricValue: "Within 24 Hours",
+        metricWidth: "w-full",
+        checklist: [
+          "1-on-1 Consultation: Discuss your exact workforce objectives",
+          "Platform Walkthrough: See how our diagnostic matching works",
+          "Custom Advisory: Tailored recommendations with no obligation"
+        ],
+        cta: "Contact Our Advisory Team",
+        href: "/contact"
       }
     }
   },

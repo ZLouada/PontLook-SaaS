@@ -1,6 +1,6 @@
 'use client';
 
-import { ShieldCheck, Building2, Target, TrendingUp } from 'lucide-react';
+import { ShieldCheck, Building2, BookOpen, TrendingUp } from 'lucide-react';
 import { m } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 
@@ -19,9 +19,9 @@ export default function TrustBar() {
       desc: dict.trust_bar?.access?.desc || 'CHRO & L&D decision-makers'
     },
     {
-      icon: Target,
-      title: dict.trust_bar?.retainers?.title || 'Zero Retainers',
-      desc: dict.trust_bar?.retainers?.desc || 'Pay per qualified opportunity'
+      icon: BookOpen,
+      title: dict.trust_bar?.insights?.title || 'Actionable L&D guides & insights',
+      desc: dict.trust_bar?.insights?.desc || 'Real-time industry & skill research'
     },
     {
       icon: TrendingUp,

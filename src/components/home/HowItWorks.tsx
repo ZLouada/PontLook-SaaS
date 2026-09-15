@@ -126,9 +126,9 @@ export default function HowItWorks() {
       <div className="container-site px-4 sm:px-8 lg:px-12">
         <div className="mb-8 sm:mb-12 text-center max-w-[820px] mx-auto">
           <SectionHeading
-            eyebrow={dict.how_it_works?.eyebrow || 'How It Works'}
-            title={dict.how_it_works?.title || 'From verified pain point to signed contract'}
-            subtitle={dict.how_it_works?.subtitle || 'Three steps. Zero wasted meetings.'}
+            eyebrow={dict.how_it_works?.eyebrow || 'Just in three steps'}
+            title={dict.how_it_works?.title || 'We pinpoint organizations facing real skill and training gaps'}
+            subtitle={dict.how_it_works?.subtitle || 'OUR APPROACH : How We Connect the Market: Learn, Diagnose, and Get Matched'}
           />
         </div>
 

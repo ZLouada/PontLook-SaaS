@@ -53,7 +53,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      setScrolled((prev) => (prev ? scrollY > 8 : scrollY > 24));
 
       // Detect if navbar is currently positioned over a dark section
       const darkElements = document.querySelectorAll(
@@ -106,7 +107,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   return (
     <>
       <header
-        className={`fixed inset-x-0 mx-auto z-50 transition-all duration-500 ease-out ${
+        className={`fixed inset-x-0 mx-auto z-50 liquid-glass-morph-header ${
           scrolled
             ? isDarkSection
               ? 'top-2 sm:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full py-2 sm:py-2.5 px-3.5 sm:px-6 liquid-glass-capsule-dark'

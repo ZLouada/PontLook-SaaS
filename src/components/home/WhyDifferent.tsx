@@ -2,21 +2,13 @@
 
 import { useState } from 'react';
 import SectionHeading from '@/components/shared/SectionHeading';
-import Card from '@/components/shared/Card';
 import {
   Target,
   ShieldCheck,
   Building2,
-  Award,
-  BadgeDollarSign,
-  TrendingUp,
-  ChevronRight,
-  Search,
   CheckCircle2,
-  User,
-  CheckSquare,
-  FileText,
-  MapPin,
+  BookOpen,
+  ArrowRight,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -90,156 +82,194 @@ export default function WhyDifferent() {
   const dict = useDictionary();
   const params = useParams();
   const lang = (params?.lang as string) || 'en';
+  const c = dict.why_different?.cards;
 
   const items = [
+    // Card 1: Diagnose Your Skill Gaps
     {
+      id: 'diagnose',
       icon: Target,
-      span: 'lg:col-span-8',
-      title: dict.why_different?.cards?.evidence?.title || 'Intelligence-driven targeting',
-      text: dict.why_different?.cards?.evidence?.text || 'We find demand signals in the market, not lists to spam. Every opportunity starts with evidence.',
+      span: 'md:col-span-12 lg:col-span-7',
+      title: c?.diagnose?.title || 'Diagnose Your Skill Gaps',
+      text:
+        c?.diagnose?.text ||
+        'We help you identify hidden capability gaps and workforce challenges across your teams—turning vague training requests into clear, actionable development priorities.',
+      cta: c?.diagnose?.cta || 'Explore our L&D guides & blog',
+      href: 'https://blog.pontlook.com',
+      isExternal: true,
       mockup: (
-        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 w-full p-4 flex flex-col gap-2.5">
-          <div className="flex items-center gap-3 mb-1">
-            <div className="h-8 w-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center font-bold">
-              <Search size={14} />
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 w-full p-4 flex flex-col gap-2.5">
+          <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+            <div className="flex items-center gap-2.5">
+              <div className="h-8 w-8 rounded-lg bg-[#0052FF]/10 text-[#0052FF] flex items-center justify-center font-bold">
+                <Target size={16} />
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-slate-800 font-sans">
+                  {c?.diagnose?.mockupHeader || 'Skill Gap Assessment'}
+                </div>
+                <div className="text-[10px] text-slate-500 font-medium">
+                  {c?.diagnose?.mockupSubheader || 'Enterprise Department Level'}
+                </div>
+              </div>
             </div>
-            <div>
-              <div className="text-[11px] font-bold text-slate-800 font-sans">New Signal Detected</div>
-              <div className="text-[10px] text-slate-500 font-medium">Enterprise · 500+ employees</div>
-            </div>
+            <span className="h-2 w-2 rounded-full bg-blue-600 animate-pulse" />
           </div>
-          <div className="flex gap-2">
-            <span className="px-2.5 py-0.5 rounded-md bg-accent/10 text-accent text-[10px] font-mono font-bold border border-accent/20">
-              Leadership Need
+          <div className="flex flex-wrap gap-2 pt-1">
+            <span className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 text-[11px] font-mono font-semibold border border-blue-200/60">
+              {c?.diagnose?.tag1 || '# Leadership & Tech Gaps'}
             </span>
-            <span className="px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-600 text-[10px] font-mono font-bold border border-emerald-100">
-              Verified Budget
+            <span className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 text-[11px] font-mono font-semibold border border-emerald-200/60">
+              {c?.diagnose?.tag2 || 'Priority Roadmap'}
             </span>
           </div>
         </div>
       ),
     },
+
+    // Card 2: Matched Directly with the Right Training Partner
     {
+      id: 'match',
       icon: ShieldCheck,
-      span: 'lg:col-span-4',
-      title: dict.why_different?.cards?.pain?.title || 'Verified business pain',
-      text: dict.why_different?.cards?.pain?.text || 'Each challenge is confirmed directly with the company before it ever reaches a provider.',
+      span: 'md:col-span-12 lg:col-span-5',
+      title: c?.match?.title || 'Matched Directly with the Right Training Partner',
+      text:
+        c?.match?.text ||
+        'No endless searching or cold sales pitches. We match your specific requirements directly with pre-vetted corporate training firms proven to deliver measurable results.',
+      cta: c?.match?.cta || 'Get matched for training',
+      href: `/${lang}/find-training`,
+      isExternal: false,
       mockup: (
-        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 w-full p-4 flex flex-col gap-2">
-          <div className="text-[11px] font-bold text-slate-800 mb-1 border-b border-slate-100 pb-2 font-sans">
-            Verification Status
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 w-full p-4 flex flex-col gap-2.5">
+          <div className="text-xs font-semibold text-slate-800 pb-1.5 border-b border-slate-100 font-sans flex items-center justify-between">
+            <span>{c?.match?.mockupHeader || 'Partner Fit Checklist'}</span>
+            <ShieldCheck size={15} className="text-emerald-600" />
           </div>
-          <div className="flex items-center gap-2 text-[10px] font-semibold text-slate-700">
-            <CheckCircle2 size={13} className="text-emerald-500" />
-            <span>Pain point documented</span>
-          </div>
-          <div className="flex items-center gap-2 text-[10px] font-semibold text-slate-700">
-            <CheckCircle2 size={13} className="text-emerald-500" />
-            <span>CHRO Sponsor identified</span>
-          </div>
-          <div className="flex items-center gap-2 text-[10px] font-semibold text-slate-700">
-            <CheckCircle2 size={13} className="text-emerald-500" />
-            <span>Budget confirmed</span>
+          <div className="space-y-1.5 text-[11px] text-slate-700">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+              <span>{c?.match?.check1 || 'Specialized in your industry'}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+              <span>{c?.match?.check2 || 'Verified delivery track record'}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+              <span>{c?.match?.check3 || 'Aligned with your timeline & budget'}</span>
+            </div>
           </div>
         </div>
       ),
     },
+
+    // Card 3: Direct Access to Verified Decision-Makers
     {
+      id: 'access',
       icon: Building2,
-      span: 'lg:col-span-4',
-      title: dict.why_different?.cards?.deciders?.title || 'Validated decision-makers',
-      text: dict.why_different?.cards?.deciders?.text || 'You talk to the CHRO, CEO, or L&D owner with authority to buy, not a gatekeeper.',
+      span: 'md:col-span-6 lg:col-span-4',
+      title: c?.access?.title || 'Direct Access to Verified Decision-Makers',
+      angle: c?.access?.angle || 'Skip the Gatekeepers. Talk Directly to the Budget Owners.',
+      text:
+        c?.access?.text ||
+        'Stop wasting time with dead-end outreach. We connect you directly with CHROs, VPs of Talent, and C-Level executives who hold verified purchasing authority and active L&D needs.',
+      cta: c?.access?.cta || 'Apply as a Provider',
+      href: `/${lang}/for-providers`,
+      isExternal: false,
       mockup: (
-        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/70 w-full p-4 flex items-center gap-3.5">
-          <div className="h-10 w-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center font-bold relative shrink-0">
-            <User size={18} />
-            <div className="absolute -bottom-1 -right-1 bg-emerald-500 text-white rounded-full p-0.5 border border-white">
-              <CheckCircle2 size={10} />
-            </div>
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="text-[11px] font-semibold text-slate-800 leading-tight font-sans truncate">
-              Enterprise Buyer
-            </div>
-            <div className="text-[10px] text-slate-500 truncate">Chief Human Resources Officer</div>
-            <div className="text-[9px] font-mono font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200 inline-block mt-1">
-              Buying Power: Confirmed
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      icon: Award,
-      span: 'lg:col-span-8',
-      title: dict.why_different?.cards?.qualified?.title || 'Qualified opportunities only',
-      text: dict.why_different?.cards?.qualified?.text || 'Budget, timeline, and scope checked. If it does not meet the bar, you never see it.',
-      mockup: (
-        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-emerald-200/80 w-full p-4 relative overflow-hidden">
-          <div className="text-[11px] font-bold text-emerald-700 mb-2 font-sans flex items-center justify-between">
-            <span>Ready for Matching</span>
-            <CheckSquare size={13} className="text-emerald-600" />
-          </div>
-          <div className="space-y-1.5">
-            <div className="flex justify-between items-center text-[10px]">
-              <span className="text-slate-500 font-medium">Verified Budget</span>
-              <span className="font-mono font-bold text-slate-800">$50k – $100k</span>
-            </div>
-            <div className="flex justify-between items-center text-[10px]">
-              <span className="text-slate-500 font-medium">Timeline</span>
-              <span className="font-bold text-slate-800">Q3 Delivery</span>
-            </div>
-            <div className="flex justify-between items-center text-[10px]">
-              <span className="text-slate-500 font-medium">Program Type</span>
-              <span className="font-bold text-slate-800">Executive Leadership</span>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      icon: BadgeDollarSign,
-      span: 'lg:col-span-6',
-      title: dict.why_different?.cards?.retainers?.title || 'No retainers',
-      text: dict.why_different?.cards?.retainers?.text || 'Pay per qualified lead ($50–$200). Zero monthly retainers. Your investment directly tracks your qualified pipeline.',
-      mockup: (
-        <div className="bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 w-full p-4 flex flex-col gap-2.5">
-          <div className="flex justify-between items-center">
-            <span className="text-[11px] font-bold text-slate-800 font-sans">Pricing Model</span>
-            <FileText size={13} className="text-accent" />
-          </div>
-          <div className="h-px w-full bg-slate-100" />
-          <div className="flex justify-between items-center text-[10px]">
-            <span className="text-slate-500 font-medium">Pay per Qualified Lead</span>
-            <span className="font-mono font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">
-              $50–$200
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 w-full p-4 flex flex-col gap-2.5">
+          <div className="flex items-center justify-between">
+            <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[10px] font-semibold tracking-wide uppercase">
+              {c?.access?.clientTag || 'Enterprise Client · GRC'}
+            </span>
+            <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-mono font-semibold border border-emerald-200/60">
+              {c?.access?.statusBadge || 'Budget Authority: Confirmed'}
             </span>
           </div>
-          <div className="flex justify-between items-center text-[10px]">
-            <span className="text-slate-500 font-medium">Monthly Retainer</span>
-            <span className="font-mono font-bold text-slate-400 line-through">$0 / month</span>
+          <div className="flex items-center gap-3 pt-1">
+            <div className="h-9 w-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
+              <Building2 size={18} />
+            </div>
+            <div className="min-w-0">
+              <div className="text-xs font-semibold text-slate-800 font-sans truncate">
+                {c?.access?.role || 'Chief Human Resources Officer (CHRO)'}
+              </div>
+              <div className="text-[10px] text-slate-500">Verified Direct Engagement</div>
+            </div>
           </div>
         </div>
       ),
     },
+
+    // Card 4: Ready-to-Partner Clients
     {
-      icon: TrendingUp,
-      span: 'lg:col-span-6',
-      title: dict.why_different?.cards?.gcc?.title || 'Regional Specialization',
-      text: dict.why_different?.cards?.gcc?.text || 'Saudi Arabia, UAE, Qatar, Kuwait, Bahrain, and Oman. Built specifically for local market dynamics, nationalization mandates, and Vision 2030 initiatives.',
+      id: 'ready',
+      icon: CheckCircle2,
+      span: 'md:col-span-6 lg:col-span-4',
+      title: c?.ready?.title || 'Ready-to-Partner Clients',
+      text:
+        c?.ready?.text ||
+        'We respect your expertise. Instead of speculative leads, we bring you serious organizations that are ready to invest, with defined budgets and clear goals—creating partnerships where both sides succeed.',
+      cta: c?.ready?.cta || 'Connect with Ready Clients',
+      href: `/${lang}/for-providers`,
+      isExternal: false,
       mockup: (
-        <div className="relative w-full py-5 sm:py-6 px-3 bg-slate-50/80 rounded-2xl overflow-hidden border border-slate-200/80 flex items-center justify-center min-h-[120px]">
-          <div className="flex flex-col items-center gap-2 z-10">
-            <MapPin size={20} className="text-accent" />
-            <div className="flex flex-wrap justify-center gap-1.5">
-              <span className="px-2 py-0.5 bg-white border border-slate-200 shadow-2xs rounded-md text-[10px] font-bold text-slate-800">
-                Saudi Arabia
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 w-full p-4 flex flex-col gap-2">
+          <div className="flex items-center justify-between pb-1.5 border-b border-slate-100 text-xs font-semibold text-slate-800 font-sans">
+            <span>{c?.ready?.mockupHeader || 'Partnership Readiness | Verified'}</span>
+            <CheckCircle2 size={14} className="text-emerald-600" />
+          </div>
+          <div className="space-y-1.5 text-[11px]">
+            <div className="flex justify-between items-center">
+              <span className="text-slate-500 font-medium">{c?.ready?.needLabel || 'Client Need'}</span>
+              <span className="font-semibold text-slate-800">{c?.ready?.needVal || 'Executive Leadership Program'}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-500 font-medium">{c?.ready?.budgetLabel || 'Budget & Scope'}</span>
+              <span className="font-mono font-bold text-emerald-600">{c?.ready?.budgetVal || 'Confirmed ($50k - $100k)'}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-500 font-medium">{c?.ready?.fitLabel || 'Mutual Fit'}</span>
+              <span className="text-slate-700 font-medium">{c?.ready?.fitVal || 'Aligned on timeline & methodology'}</span>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+
+    // Card 5: L&D Knowledge Hub
+    {
+      id: 'hub',
+      icon: BookOpen,
+      span: 'md:col-span-12 lg:col-span-4',
+      title: c?.hub?.title || 'L&D Knowledge Hub',
+      text:
+        c?.hub?.text ||
+        'We continuously analyze corporate training trends across the region and share fresh, actionable insights on our blog—providing free frameworks, guides, and research to help you make smarter L&D decisions.',
+      cta: c?.hub?.cta || 'Explore our blog & resources',
+      href: 'https://blog.pontlook.com',
+      isExternal: true,
+      mockup: (
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200/80 w-full p-4 flex flex-col gap-2.5">
+          <div className="flex items-center justify-between pb-1.5 border-b border-slate-100 text-xs font-semibold text-slate-800 font-sans">
+            <span>{c?.hub?.mockupHeader || 'Latest L&D Resources'}</span>
+            <BookOpen size={14} className="text-[#0052FF]" />
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between gap-2 text-[11px]">
+              <span className="text-slate-800 font-medium truncate">
+                {c?.hub?.item1Title || 'GCC Workforce Skill Gaps Report'}
               </span>
-              <span className="px-2 py-0.5 bg-white border border-slate-200 shadow-2xs rounded-md text-[10px] font-bold text-slate-800">
-                UAE
+              <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 text-[10px] font-mono font-bold shrink-0 border border-blue-200/60">
+                {c?.hub?.item1Badge || 'New Guide'}
               </span>
-              <span className="px-2 py-0.5 bg-white border border-slate-200 shadow-2xs rounded-md text-[10px] font-bold text-slate-800">
-                Qatar & Gulf Markets
+            </div>
+            <div className="flex items-center justify-between gap-2 text-[11px]">
+              <span className="text-slate-800 font-medium truncate">
+                {c?.hub?.item2Title || 'Diagnostic Guide to Corporate Training ROI'}
+              </span>
+              <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[10px] font-mono font-bold shrink-0 border border-emerald-200/60">
+                {c?.hub?.item2Badge || 'Free Resource'}
               </span>
             </div>
           </div>
@@ -255,11 +285,15 @@ export default function WhyDifferent() {
       <div className="container-site px-4 sm:px-8 lg:px-12">
         <div className="mb-8 sm:mb-12">
           <SectionHeading
-            eyebrow={dict.why_different?.eyebrow || 'What You Can Expect'}
-            title={dict.why_different?.title || 'Built for outcomes, not activity'}
-            subtitle={dict.why_different?.subtitle || 'Everything we deliver is verified, validated, and qualified before it reaches you.'}
+            eyebrow={dict.why_different?.eyebrow || 'ACTIONABLE MARKET INTELLIGENCE'}
+            title={dict.why_different?.title || 'Real Solutions on Our Blog. Verified Connections on Our Platform.'}
+            subtitle={
+              dict.why_different?.subtitle ||
+              'We analyze real GCC workplace challenges to deliver free, actionable problem-solving guides on our blog—and directly connect corporate leaders with the verified training providers ready to implement the solution.'
+            }
           />
         </div>
+
         <m.div
           variants={containerVariants}
           initial="hidden"
@@ -271,9 +305,9 @@ export default function WhyDifferent() {
             const Icon = it.icon;
             return (
               <m.div
-                key={it.title}
+                key={it.id}
                 variants={cardVariants}
-                className={`md:col-span-12 ${it.span} transform-gpu will-change-transform flex flex-col`}
+                className={`${it.span} transform-gpu will-change-transform flex flex-col`}
               >
                 <SpotlightCard className="h-full">
                   <div>
@@ -283,9 +317,17 @@ export default function WhyDifferent() {
                         <Icon size={24} className="hidden sm:block" />
                       </span>
                     </div>
+
                     <h3 className="text-lg sm:text-2xl font-heading font-semibold text-slate-900 leading-tight mb-2 sm:mb-3 transition-colors">
                       {it.title}
                     </h3>
+
+                    {it.angle && (
+                      <p className="text-xs sm:text-sm font-semibold text-blue-600 mb-2.5 tracking-tight">
+                        {it.angle}
+                      </p>
+                    )}
+
                     <p className="text-sm sm:text-base text-slate-600 font-sans leading-relaxed tracking-normal mb-5 sm:mb-6">
                       {it.text}
                     </p>
@@ -296,16 +338,31 @@ export default function WhyDifferent() {
                       {it.mockup}
                     </div>
 
-                    <Link
-                      href={`/${lang}/for-providers`}
-                      className="inline-flex items-center text-sm font-semibold text-accent group-hover:text-accent-secondary transition-colors min-h-[36px] py-1"
-                    >
-                      {lang === 'ar' ? 'اكتشف آلية العمل' : 'Explore how it works'}{' '}
-                      <ChevronRight
-                        size={16}
-                        className="ms-1 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100"
-                      />
-                    </Link>
+                    {it.isExternal ? (
+                      <a
+                        href={it.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-sm font-semibold text-[#0052FF] hover:text-blue-700 transition-colors min-h-[36px] py-1 group/btn"
+                      >
+                        <span>{it.cta}</span>
+                        <ArrowRight
+                          size={16}
+                          className="ms-1.5 transition-transform group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1 rtl:-scale-x-100"
+                        />
+                      </a>
+                    ) : (
+                      <Link
+                        href={it.href}
+                        className="inline-flex items-center text-sm font-semibold text-[#0052FF] hover:text-blue-700 transition-colors min-h-[36px] py-1 group/btn"
+                      >
+                        <span>{it.cta}</span>
+                        <ArrowRight
+                          size={16}
+                          className="ms-1.5 transition-transform group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1 rtl:-scale-x-100"
+                        />
+                      </Link>
+                    )}
                   </div>
                 </SpotlightCard>
               </m.div>
