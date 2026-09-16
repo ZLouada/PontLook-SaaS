@@ -5,7 +5,7 @@ import PartnershipForm from '@/components/providers/PartnershipForm';
 import LeadTiers from '@/components/providers/LeadTiers';
 import Reveal from '@/components/shared/Reveal';
 import SectionHeading from '@/components/shared/SectionHeading';
-import { ShieldCheck, Target, DollarSign, Users, Award } from 'lucide-react';
+import { ShieldCheck, Target, DollarSign, Users, Award, ChevronDown, CheckCircle2, ArrowRight } from 'lucide-react';
 import { constructAlternates } from '@/lib/seo';
 
 export async function generateMetadata({
@@ -109,33 +109,98 @@ export default async function ForProvidersPage({
 
   return (
     <>
-      <div className="bg-hero-gradient">
-        <section className="container-site pt-28 sm:pt-36 pb-12 sm:pb-20 px-4 sm:px-6">
-          <Reveal className="mx-auto max-w-3xl text-center">
-            <span className="chip mx-auto">
-              {isAr ? 'لمزودي ومراكز التدريب' : 'For Training Providers'}
+      <div className="relative overflow-hidden bg-hero-gradient min-h-[100dvh] flex flex-col justify-between items-center pt-28 sm:pt-36 pb-8 sm:pb-12 px-4 sm:px-6">
+        {/* Ambient Depth Glows */}
+        <div className="pointer-events-none absolute top-1/3 start-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-gradient-to-r from-blue-500/10 via-primary/5 to-blue-500/10 blur-3xl -z-10 rounded-full" />
+        <div className="pointer-events-none absolute top-12 start-1/4 w-[400px] h-[400px] bg-blue-500/5 blur-3xl -z-10 rounded-full" />
+
+        {/* Top spacer for balanced vertical centering */}
+        <div className="w-full" />
+
+        {/* Vertically Centered Content */}
+        <div className="container-site relative z-10 mx-auto max-w-4xl text-center my-auto py-6">
+          <Reveal className="flex flex-col items-center">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-6 shadow-xs">
+              <ShieldCheck size={14} className="text-blue-600" />
+              <span>{isAr ? 'لمزودي ومراكز التدريب المعتمدين' : 'For Approved Training Providers'}</span>
             </span>
-            <h1 className="mt-5 text-3xl sm:text-5xl lg:text-6xl font-semibold text-slate-800 leading-tight font-heading">
+
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-slate-900 leading-[1.12] sm:leading-[1.08] font-heading tracking-tight">
               {isAr ? (
                 <>
-                  فرص تدريبية للشركات والمؤسسات <span className="text-primary">حسب الطلب</span>
+                  فرص تدريبية للشركات والمؤسسات <br className="hidden sm:inline" />
+                  <span className="text-primary font-bold">حسب الطلب</span>
                 </>
               ) : (
                 <>
-                  Enterprise Training Leads <span className="text-primary">On Demand</span>
+                  Enterprise Training Leads <br className="hidden sm:inline" />
+                  <span className="text-primary font-bold">On Demand</span>
                 </>
               )}
             </h1>
-            <p className="mt-4 sm:mt-5 text-base sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
+
+            <p className="mt-5 sm:mt-6 text-base sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto font-normal">
               {isAr
                 ? 'تواصل مباشرة مع صناع القرار في كبرى المنشآت والشركات التي تبحث بنشاط عن حلول تدريبية. بدون رسوم شهرية ثابتة، الدفع فقط لكل فرصة مؤكدة ومؤهلة.'
                 : 'Connect directly with verified corporate decision-makers actively seeking training solutions. Zero retainers, 100% pay-per-lead.'}
             </p>
+
+            <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto">
+              <a
+                href="#apply"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-primary hover:bg-primary-600 text-white font-semibold text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] transition-all duration-200"
+              >
+                <span>{isAr ? 'قدم للانضمام إلى شبكتنا' : 'Apply to Join Network'}</span>
+                <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
+              </a>
+
+              <a
+                href="#tiers"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-white hover:bg-slate-50 text-slate-700 font-semibold text-base border border-slate-200/90 shadow-xs hover:border-slate-300 transition-all duration-200"
+              >
+                <span>{isAr ? 'استعرض فئات الفرص' : 'Explore Opportunity Tiers'}</span>
+              </a>
+            </div>
+
+            <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-slate-600">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/80 shadow-xs">
+                <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
+                <span className="font-medium text-slate-800">
+                  {isAr ? 'بدون أي رسوم إدارة شهرية' : 'Zero Monthly Retainers'}
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/80 shadow-xs">
+                <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
+                <span className="font-medium text-slate-800">
+                  {isAr ? 'ميزانيات تدريب مؤكدة ومعتمدة' : 'Pre-Verified Budgets'}
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/80 shadow-xs">
+                <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
+                <span className="font-medium text-slate-800">
+                  {isAr ? 'ضمان استبدال بنسبة 100%' : '100% Replacement Guarantee'}
+                </span>
+              </div>
+            </div>
           </Reveal>
-        </section>
+        </div>
+
+        {/* Bottom Bouncing Scroll Down Prompt */}
+        <div className="relative z-10 pb-2 flex flex-col items-center">
+          <a
+            href="#why-partner"
+            className="group flex flex-col items-center text-slate-400 hover:text-primary transition-colors text-xs font-medium"
+            aria-label={isAr ? 'انتقل إلى الأسفل' : 'Scroll down'}
+          >
+            <span className="mb-1 hidden sm:inline tracking-wider uppercase text-[11px] font-mono">
+              {isAr ? 'اكتشف المزيد' : 'Discover More'}
+            </span>
+            <ChevronDown size={18} className="animate-bounce text-slate-400 group-hover:text-primary" />
+          </a>
+        </div>
       </div>
 
-      <section className="bg-white py-12 sm:py-20 border-t border-slate-100">
+      <section id="why-partner" className="bg-white py-12 sm:py-20 border-t border-slate-100 scroll-mt-16">
         <div className="container-site max-w-6xl mx-auto px-4 sm:px-6 space-y-14 sm:space-y-24">
           <div>
             <SectionHeading
@@ -162,7 +227,9 @@ export default async function ForProvidersPage({
             </div>
           </div>
 
-          <LeadTiers mode="providers" dict={dict} lang={lang} />
+          <div id="tiers" className="scroll-mt-24">
+            <LeadTiers mode="providers" dict={dict} lang={lang} />
+          </div>
 
           <div id="apply" className="scroll-mt-24">
             <SectionHeading
