@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
-import PartnershipForm from '@/components/providers/PartnershipForm';
 import LeadTiers from '@/components/providers/LeadTiers';
 import Reveal from '@/components/shared/Reveal';
 import SectionHeading from '@/components/shared/SectionHeading';
-import { ShieldCheck, Target, DollarSign, Users, Award, ChevronDown, CheckCircle2, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Target, DollarSign, Award, ChevronDown, CheckCircle2, ArrowRight } from 'lucide-react';
 import { constructAlternates } from '@/lib/seo';
 
 export async function generateMetadata({
@@ -109,6 +109,7 @@ export default async function ForProvidersPage({
 
   return (
     <>
+      {/* Hero Section */}
       <div className="relative overflow-hidden bg-hero-gradient min-h-[100dvh] flex flex-col justify-between items-center pt-24 sm:pt-28 pb-6 sm:pb-8 px-4 sm:px-6">
         {/* Ambient Depth Glows */}
         <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-gradient-to-r from-blue-500/10 via-primary/5 to-blue-500/10 blur-3xl -z-10 rounded-full" />
@@ -143,38 +144,38 @@ export default async function ForProvidersPage({
             </p>
 
             <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto">
-              <a
-                href="#apply"
+              <Link
+                href={`/${lang}/for-providers/apply`}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-full bg-primary hover:bg-primary-600 text-white font-semibold text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] transition-all duration-200"
               >
                 <span>{isAr ? 'قدم للانضمام إلى شبكتنا' : 'Apply to Join Network'}</span>
                 <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
-              </a>
+              </Link>
 
               <a
                 href="#tiers"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-full bg-white hover:bg-slate-50 text-slate-700 font-semibold text-base border border-slate-200/90 shadow-xs hover:border-slate-300 transition-all duration-200"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-full bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-semibold text-base border border-slate-200 shadow-sm active:scale-[0.98] transition-all duration-200"
               >
                 <span>{isAr ? 'استعرض فئات الفرص' : 'Explore Opportunity Tiers'}</span>
               </a>
             </div>
 
             <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-xs sm:text-sm text-slate-600">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/80 shadow-xs">
-                <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
-                <span className="font-medium text-slate-800">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-xs border border-slate-200/80 shadow-xs">
+                <CheckCircle2 size={15} className="text-primary shrink-0" />
+                <span className="font-medium text-slate-700">
                   {isAr ? 'بدون أي رسوم إدارة شهرية' : 'Zero Monthly Retainers'}
                 </span>
               </div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/80 shadow-xs">
-                <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
-                <span className="font-medium text-slate-800">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-xs border border-slate-200/80 shadow-xs">
+                <CheckCircle2 size={15} className="text-primary shrink-0" />
+                <span className="font-medium text-slate-700">
                   {isAr ? 'ميزانيات تدريب مؤكدة ومعتمدة' : 'Verified Budgets'}
                 </span>
               </div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/80 shadow-xs">
-                <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
-                <span className="font-medium text-slate-800">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-xs border border-slate-200/80 shadow-xs">
+                <CheckCircle2 size={15} className="text-primary shrink-0" />
+                <span className="font-medium text-slate-700">
                   {isAr ? 'ضمان استبدال بنسبة 100%' : '100% Replacement Guarantee'}
                 </span>
               </div>
@@ -197,6 +198,7 @@ export default async function ForProvidersPage({
         </div>
       </div>
 
+      {/* Why Partner Section */}
       <section id="why-partner" className="bg-white py-12 sm:py-20 border-t border-slate-100 scroll-mt-16">
         <div className="container-site max-w-6xl mx-auto px-4 sm:px-6 space-y-14 sm:space-y-24">
           <div>
@@ -209,6 +211,7 @@ export default async function ForProvidersPage({
                   : 'Designed specifically for professional training providers seeking verified opportunities without retainers.'
               }
             />
+
             <div className="mt-8 sm:mt-10 grid gap-5 sm:gap-6 md:grid-cols-3">
               {providerBenefits.map((b, i) => (
                 <Reveal key={b.title} delay={i * 0.1}>
@@ -228,18 +231,43 @@ export default async function ForProvidersPage({
             <LeadTiers mode="providers" dict={dict} lang={lang} />
           </div>
 
+          {/* Bottom Provider Application CTA Card */}
           <div id="apply" className="scroll-mt-24">
-            <SectionHeading
-              eyebrow={isAr ? 'طلب الانضمام للشراكة' : 'Provider Application'}
-              title={isAr ? 'قدم للانضمام إلى شبكتنا المعتمدة' : 'Apply to Join Our Network'}
-              subtitle={
-                isAr
-                  ? 'أرسل بيانات شركتك وتخصصاتكم التدريبية لتبدأ في استقبال طلبات التدريب المؤسسية المؤهلة.'
-                  : 'Submit your company credentials and training specializations to begin receiving qualified enterprise requests.'
-              }
-            />
-            <Reveal className="mx-auto mt-8 sm:mt-12 max-w-3xl">
-              <PartnershipForm dict={dict} lang={lang} />
+            <Reveal className="mx-auto max-w-4xl">
+              <div className="bg-gradient-to-b from-blue-50/70 via-white to-blue-50/40 border border-blue-100 p-8 sm:p-14 rounded-3xl text-center relative overflow-hidden shadow-sm">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-blue-400/10 blur-3xl pointer-events-none" />
+
+                <span className="text-xs font-mono font-bold uppercase tracking-widest text-primary bg-blue-50 border border-blue-200 px-4 py-1.5 rounded-full inline-block mb-5">
+                  {isAr ? 'طلب الانضمام للشراكة' : 'PROVIDER QUALIFICATION'}
+                </span>
+
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-900 font-heading leading-tight mb-4">
+                  {isAr ? 'جاهز لتوسيع قاعدة عملائك المؤسسيين؟' : 'Ready to Scale Your Enterprise Pipeline?'}
+                </h2>
+
+                <p className="text-base sm:text-lg text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto mb-8">
+                  {isAr
+                    ? 'أكمل نموذج التأهيل وسيقوم فريق الشراكات بمراجعة بياناتك والتواصل معك خلال يومي عمل لبدء استقبال الفرص المؤكدة.'
+                    : 'Complete our streamlined qualification form. Our partnerships team will review your profile and reach out within 2 business days to begin delivering verified demand.'}
+                </p>
+
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <Link
+                    href={`/${lang}/for-providers/apply`}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-primary hover:bg-primary-600 text-white font-semibold text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] transition-all duration-200"
+                  >
+                    <span>{isAr ? 'ابدأ طلب التأهيل للشراكة' : 'Apply for Provider Partnership'}</span>
+                    <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
+                  </Link>
+
+                  <a
+                    href="#tiers"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-semibold text-base border border-slate-200 shadow-sm transition-all duration-200"
+                  >
+                    <span>{isAr ? 'مراجعة معايير الفرص' : 'Review Opportunity Criteria'}</span>
+                  </a>
+                </div>
+              </div>
             </Reveal>
           </div>
         </div>

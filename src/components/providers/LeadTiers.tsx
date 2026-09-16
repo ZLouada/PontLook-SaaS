@@ -69,13 +69,13 @@ const TIERS_EN: TierData[] = [
     step: 'Step 4',
     badge: 'Partnership Model',
     title: 'Explore the partnership: Predictable enterprise client pipeline',
-    description: 'Every lead is verified before introduction. Zero monthly retainers, 5-lead proof-of-concept pilot, and a 5-day replacement guarantee.',
+    description: 'Every lead is verified before introduction. Zero monthly retainers, 5 lead proof of concept pilot, and a 5 day replacement guarantee.',
     project: 'Enterprise Provider Partnership',
     accuracy: '100% Guaranteed',
-    barColor: 'bg-emerald-500',
+    barColor: 'bg-[#FF5C00]',
     barWidth: 'w-full',
     checklist: [
-      'Pay-Per-Qualified-Lead ($0 Retainer)',
+      'Pay Per Qualified Lead ($0 Retainer)',
       'Direct Access to C-Suite & HR Directors',
       'Full Lead Intelligence Report Included'
     ],
@@ -404,8 +404,8 @@ export default function LeadTiers(_props?: {
                       {tier.isCtaCard && (
                         <div className="pt-2">
                           <Link
-                            href={`/${lang}/for-providers#apply`}
-                            className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] text-white font-medium shadow-md shadow-blue-500/20 hover:shadow-blue-500/35 transition-all"
+                            href={`/${lang}/for-providers/apply`}
+                            className="inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] text-white font-medium shadow-md shadow-blue-500/20 hover:shadow-blue-500/35 active:scale-[0.98] transition-all"
                           >
                             <span>{isAr ? 'قدم للانضمام إلى الشراكة' : 'Apply for partnership'}</span>
                             <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
