@@ -11,17 +11,17 @@ export default function TrustBar() {
     {
       icon: ShieldCheck,
       title: dict.trust_bar?.needs?.title || 'Verified Needs',
-      desc: dict.trust_bar?.needs?.desc || 'Pre-qualified enterprise demand'
+      desc: dict.trust_bar?.needs?.desc || 'Qualified enterprise demand'
     },
     {
       icon: Building2,
       title: dict.trust_bar?.access?.title || 'Direct Access',
-      desc: dict.trust_bar?.access?.desc || 'CHRO & L&D decision-makers'
+      desc: dict.trust_bar?.access?.desc || 'CHRO & L&D decision makers'
     },
     {
       icon: BookOpen,
       title: dict.trust_bar?.insights?.title || 'Actionable L&D guides & insights',
-      desc: dict.trust_bar?.insights?.desc || 'Real-time industry & skill research'
+      desc: dict.trust_bar?.insights?.desc || 'Real time industry & skill research'
     },
     {
       icon: TrendingUp,

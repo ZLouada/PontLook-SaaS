@@ -53,7 +53,7 @@ export async function generateMetadata({
     },
     description: isAr
       ? 'منصة ربط مديري الموارد البشرية والشركات بأفضل مزودي التدريب المعتمدين في السعودية والإمارات. فرص معتمدة 100% بدون رسوم شهرية.'
-      : 'Connect corporate buyers with verified training providers across Saudi Arabia and UAE. Qualified leads only—zero monthly retainers or cold outreach.',
+      : 'Connect corporate buyers with verified training providers across Saudi Arabia and UAE. Qualified leads only with zero monthly retainers or cold outreach.',
 
     icons: {
       icon: [
@@ -70,7 +70,7 @@ export async function generateMetadata({
         : 'PontLook: Corporate Training Matchmaking Platform',
       description: isAr
         ? 'منصة ربط مديري الموارد البشرية والشركات بأفضل مزودي التدريب المعتمدين في السعودية والإمارات. فرص معتمدة 100% بدون رسوم شهرية.'
-        : 'Connect corporate buyers with verified training providers across Saudi Arabia and UAE. Qualified leads only—zero monthly retainers or cold outreach.',
+        : 'Connect corporate buyers with verified training providers across Saudi Arabia and UAE. Qualified leads only with zero monthly retainers or cold outreach.',
       url: `https://pontlook.com/${isAr ? 'ar' : 'en'}`,
       siteName: 'PontLook',
       images: [

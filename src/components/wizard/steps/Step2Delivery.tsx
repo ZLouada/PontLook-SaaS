@@ -39,7 +39,7 @@ type Step2Props = {
 export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: Step2Props) {
   const initialMode =
     data.deliveryMode ||
-    (data.deliveryFormat?.toLowerCase().includes('in-person')
+    (data.deliveryFormat?.toLowerCase().includes('in person') || data.deliveryFormat?.toLowerCase().includes('in-person')
       ? 'in_person'
       : data.deliveryFormat?.toLowerCase().includes('virtual')
       ? 'virtual'
@@ -171,7 +171,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
           <div className="flex items-center gap-2">
             <MapPin size={18} className="text-blue-600" />
             <h3 className="font-heading text-sm font-semibold text-slate-800">
-              Primary Location for In-Person Sessions
+              Primary Location for In Person Sessions
             </h3>
           </div>
           <p className="mt-1 text-xs text-slate-600">

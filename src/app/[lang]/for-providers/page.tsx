@@ -21,8 +21,8 @@ export async function generateMetadata({
     ? 'فرص وعملاء تدريب معتمدين للشركات | PontLook'
     : 'Corporate Training Leads & Matchmaking | PontLook';
   const description = isAr
-    ? 'احصل على فرص تعاقد وتدريب معتمدة مع كبرى الشركات في السعودية والإمارات. بدون اشتراكات شهرية أو رسوم احتجاز—ادفع فقط مقابل كل عميل مهتم ومؤهل.'
-    : 'Acquire pre-vetted enterprise corporate training leads in Saudi Arabia and the UAE. Zero retainers or monthly fees—pay strictly per qualified decision-maker.';
+    ? 'احصل على فرص تعاقد وتدريب معتمدة مع كبرى الشركات في السعودية والإمارات. بدون اشتراكات شهرية أو رسوم احتجاز، ادفع فقط مقابل كل عميل مهتم ومؤهل.'
+    : 'Acquire vetted enterprise corporate training leads in Saudi Arabia and the UAE. Zero retainers or monthly fees, pay strictly per qualified decision maker.';
 
   return {
     title: {
@@ -57,11 +57,11 @@ const providerBenefitsEn = [
   {
     icon: DollarSign,
     title: 'Zero Retainer Risk',
-    text: 'No monthly management fees or fixed retainers. You pay strictly per verified decision-maker delivered ($50–$200 per lead).',
+    text: 'No monthly management fees or fixed retainers. You pay strictly per verified decision maker delivered ($50 to $200 per lead).',
   },
   {
     icon: Target,
-    title: 'Pre-Qualified Enterprise Buyers',
+    title: 'Qualified Enterprise Buyers',
     text: 'Every lead has confirmed corporate training needs, authority, and explicit problem definitions tied to Saudization, Emiratization, or digital upskilling.',
   },
   {
@@ -139,7 +139,7 @@ export default async function ForProvidersPage({
             <p className="mt-4 sm:mt-5 text-base sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto font-normal">
               {isAr
                 ? 'تواصل مباشرة مع صناع القرار في كبرى المنشآت والشركات التي تبحث بنشاط عن حلول تدريبية. بدون رسوم شهرية ثابتة، الدفع فقط لكل فرصة مؤكدة ومؤهلة.'
-                : 'Connect directly with verified corporate decision-makers actively seeking training solutions. Zero retainers, 100% pay-per-lead.'}
+                : 'Connect directly with verified corporate decision makers actively seeking training solutions. Zero retainers, 100% pay per lead.'}
             </p>
 
             <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto">
@@ -169,7 +169,7 @@ export default async function ForProvidersPage({
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/80 shadow-xs">
                 <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
                 <span className="font-medium text-slate-800">
-                  {isAr ? 'ميزانيات تدريب مؤكدة ومعتمدة' : 'Pre-Verified Budgets'}
+                  {isAr ? 'ميزانيات تدريب مؤكدة ومعتمدة' : 'Verified Budgets'}
                 </span>
               </div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/80 shadow-xs">

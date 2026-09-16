@@ -437,7 +437,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                           {isExpanded && (
                   <div className="border-t border-slate-200/80 bg-slate-50/70 p-4 space-y-3">
                     <div className="flex items-center justify-between text-[11px] text-slate-500">
-                      <span>Specific sub-domains & capability tags:</span>
+                      <span>Specific subdomains & capability tags:</span>
                       <button
                         type="button"
                         onClick={(e) => {

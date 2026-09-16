@@ -21,7 +21,7 @@ export async function generateMetadata({
     : 'Returns & FAQ Policy | PontLook Enterprise Guarantee';
   const description = isAr
     ? 'سياسة الاسترجاع والضمانات الرسمية في PontLook، بما في ذلك ضمان استبدال العملاء المحتملين وشروط الفواتير وسياسات حل المشكلات.'
-    : 'Official PontLook Returns & FAQ Policy covering order resolutions, 30-day quality reviews, lead replacement guarantees, and billing terms.';
+    : 'Official PontLook Returns & FAQ Policy covering order resolutions, 30 day quality reviews, lead replacement guarantees, and billing terms.';
 
   return {
     title: {
@@ -55,12 +55,12 @@ export async function generateStaticParams() {
 const policyHighlightsEn = [
   {
     icon: PackageX,
-    title: 'Made-to-Order Products',
+    title: 'Made to Order Products',
     desc: 'Each physical product or custom merchandise piece is printed and fulfilled individually upon order placement.',
   },
   {
     icon: Clock,
-    title: '30-Day Resolution Window',
+    title: '30 Day Resolution Window',
     desc: 'Misprinted, damaged, or defective items must be reported within 30 days of delivery for a replacement or refund.',
   },
   {
@@ -71,7 +71,7 @@ const policyHighlightsEn = [
   {
     icon: CreditCard,
     title: 'Refund Processing',
-    desc: 'Approved refunds are credited back to your original payment method (PayPal or Credit Card) within 3-7 business days.',
+    desc: 'Approved refunds are credited back to your original payment method (PayPal or Credit Card) within 3 to 7 business days.',
   },
 ];
 
@@ -138,10 +138,10 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
       : [
           {
             '@type': 'Question',
-            name: 'What is the made-to-order fulfillment policy?',
+            name: 'What is the made to order fulfillment policy?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'All PontLook custom products are printed and fulfilled on-demand upon order confirmation. We do not accept returns or exchanges for preference changes or sizing mistakes.',
+              text: 'All PontLook custom products are printed and fulfilled on demand upon order confirmation. We do not accept returns or exchanges for preference changes or sizing mistakes.',
             },
           },
           {
@@ -149,7 +149,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
             name: 'What is the quality guarantee window for defective items?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'Misprinted, defective, or transit-damaged items reported within 30 days of delivery are eligible for an immediate free replacement or full refund.',
+              text: 'Misprinted, defective, or transit damaged items reported within 30 days of delivery are eligible for an immediate free replacement or full refund.',
             },
           },
           {
@@ -157,7 +157,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
             name: 'How do cancellations and refunds work?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'Orders can be cancelled prior to production entering fulfillment. Approved refunds are credited back to the original payment method within 3-7 business days.',
+              text: 'Orders can be cancelled prior to production entering fulfillment. Approved refunds are credited back to the original payment method within 3 to 7 business days.',
             },
           },
         ],
@@ -222,19 +222,19 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
             <div className="prose prose-slate max-w-none space-y-12 text-slate-700 leading-relaxed font-sans">
               <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
-                  1. Made-to-Order Fulfillment Policy
+                  1. Made to Order Fulfillment Policy
                 </h2>
                 <p className="mb-4">
-                  PontLook merchandise and store items are created using a made-to-order production model in collaboration with our official fulfillment partner, <strong>Fourthwall</strong>.
+                  PontLook merchandise and store items are created using a made to order production model in collaboration with our official fulfillment partner, <strong>Fourthwall</strong>.
                 </p>
                 <p>
-                  Because every item is custom printed and manufactured specifically when an order is placed, we do not maintain a warehouse of pre-printed stock. Consequently, we cannot accept standard returns or exchanges for buyer&apos;s remorse, sizing errors, or preference changes.
+                  Because every item is custom printed and manufactured specifically when an order is placed, we do not maintain a warehouse of preprinted stock. Consequently, we cannot accept standard returns or exchanges for buyer&apos;s remorse, sizing errors, or preference changes.
                 </p>
               </div>
 
               <div>
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
-                  2. 30-Day Quality Guarantee & Defect Reporting
+                  2. 30 Day Quality Guarantee & Defect Reporting
                 </h2>
                 <p className="mb-4">
                   We stand by the quality of our merchandise. If your order arrives with any of the following issues, you are entitled to a replacement item at no extra charge or a full refund:
@@ -271,10 +271,10 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-slate-600">
                   <li>
-                    <strong>Pre-Production Cancellations:</strong> You may request an order cancellation by contacting us immediately after ordering. If production has not commenced, your order will be cancelled and fully refunded.
+                    <strong>Pre Production Cancellations:</strong> You may request an order cancellation by contacting us immediately after ordering. If production has not commenced, your order will be cancelled and fully refunded.
                   </li>
                   <li>
-                    <strong>In-Production Orders:</strong> Once Fourthwall transmits the item to the manufacturing queue, the order cannot be cancelled, modified, or recalled.
+                    <strong>In Production Orders:</strong> Once Fourthwall transmits the item to the manufacturing queue, the order cannot be cancelled, modified, or recalled.
                   </li>
                 </ul>
               </div>
@@ -304,10 +304,10 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
                   5. Fourthwall Fulfillment Partner Terms
                 </h2>
                 <p className="mb-4">
-                  PontLook partners with <strong>Fourthwall</strong> for e-commerce hosting, payment processing, manufacturing, and global logisitic fulfillment. By purchasing merchandise on our store:
+                  PontLook partners with <strong>Fourthwall</strong> for ecommerce hosting, payment processing, manufacturing, and global logisitic fulfillment. By purchasing merchandise on our store:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-slate-600">
-                  <li>Your order is processed securely through Fourthwall&apos;s PCI-compliant checkout infrastructure.</li>
+                  <li>Your order is processed securely through Fourthwall&apos;s PCI compliant checkout infrastructure.</li>
                   <li>Global shipping and delivery times are estimated at checkout based on destination customs and local postal operations.</li>
                   <li>PontLook and Fourthwall adhere strictly to international consumer protection regulations and carrier claims procedures.</li>
                 </ul>

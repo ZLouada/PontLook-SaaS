@@ -47,9 +47,9 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
     data.budgetBand ||
     (data.budgetRange?.includes('Under $10,000')
       ? 'under_10k'
-      : data.budgetRange?.includes('$10,000 – $25,000')
+      : data.budgetRange?.includes('$10,000 to $25,000')
       ? '10k_25k'
-      : data.budgetRange?.includes('$25,000 – $50,000')
+      : data.budgetRange?.includes('$25,000 to $50,000')
       ? '25k_50k'
       : data.budgetRange?.includes('$50,000') || data.budgetRange?.includes('$100,000+')
       ? '50k_plus'

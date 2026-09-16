@@ -39,11 +39,11 @@ export function calculateLeadScore(data: WizardData): LeadScoreResult {
     }
   } else if (data.employees) {
     companySizeValid = true;
-    if (data.employees === '5,000+' || data.employees === '1,001–5,000') {
+    if (data.employees === '5,000+' || data.employees === '1,001 to 5,000') {
       score += 20;
-    } else if (data.employees === '501–1,000' || data.employees === '201–500') {
+    } else if (data.employees === '501 to 1,000' || data.employees === '201 to 500') {
       score += 15;
-    } else if (data.employees === '50–200') {
+    } else if (data.employees === '50 to 200') {
       score += 10;
     } else {
       score += 5;
@@ -69,13 +69,13 @@ export function calculateLeadScore(data: WizardData): LeadScoreResult {
       score += 10;
     }
   } else if (data.budgetRange) {
-    if (data.budgetRange === '$100,000+' || data.budgetRange === '$50,000 – $100,000') {
+    if (data.budgetRange === '$100,000+' || data.budgetRange === '$50,000 to $100,000') {
       score += 25;
       budgetAllocated = true;
-    } else if (data.budgetRange === '$25,000 – $50,000') {
+    } else if (data.budgetRange === '$25,000 to $50,000') {
       score += 20;
       budgetAllocated = true;
-    } else if (data.budgetRange === '$10,000 – $25,000') {
+    } else if (data.budgetRange === '$10,000 to $25,000') {
       score += 15;
       budgetAllocated = true;
     } else if (data.budgetRange === 'Under $10,000') {

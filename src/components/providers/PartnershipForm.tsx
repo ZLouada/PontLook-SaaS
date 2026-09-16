@@ -30,8 +30,8 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
   const yearsInBusinessLabel = dict?.forProviders?.form?.yearsInBusiness || 'Years in business';
   const yearsOptions = dict?.forProviders?.form?.yearsOptions || {
     lessThan2: 'Less than 2',
-    twoToFive: '2–5',
-    fiveToTen: '5–10',
+    twoToFive: '2 to 5',
+    fiveToTen: '5 to 10',
     tenPlus: '10+',
   };
   const specialtiesLabel = dict?.forProviders?.form?.specialties || 'Training specialties';

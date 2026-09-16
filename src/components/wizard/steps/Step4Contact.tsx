@@ -94,14 +94,14 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
           </h2>
         </div>
         <p className="mt-1 text-sm text-slate-600">
-          We only release curated proposals to verified corporate decision-makers.
+          We only release curated proposals to verified corporate decision makers.
         </p>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <FormTextField
           label="Full Name"
-          placeholder="e.g. Sarah Al-Rashid"
+          placeholder="e.g. Sarah Al Rashid"
           autoComplete="name"
           icon={<User size={18} />}
           registration={register('fullName')}

@@ -13,19 +13,19 @@ export const en = {
   },
   hero: {
     headline: "Your direct bridge to top corporate training providers.",
-    subtitle: "We identify organizational skill gaps and match decision-makers with the training experts equipped to resolve them.",
+    subtitle: "We identify organizational skill gaps and match decision makers with the training experts equipped to resolve them.",
     btn_provider: "I'm a training provider",
     btn_buyer: "I'm looking for training",
     badges: {
-      verified_deciders: { value: "100%", label: "Verified Decision-Makers" },
+      verified_deciders: { value: "100%", label: "Verified Decision Makers" },
       zero_retainer: { value: "Zero", label: "Monthly Retainer Risk" },
       match_rate: { value: "92%", label: "Leads Reach Meetings" },
       markets_covered: { value: "6", label: "Regional Markets Covered" }
     }
   },
   trust_bar: {
-    needs: { title: "Verified Needs", desc: "Pre-qualified enterprise demand" },
-    access: { title: "Direct Access", desc: "CHRO & L&D decision-makers" },
+    needs: { title: "Verified Needs", desc: "Qualified enterprise demand" },
+    access: { title: "Direct Access", desc: "CHRO & L&D decision makers" },
     insights: { title: "Actionable L&D guides & insights", desc: "Real-time industry & skill research" },
     gcc: { title: "Regional Focus", desc: "Saudi Arabia, UAE & Gulf" }
   },
@@ -41,22 +41,22 @@ export const en = {
     step2: {
       badge: "Step 02",
       title: "Qualify & Match",
-      subtitle: "Decision-makers are validated, budgets and timelines confirmed, then matched to the right training provider."
+      subtitle: "Decision makers are validated, budgets and timelines confirmed, then matched to the right training provider."
     },
     step3: {
       badge: "Step 03",
       title: "Close the Engagement",
-      subtitle: "Warm introductions directly to decision-makers who are ready for proposals."
+      subtitle: "Warm introductions directly to decision makers who are ready for proposals."
     }
   },
   why_different: {
     eyebrow: "ACTIONABLE MARKET INTELLIGENCE",
     title: "Real Solutions on Our Blog. Verified Connections on Our Platform.",
-    subtitle: "We analyze real GCC workplace challenges to deliver free, actionable problem-solving guides on our blog—and directly connect corporate leaders with the verified training providers ready to implement the solution.",
+    subtitle: "We analyze real GCC workplace challenges to deliver free, actionable problem-solving guides on our blog, and directly connect corporate leaders with the verified training providers ready to implement the solution.",
     cards: {
       diagnose: {
         title: "Diagnose Your Skill Gaps",
-        text: "We help you identify hidden capability gaps and workforce challenges across your teams—turning vague training requests into clear, actionable development priorities.",
+        text: "We help you identify hidden capability gaps and workforce challenges across your teams, turning vague training requests into clear, actionable development priorities.",
         cta: "Explore our L&D guides & blog",
         mockupHeader: "Skill Gap Assessment",
         mockupSubheader: "Enterprise Department Level",
@@ -65,7 +65,7 @@ export const en = {
       },
       match: {
         title: "Matched Directly with the Right Training Partner",
-        text: "No endless searching or cold sales pitches. We match your specific requirements directly with pre-vetted corporate training firms proven to deliver measurable results.",
+        text: "No endless searching or cold sales pitches. We match your specific requirements directly with vetted corporate training firms proven to deliver measurable results.",
         cta: "Get matched for training",
         mockupHeader: "Partner Fit Checklist",
         check1: "Specialized in your industry",
@@ -73,29 +73,29 @@ export const en = {
         check3: "Aligned with your timeline & budget"
       },
       access: {
-        title: "Direct Access to Verified Decision-Makers",
+        title: "Direct Access to Verified Decision Makers",
         angle: "Skip the Gatekeepers. Talk Directly to the Budget Owners.",
-        text: "Stop wasting time with dead-end outreach. We connect you directly with CHROs, VPs of Talent, and C-Level executives who hold verified purchasing authority and active L&D needs.",
+        text: "Stop wasting time with dead end outreach. We connect you directly with CHROs, VPs of Talent, and C Level executives who hold verified purchasing authority and active L&D needs.",
         cta: "Apply as a Provider",
         clientTag: "Enterprise Client · GRC",
         role: "Chief Human Resources Officer (CHRO)",
         statusBadge: "Budget Authority: Confirmed"
       },
       ready: {
-        title: "Ready-to-Partner Clients",
-        text: "We respect your expertise. Instead of speculative leads, we bring you serious organizations that are ready to invest, with defined budgets and clear goals—creating partnerships where both sides succeed.",
+        title: "Clients Ready to Partner",
+        text: "We respect your expertise. Instead of speculative leads, we bring you serious organizations that are ready to invest, with defined budgets and clear goals, creating partnerships where both sides succeed.",
         cta: "Connect with Ready Clients",
         mockupHeader: "Partnership Readiness | Verified",
         needLabel: "Client Need",
         needVal: "Executive Leadership Program",
         budgetLabel: "Budget & Scope",
-        budgetVal: "Confirmed ($50k - $100k)",
+        budgetVal: "Confirmed ($50k to $100k)",
         fitLabel: "Mutual Fit",
         fitVal: "Aligned on timeline & methodology"
       },
       hub: {
         title: "L&D Knowledge Hub",
-        text: "We continuously analyze corporate training trends across the region and share fresh, actionable insights on our blog—providing free frameworks, guides, and research to help you make smarter L&D decisions.",
+        text: "We continuously analyze corporate training trends across the region and share fresh, actionable insights on our blog, providing free frameworks, guides, and research to help you make smarter L&D decisions.",
         cta: "Explore our blog & resources",
         mockupHeader: "Latest L&D Resources",
         item1Title: "GCC Workforce Skill Gaps Report",
@@ -107,7 +107,7 @@ export const en = {
   },
   experience_cards: {
     title: "Start with Our Insights. Partner for Real Impact.",
-    subtitle: "We don't just bridge corporate needs with expert providers on the ground. Explore our blog for free, in-depth L&D guides, regional skill benchmarks, and diagnostic frameworks—and whenever you're ready, let us match you directly with the verified training experts who execute the solution.",
+    subtitle: "We don't just bridge corporate needs with expert providers on the ground. Explore our blog for free, in-depth L&D guides, regional skill benchmarks, and diagnostic frameworks, and whenever you're ready, let us match you directly with the verified training experts who execute the solution.",
     btn_blog: "Explore the Blog & Resources",
     btn_match: "Get Matched for Training",
     cards: {
@@ -115,13 +115,13 @@ export const en = {
         badgePersona: "For Training Providers",
         badgeOption: "Option 1",
         title: "Connect Directly with Ready Corporate Clients",
-        subtitle: "Partner with pre-qualified GCC enterprises that have active training budgets and executive buy-in.",
+        subtitle: "Partner with qualified GCC enterprises that have active training budgets and executive buy-in.",
         previewHeader: "PARTNER PIPELINE · ACTIVE ENGAGEMENTS",
         metricLabel: "Lead Quality Score",
         metricValue: "98%",
         metricWidth: "w-[98%]",
         checklist: [
-          "Verified Budget: Pre-approved corporate funding (SAR / AED)",
+          "Verified Budget: Pre approved corporate funding (SAR / AED)",
           "Direct Executive Access: Meet CHROs & CLOs directly",
           "Zero Cold Prospecting: Qualified demand delivered to you"
         ],
@@ -149,14 +149,14 @@ export const en = {
         badgePersona: "Knowledge & Research",
         badgeOption: "Option 3",
         title: "Explore Actionable L&D Insights & Guides",
-        subtitle: "Dive into free, research-backed frameworks, workforce reports, and practical guides on regional talent trends.",
+        subtitle: "Dive into free, research backed frameworks, workforce reports, and practical guides on regional talent trends.",
         previewHeader: "KNOWLEDGE HUB · LATEST RESOURCES",
         metricLabel: "Practical Value",
         metricValue: "Free Access",
         metricWidth: "w-full",
         checklist: [
           "Workforce Benchmarks: GCC skill shortage & talent reports",
-          "Diagnostic Frameworks: Step-by-step L&D audit templates",
+          "Diagnostic Frameworks: Step by step L&D audit templates",
           "Best Practices: Practical case studies on corporate ROI"
         ],
         cta: "Explore the Blog & Resources",
@@ -172,7 +172,7 @@ export const en = {
         metricValue: "Within 24 Hours",
         metricWidth: "w-full",
         checklist: [
-          "1-on-1 Consultation: Discuss your exact workforce objectives",
+          "1 on 1 Consultation: Discuss your exact workforce objectives",
           "Platform Walkthrough: See how our diagnostic matching works",
           "Custom Advisory: Tailored recommendations with no obligation"
         ],
@@ -191,10 +191,10 @@ export const en = {
   provider_teaser: {
     badge: "For training providers",
     headline: "A predictable pipeline of enterprise opportunities",
-    subtitle: "Every lead is scored on decision-maker verification, company size, budget, timeline, and depth of need, so you always know exactly what you’re walking into.",
+    subtitle: "Every lead is scored on decision maker verification, company size, budget, timeline, and depth of need, so you always know exactly what you’re walking into.",
     btn: "Explore the partnership",
     tiers: {
-      hot: { name: "Hot", desc: "Verified decision-maker, confirmed budget, starts within 30 days." },
+      hot: { name: "Hot", desc: "Verified decision maker, confirmed budget, starts within 30 days." },
       warm: { name: "Warm", desc: "Confirmed pain and authority; budget or timeline still forming. We stay engaged to pass the lead when ready." },
       qualified: { name: "Qualified", desc: "Genuine need verified; earlier in the buying journey." }
     },
@@ -206,14 +206,14 @@ export const en = {
     card_subtitle: "Connect directly with our enterprise advisory team to explore verified provider matching or discuss partnership opportunities across the region.",
     btn_call: "Book a consultation",
     title: "Stop chasing. Start closing with companies that already need you.",
-    subtitle: "Join the region’s intelligence-driven training marketplace — as a provider or as a buyer.",
+    subtitle: "Join the region’s intelligence driven training marketplace, as a provider or as a buyer.",
     btn_provider: "Become a partner provider",
     btn_buyer: "Find corporate training"
   },
   forProviders: {
     badge: "For training providers",
     headline: "Predictable revenue from buyers who are already looking",
-    subtitle: "Referrals are unpredictable. Cold outreach is expensive. We deliver verified, decision-maker-confirmed opportunities from enterprises with real budgets, and you only pay when a lead is qualified.",
+    subtitle: "Referrals are unpredictable. Cold outreach is expensive. We deliver verified, decision maker confirmed opportunities from enterprises with real budgets, and you only pay when a lead is qualified.",
     applyBtn: "Apply for partnership",
     form: {
       title: "Partnership application",
@@ -231,8 +231,8 @@ export const en = {
       yearsInBusiness: "Years in business",
       yearsOptions: {
         lessThan2: "Less than 2",
-        twoToFive: "2–5",
-        fiveToTen: "5–10",
+        twoToFive: "2 to 5",
+        fiveToTen: "5 to 10",
         tenPlus: "10+"
       },
       specialties: "Training specialties",
@@ -262,7 +262,7 @@ export const en = {
     subtitle: "Whether you deliver training or need it, we’ll point you in the right direction, usually within one business day.",
     emailLabel: "contact@pontlook.com",
     location: "Riyadh · Dubai · Regional Advisory",
-    hours: "Sunday–Thursday · 9:00–18:00 (GST)",
+    hours: "Sunday to Thursday · 9:00 to 18:00 (GST)",
     form: {
       name: "Name",
       namePlaceholder: "Your full name",

@@ -193,7 +193,7 @@ export default async function FindTrainingPage({
             </span>
             <span className="flex items-center gap-1.5">
               <ShieldCheck size={16} className="text-emerald-600" />
-              <span>{isAr ? 'خصوصية تامة لصناع القرار' : 'Verified Decision-Maker Privacy'}</span>
+              <span>{isAr ? 'خصوصية تامة لصناع القرار' : 'Verified Decision Maker Privacy'}</span>
             </span>
           </div>
 

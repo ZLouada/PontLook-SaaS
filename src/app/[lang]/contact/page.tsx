@@ -73,7 +73,7 @@ export default async function ContactPage({
     subtitle: 'Whether you deliver training or need it, we’ll point you in the right direction, usually within one business day.',
     emailLabel: 'contact@pontlook.com',
     location: 'Riyadh · Dubai · Serving the Region',
-    hours: 'Sunday–Thursday · 9:00–18:00 (GST)',
+    hours: 'Sunday to Thursday · 9:00 to 18:00 (GST)',
   };
 
   return (

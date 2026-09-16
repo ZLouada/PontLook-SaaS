@@ -169,7 +169,7 @@ export default function FindTrainingWizard() {
       delivery_mode: deliveryTitle,
       delivery_city: finalData.city || 'N/A',
       instruction_language: finalData.language || 'Bilingual',
-      customization_level: finalData.customization === 'tailored' ? 'Tailored Cohort Program' : 'Standard Off-the-Shelf',
+      customization_level: finalData.customization === 'tailored' ? 'Tailored Cohort Program' : 'Standard Off the Shelf',
       additional_kpis: finalData.additionalContext || 'N/A',
       submitted_at: new Date().toISOString(),
       _gotcha: finalData._gotcha || '',
@@ -259,7 +259,7 @@ export default function FindTrainingWizard() {
             </span>
             <span className="hidden items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 sm:inline-flex">
               <ShieldCheck size={12} />
-              <span>Auto-saving</span>
+              <span>Auto saving</span>
             </span>
           </div>
         </div>

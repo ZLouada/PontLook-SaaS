@@ -66,12 +66,12 @@ export default function Step5Confirmation({ data }: Step5Props) {
   const deliveryModeName =
     DELIVERY_MODES.find((m) => m.id === data.deliveryMode)?.title ||
     data.deliveryMode ||
-    'In-Person';
+    'In Person';
 
   const cohortName =
     COHORT_SIZES.find((c) => c.id === data.cohortSize)?.label ||
     data.cohortSize ||
-    '6–20 Team Members';
+    '6 to 20 Team Members';
 
   const timelineName =
     TIMELINES.find((t) => t.id === data.timeline)?.label ||
@@ -81,7 +81,7 @@ export default function Step5Confirmation({ data }: Step5Props) {
   const budgetName =
     BUDGET_BANDS.find((b) => b.id === data.budgetBand)?.label ||
     data.budgetBand ||
-    '$10,000 – $25,000';
+    '$10,000 to $25,000';
 
   const handleDownloadReport = () => {
     setDownloading(true);
@@ -96,27 +96,27 @@ Email: ${data.workEmail || 'N/A'}
 Date: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
 
 MATCHED INTAKE SPECIFICATIONS:
-- Target Domains: ${selectedDomainNames.join(', ') || 'Executive Leadership'}
-- Delivery Format: ${deliveryModeName} ${data.city ? `(${data.city})` : ''}
-- Target Cohort: ${cohortName}
-- Horizon: ${timelineName}
-- Budget Tier: ${budgetName}
+• Target Domains: ${selectedDomainNames.join(', ') || 'Executive Leadership'}
+• Delivery Format: ${deliveryModeName} ${data.city ? `(${data.city})` : ''}
+• Target Cohort: ${cohortName}
+• Horizon: ${timelineName}
+• Budget Tier: ${budgetName}
 
 EXECUTIVE SUMMARY & 2026 BENCHMARK HIGHLIGHTS:
 1. GCC Corporate Training ROI:
-   - Tailored cohort programs yield 3.4x higher knowledge retention over off-the-shelf catalog training.
-   - 78% of Saudi & UAE enterprise buyers prioritize bilingual (Arabic & English) senior facilitators.
+   • Tailored cohort programs yield 3.4x higher knowledge retention over off the shelf catalog training.
+   • 78% of Saudi & UAE enterprise buyers prioritize bilingual (Arabic & English) senior facilitators.
 
 2. Price & Duration Benchmarks:
-   - Executive Leadership Intensives (1-5 CXOs): Average market rate $18,000 – $35,000.
-   - AI & Tech Transformations: Average market rate $25,000 – $65,000 across GCC regional hubs.
-   - GRC & Board Governance: Highly localized accreditation requirements (SAMA/CMA/ADGM).
+   • Executive Leadership Intensives (1 to 5 CXOs): Average market rate $18,000 to $35,000.
+   • AI & Tech Transformations: Average market rate $25,000 to $65,000 across GCC regional hubs.
+   • GRC & Board Governance: Highly localized accreditation requirements (SAMA/CMA/ADGM).
 
 3. Next Milestone:
-   - Your PontLook Matching Concierge is currently reviewing provider capacity and SLAs.
-   - 2 to 3 itemized proposals will arrive at ${data.workEmail || 'your work email'} within 48 hours.
+   • Your PontLook Matching Concierge is currently reviewing provider capacity and SLAs.
+   • 2 to 3 itemized proposals will arrive at ${data.workEmail || 'your work email'} within 48 hours.
 
-Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Network.
+Thank you for choosing PontLook.com : The GCC Corporate Training Matchmaking Network.
 `;
       const blob = new Blob([reportContent], { type: 'text/plain;charset=utf-8' });
       const url = URL.createObjectURL(blob);
@@ -182,7 +182,7 @@ Thank you for choosing PontLook.com - The GCC Corporate Training Matchmaking Net
                 Milestone 2 · Within 48 Hours
               </span>
               <h3 className="font-heading mt-0.5 text-sm font-semibold text-slate-800">
-                2–3 Itemized Proposals
+                2 to 3 Itemized Proposals
               </h3>
               <p className="mt-1 text-xs text-slate-600">
                 Receive customized syllabi, pricing breakdown, and lead instructor bios.

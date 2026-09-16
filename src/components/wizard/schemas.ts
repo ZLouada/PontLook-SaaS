@@ -36,14 +36,14 @@ export const TRAINING_DOMAINS: TrainingDomainItem[] = [
   {
     id: 'executive_leadership',
     title: 'Executive Leadership & Management',
-    subtitle: 'C-Suite, Director Level, Strategic Alignment & Vision 2030 Leadership',
+    subtitle: 'C Suite, Director Level, Strategic Alignment & Vision 2030 Leadership',
     keywords: ['leadership', 'c-suite', 'executive', 'management', 'vision 2030', 'strategy', 'change management', 'board', 'director'],
     iconName: 'Crown',
   },
   {
     id: 'b2b_sales',
     title: 'B2B Sales & Commercial Negotiation',
-    subtitle: 'Enterprise Account Strategy, High-Stakes Deal Closing & Commercial Excellence',
+    subtitle: 'Enterprise Account Strategy, High Stakes Deal Closing & Commercial Excellence',
     keywords: ['sales', 'b2b', 'negotiation', 'commercial', 'account management', 'deal closing', 'enterprise sales', 'revenue'],
     iconName: 'TrendingUp',
   },
@@ -80,20 +80,20 @@ export const TRAINING_DOMAINS: TrainingDomainItem[] = [
 export const DELIVERY_MODES = [
   {
     id: 'in_person',
-    title: 'In-Person / Onsite',
-    description: 'On-premises at your company HQ or dedicated corporate training venue.',
+    title: 'In Person / Onsite',
+    description: 'On premises at your company HQ or dedicated corporate training venue.',
     badge: 'Popular for Executive Cohorts',
   },
   {
     id: 'virtual',
-    title: 'Virtual Instructor-Led',
+    title: 'Virtual Instructor Led',
     description: 'Live interactive digital sessions via Zoom/Teams with collaborative breakouts.',
     badge: 'High Flexibility',
   },
   {
     id: 'hybrid',
     title: 'Hybrid (Blended Cohort)',
-    description: 'Combined in-person immersion workshops and live digital reinforcement.',
+    description: 'Combined in person immersion workshops and live digital reinforcement.',
     badge: 'Best Retention',
   },
 ] as const;
@@ -113,30 +113,30 @@ export const CUSTOMIZATION_OPTIONS = [
   },
   {
     id: 'standard',
-    title: 'Standard Off-the-Shelf Courseware',
+    title: 'Standard Off the Shelf Courseware',
     description: 'Established industry curriculum with standard professional accreditation.',
     recommended: false,
   },
 ] as const;
 
 export const COHORT_SIZES = [
-  { id: '1_5_execs', label: '1–5 Executives', sublabel: 'C-Level & Senior Leadership Intensive' },
-  { id: '6_20_team', label: '6–20 Team Members', sublabel: 'Specialized Team / High-Potential Cohort' },
-  { id: '21_50_dept', label: '21–50 Dept Scale', sublabel: 'Departmental Capability Upskilling' },
-  { id: '50_plus_enterprise', label: '50+ Enterprise Wide', sublabel: 'Company-wide Transformation Program' },
+  { id: '1_5_execs', label: '1 to 5 Executives', sublabel: 'C Level & Senior Leadership Intensive' },
+  { id: '6_20_team', label: '6 to 20 Team Members', sublabel: 'Specialized Team / High Potential Cohort' },
+  { id: '21_50_dept', label: '21 to 50 Dept Scale', sublabel: 'Departmental Capability Upskilling' },
+  { id: '50_plus_enterprise', label: '50+ Enterprise Wide', sublabel: 'Company wide Transformation Program' },
 ] as const;
 
 export const TIMELINES = [
   { id: 'immediate', label: 'Immediate (< 2 weeks)', priority: 'Urgent / Priority' },
   { id: 'within_30_days', label: 'Within 30 Days', priority: 'Standard Schedule' },
-  { id: 'next_quarter', label: 'Next Quarter (60–90 Days)', priority: 'Planned Cycle' },
+  { id: 'next_quarter', label: 'Next Quarter (60 to 90 Days)', priority: 'Planned Cycle' },
   { id: 'planning', label: 'Planning / Exploratory', priority: 'Budgeting Stage' },
 ] as const;
 
 export const BUDGET_BANDS = [
   { id: 'under_10k', label: '< $10,000', sublabel: 'Focused Workshop / Small Cohort' },
-  { id: '10k_25k', label: '$10,000 – $25,000', sublabel: 'Standard Multi-day Intensive' },
-  { id: '25k_50k', label: '$25,000 – $50,000', sublabel: 'Comprehensive Multi-week Cohort' },
+  { id: '10k_25k', label: '$10,000 to $25,000', sublabel: 'Standard Multi day Intensive' },
+  { id: '25k_50k', label: '$25,000 to $50,000', sublabel: 'Comprehensive Multi week Cohort' },
   { id: '50k_plus', label: '$50,000+', sublabel: 'Enterprise Academy / Organization Rollout' },
   { id: 'pending_guidance', label: 'Budget Pending Approval / Need Guidance', sublabel: 'Benchmark market rates with PontLook team' },
 ] as const;
@@ -237,7 +237,7 @@ export const step2DeliverySchema = z
       return true;
     },
     {
-      message: 'Please select target city for on-site sessions.',
+      message: 'Please select target city for on site sessions.',
       path: ['city'],
     }
   );

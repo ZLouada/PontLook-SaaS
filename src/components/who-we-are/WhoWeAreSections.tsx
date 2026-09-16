@@ -49,7 +49,7 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
       title: isAr ? 'احتياجات غامضة ودورات غير ملائمة' : 'Vague Needs & Misaligned Courses',
       desc: isAr
         ? 'شراء برامج تدريبية معلبة وجاهزة دون تشخيص مسبق لما إذا كانت تسد فجوات الكفاءة الحقيقية لدى الموظفين.'
-        : 'Buying off-the-shelf training without diagnosing whether they bridge actual capability gaps.',
+        : 'Buying off the shelf training without diagnosing whether they bridge actual capability gaps.',
     },
     {
       title: isAr ? 'جلسات استكشافية غير مدفوعة وطرق مسدودة' : 'Unpaid Discovery & Dead Ends',
@@ -69,14 +69,14 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
     {
       title: isAr ? 'نخبة مختارة من الخبراء المعتمدين' : 'Curated, Proven Specialists',
       desc: isAr
-        ? 'تتجاوز المؤسسات عروض المبيعات العشوائية وتقيّم 2–3 مزودين تم فحصهم بدقة ومواءمتهم مع أهدافها المحددة.'
-        : 'Enterprises skip sales pitches and evaluate 2–3 thoroughly vetted providers matched to their specific objectives.',
+        ? 'تتجاوز المؤسسات عروض المبيعات العشوائية وتقيّم 2 إلى 3 مزودين تم فحصهم بدقة ومواءمتهم مع أهدافها المحددة.'
+        : 'Enterprises skip sales pitches and evaluate 2 to 3 thoroughly vetted providers matched to their specific objectives.',
     },
     {
-      title: isAr ? 'تعاقدات جاهزة للتنفيذ الفوري' : 'Ready-to-Deliver Engagements',
+      title: isAr ? 'تعاقدات جاهزة للتنفيذ الفوري' : 'Ready to Deliver Engagements',
       desc: isAr
         ? 'يستلم مزودو التدريب كراسات شروط محددة النطاق ومعتمدة الميزانية، ليركز المدربون بنسبة 100% على تحقيق أعلى أثر.'
-        : 'Providers receive pre-scoped, budget-approved briefs so facilitators can dedicate 100% of their energy to high-impact delivery.',
+        : 'Providers receive pre scoped, budget approved briefs so facilitators can dedicate 100% of their energy to high impact delivery.',
     },
   ];
 
@@ -249,7 +249,7 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
         : 'Corporate teams access the diagnostic engine, requirements scoping, and curated partner shortlist with zero retainers and zero platform fees.',
       points: [
         isAr ? 'تشخيص دقيق للاحتياجات التدريبية قبل التوفيق' : 'No subscription fees or hidden service markups',
-        isAr ? 'تقييم حر وغير ملزم لـ 2–3 مزودين معتمدين' : 'Evaluate 2–3 pre-vetted specialists with zero pressure',
+        isAr ? 'تقييم حر وغير ملزم لـ 2 إلى 3 مزودين معتمدين' : 'Evaluate 2 to 3 vetted specialists with zero pressure',
         isAr ? 'عروض تدريبية مفصلة حسب الميزانية ومطابقة للمستهدفات' : 'Custom proposals tailored directly to your team’s KPIs',
       ],
       tag: isAr ? 'ميزة تنافسية للشركات' : 'Enterprise Advantage',
@@ -261,7 +261,7 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
       priceSub: isAr ? 'ادفع لكل فرصة مؤكدة' : 'Pay Per Verified Lead',
       promise: isAr
         ? 'تخلص من تكاليف التسويق البارد. ادفع فقط عند الربط المباشر بصناع قرار معتمدين لديهم ميزانيات معتمدة واحتياجات مؤكدة.'
-        : 'Eliminate business development overhead. Providers only pay when connected with verified enterprise decision-makers with confirmed budgets and active training mandates.',
+        : 'Eliminate business development overhead. Providers only pay when connected with verified enterprise decision makers with confirmed budgets and active training mandates.',
       points: [
         isAr ? 'بدون أي اشتراكات أو تكاليف تأسيسية دورية' : 'Zero upfront retainers or arbitrary monthly agency fees',
         isAr ? 'بيانات كاملة وسياق تفصيلي لاحتياجات العميل' : 'Comprehensive intake briefs with verified budget parameters',
@@ -272,14 +272,14 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
     },
     {
       eyebrow: isAr ? 'ضمان جودة ثنائي الأطراف' : 'BILATERAL QUALITY ASSURANCE',
-      price: isAr ? '2–3 كحد أقصى' : '2–3 Max',
+      price: isAr ? '2 إلى 3 كحد أقصى' : '2 to 3 Max',
       priceSub: isAr ? 'الدقة والجودة فوق الكمية' : 'Precision Over Volume',
       promise: isAr
         ? 'نلتزم بعدم تقديم أكثر من 2 إلى 3 مزودين لكل طلب تدريبي، لضمان عدم إرهاق الشركات، ومنافسة المزودين بناءً على الجودة والقيمة.'
         : 'We cap provider introductions at 2 to 3 per mandate, ensuring enterprises aren’t overwhelmed and providers compete on merit rather than price wars.',
       points: [
         isAr ? 'حماية وقت مسؤولي الموارد البشرية من العروض العشوائية' : 'HR leaders aren’t flooded with dozens of generic pitches',
-        isAr ? 'فرص إغلاق أعلى وأكثر جدوى لمزودي التدريب' : 'Higher win-rates and healthier margins for providers',
+        isAr ? 'فرص إغلاق أعلى وأكثر جدوى لمزودي التدريب' : 'Higher win rates and healthier margins for providers',
         isAr ? 'مواءمة حقيقية مبنية على التخصص والخبرة الإقليمية' : 'Curated matching strictly by domain expertise and GCC track record',
       ],
       tag: isAr ? 'التزام الجودة' : 'Quality Commitment',
@@ -434,8 +434,8 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
       step: isAr ? 'جسر الربط المحوري' : 'Stage 2: Focal Bridge',
       title: isAr ? 'توفيق دقيق ومختار' : 'Curated Specialist Matchmaking',
       desc: isAr
-        ? 'فرز ذكي وبشري يسلمك 2–3 خبراء معتمدين مع عروض متوافقة تماماً مع الميزانية. تتجاوز المؤسسة مكالمات المبيعات العشوائية وتقيّم الأنسب فوراً.'
-        : 'AI + Human curation delivering 2–3 pre-vetted specialists with budget-aligned proposals. HR skips sales pitches and evaluates proven providers.',
+        ? 'فرز ذكي وبشري يسلمك 2 إلى 3 خبراء معتمدين مع عروض متوافقة تماماً مع الميزانية. تتجاوز المؤسسة مكالمات المبيعات العشوائية وتقيّم الأنسب فوراً.'
+        : 'AI + Human curation delivering 2 to 3 vetted specialists with budget aligned proposals. HR skips sales pitches and evaluates proven providers.',
       tag: isAr ? 'محرك بونت لوك المركزي' : 'PontLook Core Engine',
       isLive: false,
       icon: Handshake,
@@ -444,11 +444,11 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
       dotColor: 'bg-blue-500',
       points: [
         {
-          label: isAr ? '2–3 عروض لنخبة المزودين' : '2–3 Pre-Vetted Specialists',
+          label: isAr ? 'عروض لنخبة المزودين' : '2 to 3 Vetted Specialists',
           text: isAr ? 'نخبة مزودي التدريب المفحوصين بدقة واعتماد' : 'Only elite approved providers evaluated',
         },
         {
-          label: isAr ? 'مواءمة 100% مع الميزانية' : 'Budget-Aligned Proposals',
+          label: isAr ? 'مواءمة 100% مع الميزانية' : 'Budget Aligned Proposals',
           text: isAr ? 'عروض أسعار واضحة مطابقة للميزانية المعتمدة' : 'Clear pricing matched to approved budget',
         },
         {
@@ -463,7 +463,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
       title: isAr ? 'تنفيذ تدريبي مخصص وتأهيل' : 'Tailored Delivery Execution',
       desc: isAr
         ? 'توقيع التعاقد، مواءمة المناهج التدريبية، وبدء المدربين والخبراء. يركز مزودو التدريب بنسبة 100% على تقديم أعلى جودة وتفاعل.'
-        : 'Contract execution, tailored curriculum, and facilitator onboarding. Providers focus 100% of their energy on high-impact workshop delivery.',
+        : 'Contract execution, tailored curriculum, and facilitator onboarding. Providers focus 100% of their energy on high impact workshop delivery.',
       tag: isAr ? 'اكتمل التأهيل والبدء' : 'Onboarding Ready',
       isLive: false,
       icon: GraduationCap,
@@ -491,7 +491,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
       title: isAr ? 'إغلاق فجوة المهارات وعائد استثماري' : 'Closed Skill Gap & Measurable ROI',
       desc: isAr
         ? 'ارتقاء ملموس بالكفاءات، تقييم موظفين دقيق، وعائد استثماري مستدام لإدارة الشركة. تم سد فجوة الكفاءة بنجاح.'
-        : 'Measurable capability uplift, employee post-evaluation, and sustained ROI delivered to executive leadership.',
+        : 'Measurable capability uplift, employee post evaluation, and sustained ROI delivered to executive leadership.',
       tag: isAr ? 'عائد استثماري ملموس' : 'Measurable ROI',
       isLive: false,
       icon: BarChart3,
@@ -504,7 +504,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
           text: isAr ? 'توثيق تطور مهارات ومخرجات الموظفين' : 'Documented workforce competency boost',
         },
         {
-          label: isAr ? 'تقييم موظفين دقيق' : 'Employee Post-Evaluation',
+          label: isAr ? 'تقييم موظفين دقيق' : 'Employee Post Evaluation',
           text: isAr ? 'قياس أثر التدريب بالأرقام والتحليلات' : 'Data-driven assessments & feedback analytics',
         },
         {
@@ -543,7 +543,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
               </>
             ) : (
               <>
-                The End-to-End <br className="hidden sm:inline" />
+                The End to End <br className="hidden sm:inline" />
                 <span className="text-primary font-bold">Training Journey</span>
               </>
             )}

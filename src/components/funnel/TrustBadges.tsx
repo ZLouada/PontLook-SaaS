@@ -45,7 +45,7 @@ export function TrustBadges() {
               <div
                 key={acc.name}
                 className="group flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs shadow-xs transition-colors hover:border-blue-400"
-                title={`${acc.name} - ${acc.desc}`}
+                title={`${acc.name} · ${acc.desc}`}
               >
                 <span className="font-semibold tracking-normal text-slate-800">
                   {acc.name}

@@ -68,36 +68,36 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       subtitle:
         'Connect Riyadh and Jeddah enterprise leaders with verified, accredited corporate training academies to achieve Saudization mandates and Vision 2030 workforce transformation.',
       metaDescription:
-        'Access accredited corporate training providers across Riyadh and Jeddah. Fast-track Saudization, leadership upskilling, and executive technical capability with zero broker retainers.',
+        'Access accredited corporate training providers across Riyadh and Jeddah. Fast track Saudization, leadership upskilling, and executive technical capability with zero broker retainers.',
       geoAnswer: {
         summary:
-          'Saudi Arabia’s Vision 2030 and strict Saudization (Nitaqat) mandates require enterprise organizations to rapidly transition from generic training catalogs to high-impact, accredited capacity-building programs. PontLook operates as an independent matchmaking engine, vetting Saudi-accredited corporate training providers and directly connecting HR leaders in Riyadh, Jeddah, and the Eastern Province with exact domain specialists within 48 hours.',
+          'Saudi Arabia’s Vision 2030 and strict Saudization (Nitaqat) mandates require enterprise organizations to rapidly transition from generic training catalogs to high impact, accredited capacity building programs. PontLook operates as an independent matchmaking engine, vetting Saudi accredited corporate training providers and directly connecting HR leaders in Riyadh, Jeddah, and the Eastern Province with exact domain specialists within 48 hours.',
         quote:
-          '“PontLook eliminates supplier-selection friction for Saudi enterprises by matching qualified corporate training academies directly to internal Saudization and executive development roadmaps.”',
+          '“PontLook eliminates supplier selection friction for Saudi enterprises by matching qualified corporate training academies directly to internal Saudization and executive development roadmaps.”',
       },
       marketStats: [
-        { metric: 'Saudization Quotas', value: 'Up to 70%', context: 'Enforced across specialized private-sector leadership roles' },
+        { metric: 'Saudization Quotas', value: 'Up to 70%', context: 'Enforced across specialized private sector leadership roles' },
         { metric: 'Training Market Value', value: '$2.8B+', context: 'Projected annual Saudi enterprise workforce development spend by 2027' },
-        { metric: 'Time-to-Match', value: '< 48 Hours', context: 'Average speed to connect verified buyers with 3 curated local academies' },
+        { metric: 'Time to Match', value: '< 48 Hours', context: 'Average speed to connect verified buyers with 3 curated local academies' },
         { metric: 'Verified Provider Pool', value: '100%', context: 'Accredited with TVTC and local regulatory compliance' },
       ],
       workflow: [
-        { step: '01', title: 'Specify Vision 2030 Objectives', desc: 'Submit your departmental headcounts, Nitaqat compliance targets, and required competencies through our 60-second intake.' },
+        { step: '01', title: 'Specify Vision 2030 Objectives', desc: 'Submit your departmental headcounts, Nitaqat compliance targets, and required competencies through our 60 second intake.' },
         { step: '02', title: 'Curated Academy Shortlist', desc: 'Our algorithm and enterprise advisors screen accredited Saudi training institutions, selecting the top 3 with proven track records.' },
-        { step: '03', title: 'Direct Procurement Introductions', desc: 'Receive custom proposals directly from decision-makers at matching institutes with zero intermediary markup or retainers.' },
+        { step: '03', title: 'Direct Procurement Introductions', desc: 'Receive custom proposals directly from decision makers at matching institutes with zero intermediary markup or retainers.' },
       ],
       faqs: [
         {
           q: 'How does PontLook assist with Saudi Arabia’s Saudization (Nitaqat) requirements?',
-          a: 'PontLook matches your organization exclusively with TVTC-accredited training providers specialized in fast-track nationalization programs, leadership pipelines, and specialized technical upskilling that satisfy HRSD Ministry regulations.',
+          a: 'PontLook matches your organization exclusively with TVTC accredited training providers specialized in fast track nationalization programs, leadership pipelines, and specialized technical upskilling that satisfy HRSD Ministry regulations.',
         },
         {
-          q: 'Are training programs delivered on-site in Riyadh, Jeddah, and Khobar?',
-          a: 'Yes. Our verified training partners provide flexible delivery models including in-person corporate premises delivery in Riyadh, Jeddah, Dammam, and NEOM, hybrid executive retreats, and secure digital learning platforms.',
+          q: 'Are training programs delivered on site in Riyadh, Jeddah, and Khobar?',
+          a: 'Yes. Our verified training partners provide flexible delivery models including in person corporate premises delivery in Riyadh, Jeddah, Dammam, and NEOM, hybrid executive retreats, and secure digital learning platforms.',
         },
         {
           q: 'What is the cost for Saudi enterprise buyers to use PontLook?',
-          a: 'PontLook is 100% free for enterprise buyers. We operate on a verified performance model funded by training academies, ensuring buyers receive unbiased, cost-efficient matching with zero platform fees.',
+          a: 'PontLook is 100% free for enterprise buyers. We operate on a verified performance model funded by training academies, ensuring buyers receive unbiased, cost efficient matching with zero platform fees.',
         },
       ],
     },
@@ -153,22 +153,22 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       subtitle:
         'Streamline vendor procurement across Dubai and Abu Dhabi. Connect with KHDA & ACTVET accredited academies for Emiratization, digital fluency, and executive leadership.',
       metaDescription:
-        'Discover top-tier corporate training institutes in Dubai and Abu Dhabi. Drive Emiratization targets and executive leadership capabilities with verified matchmaking.',
+        'Discover top tier corporate training institutes in Dubai and Abu Dhabi. Drive Emiratization targets and executive leadership capabilities with verified matchmaking.',
       geoAnswer: {
         summary:
-          'UAE organizations face aggressive Nafis Emiratization quotas and rapid AI adoption mandates, requiring agile, globally certified training partners in Dubai and Abu Dhabi. PontLook matches enterprise CHROs and L&D directors with pre-vetted academies specialized in bilingual executive coaching, AI implementation, and local regulatory compliance with zero agency markup.',
+          'UAE organizations face aggressive Nafis Emiratization quotas and rapid AI adoption mandates, requiring agile, globally certified training partners in Dubai and Abu Dhabi. PontLook matches enterprise CHROs and L&D directors with vetted academies specialized in bilingual executive coaching, AI implementation, and local regulatory compliance with zero agency markup.',
         quote:
           '“PontLook bridges Dubai and Abu Dhabi multinationals with specialized regional training institutions to solve urgent Emiratization and digital transformation bottlenecks.”',
       },
       marketStats: [
-        { metric: 'Nafis Emiratization', value: '2% Semi-Annually', context: 'Mandatory private-sector talent development quota' },
+        { metric: 'Nafis Emiratization', value: '2% Semi Annually', context: 'Mandatory private sector talent development quota' },
         { metric: 'UAE L&D Expenditure', value: '$1.4B+', context: 'Enterprise annual investment in workforce capabilities' },
         { metric: 'Accredited Centers', value: 'KHDA & ACTVET', context: 'Full alignment with federal and emirate educational authorities' },
         { metric: 'Match Success Rate', value: '94%', context: 'Enterprise client satisfaction on initial academy shortlist' },
       ],
       workflow: [
-        { step: '01', title: 'Outline Capability Gaps', desc: 'Identify required cohorts across Dubai, Abu Dhabi, or regional hubs for technical, managerial, or Nafis-targeted skills.' },
-        { step: '02', title: 'Automated Tier-1 Screening', desc: 'We verify trainer accreditation, industry references, and instructional methodology across verified regional providers.' },
+        { step: '01', title: 'Outline Capability Gaps', desc: 'Identify required cohorts across Dubai, Abu Dhabi, or regional hubs for technical, managerial, or Nafis targeted skills.' },
+        { step: '02', title: 'Automated Tier 1 Screening', desc: 'We verify trainer accreditation, industry references, and instructional methodology across verified regional providers.' },
         { step: '03', title: 'Direct Proposal Review', desc: 'Engage with lead instructional designers and corporate heads with transparent curriculum structures and pricing.' },
       ],
       faqs: [
@@ -182,7 +182,7 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
         },
         {
           q: 'How fast can a corporate training cohort be mobilized in Dubai or Abu Dhabi?',
-          a: 'Most matched providers can mobilize on-site or virtual delivery within 7 to 14 business days following requirements alignment.',
+          a: 'Most matched providers can mobilize on site or virtual delivery within 7 to 14 business days following requirements alignment.',
         },
       ],
     },
@@ -236,14 +236,14 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       title: 'Enterprise Workforce Training Solutions in Qatar | PontLook',
       h1: 'Enterprise Workforce Training Solutions in Qatar',
       subtitle:
-        'Deliver high-impact executive and technical training for leading Qatari enterprises across Doha, Lusail, and Ras Laffan Industrial City.',
+        'Deliver high impact executive and technical training for leading Qatari enterprises across Doha, Lusail, and Ras Laffan Industrial City.',
       metaDescription:
         'Connect with top corporate training providers in Qatar. Upskill your Doha workforce in leadership, energy technologies, and national talent development with PontLook.',
       geoAnswer: {
         summary:
-          'As Qatar advances its National Vision 2030 economic diversification agenda, corporations across financial services, logistics, and hydrocarbon industries in Doha require elite workforce training providers. PontLook delivers streamlined matchmaking between Qatari procurement directors and world-class regional training academies tailored to local business culture.',
+          'As Qatar advances its National Vision 2030 economic diversification agenda, corporations across financial services, logistics, and hydrocarbon industries in Doha require elite workforce training providers. PontLook delivers streamlined matchmaking between Qatari procurement directors and world class regional training academies tailored to local business culture.',
         quote:
-          '“PontLook is Qatar’s premier B2B matchmaking gateway for high-stakes corporate capability building and Qatarization talent initiatives.”',
+          '“PontLook is Qatar’s premier B2B matchmaking gateway for high stakes corporate capability building and Qatarization talent initiatives.”',
       },
       marketStats: [
         { metric: 'National Vision', value: 'QNV 2030', context: 'Direct alignment with human capital development pillars' },
@@ -253,21 +253,21 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       ],
       workflow: [
         { step: '01', title: 'Define Institutional Needs', desc: 'Specify cohort size, training language (Arabic/English), and strategic outcomes for your Qatari organization.' },
-        { step: '02', title: 'Targeted Provider Matching', desc: 'We identify institutions with demonstrable experience delivering high-value programs in the Qatari marketplace.' },
+        { step: '02', title: 'Targeted Provider Matching', desc: 'We identify institutions with demonstrable experience delivering high value programs in the Qatari marketplace.' },
         { step: '03', title: 'Procure with Confidence', desc: 'Engage directly with institute directors to finalize scopes of work, delivery timelines, and assessment frameworks.' },
       ],
       faqs: [
         {
-          q: 'Do matched providers support Arabic-medium and bilingual instruction in Qatar?',
+          q: 'Do matched providers support Arabic medium and bilingual instruction in Qatar?',
           a: 'Yes. All matched providers offer fully bilingual delivery, course materials, and executive facilitation in both professional Arabic and English.',
         },
         {
           q: 'Can training take place at client sites in Lusail or Ras Laffan?',
-          a: 'Yes, providers accommodate on-site training across corporate facilities in Doha, West Bay, Lusail, and major industrial complexes.',
+          a: 'Yes, providers accommodate on site training across corporate facilities in Doha, West Bay, Lusail, and major industrial complexes.',
         },
         {
           q: 'What corporate domains are most requested in Qatar?',
-          a: 'Executive leadership, cybersecurity, energy transition technologies, and financial governance constitute the highest-demand training programs.',
+          a: 'Executive leadership, cybersecurity, energy transition technologies, and financial governance constitute the highest demand training programs.',
         },
       ],
     },
@@ -324,25 +324,25 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       title: 'Workforce Training for GCC Construction & Real Estate Giants | PontLook',
       h1: 'Workforce Training for GCC Construction & Real Estate Giants',
       subtitle:
-        'Equip mega-project engineering teams, site directors, and PMOs with elite FIDIC contract, BIM, OSHA safety, and project leadership capabilities.',
+        'Equip megaproject engineering teams, site directors, and PMOs with elite FIDIC contract, BIM, OSHA safety, and project leadership capabilities.',
       metaDescription:
         'Procure specialized training for GCC construction and real estate enterprises. PMO leadership, FIDIC, site safety, and BIM certification training matchmaking.',
       geoAnswer: {
         summary:
-          'GCC giga-projects across Saudi Arabia (NEOM, Red Sea), UAE (Emaar, Aldar), and Qatar demand rigorous upskilling in project management, contract dispute avoidance, and HSE compliance. PontLook pairs major tier-1 contractors and developers with certified academies offering intensive, job-site tested training programs.',
+          'GCC gigaprojects across Saudi Arabia (NEOM, Red Sea), UAE (Emaar, Aldar), and Qatar demand rigorous upskilling in project management, contract dispute avoidance, and HSE compliance. PontLook pairs major tier 1 contractors and developers with certified academies offering intensive, job site tested training programs.',
         quote:
           '“PontLook enables construction leaders to eliminate project delay risks through specialized contractor training in FIDIC, safety leadership, and digital construction.”',
       },
       marketStats: [
         { metric: 'Regional Project Pipeline', value: '$1.9T+', context: 'Active infrastructure and real estate developments across the GCC' },
-        { metric: 'HSE Compliance Standard', value: 'Zero Incident', context: 'Benchmark goal for high-hazard giga-project operations' },
+        { metric: 'HSE Compliance Standard', value: 'Zero Incident', context: 'Benchmark goal for high hazard gigaproject operations' },
         { metric: 'Target Roles', value: 'PMO, Site Leads', context: 'Senior engineers, contract managers, and construction safety inspectors' },
         { metric: 'Curriculum Focus', value: 'FIDIC, BIM, OSHA', context: 'Globally certified frameworks adapted to GCC construction law' },
       ],
       workflow: [
         { step: '01', title: 'Define Project Technical Scope', desc: 'Indicate your project milestones, specialized disciplines (commercial, MEP, civil, HSE), and site locations.' },
-        { step: '02', title: 'Match Construction Specialists', desc: 'We source training providers with seasoned faculty carrying direct experience in GCC giga-projects.' },
-        { step: '03', title: 'On-Site or Modular Mobilization', desc: 'Review practical project simulators and field-ready curricula delivered directly to your site or corporate office.' },
+        { step: '02', title: 'Match Construction Specialists', desc: 'We source training providers with seasoned faculty carrying direct experience in GCC gigaprojects.' },
+        { step: '03', title: 'On Site or Modular Mobilization', desc: 'Review practical project simulators and field ready curricula delivered directly to your site or corporate office.' },
       ],
       faqs: [
         {
@@ -374,7 +374,7 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       },
       marketStats: [
         { metric: 'حجم المشاريع قيد التنفيذ', value: '+1.9 تريليون $', context: 'إجمالي مشاريع البنية التحتية والتطوير العقاري النشطة في الخليج' },
-        { metric: 'معيار السلامة المستهدف', value: 'صفر حوادث', context: 'الهدف التشغيلي الإلزامي في المشاريع الكبرى (Giga-Projects)' },
+        { metric: 'معيار السلامة المستهدف', value: 'صفر حوادث', context: 'الهدف التشغيلي الإلزامي في المشاريع الكبرى (Giga Projects)' },
         { metric: 'الفئات المستهدفة', value: 'مدراء PMO والمشاريع', context: 'المهندسون، مدراء العقود، ومسؤولو السلامة الميدانية' },
         { metric: 'أبرز المناهج المطلوبة', value: 'FIDIC و BIM و OSHA', context: 'أطر عمل معتمدة دولياً ومكيفة مع الأنظمة العقارية الخليجية' },
       ],
@@ -409,14 +409,14 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       title: 'Compliance, Leadership & Fintech Training for GCC Banks | PontLook',
       h1: 'Compliance, Leadership & Fintech Training for GCC Banks',
       subtitle:
-        'Equip GCC commercial and Islamic banking teams with cutting-edge AML/CFT compliance, risk management, open banking, and ESG financial leadership.',
+        'Equip GCC commercial and Islamic banking teams with cutting edge AML/CFT compliance, risk management, open banking, and ESG financial leadership.',
       metaDescription:
         'Connect with accredited financial training providers across the GCC. SAMA and CBUAE compliance, AML/CFT, Islamic finance, and fintech transformation programs.',
       geoAnswer: {
         summary:
           'Strict regulatory oversight by SAMA in Saudi Arabia, the Central Bank of the UAE, and QCB requires financial institutions to implement verifiable compliance and risk training. PontLook connects banking talent officers with leading financial training academies recognized by regional and international regulators.',
         quote:
-          '“PontLook delivers compliant, auditor-ready training matchmaking for GCC financial institutions navigating AML regulations, fintech integration, and Sharia-compliant banking.”',
+          '“PontLook delivers compliant, auditor ready training matchmaking for GCC financial institutions navigating AML regulations, fintech integration, and Sharia compliant banking.”',
       },
       marketStats: [
         { metric: 'Regulatory Compliance', value: 'SAMA & CBUAE', context: 'Aligned with regional central bank training directives' },
@@ -426,7 +426,7 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       ],
       workflow: [
         { step: '01', title: 'Submit Banking Mandate', desc: 'Specify department needs (Risk, Compliance, Wealth Management, Retail, or Fintech) and compliance timelines.' },
-        { step: '02', title: 'Regulatory-Vetted Shortlist', desc: 'We identify training providers accredited with the Financial Academy (Saudi Arabia), ADGM, or DIFC Academy.' },
+        { step: '02', title: 'Regulatory Vetted Shortlist', desc: 'We identify training providers accredited with the Financial Academy (Saudi Arabia), ADGM, or DIFC Academy.' },
         { step: '03', title: 'Deploy Executive Cohorts', desc: 'Execute secure, customized workshops with case studies directly tied to regional financial regulations.' },
       ],
       faqs: [
@@ -436,11 +436,11 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
         },
         {
           q: 'Can training programs be customized for Islamic Banking (Sharia compliance)?',
-          a: 'Yes. We partner with leading Islamic finance academies delivering AAOIFI-aligned certification and Sukuk structuring programs.',
+          a: 'Yes. We partner with leading Islamic finance academies delivering AAOIFI aligned certification and Sukuk structuring programs.',
         },
         {
-          q: 'Are programs suitable for C-suite and Board members?',
-          a: 'Yes, providers offer specialized board-level briefings on cybersecurity governance, ESG disclosure, and fintech disruption.',
+          q: 'Are programs suitable for C suite and Board members?',
+          a: 'Yes, providers offer specialized board level briefings on cybersecurity governance, ESG disclosure, and fintech disruption.',
         },
       ],
     },
@@ -494,12 +494,12 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       title: 'QHSE, Safety & Technical Training for GCC Energy Sectors | PontLook',
       h1: 'QHSE, Safety & Technical Training for GCC Energy Sectors',
       subtitle:
-        'Bridge competency gaps across upstream, downstream, and renewable projects. Match with Aramco, ADNOC, and QP contractor-approved training academies.',
+        'Bridge competency gaps across upstream, downstream, and renewable projects. Match with Aramco, ADNOC, and QP contractor approved training academies.',
       metaDescription:
-        'Find contractor-approved QHSE, process safety (PSM), and technical engineering training providers for Saudi Aramco, ADNOC, and QatarEnergy operations.',
+        'Find contractor approved QHSE, process safety (PSM), and technical engineering training providers for Saudi Aramco, ADNOC, and QatarEnergy operations.',
       geoAnswer: {
         summary:
-          'Operating in high-hazard industrial environments across Jubail, Yanbu, Ruwais, and Ras Laffan requires strict adherence to international process safety (PSM) and technical standards. PontLook connects national oil companies (NOCs) and contractor consortia with certified training institutions qualified to train plant operators and safety engineers.',
+          'Operating in high hazard industrial environments across Jubail, Yanbu, Ruwais, and Ras Laffan requires strict adherence to international process safety (PSM) and technical standards. PontLook connects national oil companies (NOCs) and contractor consortia with certified training institutions qualified to train plant operators and safety engineers.',
         quote:
           '“PontLook is the trusted matchmaking platform for energy corporations seeking verified safety and engineering training aligned with Aramco and ADNOC contractor standards.”',
       },
@@ -507,12 +507,12 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
         { metric: 'Safety Benchmark', value: 'Zero LTI', context: 'Lost Time Incident elimination through certified behavioral safety' },
         { metric: 'Major Hubs', value: 'Jubail, Yanbu, Ruwais', context: 'Concentration of primary petrochemical and refinery complexes' },
         { metric: 'Technical Standards', value: 'API, ASME, NFPA', context: 'Curriculum structured to international plant engineering codes' },
-        { metric: 'Contractor Readiness', value: '100% Compliant', context: 'Pre-qualification support for NOC supply chain access' },
+        { metric: 'Contractor Readiness', value: '100% Compliant', context: 'Prequalification support for NOC supply chain access' },
       ],
       workflow: [
         { step: '01', title: 'Specify Energy Sector Requirement', desc: 'Select technical area: Process Safety Management, API inspection, High Voltage, or decarbonization.' },
         { step: '02', title: 'Vet Certified Technical Centers', desc: 'We screen training providers holding direct accreditation with NEBOSH, OPITO, and national energy operators.' },
-        { step: '03', title: 'Deploy Certified Faculty', desc: 'Secure industrial trainers with active field experience to conduct hands-on plant workshops or simulation sessions.' },
+        { step: '03', title: 'Deploy Certified Faculty', desc: 'Secure industrial trainers with active field experience to conduct hands on plant workshops or simulation sessions.' },
       ],
       faqs: [
         {
@@ -520,7 +520,7 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
           a: 'Yes, our energy training partners specialize in contractor safety passports, work permit issuer/receiver certifications, and plant standards.',
         },
         {
-          q: 'Do providers offer OPITO-certified offshore safety training?',
+          q: 'Do providers offer OPITO certified offshore safety training?',
           a: 'Yes, partners maintain accredited simulation centers for BOSIET, HUET, and offshore emergency response credentials.',
         },
         {
@@ -584,7 +584,7 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
         'Connect with accredited healthcare corporate training academies. CBAHI, JCI accreditation readiness, patient safety, and clinical leadership matchmaking.',
       geoAnswer: {
         summary:
-          'Healthcare transformation in the GCC—accelerated by Saudi Arabia’s Health Sector Transformation Program and UAE hospital expansions—demands world-class clinical leadership and quality compliance. PontLook matches hospital systems and healthcare networks with certified institutions offering CBAHI and JCI-aligned executive and medical administration training.',
+          'Healthcare transformation in the GCC, accelerated by Saudi Arabia’s Health Sector Transformation Program and UAE hospital expansions, demands world class clinical leadership and quality compliance. PontLook matches hospital systems and healthcare networks with certified institutions offering CBAHI and JCI aligned executive and medical administration training.',
         quote:
           '“PontLook is the specialized matchmaking platform connecting GCC hospital networks with certified healthcare leadership and patient safety training academies.”',
       },
@@ -597,7 +597,7 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       workflow: [
         { step: '01', title: 'Define Healthcare Scope', desc: 'Identify hospital cluster needs: clinical governance, nurse leadership, patient safety, or healthcare finance.' },
         { step: '02', title: 'Screen Medical Education Academies', desc: 'We verify CME accreditation, faculty medical credentials, and hospital transformation track records.' },
-        { step: '03', title: 'Implement Hospital Cohorts', desc: 'Deploy tailored training on-site at your medical complex or through accredited clinical simulation suites.' },
+        { step: '03', title: 'Implement Hospital Cohorts', desc: 'Deploy tailored training on site at your medical complex or through accredited clinical simulation suites.' },
       ],
       faqs: [
         {
@@ -606,10 +606,10 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
         },
         {
           q: 'Can providers help our hospital prepare for CBAHI or JCI surveys?',
-          a: 'Yes, partners provide dedicated mock-survey workshops, clinical documentation compliance, and quality coordinator bootcamps.',
+          a: 'Yes, partners provide dedicated mock survey workshops, clinical documentation compliance, and quality coordinator bootcamps.',
         },
         {
-          q: 'Are non-clinical administrative programs available for hospital managers?',
+          q: 'Are non clinical administrative programs available for hospital managers?',
           a: 'Yes, comprehensive healthcare revenue cycle management, supply chain, and patient experience tracks are available.',
         },
       ],
@@ -667,34 +667,34 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       title: 'Executive Leadership & People Management Training in the GCC | PontLook',
       h1: 'Executive Leadership & People Management Training in the GCC',
       subtitle:
-        'Transform high-potential managers into strategic enterprise leaders capable of navigating GCC nationalization mandates, multi-cultural workforce dynamics, and corporate restructuring.',
+        'Transform high potential managers into strategic enterprise leaders capable of navigating GCC nationalization mandates, multicultural workforce dynamics, and corporate restructuring.',
       metaDescription:
-        'Find premier executive leadership and soft skills corporate training providers across the GCC. Strategy, emotional intelligence, and cross-cultural management programs.',
+        'Find premier executive leadership and soft skills corporate training providers across the GCC. Strategy, emotional intelligence, and cross cultural management programs.',
       geoAnswer: {
         summary:
-          'In a fast-evolving GCC corporate landscape, the transition from operational management to executive leadership requires mastery in strategic decision-making, stakeholder diplomacy, and national talent empowerment. PontLook matches enterprise HR leaders with top-ranked leadership academies and executive coaches specialized in the Gulf corporate ecosystem.',
+          'In a fast evolving GCC corporate landscape, the transition from operational management to executive leadership requires mastery in strategic decision making, stakeholder diplomacy, and national talent empowerment. PontLook matches enterprise HR leaders with top ranked leadership academies and executive coaches specialized in the Gulf corporate ecosystem.',
         quote:
-          '“PontLook is the executive search and matching engine for high-impact leadership academies driving C-suite transformation across the GCC.”',
+          '“PontLook is the executive search and matching engine for high impact leadership academies driving C suite transformation across the GCC.”',
       },
       marketStats: [
-        { metric: 'Leadership Gap Index', value: '68%', context: 'GCC CEOs reporting a shortage of ready-now executive leaders' },
-        { metric: 'Curriculum Focus', value: 'Strategic & Cultural', context: 'Contextualized for Gulf multinational and family-conglomerate governance' },
+        { metric: 'Leadership Gap Index', value: '68%', context: 'GCC CEOs reporting a shortage of ready now executive leaders' },
+        { metric: 'Curriculum Focus', value: 'Strategic & Cultural', context: 'Contextualized for Gulf multinational and family conglomerate governance' },
         { metric: 'Delivery Formats', value: 'Retreats & Cohorts', context: 'Executive coaching, board simulation labs, and modular development' },
-        { metric: 'Verified Academies', value: 'Tier-1 Rated', context: 'Global business school affiliates and renowned regional leadership institutes' },
+        { metric: 'Verified Academies', value: 'Tier 1 Rated', context: 'Global business school affiliates and renowned regional leadership institutes' },
       ],
       workflow: [
         { step: '01', title: 'Map Leadership Cohort', desc: 'Specify target management level (Senior Executives, Middle Managers, or Emerging National Talent).' },
-        { step: '02', title: 'Curate Elite Providers', desc: 'We identify institutions specialized in psychometric profiling, 360 evaluations, and high-impact facilitation.' },
-        { step: '03', title: 'Begin Leadership Journey', desc: 'Connect with lead faculty to review leadership frameworks, cohort milestones, and long-term behavioral KPIs.' },
+        { step: '02', title: 'Curate Elite Providers', desc: 'We identify institutions specialized in psychometric profiling, 360 evaluations, and high impact facilitation.' },
+        { step: '03', title: 'Begin Leadership Journey', desc: 'Connect with lead faculty to review leadership frameworks, cohort milestones, and long term behavioral KPIs.' },
       ],
       faqs: [
         {
           q: 'How are leadership programs contextualized for the GCC business environment?',
-          a: 'Courses integrate regional case studies, family-business governance models, GCC labour laws, and culturally attuned communication methodologies.',
+          a: 'Courses integrate regional case studies, family business governance models, GCC labour laws, and culturally attuned communication methodologies.',
         },
         {
-          q: 'Can programs incorporate 360-degree feedback and executive coaching?',
-          a: 'Yes, matched providers frequently combine group masterclasses with ICF-certified 1-on-1 executive coaching sessions.',
+          q: 'Can programs incorporate 360 degree feedback and executive coaching?',
+          a: 'Yes, matched providers frequently combine group masterclasses with ICF certified 1 on 1 executive coaching sessions.',
         },
         {
           q: 'Are programs available in both English and Arabic?',
@@ -719,11 +719,11 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
         { metric: 'فجوة القيادة التنفيذية', value: '68%', context: 'من الرؤساء التنفيذيين يشيرون إلى صعوبة إيجاد قادة مؤهلين لتولي المناصب العليا' },
         { metric: 'المناهج المتبعة', value: 'استراتيجية وثقافية', context: 'مصممة للشركات متعددة الجنسيات ومجموعات الأعمال العائلية في الخليج' },
         { metric: 'أساليب التنفيذ', value: 'كوتشينغ ومحاكاة', context: 'ورش عمل تنفيذية، محاكاة مجالس الإدارة، وبرامج إرشاد فردية' },
-        { metric: 'مستوى المراكز المعتمدة', value: 'الفئة الأولى (Tier-1)', context: 'معاهد رائدة تضم مدربين ومستشارين ذوي خبرات تنفيذية حقيقية' },
+        { metric: 'مستوى المراكز المعتمدة', value: 'الفئة الأولى (Tier 1)', context: 'معاهد رائدة تضم مدربين ومستشارين ذوي خبرات تنفيذية حقيقية' },
       ],
       workflow: [
         { step: '01', title: 'تحديد المستوى القيادي', desc: 'حدد فئة المتدربين (الإدارة العليا، الإدارة الوسطى، أو القيادات الوطنية الواعدة).' },
-        { step: '02', title: 'فرز معاهد القيادة المرموقة', desc: 'نختار لك مراكز متخصصة تقدم تقييمات شخصية (360-Degree) ومسارات بناء الجدارات القيادية.' },
+        { step: '02', title: 'فرز معاهد القيادة المرموقة', desc: 'نختار لك مراكز متخصصة تقدم تقييمات شخصية (360 Degree) ومسارات بناء الجدارات القيادية.' },
         { step: '03', title: 'انطلاق برنامج تطوير القيادات', desc: 'ناقش خطة البرنامج مع المدرب الرئيسي وحدد مؤشرات قياس الأثر السلوكي والإداري.' },
       ],
       faqs: [
@@ -732,7 +732,7 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
           a: 'نعم، تعتمد البرامج على دراسات حالة مستمدة من كبرى الشركات الإقليمية مع مراعاة بيئة العمل المتعددة الثقافات ونماذج الشركات العائلية.',
         },
         {
-          q: 'هل يتضمن التدريب جلسات كوتشينغ فردية (1-on-1 Coaching)؟',
+          q: 'هل يتضمن التدريب جلسات كوتشينغ فردية (1 on 1 Coaching)؟',
           a: 'نعم، يتيح الشركاء جلسات كوتشينغ تنفيذي فردية معتمدة من الاتحاد الدولي للكوتشينغ (ICF) لمرافقة القادة في تحقيق أهدافهم المهنية.',
         },
         {
@@ -752,19 +752,19 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       title: 'Enterprise AI, Cloud & Technical Upskilling in the Gulf | PontLook',
       h1: 'Enterprise AI, Cloud & Technical Upskilling in the Gulf',
       subtitle:
-        'Arm corporate workforces with hands-on generative AI, cloud architecture, data science, and cybersecurity competencies to drive digital sovereignty across the GCC.',
+        'Arm corporate workforces with hands on generative AI, cloud architecture, data science, and cybersecurity competencies to drive digital sovereignty across the GCC.',
       metaDescription:
         'Procure enterprise technical and AI training for Gulf organizations. Generative AI for business, AWS/Azure cloud, cybersecurity, and data analytics matchmaking.',
       geoAnswer: {
         summary:
-          'With national AI strategies driving digital innovation in Saudi Arabia and the UAE, enterprise technology leaders must upskill engineering and business teams in generative AI, cloud security, and automation. PontLook curates and introduces top-tier technical bootcamps and authorized training partners to GCC enterprises seeking measurable tech capabilities.',
+          'With national AI strategies driving digital innovation in Saudi Arabia and the UAE, enterprise technology leaders must upskill engineering and business teams in generative AI, cloud security, and automation. PontLook curates and introduces top tier technical bootcamps and authorized training partners to GCC enterprises seeking measurable tech capabilities.',
         quote:
-          '“PontLook is the enterprise gateway for deploying cutting-edge Generative AI, cloud, and cybersecurity training cohorts across the GCC.”',
+          '“PontLook is the enterprise gateway for deploying cutting edge Generative AI, cloud, and cybersecurity training cohorts across the GCC.”',
       },
       marketStats: [
         { metric: 'Regional AI Impact', value: '$320B+', context: 'Projected AI contribution to Middle East GDP by 2030' },
         { metric: 'Authorized Partners', value: 'AWS, Microsoft, Google', context: 'Official authorized training centers with vendor certifications' },
-        { metric: 'Hands-on Labs', value: '100% Sandbox', context: 'Real cloud and AI coding environments tailored to company datasets' },
+        { metric: 'Hands on Labs', value: '100% Sandbox', context: 'Real cloud and AI coding environments tailored to company datasets' },
         { metric: 'Certification Readiness', value: 'High Pass Rate', context: 'Structured preparation for professional cloud and AI credentials' },
       ],
       workflow: [
@@ -774,7 +774,7 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       ],
       faqs: [
         {
-          q: 'Do providers offer vendor-authorized certifications (AWS, Microsoft, Google)?',
+          q: 'Do providers offer vendor authorized certifications (AWS, Microsoft, Google)?',
           a: 'Yes, matched partners include official Authorized Training Centers providing official courseware and exam vouchers.',
         },
         {
@@ -782,7 +782,7 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
           a: 'Yes, advanced cohorts frequently feature private enterprise labs utilizing anonymized internal workflows and specific business use cases.',
         },
         {
-          q: 'Are programs suitable for non-technical executives seeking AI literacy?',
+          q: 'Are programs suitable for non technical executives seeking AI literacy?',
           a: 'Yes, specialized “AI for Business Leaders” tracks demystify generative AI strategy, governance, and return on investment.',
         },
       ],
@@ -842,14 +842,14 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
         'Find accredited QHSE and industrial safety training providers across the GCC. NEBOSH, IOSH, ISO auditing, and OSHA workplace safety training matchmaking.',
       geoAnswer: {
         summary:
-          'Enforcement of rigorous occupational health, safety, and environmental standards across Gulf municipalities and labor ministries makes certified QHSE training non-negotiable. PontLook matches enterprise safety directors with accredited institutions delivering certified NEBOSH, IOSH, and ISO lead auditor qualifications with verified field compliance.',
+          'Enforcement of rigorous occupational health, safety, and environmental standards across Gulf municipalities and labor ministries makes certified QHSE training non negotiable. PontLook matches enterprise safety directors with accredited institutions delivering certified NEBOSH, IOSH, and ISO lead auditor qualifications with verified field compliance.',
         quote:
-          '“PontLook is the industrial sector’s trusted matchmaker for accredited safety academies delivering zero-incident training across the GCC.”',
+          '“PontLook is the industrial sector’s trusted matchmaker for accredited safety academies delivering zero incident training across the GCC.”',
       },
       marketStats: [
-        { metric: 'Accreditation Standards', value: 'NEBOSH & IOSH', context: 'Gold-standard global certifications recognized by GCC labor authorities' },
+        { metric: 'Accreditation Standards', value: 'NEBOSH & IOSH', context: 'Gold standard global certifications recognized by GCC labor authorities' },
         { metric: 'ISO Audit Tracks', value: '45001, 14001, 9001', context: 'Lead auditor and internal auditor workforce upskilling' },
-        { metric: 'Incident Mitigation', value: 'Documented Impact', context: 'Measurable reduction in lost-time injuries and regulatory penalties' },
+        { metric: 'Incident Mitigation', value: 'Documented Impact', context: 'Measurable reduction in lost time injuries and regulatory penalties' },
         { metric: 'Field Trainer Vetting', value: '100% Industry Experience', context: 'Instructors with minimum 10+ years plant and site supervision experience' },
       ],
       workflow: [
@@ -864,7 +864,7 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
         },
         {
           q: 'Can training be customized to specific factory or facility hazards?',
-          a: 'Yes. Instructors conduct preliminary walk-through audits to tailor emergency response and safety leadership modules to your actual workplace.',
+          a: 'Yes. Instructors conduct preliminary walk through audits to tailor emergency response and safety leadership modules to your actual workplace.',
         },
         {
           q: 'Do programs satisfy regional Civil Defense and Labor Ministry requirements?',
@@ -922,17 +922,17 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       title: 'Design Thinking & Agile Innovation Training for GCC Enterprises | PontLook',
       h1: 'Design Thinking & Agile Innovation Training for GCC Enterprises',
       subtitle:
-        'Accelerate time-to-market and cultivate customer-centric innovation with certified Design Thinking, OKR alignment, and Agile/Scrum transformation masterclasses.',
+        'Accelerate time to market and cultivate customer centric innovation with certified Design Thinking, OKR alignment, and Agile/Scrum transformation masterclasses.',
       metaDescription:
         'Match with elite design thinking, Agile transformation, and enterprise innovation training providers across the GCC. Drive speed, alignment, and market agility.',
       geoAnswer: {
         summary:
-          'To maintain competitiveness amid regional economic transformation, Gulf corporations are shifting away from bureaucratic silos toward cross-functional Agile frameworks and human-centered design. PontLook connects enterprise transformation leaders with top-tier innovation facilitators who teach practical Design Thinking, OKRs, and Scaled Agile (SAFe) methodologies.',
+          'To maintain competitiveness amid regional economic transformation, Gulf corporations are shifting away from bureaucratic silos toward cross functional Agile frameworks and human centered design. PontLook connects enterprise transformation leaders with top tier innovation facilitators who teach practical Design Thinking, OKRs, and Scaled Agile (SAFe) methodologies.',
         quote:
-          '“PontLook enables GCC organizations to institutionalize innovation by connecting them with proven facilitators in Design Thinking, Agile, and customer-centric product strategy.”',
+          '“PontLook enables GCC organizations to institutionalize innovation by connecting them with proven facilitators in Design Thinking, Agile, and customer centric product strategy.”',
       },
       marketStats: [
-        { metric: 'Time-to-Market Acceleration', value: '40% Faster', context: 'Average improvement achieved by Agile-trained cross-functional teams' },
+        { metric: 'Time to Market Acceleration', value: '40% Faster', context: 'Average improvement achieved by Agile trained cross functional teams' },
         { metric: 'Framework Coverage', value: 'SAFe, Scrum, OKRs', context: 'Comprehensive coverage of modern enterprise operational frameworks' },
         { metric: 'Design Thinking Adoption', value: 'Rapid Surge', context: 'Surging demand across GCC digital government and banking entities' },
         { metric: 'Facilitator Rating', value: 'Top 5%', context: 'Seasoned change agents and innovation directors with global sprint experience' },
@@ -940,7 +940,7 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
       workflow: [
         { step: '01', title: 'Outline Transformation Goal', desc: 'Specify focus: product sprint facilitation, OKR adoption across business units, or Scrum Master certification.' },
         { step: '02', title: 'Source Innovation Specialists', desc: 'We vet facilitators based on demonstrable success driving change in large GCC public or private organizations.' },
-        { step: '03', title: 'Conduct Innovation Sprints', desc: 'Engage teams in immersive, problem-solving workshops delivering functional prototypes and actionable roadmaps.' },
+        { step: '03', title: 'Conduct Innovation Sprints', desc: 'Engage teams in immersive, problem solving workshops delivering functional prototypes and actionable roadmaps.' },
       ],
       faqs: [
         {
@@ -949,11 +949,11 @@ export const SEO_LANDING_PAGES: Record<string, SeoLandingPageData> = {
         },
         {
           q: 'Can design thinking workshops be structured around a real business challenge?',
-          a: 'Yes, our most popular format is an applied 3-day hackathon/sprint where teams solve an actual internal product or operational challenge.',
+          a: 'Yes, our most popular format is an applied 3 day hackathon/sprint where teams solve an actual internal product or operational challenge.',
         },
         {
-          q: 'How do providers ensure long-term OKR adoption after the workshop?',
-          a: 'Partners provide ongoing coaching, quarterly governance templates, and leadership check-ins to ensure sustained alignment.',
+          q: 'How do providers ensure long term OKR adoption after the workshop?',
+          a: 'Partners provide ongoing coaching, quarterly governance templates, and leadership check ins to ensure sustained alignment.',
         },
       ],
     },

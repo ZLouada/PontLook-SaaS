@@ -91,13 +91,13 @@ export async function POST(req: NextRequest) {
       DELIVERY_MODES.find((m) => m.id === data.deliveryMode)?.title || data.deliveryMode || 'Virtual';
 
     const cohortLabel =
-      COHORT_SIZES.find((c) => c.id === data.cohortSize)?.label || data.cohortSize || '6–20 Team Members';
+      COHORT_SIZES.find((c) => c.id === data.cohortSize)?.label || data.cohortSize || '6 to 20 Team Members';
 
     const timelineLabel =
       TIMELINES.find((t) => t.id === data.timeline)?.label || data.timeline || 'Within 30 Days';
 
     const budgetLabel =
-      BUDGET_BANDS.find((b) => b.id === data.budgetBand)?.label || data.budgetBand || '$10,000 – $25,000';
+      BUDGET_BANDS.find((b) => b.id === data.budgetBand)?.label || data.budgetBand || '$10,000 to $25,000';
 
     const fullPhoneNumber = `${data.phoneCountryCode || ''} ${data.phoneNumber || ''}`.trim() || 'N/A';
 
@@ -150,7 +150,7 @@ export async function POST(req: NextRequest) {
         </div>
         <div class="roadmap-item">
           <div class="roadmap-title">&#128233; Within 48 Hours</div>
-          <div class="roadmap-desc">Receive 2–3 itemized proposals with custom syllabi and transparent pricing.</div>
+          <div class="roadmap-desc">Receive 2 to 3 itemized proposals with custom syllabi and transparent pricing.</div>
         </div>
         <div class="roadmap-item">
           <div class="roadmap-title">&#128274; Zero Obligation</div>
@@ -228,7 +228,7 @@ export async function POST(req: NextRequest) {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            text: `${tierEmoji} *New ${leadScoreResult.tier} Enterprise Lead (${leadScoreResult.score}/100)*: ${data.organizationName} (${data.country})\n• *Contact*: ${data.fullName} - ${data.jobTitle} (<mailto:${data.workEmail}|${data.workEmail}>)\n• *Domains*: ${domainNames}\n• *Cohort & Budget*: ${cohortLabel} | ${budgetLabel}\n• *Ref*: \`${leadId}\``,
+            text: `${tierEmoji} *New ${leadScoreResult.tier} Enterprise Lead (${leadScoreResult.score}/100)*: ${data.organizationName} (${data.country})\n• *Contact*: ${data.fullName} · ${data.jobTitle} (<mailto:${data.workEmail}|${data.workEmail}>)\n• *Domains*: ${domainNames}\n• *Cohort & Budget*: ${cohortLabel} | ${budgetLabel}\n• *Ref*: \`${leadId}\``,
           }),
         });
       } catch (slackErr) {
@@ -258,7 +258,7 @@ export async function POST(req: NextRequest) {
             cohort_size: cohortLabel,
             timeline: timelineLabel,
             budget_tier: budgetLabel,
-            message: `Lead ID: ${leadId} | Score: ${leadScoreResult.score}/100 (${leadScoreResult.tier})\nOrganization: ${data.organizationName || 'N/A'} (${data.country})\nContact: ${data.fullName} (${data.jobTitle || 'N/A'}) - ${data.workEmail}\nPhone: ${fullPhoneNumber}\nScope: ${domainNames}\nDelivery: ${deliveryModeName} ${data.city ? `(${data.city})` : ''}\nCohort: ${cohortLabel}\nBudget: ${budgetLabel}\nTimeline: ${timelineLabel}`,
+            message: `Lead ID: ${leadId} | Score: ${leadScoreResult.score}/100 (${leadScoreResult.tier})\nOrganization: ${data.organizationName || 'N/A'} (${data.country})\nContact: ${data.fullName} (${data.jobTitle || 'N/A'}) · ${data.workEmail}\nPhone: ${fullPhoneNumber}\nScope: ${domainNames}\nDelivery: ${deliveryModeName} ${data.city ? `(${data.city})` : ''}\nCohort: ${cohortLabel}\nBudget: ${budgetLabel}\nTimeline: ${timelineLabel}`,
             ...webhookPayload,
           }),
         });

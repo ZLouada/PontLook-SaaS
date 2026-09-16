@@ -28,7 +28,7 @@ export async function generateMetadata({
       : 'PontLook | Corporate Training Matchmaking Platform',
     description: isAr
       ? 'اربط شركتك بأفضل مزودي التدريب المعتمدين في السعودية والإمارات. فرص تدريب حقيقية ومؤهلة بنموذج الدفع مقابل النتائج وبدون رسوم اشتراك شهرية.'
-      : 'PontLook connects enterprise HR leaders with verified corporate training providers across Saudi Arabia & UAE. Pay-per-qualified lead with zero retainers.',
+      : 'PontLook connects enterprise HR leaders with verified corporate training providers across Saudi Arabia & UAE. Pay per qualified lead with zero retainers.',
     alternates: constructAlternates(lang, ''),
     openGraph: {
       title: isAr
@@ -36,7 +36,7 @@ export async function generateMetadata({
         : 'PontLook | Corporate Training Matchmaking Platform',
       description: isAr
         ? 'اربط شركتك بأفضل مزودي التدريب المعتمدين في السعودية والإمارات. فرص تدريب حقيقية ومؤهلة بنموذج الدفع مقابل النتائج وبدون رسوم اشتراك شهرية.'
-        : 'PontLook connects enterprise HR leaders with verified corporate training providers across Saudi Arabia & UAE. Pay-per-qualified lead with zero retainers.',
+        : 'PontLook connects enterprise HR leaders with verified corporate training providers across Saudi Arabia & UAE. Pay per qualified lead with zero retainers.',
       url: `https://pontlook.com/${lang}`,
       siteName: 'PontLook',
       locale: isAr ? 'ar_SA' : 'en_US',

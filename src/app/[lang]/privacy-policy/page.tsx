@@ -137,14 +137,14 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
 
               <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
                 <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
-                  4. Third-Party Disclosures & Service Partners
+                  4. Third Party Disclosures & Service Partners
                 </h2>
                 <p className="mb-4">
                   We do not sell, rent, or trade your personal information to third parties. We share data only with trusted partners and service providers necessary to operate our services:
                 </p>
                 <ul className="list-disc pl-6 space-y-3 text-slate-600">
                   <li>
-                    <strong>Fourthwall:</strong> We partner with Fourthwall for e-commerce store operations, merchandise fulfillment, and transaction processing. When purchasing merchandise or custom items through our store, your order and payment information is securely processed in accordance with Fourthwall&apos;s privacy and security standards.
+                    <strong>Fourthwall:</strong> We partner with Fourthwall for ecommerce store operations, merchandise fulfillment, and transaction processing. When purchasing merchandise or custom items through our store, your order and payment information is securely processed in accordance with Fourthwall&apos;s privacy and security standards.
                   </li>
                   <li>
                     <strong>Google Analytics:</strong> We use Google Analytics to analyze web traffic, visitor behavior, and site performance. Google Analytics collects anonymized interaction data via cookies to assist us in improving our platform.
@@ -193,8 +193,8 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                       <li>Right to know what personal data is collected, disclosed, or sold.</li>
                       <li>Right to request deletion of your personal information.</li>
                       <li>Right to correct inaccurate personal data.</li>
-                      <li>Right to opt-out of the sale or sharing of personal data (PontLook does not sell user data).</li>
-                      <li>Right to non-discrimination for exercising CCPA rights.</li>
+                      <li>Right to opt out of the sale or sharing of personal data (PontLook does not sell user data).</li>
+                      <li>Right to non discrimination for exercising CCPA rights.</li>
                     </ul>
                   </div>
 

@@ -50,7 +50,7 @@ export default function HowItWorks() {
       title: dict.how_it_works?.step2?.title || 'Qualify & Match',
       subtitle:
         dict.how_it_works?.step2?.subtitle ||
-        'Decision-makers are validated, budgets and timelines confirmed, then matched to the right training provider.',
+        'Decision makers are validated, budgets and timelines confirmed, then matched to the right training provider.',
       mockup: (
         <div className="w-full max-w-sm rounded-2xl border border-slate-200/70 bg-white/90 backdrop-blur-md shadow-sm p-5 flex flex-col gap-3 relative z-10">
           <div className="flex items-center justify-between pb-2">
@@ -81,7 +81,7 @@ export default function HowItWorks() {
       title: dict.how_it_works?.step3?.title || 'Introduce & Close',
       subtitle:
         dict.how_it_works?.step3?.subtitle ||
-        'Providers receive direct, warm introductions to corporate decision-makers ready for proposals.',
+        'Providers receive direct, warm introductions to corporate decision makers ready for proposals.',
       mockup: (
         <div className="w-full max-w-sm rounded-2xl border border-slate-200/70 bg-white/90 backdrop-blur-md shadow-sm p-6 text-center flex flex-col items-center gap-4 relative z-10">
           <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-accent to-accent-secondary p-[2px] shadow-sm">
@@ -91,7 +91,7 @@ export default function HowItWorks() {
           </div>
           <div>
             <div className="text-sm font-semibold text-slate-800 font-sans">Warm Introduction Made</div>
-            <div className="text-xs text-slate-500 mt-1">Direct access to buyer decision-maker</div>
+            <div className="text-xs text-slate-500 mt-1">Direct access to buyer decision maker</div>
           </div>
           <div className="w-full pt-3 border-t border-slate-100 flex items-center justify-between px-2">
             <span className="text-[11px] font-mono font-semibold text-slate-500 uppercase tracking-wider">Status</span>

@@ -259,7 +259,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <ShieldCheck size={15} className="text-blue-500 shrink-0" />
-                  <span>{isAr ? 'تأكيد هوية واختيار دقيق' : 'Verified Decision-Maker Privacy'}</span>
+                  <span>{isAr ? 'تأكيد هوية واختيار دقيق' : 'Verified Decision Maker Privacy'}</span>
                 </span>
               </div>
             </Reveal>
@@ -417,7 +417,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
               <div className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-1.5 text-xs font-semibold text-blue-300 mb-6">
                 <Zap size={14} className="text-blue-400" />
                 <span>
-                  {isAr ? 'ابدأ الآن • مطابقة مجانية خلال 60 ثانية' : 'Fast-Track • 60-Second Matchmaking'}
+                  {isAr ? 'ابدأ الآن • مطابقة مجانية خلال 60 ثانية' : 'Fast Track • 60 Second Matchmaking'}
                 </span>
               </div>
 
@@ -430,7 +430,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
               <p className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto">
                 {isAr
                   ? 'انضم إلى مئات الشركات والمؤسسات التي تستخدم بونت لوك للوصول المباشر إلى أفضل الأكاديميات ومراكز التدريب المعتمدة.'
-                  : 'Join hundreds of corporate decision-makers who utilize PontLook to bypass vendor noise and secure verified corporate training proposals.'}
+                  : 'Join hundreds of corporate decision makers who utilize PontLook to bypass vendor noise and secure verified corporate training proposals.'}
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">

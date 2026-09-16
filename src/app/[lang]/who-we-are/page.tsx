@@ -60,21 +60,21 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-hero-gradient pt-44 sm:pt-52 pb-24 sm:pb-32 relative overflow-hidden">
+      <section className="bg-hero-gradient min-h-[60vh] sm:min-h-[70vh] flex flex-col justify-center items-center pt-28 sm:pt-36 pb-16 sm:pb-24 relative overflow-hidden">
         {/* Ambient Depth Glows */}
-        <div className="pointer-events-none absolute top-1/3 start-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gradient-to-r from-blue-500/10 via-primary/5 to-blue-500/10 blur-3xl -z-10 rounded-full" />
-        <div className="pointer-events-none absolute top-12 start-1/4 w-[400px] h-[400px] bg-blue-500/5 blur-3xl -z-10 rounded-full" />
+        <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gradient-to-r from-blue-500/10 via-primary/5 to-blue-500/10 blur-3xl -z-10 rounded-full" />
+        <div className="pointer-events-none absolute top-10 start-1/4 w-[400px] h-[400px] bg-blue-500/5 blur-3xl -z-10 rounded-full" />
 
-        <div className="container-site max-w-5xl relative z-10 text-center mx-auto px-6">
-          <Reveal>
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-6 shadow-xs">
+        <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6 my-auto -translate-y-2 sm:-translate-y-4">
+          <Reveal className="flex flex-col items-center">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-5 shadow-xs">
               {isAr ? 'من نحن' : 'Who We Are'}
             </span>
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-slate-900 leading-[1.12] sm:leading-[1.08] font-heading tracking-tight">
+            <h1 className="text-3xl sm:text-5xl lg:text-[56px] font-semibold text-slate-900 leading-[1.15] sm:leading-[1.1] font-heading tracking-tight">
               {isAr ? (
                 <>
-                  من نحن: منصة التوفيق والربط الرائدة لتدريب الشركات في <br className="hidden sm:inline" />
-                  <span className="text-primary font-bold">المنطقة</span>
+                  من نحن: منصة التوفيق والربط الرائدة <br className="hidden sm:inline" />
+                  لتدريب الشركات في <span className="text-primary font-bold">المنطقة</span>
                 </>
               ) : (
                 <>
@@ -83,19 +83,19 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                 </>
               )}
             </h1>
-            <p className="mt-6 text-lg sm:text-2xl leading-relaxed text-slate-600 max-w-3xl mx-auto font-normal">
+            <p className="mt-5 text-base sm:text-xl leading-relaxed text-slate-600 max-w-2xl sm:max-w-3xl mx-auto font-normal">
               {isAr
                 ? 'نربط شركات ومزودي التدريب بصناع القرار في كبرى المؤسسات الذين لديهم احتياجات وتحديات حقيقية يسعون لحلها.'
-                : 'We connect corporate training companies with enterprise decision-makers who already have a real workforce challenge to solve.'}
+                : 'We connect corporate training companies with enterprise decision makers who already have a real workforce challenge to solve.'}
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* Core Who We Are Sections:
-          - Section 2: Mission & Split-Card Comparison Engine
-          - Section 3: Value Model & Bilateral Alignment
-          - Section 4: The End-to-End Training Journey */}
+      {/* Narrative Flow:
+          • Section 2: Mission & Split Card Comparison Engine
+          • Section 3: Value Model & Bilateral Alignment
+          • Section 4: The End to End Training Journey */}
       <WhoWeAreSections lang={lang} />
 
       {/* Bottom CTA / Guarantee Section */}
@@ -121,7 +121,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                   </>
                 ) : (
                   <>
-                    We deliver verified enterprise decision-makers with a confirmed corporate-training need...{' '}
+                    We deliver verified enterprise decision makers with a confirmed corporate training need...{' '}
                     <span className="text-primary font-semibold">No retainer. No risk.</span>
                   </>
                 )}

@@ -24,9 +24,9 @@ export const TRAINING_CATEGORIES: TrainingCategory[] = [
     icon: 'Users',
     badge: 'PEOPLE & LEADERSHIP',
     subDomains: [
-      { id: 'leadership-management', title: 'Leadership & People Management', tags: ['C-Suite', 'Executive Coaching', 'Mentoring', 'Succession Planning'] },
+      { id: 'leadership-management', title: 'Leadership & People Management', tags: ['C Suite', 'Executive Coaching', 'Mentoring', 'Succession Planning'] },
       { id: 'communication-influence', title: 'Communication, Negotiation & Influencing', tags: ['Presentation', 'Business Writing', 'Public Speaking'] },
-      { id: 'problem-solving-decision', title: 'Problem-Solving, Critical Thinking & Decision-Making', tags: ['Time Management', 'Conflict Resolution'] },
+      { id: 'problem-solving-decision', title: 'Problem Solving, Critical Thinking & Decision Making', tags: ['Time Management', 'Conflict Resolution'] },
       { id: 'sales-customer-service', title: 'Sales, Relationship Management & Customer Service', tags: ['Client Success', 'B2B Sales'] },
       { id: 'change-resilience', title: 'Change Management & Workplace Resilience', tags: ['Stress Management', 'Cultural Awareness'] }
     ]
@@ -54,7 +54,7 @@ export const TRAINING_CATEGORIES: TrainingCategory[] = [
     icon: 'ShieldCheck',
     badge: 'REGULATORY & COMPLIANCE',
     subDomains: [
-      { id: 'occupational-safety', title: 'Health & Occupational Safety', tags: ['Risk Assessment', 'Job Safety Analysis', 'Permit-to-Work', 'PPE', 'Ergonomics'] },
+      { id: 'occupational-safety', title: 'Health & Occupational Safety', tags: ['Risk Assessment', 'Job Safety Analysis', 'Permit to Work', 'PPE', 'Ergonomics'] },
       { id: 'quality-management', title: 'Quality Management Systems (QMS)', tags: ['ISO 9001', 'Total Quality Management', 'Lead Auditor', 'Continuous Improvement'] },
       { id: 'environment-esg', title: 'Environmental Management & ESG', tags: ['ISO 14001', 'Sustainability', 'Carbon Management', 'Waste Management', 'Compliance'] },
       { id: 'fire-emergency', title: 'Fire & Emergency Management', tags: ['Fire Safety', 'First Aid / CPR', 'Crisis Management', 'Disaster Recovery'] },
@@ -64,13 +64,13 @@ export const TRAINING_CATEGORIES: TrainingCategory[] = [
   {
     id: 'collaborative-innovative',
     title: 'Collaborative & Innovative Skills',
-    shortDescription: 'Cross-functional teamwork, design thinking, ideation & business model innovation.',
+    shortDescription: 'Cross functional teamwork, design thinking, ideation & business model innovation.',
     targetBuyers: 'Executives, Innovation teams, Transformation departments, Startups',
     icon: 'Lightbulb',
     badge: 'INNOVATION & TEAMWORK',
     subDomains: [
-      { id: 'collaborative-teamwork', title: 'Cross-Functional & Agile Teamwork', tags: ['Team Building', 'Remote Collaboration', 'Stakeholder Management', 'Scrum'] },
-      { id: 'design-thinking-creativity', title: 'Design Thinking & Customer-Centric Innovation', tags: ['Ideation', 'Brainstorming', 'Prototyping', 'Service Design'] },
+      { id: 'collaborative-teamwork', title: 'Cross Functional & Agile Teamwork', tags: ['Team Building', 'Remote Collaboration', 'Stakeholder Management', 'Scrum'] },
+      { id: 'design-thinking-creativity', title: 'Design Thinking & Customer Centric Innovation', tags: ['Ideation', 'Brainstorming', 'Prototyping', 'Service Design'] },
       { id: 'strategic-foresight', title: 'Strategic Foresight & Future Thinking', tags: ['Trend Analysis', 'Digital Innovation', 'Business Model Innovation'] },
       { id: 'entrepreneurship-agile', title: 'Intrapreneurship & Lean Innovation', tags: ['Lean Startup', 'AI Innovation', 'Sustainability Innovation'] }
     ]

@@ -131,7 +131,7 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                   4. Payment Authorization & Financial Terms
                 </h2>
                 <p className="mb-4">
-                  PontLook operates on a zero-retainer, pay-per-lead model for training provider partnerships as well as verified store sales. By placing an order or authorizing a lead delivery package:
+                  PontLook operates on a zero retainer, pay per lead model for training provider partnerships as well as verified store sales. By placing an order or authorizing a lead delivery package:
                 </p>
                 <ul className="list-disc pl-6 space-y-3 text-slate-600">
                   <li>
@@ -154,7 +154,7 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                   5. Limited License & Intellectual Property
                 </h2>
                 <p className="mb-4">
-                  Subject to your compliance with these Terms, PontLook grants you a limited, non-exclusive, non-transferable, non-sublicensable, revocable license to access and use the platform for internal business operations.
+                  Subject to your compliance with these Terms, PontLook grants you a limited, non exclusive, non transferable, non sublicensable, revocable license to access and use the platform for internal business operations.
                 </p>
                 <p className="mb-4 font-semibold text-slate-800">
                   Intellectual Property Ownership:
@@ -184,10 +184,10 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
                   7. Disclaimers & Limitation of Liability
                 </h2>
                 <p className="mb-4">
-                  THE PLATFORM AND SERVICES ARE PROVIDED ON AN &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; BASIS WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+                  THE PLATFORM AND SERVICES ARE PROVIDED ON AN &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; BASIS WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON INFRINGEMENT.
                 </p>
                 <p className="mb-4">
-                  WHILE PONTLCOK QUALIFIES DECISION-MAKERS AND MATCHES CORPORATE TRAINING NEEDS, WE DO NOT GUARANTEE THAT EVERY MATCH WILL RESULT IN A CLOSED COMMERCIAL TRANSACTION.
+                  WHILE PONTLCOK QUALIFIES DECISION MAKERS AND MATCHES CORPORATE TRAINING NEEDS, WE DO NOT GUARANTEE THAT EVERY MATCH WILL RESULT IN A CLOSED COMMERCIAL TRANSACTION.
                 </p>
                 <p className="text-slate-600">
                   TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL FIRSTNESTCARE, LLC, PONTLCOK, ITS DIRECTORS, EMPLOYEES, OR PARTNERS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, CONSEQUENTIAL, SPECIAL, OR PUNITIVE DAMAGES ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE PLATFORM.

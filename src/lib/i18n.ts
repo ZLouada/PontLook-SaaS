@@ -111,7 +111,7 @@ export const FUNNEL_DICTIONARIES: Record<FunnelLocale, FunnelDictionary> = {
     scaffolding: {
       stepOf: 'Step {current} of {total}',
       estimatedTime: '(~60 seconds)',
-      autoSaving: 'Auto-saving',
+      autoSaving: 'Auto saving',
       step1Short: 'Scope',
       step2Short: 'Delivery',
       step3Short: 'Cohort & Budget',
@@ -135,7 +135,7 @@ export const FUNNEL_DICTIONARIES: Record<FunnelLocale, FunnelDictionary> = {
     step2: {
       modeTitle: 'How should the training be delivered?',
       modeSubtitle: 'Choose the instructional format that best fits your workforce location and logistics.',
-      cityTitle: 'Primary GCC Location for In-Person Sessions',
+      cityTitle: 'Primary GCC Location for In Person Sessions',
       citySubtitle: 'Select your host city so we only match providers with accredited trainers and logistics in your hub.',
       langTitle: 'Instruction Language',
       langSubtitle: 'Ensure instructors can facilitate natively and provide localized course materials.',
@@ -162,9 +162,9 @@ export const FUNNEL_DICTIONARIES: Record<FunnelLocale, FunnelDictionary> = {
     },
     step4: {
       title: 'Enterprise Verification & Contact Details',
-      subtitle: 'We only release curated proposals to verified corporate decision-makers.',
+      subtitle: 'We only release curated proposals to verified corporate decision makers.',
       fullNameLabel: 'Full Name',
-      fullNamePlaceholder: 'e.g. Sarah Al-Rashid',
+      fullNamePlaceholder: 'e.g. Sarah Al Rashid',
       jobTitleLabel: 'Official Job Title',
       jobTitlePlaceholder: 'e.g. VP of Human Capital / L&D Director',
       emailLabel: 'Corporate Work Email',
@@ -189,7 +189,7 @@ export const FUNNEL_DICTIONARIES: Record<FunnelLocale, FunnelDictionary> = {
       m1Title: 'Partner Availability Check',
       m1Desc: 'Our GCC matching team audits trainer accreditations and schedule slots.',
       m2Time: 'Milestone 2 · Within 48 Hours',
-      m2Title: '2–3 Itemized Proposals',
+      m2Title: '2 to 3 Itemized Proposals',
       m2Desc: 'Receive customized syllabi, pricing breakdown, and lead instructor bios.',
       m3Time: 'Milestone 3 · Zero Obligation',
       m3Title: 'Instructor Interview & Terms',

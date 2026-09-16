@@ -93,7 +93,7 @@ export default function WhyDifferent() {
       title: c?.diagnose?.title || 'Diagnose Your Skill Gaps',
       text:
         c?.diagnose?.text ||
-        'We help you identify hidden capability gaps and workforce challenges across your teams—turning vague training requests into clear, actionable development priorities.',
+        'We help you identify hidden capability gaps and workforce challenges across your teams, turning vague training requests into clear, actionable development priorities.',
       cta: c?.diagnose?.cta || 'Explore our L&D guides & blog',
       href: 'https://blog.pontlook.com',
       isExternal: true,
@@ -135,7 +135,7 @@ export default function WhyDifferent() {
       title: c?.match?.title || 'Matched Directly with the Right Training Partner',
       text:
         c?.match?.text ||
-        'No endless searching or cold sales pitches. We match your specific requirements directly with pre-vetted corporate training firms proven to deliver measurable results.',
+        'No endless searching or cold sales pitches. We match your specific requirements directly with vetted corporate training firms proven to deliver measurable results.',
       cta: c?.match?.cta || 'Get matched for training',
       href: `/${lang}/find-training`,
       isExternal: false,
@@ -168,11 +168,11 @@ export default function WhyDifferent() {
       id: 'access',
       icon: Building2,
       span: 'md:col-span-6 lg:col-span-4',
-      title: c?.access?.title || 'Direct Access to Verified Decision-Makers',
+      title: c?.access?.title || 'Direct Access to Verified Decision Makers',
       angle: c?.access?.angle || 'Skip the Gatekeepers. Talk Directly to the Budget Owners.',
       text:
         c?.access?.text ||
-        'Stop wasting time with dead-end outreach. We connect you directly with CHROs, VPs of Talent, and C-Level executives who hold verified purchasing authority and active L&D needs.',
+        'Stop wasting time with dead end outreach. We connect you directly with CHROs, VPs of Talent, and C Level executives who hold verified purchasing authority and active L&D needs.',
       cta: c?.access?.cta || 'Apply as a Provider',
       href: `/${lang}/for-providers`,
       isExternal: false,
@@ -206,10 +206,10 @@ export default function WhyDifferent() {
       id: 'ready',
       icon: CheckCircle2,
       span: 'md:col-span-6 lg:col-span-4',
-      title: c?.ready?.title || 'Ready-to-Partner Clients',
+      title: c?.ready?.title || 'Clients Ready to Partner',
       text:
         c?.ready?.text ||
-        'We respect your expertise. Instead of speculative leads, we bring you serious organizations that are ready to invest, with defined budgets and clear goals—creating partnerships where both sides succeed.',
+        'We respect your expertise. Instead of speculative leads, we bring you serious organizations that are ready to invest, with defined budgets and clear goals, creating partnerships where both sides succeed.',
       cta: c?.ready?.cta || 'Connect with Ready Clients',
       href: `/${lang}/for-providers`,
       isExternal: false,
@@ -226,7 +226,7 @@ export default function WhyDifferent() {
             </div>
             <div className="flex justify-between items-center">
               <span className="text-slate-500 font-medium">{c?.ready?.budgetLabel || 'Budget & Scope'}</span>
-              <span className="font-mono font-bold text-emerald-600">{c?.ready?.budgetVal || 'Confirmed ($50k - $100k)'}</span>
+              <span className="font-mono font-bold text-emerald-600">{c?.ready?.budgetVal || 'Confirmed ($50k to $100k)'}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-slate-500 font-medium">{c?.ready?.fitLabel || 'Mutual Fit'}</span>
@@ -245,7 +245,7 @@ export default function WhyDifferent() {
       title: c?.hub?.title || 'L&D Knowledge Hub',
       text:
         c?.hub?.text ||
-        'We continuously analyze corporate training trends across the region and share fresh, actionable insights on our blog—providing free frameworks, guides, and research to help you make smarter L&D decisions.',
+        'We continuously analyze corporate training trends across the region and share fresh, actionable insights on our blog, providing free frameworks, guides, and research to help you make smarter L&D decisions.',
       cta: c?.hub?.cta || 'Explore our blog & resources',
       href: 'https://blog.pontlook.com',
       isExternal: true,
@@ -289,7 +289,7 @@ export default function WhyDifferent() {
             title={dict.why_different?.title || 'Real Solutions on Our Blog. Verified Connections on Our Platform.'}
             subtitle={
               dict.why_different?.subtitle ||
-              'We analyze real GCC workplace challenges to deliver free, actionable problem-solving guides on our blog—and directly connect corporate leaders with the verified training providers ready to implement the solution.'
+              'We analyze real GCC workplace challenges to deliver free, actionable problem solving guides on our blog, and directly connect corporate leaders with the verified training providers ready to implement the solution.'
             }
           />
         </div>

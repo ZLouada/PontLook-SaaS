@@ -23,16 +23,16 @@ const TIERS_EN: TierData[] = [
   {
     step: 'Step 1',
     badge: 'Hot · 95% Match',
-    title: 'High-intent enterprise demand with confirmed budget',
-    description: 'Verified decision-maker, confirmed budget, starts within 30 days.',
+    title: 'High intent enterprise demand with confirmed budget',
+    description: 'Verified decision maker, confirmed budget, starts within 30 days.',
     project: 'Riyadh Enterprise · Project #01',
     accuracy: '95%',
     barColor: 'bg-blue-600',
     barWidth: 'w-[95%]',
     checklist: [
-      'Verified Decision-Maker (CHRO)',
+      'Verified Decision Maker (CHRO)',
       'Confirmed Budget (SAR 300k+)',
-      'Immediate 30-Day Window'
+      'Immediate 30 Day Window'
     ]
   },
   {
@@ -369,7 +369,7 @@ export default function LeadTiers(_props?: {
             <p className="mt-4 text-base text-slate-600 dark:text-slate-400">
               {isAr
                 ? 'يتم تقييم كل فرصة بناءً على التحقق من صانع القرار، وحجم الشركة، والميزانية، والجدول الزمني، وعمق الاحتياج لتكون على دراية تامة بتفاصيل كل فرصة.'
-                : "Every lead is scored on decision-maker verification, company size, budget, timeline, and depth of need, so you always know exactly what you're walking into."}
+                : "Every lead is scored on decision maker verification, company size, budget, timeline, and depth of need, so you always know exactly what you're walking into."}
             </p>
           </div>
 
@@ -465,7 +465,7 @@ export default function LeadTiers(_props?: {
           </h2>
           <p className="mt-4 text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto font-sans">
             {exp?.subtitle ||
-              "We don't just bridge corporate needs with expert providers on the ground. Explore our blog for free, in-depth L&D guides, regional skill benchmarks, and diagnostic frameworks—and whenever you're ready, let us match you directly with the verified training experts who execute the solution."}
+              "We don't just bridge corporate needs with expert providers on the ground. Explore our blog for free, in-depth L&D guides, regional skill benchmarks, and diagnostic frameworks, and whenever you're ready, let us match you directly with the verified training experts who execute the solution."}
           </p>
 
           {/* Top Action Buttons */}

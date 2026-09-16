@@ -52,21 +52,21 @@ export async function generateStaticParams() {
 }
 
 const faqsEn = [
-  { question: "What does PontLook do?", answer: "We help corporate training providers reach verified enterprise decision-makers who have a relevant training need and a reason to speak." },
+  { question: "What does PontLook do?", answer: "We help corporate training providers reach verified enterprise decision makers who have a relevant training need and a reason to speak." },
   { question: "Do you provide corporate training?", answer: "No. We do not deliver training programmes; we connect specialist training companies with qualified corporate buyers." },
-  { question: "Who do you help?", answer: "We work with mid-sized corporate training providers offering leadership, soft skills, digital transformation, compliance, onboarding, and workforce-development programmes." },
-  { question: "Which decision-makers do you target?", answer: "We identify and qualify CEOs, Managing Directors, HR Directors, CHROs, and L&D Managers who influence or own training decisions." },
+  { question: "Who do you help?", answer: "We work with mid-sized corporate training providers offering leadership, soft skills, digital transformation, compliance, onboarding, and workforce development programmes." },
+  { question: "Which decision makers do you target?", answer: "We identify and qualify CEOs, Managing Directors, HR Directors, CHROs, and L&D Managers who influence or own training decisions." },
   { question: "Which markets do you cover?", answer: "Our focus is the GCC: Saudi Arabia, UAE, Qatar, Kuwait, Bahrain, and Oman." },
   { question: "Which industries do you target?", answer: "We focus on construction, real estate, financial services, technology, healthcare, hospitality, manufacturing, and logistics." },
   { question: "Is this just a contact list?", answer: "No. A contact list gives you names and emails; we provide researched prospects with context on their role, company, pain point, and potential need." },
   { question: "How do you qualify each lead?", answer: "We verify the person’s current role, company fit, industry, business challenge, and the evidence that makes your training offer relevant." },
   { question: "How does your pricing work?", answer: "You pay per qualified lead delivered and accepted, rather than paying a monthly retainer for activity or promises." },
-  { question: "Do I need to sign a long-term contract?", answer: "No. Our model is designed without a monthly retainer or long-term commitment; you pay for qualified opportunities delivered." },
+  { question: "Do I need to sign a long term contract?", answer: "No. Our model is designed without a monthly retainer or long term commitment; you pay for qualified opportunities delivered." },
   { question: "What happens if a lead does not meet our criteria?", answer: "We replace any lead that does not meet the qualification criteria agreed with you at the beginning." },
   { question: "Can you target UAE or Saudi Arabia only?", answer: "Yes. We can focus campaigns on one specific country, selected cities, or a wider regional market based on where you deliver training." },
   { question: "Will the leads be relevant to our programme?", answer: "That is the goal: we match the prospect’s documented business problem with the type of training your company provides." },
   { question: "Do you guarantee that every lead will close?", answer: "No ethical agency can guarantee a sale. We guarantee qualified, researched opportunities; your offer, follow-up, sales process, and pricing determine the final result." },
-  { question: "What do we need to provide before starting?", answer: "You tell us your ideal client profile, training solutions, target industries, preferred countries, decision-maker roles, and lead qualification criteria." },
+  { question: "What do we need to provide before starting?", answer: "You tell us your ideal client profile, training solutions, target industries, preferred countries, decision maker roles, and lead qualification criteria." },
   { question: "How quickly can we get started?", answer: "Once we agree on your targeting and lead criteria, we begin research and outreach to identify suitable opportunities." },
 ];
 
@@ -135,7 +135,7 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: Loca
             <p className="mt-6 text-xl leading-relaxed text-slate-600 max-w-2xl mx-auto">
               {isAr
                 ? 'كل ما تحتاج معرفته حول كيفية قيام بونت لوك بربط مزودي تدريب الشركات بصناع القرار المؤهلين في المنطقة.'
-                : 'Everything you need to know about how PontLook connects corporate training companies with qualified enterprise decision-makers.'}
+                : 'Everything you need to know about how PontLook connects corporate training companies with qualified enterprise decision makers.'}
             </p>
           </Reveal>
         </div>
