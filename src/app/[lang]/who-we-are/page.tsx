@@ -60,22 +60,30 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-hero-gradient pt-36 pb-24 relative overflow-hidden">
+      <section className="bg-hero-gradient pt-44 sm:pt-52 pb-24 sm:pb-32 relative overflow-hidden">
+        {/* Ambient Depth Glows */}
+        <div className="pointer-events-none absolute top-1/3 start-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gradient-to-r from-blue-500/10 via-primary/5 to-blue-500/10 blur-3xl -z-10 rounded-full" />
+        <div className="pointer-events-none absolute top-12 start-1/4 w-[400px] h-[400px] bg-blue-500/5 blur-3xl -z-10 rounded-full" />
+
         <div className="container-site max-w-5xl relative z-10 text-center mx-auto px-6">
           <Reveal>
-            <span className="chip mx-auto">{isAr ? 'من نحن' : 'Who We Are'}</span>
-            <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-slate-800 leading-[1.15] font-heading">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-6 shadow-xs">
+              {isAr ? 'من نحن' : 'Who We Are'}
+            </span>
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-slate-900 leading-[1.12] sm:leading-[1.08] font-heading tracking-tight">
               {isAr ? (
                 <>
-                  من نحن: منصة التوفيق والربط الرائدة لتدريب الشركات في <span className="text-primary">المنطقة</span>
+                  من نحن: منصة التوفيق والربط الرائدة لتدريب الشركات في <br className="hidden sm:inline" />
+                  <span className="text-primary font-bold">المنطقة</span>
                 </>
               ) : (
                 <>
-                  Who We Are: The Corporate Training <span className="text-primary">Matchmaking Platform</span>
+                  Who We Are: The Corporate Training <br className="hidden sm:inline" />
+                  <span className="text-primary font-bold">Matchmaking Platform</span>
                 </>
               )}
             </h1>
-            <p className="mt-6 text-xl leading-relaxed text-slate-600 max-w-3xl mx-auto font-normal">
+            <p className="mt-6 text-lg sm:text-2xl leading-relaxed text-slate-600 max-w-3xl mx-auto font-normal">
               {isAr
                 ? 'نربط شركات ومزودي التدريب بصناع القرار في كبرى المؤسسات الذين لديهم احتياجات وتحديات حقيقية يسعون لحلها.'
                 : 'We connect corporate training companies with enterprise decision-makers who already have a real workforce challenge to solve.'}

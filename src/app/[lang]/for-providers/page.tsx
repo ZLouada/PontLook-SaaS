@@ -114,8 +114,8 @@ export default async function ForProvidersPage({
         <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-gradient-to-r from-blue-500/10 via-primary/5 to-blue-500/10 blur-3xl -z-10 rounded-full" />
         <div className="pointer-events-none absolute top-10 start-1/4 w-[400px] h-[400px] bg-blue-500/5 blur-3xl -z-10 rounded-full" />
 
-        {/* Vertically Centered Content (Optically elevated) */}
-        <div className="container-site relative z-10 mx-auto max-w-4xl text-center my-auto -translate-y-5 sm:-translate-y-10 py-2">
+        {/* Vertically Centered Content (Optically balanced) */}
+        <div className="container-site relative z-10 mx-auto max-w-4xl text-center my-auto -translate-y-3 sm:-translate-y-6 py-2">
           <Reveal className="flex flex-col items-center">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-5 shadow-xs">
               <ShieldCheck size={14} className="text-blue-600" />
