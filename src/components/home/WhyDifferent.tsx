@@ -58,28 +58,28 @@ export default function WhyDifferent() {
         isAr ? 'تجنب هدر الميزانيات في تدريب غير مجدٍ' : 'Zero wasted corporate training budget',
       ],
       mockup: (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] w-full p-4 flex flex-col gap-3">
-          <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
-            <div className="flex items-center gap-2.5">
-              <div className="h-8 w-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold">
-                <Target size={16} />
+        <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-2.5 sm:p-3 flex flex-col gap-2">
+          <div className="flex items-center justify-between pb-1.5 border-b border-white/[0.06]">
+            <div className="flex items-center gap-2">
+              <div className="h-7 w-7 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold">
+                <Target size={14} />
               </div>
               <div>
-                <div className="text-xs font-semibold text-white font-sans">
+                <div className="text-[11px] font-semibold text-white font-sans">
                   {c?.diagnose?.mockupHeader || (isAr ? 'تقييم فجوات الكفاءات' : 'Skill Gap Assessment')}
                 </div>
-                <div className="text-[10px] text-neutral-400 font-medium">
+                <div className="text-[9px] text-neutral-400 font-medium">
                   {c?.diagnose?.mockupSubheader || (isAr ? 'مستوى الإدارات المؤسسية' : 'Enterprise Department Level')}
                 </div>
               </div>
             </div>
-            <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" />
           </div>
-          <div className="flex flex-wrap gap-2 pt-1">
-            <span className="px-2.5 py-1 rounded-lg bg-blue-500/15 text-blue-400 text-[11px] font-mono font-semibold border border-blue-500/30">
+          <div className="flex flex-wrap gap-1.5 pt-0.5">
+            <span className="px-2 py-0.5 rounded-md bg-blue-500/15 text-blue-400 text-[10px] font-mono font-semibold border border-blue-500/30">
               {c?.diagnose?.tag1 || (isAr ? '# فجوات القيادة والتقنية' : '# Leadership & Tech Gaps')}
             </span>
-            <span className="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-400 text-[11px] font-mono font-semibold border border-emerald-500/30">
+            <span className="px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 text-[10px] font-mono font-semibold border border-emerald-500/30">
               {c?.diagnose?.tag2 || (isAr ? 'خارطة طريق معتمدة' : 'Priority Roadmap')}
             </span>
           </div>
@@ -108,22 +108,22 @@ export default function WhyDifferent() {
         isAr ? 'التزام بالمواعيد والميزانية المحددة مسبقاً' : 'Pre confirmed budget and deployment window',
       ],
       mockup: (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] w-full p-4 flex flex-col gap-2.5">
-          <div className="text-xs font-semibold text-white pb-2 border-b border-white/[0.06] font-sans flex items-center justify-between">
+        <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-2.5 sm:p-3 flex flex-col gap-2">
+          <div className="text-[11px] font-semibold text-white pb-1.5 border-b border-white/[0.06] font-sans flex items-center justify-between">
             <span>{c?.match?.mockupHeader || (isAr ? 'قائمة معايير توافق الشريك' : 'Partner Fit Checklist')}</span>
-            <ShieldCheck size={16} className="text-emerald-400" />
+            <ShieldCheck size={14} className="text-emerald-400" />
           </div>
-          <div className="space-y-1.5 text-[11px] text-neutral-300">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+          <div className="space-y-1 text-[10px] sm:text-[11px] text-neutral-300">
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 size={12} className="text-emerald-400 shrink-0" />
               <span>{c?.match?.check1 || (isAr ? 'متخصص في مجال عمل منشأتك' : 'Specialized in your industry')}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 size={12} className="text-emerald-400 shrink-0" />
               <span>{c?.match?.check2 || (isAr ? 'سجل تدريبي موثق في المنطقة' : 'Verified delivery track record')}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 size={12} className="text-emerald-400 shrink-0" />
               <span>{c?.match?.check3 || (isAr ? 'متوافق مع جدولك وميزانيتك' : 'Aligned with your timeline and budget')}</span>
             </div>
           </div>
@@ -152,24 +152,24 @@ export default function WhyDifferent() {
         isAr ? 'بدون وسطاء أو رسوم اشتراك شهرية' : 'Zero intermediaries and $0 monthly retainers',
       ],
       mockup: (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] w-full p-4 flex flex-col gap-2.5">
+        <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-2.5 sm:p-3 flex flex-col gap-2">
           <div className="flex items-center justify-between">
-            <span className="px-2 py-0.5 rounded-md bg-white/5 text-neutral-300 text-[10px] font-semibold uppercase">
+            <span className="px-2 py-0.5 rounded-md bg-white/5 text-neutral-300 text-[9px] font-semibold uppercase">
               {c?.access?.clientTag || (isAr ? 'جهة مؤسسية · حوكمة ومخاطر' : 'Enterprise Client · GRC')}
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 text-[10px] font-mono font-semibold border border-emerald-500/30">
+            <span className="px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 text-[9px] font-mono font-semibold border border-emerald-500/30">
               {c?.access?.statusBadge || (isAr ? 'صلاحية الميزانية: مؤكدة' : 'Budget Authority: Confirmed')}
             </span>
           </div>
-          <div className="flex items-center gap-3 pt-1">
-            <div className="h-9 w-9 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center shrink-0">
-              <Building2 size={18} />
+          <div className="flex items-center gap-2.5 pt-0.5">
+            <div className="h-7 w-7 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center shrink-0">
+              <Building2 size={15} />
             </div>
             <div className="min-w-0">
-              <div className="text-xs font-semibold text-white font-sans truncate">
+              <div className="text-[11px] font-semibold text-white font-sans truncate">
                 {c?.access?.role || (isAr ? 'رئيس قطاع الموارد البشرية (CHRO)' : 'Chief Human Resources Officer (CHRO)')}
               </div>
-              <div className="text-[10px] text-neutral-400">{isAr ? 'تعاقد مباشر ومؤكد' : 'Verified Direct Engagement'}</div>
+              <div className="text-[9px] text-neutral-400">{isAr ? 'تعاقد مباشر ومؤكد' : 'Verified Direct Engagement'}</div>
             </div>
           </div>
         </div>
@@ -197,12 +197,12 @@ export default function WhyDifferent() {
         isAr ? 'دفع حصري لكل فرصة مؤهلة' : 'Strict pay per qualified lead model',
       ],
       mockup: (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] w-full p-4 flex flex-col gap-2">
-          <div className="flex items-center justify-between pb-1.5 border-b border-white/[0.06] text-xs font-semibold text-white font-sans">
+        <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-2.5 sm:p-3 flex flex-col gap-1.5">
+          <div className="flex items-center justify-between pb-1 border-b border-white/[0.06] text-[11px] font-semibold text-white font-sans">
             <span>{c?.ready?.mockupHeader || (isAr ? 'جاهزية الشراكة | مؤكدة' : 'Partnership Readiness | Verified')}</span>
-            <CheckCircle2 size={14} className="text-emerald-400" />
+            <CheckCircle2 size={13} className="text-emerald-400" />
           </div>
-          <div className="space-y-1.5 text-[11px]">
+          <div className="space-y-1 text-[10px] sm:text-[11px]">
             <div className="flex justify-between items-center">
               <span className="text-neutral-400 font-medium">{c?.ready?.needLabel || (isAr ? 'الاحتياج التدريبي' : 'Client Need')}</span>
               <span className="font-semibold text-white">{c?.ready?.needVal || (isAr ? 'برنامج القيادة التنفيذية' : 'Executive Leadership Program')}</span>
@@ -241,25 +241,25 @@ export default function WhyDifferent() {
         isAr ? 'دراسات حالة حول قياس أثر التدريب وعائده' : 'Practical case studies on training ROI',
       ],
       mockup: (
-        <div className="bg-white/[0.02] rounded-2xl border border-white/[0.08] w-full p-4 flex flex-col gap-2.5">
-          <div className="flex items-center justify-between pb-1.5 border-b border-white/[0.06] text-xs font-semibold text-white font-sans">
+        <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-2.5 sm:p-3 flex flex-col gap-1.5">
+          <div className="flex items-center justify-between pb-1 border-b border-white/[0.06] text-[11px] font-semibold text-white font-sans">
             <span>{c?.hub?.mockupHeader || (isAr ? 'أحدث أدلة ومقالات المنصة' : 'Latest L&D Resources')}</span>
-            <BookOpen size={14} className="text-blue-400" />
+            <BookOpen size={13} className="text-blue-400" />
           </div>
-          <div className="space-y-2">
-            <div className="flex items-center justify-between gap-2 text-[11px]">
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between gap-2 text-[10px] sm:text-[11px]">
               <span className="text-white font-medium truncate">
                 {c?.hub?.item1Title || (isAr ? 'تقرير فجوات مهارات سوق العمل الخليجي' : 'GCC Workforce Skill Gaps Report')}
               </span>
-              <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-mono font-bold shrink-0 border border-blue-500/30">
+              <span className="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[9px] font-mono font-bold shrink-0 border border-blue-500/30">
                 {c?.hub?.item1Badge || (isAr ? 'دليل جديد' : 'New Guide')}
               </span>
             </div>
-            <div className="flex items-center justify-between gap-2 text-[11px]">
+            <div className="flex items-center justify-between gap-2 text-[10px] sm:text-[11px]">
               <span className="text-white font-medium truncate">
                 {c?.hub?.item2Title || (isAr ? 'دليل تشخيص العائد على التدريب المؤسسي' : 'Diagnostic Guide to Corporate Training ROI')}
               </span>
-              <span className="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 text-[10px] font-mono font-bold shrink-0 border border-emerald-500/30">
+              <span className="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 text-[9px] font-mono font-bold shrink-0 border border-emerald-500/30">
                 {c?.hub?.item2Badge || (isAr ? 'مورد مجاني' : 'Free Resource')}
               </span>
             </div>
@@ -275,21 +275,21 @@ export default function WhyDifferent() {
   return (
     <section
       data-nav-dark="true"
-      className="relative bg-[#000000] text-white py-16 sm:py-24 lg:py-32 border-t border-[#1F1F1F]"
+      className="relative bg-[#000000] text-white py-12 sm:py-16 lg:py-20 border-t border-[#1F1F1F]"
     >
-      <div className="container-site relative z-10 px-4 sm:px-8 lg:px-12">
+      <div className="container-site relative z-10 px-4 sm:px-6 lg:px-8 max-w-6xl">
         {/* Section Header */}
-        <div className="mb-12 sm:mb-16 text-center max-w-3xl mx-auto space-y-4">
+        <div className="mb-8 sm:mb-10 text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-blue-400 text-xs font-semibold uppercase tracking-wider">
             <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
             <span>{dict.why_different?.eyebrow || (isAr ? 'تحليلات سوقية قابلة للتنفيذ' : 'ACTIONABLE MARKET INTELLIGENCE')}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
             {dict.why_different?.title || (isAr ? 'حلول حقيقية على مدونتنا. تعاقدات موثقة على منصتنا.' : 'Real Solutions on Our Blog. Verified Connections on Our Platform.')}
           </h2>
 
-          <p className="text-sm sm:text-base lg:text-lg text-neutral-400 font-sans leading-relaxed">
+          <p className="text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed max-w-2xl mx-auto">
             {dict.why_different?.subtitle ||
               (isAr
                 ? 'نحلل التحديات المؤسسية الحقيقية لنقدم أدلة مجانية قابلة للتطبيق، ونربط قادة التدريب مباشرة بمزودي البرامج المعتمدين والمؤهلين لتنفيذ الحل.'
@@ -298,9 +298,9 @@ export default function WhyDifferent() {
         </div>
 
         {/* Side-by-Side Interactive Split: Cards on One Side, Detailed Content Card on Other Side (as drawn in sketch) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-start">
           {/* Left Column: Selectable Cards List */}
-          <div className="lg:col-span-5 flex flex-col gap-3">
+          <div className="lg:col-span-5 flex flex-col gap-2 sm:gap-2.5">
             {items.map((it) => {
               const Icon = it.icon;
               const isActive = activeId === it.id;
@@ -309,16 +309,16 @@ export default function WhyDifferent() {
                   key={it.id}
                   type="button"
                   onClick={() => setActiveId(it.id)}
-                  whileHover={{ x: isAr ? -4 : 4 }}
+                  whileHover={{ x: isAr ? -3 : 3 }}
                   whileTap={{ scale: 0.98 }}
                   animate={{
-                    x: isActive ? (isAr ? -8 : 8) : 0,
+                    x: isActive ? (isAr ? -6 : 6) : 0,
                     scale: isActive ? 1.01 : 1,
                   }}
                   transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-                  className={`w-full text-start group relative flex flex-col justify-between rounded-2xl border p-4 sm:p-5 transition-colors duration-200 cursor-pointer ${
+                  className={`w-full text-start group relative flex flex-col justify-between rounded-xl border p-3 sm:p-3.5 transition-colors duration-200 cursor-pointer ${
                     isActive
-                      ? 'bg-[#141720] border-blue-500/50 shadow-lg shadow-blue-500/15'
+                      ? 'bg-[#141720] border-blue-500/50 shadow-md shadow-blue-500/10'
                       : 'bg-[#0A0B0E] border-white/[0.08] hover:border-white/20 hover:bg-[#0F1117]'
                   }`}
                 >
@@ -326,28 +326,28 @@ export default function WhyDifferent() {
                   {isActive && (
                     <m.div
                       layoutId="activeIndicator"
-                      className={`absolute ${isAr ? 'end-0' : 'start-0'} top-3 bottom-3 w-1.5 bg-blue-500 rounded-full shadow-[0_0_12px_rgba(59,130,246,0.8)]`}
+                      className={`absolute ${isAr ? 'end-0' : 'start-0'} top-2.5 bottom-2.5 w-1 bg-blue-500 rounded-full shadow-[0_0_10px_rgba(59,130,246,0.8)]`}
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
 
-                  <div className="flex items-center justify-between gap-3 mb-2">
-                    <div className="flex items-center gap-2.5">
+                  <div className="flex items-center justify-between gap-2 mb-1.5">
+                    <div className="flex items-center gap-2">
                       <span
-                        className={`inline-flex h-8 w-8 items-center justify-center rounded-xl border transition-colors ${
+                        className={`inline-flex h-7 w-7 items-center justify-center rounded-lg border transition-colors ${
                           isActive
-                            ? 'bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-500/30'
+                            ? 'bg-blue-600 text-white border-blue-500 shadow-sm shadow-blue-500/30'
                             : 'bg-white/[0.05] text-neutral-300 border-white/10 group-hover:text-white'
                         }`}
                       >
-                        <Icon size={16} />
+                        <Icon size={14} />
                       </span>
-                      <span className="text-[11px] font-mono font-medium text-neutral-400 uppercase tracking-wider">
+                      <span className="text-[10px] font-mono font-medium text-neutral-400 uppercase tracking-wider">
                         {it.badge}
                       </span>
                     </div>
                     <ArrowRight
-                      size={14}
+                      size={13}
                       className={`transition-all ${
                         isActive
                           ? 'text-blue-400 translate-x-0 rtl:-scale-x-100'
@@ -357,7 +357,7 @@ export default function WhyDifferent() {
                   </div>
 
                   <h3
-                    className={`text-sm sm:text-base font-semibold leading-snug font-heading transition-colors ${
+                    className={`text-xs sm:text-[13px] font-semibold leading-snug font-heading transition-colors ${
                       isActive ? 'text-white' : 'text-neutral-300 group-hover:text-white'
                     }`}
                   >
@@ -369,47 +369,47 @@ export default function WhyDifferent() {
           </div>
 
           {/* Right Column: Large Detail Card (Exact Match to User Sketch in media_1789674944443.png) */}
-          <div className="lg:col-span-7 rounded-3xl bg-[#0B0C0E] border border-white/10 p-6 sm:p-8 text-white shadow-2xl relative overflow-hidden min-h-[500px] flex flex-col justify-between">
+          <div className="lg:col-span-7 rounded-2xl bg-[#0B0C0E] border border-white/10 p-4 sm:p-5 lg:p-6 text-white shadow-xl relative overflow-hidden flex flex-col justify-between">
             <AnimatePresence mode="wait">
               <m.div
                 key={activeCard.id}
-                initial={{ opacity: 0, x: isAr ? -35 : 35, scale: 0.97 }}
+                initial={{ opacity: 0, x: isAr ? -25 : 25, scale: 0.98 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: isAr ? 35 : -35, scale: 0.97 }}
+                exit={{ opacity: 0, x: isAr ? 25 : -25, scale: 0.98 }}
                 transition={{ type: 'spring', stiffness: 320, damping: 28 }}
-                className="space-y-5"
+                className="space-y-3.5"
               >
                 {/* Top Badge & Angle */}
-                <div className="flex items-center gap-2.5 flex-wrap">
-                  <span className="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-white/10 text-white border border-white/15">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-white/10 text-white border border-white/15">
                     {activeCard.badge}
                   </span>
                   {activeCard.angle && (
-                    <span className="text-xs font-mono text-neutral-400">
+                    <span className="text-[11px] font-mono text-neutral-400">
                       {activeCard.angle}
                     </span>
                   )}
                 </div>
 
                 {/* Title */}
-                <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-snug font-heading">
+                <h3 className="text-lg sm:text-xl font-semibold text-white tracking-tight leading-snug font-heading">
                   {activeCard.title}
                 </h3>
 
                 {/* Text Description */}
-                <p className="text-sm sm:text-base text-neutral-300 font-sans leading-relaxed">
+                <p className="text-xs sm:text-[13px] text-neutral-300 font-sans leading-relaxed">
                   {activeCard.text}
                 </p>
 
                 {/* Strategic Advantages Checklist */}
-                <div className="rounded-2xl p-4 sm:p-5 bg-white/[0.03] border border-white/[0.08] space-y-2.5">
-                  <div className="text-xs font-mono font-semibold text-blue-400 uppercase tracking-wider">
+                <div className="rounded-xl p-3 sm:p-3.5 bg-white/[0.03] border border-white/[0.08] space-y-1.5">
+                  <div className="text-[10px] sm:text-[11px] font-mono font-semibold text-blue-400 uppercase tracking-wider">
                     {isAr ? 'أهم المميزات والقيمة المقدمة' : 'Key Strategic Advantages'}
                   </div>
-                  <ul className="space-y-2 text-xs sm:text-sm text-neutral-200">
+                  <ul className="space-y-1 text-[11px] sm:text-xs text-neutral-200">
                     {activeCard.takeaways.map((point, pIdx) => (
-                      <li key={pIdx} className="flex items-center gap-2.5">
-                        <CheckCircle2 size={15} className="text-emerald-400 shrink-0" />
+                      <li key={pIdx} className="flex items-center gap-2">
+                        <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
                         <span>{point}</span>
                       </li>
                     ))}
@@ -422,8 +422,8 @@ export default function WhyDifferent() {
                 </div>
 
                 {/* Action CTA Button */}
-                <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between flex-wrap gap-4">
-                  <span className="text-xs text-neutral-400 font-mono">
+                <div className="pt-2.5 border-t border-white/[0.08] flex items-center justify-between flex-wrap gap-3">
+                  <span className="text-[11px] text-neutral-400 font-mono">
                     {isAr ? 'خطوة تنفيذية واضحة' : 'Direct execution pathway'}
                   </span>
                   {activeCard.isExternal ? (
@@ -431,18 +431,18 @@ export default function WhyDifferent() {
                       href={activeCard.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm shadow-md shadow-blue-600/30 active:scale-[0.98] transition-all"
+                      className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs sm:text-sm shadow-md shadow-blue-600/30 active:scale-[0.98] transition-all"
                     >
                       <span>{activeCard.cta}</span>
-                      <ExternalLink size={15} className="ms-2" />
+                      <ExternalLink size={14} className="ms-1.5" />
                     </a>
                   ) : (
                     <Link
                       href={activeCard.href}
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm shadow-md shadow-blue-600/30 active:scale-[0.98] transition-all"
+                      className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs sm:text-sm shadow-md shadow-blue-600/30 active:scale-[0.98] transition-all"
                     >
                       <span>{activeCard.cta}</span>
-                      <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
+                      <ArrowRight size={14} className="ms-1.5 rtl:-scale-x-100" />
                     </Link>
                   )}
                 </div>

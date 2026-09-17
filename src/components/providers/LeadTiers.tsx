@@ -629,47 +629,47 @@ export default function LeadTiers(_props?: {
             return (
               <div
                 key={card.id}
-                className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass} ${theme.bgClass} ${theme.borderClass} border rounded-3xl p-6 sm:p-10 ${config.shadowClass} backdrop-blur-xl transition-all duration-300 transform-gpu`}
+                className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass} ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-all duration-300 transform-gpu`}
               >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
                   {/* Left Details */}
-                  <div className="lg:col-span-7 space-y-5">
+                  <div className="lg:col-span-7 space-y-4">
                     {/* Layered Rounded Pill Badges */}
                     <div className="inline-flex items-center p-1 rounded-full border border-white/10 bg-white/[0.03] shadow-sm gap-1.5 backdrop-blur-md flex-wrap">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${theme.pillOuter}`}>
+                      <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${theme.pillOuter}`}>
                         {badgeOption}
                       </span>
-                      <span className={`px-3.5 py-1 rounded-full text-xs font-medium ${theme.pillInner}`}>
+                      <span className={`px-3 py-0.5 rounded-full text-[11px] font-medium ${theme.pillInner}`}>
                         {badgePersona}
                       </span>
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-snug font-heading">
+                    <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight leading-snug font-heading">
                       {title}
                     </h3>
 
-                    <p className="text-sm sm:text-base text-neutral-300 leading-relaxed font-sans">
+                    <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-sans">
                       {subtitle}
                     </p>
 
-                    <div className="pt-2">
+                    <div className="pt-1">
                       {isExternal ? (
                         <a
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`inline-flex items-center justify-center px-6 py-3.5 rounded-xl ${theme.buttonClass} font-medium text-sm transition-all`}
+                          className={`inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all`}
                         >
                           <span>{cta}</span>
-                          <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
+                          <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
                         </a>
                       ) : (
                         <Link
                           href={href.startsWith('http') ? href : `/${lang}${href}`}
-                          className={`inline-flex items-center justify-center px-6 py-3.5 rounded-xl ${theme.buttonClass} font-medium text-sm transition-all`}
+                          className={`inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all`}
                         >
                           <span>{cta}</span>
-                          <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
+                          <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
                         </Link>
                       )}
                     </div>
@@ -677,25 +677,25 @@ export default function LeadTiers(_props?: {
 
                   {/* Right Preview Card */}
                   <div className="lg:col-span-5">
-                    <div className={`rounded-2xl ${theme.innerCardBg} ${theme.innerCardBorder} border p-6 space-y-4 shadow-xl`}>
-                      <div className="text-xs font-semibold text-neutral-400 tracking-wide uppercase font-mono">
+                    <div className={`rounded-2xl ${theme.innerCardBg} ${theme.innerCardBorder} border p-4 sm:p-5 space-y-3 shadow-xl`}>
+                      <div className="text-[11px] font-semibold text-neutral-400 tracking-wide uppercase font-mono">
                         {previewHeader}
                       </div>
 
                       <div>
-                        <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1.5">
+                        <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1">
                           <span>{metricLabel}</span>
                           <span className="font-mono font-bold text-white">{metricValue}</span>
                         </div>
-                        <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
+                        <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
                           <div className={`h-full rounded-full ${theme.meterColor} ${metricWidth}`} />
                         </div>
                       </div>
 
-                      <ul className="space-y-2.5 pt-2 text-xs text-neutral-200">
+                      <ul className="space-y-2 pt-1 text-xs text-neutral-200">
                         {checklist.map((item: string, cIdx: number) => (
                           <li key={cIdx} className="flex items-center gap-2">
-                            <CheckCircle2 size={15} className={`flex-shrink-0 ${theme.checkColor || 'text-emerald-400'}`} />
+                            <CheckCircle2 size={14} className={`flex-shrink-0 ${theme.checkColor || 'text-emerald-400'}`} />
                             <span>{item}</span>
                           </li>
                         ))}
