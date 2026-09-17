@@ -30,33 +30,40 @@ export default function Hero() {
     : ['Leadership', 'Tech & AI', 'Sales', 'Compliance & Localization'];
 
   return (
-    <section className="relative overflow-hidden bg-white min-h-[calc(100vh-4rem)] sm:min-h-screen flex flex-col justify-center pt-24 pb-14 sm:pt-28 sm:pb-20">
-      {/* Background Gradients & Ambient Glows */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-30 transition-opacity duration-700"
-          style={{
-            backgroundImage: "url('/skyline-bg.webp')",
-          }}
+    <section
+      data-nav-dark="true"
+      className="relative overflow-hidden bg-[#000000] text-white min-h-[calc(100vh-4rem)] sm:min-h-screen flex flex-col justify-center pt-28 pb-16 sm:pt-36 sm:pb-24"
+    >
+      {/* Cinematic Bridge Background Image */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none" aria-hidden="true">
+        <Image
+          src="/hero-bridge.png"
+          alt="PontLook Bridge Background"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center transform-gpu scale-105"
         />
-        <div
-          className="absolute inset-0 bg-white/80"
-          style={{
-            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 45%, white 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 45%, white 100%)',
-          }}
-        />
-        <div className="absolute top-1/4 start-1/4 w-[600px] h-[450px] bg-gradient-to-r from-accent/15 via-accent-secondary/10 to-accent/15 blur-3xl -z-10 rounded-full" />
-        <div className="absolute bottom-10 end-1/4 w-[500px] h-[400px] bg-accent/10 blur-3xl -z-10 rounded-full" />
+
+        {/* Dark Cinematic Vignette & Readability Gradient Overlay */}
+        <div className="absolute inset-0 bg-black/45" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/30 rtl:bg-gradient-to-l rtl:from-black/85 rtl:via-black/55 rtl:to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-black/20 to-black/60" />
+
+        {/* Ambient warm and cool glows echoing the bridge's lights */}
+        <div className="absolute top-1/2 end-1/4 w-[500px] h-[500px] bg-amber-500/[0.06] blur-[150px] rounded-full" />
+        <div className="absolute bottom-10 start-1/4 w-[600px] h-[400px] bg-[#0052FF]/[0.08] blur-[160px] rounded-full" />
       </div>
 
-      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          {/* Left Column: Copy & Actions */}
-          <div className="lg:col-span-6 flex flex-col items-start text-start">
+      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-7xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          
+          {/* Left Column (Writing): Linear-style Headline, Eyebrow & Subtitle in White */}
+          <div className="lg:col-span-7 xl:col-span-8 flex flex-col items-start text-start">
             <Reveal>
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-5 shadow-xs">
-                <Sparkles size={13} className="text-primary" />
+              {/* Eyebrow Badge */}
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-blue-300 text-xs font-semibold uppercase tracking-wider mb-6 backdrop-blur-md shadow-sm">
+                <Sparkles size={13} className="text-[#0052FF]" />
                 <span>
                   {isAr
                     ? 'منصة الربط التدريبي المؤسسي الأولى بالخليج'
@@ -64,44 +71,22 @@ export default function Hero() {
                 </span>
               </span>
 
-              <h1 className="font-heading text-3xl sm:text-5xl lg:text-[54px] xl:text-[58px] font-semibold tracking-[-0.03em] leading-[1.12] sm:leading-[1.08] text-slate-900">
+              {/* Linear-Style Big Title in White */}
+              <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-[62px] xl:text-[70px] font-medium tracking-[-0.035em] leading-[1.08] text-white">
                 {dict.hero.headline}
               </h1>
 
-              <p className="mt-4 sm:mt-5 text-base sm:text-lg text-slate-600 font-normal leading-relaxed max-w-xl">
+              {/* Subtitle */}
+              <p className="mt-5 sm:mt-6 text-base sm:text-lg lg:text-xl text-neutral-300 font-normal leading-relaxed max-w-2xl font-sans">
                 {dict.hero.subtitle}
               </p>
 
-              {/* Action Buttons */}
-              <div className="mt-7 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 w-full sm:w-auto">
-                {/* Primary Button: Join the networks with electric orange hover effect */}
-                <Link
-                  href={`/${lang}/for-providers/apply`}
-                  className="inline-flex items-center justify-center gap-2 py-4 px-7 rounded-full bg-primary hover:bg-[#FF5C00] text-white font-semibold text-base shadow-lg shadow-primary/20 hover:shadow-orange-500/30 hover:border-[#FF5C00] active:scale-[0.98] transition-all duration-300 group"
-                >
-                  <span>{isAr ? 'انضم إلى شبكتنا' : 'Join the networks'}</span>
-                  <ArrowRight
-                    size={17}
-                    className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform"
-                  />
-                </Link>
-
-                {/* Secondary Button: I'm looking for training */}
-                <Link
-                  href={`/${lang}/find-training/request`}
-                  className="inline-flex items-center justify-center gap-2 py-4 px-7 rounded-full bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-semibold text-base border border-slate-200 shadow-sm active:scale-[0.98] transition-all duration-200"
-                >
-                  <Target size={17} className="text-primary" />
-                  <span>{dict.hero.btn_buyer}</span>
-                </Link>
-              </div>
-
               {/* 3 Trust Points */}
-              <div className="mt-7 pt-6 border-t border-slate-200/80 grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
+              <div className="mt-8 pt-6 border-t border-white/15 flex flex-wrap items-center gap-y-3 gap-x-6 w-full">
                 {trustCheckmarks.map((point) => (
                   <div key={point} className="flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-                    <span className="text-xs font-medium text-slate-700 leading-snug">
+                    <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
+                    <span className="text-xs sm:text-sm font-medium text-neutral-300 leading-snug">
                       {point}
                     </span>
                   </div>
@@ -110,54 +95,63 @@ export default function Hero() {
             </Reveal>
           </div>
 
-          {/* Right Column: Hero Image with Blurred Faces and Overlay Card */}
-          <div className="lg:col-span-6 relative">
-            <Reveal delay={0.15}>
-              <div className="relative rounded-3xl overflow-hidden border border-slate-200/90 shadow-2xl bg-slate-100 group">
-                <div className="aspect-[16/10] sm:aspect-[16/10] w-full relative">
-                  <Image
-                    src="/executive_training_room.jpg"
-                    alt={
-                      isAr
-                        ? 'ورشة عمل تدريبية تنفيذية للشركات'
-                        : 'Executive corporate training workshop'
-                    }
-                    fill
-                    priority
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover object-center group-hover:scale-102 transition-transform duration-700 ease-out"
-                  />
+          {/* Right Column (Buttons): Prominent Action Card */}
+          <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-start lg:items-end justify-center w-full">
+            <Reveal delay={0.12}>
+              <div className="w-full max-w-md lg:max-w-sm flex flex-col gap-4 p-6 sm:p-7 rounded-3xl bg-black/45 backdrop-blur-xl border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.65)]">
+                
+                {/* Micro Header for Actions */}
+                <div className="text-xs font-mono font-bold uppercase tracking-wider text-blue-400 mb-1">
+                  {isAr ? 'ابدأ الآن' : 'GET STARTED TODAY'}
                 </div>
 
-                {/* Gradient vignette for card contrast */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
+                {/* Primary CTA Button: Join the networks with electric orange hover effect */}
+                <Link
+                  href={`/${lang}/for-providers/apply`}
+                  className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-6 rounded-full bg-[#0052FF] hover:bg-[#FF5C00] text-white font-semibold text-base shadow-lg shadow-blue-600/30 hover:shadow-orange-500/30 active:scale-[0.98] transition-all duration-300 group"
+                >
+                  <span>{isAr ? 'انضم إلى شبكتنا' : 'Join the networks'}</span>
+                  <ArrowRight
+                    size={17}
+                    className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform"
+                  />
+                </Link>
 
-                {/* Floating Overlay Badge Card at Bottom */}
-                <div className="absolute bottom-4 inset-x-4 sm:bottom-5 sm:inset-x-5 p-4 sm:p-5 rounded-2xl bg-white/95 backdrop-blur-md border border-white/80 shadow-xl">
-                  <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 mb-2">
-                    {isAr
-                      ? 'موثوق من قادة الموارد البشرية والتدريب في'
-                      : 'TRUSTED BY HR AND TALENT LEADERS IN'}
+                {/* Secondary CTA Button: I'm looking for training */}
+                <Link
+                  href={`/${lang}/find-training/request`}
+                  className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-6 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-base border border-white/20 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200"
+                >
+                  <Target size={17} className="text-blue-400" />
+                  <span>{dict.hero.btn_buyer}</span>
+                </Link>
+
+                {/* Quick Trust / Category Pills */}
+                <div className="pt-4 mt-2 border-t border-white/10">
+                  <div className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 mb-2.5">
+                    {isAr ? 'المجالات التدريبية الأكثر طلباً' : 'POPULAR DOMAINS'}
                   </div>
-                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                  <div className="flex flex-wrap gap-1.5">
                     {trustedCategories.map((cat) => (
                       <span
                         key={cat}
-                        className="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-800 text-xs font-semibold"
+                        className="px-2.5 py-1 rounded-lg bg-white/10 border border-white/15 text-neutral-200 text-xs font-medium"
                       >
                         {cat}
                       </span>
                     ))}
                   </div>
                 </div>
+
               </div>
             </Reveal>
           </div>
+
         </div>
       </div>
 
-      {/* Smooth sliding gradient transition into the black section */}
-      <div className="absolute inset-x-0 bottom-0 h-16 sm:h-24 bg-gradient-to-b from-transparent via-slate-900/15 to-black/35 pointer-events-none" />
+      {/* Smooth sliding gradient transition into the black TrustBar section */}
+      <div className="absolute inset-x-0 bottom-0 h-20 sm:h-28 bg-gradient-to-b from-transparent via-black/60 to-[#000000] pointer-events-none" />
     </section>
   );
 }

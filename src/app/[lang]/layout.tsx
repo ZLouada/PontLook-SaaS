@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, IBM_Plex_Sans_Arabic, JetBrains_Mono } from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import '../globals.css';
@@ -13,27 +12,6 @@ export const viewport: Viewport = {
   maximumScale: 5,
   themeColor: '#0052FF',
 };
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
-});
-
-const ibmPlexArabic = IBM_Plex_Sans_Arabic({
-  subsets: ['arabic'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-arabic',
-  display: 'swap',
-  preload: false,
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
-  display: 'swap',
-  preload: false,
-});
 
 export async function generateMetadata({
   params,
@@ -108,8 +86,6 @@ export default async function RootLayout({
   const dictionary = await getDictionary(lang);
   const dir = rawLang === 'ar' ? 'rtl' : 'ltr';
 
-  const fontClass = `${inter.variable} ${ibmPlexArabic.variable} ${jetbrainsMono.variable}`;
-
   const jsonLdGraph = {
     "@context": "https://schema.org",
     "@graph": [
@@ -172,7 +148,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang={lang} dir={dir} className={fontClass}>
+    <html lang={lang} dir={dir}>
       <head>
         <script
           type="application/ld+json"
