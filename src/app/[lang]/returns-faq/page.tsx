@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Reveal from '@/components/shared/Reveal';
 import Link from 'next/link';
-import { PackageX, Clock, RefreshCw, CreditCard, ShieldCheck, Mail } from 'lucide-react';
+import { PackageCheck, Clock, RefreshCw, CreditCard, ShieldCheck, Mail } from 'lucide-react';
 
 import { Locale, i18n } from '@/i18n/config';
 
@@ -54,7 +54,7 @@ export async function generateStaticParams() {
 
 const policyHighlightsEn = [
   {
-    icon: PackageX,
+    icon: PackageCheck,
     title: 'Made to Order Products',
     desc: 'Each physical product or custom merchandise piece is printed and fulfilled individually upon order placement.',
   },
@@ -77,7 +77,7 @@ const policyHighlightsEn = [
 
 const policyHighlightsAr = [
   {
-    icon: PackageX,
+    icon: PackageCheck,
     title: 'منتجات تصنع بالطلب',
     desc: 'تتم طباعة وتجهيز كل منتج مادي أو تذكاري بصورة فردية بمجرد تأكيد الطلب.',
   },

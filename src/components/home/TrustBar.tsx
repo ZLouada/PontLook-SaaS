@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ShieldCheck, Building2, BookOpen, TrendingUp } from 'lucide-react';
+import { ShieldCheck, Building2, BookOpen, Globe2 } from 'lucide-react';
 import { m } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { useParams } from 'next/navigation';
@@ -33,7 +33,7 @@ export default function TrustBar() {
       badge: isAr ? 'أبحاث حصرية' : 'Market Intel',
     },
     {
-      icon: TrendingUp,
+      icon: Globe2,
       title: dict.trust_bar?.gcc?.title || 'Regional Focus',
       desc: dict.trust_bar?.gcc?.desc || 'Saudi Arabia, UAE and GCC focused enterprise landscape',
       badge: isAr ? 'السعودية والإمارات' : 'KSA & UAE',
@@ -98,7 +98,7 @@ export default function TrustBar() {
                       <span className="font-semibold text-sm sm:text-base text-white tracking-tight truncate block group-hover:text-white transition-colors">
                         {v.title}
                       </span>
-                      <span className="shrink-0 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-[#1A1A1A] text-neutral-400 border border-[#2B2B2B] group-hover:border-[#0052FF]/30 group-hover:text-blue-400 transition-colors">
+                      <span className="shrink-0 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#1A1A1A] text-neutral-400 border border-[#2B2B2B] group-hover:border-[#0052FF]/30 group-hover:text-blue-400 transition-colors">
                         {v.badge}
                       </span>
                     </div>

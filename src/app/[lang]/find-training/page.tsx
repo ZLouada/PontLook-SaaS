@@ -11,7 +11,6 @@ import {
   Building2,
   CheckCircle2,
   ArrowRight,
-  Sparkles,
   Layers,
   FileCheck2,
   ChevronDown,
@@ -230,7 +229,7 @@ export default async function FindTrainingPage({
                   key={m.label}
                   className="rounded-2xl border border-slate-200/80 bg-white/90 backdrop-blur-xs p-3.5 sm:p-4 text-center shadow-xs"
                 >
-                  <div className="text-xl font-bold text-slate-900 sm:text-2xl font-mono">{m.value}</div>
+                  <div className="text-xl font-bold text-slate-900 sm:text-2xl tabular-nums">{m.value}</div>
                   <div className="mt-1 text-[11px] font-medium uppercase tracking-wider text-slate-600">{m.label}</div>
                 </div>
               ))}
@@ -266,7 +265,7 @@ export default async function FindTrainingPage({
             className="group flex flex-col items-center text-slate-400 hover:text-primary transition-colors text-xs font-medium"
             aria-label={isAr ? 'انتقل إلى الأسفل' : 'Scroll down'}
           >
-            <span className="mb-1 hidden sm:inline tracking-wider uppercase text-[11px] font-mono">
+            <span className="mb-1 hidden sm:inline tracking-wider uppercase text-[11px] font-semibold">
               {isAr ? 'اكتشف المزيد' : 'Discover More'}
             </span>
             <ChevronDown size={18} className="animate-bounce text-slate-400 group-hover:text-primary" />
@@ -296,7 +295,7 @@ export default async function FindTrainingPage({
                       <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary">
                         <st.icon size={22} />
                       </span>
-                      <span className="text-2xl font-bold font-mono text-slate-300">
+                      <span className="text-2xl font-bold text-slate-300">
                         {st.step}
                       </span>
                     </div>
@@ -349,7 +348,7 @@ export default async function FindTrainingPage({
               <div className="bg-gradient-to-b from-blue-50/70 via-white to-blue-50/40 border border-blue-100 p-8 sm:p-14 rounded-3xl text-center relative overflow-hidden shadow-sm">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-blue-400/10 blur-3xl pointer-events-none" />
 
-                <span className="text-xs font-mono font-bold uppercase tracking-widest text-primary bg-blue-50 border border-blue-200 px-4 py-1.5 rounded-full inline-block mb-5">
+                <span className="text-xs font-bold uppercase tracking-widest text-primary bg-blue-50 border border-blue-200 px-4 py-1.5 rounded-full inline-block mb-5">
                   {isAr ? 'طلب تدريب مؤسسي' : 'ENTERPRISE MATCHMAKING'}
                 </span>
 

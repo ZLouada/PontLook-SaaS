@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Users,
   Calendar,
-  DollarSign,
+  CircleDollarSign,
   HelpCircle,
   Check,
   Clock,
@@ -199,7 +199,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
       <section className="space-y-3">
         <div>
           <div className="flex items-center gap-2">
-            <DollarSign size={18} className="text-blue-600" />
+            <CircleDollarSign size={18} className="text-blue-600" />
             <h3 className="font-heading text-base font-semibold text-slate-800">
               Estimated Budget Allocation (USD)
             </h3>

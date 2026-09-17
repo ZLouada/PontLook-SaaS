@@ -83,13 +83,13 @@ export default async function FindTrainingRequestPage({
         <div className="flex items-center justify-between gap-4 mb-6 sm:mb-8">
           <Link
             href={`/${lang}/find-training`}
-            className="inline-flex items-center gap-2 text-xs font-mono text-slate-500 hover:text-primary transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-primary transition-colors"
           >
             <ArrowLeft size={14} className={isAr ? 'rotate-180' : ''} />
             <span>{isAr ? 'العودة لنظرة عامة' : 'Back to Training Overview'}</span>
           </Link>
 
-          <span className="font-mono text-xs text-primary font-semibold uppercase tracking-wider">
+          <span className="text-xs text-primary font-bold uppercase tracking-wider">
             {isAr ? 'طلب تدريب مؤسسي' : 'Enterprise Intake'}
           </span>
         </div>
@@ -137,17 +137,17 @@ export default async function FindTrainingRequestPage({
         {/* Trust Footnotes */}
         <div className="mt-8 grid grid-cols-3 gap-3 text-center">
           <div className="p-3 bg-white/80 border border-slate-200 rounded-2xl shadow-xs">
-            <div className="text-xs font-mono text-slate-600 font-medium">
+            <div className="text-xs text-slate-600 font-semibold">
               {isAr ? '120+ مزود معتمد' : '120+ Vetted Providers'}
             </div>
           </div>
           <div className="p-3 bg-white/80 border border-slate-200 rounded-2xl shadow-xs">
-            <div className="text-xs font-mono text-slate-600 font-medium">
+            <div className="text-xs text-slate-600 font-semibold">
               {isAr ? 'بدون أي التزام بالشراء' : 'Zero Purchase Obligation'}
             </div>
           </div>
           <div className="p-3 bg-white/80 border border-slate-200 rounded-2xl shadow-xs">
-            <div className="text-xs font-mono text-slate-600 font-medium">
+            <div className="text-xs text-slate-600 font-semibold">
               {isAr ? 'متوافق مع حماية البيانات' : 'KSA PDPL Aligned'}
             </div>
           </div>

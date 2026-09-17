@@ -6,10 +6,8 @@ import {
   Building2,
   CheckCircle2,
   ArrowRight,
-  Sparkles,
+  FileText,
   ChevronRight,
-  TrendingUp,
-  Award,
   Zap,
   BadgeDollarSign,
   Quote,
@@ -208,7 +206,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
                 </span>
-                <span className="font-mono text-xs font-semibold text-primary uppercase tracking-wide">
+                <span className="text-xs font-semibold text-primary uppercase tracking-wide">
                   {badge}
                 </span>
               </div>
@@ -278,12 +276,12 @@ export default async function SolutionLandingPage({ params }: PageProps) {
 
                 <div className="flex items-center justify-between gap-3 pb-4 border-b border-slate-100">
                   <div className="inline-flex items-center gap-2">
-                    <Sparkles size={18} className="text-primary" />
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-800">
+                    <FileText size={18} className="text-primary" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-800">
                       {isAr ? 'ملخص تحليلي تنفيذي (GEO Synthesis)' : 'Executive Briefing & Market Synthesis'}
                     </span>
                   </div>
-                  <span className="text-[11px] font-mono font-bold bg-blue-50 text-primary px-2.5 py-1 rounded-full border border-blue-200/60">
+                  <span className="text-[11px] font-bold bg-blue-50 text-primary px-2.5 py-1 rounded-full border border-blue-200/60">
                     {isAr ? 'مستند حقائق موثق' : 'Verified Entity Fact'}
                   </span>
                 </div>
@@ -328,7 +326,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
                       <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
                         {stat.metric}
                       </div>
-                      <div className="mt-3 font-mono text-2xl sm:text-3xl font-bold text-primary tracking-tight">
+                      <div className="mt-3 text-2xl sm:text-3xl font-bold text-primary tracking-tight tabular-nums">
                         {stat.value}
                       </div>
                     </div>
@@ -361,7 +359,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
               {content.workflow.map((item, i) => (
                 <Reveal key={item.step} delay={i * 0.1}>
                   <div className="relative h-full flex flex-col rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm hover:shadow-md transition-all">
-                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white font-mono font-bold text-sm shadow-sm mb-5">
+                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white font-bold text-sm shadow-sm mb-5">
                       {item.step}
                     </div>
                     <h3 className="font-heading text-lg font-semibold text-slate-900 leading-snug">

@@ -520,14 +520,14 @@ export default function LeadTiers(_props?: {
                     {/* Right Preview Card */}
                     <div className="lg:col-span-5">
                       <div className="rounded-2xl liquid-glass-panel-inset p-6 space-y-4">
-                        <div className="text-xs font-semibold text-slate-500 tracking-wide uppercase font-mono">
+                        <div className="text-xs font-semibold text-slate-500 tracking-wide uppercase">
                           {tier.project}
                         </div>
 
                         <div>
                           <div className="flex justify-between text-xs font-semibold text-slate-700 mb-1.5">
                             <span>{isAr ? 'دقة التطابق' : 'Match Accuracy'}</span>
-                            <span className="font-mono font-bold text-slate-900">{tier.accuracy}</span>
+                            <span className="font-bold text-slate-900 tabular-nums">{tier.accuracy}</span>
                           </div>
                           <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
                             <div className={`h-full rounded-full ${tier.barColor} ${tier.barWidth}`} />
@@ -678,14 +678,14 @@ export default function LeadTiers(_props?: {
                   {/* Right Preview Card */}
                   <div className="lg:col-span-5">
                     <div className={`rounded-2xl ${theme.innerCardBg} ${theme.innerCardBorder} border p-4 sm:p-5 space-y-3 shadow-xl`}>
-                      <div className="text-[11px] font-semibold text-neutral-400 tracking-wide uppercase font-mono">
+                      <div className="text-[11px] font-semibold text-neutral-400 tracking-wide uppercase">
                         {previewHeader}
                       </div>
 
                       <div>
                         <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1">
                           <span>{metricLabel}</span>
-                          <span className="font-mono font-bold text-white">{metricValue}</span>
+                          <span className="font-bold text-white tabular-nums">{metricValue}</span>
                         </div>
                         <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
                           <div className={`h-full rounded-full ${theme.meterColor} ${metricWidth}`} />

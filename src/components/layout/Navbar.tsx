@@ -316,7 +316,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             >
                               <span>{l.label}</span>
                               {isActive && (
-                                <span className="text-[11px] font-mono font-bold text-[#0052FF] bg-white px-2 py-0.5 rounded-md shadow-2xs">
+                                <span className="text-[11px] font-bold text-[#0052FF] bg-white px-2 py-0.5 rounded-md shadow-2xs">
                                   {lang === 'ar' ? 'الحالي' : 'Active'}
                                 </span>
                               )}

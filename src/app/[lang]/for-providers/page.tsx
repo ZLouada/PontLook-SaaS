@@ -5,7 +5,7 @@ import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
 import Reveal from '@/components/shared/Reveal';
 import SectionHeading from '@/components/shared/SectionHeading';
-import { ShieldCheck, Target, DollarSign, Award, ChevronDown, CheckCircle2, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Target, CircleDollarSign, TrendingUp, ChevronDown, CheckCircle2, ArrowRight } from 'lucide-react';
 import { constructAlternates } from '@/lib/seo';
 
 export async function generateMetadata({
@@ -55,7 +55,7 @@ export async function generateStaticParams() {
 
 const providerBenefitsEn = [
   {
-    icon: DollarSign,
+    icon: CircleDollarSign,
     title: 'Zero Retainer Risk',
     text: 'No monthly management fees or fixed retainers. You pay strictly per verified decision maker delivered ($50 to $200 per lead).',
   },
@@ -65,7 +65,7 @@ const providerBenefitsEn = [
     text: 'Every lead has confirmed corporate training needs, authority, and explicit problem definitions tied to Saudization, Emiratization, or digital upskilling.',
   },
   {
-    icon: Award,
+    icon: TrendingUp,
     title: 'Consistent Pipeline',
     text: 'Keep your business development active and predictable throughout the year, even during delivery seasons.',
   },
@@ -73,7 +73,7 @@ const providerBenefitsEn = [
 
 const providerBenefitsAr = [
   {
-    icon: DollarSign,
+    icon: CircleDollarSign,
     title: 'انعدام مخاطر الرسوم الشهرية',
     text: 'لا توجد رسوم إدارة أو اشتراكات شهرية ثابتة. الدفع يتم حصراً لكل صانع قرار مؤكد ومؤهل يتم تقديمه لك.',
   },
@@ -83,7 +83,7 @@ const providerBenefitsAr = [
     text: 'كل فرصة تدريبية تتضمن احتياجاً مؤسسياً مؤكداً، وصلاحية قرار واضحة، ومتطلبات متوافقة مع أهداف التوطين أو التحول الرقمي.',
   },
   {
-    icon: Award,
+    icon: TrendingUp,
     title: 'تدفق مستمر لفرص الأعمال',
     text: 'حافظ على استمرارية ونمو أعمالك على مدار العام، حتى خلال مواسم التدريب والتنفيذ الميداني.',
   },
@@ -190,7 +190,7 @@ export default async function ForProvidersPage({
             className="group flex flex-col items-center text-slate-400 hover:text-primary transition-colors text-xs font-medium"
             aria-label={isAr ? 'انتقل إلى الأسفل' : 'Scroll down'}
           >
-            <span className="mb-1 hidden sm:inline tracking-wider uppercase text-[11px] font-mono">
+            <span className="mb-1 hidden sm:inline tracking-wider uppercase text-[11px] font-semibold">
               {isAr ? 'اكتشف المزيد' : 'Discover More'}
             </span>
             <ChevronDown size={18} className="animate-bounce text-slate-400 group-hover:text-primary" />
@@ -237,7 +237,7 @@ export default async function ForProvidersPage({
               <div className="bg-gradient-to-b from-blue-50/70 via-white to-blue-50/40 border border-blue-100 p-8 sm:p-14 rounded-3xl text-center relative overflow-hidden shadow-sm">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-blue-400/10 blur-3xl pointer-events-none" />
 
-                <span className="text-xs font-mono font-bold uppercase tracking-widest text-primary bg-blue-50 border border-blue-200 px-4 py-1.5 rounded-full inline-block mb-5">
+                <span className="text-xs font-bold uppercase tracking-widest text-primary bg-blue-50 border border-blue-200 px-4 py-1.5 rounded-full inline-block mb-5">
                   {isAr ? 'طلب الانضمام للشراكة' : 'PROVIDER QUALIFICATION'}
                 </span>
 

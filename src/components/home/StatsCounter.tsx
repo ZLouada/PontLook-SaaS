@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useInView, useMotionValue, useTransform, animate, m, useReducedMotion } from 'framer-motion';
-import { Building2, CheckCircle2, Clock, Globe } from 'lucide-react';
+import { Building2, CalendarCheck, Clock, Globe } from 'lucide-react';
 import Card from '@/components/shared/Card';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 
@@ -41,7 +41,7 @@ export default function StatsCounter() {
 
   const stats = [
     { icon: Building2, end: dict.stats.companies.value, suffix: dict.stats.companies.suffix, label: dict.stats.companies.label },
-    { icon: CheckCircle2, end: dict.stats.meetings.value, suffix: dict.stats.meetings.suffix, label: dict.stats.meetings.label },
+    { icon: CalendarCheck, end: dict.stats.meetings.value, suffix: dict.stats.meetings.suffix, label: dict.stats.meetings.label },
     { icon: Clock, end: dict.stats.turnaround.value, suffix: dict.stats.turnaround.suffix, label: dict.stats.turnaround.label },
     { icon: Globe, end: dict.stats.markets.value, suffix: dict.stats.markets.suffix, label: dict.stats.markets.label },
   ];
@@ -78,7 +78,7 @@ export default function StatsCounter() {
           })}
         </div>
 
-        <p className="mt-10 sm:mt-16 text-center text-xs font-mono font-medium text-slate-400 tracking-wider uppercase">
+        <p className="mt-10 sm:mt-16 text-center text-xs font-semibold text-slate-500 tracking-wider uppercase">
           {dict.stats.caption}
         </p>
       </div>

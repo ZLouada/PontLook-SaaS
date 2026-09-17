@@ -4,10 +4,7 @@ import React from 'react';
 import {
   ShieldCheck,
   Lock,
-  Award,
-  CheckCircle2,
-  Building,
-  Globe2,
+  BadgeCheck,
 } from 'lucide-react';
 
 const ACCREDITATIONS = [
@@ -36,7 +33,7 @@ export function TrustBadges() {
       <div className="rounded-2xl border border-slate-200/60 bg-slate-50/70 p-4">
         <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500">
-            <Award size={16} className="text-blue-600" />
+            <BadgeCheck size={16} className="text-blue-600" />
             <span>Network Faculty Standards & Accreditations</span>
           </div>
 

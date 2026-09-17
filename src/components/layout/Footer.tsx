@@ -77,7 +77,7 @@ export default function Footer() {
 
           {/* Column 2: Platform */}
           <nav aria-label="Footer: platform" className="space-y-3 sm:space-y-4">
-            <p className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-slate-200">PLATFORM</p>
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-slate-200">PLATFORM</p>
             <ul className="space-y-1 text-sm font-medium text-slate-400">
               <li>
                 <Link href={`/${lang}/who-we-are`} className="hover:text-white transition-colors py-1.5 inline-block">
@@ -109,7 +109,7 @@ export default function Footer() {
 
           {/* Column 3: Legal & Compliance */}
           <div className="space-y-3 sm:space-y-4">
-            <p className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-slate-200">
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-slate-200">
               LEGAL &amp; COMPLIANCE
             </p>
             <ul className="space-y-1 text-sm font-medium text-slate-400">
@@ -128,7 +128,7 @@ export default function Footer() {
                   {dict.footer?.returns_faq || 'Returns & FAQ'}
                 </Link>
               </li>
-              <li className="pt-2 text-xs text-slate-400 font-mono">
+              <li className="pt-2 text-xs text-slate-400 font-medium">
                 Firstnestcare, LLC · Delaware DE
               </li>
             </ul>
@@ -136,7 +136,7 @@ export default function Footer() {
 
           {/* Column 4: Get In Touch */}
           <div className="space-y-3 sm:space-y-4">
-            <p className="font-mono text-xs font-bold uppercase tracking-[0.12em] text-slate-200">GET IN TOUCH</p>
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-slate-200">GET IN TOUCH</p>
             <ul className="space-y-2 text-sm font-medium text-slate-400">
               <li>
                 <a href="mailto:contact@pontlook.com" className="flex items-center gap-2.5 hover:text-white transition-colors py-1.5 inline-flex">

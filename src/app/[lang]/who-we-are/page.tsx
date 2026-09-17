@@ -105,7 +105,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
             <div className="bg-white border border-blue-200/80 p-10 md:p-16 rounded-3xl shadow-xl shadow-blue-900/5 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-60 h-60 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
               
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-primary bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full inline-block mb-6">
+              <span className="text-xs font-bold uppercase tracking-widest text-primary bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full inline-block mb-6">
                 {isAr ? 'ضماننا' : 'OUR GUARANTEE'}
               </span>
               

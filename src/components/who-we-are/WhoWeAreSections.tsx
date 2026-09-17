@@ -7,20 +7,6 @@ import {
   CheckCircle2,
   XCircle,
   ShieldCheck,
-  ArrowRight,
-  Sparkles,
-  TrendingUp,
-  Target,
-  Compass,
-  Cpu,
-  Lock,
-  Plane,
-  Play,
-  Pause,
-  ChevronLeft,
-  ChevronRight,
-  Zap,
-  Building2,
   ClipboardCheck,
   Handshake,
   GraduationCap,
@@ -341,7 +327,7 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
 
               <div>
                 {/* Eyebrow */}
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 block mb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-4">
                   {card.eyebrow}
                 </span>
 
@@ -377,7 +363,7 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
               {/* Tag / Footer Pill */}
               <div className="pt-6 border-t border-slate-100">
                 <span
-                  className={`inline-flex items-center text-xs font-mono font-semibold px-3 py-1.5 rounded-full ${
+                  className={`inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-full ${
                     card.isFeatured
                       ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                       : 'bg-slate-100 text-slate-700 border border-slate-200'
@@ -578,10 +564,10 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
                       <step.icon size={22} className="transition-transform duration-300 group-hover:scale-110" />
                     </div>
                     <div>
-                      <span className="text-xs font-mono font-bold text-primary uppercase tracking-wider block">
+                      <span className="text-xs font-bold text-primary uppercase tracking-wider block">
                         {step.step}
                       </span>
-                      <span className="text-[11px] font-mono text-slate-400">
+                      <span className="text-[11px] font-medium text-slate-400">
                         STEP {step.num}
                       </span>
                     </div>

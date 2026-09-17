@@ -12,12 +12,7 @@ import {
   Download,
   FileText,
   Building2,
-  Users,
-  MapPin,
-  Calendar,
-  DollarSign,
   ArrowRight,
-  ExternalLink,
 } from 'lucide-react';
 import {
   TRAINING_DOMAINS,

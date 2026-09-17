@@ -56,11 +56,11 @@ export default function HowItWorks() {
                 <span className="h-2.5 w-2.5 rounded-full bg-[#F59E0B]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#10B981]" />
               </div>
-              <span className="font-mono text-neutral-400 text-[11px] ms-2">
+              <span className="text-neutral-400 text-[11px] font-medium ms-2">
                 {isAr ? 'رادار الاحتياج المؤسسي' : 'Enterprise Demand Feed'}
               </span>
             </div>
-            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono">
+            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-semibold">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>{isAr ? 'إشارة نشطة' : 'Active Signal'}</span>
             </div>
@@ -72,7 +72,7 @@ export default function HowItWorks() {
               <span className="font-semibold text-white">
                 {isAr ? 'الخدمات المالية والمصرفية · الرياض' : 'Banking & FinTech · Riyadh'}
               </span>
-              <span className="font-mono font-bold text-emerald-400">SAR 450,000+</span>
+              <span className="font-bold text-emerald-400 tabular-nums">SAR 450,000+</span>
             </div>
             <div className="flex items-center justify-between text-neutral-400 text-[11px]">
               <span>{isAr ? '1,200+ موظف' : '1,200+ Employees'}</span>
@@ -88,7 +88,7 @@ export default function HowItWorks() {
               <span className="font-semibold text-white">
                 {isAr ? 'الطاقة والبنية التحتية · الظهران' : 'Energy & Infrastructure · Dhahran'}
               </span>
-              <span className="font-mono font-bold text-blue-400">
+              <span className="font-bold text-blue-400">
                 {isAr ? 'ميزانية مؤكدة' : 'Confirmed Budget'}
               </span>
             </div>
@@ -146,11 +146,11 @@ export default function HowItWorks() {
                 <span className="h-2.5 w-2.5 rounded-full bg-[#F59E0B]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#10B981]" />
               </div>
-              <span className="font-mono text-neutral-400 text-[11px] ms-2">
+              <span className="text-neutral-400 text-[11px] font-medium ms-2">
                 {isAr ? 'منظومة المطابقة الذكية' : 'AI Match & Qualification'}
               </span>
             </div>
-            <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
+            <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
               <span>94%</span>
               <span className="text-[10px] font-normal">{isAr ? 'تطابق' : 'Match'}</span>
             </div>
@@ -160,7 +160,7 @@ export default function HowItWorks() {
           <div className="space-y-1.5">
             <div className="flex justify-between text-xs text-neutral-300 font-medium">
               <span>{isAr ? 'معايير التأهيل المكتملة' : 'Criteria Fulfilled'}</span>
-              <span className="font-mono font-bold text-white">4 / 4 Complete</span>
+              <span className="font-bold text-white">4 / 4 Complete</span>
             </div>
             <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden p-0.5">
               <div className="h-full bg-gradient-to-r from-purple-500 to-emerald-400 rounded-full w-[94%]" />
@@ -233,11 +233,11 @@ export default function HowItWorks() {
                 <span className="h-2.5 w-2.5 rounded-full bg-[#F59E0B]" />
                 <span className="h-2.5 w-2.5 rounded-full bg-[#10B981]" />
               </div>
-              <span className="font-mono text-neutral-400 text-[11px] ms-2">
+              <span className="text-neutral-400 text-[11px] font-medium ms-2">
                 {isAr ? 'لوحة التعاقد المباشر' : 'Direct Engagement Console'}
               </span>
             </div>
-            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-teal-500/15 border border-teal-500/30 text-teal-400 text-[10px] font-mono">
+            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-teal-500/15 border border-teal-500/30 text-teal-400 text-[10px] font-semibold">
               <CheckCircle2 size={12} />
               <span>{isAr ? 'تم التقديم' : 'Intro Complete'}</span>
             </div>
@@ -262,7 +262,7 @@ export default function HowItWorks() {
           {/* Contract Terms */}
           <div className="pt-1 flex items-center justify-between text-xs text-neutral-400">
             <span>{isAr ? 'بدون عمولات خفية' : 'Zero hidden fees'}</span>
-            <span className="font-mono font-bold text-teal-400">
+            <span className="font-bold text-teal-400">
               {isAr ? 'علاقة تعاقدية مباشرة 100%' : '100% Direct Contract'}
             </span>
           </div>
@@ -311,7 +311,7 @@ export default function HowItWorks() {
                   {/* Left Column: Category Tag, Title, Action Pill, 3 Points with Chevrons */}
                   <div className="lg:col-span-6 flex flex-col items-start text-start">
                     {/* Eyebrow Tag with Accent Color */}
-                    <div className={`${card.tagColor} font-mono text-xs font-bold uppercase tracking-wider mb-2.5`}>
+                    <div className={`${card.tagColor} text-xs font-bold uppercase tracking-wider mb-2.5`}>
                       {card.tag}
                     </div>
 
