@@ -2,7 +2,7 @@ export const ar = {
   nav: {
     home: "الرئيسية",
     who_we_are: "من نحن",
-    for_providers: "أنا مزود تدريب",
+    for_providers: "لمزودي التدريب",
     find_training: "أبحث عن تدريب",
     contact: "تواصل معنا",
     faq: "الأسئلة الشائعة",

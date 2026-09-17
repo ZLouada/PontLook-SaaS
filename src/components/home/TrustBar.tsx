@@ -44,9 +44,15 @@ export default function TrustBar() {
   const marqueeItems = [...values, ...values, ...values];
 
   return (
-    <section className="relative bg-[#000000] text-white py-8 sm:py-10 border-y border-[#1A1A1A] overflow-hidden">
+    <section
+      data-nav-dark="true"
+      className="relative bg-[#000000] text-white pt-10 pb-10 sm:py-12 border-b border-[#1A1A1A] overflow-hidden"
+    >
+      {/* Smooth sliding transition from white to black (sliding from color to color) */}
+      <div className="absolute inset-x-0 top-0 h-12 sm:h-16 bg-gradient-to-b from-white/10 via-[#070D1E]/40 to-transparent pointer-events-none" />
+      
       {/* Subtle top/bottom ambient glow */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#0052FF]/40 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#0052FF]/50 to-transparent pointer-events-none" />
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#FF5C00]/20 to-transparent pointer-events-none" />
 
       {/* Edge gradient mask for smooth fade in/out */}
@@ -79,7 +85,7 @@ export default function TrustBar() {
                 key={`${v.title}-${i}`}
                 className="w-[320px] sm:w-[380px] md:w-[440px] shrink-0 mx-3 sm:mx-4"
               >
-                <div className="group relative flex items-center gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl bg-[#080808] border border-[#1F1F1F] hover:border-[#0052FF]/50 hover:bg-[#0D0D0D] transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
+                <div className="group relative flex items-center gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-white/10 hover:border-[#0052FF]/50 hover:bg-white/[0.08] transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
                   {/* Subtle hover gradient on card */}
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#0052FF]/[0.08] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 

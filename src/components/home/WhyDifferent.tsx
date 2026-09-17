@@ -279,7 +279,10 @@ export default function WhyDifferent() {
   ];
 
   return (
-    <section className="relative bg-[#000000] text-white py-16 sm:py-24 lg:py-32 border-t border-[#1F1F1F] overflow-hidden">
+    <section
+      data-nav-dark="true"
+      className="relative bg-[#000000] text-white py-16 sm:py-24 lg:py-32 border-t border-[#1F1F1F] overflow-hidden"
+    >
       {/* Background Subtle Cross (+) Grid Pattern (Matching Screenshot) */}
       <div
         className="absolute inset-0 pointer-events-none opacity-25"

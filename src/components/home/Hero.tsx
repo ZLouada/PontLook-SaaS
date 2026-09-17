@@ -155,6 +155,9 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
+      {/* Smooth sliding gradient transition into the black section */}
+      <div className="absolute inset-x-0 bottom-0 h-16 sm:h-24 bg-gradient-to-b from-transparent via-slate-900/15 to-black/35 pointer-events-none" />
     </section>
   );
 }

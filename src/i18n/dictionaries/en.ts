@@ -2,7 +2,7 @@ export const en = {
   nav: {
     home: "Home",
     who_we_are: "Who we are",
-    for_providers: "I'm a training provider",
+    for_providers: "For providers",
     find_training: "I'm looking for training",
     contact: "Contact",
     faq: "FAQ",

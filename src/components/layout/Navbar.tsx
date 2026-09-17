@@ -58,7 +58,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
       // Detect if navbar is currently positioned over a dark section
       const darkElements = document.querySelectorAll(
-        '[data-nav-dark="true"], section.bg-slate-950, footer.bg-slate-950, section.bg-slate-900, footer.bg-slate-900'
+        '[data-nav-dark="true"], [data-theme="dark"], section.bg-black, section.bg-slate-950, footer.bg-slate-950, section.bg-slate-900, footer.bg-slate-900'
       );
       const navCenterY = 45;
       let overDark = false;
