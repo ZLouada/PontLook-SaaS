@@ -48,11 +48,8 @@ export default function TrustBar() {
       data-nav-dark="true"
       className="relative bg-[#000000] text-white pt-10 pb-10 sm:py-12 border-b border-[#1A1A1A] overflow-hidden"
     >
-      {/* Smooth sliding transition from white to black (sliding from color to color) */}
-      <div className="absolute inset-x-0 top-0 h-12 sm:h-16 bg-gradient-to-b from-white/10 via-[#070D1E]/40 to-transparent pointer-events-none" />
-      
-      {/* Subtle top/bottom ambient glow */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#0052FF]/50 to-transparent pointer-events-none" />
+      {/* Pure AMOLED top border accent */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#FF5C00]/20 to-transparent pointer-events-none" />
 
       {/* Edge gradient mask for smooth fade in/out */}

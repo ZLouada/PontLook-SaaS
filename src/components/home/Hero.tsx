@@ -25,10 +25,6 @@ export default function Hero() {
         'Zero upfront platform cost for enterprises',
       ];
 
-  const trustedCategories = isAr
-    ? ['القيادة', 'الذكاء الاصطناعي والتقنية', 'المبيعات', 'الامتثال والتوطين']
-    : ['Leadership', 'Tech & AI', 'Sales', 'Compliance & Localization'];
-
   return (
     <section
       data-nav-dark="true"
@@ -47,10 +43,10 @@ export default function Hero() {
 
         {/* Dark Cinematic Vignette & Readability Gradient Overlay */}
         <div className="absolute inset-0 bg-black/45" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/30 rtl:bg-gradient-to-l rtl:from-black/85 rtl:via-black/55 rtl:to-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-black/20 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/35 rtl:bg-gradient-to-l rtl:from-black/85 rtl:via-black/60 rtl:to-black/35" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-black/25 to-black/60" />
 
-        {/* Ambient warm and cool glows echoing the bridge's lights */}
+        {/* Ambient warm and cool glows echoing the bridge lights */}
         <div className="absolute top-1/2 end-1/4 w-[500px] h-[500px] bg-amber-500/[0.06] blur-[150px] rounded-full" />
         <div className="absolute bottom-10 start-1/4 w-[600px] h-[400px] bg-[#0052FF]/[0.08] blur-[160px] rounded-full" />
       </div>
@@ -95,20 +91,14 @@ export default function Hero() {
             </Reveal>
           </div>
 
-          {/* Right Column (Buttons): Prominent Action Card */}
+          {/* Right Column (Buttons directly without any cadre / card) */}
           <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-start lg:items-end justify-center w-full">
             <Reveal delay={0.12}>
-              <div className="w-full max-w-md lg:max-w-sm flex flex-col gap-4 p-6 sm:p-7 rounded-3xl bg-black/45 backdrop-blur-xl border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.65)]">
-                
-                {/* Micro Header for Actions */}
-                <div className="text-xs font-mono font-bold uppercase tracking-wider text-blue-400 mb-1">
-                  {isAr ? 'ابدأ الآن' : 'GET STARTED TODAY'}
-                </div>
-
+              <div className="w-full max-w-sm flex flex-col gap-3.5">
                 {/* Primary CTA Button: Join the networks with electric orange hover effect */}
                 <Link
                   href={`/${lang}/for-providers/apply`}
-                  className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-6 rounded-full bg-[#0052FF] hover:bg-[#FF5C00] text-white font-semibold text-base shadow-lg shadow-blue-600/30 hover:shadow-orange-500/30 active:scale-[0.98] transition-all duration-300 group"
+                  className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-7 rounded-full bg-[#0052FF] hover:bg-[#FF5C00] text-white font-semibold text-base shadow-lg shadow-blue-600/30 hover:shadow-orange-500/30 active:scale-[0.98] transition-all duration-300 group"
                 >
                   <span>{isAr ? 'انضم إلى شبكتنا' : 'Join the networks'}</span>
                   <ArrowRight
@@ -120,29 +110,11 @@ export default function Hero() {
                 {/* Secondary CTA Button: I'm looking for training */}
                 <Link
                   href={`/${lang}/find-training/request`}
-                  className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-6 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-base border border-white/20 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200"
+                  className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-7 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-base border border-white/20 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200"
                 >
                   <Target size={17} className="text-blue-400" />
                   <span>{dict.hero.btn_buyer}</span>
                 </Link>
-
-                {/* Quick Trust / Category Pills */}
-                <div className="pt-4 mt-2 border-t border-white/10">
-                  <div className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 mb-2.5">
-                    {isAr ? 'المجالات التدريبية الأكثر طلباً' : 'POPULAR DOMAINS'}
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {trustedCategories.map((cat) => (
-                      <span
-                        key={cat}
-                        className="px-2.5 py-1 rounded-lg bg-white/10 border border-white/15 text-neutral-200 text-xs font-medium"
-                      >
-                        {cat}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
               </div>
             </Reveal>
           </div>
@@ -150,8 +122,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Smooth sliding gradient transition into the black TrustBar section */}
-      <div className="absolute inset-x-0 bottom-0 h-20 sm:h-28 bg-gradient-to-b from-transparent via-black/60 to-[#000000] pointer-events-none" />
+      {/* Smooth gradient transition into the TrustBar section */}
+      <div className="absolute inset-x-0 bottom-0 h-16 sm:h-20 bg-gradient-to-b from-transparent to-[#000000] pointer-events-none" />
     </section>
   );
 }
