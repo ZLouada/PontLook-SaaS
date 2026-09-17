@@ -619,8 +619,8 @@ export default function LeadTiers(_props?: {
           </div>
         </div>
 
-        {/* Sticky Stacked Style Cards (Preserving the exact sticky animation) */}
-        <div className="relative max-w-5xl mx-auto pb-8 space-y-6 sm:space-y-8">
+        {/* Sticky Stacked Style Cards (Exact pontlook.com/en/for-providers animation) */}
+        <div className="relative max-w-5xl mx-auto pb-6">
           {fallbackCards.map((card, idx) => {
             const config = CARD_CONFIGS[idx] || CARD_CONFIGS[0];
             const dictCard = exp?.cards?.[card.id as 'provider' | 'enterprise' | 'hub' | 'consultation'];
@@ -642,7 +642,7 @@ export default function LeadTiers(_props?: {
             return (
               <div
                 key={card.id}
-                className={`sticky top-28 ${config.zIndexClass} ${theme.bgClass} ${theme.borderClass} border rounded-3xl p-6 sm:p-10 ${config.shadowClass} backdrop-blur-xl transition-all duration-300`}
+                className={`sticky top-28 ${config.zIndexClass} ${config.spacingClass} ${theme.bgClass} ${theme.borderClass} border rounded-3xl p-6 sm:p-10 ${config.shadowClass} backdrop-blur-xl transition-transform duration-200`}
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                   {/* Left Details */}
