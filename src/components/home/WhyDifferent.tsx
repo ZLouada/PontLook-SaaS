@@ -305,22 +305,38 @@ export default function WhyDifferent() {
               const Icon = it.icon;
               const isActive = activeId === it.id;
               return (
-                <button
+                <m.button
                   key={it.id}
                   type="button"
                   onClick={() => setActiveId(it.id)}
-                  className={`w-full text-start group relative flex flex-col justify-between rounded-2xl border p-4 sm:p-5 transition-all duration-200 cursor-pointer ${
+                  whileHover={{ x: isAr ? -4 : 4 }}
+                  whileTap={{ scale: 0.98 }}
+                  animate={{
+                    x: isActive ? (isAr ? -8 : 8) : 0,
+                    scale: isActive ? 1.01 : 1,
+                  }}
+                  transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+                  className={`w-full text-start group relative flex flex-col justify-between rounded-2xl border p-4 sm:p-5 transition-colors duration-200 cursor-pointer ${
                     isActive
-                      ? 'bg-[#141720] border-blue-500/50 shadow-lg shadow-blue-500/10'
+                      ? 'bg-[#141720] border-blue-500/50 shadow-lg shadow-blue-500/15'
                       : 'bg-[#0A0B0E] border-white/[0.08] hover:border-white/20 hover:bg-[#0F1117]'
                   }`}
                 >
+                  {/* Sliding animated active indicator */}
+                  {isActive && (
+                    <m.div
+                      layoutId="activeIndicator"
+                      className={`absolute ${isAr ? 'end-0' : 'start-0'} top-3 bottom-3 w-1.5 bg-blue-500 rounded-full shadow-[0_0_12px_rgba(59,130,246,0.8)]`}
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+
                   <div className="flex items-center justify-between gap-3 mb-2">
                     <div className="flex items-center gap-2.5">
                       <span
                         className={`inline-flex h-8 w-8 items-center justify-center rounded-xl border transition-colors ${
                           isActive
-                            ? 'bg-blue-600 text-white border-blue-500'
+                            ? 'bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-500/30'
                             : 'bg-white/[0.05] text-neutral-300 border-white/10 group-hover:text-white'
                         }`}
                       >
@@ -347,7 +363,7 @@ export default function WhyDifferent() {
                   >
                     {it.title}
                   </h3>
-                </button>
+                </m.button>
               );
             })}
           </div>
@@ -357,10 +373,10 @@ export default function WhyDifferent() {
             <AnimatePresence mode="wait">
               <m.div
                 key={activeCard.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.22, ease: 'easeInOut' }}
+                initial={{ opacity: 0, x: isAr ? -35 : 35, scale: 0.97 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: isAr ? 35 : -35, scale: 0.97 }}
+                transition={{ type: 'spring', stiffness: 320, damping: 28 }}
                 className="space-y-5"
               >
                 {/* Top Badge & Angle */}
