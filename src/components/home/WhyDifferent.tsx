@@ -283,15 +283,6 @@ export default function WhyDifferent() {
       data-nav-dark="true"
       className="relative bg-[#000000] text-white py-16 sm:py-24 lg:py-32 border-t border-[#1F1F1F] overflow-hidden"
     >
-      {/* Background Subtle Cross (+) Grid Pattern (Matching Screenshot) */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-25"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M24 20V28M20 24H28' stroke='%234D7CFF' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E")`,
-          backgroundSize: '48px 48px',
-        }}
-      />
-
       {/* Ambient ambient glow in center */}
       <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] bg-gradient-to-r from-[#0052FF]/[0.08] via-purple-600/[0.05] to-[#FF5C00]/[0.05] blur-[160px] pointer-events-none rounded-full" />
 
