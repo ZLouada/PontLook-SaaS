@@ -306,65 +306,42 @@ export default function WhyDifferent() {
           </p>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6">
+        {/* Cards Grid: 5 Side-by-Side Cards (Attio Style) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
           {items.map((it) => {
             const Icon = it.icon;
             return (
               <div
                 key={it.id}
-                className={`${it.span} flex flex-col`}
+                onClick={() => setActiveModalCard(it)}
+                className="group relative flex flex-col justify-between rounded-2xl border border-white/10 hover:border-[#0052FF]/60 bg-[#0A0A0A] hover:bg-[#0F121A] p-4 sm:p-5 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:shadow-[0_0_30px_rgba(0,82,255,0.22)] cursor-pointer min-h-[170px] sm:min-h-[190px] overflow-hidden"
               >
-                <div
-                  onClick={() => setActiveModalCard(it)}
-                  className="group relative flex flex-col justify-between h-full rounded-3xl border border-[#1F1F1F] bg-[#0A0A0A] hover:bg-[#0D0D0D] p-6 sm:p-8 hover:border-[#0052FF]/60 transition-all duration-300 shadow-[0_8px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_0_35px_rgba(0,82,255,0.18)] cursor-pointer"
-                >
-                  {/* Subtle hover gradient */}
-                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0052FF]/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                {/* Subtle hover gradient */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#0052FF]/[0.08] to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between gap-2 mb-6">
-                      <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#141414] text-[#4D7CFF] group-hover:bg-[#0052FF] group-hover:text-white border border-[#262626] group-hover:border-[#0052FF] transition-all duration-300">
-                        <Icon size={24} />
-                      </span>
-                      <span className="px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-[#141414] text-neutral-400 border border-[#242424] group-hover:border-[#0052FF]/40 group-hover:text-blue-300 transition-colors">
-                        {it.badge}
-                      </span>
-                    </div>
-
-                    <h3 className="text-xl sm:text-2xl font-semibold text-white leading-tight mb-2.5 font-heading group-hover:text-white transition-colors">
-                      {it.title}
-                    </h3>
-
-                    {it.angle && (
-                      <p className="text-xs sm:text-sm font-medium text-[#4D7CFF] mb-3">
-                        {it.angle}
-                      </p>
-                    )}
-
-                    <p className="text-sm sm:text-base text-neutral-400 font-sans leading-relaxed mb-6 line-clamp-3">
-                      {it.text}
-                    </p>
+                <div className="relative z-10 space-y-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-[#4D7CFF] group-hover:bg-[#0052FF] group-hover:text-white border border-white/10 group-hover:border-[#0052FF] transition-all duration-300">
+                      <Icon size={18} />
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-white/[0.04] text-neutral-400 border border-white/[0.08] group-hover:border-[#0052FF]/40 group-hover:text-blue-300 transition-colors">
+                      {it.badge}
+                    </span>
                   </div>
 
-                  <div className="relative z-10 mt-auto pt-2">
-                    <div className="w-full rounded-2xl bg-[#080808] border border-[#1A1A1A] p-2.5 sm:p-3 flex items-center justify-center overflow-hidden mb-5">
-                      {it.mockup}
-                    </div>
+                  {/* Title only */}
+                  <h3 className="text-sm sm:text-base font-semibold text-white leading-snug font-heading group-hover:text-blue-200 transition-colors">
+                    {it.title}
+                  </h3>
+                </div>
 
-                    <div className="flex items-center justify-between pt-2 border-t border-[#171717]">
-                      <span className="inline-flex items-center text-sm font-semibold text-[#4D7CFF] group-hover:text-white transition-colors">
-                        <span>{it.cta}</span>
-                        <ArrowRight
-                          size={16}
-                          className="ms-2 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100"
-                        />
-                      </span>
-                      <span className="text-xs text-neutral-500 font-mono">
-                        {isAr ? 'انقر للتفاصيل' : 'Click to preview'}
-                      </span>
-                    </div>
-                  </div>
+                {/* Minimal preview trigger */}
+                <div className="relative z-10 pt-3 mt-auto border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-neutral-500 group-hover:text-neutral-300 transition-colors">
+                  <span>{isAr ? 'عرض التفاصيل' : 'Tap to expand'}</span>
+                  <ArrowRight
+                    size={13}
+                    className="transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-[#4D7CFF]"
+                  />
                 </div>
               </div>
             );
@@ -376,22 +353,23 @@ export default function WhyDifferent() {
       <AnimatePresence>
         {activeModalCard && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-            {/* Blurry Backdrop (backdrop-blur-md bg-black/75) */}
+            {/* Blurry Backdrop with Apple 3D Touch Dimming */}
             <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               onClick={() => setActiveModalCard(null)}
-              className="absolute inset-0 bg-black/75 backdrop-blur-md"
+              className="absolute inset-0 bg-black/80 backdrop-blur-xl"
             />
 
-            {/* Modal Dialog Card */}
+            {/* Apple 3D Touch Modal Dialog Card */}
             <m.div
-              initial={{ opacity: 0, scale: 0.94, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.94, y: 20 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="relative z-10 w-full max-w-2xl bg-[#0A0E1A] border border-[#1E293B] rounded-3xl p-6 sm:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.9)] overflow-hidden text-white"
+              initial={{ opacity: 0, scale: 0.86, y: 20, filter: 'blur(8px)' }}
+              animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, scale: 0.88, y: 15, filter: 'blur(8px)' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 340 }}
+              className="relative z-10 w-full max-w-2xl bg-[#0B0E17]/95 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 sm:p-8 shadow-[0_30px_80px_rgba(0,0,0,0.95)] overflow-hidden text-white"
             >
               {/* Close Button */}
               <button

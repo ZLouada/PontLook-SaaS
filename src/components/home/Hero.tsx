@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { ArrowRight, CheckCircle2, Target, Sparkles } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Target } from 'lucide-react';
 import Reveal from '@/components/shared/Reveal';
 
 export default function Hero() {
@@ -57,16 +57,6 @@ export default function Hero() {
           {/* Left Column (Writing): Linear-style Headline, Eyebrow & Subtitle in White */}
           <div className="lg:col-span-7 xl:col-span-8 flex flex-col items-start text-start">
             <Reveal>
-              {/* Eyebrow Badge */}
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-blue-300 text-xs font-semibold uppercase tracking-wider mb-6 backdrop-blur-md shadow-sm">
-                <Sparkles size={13} className="text-[#0052FF]" />
-                <span>
-                  {isAr
-                    ? 'منصة الربط التدريبي المؤسسي الأولى بالخليج'
-                    : 'GCC Corporate Training Matchmaking'}
-                </span>
-              </span>
-
               {/* Linear-Style Big Title in White */}
               <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-[62px] xl:text-[70px] font-medium tracking-[-0.035em] leading-[1.08] text-white">
                 {dict.hero.headline}

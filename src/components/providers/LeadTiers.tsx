@@ -151,22 +151,22 @@ const CARD_CONFIGS = [
   {
     zIndexClass: 'z-10',
     spacingClass: 'mb-6 sm:mb-8',
-    shadowClass: 'shadow-xl shadow-[0_-8px_30px_rgba(0,0,0,0.06)]'
+    shadowClass: 'shadow-2xl shadow-[0_-12px_40px_rgba(0,0,0,0.85)]'
   },
   {
     zIndexClass: 'z-20',
     spacingClass: 'mb-6 sm:mb-8',
-    shadowClass: 'shadow-2xl shadow-[0_-8px_30px_rgba(0,0,0,0.08)]'
+    shadowClass: 'shadow-2xl shadow-[0_-12px_40px_rgba(0,0,0,0.85)]'
   },
   {
     zIndexClass: 'z-30',
     spacingClass: 'mb-6 sm:mb-8',
-    shadowClass: 'shadow-2xl shadow-[0_-8px_30px_rgba(0,0,0,0.08)]'
+    shadowClass: 'shadow-2xl shadow-[0_-12px_40px_rgba(0,0,0,0.85)]'
   },
   {
     zIndexClass: 'z-40',
     spacingClass: '',
-    shadowClass: 'shadow-2xl shadow-[0_-8px_30px_rgba(0,0,0,0.1)]'
+    shadowClass: 'shadow-2xl shadow-[0_-12px_40px_rgba(0,0,0,0.9)]'
   }
 ];
 
@@ -219,17 +219,17 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     href: '/for-providers',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#F7F9E8]',
-      borderClass: 'border-[#DCE59B]',
-      textHeading: 'text-[#1C2307]',
-      textBody: 'text-[#44501D]',
-      pillOuter: 'bg-[#EBF0C2] border-[#DCE59B]',
-      pillInner: 'bg-white/85 border-[#DCE59B]',
-      pillText: 'text-[#3E4A14]',
-      buttonClass: 'bg-[#3E4A14] hover:bg-[#2B350A] text-white shadow-md shadow-[#3E4A14]/20',
-      innerCardBg: 'bg-white/95',
-      innerCardBorder: 'border-[#DCE59B]',
-      meterColor: 'bg-[#5C701B]',
+      bgClass: 'bg-[#0B0E09] text-white',
+      borderClass: 'border-[#4D5E19]/70 hover:border-[#657B1F]',
+      textHeading: 'text-white',
+      textBody: 'text-neutral-300',
+      pillOuter: 'bg-[#151B0D] border-[#4D5E19]',
+      pillInner: 'bg-white/10 border-[#4D5E19]/60',
+      pillText: 'text-[#A3C738]',
+      buttonClass: 'bg-[#4D5E19] hover:bg-[#657B1F] text-white shadow-lg shadow-[#4D5E19]/30',
+      innerCardBg: 'bg-[#12160C] text-white',
+      innerCardBorder: 'border-[#2C380E]',
+      meterColor: 'bg-[#84A920]',
     }
   },
   {
@@ -251,17 +251,17 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     href: '/find-training',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#FDF2F8]',
-      borderClass: 'border-[#F5D0FE]',
-      textHeading: 'text-[#38093C]',
-      textBody: 'text-[#701A75]',
-      pillOuter: 'bg-[#FCE7F3] border-[#F5D0FE]',
-      pillInner: 'bg-white/85 border-[#F5D0FE]',
-      pillText: 'text-[#701A75]',
-      buttonClass: 'bg-[#701A75] hover:bg-[#531057] text-white shadow-md shadow-[#701A75]/20',
-      innerCardBg: 'bg-white/95',
-      innerCardBorder: 'border-[#F5D0FE]',
-      meterColor: 'bg-[#A21CAF]',
+      bgClass: 'bg-[#0F0813] text-white',
+      borderClass: 'border-[#701A75]/70 hover:border-[#A21CAF]',
+      textHeading: 'text-white',
+      textBody: 'text-neutral-300',
+      pillOuter: 'bg-[#1D0E23] border-[#701A75]',
+      pillInner: 'bg-white/10 border-[#701A75]/60',
+      pillText: 'text-[#E879F9]',
+      buttonClass: 'bg-[#86198F] hover:bg-[#A21CAF] text-white shadow-lg shadow-[#86198F]/30',
+      innerCardBg: 'bg-[#160B1C] text-white',
+      innerCardBorder: 'border-[#421046]',
+      meterColor: 'bg-[#D946EF]',
     }
   },
   {
@@ -283,16 +283,16 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     href: 'https://blog.pontlook.com',
     isExternal: true,
     clayTheme: {
-      bgClass: 'bg-[#F0F9FF]',
-      borderClass: 'border-[#BAE6FD]',
-      textHeading: 'text-[#082F49]',
-      textBody: 'text-[#0C4A6E]',
-      pillOuter: 'bg-[#E0F2FE] border-[#BAE6FD]',
-      pillInner: 'bg-white/85 border-[#BAE6FD]',
-      pillText: 'text-[#0369A1]',
-      buttonClass: 'bg-[#0284C7] hover:bg-[#0369A1] text-white shadow-md shadow-[#0284C7]/20',
-      innerCardBg: 'bg-white/95',
-      innerCardBorder: 'border-[#BAE6FD]',
+      bgClass: 'bg-[#070E16] text-white',
+      borderClass: 'border-[#0284C7]/70 hover:border-[#38BDF8]',
+      textHeading: 'text-white',
+      textBody: 'text-neutral-300',
+      pillOuter: 'bg-[#0A1A28] border-[#0284C7]',
+      pillInner: 'bg-white/10 border-[#0284C7]/60',
+      pillText: 'text-[#38BDF8]',
+      buttonClass: 'bg-[#0284C7] hover:bg-[#0EA5E9] text-white shadow-lg shadow-[#0284C7]/30',
+      innerCardBg: 'bg-[#0B1520] text-white',
+      innerCardBorder: 'border-[#0C324C]',
       meterColor: 'bg-[#0284C7]',
     }
   },
@@ -315,16 +315,16 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     href: '/contact',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#FFF7ED]',
-      borderClass: 'border-[#FED7AA]',
-      textHeading: 'text-[#431407]',
-      textBody: 'text-[#7C2D12]',
-      pillOuter: 'bg-[#FFEDD5] border-[#FED7AA]',
-      pillInner: 'bg-white/85 border-[#FED7AA]',
-      pillText: 'text-[#C2410C]',
-      buttonClass: 'bg-[#EA580C] hover:bg-[#C2410C] text-white shadow-md shadow-[#EA580C]/20',
-      innerCardBg: 'bg-white/95',
-      innerCardBorder: 'border-[#FED7AA]',
+      bgClass: 'bg-[#110804] text-white',
+      borderClass: 'border-[#EA580C]/70 hover:border-[#F97316]',
+      textHeading: 'text-white',
+      textBody: 'text-neutral-300',
+      pillOuter: 'bg-[#221008] border-[#EA580C]',
+      pillInner: 'bg-white/10 border-[#EA580C]/60',
+      pillText: 'text-[#FB923C]',
+      buttonClass: 'bg-[#EA580C] hover:bg-[#F97316] text-white shadow-lg shadow-[#EA580C]/30',
+      innerCardBg: 'bg-[#180C07] text-white',
+      innerCardBorder: 'border-[#521C06]',
       meterColor: 'bg-[#EA580C]',
     }
   },
@@ -350,17 +350,17 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     href: '/for-providers',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#F7F9E8]',
-      borderClass: 'border-[#DCE59B]',
-      textHeading: 'text-[#1C2307]',
-      textBody: 'text-[#44501D]',
-      pillOuter: 'bg-[#EBF0C2] border-[#DCE59B]',
-      pillInner: 'bg-white/85 border-[#DCE59B]',
-      pillText: 'text-[#3E4A14]',
-      buttonClass: 'bg-[#3E4A14] hover:bg-[#2B350A] text-white shadow-md shadow-[#3E4A14]/20',
-      innerCardBg: 'bg-white/95',
-      innerCardBorder: 'border-[#DCE59B]',
-      meterColor: 'bg-[#5C701B]',
+      bgClass: 'bg-[#0B0E09] text-white',
+      borderClass: 'border-[#4D5E19]/70 hover:border-[#657B1F]',
+      textHeading: 'text-white',
+      textBody: 'text-neutral-300',
+      pillOuter: 'bg-[#151B0D] border-[#4D5E19]',
+      pillInner: 'bg-white/10 border-[#4D5E19]/60',
+      pillText: 'text-[#A3C738]',
+      buttonClass: 'bg-[#4D5E19] hover:bg-[#657B1F] text-white shadow-lg shadow-[#4D5E19]/30',
+      innerCardBg: 'bg-[#12160C] text-white',
+      innerCardBorder: 'border-[#2C380E]',
+      meterColor: 'bg-[#84A920]',
     }
   },
   {
@@ -382,17 +382,17 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     href: '/find-training',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#FDF2F8]',
-      borderClass: 'border-[#F5D0FE]',
-      textHeading: 'text-[#38093C]',
-      textBody: 'text-[#701A75]',
-      pillOuter: 'bg-[#FCE7F3] border-[#F5D0FE]',
-      pillInner: 'bg-white/85 border-[#F5D0FE]',
-      pillText: 'text-[#701A75]',
-      buttonClass: 'bg-[#701A75] hover:bg-[#531057] text-white shadow-md shadow-[#701A75]/20',
-      innerCardBg: 'bg-white/95',
-      innerCardBorder: 'border-[#F5D0FE]',
-      meterColor: 'bg-[#A21CAF]',
+      bgClass: 'bg-[#0F0813] text-white',
+      borderClass: 'border-[#701A75]/70 hover:border-[#A21CAF]',
+      textHeading: 'text-white',
+      textBody: 'text-neutral-300',
+      pillOuter: 'bg-[#1D0E23] border-[#701A75]',
+      pillInner: 'bg-white/10 border-[#701A75]/60',
+      pillText: 'text-[#E879F9]',
+      buttonClass: 'bg-[#86198F] hover:bg-[#A21CAF] text-white shadow-lg shadow-[#86198F]/30',
+      innerCardBg: 'bg-[#160B1C] text-white',
+      innerCardBorder: 'border-[#421046]',
+      meterColor: 'bg-[#D946EF]',
     }
   },
   {
@@ -414,16 +414,16 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     href: 'https://blog.pontlook.com',
     isExternal: true,
     clayTheme: {
-      bgClass: 'bg-[#F0F9FF]',
-      borderClass: 'border-[#BAE6FD]',
-      textHeading: 'text-[#082F49]',
-      textBody: 'text-[#0C4A6E]',
-      pillOuter: 'bg-[#E0F2FE] border-[#BAE6FD]',
-      pillInner: 'bg-white/85 border-[#BAE6FD]',
-      pillText: 'text-[#0369A1]',
-      buttonClass: 'bg-[#0284C7] hover:bg-[#0369A1] text-white shadow-md shadow-[#0284C7]/20',
-      innerCardBg: 'bg-white/95',
-      innerCardBorder: 'border-[#BAE6FD]',
+      bgClass: 'bg-[#070E16] text-white',
+      borderClass: 'border-[#0284C7]/70 hover:border-[#38BDF8]',
+      textHeading: 'text-white',
+      textBody: 'text-neutral-300',
+      pillOuter: 'bg-[#0A1A28] border-[#0284C7]',
+      pillInner: 'bg-white/10 border-[#0284C7]/60',
+      pillText: 'text-[#38BDF8]',
+      buttonClass: 'bg-[#0284C7] hover:bg-[#0EA5E9] text-white shadow-lg shadow-[#0284C7]/30',
+      innerCardBg: 'bg-[#0B1520] text-white',
+      innerCardBorder: 'border-[#0C324C]',
       meterColor: 'bg-[#0284C7]',
     }
   },
@@ -446,16 +446,16 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     href: '/contact',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#FFF7ED]',
-      borderClass: 'border-[#FED7AA]',
-      textHeading: 'text-[#431407]',
-      textBody: 'text-[#7C2D12]',
-      pillOuter: 'bg-[#FFEDD5] border-[#FED7AA]',
-      pillInner: 'bg-white/85 border-[#FED7AA]',
-      pillText: 'text-[#C2410C]',
-      buttonClass: 'bg-[#EA580C] hover:bg-[#C2410C] text-white shadow-md shadow-[#EA580C]/20',
-      innerCardBg: 'bg-white/95',
-      innerCardBorder: 'border-[#FED7AA]',
+      bgClass: 'bg-[#110804] text-white',
+      borderClass: 'border-[#EA580C]/70 hover:border-[#F97316]',
+      textHeading: 'text-white',
+      textBody: 'text-neutral-300',
+      pillOuter: 'bg-[#221008] border-[#EA580C]',
+      pillInner: 'bg-white/10 border-[#EA580C]/60',
+      pillText: 'text-[#FB923C]',
+      buttonClass: 'bg-[#EA580C] hover:bg-[#F97316] text-white shadow-lg shadow-[#EA580C]/30',
+      innerCardBg: 'bg-[#180C07] text-white',
+      innerCardBorder: 'border-[#521C06]',
       meterColor: 'bg-[#EA580C]',
     }
   },
@@ -568,29 +568,29 @@ export default function LeadTiers(_props?: {
     );
   }
 
-  // Section 5: Start with Our Insights, Partner for Real Impact (Clay.com Cards with White Grid)
+  // Section 5: Start with Our Insights, Partner for Real Impact (Pure Dark AMOLED with Sticky Stacking)
   const exp = dict?.experience_cards;
   const fallbackCards = isAr ? EXPERIENCE_CARDS_AR : EXPERIENCE_CARDS_EN;
 
   return (
     <section
-      className="relative py-16 sm:py-24 lg:py-32 bg-white border-t border-slate-200 overflow-hidden"
-      style={{
-        backgroundImage: `linear-gradient(to right, #F1F5F9 1px, transparent 1px), linear-gradient(to bottom, #F1F5F9 1px, transparent 1px)`,
-        backgroundSize: '40px 40px',
-      }}
+      data-nav-dark="true"
+      className="relative py-16 sm:py-24 lg:py-32 bg-[#000000] text-white border-t border-[#1F1F1F] overflow-hidden"
     >
+      {/* Pure AMOLED Ambient Glow (Zero Grids) */}
+      <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/[0.04] blur-[180px] pointer-events-none rounded-full" />
+
       <div className="container-site relative z-10 px-4 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-[#0052FF] text-xs font-semibold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-4">
             <span>{isAr ? 'خيارات الشراكة والتعاون' : 'COLLABORATION PATHWAYS'}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-slate-900 tracking-[-0.03em] leading-tight font-heading">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
             {exp?.title || (isAr ? 'ابدأ برؤى وأبحاث مدروسة. اعقد شراكات تثمر أثراً حقيقياً.' : 'Start with Our Insights. Partner for Real Impact.')}
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto font-sans">
+          <p className="mt-4 text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-sans">
             {exp?.subtitle ||
               (isAr
                 ? 'لا نكتفي بربط احتياجات الشركات مع خبراء التدريب المعتمدين على أرض الواقع. استكشف مدونتنا للاطلاع على أطر عمل وأدلة مجانية، وعندما تكون جاهزاً، نوصلك مباشرة بالشريك الأنسب.'
@@ -603,7 +603,7 @@ export default function LeadTiers(_props?: {
               href="https://blog.pontlook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-[#0052FF] hover:bg-blue-700 text-white font-medium text-sm shadow-md shadow-blue-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-[#0052FF] hover:bg-[#FF5C00] text-white font-medium text-sm shadow-lg shadow-blue-600/30 hover:shadow-orange-500/30 active:scale-[0.98] transition-all"
             >
               <span>{exp?.btn_blog || (isAr ? 'استكشف المدونة والموارد' : 'Explore the Blog & Resources')}</span>
               <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
@@ -611,7 +611,7 @@ export default function LeadTiers(_props?: {
 
             <Link
               href={`/${lang}/find-training`}
-              className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-white text-slate-800 font-medium text-sm border border-slate-300 hover:bg-slate-50 transition-all shadow-sm"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-white/10 text-white font-medium text-sm border border-white/20 hover:bg-white/20 active:scale-[0.98] transition-all shadow-sm"
             >
               <span>{exp?.btn_match || (isAr ? 'ابدأ الربط للتدريب' : 'Get Matched for Training')}</span>
               <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
@@ -619,7 +619,7 @@ export default function LeadTiers(_props?: {
           </div>
         </div>
 
-        {/* Sticky Stacked Clay.com Style Cards */}
+        {/* Sticky Stacked Style Cards (Preserving the exact sticky animation) */}
         <div className="relative max-w-5xl mx-auto pb-8 space-y-6 sm:space-y-8">
           {fallbackCards.map((card, idx) => {
             const config = CARD_CONFIGS[idx] || CARD_CONFIGS[0];
@@ -642,13 +642,13 @@ export default function LeadTiers(_props?: {
             return (
               <div
                 key={card.id}
-                className={`sticky top-28 ${config.zIndexClass} ${theme.bgClass} ${theme.borderClass} border-2 rounded-3xl p-6 sm:p-10 ${config.shadowClass} transition-all duration-300`}
+                className={`sticky top-28 ${config.zIndexClass} ${theme.bgClass} ${theme.borderClass} border rounded-3xl p-6 sm:p-10 ${config.shadowClass} backdrop-blur-xl transition-all duration-300`}
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                   {/* Left Details */}
                   <div className="lg:col-span-7 space-y-5">
-                    {/* Layered Rounded Pill Badges (Clay.com style) */}
-                    <div className="inline-flex items-center p-1 rounded-full border shadow-2xs gap-1.5 backdrop-blur-xs flex-wrap">
+                    {/* Layered Rounded Pill Badges */}
+                    <div className="inline-flex items-center p-1 rounded-full border shadow-sm gap-1.5 backdrop-blur-md flex-wrap">
                       <span className={`px-3 py-1 rounded-full text-xs font-semibold ${theme.pillOuter} ${theme.pillText}`}>
                         {badgeOption}
                       </span>
@@ -690,25 +690,25 @@ export default function LeadTiers(_props?: {
 
                   {/* Right Preview Card */}
                   <div className="lg:col-span-5">
-                    <div className={`rounded-2xl ${theme.innerCardBg} ${theme.innerCardBorder} border p-6 space-y-4 shadow-sm`}>
-                      <div className="text-xs font-semibold text-slate-500 tracking-wide uppercase font-mono">
+                    <div className={`rounded-2xl ${theme.innerCardBg} ${theme.innerCardBorder} border p-6 space-y-4 shadow-xl`}>
+                      <div className="text-xs font-semibold text-neutral-400 tracking-wide uppercase font-mono">
                         {previewHeader}
                       </div>
 
                       <div>
-                        <div className="flex justify-between text-xs font-semibold text-slate-700 mb-1.5">
+                        <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1.5">
                           <span>{metricLabel}</span>
-                          <span className="font-mono font-bold text-slate-900">{metricValue}</span>
+                          <span className="font-mono font-bold text-white">{metricValue}</span>
                         </div>
-                        <div className="h-2 w-full rounded-full bg-slate-100 overflow-hidden">
+                        <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
                           <div className={`h-full rounded-full ${theme.meterColor} ${metricWidth}`} />
                         </div>
                       </div>
 
-                      <ul className="space-y-2.5 pt-2 text-xs text-slate-700">
+                      <ul className="space-y-2.5 pt-2 text-xs text-neutral-200">
                         {checklist.map((item: string, cIdx: number) => (
                           <li key={cIdx} className="flex items-center gap-2">
-                            <CheckCircle2 size={15} className="flex-shrink-0 text-emerald-600" />
+                            <CheckCircle2 size={15} className="flex-shrink-0 text-emerald-400" />
                             <span>{item}</span>
                           </li>
                         ))}
