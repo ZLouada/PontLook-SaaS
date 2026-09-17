@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Building2, ShieldCheck, Award, CheckCircle2, ArrowRight } from 'lucide-react';
-import { m, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { useParams } from 'next/navigation';
 
@@ -12,8 +12,58 @@ export default function HowItWorks() {
   const lang = (params?.lang as string) || 'en';
   const isAr = lang === 'ar';
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
-  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [stepScrollProgress, setStepScrollProgress] = useState(0);
+
+  // Pinned scroll sequence: track progress through the 300vh container
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    if (latest < 0.33) {
+      setActiveStep(0);
+      setStepScrollProgress(latest / 0.33);
+    } else if (latest < 0.66) {
+      setActiveStep(1);
+      setStepScrollProgress((latest - 0.33) / 0.33);
+    } else {
+      setActiveStep(2);
+      setStepScrollProgress(Math.min(1, (latest - 0.66) / 0.34));
+    }
+  });
+
+  useEffect(() => {
+    const current = scrollYProgress.get();
+    if (current < 0.33) {
+      setActiveStep(0);
+    } else if (current < 0.66) {
+      setActiveStep(1);
+    } else {
+      setActiveStep(2);
+    }
+  }, [scrollYProgress]);
+
+  // Smooth scroll to corresponding step in the 300vh sequence when clicked
+  const handleStepClick = (index: number) => {
+    setActiveStep(index);
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const containerTop = window.scrollY + rect.top;
+    const containerHeight = containerRef.current.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    const scrollableDistance = containerHeight - viewportHeight;
+
+    const targetProgress = [0.08, 0.48, 0.88][index];
+    const targetY = containerTop + scrollableDistance * targetProgress;
+
+    window.scrollTo({
+      top: targetY,
+      behavior: 'smooth',
+    });
+  };
 
   const steps = [
     {
@@ -185,187 +235,262 @@ export default function HowItWorks() {
     },
   ];
 
-  const handleStepClick = (index: number) => {
-    setActiveStep(index);
-    stepRefs.current[index]?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-    });
-  };
-
-  // Scroll spy to update active step as user scrolls through the steps on the left
-  useEffect(() => {
-    const handleScroll = () => {
-      const windowHeight = window.innerHeight;
-      const centerY = windowHeight * 0.45;
-
-      stepRefs.current.forEach((el, index) => {
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= centerY && rect.bottom >= centerY) {
-          setActiveStep(index);
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <section
       id="how-it-works"
-      className="relative bg-white text-slate-900 py-16 sm:py-24 lg:py-32 border-t border-slate-200 overflow-hidden"
+      ref={containerRef}
+      data-nav-dark="true"
+      className="relative bg-[#000000] text-white border-t border-[#1F1F1F] min-h-[300vh]"
     >
-      {/* Background Full-White Cross (+) Grid Pattern (Matching Attio Style) */}
+      {/* Background Subtle Cross (+) Grid Pattern on AMOLED Black */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-30"
+        className="absolute inset-0 pointer-events-none opacity-20"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M24 20V28M20 24H28' stroke='%2364748B' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M24 20V28M20 24H28' stroke='%234D7CFF' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E")`,
           backgroundSize: '48px 48px',
         }}
       />
 
       {/* Subtle background ambient glow */}
-      <div className="absolute top-1/4 start-1/4 w-[600px] h-[600px] bg-blue-500/[0.04] blur-[140px] pointer-events-none rounded-full" />
-      <div className="absolute bottom-1/4 end-1/4 w-[600px] h-[600px] bg-indigo-500/[0.03] blur-[140px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/4 start-1/4 w-[600px] h-[600px] bg-blue-600/[0.08] blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-1/4 end-1/4 w-[600px] h-[600px] bg-indigo-600/[0.06] blur-[150px] pointer-events-none rounded-full" />
 
-      <div className="container-site relative z-10 px-4 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      {/* Sticky Pinned Viewport Container */}
+      <div className="sticky top-0 h-screen max-h-[100dvh] flex flex-col justify-center overflow-hidden py-4 sm:py-8">
+        <div className="container-site relative z-10 px-4 sm:px-8 lg:px-12 w-full max-w-7xl mx-auto">
           
-          {/* Left Column: Sticky Heading & Scrolling Step Triggers */}
-          <div className="lg:col-span-5 space-y-8 sm:space-y-12">
-            {/* Main Section Header */}
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-[#0052FF] text-xs font-semibold uppercase tracking-wider">
+          {/* Desktop Layout (Two Columns) */}
+          <div className="hidden lg:grid grid-cols-12 gap-10 lg:gap-14 items-center">
+            
+            {/* Left Column: Heading & 3 White Step Cards */}
+            <div className="lg:col-span-5 space-y-6 sm:space-y-7">
+              {/* Main Section Header */}
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/15 text-blue-400 text-xs font-semibold uppercase tracking-wider">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#0052FF] animate-pulse" />
+                  <span>{dict.how_it_works?.eyebrow || (isAr ? 'في ثلاث خطوات بسيطة' : 'Just in three steps')}</span>
+                </div>
+
+                <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
+                  {dict.how_it_works?.title || (isAr ? 'نحدد المنشآت التي تواجه فجوات تدريب حقيقية' : 'We pinpoint organizations facing real skill & training gaps')}
+                </h2>
+
+                <p className="text-sm text-neutral-400 font-sans leading-relaxed">
+                  {dict.how_it_works?.subtitle || (isAr ? 'منهجيتنا: كيف نربط السوق ونتحقق من الاحتياج ونطابق المزود الأنسب' : 'OUR APPROACH: How We Connect the Market: Learn, Diagnose, and Get Matched')}
+                </p>
+              </div>
+
+              {/* 3 White Step Cards */}
+              <div className="space-y-3.5 pt-1">
+                {steps.map((s, index) => {
+                  const isActive = activeStep === index;
+                  return (
+                    <div
+                      key={s.id}
+                      onClick={() => handleStepClick(index)}
+                      className={`cursor-pointer p-4 sm:p-5 rounded-2xl border transition-all duration-300 relative overflow-hidden ${
+                        isActive
+                          ? 'bg-white text-slate-900 border-2 border-[#0052FF] shadow-[0_16px_40px_rgba(0,82,255,0.25)] ring-2 ring-[#0052FF]/30 scale-[1.02] opacity-100'
+                          : 'bg-white/85 backdrop-blur-md text-slate-800 border border-slate-200/80 shadow-md opacity-45 hover:opacity-75'
+                      }`}
+                    >
+                      <div className="flex items-start gap-3.5">
+                        <div
+                          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-mono font-bold text-sm transition-all ${
+                            isActive
+                              ? 'bg-[#0052FF] text-white shadow-md shadow-blue-500/30'
+                              : 'bg-slate-200 text-slate-700'
+                          }`}
+                        >
+                          {s.number}
+                        </div>
+
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-2 mb-1">
+                            <h3 className="font-semibold text-base font-heading text-slate-900">
+                              {s.navTitle}
+                            </h3>
+                            {isActive && (
+                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-blue-50 text-[#0052FF] border border-blue-200">
+                                {s.badge}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">
+                            {s.subtitle}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Active step progress indicator line */}
+                      {isActive && (
+                        <div className="absolute bottom-0 inset-x-0 h-1 bg-slate-100">
+                          <div
+                            className="h-full bg-[#0052FF] transition-all duration-150"
+                            style={{ width: `${Math.min(100, Math.max(0, stepScrollProgress * 100))}%` }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Right Column: Pop-Up White Card (Attio Style) */}
+            <div className="lg:col-span-7 w-full">
+              <div className="w-full max-w-xl mx-auto">
+                <AnimatePresence mode="wait">
+                  <m.div
+                    key={activeStep}
+                    initial={{ opacity: 0, scale: 0.94, y: 18 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.94, y: -18 }}
+                    transition={{ type: 'spring', stiffness: 350, damping: 26 }}
+                    className="w-full"
+                  >
+                    {/* Crisp White Showcase Card on AMOLED Black */}
+                    <div className="relative rounded-3xl bg-white text-slate-900 shadow-[0_25px_80px_rgba(0,0,0,0.85)] border border-slate-100 p-6 sm:p-8 lg:p-9 overflow-hidden">
+                      
+                      {/* Top Accent Gradient Bar */}
+                      <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#0052FF] via-[#4D7CFF] to-[#FF5C00]" />
+
+                      {/* Card Header Info */}
+                      <div className="flex flex-wrap items-center justify-between gap-3 mb-5 pt-1">
+                        <div className="flex items-center gap-3">
+                          <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0052FF] text-white text-xs font-mono font-semibold shadow-md shadow-blue-500/25">
+                            {steps[activeStep].badge}
+                          </span>
+                          <span className="text-xs font-mono font-medium text-slate-500">
+                            {steps[activeStep].highlight}
+                          </span>
+                        </div>
+
+                        <span className="text-2xl sm:text-3xl font-mono font-bold text-slate-300">
+                          {steps[activeStep].number}
+                        </span>
+                      </div>
+
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 tracking-tight leading-snug mb-3 font-heading">
+                        {steps[activeStep].title}
+                      </h3>
+
+                      <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans mb-6">
+                        {steps[activeStep].subtitle}
+                      </p>
+
+                      {/* Inner Content Card */}
+                      <div className="relative rounded-2xl bg-slate-50/90 border border-slate-200/80 p-5 sm:p-6 shadow-sm">
+                        {steps[activeStep].cardContent}
+                      </div>
+
+                      {/* Bottom step switcher indicator pills */}
+                      <div className="flex items-center justify-between pt-5 mt-5 border-t border-slate-200/60 text-xs text-slate-500">
+                        <div className="flex items-center gap-2">
+                          {steps.map((_, dotIdx) => (
+                            <button
+                              key={dotIdx}
+                              onClick={() => handleStepClick(dotIdx)}
+                              aria-label={`Go to step ${dotIdx + 1}`}
+                              className={`h-2 rounded-full transition-all duration-300 ${
+                                activeStep === dotIdx ? 'w-8 bg-[#0052FF]' : 'w-2 bg-slate-300 hover:bg-slate-400'
+                              }`}
+                            />
+                          ))}
+                        </div>
+
+                        <button
+                          onClick={() => handleStepClick((activeStep + 1) % steps.length)}
+                          className="inline-flex items-center gap-1.5 font-semibold text-[#0052FF] hover:text-blue-700 transition-colors"
+                        >
+                          <span>{isAr ? 'الخطوة التالية' : 'Next Step'}</span>
+                          <ArrowRight size={14} className="rtl:-scale-x-100" />
+                        </button>
+                      </div>
+
+                    </div>
+                  </m.div>
+                </AnimatePresence>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Mobile Layout (Stacked & Compact View) */}
+          <div className="lg:hidden flex flex-col justify-center gap-4 py-2">
+            {/* Header */}
+            <div className="space-y-1.5 text-center">
+              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-white/10 border border-white/15 text-blue-400 text-[11px] font-semibold uppercase tracking-wider">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#0052FF] animate-pulse" />
                 <span>{dict.how_it_works?.eyebrow || (isAr ? 'في ثلاث خطوات بسيطة' : 'Just in three steps')}</span>
               </div>
-
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-slate-900 tracking-[-0.03em] leading-tight font-heading">
+              <h2 className="text-xl sm:text-2xl font-semibold text-white tracking-tight leading-snug font-heading">
                 {dict.how_it_works?.title || (isAr ? 'نحدد المنشآت التي تواجه فجوات تدريب حقيقية' : 'We pinpoint organizations facing real skill & training gaps')}
               </h2>
-
-              <p className="text-sm sm:text-base text-slate-600 font-sans leading-relaxed">
-                {dict.how_it_works?.subtitle || (isAr ? 'منهجيتنا: كيف نربط السوق ونتحقق من الاحتياج ونطابق المزود الأنسب' : 'OUR APPROACH: How We Connect the Market: Learn, Diagnose, and Get Matched')}
-              </p>
             </div>
 
-            {/* Step triggers on the left that activate as the user scrolls */}
-            <div className="space-y-6 sm:space-y-8 pt-2">
+            {/* 3 Mobile Step Tabs */}
+            <div className="grid grid-cols-3 gap-2">
               {steps.map((s, index) => {
                 const isActive = activeStep === index;
                 return (
-                  <div
+                  <button
                     key={s.id}
-                    ref={(el) => {
-                      stepRefs.current[index] = el;
-                    }}
                     onClick={() => handleStepClick(index)}
-                    className={`cursor-pointer p-6 sm:p-7 rounded-3xl border transition-all duration-300 ${
+                    className={`p-2.5 rounded-xl border text-center transition-all ${
                       isActive
-                        ? 'bg-white border-[#0052FF]/60 shadow-[0_12px_30px_-8px_rgba(0,82,255,0.15)] ring-1 ring-[#0052FF]/30'
-                        : 'bg-white/60 border-slate-200/80 hover:bg-white hover:border-slate-300 shadow-sm opacity-75 hover:opacity-100'
+                        ? 'bg-white text-slate-900 border-[#0052FF] shadow-lg ring-1 ring-[#0052FF]'
+                        : 'bg-white/80 text-slate-700 border-slate-200 opacity-50'
                     }`}
                   >
-                    <div className="flex items-start gap-4">
-                      <div
-                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl font-mono font-bold text-sm transition-all ${
-                          isActive
-                            ? 'bg-[#0052FF] text-white shadow-md shadow-blue-500/30'
-                            : 'bg-slate-100 text-slate-600'
-                        }`}
-                      >
-                        {s.number}
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between gap-2 mb-1.5">
-                          <h3
-                            className={`font-semibold text-base sm:text-lg transition-colors font-heading ${
-                              isActive ? 'text-slate-900' : 'text-slate-700'
-                            }`}
-                          >
-                            {s.navTitle}
-                          </h3>
-                          {isActive && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-blue-50 text-[#0052FF] border border-blue-200">
-                              {s.badge}
-                            </span>
-                          )}
-                        </div>
-                        <p
-                          className={`text-xs sm:text-sm leading-relaxed ${
-                            isActive ? 'text-slate-600' : 'text-slate-500'
-                          }`}
-                        >
-                          {s.subtitle}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                    <div className="text-xs font-mono font-bold text-[#0052FF]">{s.number}</div>
+                    <div className="text-[11px] font-semibold truncate">{s.navTitle}</div>
+                  </button>
                 );
               })}
             </div>
-          </div>
 
-          {/* Right Column: Sticky Single Card Pop-Up in Place (Attio Style) */}
-          <div className="lg:col-span-7 lg:sticky lg:top-28 sm:lg:top-36 self-start w-full">
-            <div className="w-full max-w-xl mx-auto">
+            {/* Showcase Card on Mobile */}
+            <div className="w-full">
               <AnimatePresence mode="wait">
                 <m.div
                   key={activeStep}
-                  initial={{ opacity: 0, scale: 0.94, y: 18 }}
+                  initial={{ opacity: 0, scale: 0.96, y: 12 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.94, y: -18 }}
+                  exit={{ opacity: 0, scale: 0.96, y: -12 }}
                   transition={{ type: 'spring', stiffness: 350, damping: 26 }}
                   className="w-full"
                 >
-                  {/* Card with White Transparent Frosted Glass Background */}
-                  <div className="relative rounded-3xl bg-white/80 backdrop-blur-xl border border-slate-200/90 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] p-6 sm:p-8 lg:p-10 overflow-hidden">
-                    
-                    {/* Top Accent Gradient Bar */}
-                    <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#0052FF] via-[#4D7CFF] to-[#FF5C00]/80" />
+                  <div className="relative rounded-2xl bg-white text-slate-900 shadow-xl border border-slate-100 p-4 sm:p-5 overflow-hidden">
+                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#0052FF] via-[#4D7CFF] to-[#FF5C00]" />
 
-                    {/* Card Header Info */}
-                    <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pt-1">
-                      <div className="flex items-center gap-3">
-                        <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0052FF] text-white text-xs font-mono font-semibold shadow-md shadow-blue-500/25">
-                          {steps[activeStep].badge}
-                        </span>
-                        <span className="text-xs font-mono font-medium text-slate-500">
-                          {steps[activeStep].highlight}
-                        </span>
-                      </div>
-
-                      <span className="text-2xl sm:text-3xl font-mono font-bold text-slate-300">
+                    <div className="flex items-center justify-between gap-2 mb-3 pt-1">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#0052FF] text-white text-[11px] font-mono font-semibold">
+                        {steps[activeStep].badge}
+                      </span>
+                      <span className="text-xl font-mono font-bold text-slate-300">
                         {steps[activeStep].number}
                       </span>
                     </div>
 
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-900 tracking-tight leading-snug mb-3 font-heading">
+                    <h3 className="text-lg font-semibold text-slate-900 leading-snug mb-2 font-heading">
                       {steps[activeStep].title}
                     </h3>
 
-                    <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans mb-8">
-                      {steps[activeStep].subtitle}
-                    </p>
-
-                    {/* Inner Content Card */}
-                    <div className="relative rounded-2xl bg-white/95 border border-slate-200/80 p-5 sm:p-6 shadow-sm">
+                    <div className="relative rounded-xl bg-slate-50/90 border border-slate-200/80 p-3.5 shadow-sm text-xs">
                       {steps[activeStep].cardContent}
                     </div>
 
-                    {/* Bottom step switcher indicator pills */}
-                    <div className="flex items-center justify-between pt-6 mt-6 border-t border-slate-200/60 text-xs text-slate-500">
-                      <div className="flex items-center gap-2">
+                    {/* Bottom Nav */}
+                    <div className="flex items-center justify-between pt-3 mt-3 border-t border-slate-200/60 text-xs text-slate-500">
+                      <div className="flex items-center gap-1.5">
                         {steps.map((_, dotIdx) => (
                           <button
                             key={dotIdx}
                             onClick={() => handleStepClick(dotIdx)}
                             aria-label={`Go to step ${dotIdx + 1}`}
-                            className={`h-2 rounded-full transition-all duration-300 ${
-                              activeStep === dotIdx ? 'w-8 bg-[#0052FF]' : 'w-2 bg-slate-300 hover:bg-slate-400'
+                            className={`h-1.5 rounded-full transition-all ${
+                              activeStep === dotIdx ? 'w-6 bg-[#0052FF]' : 'w-1.5 bg-slate-300'
                             }`}
                           />
                         ))}
@@ -373,10 +498,10 @@ export default function HowItWorks() {
 
                       <button
                         onClick={() => handleStepClick((activeStep + 1) % steps.length)}
-                        className="inline-flex items-center gap-1.5 font-semibold text-[#0052FF] hover:text-blue-700 transition-colors"
+                        className="inline-flex items-center gap-1 font-semibold text-[#0052FF]"
                       >
-                        <span>{isAr ? 'الخطوة التالية' : 'Next Step'}</span>
-                        <ArrowRight size={14} className="rtl:-scale-x-100" />
+                        <span>{isAr ? 'التالي' : 'Next'}</span>
+                        <ArrowRight size={13} className="rtl:-scale-x-100" />
                       </button>
                     </div>
 
@@ -384,6 +509,7 @@ export default function HowItWorks() {
                 </m.div>
               </AnimatePresence>
             </div>
+
           </div>
 
         </div>
@@ -391,5 +517,3 @@ export default function HowItWorks() {
     </section>
   );
 }
-
-
