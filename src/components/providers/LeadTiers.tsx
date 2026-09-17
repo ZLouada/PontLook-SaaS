@@ -150,23 +150,23 @@ const TIERS_AR: TierData[] = [
 const CARD_CONFIGS = [
   {
     zIndexClass: 'z-10',
-    spacingClass: 'mb-6 sm:mb-8',
-    shadowClass: 'shadow-2xl shadow-[0_-12px_40px_rgba(0,0,0,0.85)]'
+    spacingClass: 'mb-10 sm:mb-16',
+    shadowClass: 'shadow-2xl shadow-[0_-16px_48px_rgba(0,0,0,0.95)]'
   },
   {
     zIndexClass: 'z-20',
-    spacingClass: 'mb-6 sm:mb-8',
-    shadowClass: 'shadow-2xl shadow-[0_-12px_40px_rgba(0,0,0,0.85)]'
+    spacingClass: 'mb-10 sm:mb-16',
+    shadowClass: 'shadow-2xl shadow-[0_-16px_48px_rgba(0,0,0,0.95)]'
   },
   {
     zIndexClass: 'z-30',
-    spacingClass: 'mb-6 sm:mb-8',
-    shadowClass: 'shadow-2xl shadow-[0_-12px_40px_rgba(0,0,0,0.85)]'
+    spacingClass: 'mb-10 sm:mb-16',
+    shadowClass: 'shadow-2xl shadow-[0_-16px_48px_rgba(0,0,0,0.95)]'
   },
   {
     zIndexClass: 'z-40',
     spacingClass: '',
-    shadowClass: 'shadow-2xl shadow-[0_-12px_40px_rgba(0,0,0,0.9)]'
+    shadowClass: 'shadow-2xl shadow-[0_-16px_48px_rgba(0,0,0,0.95)]'
   }
 ];
 
@@ -575,7 +575,7 @@ export default function LeadTiers(_props?: {
   return (
     <section
       data-nav-dark="true"
-      className="relative py-16 sm:py-24 lg:py-32 bg-[#000000] text-white border-t border-[#1F1F1F] overflow-hidden"
+      className="relative py-16 sm:py-24 lg:py-32 bg-[#000000] text-white border-t border-[#1F1F1F]"
     >
       {/* Pure AMOLED Ambient Glow (Zero Grids) */}
       <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/[0.04] blur-[180px] pointer-events-none rounded-full" />
@@ -637,31 +637,30 @@ export default function LeadTiers(_props?: {
             const cta = dictCard?.cta || card.cta;
             const href = dictCard?.href || card.href;
             const isExternal = card.isExternal || href.startsWith('http');
-            const theme = card.clayTheme;
 
             return (
               <div
                 key={card.id}
-                className={`sticky top-28 ${config.zIndexClass} ${config.spacingClass} ${theme.bgClass} ${theme.borderClass} border rounded-3xl p-6 sm:p-10 ${config.shadowClass} backdrop-blur-xl transition-transform duration-200`}
+                className={`sticky top-24 sm:top-28 ${config.zIndexClass} ${config.spacingClass} bg-[#0A0B0E] border border-white/10 hover:border-white/20 rounded-3xl p-6 sm:p-10 ${config.shadowClass} backdrop-blur-xl transition-transform duration-200`}
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                   {/* Left Details */}
                   <div className="lg:col-span-7 space-y-5">
                     {/* Layered Rounded Pill Badges */}
-                    <div className="inline-flex items-center p-1 rounded-full border shadow-sm gap-1.5 backdrop-blur-md flex-wrap">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${theme.pillOuter} ${theme.pillText}`}>
+                    <div className="inline-flex items-center p-1 rounded-full border border-white/10 bg-white/[0.03] shadow-sm gap-1.5 backdrop-blur-md flex-wrap">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white">
                         {badgeOption}
                       </span>
-                      <span className={`px-3.5 py-1 rounded-full text-xs font-medium ${theme.pillInner} ${theme.pillText}`}>
+                      <span className="px-3.5 py-1 rounded-full text-xs font-medium bg-white/10 text-white/90">
                         {badgePersona}
                       </span>
                     </div>
 
-                    <h3 className={`text-2xl sm:text-3xl font-semibold ${theme.textHeading} tracking-tight leading-snug font-heading`}>
+                    <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-snug font-heading">
                       {title}
                     </h3>
 
-                    <p className={`text-sm sm:text-base ${theme.textBody} leading-relaxed font-sans`}>
+                    <p className="text-sm sm:text-base text-neutral-300 leading-relaxed font-sans">
                       {subtitle}
                     </p>
 
@@ -671,7 +670,7 @@ export default function LeadTiers(_props?: {
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`inline-flex items-center justify-center px-6 py-3.5 rounded-xl ${theme.buttonClass} font-medium text-sm transition-all`}
+                          className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] hover:from-[#0047E0] hover:to-[#386BF6] text-white font-medium text-sm shadow-md shadow-blue-500/20 active:scale-[0.98] transition-all"
                         >
                           <span>{cta}</span>
                           <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
@@ -679,7 +678,7 @@ export default function LeadTiers(_props?: {
                       ) : (
                         <Link
                           href={href.startsWith('http') ? href : `/${lang}${href}`}
-                          className={`inline-flex items-center justify-center px-6 py-3.5 rounded-xl ${theme.buttonClass} font-medium text-sm transition-all`}
+                          className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] hover:from-[#0047E0] hover:to-[#386BF6] text-white font-medium text-sm shadow-md shadow-blue-500/20 active:scale-[0.98] transition-all"
                         >
                           <span>{cta}</span>
                           <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
@@ -690,7 +689,7 @@ export default function LeadTiers(_props?: {
 
                   {/* Right Preview Card */}
                   <div className="lg:col-span-5">
-                    <div className={`rounded-2xl ${theme.innerCardBg} ${theme.innerCardBorder} border p-6 space-y-4 shadow-xl`}>
+                    <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-6 space-y-4 shadow-xl">
                       <div className="text-xs font-semibold text-neutral-400 tracking-wide uppercase font-mono">
                         {previewHeader}
                       </div>
@@ -701,7 +700,7 @@ export default function LeadTiers(_props?: {
                           <span className="font-mono font-bold text-white">{metricValue}</span>
                         </div>
                         <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
-                          <div className={`h-full rounded-full ${theme.meterColor} ${metricWidth}`} />
+                          <div className={`h-full rounded-full bg-blue-600 ${metricWidth}`} />
                         </div>
                       </div>
 
