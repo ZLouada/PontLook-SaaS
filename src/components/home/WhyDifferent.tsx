@@ -5,13 +5,13 @@ import {
   Target,
   ShieldCheck,
   Building2,
-  CheckCircle2,
+  Handshake,
   BookOpen,
+  CheckCircle2,
   ArrowRight,
+  ArrowUpRight,
   ExternalLink,
-  RotateCw,
   X,
-  Sparkles,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -73,7 +73,7 @@ export default function WhyDifferent() {
   }, [activeModalId]);
 
   const items: CardItem[] = [
-    // Card 1: Diagnose Your Skill Gaps (Clean brand font, no mono, no edge lightning)
+    // Card 1: Diagnose Your Skill Gaps (Target icon, clean enterprise look)
     {
       id: 'diagnose',
       index: '01',
@@ -118,7 +118,7 @@ export default function WhyDifferent() {
                 </div>
               </div>
             </div>
-            <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+            <span className="h-2 w-2 rounded-full bg-blue-500" />
           </div>
           <div className="flex flex-wrap gap-1.5 pt-0.5">
             <span className="px-2 py-0.5 rounded-md bg-blue-500/15 text-blue-400 text-[10px] font-medium border border-blue-500/30 font-sans">
@@ -132,7 +132,7 @@ export default function WhyDifferent() {
       ),
     },
 
-    // Card 2: Matched Directly with the Right Training Partner (Emerald accents)
+    // Card 2: Matched Directly with the Right Training Partner (ShieldCheck icon)
     {
       id: 'match',
       index: '02',
@@ -185,7 +185,7 @@ export default function WhyDifferent() {
       ),
     },
 
-    // Card 3: Direct Access to Verified Decision Makers (Purple accents)
+    // Card 3: Direct Access to Verified Decision Makers (Building2 icon)
     {
       id: 'access',
       index: '03',
@@ -239,11 +239,11 @@ export default function WhyDifferent() {
       ),
     },
 
-    // Card 4: Clients Ready to Partner (Amber accents)
+    // Card 4: Clients Ready to Partner (Handshake icon - authentic B2B business partnership)
     {
       id: 'ready',
       index: '04',
-      icon: CheckCircle2,
+      icon: Handshake,
       badge: isAr ? 'جاهزية التعاقد' : 'Ready to Partner',
       title: c?.ready?.title || (isAr ? 'عملاء مستعدون للتعاقد والشراكة' : 'Clients Ready to Partner'),
       angle: isAr ? 'فرص بميزانيات واضحة وأهداف محددة' : 'Active Purchasing Intent',
@@ -272,7 +272,7 @@ export default function WhyDifferent() {
         <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-3 flex flex-col gap-1.5">
           <div className="flex items-center justify-between pb-1 border-b border-white/[0.06] text-xs font-semibold text-white font-sans">
             <span>{c?.ready?.mockupHeader || (isAr ? 'جاهزية الشراكة | مؤكدة' : 'Partnership Readiness | Confirmed')}</span>
-            <CheckCircle2 size={13} className="text-amber-400 shrink-0" />
+            <Handshake size={14} className="text-amber-400 shrink-0" />
           </div>
           <div className="space-y-1 text-[10px] sm:text-[11px] font-sans">
             <div className="flex justify-between items-center">
@@ -292,7 +292,7 @@ export default function WhyDifferent() {
       ),
     },
 
-    // Card 5: L&D Knowledge Hub (Cyan accents)
+    // Card 5: L&D Knowledge Hub (BookOpen icon)
     {
       id: 'hub',
       index: '05',
@@ -358,7 +358,7 @@ export default function WhyDifferent() {
       className="relative bg-[#000000] text-white py-10 sm:py-16 lg:py-20 border-t border-[#1F1F1F]"
     >
       <div className="container-site relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl">
-        {/* Section Header with Staggered Entrance Animation */}
+        {/* Section Header */}
         <m.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -367,7 +367,7 @@ export default function WhyDifferent() {
           className="mb-6 sm:mb-12 text-center max-w-3xl mx-auto space-y-2.5 sm:space-y-3"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-blue-400 text-xs font-semibold uppercase tracking-wider font-sans">
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
             <span>{dict.why_different?.eyebrow || (isAr ? 'تحليلات سوقية قابلة للتنفيذ' : 'ACTIONABLE MARKET INTELLIGENCE')}</span>
           </div>
 
@@ -386,19 +386,13 @@ export default function WhyDifferent() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.4 }}
-            className="pt-1 flex items-center justify-center gap-2 text-[11px] text-neutral-400 font-sans"
+            className="pt-1 flex items-center justify-center gap-1.5 text-[11px] text-neutral-400 font-sans"
           >
-            <m.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 8, ease: 'linear' }}
-            >
-              <RotateCw size={12} className="text-neutral-400" />
-            </m.div>
-            <span>{isAr ? 'اسحب لعرض جميع البطاقات · انقر لفتح النافذة' : 'Swipe to view cards · Tap any card to flip & open'}</span>
+            <span>{isAr ? 'اسحب لعرض جميع البطاقات · انقر لفتح النافذة' : 'Swipe to view cards · Tap any card to open window'}</span>
           </m.div>
         </m.div>
 
-        {/* 5 Side-by-Side Cards (Mobile-Optimized Carousel with Peeking Edges, Desktop 5-Column Grid, Clean Pure Black) */}
+        {/* 5 Side-by-Side Cards (Mobile-Optimized Carousel, Desktop 5-Column Grid, Clean Pure Black) */}
         <m.div
           initial="hidden"
           whileInView="visible"
@@ -491,14 +485,14 @@ export default function WhyDifferent() {
                     </p>
                   </div>
 
-                  {/* Card Front Bottom: Flip & Pop-up Trigger Button */}
+                  {/* Card Front Bottom: Expand Trigger Button with standard ArrowUpRight */}
                   <div className="pt-2.5 border-t border-white/[0.06] flex items-center justify-between font-sans">
                     <span className="text-[10px] text-neutral-400">
-                      {isAr ? 'نافذة تفاعلية' : 'Interactive window'}
+                      {isAr ? 'عرض التفاصيل' : 'View details'}
                     </span>
                     <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-medium transition-all duration-300 ${theme.flipHintBg}`}>
-                      <span>{isAr ? 'افتح النافذة' : 'Flip & open'}</span>
-                      <RotateCw size={11} className="transition-transform duration-500 group-hover:rotate-180" />
+                      <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
+                      <ArrowUpRight size={12} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:group-hover:-translate-x-0.5" />
                     </div>
                   </div>
                 </m.div>
@@ -535,7 +529,7 @@ export default function WhyDifferent() {
               className="fixed inset-0 bg-black/90 backdrop-blur-md cursor-pointer"
             />
 
-            {/* Modal Pop-up Window with 3D Flip & Pop-up spring animation (Phone-optimized max-height and scrolling) */}
+            {/* Modal Pop-up Window with 3D Flip & Pop-up spring animation */}
             <m.div
               initial={{
                 opacity: 0,
@@ -622,9 +616,8 @@ export default function WhyDifferent() {
                     transition={{ delay: 0.2, duration: 0.3 }}
                     className="rounded-xl p-3 sm:p-3.5 bg-white/[0.03] border border-white/[0.08] flex flex-col justify-between space-y-2"
                   >
-                    <div className="text-[11px] font-semibold text-neutral-300 uppercase tracking-wider flex items-center gap-1.5 font-sans">
-                      <Sparkles size={11} className={activeCard.theme.accentText} />
-                      <span>{isAr ? 'أهم المميزات والقيمة المقدمة' : 'Key Strategic Advantages'}</span>
+                    <div className="text-[11px] font-semibold text-neutral-300 uppercase tracking-wider font-sans">
+                      {isAr ? 'أهم المميزات والقيمة المقدمة' : 'Key Strategic Advantages'}
                     </div>
                     <ul className="space-y-1.5 sm:space-y-2 text-xs text-neutral-200 font-sans">
                       {activeCard.takeaways.map((point, pIdx) => (
