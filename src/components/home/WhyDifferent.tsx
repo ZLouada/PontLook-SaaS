@@ -11,6 +11,7 @@ import {
   ExternalLink,
   RotateCw,
   X,
+  Sparkles,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -18,10 +19,6 @@ import { m, AnimatePresence } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 interface CardTheme {
-  border: string;
-  modalBorder: string;
-  glow: string;
-  modalGlow: string;
   accentText: string;
   badgeBg: string;
   iconBg: string;
@@ -76,7 +73,7 @@ export default function WhyDifferent() {
   }, [activeModalId]);
 
   const items: CardItem[] = [
-    // Card 1: Diagnose Your Skill Gaps (Blue accents)
+    // Card 1: Diagnose Your Skill Gaps (Blue accents, clean dark surface without edge lightning)
     {
       id: 'diagnose',
       index: '01',
@@ -98,16 +95,12 @@ export default function WhyDifferent() {
         isAr ? 'تجنب هدر الميزانيات في تدريب غير مجدٍ' : 'Zero wasted corporate training budget',
       ],
       theme: {
-        border: 'border-blue-500/25 hover:border-blue-500/50',
-        modalBorder: 'border-blue-500/40',
-        glow: 'hover:shadow-[0_0_30px_rgba(59,130,246,0.18)]',
-        modalGlow: 'shadow-[0_0_60px_rgba(59,130,246,0.25)]',
         accentText: 'text-blue-400',
-        badgeBg: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
-        iconBg: 'bg-blue-600/20 text-blue-400 border-blue-500/30',
-        buttonBg: 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-600/30',
+        badgeBg: 'bg-blue-500/10 text-blue-400 border border-blue-500/20',
+        iconBg: 'bg-blue-600/15 text-blue-400 border border-blue-500/20',
+        buttonBg: 'bg-blue-600 hover:bg-blue-500 text-white shadow-md shadow-blue-900/40',
         checkColor: 'text-blue-400',
-        flipHintBg: 'bg-blue-500/10 text-blue-300 border-blue-500/25 group-hover:bg-blue-500/20',
+        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-blue-400 group-hover:border-blue-500/30',
       },
       mockup: (
         <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-3 sm:p-3.5 flex flex-col gap-2">
@@ -161,16 +154,12 @@ export default function WhyDifferent() {
         isAr ? 'التزام بالمواعيد والميزانية المحددة مسبقاً' : 'Pre confirmed budget and deployment window',
       ],
       theme: {
-        border: 'border-emerald-500/25 hover:border-emerald-500/50',
-        modalBorder: 'border-emerald-500/40',
-        glow: 'hover:shadow-[0_0_30px_rgba(16,185,129,0.18)]',
-        modalGlow: 'shadow-[0_0_60px_rgba(16,185,129,0.25)]',
         accentText: 'text-emerald-400',
-        badgeBg: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
-        iconBg: 'bg-emerald-600/20 text-emerald-400 border-emerald-500/30',
-        buttonBg: 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/30',
+        badgeBg: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
+        iconBg: 'bg-emerald-600/15 text-emerald-400 border border-emerald-500/20',
+        buttonBg: 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-md shadow-emerald-900/40',
         checkColor: 'text-emerald-400',
-        flipHintBg: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/25 group-hover:bg-emerald-500/20',
+        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-emerald-400 group-hover:border-emerald-500/30',
       },
       mockup: (
         <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-3 sm:p-3.5 flex flex-col gap-2">
@@ -218,16 +207,12 @@ export default function WhyDifferent() {
         isAr ? 'بدون وسطاء أو رسوم اشتراك شهرية' : 'Zero intermediaries and $0 monthly retainers',
       ],
       theme: {
-        border: 'border-purple-500/25 hover:border-purple-500/50',
-        modalBorder: 'border-purple-500/40',
-        glow: 'hover:shadow-[0_0_30px_rgba(168,85,247,0.18)]',
-        modalGlow: 'shadow-[0_0_60px_rgba(168,85,247,0.25)]',
         accentText: 'text-purple-400',
-        badgeBg: 'bg-purple-500/15 text-purple-400 border-purple-500/30',
-        iconBg: 'bg-purple-600/20 text-purple-400 border-purple-500/30',
-        buttonBg: 'bg-purple-600 hover:bg-purple-500 text-white shadow-purple-600/30',
+        badgeBg: 'bg-purple-500/10 text-purple-400 border border-purple-500/20',
+        iconBg: 'bg-purple-600/15 text-purple-400 border border-purple-500/20',
+        buttonBg: 'bg-purple-600 hover:bg-purple-500 text-white shadow-md shadow-purple-900/40',
         checkColor: 'text-purple-400',
-        flipHintBg: 'bg-purple-500/10 text-purple-300 border-purple-500/25 group-hover:bg-purple-500/20',
+        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-purple-400 group-hover:border-purple-500/30',
       },
       mockup: (
         <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-3 sm:p-3.5 flex flex-col gap-2">
@@ -276,16 +261,12 @@ export default function WhyDifferent() {
         isAr ? 'دفع حصري لكل فرصة مؤهلة' : 'Strict pay per qualified lead model',
       ],
       theme: {
-        border: 'border-amber-500/25 hover:border-amber-500/50',
-        modalBorder: 'border-amber-500/40',
-        glow: 'hover:shadow-[0_0_30px_rgba(245,158,11,0.18)]',
-        modalGlow: 'shadow-[0_0_60px_rgba(245,158,11,0.25)]',
         accentText: 'text-amber-400',
-        badgeBg: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
-        iconBg: 'bg-amber-600/20 text-amber-400 border-amber-500/30',
-        buttonBg: 'bg-amber-600 hover:bg-amber-500 text-white shadow-amber-600/30',
+        badgeBg: 'bg-amber-500/10 text-amber-400 border border-amber-500/20',
+        iconBg: 'bg-amber-600/15 text-amber-400 border border-amber-500/20',
+        buttonBg: 'bg-amber-600 hover:bg-amber-500 text-white shadow-md shadow-amber-900/40',
         checkColor: 'text-amber-400',
-        flipHintBg: 'bg-amber-500/10 text-amber-300 border-amber-500/25 group-hover:bg-amber-500/20',
+        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-amber-400 group-hover:border-amber-500/30',
       },
       mockup: (
         <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-3 sm:p-3.5 flex flex-col gap-1.5">
@@ -333,16 +314,12 @@ export default function WhyDifferent() {
         isAr ? 'دراسات حالة حول قياس أثر التدريب وعائده' : 'Practical case studies on training ROI',
       ],
       theme: {
-        border: 'border-cyan-500/25 hover:border-cyan-500/50',
-        modalBorder: 'border-cyan-500/40',
-        glow: 'hover:shadow-[0_0_30px_rgba(6,182,212,0.18)]',
-        modalGlow: 'shadow-[0_0_60px_rgba(6,182,212,0.25)]',
         accentText: 'text-cyan-400',
-        badgeBg: 'bg-cyan-500/15 text-cyan-400 border-cyan-500/30',
-        iconBg: 'bg-cyan-600/20 text-cyan-400 border-cyan-500/30',
-        buttonBg: 'bg-cyan-600 hover:bg-cyan-500 text-white shadow-cyan-600/30',
+        badgeBg: 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20',
+        iconBg: 'bg-cyan-600/15 text-cyan-400 border border-cyan-500/20',
+        buttonBg: 'bg-cyan-600 hover:bg-cyan-500 text-white shadow-md shadow-cyan-900/40',
         checkColor: 'text-cyan-400',
-        flipHintBg: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/25 group-hover:bg-cyan-500/20',
+        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-cyan-400 group-hover:border-cyan-500/30',
       },
       mockup: (
         <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-3 sm:p-3.5 flex flex-col gap-1.5">
@@ -381,10 +358,16 @@ export default function WhyDifferent() {
       className="relative bg-[#000000] text-white py-12 sm:py-16 lg:py-20 border-t border-[#1F1F1F]"
     >
       <div className="container-site relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl">
-        {/* Section Header */}
-        <div className="mb-8 sm:mb-12 text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-blue-400 text-xs font-semibold uppercase tracking-wider">
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+        {/* Section Header with Staggered Entrance Animation */}
+        <m.div
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-8 sm:mb-12 text-center max-w-3xl mx-auto space-y-3"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-blue-400 text-xs font-semibold uppercase tracking-wider">
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" />
             <span>{dict.why_different?.eyebrow || (isAr ? 'تحليلات سوقية قابلة للتنفيذ' : 'ACTIONABLE MARKET INTELLIGENCE')}</span>
           </div>
 
@@ -399,14 +382,36 @@ export default function WhyDifferent() {
                 : 'We analyze real GCC workplace challenges to deliver free, actionable problem solving guides on our blog, and directly connect corporate leaders with the verified training providers ready to implement the solution.')}
           </p>
 
-          <div className="pt-1 flex items-center justify-center gap-2 text-[11px] text-neutral-500 font-mono">
-            <RotateCw size={12} className="text-blue-400 animate-spin-slow" />
+          <m.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.4 }}
+            className="pt-1 flex items-center justify-center gap-2 text-[11px] text-neutral-500 font-mono"
+          >
+            <m.div
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 8, ease: 'linear' }}
+            >
+              <RotateCw size={12} className="text-neutral-400" />
+            </m.div>
             <span>{isAr ? 'انقر على أي بطاقة للقلب وفتح نافذة التفاصيل' : 'Click any card to flip & pop up detail window'}</span>
-          </div>
-        </div>
+          </m.div>
+        </m.div>
 
-        {/* 5 Side-by-Side Cards (Pure AMOLED Black with Distinct Colored Accents) */}
-        <div className="flex lg:grid lg:grid-cols-5 gap-3.5 sm:gap-4 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 snap-x snap-mandatory scrollbar-none items-stretch">
+        {/* 5 Side-by-Side Cards (Clean Minimalist AMOLED Black without Edge Lightning, Dynamic Staggered Animations) */}
+        <m.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+            },
+          }}
+          className="flex lg:grid lg:grid-cols-5 gap-3.5 sm:gap-4 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 snap-x snap-mandatory scrollbar-none items-stretch"
+        >
           {items.map((it) => {
             const Icon = it.icon;
             const isSelected = activeModalId === it.id;
@@ -419,26 +424,43 @@ export default function WhyDifferent() {
                 onClick={() => setActiveModalId(it.id)}
               >
                 <m.div
-                  whileHover={{ y: -5, scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 35, scale: 0.95 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      transition: { type: 'spring', stiffness: 260, damping: 22 },
+                    },
+                  }}
+                  whileHover={{
+                    y: -8,
+                    scale: 1.02,
+                    transition: { type: 'spring', stiffness: 350, damping: 20 },
+                  }}
+                  whileTap={{ scale: 0.97 }}
                   animate={{
                     rotateY: isSelected ? (isAr ? -180 : 180) : 0,
                   }}
                   transition={{
-                    duration: 0.5,
+                    duration: 0.55,
                     type: 'spring',
                     stiffness: 280,
                     damping: 24,
                   }}
                   style={{ transformStyle: 'preserve-3d' }}
-                  className={`group relative w-full h-full rounded-2xl bg-[#08080A] border ${theme.border} p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-lg transition-all duration-300 ${theme.glow} transform-gpu`}
+                  className="group relative w-full h-full rounded-2xl bg-[#0A0B0E] border border-white/[0.08] hover:border-white/20 p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-xl shadow-black/60 transition-colors duration-200 transform-gpu"
                 >
                   {/* Card Front Top */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className={`h-9 w-9 rounded-xl ${theme.iconBg} border flex items-center justify-center font-bold shadow-sm`}>
+                      <m.div
+                        whileHover={{ rotate: 8, scale: 1.1 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                        className={`h-9 w-9 rounded-xl ${theme.iconBg} flex items-center justify-center font-bold shadow-sm transition-transform`}
+                      >
                         <Icon size={18} />
-                      </div>
+                      </m.div>
                       <span className="text-xs font-mono font-bold text-neutral-500 tracking-wider">
                         {it.index}
                       </span>
@@ -446,13 +468,13 @@ export default function WhyDifferent() {
 
                     {/* Category pill badge */}
                     <div>
-                      <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold border ${theme.badgeBg}`}>
+                      <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold ${theme.badgeBg}`}>
                         {it.badge}
                       </span>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-sm sm:text-[15px] font-semibold text-white font-heading leading-snug tracking-tight">
+                    <h3 className="text-sm sm:text-[15px] font-semibold text-white font-heading leading-snug tracking-tight group-hover:text-white transition-colors">
                       {it.title}
                     </h3>
 
@@ -470,71 +492,79 @@ export default function WhyDifferent() {
                   </div>
 
                   {/* Card Front Bottom: Flip & Pop-up Trigger Button */}
-                  <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between">
+                  <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between">
                     <span className="text-[10px] text-neutral-500 font-mono">
                       {isAr ? 'نافذة تفاعلية' : 'Interactive window'}
                     </span>
-                    <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-medium border transition-all ${theme.flipHintBg}`}>
+                    <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-medium transition-all duration-300 ${theme.flipHintBg}`}>
                       <span>{isAr ? 'افتح النافذة' : 'Flip & open'}</span>
-                      <RotateCw size={11} className="transition-transform group-hover:rotate-180" />
+                      <RotateCw size={11} className="transition-transform duration-500 group-hover:rotate-180" />
                     </div>
                   </div>
                 </m.div>
               </div>
             );
           })}
-        </div>
+        </m.div>
       </div>
 
-      {/* POP-UP WINDOW (MODAL DIALOG WITH FLIP-IN ANIMATION & PURE BLACK BACKGROUND) */}
+      {/* POP-UP WINDOW (MODAL DIALOG WITH MULTI-STAGE 3D FLIP & SPRING ENTRANCE, PURE BLACK BACKGROUND WITHOUT EDGE LIGHTNING) */}
       <AnimatePresence>
         {activeCard && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-            {/* Backdrop (Click in empty space to return to normal card) */}
+            {/* Backdrop with Smooth Fade-In (Click in empty space to return to normal card) */}
             <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
+              transition={{ duration: 0.28, ease: 'easeOut' }}
               onClick={() => setActiveModalId(null)}
-              className="fixed inset-0 bg-black/85 backdrop-blur-md"
+              className="fixed inset-0 bg-black/90 backdrop-blur-md cursor-pointer"
             />
 
-            {/* Modal Pop-up Window with 3D Flip & Pop-up spring animation */}
+            {/* Modal Pop-up Window with 3D Flip & Pop-up spring animation (Clean pure black, NO edge lighting) */}
             <m.div
               initial={{
                 opacity: 0,
-                scale: 0.82,
-                rotateY: isAr ? -50 : 50,
-                y: 25,
+                scale: 0.72,
+                rotateX: 25,
+                rotateY: isAr ? -45 : 45,
+                y: 40,
               }}
               animate={{
                 opacity: 1,
                 scale: 1,
+                rotateX: 0,
                 rotateY: 0,
                 y: 0,
               }}
               exit={{
                 opacity: 0,
-                scale: 0.82,
-                rotateY: isAr ? 50 : -50,
-                y: 25,
+                scale: 0.75,
+                rotateX: -20,
+                rotateY: isAr ? 45 : -45,
+                y: 35,
               }}
               transition={{
                 type: 'spring',
                 stiffness: 300,
-                damping: 26,
+                damping: 25,
               }}
               style={{ transformStyle: 'preserve-3d', perspective: 1200 }}
-              className={`relative z-10 w-full max-w-2xl sm:max-w-3xl rounded-2xl sm:rounded-3xl bg-[#060608] border ${activeCard.theme.modalBorder} p-5 sm:p-7 text-white shadow-2xl ${activeCard.theme.modalGlow} my-auto overflow-hidden transform-gpu`}
+              className="relative z-10 w-full max-w-2xl sm:max-w-3xl rounded-2xl sm:rounded-3xl bg-[#0A0B0E] border border-white/[0.12] p-5 sm:p-7 text-white shadow-2xl shadow-black my-auto overflow-hidden transform-gpu"
             >
-              {/* Top Bar: Icon, Badge, Angle & Close X Button */}
-              <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] gap-3">
+              {/* Top Bar: Staggered Entrance */}
+              <m.div
+                initial={{ opacity: 0, y: -12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+                className="flex items-center justify-between pb-4 border-b border-white/[0.08] gap-3"
+              >
                 <div className="flex items-center gap-2.5 flex-wrap">
-                  <div className={`h-8 w-8 rounded-lg ${activeCard.theme.iconBg} border flex items-center justify-center font-bold`}>
+                  <div className={`h-8 w-8 rounded-lg ${activeCard.theme.iconBg} flex items-center justify-center font-bold`}>
                     <activeCard.icon size={16} />
                   </div>
-                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold border ${activeCard.theme.badgeBg}`}>
+                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold ${activeCard.theme.badgeBg}`}>
                     {activeCard.badge}
                   </span>
                   {activeCard.angle && (
@@ -544,76 +574,120 @@ export default function WhyDifferent() {
                   )}
                 </div>
 
-                <button
+                <m.button
                   type="button"
+                  whileHover={{ rotate: 90, scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                   onClick={() => setActiveModalId(null)}
                   aria-label={isAr ? 'إغلاق النافذة' : 'Close window'}
                   className="h-8 w-8 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center transition-colors shrink-0 cursor-pointer"
                 >
                   <X size={15} />
-                </button>
-              </div>
+                </m.button>
+              </m.div>
 
-              {/* Modal Body: Title, Text, Strategic Advantages, Proof Widget */}
+              {/* Modal Body: Sequential Animated Content */}
               <div className="py-4 space-y-4">
-                <div>
+                <m.div
+                  initial={{ opacity: 0, x: isAr ? 20 : -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.15, duration: 0.35 }}
+                >
                   <h3 className="text-lg sm:text-xl font-semibold text-white tracking-tight leading-snug font-heading">
                     {activeCard.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed mt-1.5">
                     {activeCard.text}
                   </p>
-                </div>
+                </m.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 items-stretch">
-                  {/* Strategic Advantages Checklist */}
-                  <div className="rounded-xl p-3.5 bg-white/[0.03] border border-white/[0.08] flex flex-col justify-between space-y-2">
-                    <div className="text-[11px] font-mono font-semibold text-neutral-400 uppercase tracking-wider">
-                      {isAr ? 'أهم المميزات والقيمة المقدمة' : 'Key Strategic Advantages'}
+                  {/* Strategic Advantages Checklist with Cascading Bullet Animation */}
+                  <m.div
+                    initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ delay: 0.22, duration: 0.35 }}
+                    className="rounded-xl p-3.5 bg-white/[0.03] border border-white/[0.08] flex flex-col justify-between space-y-2"
+                  >
+                    <div className="text-[11px] font-mono font-semibold text-neutral-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <Sparkles size={11} className={activeCard.theme.accentText} />
+                      <span>{isAr ? 'أهم المميزات والقيمة المقدمة' : 'Key Strategic Advantages'}</span>
                     </div>
-                    <ul className="space-y-1.5 text-xs text-neutral-200">
+                    <ul className="space-y-2 text-xs text-neutral-200">
                       {activeCard.takeaways.map((point, pIdx) => (
-                        <li key={pIdx} className="flex items-start gap-2">
-                          <CheckCircle2 size={13} className={`${activeCard.theme.checkColor} shrink-0 mt-0.5`} />
+                        <m.li
+                          key={pIdx}
+                          initial={{ opacity: 0, x: isAr ? 15 : -15 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.26 + pIdx * 0.07, type: 'spring', stiffness: 320, damping: 22 }}
+                          className="flex items-start gap-2"
+                        >
+                          <m.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: [0, 1.35, 1] }}
+                            transition={{ delay: 0.28 + pIdx * 0.07, duration: 0.35 }}
+                            className="shrink-0 mt-0.5"
+                          >
+                            <CheckCircle2 size={13} className={activeCard.theme.checkColor} />
+                          </m.div>
                           <span className="leading-snug">{point}</span>
-                        </li>
+                        </m.li>
                       ))}
                     </ul>
-                  </div>
+                  </m.div>
 
-                  {/* Mockup Proof Widget */}
-                  <div className="flex items-center">
+                  {/* Mockup Proof Widget with Smooth Slide-In */}
+                  <m.div
+                    initial={{ opacity: 0, x: isAr ? -20 : 20, scale: 0.96 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    transition={{ delay: 0.26, duration: 0.4 }}
+                    className="flex items-center"
+                  >
                     {activeCard.mockup}
-                  </div>
+                  </m.div>
                 </div>
               </div>
 
-              {/* Modal Footer: Close Hint & CTA Action Button */}
-              <div className="pt-3.5 border-t border-white/[0.08] flex items-center justify-between flex-wrap gap-3">
+              {/* Modal Footer: Close Hint & Tactile Interactive CTA Action Button */}
+              <m.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.32, duration: 0.35 }}
+                className="pt-3.5 border-t border-white/[0.08] flex items-center justify-between flex-wrap gap-3"
+              >
                 <span className="text-[11px] text-neutral-400 font-mono">
                   {isAr ? 'انقر في المساحة الفارغة أو Esc للإغلاق' : 'Click outside or press Esc to close'}
                 </span>
 
                 {activeCard.isExternal ? (
-                  <a
+                  <m.a
                     href={activeCard.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${activeCard.theme.buttonBg} font-medium text-xs sm:text-sm shadow-md active:scale-[0.98] transition-all`}
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                    className={`inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${activeCard.theme.buttonBg} font-medium text-xs sm:text-sm active:scale-[0.98] transition-all`}
                   >
                     <span>{activeCard.cta}</span>
                     <ExternalLink size={14} className="ms-1.5" />
-                  </a>
+                  </m.a>
                 ) : (
-                  <Link
-                    href={activeCard.href}
-                    className={`inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${activeCard.theme.buttonBg} font-medium text-xs sm:text-sm shadow-md active:scale-[0.98] transition-all`}
+                  <m.div
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   >
-                    <span>{activeCard.cta}</span>
-                    <ArrowRight size={14} className="ms-1.5 rtl:-scale-x-100" />
-                  </Link>
+                    <Link
+                      href={activeCard.href}
+                      className={`inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${activeCard.theme.buttonBg} font-medium text-xs sm:text-sm active:scale-[0.98] transition-all`}
+                    >
+                      <span>{activeCard.cta}</span>
+                      <ArrowRight size={14} className="ms-1.5 rtl:-scale-x-100" />
+                    </Link>
+                  </m.div>
                 )}
-              </div>
+              </m.div>
             </m.div>
           </div>
         )}
