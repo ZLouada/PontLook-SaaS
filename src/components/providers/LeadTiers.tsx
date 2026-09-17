@@ -187,15 +187,13 @@ interface ExperienceCardData {
   clayTheme: {
     bgClass: string;
     borderClass: string;
-    textHeading: string;
-    textBody: string;
     pillOuter: string;
     pillInner: string;
-    pillText: string;
     buttonClass: string;
     innerCardBg: string;
     innerCardBorder: string;
     meterColor: string;
+    checkColor?: string;
   };
 }
 
@@ -219,17 +217,15 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     href: '/for-providers',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#0B0E09] text-white',
-      borderClass: 'border-[#4D5E19]/70 hover:border-[#657B1F]',
-      textHeading: 'text-white',
-      textBody: 'text-neutral-300',
-      pillOuter: 'bg-[#151B0D] border-[#4D5E19]',
-      pillInner: 'bg-white/10 border-[#4D5E19]/60',
-      pillText: 'text-[#A3C738]',
-      buttonClass: 'bg-[#4D5E19] hover:bg-[#657B1F] text-white shadow-lg shadow-[#4D5E19]/30',
-      innerCardBg: 'bg-[#12160C] text-white',
-      innerCardBorder: 'border-[#2C380E]',
-      meterColor: 'bg-[#84A920]',
+      bgClass: 'bg-[#060E1A]/95 text-white',
+      borderClass: 'border-[#0052FF]/40 hover:border-[#0052FF]/70',
+      pillOuter: 'bg-[#0052FF] text-white',
+      pillInner: 'bg-white/10 border-white/15 text-blue-200',
+      buttonClass: 'bg-gradient-to-r from-[#0052FF] to-[#3B82F6] hover:from-[#0047E0] hover:to-[#2563EB] text-white shadow-lg shadow-blue-500/25',
+      innerCardBg: 'bg-[#0A162D] text-white',
+      innerCardBorder: 'border-[#0052FF]/25',
+      meterColor: 'bg-[#0052FF]',
+      checkColor: 'text-[#38BDF8]',
     }
   },
   {
@@ -251,17 +247,15 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     href: '/find-training',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#0F0813] text-white',
-      borderClass: 'border-[#701A75]/70 hover:border-[#A21CAF]',
-      textHeading: 'text-white',
-      textBody: 'text-neutral-300',
-      pillOuter: 'bg-[#1D0E23] border-[#701A75]',
-      pillInner: 'bg-white/10 border-[#701A75]/60',
-      pillText: 'text-[#E879F9]',
-      buttonClass: 'bg-[#86198F] hover:bg-[#A21CAF] text-white shadow-lg shadow-[#86198F]/30',
-      innerCardBg: 'bg-[#160B1C] text-white',
-      innerCardBorder: 'border-[#421046]',
-      meterColor: 'bg-[#D946EF]',
+      bgClass: 'bg-[#04150F]/95 text-white',
+      borderClass: 'border-emerald-500/40 hover:border-emerald-500/70',
+      pillOuter: 'bg-emerald-600 text-white',
+      pillInner: 'bg-white/10 border-white/15 text-emerald-200',
+      buttonClass: 'bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white shadow-lg shadow-emerald-500/25',
+      innerCardBg: 'bg-[#082218] text-white',
+      innerCardBorder: 'border-emerald-500/25',
+      meterColor: 'bg-emerald-500',
+      checkColor: 'text-emerald-400',
     }
   },
   {
@@ -283,17 +277,15 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     href: 'https://blog.pontlook.com',
     isExternal: true,
     clayTheme: {
-      bgClass: 'bg-[#070E16] text-white',
-      borderClass: 'border-[#0284C7]/70 hover:border-[#38BDF8]',
-      textHeading: 'text-white',
-      textBody: 'text-neutral-300',
-      pillOuter: 'bg-[#0A1A28] border-[#0284C7]',
-      pillInner: 'bg-white/10 border-[#0284C7]/60',
-      pillText: 'text-[#38BDF8]',
-      buttonClass: 'bg-[#0284C7] hover:bg-[#0EA5E9] text-white shadow-lg shadow-[#0284C7]/30',
-      innerCardBg: 'bg-[#0B1520] text-white',
-      innerCardBorder: 'border-[#0C324C]',
-      meterColor: 'bg-[#0284C7]',
+      bgClass: 'bg-[#11071D]/95 text-white',
+      borderClass: 'border-purple-500/40 hover:border-purple-500/70',
+      pillOuter: 'bg-purple-600 text-white',
+      pillInner: 'bg-white/10 border-white/15 text-purple-200',
+      buttonClass: 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/25',
+      innerCardBg: 'bg-[#1D0C30] text-white',
+      innerCardBorder: 'border-purple-500/25',
+      meterColor: 'bg-purple-500',
+      checkColor: 'text-purple-300',
     }
   },
   {
@@ -315,17 +307,15 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     href: '/contact',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#110804] text-white',
-      borderClass: 'border-[#EA580C]/70 hover:border-[#F97316]',
-      textHeading: 'text-white',
-      textBody: 'text-neutral-300',
-      pillOuter: 'bg-[#221008] border-[#EA580C]',
-      pillInner: 'bg-white/10 border-[#EA580C]/60',
-      pillText: 'text-[#FB923C]',
-      buttonClass: 'bg-[#EA580C] hover:bg-[#F97316] text-white shadow-lg shadow-[#EA580C]/30',
-      innerCardBg: 'bg-[#180C07] text-white',
-      innerCardBorder: 'border-[#521C06]',
-      meterColor: 'bg-[#EA580C]',
+      bgClass: 'bg-[#180A04]/95 text-white',
+      borderClass: 'border-[#FF5C00]/40 hover:border-[#FF5C00]/70',
+      pillOuter: 'bg-[#FF5C00] text-white',
+      pillInner: 'bg-white/10 border-white/15 text-orange-200',
+      buttonClass: 'bg-gradient-to-r from-[#FF5C00] to-[#EA580C] hover:from-[#EA580C] hover:to-[#C2410C] text-white shadow-lg shadow-[#FF5C00]/25',
+      innerCardBg: 'bg-[#261106] text-white',
+      innerCardBorder: 'border-[#FF5C00]/25',
+      meterColor: 'bg-[#FF5C00]',
+      checkColor: 'text-amber-400',
     }
   },
 ];
@@ -350,17 +340,15 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     href: '/for-providers',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#0B0E09] text-white',
-      borderClass: 'border-[#4D5E19]/70 hover:border-[#657B1F]',
-      textHeading: 'text-white',
-      textBody: 'text-neutral-300',
-      pillOuter: 'bg-[#151B0D] border-[#4D5E19]',
-      pillInner: 'bg-white/10 border-[#4D5E19]/60',
-      pillText: 'text-[#A3C738]',
-      buttonClass: 'bg-[#4D5E19] hover:bg-[#657B1F] text-white shadow-lg shadow-[#4D5E19]/30',
-      innerCardBg: 'bg-[#12160C] text-white',
-      innerCardBorder: 'border-[#2C380E]',
-      meterColor: 'bg-[#84A920]',
+      bgClass: 'bg-[#060E1A]/95 text-white',
+      borderClass: 'border-[#0052FF]/40 hover:border-[#0052FF]/70',
+      pillOuter: 'bg-[#0052FF] text-white',
+      pillInner: 'bg-white/10 border-white/15 text-blue-200',
+      buttonClass: 'bg-gradient-to-r from-[#0052FF] to-[#3B82F6] hover:from-[#0047E0] hover:to-[#2563EB] text-white shadow-lg shadow-blue-500/25',
+      innerCardBg: 'bg-[#0A162D] text-white',
+      innerCardBorder: 'border-[#0052FF]/25',
+      meterColor: 'bg-[#0052FF]',
+      checkColor: 'text-[#38BDF8]',
     }
   },
   {
@@ -382,17 +370,15 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     href: '/find-training',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#0F0813] text-white',
-      borderClass: 'border-[#701A75]/70 hover:border-[#A21CAF]',
-      textHeading: 'text-white',
-      textBody: 'text-neutral-300',
-      pillOuter: 'bg-[#1D0E23] border-[#701A75]',
-      pillInner: 'bg-white/10 border-[#701A75]/60',
-      pillText: 'text-[#E879F9]',
-      buttonClass: 'bg-[#86198F] hover:bg-[#A21CAF] text-white shadow-lg shadow-[#86198F]/30',
-      innerCardBg: 'bg-[#160B1C] text-white',
-      innerCardBorder: 'border-[#421046]',
-      meterColor: 'bg-[#D946EF]',
+      bgClass: 'bg-[#04150F]/95 text-white',
+      borderClass: 'border-emerald-500/40 hover:border-emerald-500/70',
+      pillOuter: 'bg-emerald-600 text-white',
+      pillInner: 'bg-white/10 border-white/15 text-emerald-200',
+      buttonClass: 'bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white shadow-lg shadow-emerald-500/25',
+      innerCardBg: 'bg-[#082218] text-white',
+      innerCardBorder: 'border-emerald-500/25',
+      meterColor: 'bg-emerald-500',
+      checkColor: 'text-emerald-400',
     }
   },
   {
@@ -414,17 +400,15 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     href: 'https://blog.pontlook.com',
     isExternal: true,
     clayTheme: {
-      bgClass: 'bg-[#070E16] text-white',
-      borderClass: 'border-[#0284C7]/70 hover:border-[#38BDF8]',
-      textHeading: 'text-white',
-      textBody: 'text-neutral-300',
-      pillOuter: 'bg-[#0A1A28] border-[#0284C7]',
-      pillInner: 'bg-white/10 border-[#0284C7]/60',
-      pillText: 'text-[#38BDF8]',
-      buttonClass: 'bg-[#0284C7] hover:bg-[#0EA5E9] text-white shadow-lg shadow-[#0284C7]/30',
-      innerCardBg: 'bg-[#0B1520] text-white',
-      innerCardBorder: 'border-[#0C324C]',
-      meterColor: 'bg-[#0284C7]',
+      bgClass: 'bg-[#11071D]/95 text-white',
+      borderClass: 'border-purple-500/40 hover:border-purple-500/70',
+      pillOuter: 'bg-purple-600 text-white',
+      pillInner: 'bg-white/10 border-white/15 text-purple-200',
+      buttonClass: 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/25',
+      innerCardBg: 'bg-[#1D0C30] text-white',
+      innerCardBorder: 'border-purple-500/25',
+      meterColor: 'bg-purple-500',
+      checkColor: 'text-purple-300',
     }
   },
   {
@@ -446,17 +430,15 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     href: '/contact',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#110804] text-white',
-      borderClass: 'border-[#EA580C]/70 hover:border-[#F97316]',
-      textHeading: 'text-white',
-      textBody: 'text-neutral-300',
-      pillOuter: 'bg-[#221008] border-[#EA580C]',
-      pillInner: 'bg-white/10 border-[#EA580C]/60',
-      pillText: 'text-[#FB923C]',
-      buttonClass: 'bg-[#EA580C] hover:bg-[#F97316] text-white shadow-lg shadow-[#EA580C]/30',
-      innerCardBg: 'bg-[#180C07] text-white',
-      innerCardBorder: 'border-[#521C06]',
-      meterColor: 'bg-[#EA580C]',
+      bgClass: 'bg-[#180A04]/95 text-white',
+      borderClass: 'border-[#FF5C00]/40 hover:border-[#FF5C00]/70',
+      pillOuter: 'bg-[#FF5C00] text-white',
+      pillInner: 'bg-white/10 border-white/15 text-orange-200',
+      buttonClass: 'bg-gradient-to-r from-[#FF5C00] to-[#EA580C] hover:from-[#EA580C] hover:to-[#C2410C] text-white shadow-lg shadow-[#FF5C00]/25',
+      innerCardBg: 'bg-[#261106] text-white',
+      innerCardBorder: 'border-[#FF5C00]/25',
+      meterColor: 'bg-[#FF5C00]',
+      checkColor: 'text-amber-400',
     }
   },
 ];
@@ -638,20 +620,22 @@ export default function LeadTiers(_props?: {
             const href = dictCard?.href || card.href;
             const isExternal = card.isExternal || href.startsWith('http');
 
+            const theme = card.clayTheme;
+
             return (
               <div
                 key={card.id}
-                className={`sticky top-24 sm:top-28 ${config.zIndexClass} ${config.spacingClass} bg-[#0A0B0E] border border-white/10 hover:border-white/20 rounded-3xl p-6 sm:p-10 ${config.shadowClass} backdrop-blur-xl transition-transform duration-200`}
+                className={`sticky top-24 sm:top-28 ${config.zIndexClass} ${config.spacingClass} ${theme.bgClass} ${theme.borderClass} border rounded-3xl p-6 sm:p-10 ${config.shadowClass} backdrop-blur-xl transition-transform duration-200`}
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                   {/* Left Details */}
                   <div className="lg:col-span-7 space-y-5">
                     {/* Layered Rounded Pill Badges */}
                     <div className="inline-flex items-center p-1 rounded-full border border-white/10 bg-white/[0.03] shadow-sm gap-1.5 backdrop-blur-md flex-wrap">
-                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white">
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${theme.pillOuter}`}>
                         {badgeOption}
                       </span>
-                      <span className="px-3.5 py-1 rounded-full text-xs font-medium bg-white/10 text-white/90">
+                      <span className={`px-3.5 py-1 rounded-full text-xs font-medium ${theme.pillInner}`}>
                         {badgePersona}
                       </span>
                     </div>
@@ -670,7 +654,7 @@ export default function LeadTiers(_props?: {
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] hover:from-[#0047E0] hover:to-[#386BF6] text-white font-medium text-sm shadow-md shadow-blue-500/20 active:scale-[0.98] transition-all"
+                          className={`inline-flex items-center justify-center px-6 py-3.5 rounded-xl ${theme.buttonClass} font-medium text-sm transition-all`}
                         >
                           <span>{cta}</span>
                           <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
@@ -678,7 +662,7 @@ export default function LeadTiers(_props?: {
                       ) : (
                         <Link
                           href={href.startsWith('http') ? href : `/${lang}${href}`}
-                          className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] hover:from-[#0047E0] hover:to-[#386BF6] text-white font-medium text-sm shadow-md shadow-blue-500/20 active:scale-[0.98] transition-all"
+                          className={`inline-flex items-center justify-center px-6 py-3.5 rounded-xl ${theme.buttonClass} font-medium text-sm transition-all`}
                         >
                           <span>{cta}</span>
                           <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
@@ -689,7 +673,7 @@ export default function LeadTiers(_props?: {
 
                   {/* Right Preview Card */}
                   <div className="lg:col-span-5">
-                    <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-6 space-y-4 shadow-xl">
+                    <div className={`rounded-2xl ${theme.innerCardBg} ${theme.innerCardBorder} border p-6 space-y-4 shadow-xl`}>
                       <div className="text-xs font-semibold text-neutral-400 tracking-wide uppercase font-mono">
                         {previewHeader}
                       </div>
@@ -700,14 +684,14 @@ export default function LeadTiers(_props?: {
                           <span className="font-mono font-bold text-white">{metricValue}</span>
                         </div>
                         <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
-                          <div className={`h-full rounded-full bg-blue-600 ${metricWidth}`} />
+                          <div className={`h-full rounded-full ${theme.meterColor} ${metricWidth}`} />
                         </div>
                       </div>
 
                       <ul className="space-y-2.5 pt-2 text-xs text-neutral-200">
                         {checklist.map((item: string, cIdx: number) => (
                           <li key={cIdx} className="flex items-center gap-2">
-                            <CheckCircle2 size={15} className="flex-shrink-0 text-emerald-400" />
+                            <CheckCircle2 size={15} className={`flex-shrink-0 ${theme.checkColor || 'text-emerald-400'}`} />
                             <span>{item}</span>
                           </li>
                         ))}
