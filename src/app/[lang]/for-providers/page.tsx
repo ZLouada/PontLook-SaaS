@@ -5,7 +5,7 @@ import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
 import Reveal from '@/components/shared/Reveal';
 import SectionHeading from '@/components/shared/SectionHeading';
-import { ShieldCheck, Target, CircleDollarSign, TrendingUp, ChevronDown, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Target, CircleDollarSign, TrendingUp, ArrowRight } from 'lucide-react';
 import { constructAlternates } from '@/lib/seo';
 
 export async function generateMetadata({
@@ -109,8 +109,8 @@ export default async function ForProvidersPage({
 
   return (
     <>
-      {/* 1. HERO SECTION (Left-Aligned, Orange Brand Accent, Dashboard Mockup) */}
-      <section className="relative overflow-hidden bg-[#08090A] pt-28 sm:pt-36 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8">
+      {/* 1. HERO SECTION (Left-Aligned, Orange Brand Accent) */}
+      <section className="relative overflow-hidden bg-[#08090A] pt-20 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8">
         {/* Ambient Depth Glows */}
         <div className="pointer-events-none absolute top-1/4 start-0 w-[600px] h-[500px] bg-orange-500/[0.03] blur-[160px] -z-10 rounded-full" />
         <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-blue-500/[0.02] blur-[160px] -z-10 rounded-full" />
@@ -119,11 +119,6 @@ export default async function ForProvidersPage({
           {/* Top Left-Aligned Header Block */}
           <div className="max-w-3xl text-start">
             <Reveal>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5 shadow-xs">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00] animate-pulse" />
-                <span>{isAr ? 'لمزودي ومراكز التدريب المعتمدين' : 'For Approved Training Providers'}</span>
-              </div>
-
               <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.1] sm:leading-[1.05] font-heading tracking-tight text-start">
                 {isAr ? (
                   <>
@@ -160,28 +155,6 @@ export default async function ForProvidersPage({
                 >
                   <span>{isAr ? 'استعرض فئات الفرص' : 'Explore Opportunity Tiers'}</span>
                 </a>
-              </div>
-
-              {/* Trust Value Badges */}
-              <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-2.5 sm:gap-4 text-xs text-neutral-400">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D]">
-                  <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
-                  <span className="font-medium text-neutral-300">
-                    {isAr ? 'بدون أي رسوم إدارة شهرية' : 'Zero Monthly Retainers'}
-                  </span>
-                </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D]">
-                  <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
-                  <span className="font-medium text-neutral-300">
-                    {isAr ? 'ميزانيات تدريب مؤكدة ومعتمدة' : 'Verified Budgets'}
-                  </span>
-                </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D]">
-                  <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
-                  <span className="font-medium text-neutral-300">
-                    {isAr ? 'ضمان استبدال بنسبة 100%' : '100% Replacement Guarantee'}
-                  </span>
-                </div>
               </div>
             </Reveal>
           </div>
