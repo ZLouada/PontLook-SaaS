@@ -70,12 +70,13 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
 
   return (
     <section
-      className="relative overflow-hidden bg-[#08090A] py-20 sm:py-28 text-white"
+      id="our-mission"
+      className="relative overflow-hidden bg-[#08090A] pt-4 sm:pt-8 pb-20 sm:pb-28 text-white"
       aria-labelledby="mission-title"
     >
       <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header Block */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
