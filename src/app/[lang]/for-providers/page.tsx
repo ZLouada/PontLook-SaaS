@@ -162,7 +162,7 @@ export default async function ForProvidersPage({
       </section>
 
       {/* 2. WHY PARTNER SECTION (Redesigned matching Pasted image 20260918161220.png) */}
-      <section id="why-partner" className="bg-[#08090A] py-16 sm:py-24 border-t border-[#26282D] scroll-mt-16">
+      <section id="why-partner" className="bg-[#08090A] py-16 sm:py-24 scroll-mt-16">
         <div className="container-site max-w-6xl mx-auto px-4 sm:px-6">
           <Reveal>
             {/* Left-Aligned Header */}
