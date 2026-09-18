@@ -16,7 +16,7 @@ export default function Hero() {
   return (
     <section
       data-nav-dark="true"
-      className="relative overflow-hidden bg-[#08090A] text-white min-h-[calc(100vh-4rem)] sm:min-h-screen flex flex-col justify-center pt-28 pb-16 sm:pt-36 sm:pb-24"
+      className="relative overflow-hidden bg-[#08090A] text-white min-h-[calc(100vh-4rem)] sm:min-h-screen flex flex-col justify-center pt-24 pb-12 sm:pt-36 sm:pb-24"
     >
       {/* Cinematic Bridge Background Image */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none" aria-hidden="true">
@@ -44,18 +44,18 @@ export default function Hero() {
           
           <Reveal>
             {/* Linear-Style Centered Headline in White */}
-            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-[64px] xl:text-[72px] font-medium tracking-[-0.035em] leading-[1.08] text-white max-w-4xl mx-auto">
+            <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-[64px] xl:text-[72px] font-medium tracking-[-0.035em] leading-[1.12] sm:leading-[1.08] text-white max-w-4xl mx-auto px-2">
               {dict.hero.headline}
             </h1>
           </Reveal>
 
           {/* Centered Transparent CTA Buttons */}
           <Reveal delay={0.12}>
-            <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full">
+            <div className="mt-6 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-xs sm:max-w-none mx-auto">
               {/* Primary CTA Button: Join the network (No background until hover, links to /for-providers) */}
               <Link
                 href={`/${lang}/for-providers`}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 py-3.5 px-7 rounded-full bg-transparent hover:bg-white/[0.10] text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-transparent hover:bg-white/[0.10] text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group"
               >
                 <span>{isAr ? 'انضم إلى شبكتنا' : 'Join the network'}</span>
                 <ArrowRight
@@ -67,7 +67,7 @@ export default function Hero() {
               {/* Secondary CTA Button: Who we are (Links to /who-we-are) */}
               <Link
                 href={`/${lang}/who-we-are`}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-7 rounded-full bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md transition-all duration-200 group"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md transition-all duration-200 group"
               >
                 <span>{isAr ? 'من نحن' : 'Who we are'}</span>
                 <ArrowRight

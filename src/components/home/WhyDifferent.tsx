@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Target,
   ShieldCheck,
@@ -9,11 +9,8 @@ import {
   BookOpen,
   CheckCircle2,
   ArrowRight,
-  ArrowUpRight,
   ExternalLink,
   X,
-  Minus,
-  Maximize2,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -53,6 +50,28 @@ export default function WhyDifferent() {
   const c = dict.why_different?.cards;
 
   const [activeModalId, setActiveModalId] = useState<string | null>(null);
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (!carouselRef.current) return;
+    const el = carouselRef.current;
+    const scrollLeft = Math.abs(el.scrollLeft);
+    const cardWidth = el.scrollWidth / items.length;
+    const newIndex = Math.round(scrollLeft / cardWidth);
+    setActiveCardIndex(Math.min(Math.max(newIndex, 0), items.length - 1));
+  };
+
+  const scrollToCard = (idx: number) => {
+    if (!carouselRef.current) return;
+    const el = carouselRef.current;
+    const cardWidth = el.scrollWidth / items.length;
+    el.scrollTo({
+      left: isAr ? -(idx * cardWidth) : idx * cardWidth,
+      behavior: 'smooth',
+    });
+    setActiveCardIndex(idx);
+  };
 
   // Lock body scroll and listen for Escape key when pop-up window is open
   useEffect(() => {
@@ -395,17 +414,9 @@ export default function WhyDifferent() {
         </m.div>
 
         {/* 5 Side-by-Side Cards (Mobile-Optimized Carousel, Desktop 5-Column Grid, Clean Pure Black) */}
-        <m.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-40px' }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { staggerChildren: 0.08, delayChildren: 0.1 },
-            },
-          }}
+        <div
+          ref={carouselRef}
+          onScroll={handleScroll}
           className="flex lg:grid lg:grid-cols-5 gap-3 sm:gap-4 overflow-x-auto lg:overflow-visible pb-3 sm:pb-4 lg:pb-0 snap-x snap-mandatory scrollbar-none items-stretch px-1 -mx-1"
         >
           {items.map((it) => {
@@ -420,15 +431,6 @@ export default function WhyDifferent() {
                 onClick={() => setActiveModalId(it.id)}
               >
                 <m.div
-                  variants={{
-                    hidden: { opacity: 0, y: 25, scale: 0.96 },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      scale: 1,
-                      transition: { type: 'spring', stiffness: 260, damping: 22 },
-                    },
-                  }}
                   whileHover={{
                     y: -6,
                     scale: 1.02,
@@ -448,55 +450,31 @@ export default function WhyDifferent() {
                   className="group relative w-full h-full rounded-2xl bg-[#0F1013] border border-[#26282D] hover:border-white/20 p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-xl shadow-black/80 transition-colors duration-200 transform-gpu"
                 >
                   {/* Card Front Top */}
-                  <div className="space-y-2.5 sm:space-y-3">
-                    {/* Header with App icon & Linear window controls */}
+                  <div className="space-y-2.5">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <m.div
-                          whileHover={{ rotate: 8, scale: 1.1 }}
-                          transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                          className={`h-7 w-7 sm:h-8 sm:w-8 rounded-lg ${theme.iconBg} flex items-center justify-center font-bold shadow-sm transition-transform`}
-                        >
-                          <Icon size={15} className="sm:w-[16px] sm:h-[16px]" />
-                        </m.div>
-                        <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-medium font-sans ${theme.badgeBg}`}>
-                          {it.badge}
-                        </span>
-                      </div>
-
-                      {/* Window Controls (Linear agentic style) */}
-                      <div className="flex items-center gap-2 text-neutral-500">
-                        <span className="text-[11px] font-mono font-medium text-neutral-400">{it.index}</span>
-                        <div className="hidden sm:flex items-center gap-1.5 opacity-50 group-hover:opacity-100 transition-opacity">
-                          <Minus size={11} className="text-neutral-400" />
-                          <Maximize2 size={10} className="text-neutral-400" />
-                        </div>
-                      </div>
+                      <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-medium font-sans ${theme.badgeBg}`}>
+                        {it.badge}
+                      </span>
+                      <span className="text-[11px] font-mono text-neutral-400">
+                        {it.index}
+                      </span>
                     </div>
 
-                    {/* Inner Prompt / Context Container */}
-                    <div className="rounded-xl bg-[#16171B] border border-[#26282D] p-3 space-y-1.5">
-                      <h3 className="text-xs sm:text-[13px] font-medium text-white font-heading leading-snug tracking-tight">
-                        {it.title}
-                      </h3>
-                      {it.angle && (
-                        <p className={`text-[10px] font-normal leading-snug font-sans ${theme.accentText}`}>
-                          {it.angle}
-                        </p>
-                      )}
-                    </div>
+                    <h3 className="text-base sm:text-lg font-semibold text-white tracking-tight leading-snug font-heading group-hover:text-white">
+                      {it.title}
+                    </h3>
 
-                    {/* Teaser Preview */}
-                    <p className="text-[11px] text-neutral-400 font-sans leading-relaxed line-clamp-2">
+                    <p className="text-xs text-neutral-400 font-sans leading-relaxed line-clamp-2">
                       {it.text}
                     </p>
                   </div>
 
-                  {/* Card Front Bottom: Expand Trigger Button with standard Linear arrow */}
-                  <div className="pt-2.5 border-t border-[#26282D] flex items-center justify-between font-sans">
-                    <span className="text-[10px] text-neutral-400">
-                      {isAr ? 'عرض التفاصيل' : 'View details'}
-                    </span>
+                  {/* Card Front Bottom */}
+                  <div className="pt-2 border-t border-[#26282D] flex items-center justify-between">
+                    <div className={`h-8 w-8 rounded-lg ${theme.iconBg} flex items-center justify-center font-bold text-white transition-transform duration-200 group-hover:scale-105`}>
+                      <Icon size={16} />
+                    </div>
+
                     <div className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-300 group-hover:text-white transition-colors duration-200">
                       <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
                       <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-neutral-400 group-hover:text-white" />
@@ -506,17 +484,19 @@ export default function WhyDifferent() {
               </div>
             );
           })}
-        </m.div>
+        </div>
 
         {/* Mobile Swipe Pagination Dots Indicator (5 Cards) */}
-        <div className="flex lg:hidden justify-center items-center gap-1.5 pt-3">
+        <div className="flex lg:hidden justify-center items-center gap-2 pt-3">
           {items.map((it, idx) => (
-            <span
+            <button
               key={it.id}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                activeModalId === it.id ? 'w-5 bg-blue-500' : 'w-1.5 bg-white/20'
+              type="button"
+              onClick={() => scrollToCard(idx)}
+              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                activeCardIndex === idx ? 'w-5 bg-blue-500' : 'w-1.5 bg-white/20 hover:bg-white/40'
               }`}
-              aria-label={`Card ${idx + 1}`}
+              aria-label={`Go to slide ${idx + 1}`}
             />
           ))}
         </div>
@@ -565,7 +545,7 @@ export default function WhyDifferent() {
                 damping: 26,
               }}
               style={{ transformStyle: 'preserve-3d', perspective: 1200 }}
-              className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[90vh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] text-white shadow-2xl shadow-black my-auto overflow-hidden transform-gpu"
+              className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] text-white shadow-2xl shadow-black my-auto overflow-hidden transform-gpu"
             >
               {/* Modal Top Bar (Fixed Header) */}
               <m.div

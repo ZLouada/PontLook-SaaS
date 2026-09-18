@@ -16,13 +16,52 @@ export default function HowItWorks() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
 
-  // Track scroll progress through the 300vh container
+  // Touch swipe support for mobile
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchEndX.current = null;
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    const distance = touchStartX.current - touchEndX.current;
+    const minDistance = 45;
+
+    if (Math.abs(distance) < minDistance) return;
+
+    if (isAr) {
+      if (distance > minDistance) {
+        setActiveStep((prev) => (prev === 0 ? 2 : prev - 1));
+      } else {
+        setActiveStep((prev) => (prev + 1) % 3);
+      }
+    } else {
+      if (distance > minDistance) {
+        setActiveStep((prev) => (prev + 1) % 3);
+      } else {
+        setActiveStep((prev) => (prev === 0 ? 2 : prev - 1));
+      }
+    }
+  };
+
+  // Track scroll progress through the 300vh container on desktop only
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    // Only hijack scroll on desktop screens (width >= 1024px)
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      return;
+    }
     if (latest < 0.33) {
       setActiveStep(0);
     } else if (latest < 0.66) {
@@ -33,6 +72,9 @@ export default function HowItWorks() {
   });
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      return;
+    }
     const current = scrollYProgress.get();
     if (current < 0.33) {
       setActiveStep(0);
@@ -43,9 +85,12 @@ export default function HowItWorks() {
     }
   }, [scrollYProgress]);
 
-  // Smooth scroll to corresponding step in the 300vh sequence when clicked
+  // Smooth scroll to corresponding step in the 300vh sequence when clicked on desktop
   const handleStepClick = (index: number) => {
     setActiveStep(index);
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      return;
+    }
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const containerTop = window.scrollY + rect.top;
@@ -97,7 +142,7 @@ export default function HowItWorks() {
       ],
       canvasBg: 'bg-[#16171B] border-[#26282D]',
       console: (
-        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2.5 font-sans">
+        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2 font-sans">
           {/* Console Window Header */}
           <div className="flex items-center justify-between pb-2 border-b border-[#26282D] text-xs">
             <div className="flex items-center gap-2">
@@ -187,7 +232,7 @@ export default function HowItWorks() {
       ],
       canvasBg: 'bg-[#16171B] border-[#26282D]',
       console: (
-        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2.5 font-sans">
+        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2 font-sans">
           {/* Console Window Header */}
           <div className="flex items-center justify-between pb-2 border-b border-[#26282D] text-xs">
             <div className="flex items-center gap-2">
@@ -274,7 +319,7 @@ export default function HowItWorks() {
       ],
       canvasBg: 'bg-[#16171B] border-[#26282D]',
       console: (
-        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2.5 font-sans">
+        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2 font-sans">
           {/* Console Window Header */}
           <div className="flex items-center justify-between pb-2 border-b border-[#26282D] text-xs">
             <div className="flex items-center gap-2">
@@ -328,19 +373,19 @@ export default function HowItWorks() {
       ref={containerRef}
       id="how-it-works"
       data-nav-dark="true"
-      className="relative bg-[#08090A] text-white min-h-[300vh]"
+      className="relative bg-[#08090A] text-white py-12 sm:py-16 lg:py-0 lg:min-h-[300vh]"
     >
-      {/* Subtle Pure AMOLED Ambient Lighting (Zero Grids) */}
+      {/* Pure AMOLED Ambient Lighting */}
       <div className="absolute top-1/4 start-1/4 w-[600px] h-[600px] bg-blue-600/[0.04] blur-[180px] pointer-events-none rounded-full" />
       <div className="absolute bottom-1/4 end-1/4 w-[600px] h-[600px] bg-purple-600/[0.03] blur-[180px] pointer-events-none rounded-full" />
 
-      {/* Sticky Pinned Viewport Container with Guaranteed Navbar Top Clearance */}
-      <div className="sticky top-0 h-screen max-h-[100dvh] flex flex-col justify-center pt-20 sm:pt-24 lg:pt-28 pb-4 sm:pb-6 px-4 sm:px-6 lg:px-8">
+      {/* Viewport Container: Normal Flow on Mobile, Sticky on Desktop */}
+      <div className="relative lg:sticky lg:top-0 lg:h-screen lg:max-h-[100dvh] lg:flex lg:flex-col lg:justify-center pt-0 lg:pt-28 pb-0 lg:pb-6 px-4 sm:px-6 lg:px-8">
         <div className="container-site relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center my-auto">
           
-          {/* Section Header: Centered with comfortable vertical spacing */}
-          <div className="mb-3 sm:mb-4 text-center max-w-3xl mx-auto shrink-0">
-            <h2 className="text-xl sm:text-2xl lg:text-[28px] font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
+          {/* Section Header */}
+          <div className="mb-4 sm:mb-5 text-center max-w-3xl mx-auto shrink-0">
+            <h2 className="text-2xl sm:text-3xl lg:text-[28px] font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
               {dict.how_it_works?.title || (isAr ? 'نرصد بدقة المنشآت التي تواجه فجوات تدريبية ومهارية حقيقية' : 'We pinpoint organizations facing real skill & training gaps')}
             </h2>
 
@@ -349,15 +394,15 @@ export default function HowItWorks() {
             </p>
           </div>
 
-          {/* 3 Step Switcher Pills */}
-          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4 w-full max-w-md shrink-0">
+          {/* 3 Step Switcher Tabs (Touch-optimized for Mobile & Desktop) */}
+          <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-4 sm:mb-5 w-full max-w-lg shrink-0">
             {cards.map((card, idx) => {
               const isActive = activeStep === idx;
               return (
                 <button
                   key={card.id}
                   onClick={() => handleStepClick(idx)}
-                  className={`group relative flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 px-2.5 sm:px-3.5 rounded-full border transition-all duration-200 text-xs font-medium ${
+                  className={`group relative flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2.5 sm:px-3.5 rounded-full border transition-all duration-200 text-xs font-medium active:scale-95 ${
                     isActive
                       ? 'bg-white/[0.08] text-white border-white/30 shadow-sm'
                       : 'bg-transparent text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
@@ -366,19 +411,24 @@ export default function HowItWorks() {
                   <span className={`text-[11px] font-mono font-bold ${isActive ? card.tagColor : 'text-neutral-500'}`}>
                     {card.stepNumber}
                   </span>
-                  <span className="hidden sm:inline truncate">
+                  <span className="truncate">
                     {card.navTitle}
                   </span>
                   {isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse shrink-0" />
                   )}
                 </button>
               );
             })}
           </div>
 
-          {/* Fixed Showcase Card (with AnimatePresence) */}
-          <div className="w-full">
+          {/* Showcase Card: Touch-Swipeable on Mobile */}
+          <div
+            className="w-full"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <AnimatePresence mode="wait">
               <m.div
                 key={activeCard.id}

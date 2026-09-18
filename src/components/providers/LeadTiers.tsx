@@ -482,7 +482,7 @@ export default function LeadTiers(_props?: {
               return (
                 <div
                   key={tier.step}
-                  className={`sticky top-28 ${config.zIndexClass} ${config.spacingClass} bg-[#0F1013] border border-[#26282D] text-white rounded-3xl p-6 sm:p-10 ${config.shadowClass} transition-transform duration-200`}
+                  className={`relative lg:sticky lg:top-28 ${config.zIndexClass} mb-6 sm:mb-8 lg:${config.spacingClass} bg-[#0F1013] border border-[#26282D] text-white rounded-3xl p-6 sm:p-10 ${config.shadowClass} transition-transform duration-200`}
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     {/* Left Details */}
@@ -605,8 +605,8 @@ export default function LeadTiers(_props?: {
           </div>
         </div>
 
-        {/* Sticky Stacked Style Cards (Exact pontlook.com/en/for-providers animation) */}
-        <div className="relative max-w-5xl mx-auto pb-32 sm:pb-48">
+        {/* Sticky Stacked Style Cards (Exact pontlook.com/en/for-providers animation on desktop, natural flow on mobile) */}
+        <div className="relative max-w-5xl mx-auto pb-8 sm:pb-12 lg:pb-48">
           {fallbackCards.map((card, idx) => {
             const config = CARD_CONFIGS[idx] || CARD_CONFIGS[0];
             const dictCard = exp?.cards?.[card.id as 'provider' | 'enterprise' | 'hub' | 'consultation'];
@@ -629,7 +629,7 @@ export default function LeadTiers(_props?: {
             return (
               <div
                 key={card.id}
-                className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass} ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-all duration-300 transform-gpu`}
+                className={`relative lg:sticky lg:${config.topClass} ${config.zIndexClass} mb-6 sm:mb-8 lg:${config.spacingClass} ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-all duration-300 transform-gpu`}
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
                   {/* Left Details */}
