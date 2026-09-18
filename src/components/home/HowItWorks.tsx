@@ -44,30 +44,30 @@ export default function HowItWorks() {
             : 'No generic public RFPs or dead directories, only active corporate organizations ready to upskill.',
         },
       ],
-      // Right side: Amber Tinted Canvas with Authentic Dark Console
-      canvasBg: 'bg-[#17150E] border-amber-500/25',
+      // Right side: Linear-styled container
+      canvasBg: 'bg-[#16171B] border-[#26282D]',
       console: (
-        <div className="w-full bg-[#0B0C0E] rounded-xl border border-white/10 p-4 sm:p-5 shadow-2xl space-y-3 font-sans">
+        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-4 sm:p-5 shadow-2xl space-y-3 font-sans">
           {/* Console Window Header */}
-          <div className="flex items-center justify-between pb-3 border-b border-white/10 text-xs">
+          <div className="flex items-center justify-between pb-3 border-b border-[#26282D] text-xs">
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#EF4444]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#F59E0B]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#10B981]" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
               </div>
               <span className="text-neutral-400 text-[11px] font-medium ms-2">
                 {isAr ? 'رادار الاحتياج المؤسسي' : 'Enterprise Demand Feed'}
               </span>
             </div>
-            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-semibold">
+            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-[10px] font-medium">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>{isAr ? 'إشارة نشطة' : 'Active Signal'}</span>
             </div>
           </div>
 
           {/* Lead Item 1 */}
-          <div className="p-3 rounded-lg bg-white/[0.04] border border-white/[0.08] space-y-1.5 text-xs">
+          <div className="p-3 rounded-lg bg-[#16171B] border border-[#26282D] space-y-1.5 text-xs">
             <div className="flex items-center justify-between">
               <span className="font-semibold text-white">
                 {isAr ? 'الخدمات المالية والمصرفية · الرياض' : 'Banking & FinTech · Riyadh'}
@@ -83,7 +83,7 @@ export default function HowItWorks() {
           </div>
 
           {/* Lead Item 2 */}
-          <div className="p-3 rounded-lg bg-white/[0.04] border border-white/[0.08] space-y-1.5 text-xs">
+          <div className="p-3 rounded-lg bg-[#16171B] border border-[#26282D] space-y-1.5 text-xs">
             <div className="flex items-center justify-between">
               <span className="font-semibold text-white">
                 {isAr ? 'الطاقة والبنية التحتية · الظهران' : 'Energy & Infrastructure · Dhahran'}
@@ -134,23 +134,23 @@ export default function HowItWorks() {
             : 'Strict validation across timeline, participant level, delivery format, and ROI performance metrics.',
         },
       ],
-      // Right side: Purple Tinted Canvas with Authentic Dark Console
-      canvasBg: 'bg-[#151222] border-purple-500/25',
+      // Right side: Linear-styled container
+      canvasBg: 'bg-[#16171B] border-[#26282D]',
       console: (
-        <div className="w-full bg-[#0B0C0E] rounded-xl border border-white/10 p-4 sm:p-5 shadow-2xl space-y-3 font-sans">
+        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-4 sm:p-5 shadow-2xl space-y-3 font-sans">
           {/* Console Window Header */}
-          <div className="flex items-center justify-between pb-3 border-b border-white/10 text-xs">
+          <div className="flex items-center justify-between pb-3 border-b border-[#26282D] text-xs">
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#EF4444]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#F59E0B]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#10B981]" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
               </div>
               <span className="text-neutral-400 text-[11px] font-medium ms-2">
                 {isAr ? 'منظومة المطابقة الذكية' : 'AI Match & Qualification'}
               </span>
             </div>
-            <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
+            <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-xs font-bold">
               <span>94%</span>
               <span className="text-[10px] font-normal">{isAr ? 'تطابق' : 'Match'}</span>
             </div>
@@ -162,14 +162,14 @@ export default function HowItWorks() {
               <span>{isAr ? 'معايير التأهيل المكتملة' : 'Criteria Fulfilled'}</span>
               <span className="font-bold text-white">4 / 4 Complete</span>
             </div>
-            <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden p-0.5">
+            <div className="h-2 w-full bg-[#16171B] border border-[#26282D] rounded-full overflow-hidden p-0.5">
               <div className="h-full bg-gradient-to-r from-purple-500 to-emerald-400 rounded-full w-[94%]" />
             </div>
           </div>
 
           {/* Checklist items */}
           <div className="space-y-1.5 pt-1 text-xs text-neutral-300">
-            <div className="flex items-center gap-2 p-2 rounded-lg bg-white/[0.04] border border-white/[0.08]">
+            <div className="flex items-center gap-2 p-2 rounded-lg bg-[#16171B] border border-[#26282D]">
               <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
               <span>
                 {isAr
@@ -177,7 +177,7 @@ export default function HowItWorks() {
                   : 'Decision Maker: Chief Human Resources Officer'}
               </span>
             </div>
-            <div className="flex items-center gap-2 p-2 rounded-lg bg-white/[0.04] border border-white/[0.08]">
+            <div className="flex items-center gap-2 p-2 rounded-lg bg-[#16171B] border border-[#26282D]">
               <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
               <span>
                 {isAr
@@ -221,30 +221,30 @@ export default function HowItWorks() {
             : 'If an introduction does not meet confirmed qualification criteria, we replace it at zero cost.',
         },
       ],
-      // Right side: Teal Tinted Canvas with Authentic Dark Console
-      canvasBg: 'bg-[#0E1715] border-teal-500/25',
+      // Right side: Linear-styled container
+      canvasBg: 'bg-[#16171B] border-[#26282D]',
       console: (
-        <div className="w-full bg-[#0B0C0E] rounded-xl border border-white/10 p-4 sm:p-5 shadow-2xl space-y-3 font-sans">
+        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-4 sm:p-5 shadow-2xl space-y-3 font-sans">
           {/* Console Window Header */}
-          <div className="flex items-center justify-between pb-3 border-b border-white/10 text-xs">
+          <div className="flex items-center justify-between pb-3 border-b border-[#26282D] text-xs">
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#EF4444]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#F59E0B]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#10B981]" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
               </div>
               <span className="text-neutral-400 text-[11px] font-medium ms-2">
                 {isAr ? 'لوحة التعاقد المباشر' : 'Direct Engagement Console'}
               </span>
             </div>
-            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-teal-500/15 border border-teal-500/30 text-teal-400 text-[10px] font-semibold">
+            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-teal-400 text-[10px] font-medium">
               <CheckCircle2 size={12} />
               <span>{isAr ? 'تم التقديم' : 'Intro Complete'}</span>
             </div>
           </div>
 
           {/* Status Box */}
-          <div className="p-3 rounded-lg bg-white/[0.04] border border-white/[0.08] space-y-1.5 text-xs">
+          <div className="p-3 rounded-lg bg-[#16171B] border border-[#26282D] space-y-1.5 text-xs">
             <div className="flex items-center justify-between">
               <span className="text-neutral-400">{isAr ? 'حالة الفرصة' : 'Pipeline Status'}</span>
               <span className="font-semibold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded text-[11px] border border-emerald-500/30">
@@ -275,7 +275,7 @@ export default function HowItWorks() {
     <section
       id="how-it-works"
       data-nav-dark="true"
-      className="relative bg-[#000000] text-white py-20 sm:py-28 lg:py-36 overflow-hidden"
+      className="relative bg-[#08090A] text-white py-20 sm:py-28 lg:py-36 overflow-hidden"
     >
       {/* Subtle Pure AMOLED Ambient Lighting (Zero Grids) */}
       <div className="absolute top-1/4 start-1/4 w-[600px] h-[600px] bg-blue-600/[0.04] blur-[180px] pointer-events-none rounded-full" />
@@ -301,11 +301,11 @@ export default function HowItWorks() {
           </Reveal>
         </div>
 
-        {/* 3 Horizontal Showcase Cards Stack (Twingate Style) */}
+        {/* 3 Horizontal Showcase Cards Stack (Twingate / Linear Style) */}
         <div className="space-y-8 sm:space-y-10">
           {cards.map((card, index) => (
             <Reveal key={card.id} delay={index * 0.1}>
-              <div className="relative rounded-3xl bg-[#0B0C0E] border border-white/[0.08] hover:border-white/[0.18] transition-all duration-300 p-6 sm:p-8 lg:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.7)] overflow-hidden">
+              <div className="relative rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] hover:border-white/20 transition-all duration-300 p-6 sm:p-8 lg:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.7)] overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                   
                   {/* Left Column: Category Tag, Title, Action Pill, 3 Points with Chevrons */}
@@ -320,20 +320,20 @@ export default function HowItWorks() {
                       {card.headline}
                     </h3>
 
-                    {/* Dark Action Pill (Learn more >) */}
+                    {/* Linear Style Action Link (Learn more ->) */}
                     <Link
                       href={card.actionHref}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/15 text-xs font-semibold text-white border border-white/15 transition-all duration-200 mb-6 group"
+                      className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-white transition-colors duration-200 mb-6 group"
                     >
                       <span>{card.actionText}</span>
                       <ArrowRight
-                        size={13}
-                        className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform"
+                        size={15}
+                        className="rtl:-scale-x-100 text-neutral-400 group-hover:text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all"
                       />
                     </Link>
 
                     {/* 3 Points with Chevrons */}
-                    <div className="space-y-4 w-full pt-1 border-t border-white/10">
+                    <div className="space-y-4 w-full pt-1 border-t border-[#26282D]">
                       {card.points.map((pt) => (
                         <div key={pt.title} className="space-y-1">
                           <div className="text-sm sm:text-base font-semibold text-neutral-100 font-heading">

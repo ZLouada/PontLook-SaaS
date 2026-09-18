@@ -46,11 +46,11 @@ export default function TrustBar() {
   return (
     <section
       data-nav-dark="true"
-      className="relative bg-[#000000] text-white pt-10 pb-10 sm:py-12 overflow-hidden"
+      className="relative bg-[#08090A] text-white pt-10 pb-10 sm:py-12 overflow-hidden"
     >
       {/* Edge gradient mask for smooth fade in/out */}
-      <div className="absolute inset-y-0 start-0 w-16 sm:w-32 bg-gradient-to-r rtl:bg-gradient-to-l from-[#000000] via-[#000000]/80 to-transparent z-20 pointer-events-none" />
-      <div className="absolute inset-y-0 end-0 w-16 sm:w-32 bg-gradient-to-l rtl:bg-gradient-to-r from-[#000000] via-[#000000]/80 to-transparent z-20 pointer-events-none" />
+      <div className="absolute inset-y-0 start-0 w-16 sm:w-32 bg-gradient-to-r rtl:bg-gradient-to-l from-[#08090A] via-[#08090A]/80 to-transparent z-20 pointer-events-none" />
+      <div className="absolute inset-y-0 end-0 w-16 sm:w-32 bg-gradient-to-l rtl:bg-gradient-to-r from-[#08090A] via-[#08090A]/80 to-transparent z-20 pointer-events-none" />
 
       <div
         className="w-full overflow-hidden"
@@ -78,12 +78,12 @@ export default function TrustBar() {
                 key={`${v.title}-${i}`}
                 className="w-[320px] sm:w-[380px] md:w-[440px] shrink-0 mx-3 sm:mx-4"
               >
-                <div className="group relative flex items-center gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-white/10 hover:border-white/30 hover:bg-white/[0.08] transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
+                <div className="group relative flex items-center gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl bg-[#0F1013] border border-[#26282D] hover:border-white/20 transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
                   {/* Subtle hover gradient on card */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                   {/* Icon container */}
-                  <div className="relative flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl bg-[#121212] text-white group-hover:bg-white/10 border border-[#262626] group-hover:border-white/30 transition-all duration-300 shadow-inner">
+                  <div className="relative flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl bg-[#16171B] text-white group-hover:bg-[#18191E] border border-[#26282D] group-hover:border-white/20 transition-all duration-300 shadow-inner">
                     <Icon size={22} className="sm:hidden" />
                     <Icon size={26} className="hidden sm:block" />
                   </div>
@@ -91,10 +91,10 @@ export default function TrustBar() {
                   {/* Content */}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-2 mb-1">
-                      <span className="font-semibold text-sm sm:text-base text-white tracking-tight truncate block group-hover:text-white transition-colors">
+                      <span className="font-medium text-sm sm:text-base text-white tracking-[-0.02em] truncate block group-hover:text-white transition-colors">
                         {v.title}
                       </span>
-                      <span className="shrink-0 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#1A1A1A] text-neutral-400 border border-[#2B2B2B] group-hover:border-white/20 group-hover:text-neutral-200 transition-colors">
+                      <span className="shrink-0 px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#16171B] text-neutral-400 border border-[#26282D] group-hover:border-white/20 group-hover:text-neutral-200 transition-colors">
                         {v.badge}
                       </span>
                     </div>

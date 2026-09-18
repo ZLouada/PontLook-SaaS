@@ -28,7 +28,7 @@ export default function Hero() {
   return (
     <section
       data-nav-dark="true"
-      className="relative overflow-hidden bg-[#000000] text-white min-h-[calc(100vh-4rem)] sm:min-h-screen flex flex-col justify-center pt-28 pb-16 sm:pt-36 sm:pb-24"
+      className="relative overflow-hidden bg-[#08090A] text-white min-h-[calc(100vh-4rem)] sm:min-h-screen flex flex-col justify-center pt-28 pb-16 sm:pt-36 sm:pb-24"
     >
       {/* Cinematic Bridge Background Image */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none" aria-hidden="true">
@@ -44,7 +44,7 @@ export default function Hero() {
         {/* Dark Cinematic Vignette & Readability Gradient Overlay */}
         <div className="absolute inset-0 bg-black/45" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/35 rtl:bg-gradient-to-l rtl:from-black/85 rtl:via-black/60 rtl:to-black/35" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-black/25 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#08090A] via-black/25 to-black/60" />
 
         {/* Ambient warm and cool glows echoing the bridge lights */}
         <div className="absolute top-1/2 end-1/4 w-[500px] h-[500px] bg-amber-500/[0.06] blur-[150px] rounded-full" />
@@ -88,11 +88,11 @@ export default function Hero() {
                 {/* Primary CTA Button: Join the networks */}
                 <Link
                   href={`/${lang}/for-providers/apply`}
-                  className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-7 rounded-full bg-white/[0.06] hover:bg-white/[0.14] text-white font-semibold text-base border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group"
+                  className="w-full inline-flex items-center justify-center gap-2.5 py-3.5 px-6 rounded-full bg-white/[0.05] hover:bg-white/[0.10] text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group"
                 >
                   <span>{isAr ? 'انضم إلى شبكتنا' : 'Join the networks'}</span>
                   <ArrowRight
-                    size={17}
+                    size={16}
                     className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform"
                   />
                 </Link>
@@ -100,10 +100,13 @@ export default function Hero() {
                 {/* Secondary CTA Button: I'm looking for training */}
                 <Link
                   href={`/${lang}/find-training/request`}
-                  className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-7 rounded-full bg-white/[0.06] hover:bg-white/[0.14] text-white font-semibold text-base border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-transparent hover:bg-white/[0.04] text-neutral-300 hover:text-white font-medium text-sm sm:text-base transition-colors duration-200 group"
                 >
-                  <Target size={17} className="text-white/80" />
                   <span>{dict.hero.btn_buyer}</span>
+                  <ArrowRight
+                    size={15}
+                    className="rtl:-scale-x-100 text-neutral-400 group-hover:text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all"
+                  />
                 </Link>
               </div>
             </Reveal>
@@ -113,7 +116,7 @@ export default function Hero() {
       </div>
 
       {/* Smooth gradient transition into the TrustBar section */}
-      <div className="absolute inset-x-0 bottom-0 h-16 sm:h-20 bg-gradient-to-b from-transparent to-[#000000] pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-16 sm:h-20 bg-gradient-to-b from-transparent to-[#08090A] pointer-events-none" />
     </section>
   );
 }

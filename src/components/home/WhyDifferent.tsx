@@ -12,6 +12,8 @@ import {
   ArrowUpRight,
   ExternalLink,
   X,
+  Minus,
+  Maximize2,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -98,13 +100,13 @@ export default function WhyDifferent() {
         accentText: 'text-blue-400',
         badgeBg: 'bg-blue-500/10 text-blue-400 border border-blue-500/20',
         iconBg: 'bg-blue-600/15 text-blue-400 border border-blue-500/20',
-        buttonBg: 'bg-white/[0.08] hover:bg-white/[0.16] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm',
+        buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
         checkColor: 'text-blue-400',
         flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-blue-400 group-hover:border-blue-500/30',
       },
       mockup: (
-        <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-3 flex flex-col gap-2">
-          <div className="flex items-center justify-between pb-1.5 border-b border-white/[0.06]">
+        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
+          <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
               <div className="h-7 w-7 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center shrink-0">
                 <Target size={14} />
@@ -157,13 +159,13 @@ export default function WhyDifferent() {
         accentText: 'text-emerald-400',
         badgeBg: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
         iconBg: 'bg-emerald-600/15 text-emerald-400 border border-emerald-500/20',
-        buttonBg: 'bg-white/[0.08] hover:bg-white/[0.16] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm',
+        buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
         checkColor: 'text-emerald-400',
         flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-emerald-400 group-hover:border-emerald-500/30',
       },
       mockup: (
-        <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-3 flex flex-col gap-2">
-          <div className="text-xs font-semibold text-white pb-1.5 border-b border-white/[0.06] flex items-center justify-between font-sans">
+        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
+          <div className="text-xs font-semibold text-white pb-1.5 border-b border-[#26282D] flex items-center justify-between font-sans">
             <span>{c?.match?.mockupHeader || (isAr ? 'قائمة معايير توافق الشريك' : 'Partner Fit Checklist')}</span>
             <ShieldCheck size={14} className="text-emerald-400 shrink-0" />
           </div>
@@ -210,14 +212,14 @@ export default function WhyDifferent() {
         accentText: 'text-purple-400',
         badgeBg: 'bg-purple-500/10 text-purple-400 border border-purple-500/20',
         iconBg: 'bg-purple-600/15 text-purple-400 border border-purple-500/20',
-        buttonBg: 'bg-white/[0.08] hover:bg-white/[0.16] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm',
+        buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
         checkColor: 'text-purple-400',
         flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-purple-400 group-hover:border-purple-500/30',
       },
       mockup: (
-        <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-3 flex flex-col gap-2">
+        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
           <div className="flex items-center justify-between">
-            <span className="px-2 py-0.5 rounded-md bg-white/5 text-neutral-300 text-[9px] font-medium uppercase font-sans">
+            <span className="px-2 py-0.5 rounded-md bg-[#0F1013] border border-[#26282D] text-neutral-300 text-[9px] font-medium uppercase font-sans">
               {c?.access?.clientTag || (isAr ? 'جهة مؤسسية · حوكمة ومخاطر' : 'Enterprise Client · GRC')}
             </span>
             <span className="px-2 py-0.5 rounded-md bg-purple-500/15 text-purple-300 text-[9px] font-medium border border-purple-500/30 shrink-0 font-sans">
@@ -264,13 +266,13 @@ export default function WhyDifferent() {
         accentText: 'text-amber-400',
         badgeBg: 'bg-amber-500/10 text-amber-400 border border-amber-500/20',
         iconBg: 'bg-amber-600/15 text-amber-400 border border-amber-500/20',
-        buttonBg: 'bg-white/[0.08] hover:bg-white/[0.16] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm',
+        buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
         checkColor: 'text-amber-400',
         flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-amber-400 group-hover:border-amber-500/30',
       },
       mockup: (
-        <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-3 flex flex-col gap-1.5">
-          <div className="flex items-center justify-between pb-1 border-b border-white/[0.06] text-xs font-semibold text-white font-sans">
+        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-1.5">
+          <div className="flex items-center justify-between pb-1 border-b border-[#26282D] text-xs font-semibold text-white font-sans">
             <span>{c?.ready?.mockupHeader || (isAr ? 'جاهزية الشراكة | مؤكدة' : 'Partnership Readiness | Confirmed')}</span>
             <Handshake size={14} className="text-amber-400 shrink-0" />
           </div>
@@ -317,13 +319,13 @@ export default function WhyDifferent() {
         accentText: 'text-cyan-400',
         badgeBg: 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20',
         iconBg: 'bg-cyan-600/15 text-cyan-400 border border-cyan-500/20',
-        buttonBg: 'bg-white/[0.08] hover:bg-white/[0.16] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm',
+        buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
         checkColor: 'text-cyan-400',
         flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-cyan-400 group-hover:border-cyan-500/30',
       },
       mockup: (
-        <div className="bg-white/[0.02] rounded-xl border border-white/[0.08] w-full p-3 flex flex-col gap-1.5">
-          <div className="flex items-center justify-between pb-1 border-b border-white/[0.06] text-xs font-semibold text-white font-sans">
+        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-1.5">
+          <div className="flex items-center justify-between pb-1 border-b border-[#26282D] text-xs font-semibold text-white font-sans">
             <span>{c?.hub?.mockupHeader || (isAr ? 'أحدث أدلة ومقالات المنصة' : 'Latest L&D Resources')}</span>
             <BookOpen size={13} className="text-cyan-400 shrink-0" />
           </div>
@@ -355,7 +357,7 @@ export default function WhyDifferent() {
   return (
     <section
       data-nav-dark="true"
-      className="relative bg-[#000000] text-white py-10 sm:py-16 lg:py-20"
+      className="relative bg-[#08090A] text-white py-10 sm:py-16 lg:py-20"
     >
       <div className="container-site relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Section Header */}
@@ -443,56 +445,61 @@ export default function WhyDifferent() {
                     damping: 24,
                   }}
                   style={{ transformStyle: 'preserve-3d' }}
-                  className="group relative w-full h-full rounded-2xl bg-[#0A0B0E] border border-white/[0.08] hover:border-white/20 p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-lg shadow-black/60 transition-colors duration-200 transform-gpu"
+                  className="group relative w-full h-full rounded-2xl bg-[#0F1013] border border-[#26282D] hover:border-white/20 p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-xl shadow-black/80 transition-colors duration-200 transform-gpu"
                 >
                   {/* Card Front Top */}
                   <div className="space-y-2.5 sm:space-y-3">
+                    {/* Header with App icon & Linear window controls */}
                     <div className="flex items-center justify-between">
-                      <m.div
-                        whileHover={{ rotate: 8, scale: 1.1 }}
-                        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                        className={`h-8 w-8 sm:h-9 sm:w-9 rounded-xl ${theme.iconBg} flex items-center justify-center font-bold shadow-sm transition-transform`}
-                      >
-                        <Icon size={16} className="sm:w-[18px] sm:h-[18px]" />
-                      </m.div>
-                      <span className="text-xs font-bold text-neutral-400 font-sans">
-                        {it.index}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <m.div
+                          whileHover={{ rotate: 8, scale: 1.1 }}
+                          transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                          className={`h-7 w-7 sm:h-8 sm:w-8 rounded-lg ${theme.iconBg} flex items-center justify-center font-bold shadow-sm transition-transform`}
+                        >
+                          <Icon size={15} className="sm:w-[16px] sm:h-[16px]" />
+                        </m.div>
+                        <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-medium font-sans ${theme.badgeBg}`}>
+                          {it.badge}
+                        </span>
+                      </div>
+
+                      {/* Window Controls (Linear agentic style) */}
+                      <div className="flex items-center gap-2 text-neutral-500">
+                        <span className="text-[11px] font-mono font-medium text-neutral-400">{it.index}</span>
+                        <div className="hidden sm:flex items-center gap-1.5 opacity-50 group-hover:opacity-100 transition-opacity">
+                          <Minus size={11} className="text-neutral-400" />
+                          <Maximize2 size={10} className="text-neutral-400" />
+                        </div>
+                      </div>
                     </div>
 
-                    {/* Category pill badge */}
-                    <div>
-                      <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold font-sans ${theme.badgeBg}`}>
-                        {it.badge}
-                      </span>
+                    {/* Inner Prompt / Context Container */}
+                    <div className="rounded-xl bg-[#16171B] border border-[#26282D] p-3 space-y-1.5">
+                      <h3 className="text-xs sm:text-[13px] font-medium text-white font-heading leading-snug tracking-tight">
+                        {it.title}
+                      </h3>
+                      {it.angle && (
+                        <p className={`text-[10px] font-normal leading-snug font-sans ${theme.accentText}`}>
+                          {it.angle}
+                        </p>
+                      )}
                     </div>
-
-                    {/* Title */}
-                    <h3 className="text-[13px] sm:text-sm lg:text-[15px] font-semibold text-white font-heading leading-snug tracking-tight group-hover:text-white transition-colors">
-                      {it.title}
-                    </h3>
-
-                    {/* Subtitle / Angle */}
-                    {it.angle && (
-                      <p className={`text-[11px] font-medium leading-snug font-sans ${theme.accentText}`}>
-                        {it.angle}
-                      </p>
-                    )}
 
                     {/* Teaser Preview */}
-                    <p className="text-[11px] text-neutral-400 font-sans leading-relaxed line-clamp-3">
+                    <p className="text-[11px] text-neutral-400 font-sans leading-relaxed line-clamp-2">
                       {it.text}
                     </p>
                   </div>
 
-                  {/* Card Front Bottom: Expand Trigger Button with standard ArrowUpRight */}
-                  <div className="pt-2.5 border-t border-white/[0.06] flex items-center justify-between font-sans">
+                  {/* Card Front Bottom: Expand Trigger Button with standard Linear arrow */}
+                  <div className="pt-2.5 border-t border-[#26282D] flex items-center justify-between font-sans">
                     <span className="text-[10px] text-neutral-400">
                       {isAr ? 'عرض التفاصيل' : 'View details'}
                     </span>
-                    <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-medium transition-all duration-300 ${theme.flipHintBg}`}>
+                    <div className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-300 group-hover:text-white transition-colors duration-200">
                       <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
-                      <ArrowUpRight size={12} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:group-hover:-translate-x-0.5" />
+                      <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-neutral-400 group-hover:text-white" />
                     </div>
                   </div>
                 </m.div>
@@ -558,14 +565,14 @@ export default function WhyDifferent() {
                 damping: 26,
               }}
               style={{ transformStyle: 'preserve-3d', perspective: 1200 }}
-              className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[90vh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0A0B0E] border border-white/[0.12] text-white shadow-2xl shadow-black my-auto overflow-hidden transform-gpu"
+              className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[90vh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] text-white shadow-2xl shadow-black my-auto overflow-hidden transform-gpu"
             >
               {/* Modal Top Bar (Fixed Header) */}
               <m.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.25 }}
-                className="flex items-center justify-between p-4 sm:p-5 border-b border-white/[0.08] gap-3 shrink-0"
+                className="flex items-center justify-between p-4 sm:p-5 border-b border-[#26282D] gap-3 shrink-0"
               >
                 <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
                   <div className={`h-7 w-7 sm:h-8 sm:w-8 rounded-lg ${activeCard.theme.iconBg} flex items-center justify-center font-bold`}>
@@ -614,7 +621,7 @@ export default function WhyDifferent() {
                     initial={{ opacity: 0, scale: 0.96, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.3 }}
-                    className="rounded-xl p-3 sm:p-3.5 bg-white/[0.03] border border-white/[0.08] flex flex-col justify-between space-y-2"
+                    className="rounded-xl p-3 sm:p-3.5 bg-[#16171B] border border-[#26282D] flex flex-col justify-between space-y-2"
                   >
                     <div className="text-[11px] font-semibold text-neutral-300 uppercase tracking-wider font-sans">
                       {isAr ? 'أهم المميزات والقيمة المقدمة' : 'Key Strategic Advantages'}
@@ -659,7 +666,7 @@ export default function WhyDifferent() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.28, duration: 0.3 }}
-                className="p-3.5 sm:p-5 border-t border-white/[0.08] bg-[#0A0B0E] shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3"
+                className="p-3.5 sm:p-5 border-t border-[#26282D] bg-[#0F1013] shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3"
               >
                 <span className="text-[11px] text-neutral-400 font-sans hidden sm:inline">
                   {isAr ? 'انقر في المساحة الفارغة أو Esc للإغلاق' : 'Click outside or press Esc to close'}

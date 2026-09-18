@@ -61,6 +61,7 @@
   h6 {
     @apply font-heading text-slate-900 font-semibold;
     letter-spacing: -0.025em;
+    line-height: 1.12;
     font-feature-settings: "kern" 1, "liga" 1;
     font-stretch: normal;
   }
@@ -100,6 +101,17 @@
   }
   .btn-secondary {
     @apply btn border border-slate-200/90 bg-transparent text-slate-700 hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  /* Linear-style UI components from Obsidian specifications */
+  .btn-linear {
+    @apply inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-white transition-colors duration-200;
+  }
+  .card-linear {
+    @apply rounded-2xl bg-[#0F1013] border border-[#26282D] text-white shadow-xl shadow-black/40 transition-all duration-300;
+  }
+  .card-linear-inner {
+    @apply rounded-xl bg-[#16171B] border border-[#26282D];
   }
 
   .card {

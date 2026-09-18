@@ -7,7 +7,11 @@ const config: Config = {
     extend: {
       colors: {
         background: '#FAFAFA',
-        'background-dark': '#0F172A',
+        'background-dark': '#08090A',
+        'canvas-dark': '#08090A',
+        'card-base': '#0F1013',
+        'card-inner': '#16171B',
+        'card-border': '#26282D',
         foreground: '#1E293B',
         muted: '#F1F5F9',
         'muted-foreground': '#475569',

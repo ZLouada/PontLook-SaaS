@@ -17,14 +17,14 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer data-nav-dark="true" className="relative bg-[#000000] text-neutral-400 overflow-hidden">
+    <footer data-nav-dark="true" className="relative bg-[#08090A] text-neutral-400 overflow-hidden">
       {/* 1. HORIZON BRAND LOCKUP (PRE-FOOTER ELEMENT) */}
-      <div className="relative pt-0 pb-16 sm:pb-20 lg:pb-24 overflow-hidden bg-[#000000]">
+      <div className="relative pt-0 pb-16 sm:pb-20 lg:pb-24 overflow-hidden bg-[#08090A]">
         {/* Ambient glowing radial backlight */}
         <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[850px] h-[360px] bg-gradient-to-b from-blue-600/[0.08] to-transparent blur-[140px] pointer-events-none rounded-full transform-gpu" />
 
         {/* Top shadow gradient overlay blending into the horizon line */}
-        <div className="absolute top-0 inset-x-0 h-6 sm:h-10 bg-gradient-to-b from-[#000000] via-[#000000]/60 to-transparent pointer-events-none z-10" />
+        <div className="absolute top-0 inset-x-0 h-6 sm:h-10 bg-gradient-to-b from-[#08090A] via-[#08090A]/60 to-transparent pointer-events-none z-10" />
 
         {/* Horizon Wordmark Lockup (subtle negative margin clipping so it emerges beneath horizon border) */}
         <div className="relative -mt-2 sm:-mt-3 md:-mt-4 lg:-mt-5 overflow-hidden select-none pointer-events-none transform-gpu flex items-center justify-center">
@@ -38,7 +38,7 @@ export default function Footer() {
 
         {/* Centered Floating Consultation Card Over Horizon */}
         <div className="container-site relative z-20 px-4 sm:px-8 lg:px-12 mx-auto">
-          <div className="relative z-10 -mt-10 max-w-2xl mx-auto rounded-2xl sm:rounded-3xl border border-white/10 hover:border-white/20 bg-[#0A0A0A]/95 backdrop-blur-2xl p-8 md:p-10 shadow-[0_24px_64px_rgba(0,0,0,0.9)] text-center flex flex-col items-center gap-6 transform-gpu transition-all duration-300">
+          <div className="relative z-10 -mt-10 max-w-2xl mx-auto rounded-2xl sm:rounded-3xl border border-[#26282D] hover:border-white/20 bg-[#0F1013]/95 backdrop-blur-2xl p-8 md:p-10 shadow-[0_24px_64px_rgba(0,0,0,0.9)] text-center flex flex-col items-center gap-6 transform-gpu transition-all duration-300">
             {/* Subtle top inner sheen */}
             <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
 
@@ -54,7 +54,7 @@ export default function Footer() {
 
             <Link
               href={`/${lang}/contact`}
-              className="relative z-10 inline-flex items-center justify-center gap-2.5 bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 font-semibold px-8 py-3.5 rounded-full text-sm sm:text-base min-h-[48px] backdrop-blur-md shadow-sm hover:scale-105 active:scale-95 transition-all group"
+              className="relative z-10 inline-flex items-center justify-center gap-2.5 bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 font-medium px-8 py-3.5 rounded-xl text-sm sm:text-base min-h-[48px] backdrop-blur-md shadow-sm hover:scale-105 active:scale-95 transition-all group"
             >
               <span>{dict.final_cta?.btn_call || (lang === 'ar' ? 'احجز استشارة' : 'Book a consultation')}</span>
               <ArrowRight size={17} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
@@ -64,7 +64,7 @@ export default function Footer() {
       </div>
 
       {/* 2. UNIVERSAL 4-COLUMN FOOTER LAYOUT */}
-      <div className="bg-[#000000] text-neutral-400 pt-16 pb-12 px-6 lg:px-12">
+      <div className="bg-[#08090A] text-neutral-400 pt-16 pb-12 px-6 lg:px-12">
         <div className="container-site relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mx-auto">
           {/* Column 1: Mission & Registered Entity */}
           <div className="space-y-4">
@@ -161,7 +161,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Copyright Line */}
-        <div className="container-site border-t border-white/[0.06] mt-12 pt-8 mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-neutral-400 text-center sm:text-start">
+        <div className="container-site border-t border-[#26282D] mt-12 pt-8 mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-neutral-400 text-center sm:text-start">
           <p>
             &copy; {year} PontLook, operating under Firstnestcare, LLC. All rights reserved.
           </p>
