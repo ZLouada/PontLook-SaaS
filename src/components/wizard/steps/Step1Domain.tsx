@@ -552,7 +552,7 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
                   setValue('otherDomainText', searchQuery, { shouldValidate: true });
                   setSearchQuery('');
                 }}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-[#2451BF] px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-blue-700 active:scale-95 touch-manipulation"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-transparent hover:bg-slate-900/5 text-slate-900 border border-slate-300 hover:border-slate-500 px-4 py-2.5 text-xs font-bold shadow-xs active:scale-95 touch-manipulation"
               >
                 <Sliders size={14} />
                 <span>Add &quot;{searchQuery}&quot; as Specialized Topic</span>

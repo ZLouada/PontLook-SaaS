@@ -130,7 +130,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link 
                   href={`/${lang}/for-providers`} 
-                  className="btn-primary inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-white rounded-full shadow-lg shadow-primary/25 hover:shadow-xl transition-all"
+                  className="btn-primary inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold rounded-full shadow-xs transition-all"
                 >
                   {isAr ? 'ابدأ باستقبال الفرص المؤهلة' : 'Start Receiving Qualified Leads'}
                   <ArrowRight size={18} className="ms-2 rtl:-scale-x-100" />
@@ -138,7 +138,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                 
                 <Link 
                   href={`/${lang}/contact`} 
-                  className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-full border border-slate-200 transition-all"
+                  className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-semibold text-slate-700 hover:text-slate-900 bg-transparent hover:bg-slate-100 rounded-full border border-slate-200 shadow-xs transition-all"
                 >
                   {isAr ? 'احجز جلسة استكشافية' : 'Book a Discovery Call'}
                 </Link>

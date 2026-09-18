@@ -54,7 +54,7 @@ export default function Footer() {
 
             <Link
               href={`/${lang}/contact`}
-              className="relative z-10 inline-flex items-center justify-center gap-2.5 bg-white hover:bg-neutral-200 text-black font-semibold px-8 py-3.5 rounded-full text-sm sm:text-base min-h-[48px] shadow-lg shadow-white/5 hover:scale-105 active:scale-95 transition-all group"
+              className="relative z-10 inline-flex items-center justify-center gap-2.5 bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 font-semibold px-8 py-3.5 rounded-full text-sm sm:text-base min-h-[48px] backdrop-blur-md shadow-sm hover:scale-105 active:scale-95 transition-all group"
             >
               <span>{dict.final_cta?.btn_call || (lang === 'ar' ? 'احجز استشارة' : 'Book a consultation')}</span>
               <ArrowRight size={17} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />

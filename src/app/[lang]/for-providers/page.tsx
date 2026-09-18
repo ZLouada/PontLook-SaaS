@@ -146,7 +146,7 @@ export default async function ForProvidersPage({
             <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto">
               <Link
                 href={`/${lang}/for-providers/apply`}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-full bg-primary hover:bg-primary-600 text-white font-semibold text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] transition-all duration-200"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-full bg-transparent hover:bg-slate-900/5 text-slate-900 font-semibold text-base border border-slate-300 hover:border-slate-500 shadow-xs active:scale-[0.98] transition-all duration-200"
               >
                 <span>{isAr ? 'قدم للانضمام إلى شبكتنا' : 'Apply to Join Network'}</span>
                 <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
@@ -154,7 +154,7 @@ export default async function ForProvidersPage({
 
               <a
                 href="#tiers"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-full bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-semibold text-base border border-slate-200 shadow-sm active:scale-[0.98] transition-all duration-200"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-full bg-transparent hover:bg-slate-100 text-slate-700 hover:text-slate-900 font-semibold text-base border border-slate-200 shadow-xs active:scale-[0.98] transition-all duration-200"
               >
                 <span>{isAr ? 'استعرض فئات الفرص' : 'Explore Opportunity Tiers'}</span>
               </a>
@@ -254,7 +254,7 @@ export default async function ForProvidersPage({
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Link
                     href={`/${lang}/for-providers/apply`}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-primary hover:bg-primary-600 text-white font-semibold text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] transition-all duration-200"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-transparent hover:bg-slate-900/5 text-slate-900 font-semibold text-base border border-slate-300 hover:border-slate-500 shadow-xs active:scale-[0.98] transition-all duration-200"
                   >
                     <span>{isAr ? 'ابدأ طلب التأهيل للشراكة' : 'Apply for Provider Partnership'}</span>
                     <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
@@ -262,7 +262,7 @@ export default async function ForProvidersPage({
 
                   <a
                     href="#tiers"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-semibold text-base border border-slate-200 shadow-sm transition-all duration-200"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-transparent hover:bg-slate-100 text-slate-700 hover:text-slate-900 font-semibold text-base border border-slate-200 shadow-xs transition-all duration-200"
                   >
                     <span>{isAr ? 'مراجعة معايير الفرص' : 'Review Opportunity Criteria'}</span>
                   </a>

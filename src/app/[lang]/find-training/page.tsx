@@ -209,7 +209,7 @@ export default async function FindTrainingPage({
             <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto">
               <Link
                 href={`/${lang}/find-training/request`}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-full bg-primary hover:bg-primary-600 text-white font-semibold text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] transition-all duration-200"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-full bg-transparent hover:bg-slate-900/5 text-slate-900 font-semibold text-base border border-slate-300 hover:border-slate-500 shadow-xs active:scale-[0.98] transition-all duration-200"
               >
                 <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals'}</span>
                 <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
@@ -217,7 +217,7 @@ export default async function FindTrainingPage({
 
               <a
                 href="#how-it-works"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-full bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-semibold text-base border border-slate-200 shadow-sm active:scale-[0.98] transition-all duration-200"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-full bg-transparent hover:bg-slate-100 text-slate-700 hover:text-slate-900 font-semibold text-base border border-slate-200 shadow-xs active:scale-[0.98] transition-all duration-200"
               >
                 <span>{isAr ? 'كيف تعمل المنصة' : 'How Matchmaking Works'}</span>
               </a>
@@ -365,7 +365,7 @@ export default async function FindTrainingPage({
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Link
                     href={`/${lang}/find-training/request`}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-primary hover:bg-primary-600 text-white font-semibold text-base shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] transition-all duration-200"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-transparent hover:bg-slate-900/5 text-slate-900 font-semibold text-base border border-slate-300 hover:border-slate-500 shadow-xs active:scale-[0.98] transition-all duration-200"
                   >
                     <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals'}</span>
                     <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
@@ -373,7 +373,7 @@ export default async function FindTrainingPage({
 
                   <a
                     href="#how-it-works"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-semibold text-base border border-slate-200 shadow-sm transition-all duration-200"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-transparent hover:bg-slate-100 text-slate-700 hover:text-slate-900 font-semibold text-base border border-slate-200 shadow-xs transition-all duration-200"
                   >
                     <span>{isAr ? 'استكشف خطوات العمل' : 'Explore How It Works'}</span>
                   </a>

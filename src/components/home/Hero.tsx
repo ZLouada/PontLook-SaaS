@@ -85,10 +85,10 @@ export default function Hero() {
           <div className="lg:col-span-5 xl:col-span-4 flex flex-col items-start lg:items-end justify-center w-full">
             <Reveal delay={0.12}>
               <div className="w-full max-w-sm flex flex-col gap-3.5">
-                {/* Primary CTA Button: Join the networks with electric orange hover effect */}
+                {/* Primary CTA Button: Join the networks */}
                 <Link
                   href={`/${lang}/for-providers/apply`}
-                  className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-7 rounded-full bg-[#0052FF] hover:bg-[#FF5C00] text-white font-semibold text-base shadow-lg shadow-blue-600/30 hover:shadow-orange-500/30 active:scale-[0.98] transition-all duration-300 group"
+                  className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-7 rounded-full bg-white/[0.06] hover:bg-white/[0.14] text-white font-semibold text-base border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group"
                 >
                   <span>{isAr ? 'انضم إلى شبكتنا' : 'Join the networks'}</span>
                   <ArrowRight
@@ -100,9 +100,9 @@ export default function Hero() {
                 {/* Secondary CTA Button: I'm looking for training */}
                 <Link
                   href={`/${lang}/find-training/request`}
-                  className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-7 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-base border border-white/20 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200"
+                  className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-7 rounded-full bg-white/[0.06] hover:bg-white/[0.14] text-white font-semibold text-base border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200"
                 >
-                  <Target size={17} className="text-blue-400" />
+                  <Target size={17} className="text-white/80" />
                   <span>{dict.hero.btn_buyer}</span>
                 </Link>
               </div>

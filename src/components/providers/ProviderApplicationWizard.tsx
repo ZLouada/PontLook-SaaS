@@ -400,7 +400,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               href={`/${lang}/for-providers`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-full bg-primary hover:bg-primary-600 text-white font-semibold text-sm shadow-lg shadow-primary/25 hover:shadow-xl transition-all duration-200"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-full bg-transparent hover:bg-slate-900/5 text-slate-900 font-semibold text-sm border border-slate-300 hover:border-slate-500 shadow-xs active:scale-[0.98] transition-all duration-200"
             >
               <span>{isAr ? 'العودة لصفحة مزودي التدريب' : 'Return to Providers Overview'}</span>
               <ArrowRight size={16} className={isAr ? 'rotate-180' : ''} />
@@ -408,7 +408,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
 
             <Link
               href={`/${lang}`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-full bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-semibold text-sm border border-slate-200 shadow-sm transition-all duration-200"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-full bg-transparent hover:bg-slate-100 text-slate-700 hover:text-slate-900 font-semibold text-sm border border-slate-200 shadow-xs transition-all duration-200"
             >
               <span>{isAr ? 'الصفحة الرئيسية' : 'Homepage'}</span>
             </Link>
@@ -859,7 +859,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
             <button
               type="button"
               onClick={handleNext}
-              className="inline-flex items-center justify-center gap-2 py-3.5 px-7 rounded-full bg-primary hover:bg-primary-600 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] transition-all"
+              className="inline-flex items-center justify-center gap-2 py-3.5 px-7 rounded-full bg-transparent hover:bg-slate-900/5 text-slate-900 font-semibold text-xs sm:text-sm border border-slate-300 hover:border-slate-500 shadow-xs active:scale-[0.98] transition-all"
             >
               <span>{isAr ? 'المتابعة' : 'Continue'}</span>
               <ArrowRight size={16} className={isAr ? 'rotate-180' : ''} />
@@ -869,7 +869,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
               type="button"
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-full bg-primary hover:bg-primary-600 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] disabled:opacity-50 transition-all"
+              className="inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-full bg-transparent hover:bg-slate-900/5 text-slate-900 font-semibold text-xs sm:text-sm border border-slate-300 hover:border-slate-500 shadow-xs active:scale-[0.98] disabled:opacity-50 transition-all"
             >
               <span>
                 {isSubmitting

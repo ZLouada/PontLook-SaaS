@@ -193,8 +193,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       layoutId="nav-active-indicator"
                       className={`absolute bottom-0 inset-x-3 h-0.5 rounded-full ${
                         isDarkSection
-                          ? 'bg-[#4D7CFF] shadow-[0_0_8px_rgba(77,124,255,0.6)]'
-                          : 'bg-[#0052FF] shadow-[0_0_8px_rgba(0,82,255,0.4)]'
+                          ? 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]'
+                          : 'bg-slate-900 shadow-[0_0_8px_rgba(0,0,0,0.2)]'
                       }`}
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
@@ -211,11 +211,11 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border active:scale-95 transition-all duration-200 ${
                 isDarkSection
                   ? 'border-white/20 bg-white/10 backdrop-blur-md text-white hover:bg-white/20 hover:border-white/30 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)]'
-                  : 'border-white/80 bg-white/70 backdrop-blur-md text-slate-700 hover:text-[#0052FF] hover:border-[#0052FF]/30 hover:bg-white/90 shadow-[inset_0_1px_1px_rgba(255,255,255,0.95),0_2px_6px_rgba(0,0,0,0.04)]'
+                  : 'border-white/80 bg-white/70 backdrop-blur-md text-slate-700 hover:text-slate-950 hover:border-slate-300 hover:bg-white/90 shadow-[inset_0_1px_1px_rgba(255,255,255,0.95),0_2px_6px_rgba(0,0,0,0.04)]'
               }`}
               aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
             >
-              <Globe size={13} className={isDarkSection ? 'text-[#4D7CFF]' : 'text-[#0052FF]'} />
+              <Globe size={13} className={isDarkSection ? 'text-white' : 'text-slate-600'} />
               <span>{lang === 'en' ? 'العربية' : 'English'}</span>
             </Link>
 
@@ -226,7 +226,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 className={`flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full transition-all active:scale-90 ${
                   isDarkSection
                     ? 'text-white bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)]'
-                    : 'text-slate-800 bg-white/75 backdrop-blur-md border border-white/85 hover:bg-white/95 hover:border-[#0052FF]/30 hover:text-[#0052FF] shadow-[inset_0_1px_1px_rgba(255,255,255,0.95),0_2px_6px_rgba(0,0,0,0.04)]'
+                    : 'text-slate-800 bg-white/75 backdrop-blur-md border border-white/85 hover:bg-white/95 hover:border-slate-300 hover:text-slate-950 shadow-[inset_0_1px_1px_rgba(255,255,255,0.95),0_2px_6px_rgba(0,0,0,0.04)]'
                 }`}
                 onClick={() => setOpen(true)}
                 aria-expanded={open}
@@ -310,13 +310,13 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                               {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                               className={`flex min-h-[48px] items-center justify-between px-4 py-3 rounded-2xl text-base font-semibold tracking-wide transition-all active:scale-[0.98] ${
                                 isActive
-                                  ? 'text-[#0052FF] bg-[#0052FF]/10 font-bold border border-[#0052FF]/20'
+                                  ? 'text-slate-900 bg-slate-100 font-bold border border-slate-200'
                                   : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
                               }`}
                             >
                               <span>{l.label}</span>
                               {isActive && (
-                                <span className="text-[11px] font-bold text-[#0052FF] bg-white px-2 py-0.5 rounded-md shadow-2xs">
+                                <span className="text-[11px] font-bold text-slate-900 bg-white px-2 py-0.5 rounded-md shadow-2xs">
                                   {lang === 'ar' ? 'الحالي' : 'Active'}
                                 </span>
                               )}
@@ -334,8 +334,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       onClick={() => setOpen(false)}
                       variant="primary"
                       size="md"
-                      className="w-full justify-center shadow-md py-3.5 text-base font-bold min-h-[50px] rounded-2xl"
-                      leftIcon={<ShieldCheck size={18} className="text-white/90" />}
+                      className="w-full justify-center shadow-xs py-3.5 text-base font-bold min-h-[50px] rounded-2xl border border-slate-300 hover:border-slate-500 bg-transparent hover:bg-slate-50 text-slate-900"
+                      leftIcon={<ShieldCheck size={18} className="text-slate-700" />}
                       rightIcon={<ArrowRight size={17} className="rtl:-scale-x-100" />}
                     >
                       {dict.nav.get_matched}
@@ -350,7 +350,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                         onClick={() => setOpen(false)}
                         className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-bold text-xs text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all active:scale-95 min-h-[40px]"
                       >
-                        <Globe size={14} className="text-[#0052FF]" />
+                        <Globe size={14} className="text-slate-700" />
                         <span>{lang === 'en' ? 'العربية' : 'English'}</span>
                       </Link>
                     </div>

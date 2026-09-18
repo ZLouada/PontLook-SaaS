@@ -223,12 +223,12 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     clayTheme: {
       bgClass: 'bg-[#0A0B0E] text-white',
       borderClass: 'border-white/10 hover:border-white/20',
-      pillOuter: 'bg-[#0052FF] text-white',
+      pillOuter: 'bg-white/10 border border-white/15 text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] hover:from-[#0047E0] hover:to-[#386BF6] text-white shadow-md shadow-blue-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-white/[0.03] text-white',
       innerCardBorder: 'border-white/10',
-      meterColor: 'bg-[#0052FF]',
+      meterColor: 'bg-white/60',
       checkColor: 'text-[#38BDF8]',
     }
   },
@@ -255,7 +255,7 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
       borderClass: 'border-white/10 hover:border-white/20',
       pillOuter: 'bg-emerald-600 text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] hover:from-[#0047E0] hover:to-[#386BF6] text-white shadow-md shadow-blue-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-white/[0.03] text-white',
       innerCardBorder: 'border-white/10',
       meterColor: 'bg-emerald-500',
@@ -285,7 +285,7 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
       borderClass: 'border-white/10 hover:border-white/20',
       pillOuter: 'bg-purple-600 text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] hover:from-[#0047E0] hover:to-[#386BF6] text-white shadow-md shadow-blue-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-white/[0.03] text-white',
       innerCardBorder: 'border-white/10',
       meterColor: 'bg-purple-500',
@@ -315,7 +315,7 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
       borderClass: 'border-white/10 hover:border-white/20',
       pillOuter: 'bg-[#FF5C00] text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] hover:from-[#0047E0] hover:to-[#386BF6] text-white shadow-md shadow-blue-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-white/[0.03] text-white',
       innerCardBorder: 'border-white/10',
       meterColor: 'bg-[#FF5C00]',
@@ -346,12 +346,12 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     clayTheme: {
       bgClass: 'bg-[#0A0B0E] text-white',
       borderClass: 'border-white/10 hover:border-white/20',
-      pillOuter: 'bg-[#0052FF] text-white',
+      pillOuter: 'bg-white/10 border border-white/15 text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] hover:from-[#0047E0] hover:to-[#386BF6] text-white shadow-md shadow-blue-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-white/[0.03] text-white',
       innerCardBorder: 'border-white/10',
-      meterColor: 'bg-[#0052FF]',
+      meterColor: 'bg-white/60',
       checkColor: 'text-[#38BDF8]',
     }
   },
@@ -378,7 +378,7 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
       borderClass: 'border-white/10 hover:border-white/20',
       pillOuter: 'bg-emerald-600 text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] hover:from-[#0047E0] hover:to-[#386BF6] text-white shadow-md shadow-blue-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-white/[0.03] text-white',
       innerCardBorder: 'border-white/10',
       meterColor: 'bg-emerald-500',
@@ -408,7 +408,7 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
       borderClass: 'border-white/10 hover:border-white/20',
       pillOuter: 'bg-purple-600 text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] hover:from-[#0047E0] hover:to-[#386BF6] text-white shadow-md shadow-blue-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-white/[0.03] text-white',
       innerCardBorder: 'border-white/10',
       meterColor: 'bg-purple-500',
@@ -438,7 +438,7 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
       borderClass: 'border-white/10 hover:border-white/20',
       pillOuter: 'bg-[#FF5C00] text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] hover:from-[#0047E0] hover:to-[#386BF6] text-white shadow-md shadow-blue-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-white/[0.03] text-white',
       innerCardBorder: 'border-white/10',
       meterColor: 'bg-[#FF5C00]',
@@ -508,7 +508,7 @@ export default function LeadTiers(_props?: {
                         <div className="pt-2">
                           <Link
                             href={`/${lang}/for-providers/apply`}
-                            className="inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-gradient-to-r from-[#0052FF] to-[#4D7CFF] text-white font-medium shadow-md shadow-blue-500/20 hover:shadow-blue-500/35 active:scale-[0.98] transition-all"
+                            className="inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 font-medium text-sm backdrop-blur-md shadow-sm active:scale-[0.98] transition-all"
                           >
                             <span>{isAr ? 'قدم للانضمام إلى الشراكة' : 'Apply for partnership'}</span>
                             <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
@@ -569,7 +569,7 @@ export default function LeadTiers(_props?: {
       <div className="container-site relative z-10 px-4 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-4">
             <span>{isAr ? 'خيارات الشراكة والتعاون' : 'COLLABORATION PATHWAYS'}</span>
           </div>
 
@@ -589,7 +589,7 @@ export default function LeadTiers(_props?: {
               href="https://blog.pontlook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-[#0052FF] hover:bg-[#FF5C00] text-white font-medium text-sm shadow-lg shadow-blue-600/30 hover:shadow-orange-500/30 active:scale-[0.98] transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 font-medium text-sm backdrop-blur-md shadow-sm active:scale-[0.98] transition-all"
             >
               <span>{exp?.btn_blog || (isAr ? 'استكشف المدونة والموارد' : 'Explore the Blog & Resources')}</span>
               <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
@@ -597,7 +597,7 @@ export default function LeadTiers(_props?: {
 
             <Link
               href={`/${lang}/find-training`}
-              className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-white/10 text-white font-medium text-sm border border-white/20 hover:bg-white/20 active:scale-[0.98] transition-all shadow-sm"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 font-medium text-sm backdrop-blur-md shadow-sm active:scale-[0.98] transition-all"
             >
               <span>{exp?.btn_match || (isAr ? 'ابدأ الربط للتدريب' : 'Get Matched for Training')}</span>
               <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />

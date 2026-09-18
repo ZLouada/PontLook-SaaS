@@ -227,8 +227,8 @@ export default async function SolutionLandingPage({ params }: PageProps) {
                   href={`/${lang}/find-training`}
                   variant="primary"
                   size="lg"
-                  className="w-full sm:w-auto py-4 sm:py-3.5 px-7 justify-center min-h-[50px] font-bold shadow-md shadow-blue-500/20"
-                  leftIcon={<Building2 size={18} className="text-white/90" />}
+                  className="w-full sm:w-auto py-4 sm:py-3.5 px-7 justify-center min-h-[50px] font-bold shadow-xs"
+                  leftIcon={<Building2 size={18} className="text-slate-700" />}
                   rightIcon={<ArrowRight size={17} className="rtl:-scale-x-100" />}
                 >
                   {isAr ? 'احصل على عروض تدريبية مخصصة' : 'Find Matched Providers Now'}
@@ -434,9 +434,9 @@ export default async function SolutionLandingPage({ params }: PageProps) {
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
                 <Button
                   href={`/${lang}/find-training`}
-                  variant="primary"
+                  variant="dark"
                   size="lg"
-                  className="w-full sm:w-auto py-4 px-8 justify-center min-h-[50px] font-bold shadow-lg shadow-blue-500/30"
+                  className="w-full sm:w-auto py-4 px-8 justify-center min-h-[50px] font-bold shadow-xs"
                   leftIcon={<Building2 size={18} />}
                   rightIcon={<ArrowRight size={17} className="rtl:-scale-x-100" />}
                 >
@@ -445,9 +445,9 @@ export default async function SolutionLandingPage({ params }: PageProps) {
 
                 <Button
                   href={`/${lang}/for-providers`}
-                  variant="secondary"
+                  variant="dark"
                   size="lg"
-                  className="w-full sm:w-auto py-4 px-6 justify-center min-h-[50px] bg-slate-900 border-slate-700 text-slate-200 hover:bg-slate-800 hover:text-white"
+                  className="w-full sm:w-auto py-4 px-6 justify-center min-h-[50px] font-semibold"
                 >
                   {isAr ? 'تسجيل مزود تدريب جديد' : 'Register as a Training Academy'}
                 </Button>

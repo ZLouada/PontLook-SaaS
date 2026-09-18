@@ -286,8 +286,8 @@ export default function HowItWorks() {
         {/* Section Header */}
         <div className="mb-14 sm:mb-20 text-start max-w-3xl">
           <Reveal>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/15 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-4">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#0052FF]" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/15 text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-4">
+              <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
               <span>{dict.how_it_works?.eyebrow || (isAr ? 'في ثلاث خطوات فقط' : 'Just in three steps')}</span>
             </div>
 

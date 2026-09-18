@@ -96,10 +96,10 @@
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition-all duration-200 transform-gpu;
   }
   .btn-primary {
-    @apply btn bg-gradient-to-r from-accent to-accent-secondary text-accent-foreground shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0;
+    @apply btn bg-transparent hover:bg-slate-900/5 text-slate-900 border border-slate-300 hover:border-slate-500 shadow-sm hover:-translate-y-0.5 active:translate-y-0;
   }
   .btn-secondary {
-    @apply btn border border-slate-200/90 bg-white text-slate-800 hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0;
+    @apply btn border border-slate-200/90 bg-transparent text-slate-700 hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0;
   }
 
   .card {

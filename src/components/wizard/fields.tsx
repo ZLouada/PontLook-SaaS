@@ -268,7 +268,7 @@ export function StepNavigation({
                 e.stopPropagation();
                 onBack(e);
               }}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-xs transition-all hover:bg-slate-50 hover:text-slate-800 active:scale-[0.98] sm:w-auto min-h-[44px] touch-manipulation"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-transparent hover:bg-slate-100 px-5 py-3 text-sm font-semibold text-slate-700 hover:text-slate-900 shadow-xs transition-all active:scale-[0.98] sm:w-auto min-h-[44px] touch-manipulation"
             >
               <ArrowLeft size={16} className="rtl:rotate-180 shrink-0" />
               <span>Back</span>
@@ -280,10 +280,10 @@ export function StepNavigation({
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`inline-flex w-full items-center justify-center gap-2.5 rounded-xl px-7 py-3.5 sm:py-4 text-base sm:text-sm font-semibold shadow-sm transition-all hover:shadow active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:w-auto min-h-[48px] touch-manipulation ${
+            className={`inline-flex w-full items-center justify-center gap-2.5 rounded-xl px-7 py-3.5 sm:py-4 text-base sm:text-sm font-semibold shadow-xs transition-all hover:shadow active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:w-auto min-h-[48px] touch-manipulation ${
               isFinalStep
-                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:from-emerald-500 hover:to-teal-500'
-                : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-500 hover:to-blue-600'
+                ? 'bg-transparent hover:bg-emerald-50 text-emerald-700 border border-emerald-300 hover:border-emerald-500'
+                : 'bg-transparent hover:bg-slate-900/5 text-slate-900 border border-slate-300 hover:border-slate-500'
             }`}
           >
             {isSubmitting ? (
