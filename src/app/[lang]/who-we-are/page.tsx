@@ -67,9 +67,6 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
 
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6 my-auto -translate-y-2 sm:-translate-y-4">
           <Reveal className="flex flex-col items-center">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5 shadow-xs">
-              {isAr ? 'من نحن' : 'Who We Are'}
-            </span>
             <h1 className="text-3xl sm:text-5xl lg:text-[56px] font-semibold text-white leading-[1.12] sm:leading-[1.1] font-heading tracking-tight">
               {isAr ? (
                 <>

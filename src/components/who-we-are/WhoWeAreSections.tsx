@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -382,6 +382,46 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
 export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
   const isAr = lang === 'ar';
   const [activeStep, setActiveStep] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const elapsedRef = useRef(0);
+  const STEP_DURATION = 5000; // 5 seconds per stage
+
+  const handleStepChange = (newStep: number) => {
+    elapsedRef.current = 0;
+    setProgress(0);
+    setActiveStep(newStep);
+  };
+
+  useEffect(() => {
+    elapsedRef.current = 0;
+    setProgress(0);
+  }, [activeStep]);
+
+  useEffect(() => {
+    if (isPaused) return;
+
+    const startTime = performance.now() - elapsedRef.current;
+    let animationFrameId: number;
+
+    const tick = (now: number) => {
+      const elapsed = now - startTime;
+      elapsedRef.current = elapsed;
+      const pct = Math.min((elapsed / STEP_DURATION) * 100, 100);
+      setProgress(pct);
+
+      if (elapsed >= STEP_DURATION) {
+        elapsedRef.current = 0;
+        setProgress(0);
+        setActiveStep((prev) => (prev + 1) % 4);
+      } else {
+        animationFrameId = requestAnimationFrame(tick);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [activeStep, isPaused]);
 
   // Mobile swipe handling
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -399,15 +439,15 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
     const minDistance = 50;
     if (isAr) {
       if (distance > minDistance) {
-        setActiveStep((prev) => (prev === 0 ? steps.length - 1 : prev - 1));
+        handleStepChange(activeStep === 0 ? 3 : activeStep - 1);
       } else if (distance < -minDistance) {
-        setActiveStep((prev) => (prev + 1) % steps.length);
+        handleStepChange((activeStep + 1) % 4);
       }
     } else {
       if (distance > minDistance) {
-        setActiveStep((prev) => (prev + 1) % steps.length);
+        handleStepChange((activeStep + 1) % 4);
       } else if (distance < -minDistance) {
-        setActiveStep((prev) => (prev === 0 ? steps.length - 1 : prev - 1));
+        handleStepChange(activeStep === 0 ? 3 : activeStep - 1);
       }
     }
     setTouchStart(null);
@@ -568,7 +608,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
           </p>
         </div>
 
-        {/* 4-Step Segmented Navigation Header (Touch-optimized) */}
+        {/* 4-Step Segmented Navigation Header (Touch-optimized with live white line) */}
         <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-6 sm:mb-8 w-full max-w-4xl mx-auto overflow-x-auto scrollbar-none py-1">
           {steps.map((s, idx) => {
             const isActive = activeStep === idx;
@@ -576,22 +616,40 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
               <button
                 key={s.num}
                 type="button"
-                onClick={() => setActiveStep(idx)}
-                className={`group relative flex-1 min-w-[130px] sm:min-w-0 flex items-center justify-center gap-2 py-2.5 sm:py-3 px-3 sm:px-4 rounded-2xl border transition-all duration-200 text-xs font-medium cursor-pointer active:scale-95 ${
+                onClick={() => handleStepChange(idx)}
+                className={`group relative flex-1 min-w-[140px] sm:min-w-0 flex flex-col justify-between py-2.5 sm:py-3 px-3 sm:px-4 rounded-2xl border transition-all duration-200 text-xs font-medium cursor-pointer active:scale-95 ${
                   isActive
                     ? 'bg-white/[0.08] text-white border-white/30 shadow-lg'
                     : 'bg-[#0F1013] text-neutral-400 border-[#26282D] hover:border-white/20 hover:text-neutral-200'
                 }`}
               >
-                <span className={`text-[11px] font-mono font-bold ${isActive ? 'text-blue-400' : 'text-neutral-500'}`}>
-                  {s.num}
-                </span>
-                <span className="truncate">
-                  {s.navTitle}
-                </span>
-                {isActive && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse shrink-0" />
-                )}
+                <div className="flex items-center justify-between w-full gap-2 mb-2">
+                  <div className="flex items-center gap-2 truncate">
+                    <span className={`text-[11px] font-mono font-bold ${isActive ? 'text-white' : 'text-neutral-500'}`}>
+                      {s.num}
+                    </span>
+                    <span className="truncate">
+                      {s.navTitle.replace(/^\d+\s*/, '')}
+                    </span>
+                  </div>
+                  {isActive && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse shrink-0" />
+                  )}
+                </div>
+
+                {/* White Progress Line on Active Tab */}
+                <div className="w-full h-[3px] rounded-full bg-white/10 overflow-hidden">
+                  {isActive ? (
+                    <div
+                      className="h-full bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.9)]"
+                      style={{ width: `${progress}%` }}
+                    />
+                  ) : idx < activeStep ? (
+                    <div className="h-full bg-white/30 rounded-full w-full" />
+                  ) : (
+                    <div className="h-full w-0" />
+                  )}
+                </div>
               </button>
             );
           })}
@@ -602,6 +660,8 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
           className="relative rounded-3xl border border-[#26282D] bg-[#0F1013] p-6 sm:p-10 lg:p-12 shadow-2xl overflow-hidden text-white transition-all duration-300"
         >
           {/* Ambient Corner Glow */}
@@ -643,9 +703,8 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
                 <div className="pt-3 flex items-center gap-3">
                   <button
                     type="button"
-                    disabled={activeStep === 0}
-                    onClick={() => setActiveStep((prev) => Math.max(prev - 1, 0))}
-                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-medium bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 hover:text-white border border-[#26282D] disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer active:scale-95 font-sans"
+                    onClick={() => handleStepChange(activeStep === 0 ? steps.length - 1 : activeStep - 1)}
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-medium bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 hover:text-white border border-[#26282D] transition-all cursor-pointer active:scale-95 font-sans"
                   >
                     <ArrowLeft size={14} className="rtl:-scale-x-100" />
                     <span>{isAr ? 'المرحلة السابقة' : 'Previous Stage'}</span>
@@ -653,8 +712,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
 
                   <button
                     type="button"
-                    disabled={activeStep === steps.length - 1}
-                    onClick={() => setActiveStep((prev) => Math.min(prev + 1, steps.length - 1))}
+                    onClick={() => handleStepChange((activeStep + 1) % steps.length)}
                     className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-medium bg-white/[0.08] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/30 transition-all cursor-pointer active:scale-95 shadow-sm font-sans"
                   >
                     <span>{isAr ? 'المرحلة التالية' : 'Next Stage'}</span>
@@ -671,21 +729,21 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
                     <div className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-sans">
                       {isAr ? 'مخرجات المرحلة والتحقق المعتمد' : 'Key Deliverables & Verification'}
                     </div>
-                    <div className="text-xs font-bold text-blue-400 font-mono">
+                    <div className="text-xs font-bold text-white font-mono">
                       {activeStep + 1} / {steps.length}
                     </div>
                   </div>
 
-                  {/* Progress Gauge */}
+                  {/* Progress Gauge: Live White Line */}
                   <div className="space-y-1.5">
                     <div className="flex justify-between text-[11px] text-neutral-400 font-sans">
-                      <span>{isAr ? 'مستوى تقدم رحلة التدريب' : 'Journey Progress'}</span>
-                      <span className="font-semibold text-white">{((activeStep + 1) / steps.length) * 100}%</span>
+                      <span>{isAr ? 'مستوى تقدم المرحلة الحالية' : 'Live Stage Progress'}</span>
+                      <span className="font-semibold text-white font-mono">{Math.round(progress)}%</span>
                     </div>
                     <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-blue-500 to-emerald-400 rounded-full transition-all duration-500"
-                        style={{ width: `${((activeStep + 1) / steps.length) * 100}%` }}
+                        className="h-full bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"
+                        style={{ width: `${progress}%` }}
                       />
                     </div>
                   </div>

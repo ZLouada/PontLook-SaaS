@@ -8,7 +8,6 @@ import {
   BadgeDollarSign,
   Target,
   Sparkles,
-  Building2,
   ArrowRight,
   SlidersHorizontal,
   Scale,
@@ -178,15 +177,6 @@ export default async function FindTrainingPage({
         {/* Vertically Centered Content */}
         <div className="container-site relative z-10 mx-auto max-w-4xl text-center my-auto -translate-y-3 sm:-translate-y-6 py-2">
           <Reveal className="flex flex-col items-center">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5 shadow-xs">
-              <Building2 size={14} className="text-white" />
-              <span>
-                {isAr
-                  ? 'لمدراء الموارد البشرية والتطوير وقادة المؤسسات'
-                  : 'For CHROs, L&D Directors & Enterprise Leaders'}
-              </span>
-            </span>
-
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.08] font-heading tracking-tight">
               {isAr ? (
                 <>
