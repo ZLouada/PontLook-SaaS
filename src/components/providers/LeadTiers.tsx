@@ -150,26 +150,26 @@ const TIERS_AR: TierData[] = [
 const CARD_CONFIGS = [
   {
     zIndexClass: 'z-10',
-    topClass: 'top-20 sm:top-24',
-    spacingClass: 'mb-12 sm:mb-20',
+    topClass: 'top-16 sm:top-20 lg:top-24',
+    spacingClass: 'mb-12 sm:mb-16 lg:mb-20',
     shadowClass: 'shadow-2xl shadow-[0_-12px_36px_rgba(0,0,0,0.85)]'
   },
   {
     zIndexClass: 'z-20',
-    topClass: 'top-24 sm:top-28',
-    spacingClass: 'mb-12 sm:mb-20',
+    topClass: 'top-20 sm:top-24 lg:top-28',
+    spacingClass: 'mb-12 sm:mb-16 lg:mb-20',
     shadowClass: 'shadow-2xl shadow-[0_-16px_42px_rgba(0,0,0,0.9)]'
   },
   {
     zIndexClass: 'z-30',
-    topClass: 'top-28 sm:top-32',
-    spacingClass: 'mb-12 sm:mb-20',
+    topClass: 'top-24 sm:top-28 lg:top-32',
+    spacingClass: 'mb-12 sm:mb-16 lg:mb-20',
     shadowClass: 'shadow-2xl shadow-[0_-20px_48px_rgba(0,0,0,0.95)]'
   },
   {
     zIndexClass: 'z-40',
-    topClass: 'top-32 sm:top-36',
-    spacingClass: '',
+    topClass: 'top-28 sm:top-32 lg:top-36',
+    spacingClass: 'mb-0',
     shadowClass: 'shadow-2xl shadow-[0_-24px_54px_rgba(0,0,0,0.98)]'
   }
 ];
@@ -476,31 +476,31 @@ export default function LeadTiers(_props?: {
             </p>
           </div>
 
-          <div className="relative max-w-5xl mx-auto pb-6">
+          <div className="relative max-w-5xl mx-auto pb-16 sm:pb-24 lg:pb-36">
             {tiers.map((tier, idx) => {
               const config = CARD_CONFIGS[idx] || CARD_CONFIGS[0];
               return (
                 <div
                   key={tier.step}
-                  className={`relative lg:sticky lg:top-28 ${config.zIndexClass} mb-6 sm:mb-8 lg:${config.spacingClass} bg-[#0F1013] border border-[#26282D] text-white rounded-3xl p-6 sm:p-10 ${config.shadowClass} transition-transform duration-200`}
+                  className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass} bg-[#0F1013] border border-[#26282D] text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-all duration-300 transform-gpu`}
                 >
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-center">
                     {/* Left Details */}
-                    <div className="lg:col-span-7 space-y-4">
+                    <div className="lg:col-span-7 space-y-3 sm:space-y-4">
                       <div className="flex items-center gap-2">
-                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/[0.08] text-white border border-[#26282D]">
+                        <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-semibold bg-white/[0.08] text-white border border-[#26282D]">
                           {tier.step}
                         </span>
-                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-[#16171B] text-neutral-300 border border-[#26282D]">
+                        <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-medium bg-[#16171B] text-neutral-300 border border-[#26282D]">
                           {tier.badge}
                         </span>
                       </div>
 
-                      <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-snug font-heading">
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-white tracking-tight leading-snug font-heading">
                         {tier.title}
                       </h3>
 
-                      <p className="text-sm sm:text-base text-neutral-400 leading-relaxed font-sans">
+                      <p className="text-xs sm:text-sm lg:text-base text-neutral-400 leading-relaxed font-sans">
                         {tier.description}
                       </p>
 
@@ -508,7 +508,7 @@ export default function LeadTiers(_props?: {
                         <div className="pt-2">
                           <Link
                             href={`/${lang}/for-providers/apply`}
-                            className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 font-medium text-sm backdrop-blur-md shadow-sm active:scale-[0.98] transition-all"
+                            className="inline-flex items-center justify-center px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-medium text-sm shadow-lg shadow-orange-500/20 active:scale-95 transition-all"
                           >
                             <span>{isAr ? 'قدم للانضمام إلى الشراكة' : 'Apply for partnership'}</span>
                             <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
@@ -519,22 +519,22 @@ export default function LeadTiers(_props?: {
 
                     {/* Right Preview Card */}
                     <div className="lg:col-span-5">
-                      <div className="rounded-2xl bg-[#16171B] border border-[#26282D] p-6 space-y-4 text-white">
-                        <div className="text-xs font-semibold text-neutral-400 tracking-wide uppercase">
+                      <div className="rounded-xl sm:rounded-2xl bg-[#16171B] border border-[#26282D] p-4 sm:p-6 space-y-3 sm:space-y-4 text-white">
+                        <div className="text-[11px] sm:text-xs font-semibold text-neutral-400 tracking-wide uppercase">
                           {tier.project}
                         </div>
 
                         <div>
-                          <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1.5">
+                          <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1 sm:mb-1.5">
                             <span>{isAr ? 'دقة التطابق' : 'Match Accuracy'}</span>
                             <span className="font-bold text-white tabular-nums">{tier.accuracy}</span>
                           </div>
-                          <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
+                          <div className="h-1.5 sm:h-2 w-full rounded-full bg-white/10 overflow-hidden">
                             <div className={`h-full rounded-full ${tier.barColor} ${tier.barWidth}`} />
                           </div>
                         </div>
 
-                        <ul className="space-y-2.5 pt-2 text-xs text-neutral-300">
+                        <ul className="space-y-2 sm:space-y-2.5 pt-1 text-xs text-neutral-300">
                           {tier.checklist.map((item, cIdx) => (
                             <li key={cIdx} className="flex items-center gap-2">
                               <span className="flex-shrink-0 text-emerald-400 font-bold">✓</span>
@@ -605,8 +605,8 @@ export default function LeadTiers(_props?: {
           </div>
         </div>
 
-        {/* Sticky Stacked Style Cards (Exact pontlook.com/en/for-providers animation on desktop, natural flow on mobile) */}
-        <div className="relative max-w-5xl mx-auto pb-8 sm:pb-12 lg:pb-48">
+        {/* Sticky Stacked Style Cards (Full responsive sticky animation on both mobile & desktop) */}
+        <div className="relative max-w-5xl mx-auto pb-16 sm:pb-24 lg:pb-36">
           {fallbackCards.map((card, idx) => {
             const config = CARD_CONFIGS[idx] || CARD_CONFIGS[0];
             const dictCard = exp?.cards?.[card.id as 'provider' | 'enterprise' | 'hub' | 'consultation'];
@@ -629,7 +629,7 @@ export default function LeadTiers(_props?: {
             return (
               <div
                 key={card.id}
-                className={`relative lg:sticky lg:${config.topClass} ${config.zIndexClass} mb-6 sm:mb-8 lg:${config.spacingClass} ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-all duration-300 transform-gpu`}
+                className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass} ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-all duration-300 transform-gpu`}
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
                   {/* Left Details */}
