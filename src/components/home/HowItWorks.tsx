@@ -1,10 +1,11 @@
 'use client';
 
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
-import Reveal from '@/components/shared/Reveal';
+import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 
 export default function HowItWorks() {
   const dict = useDictionary();
@@ -12,11 +13,61 @@ export default function HowItWorks() {
   const lang = (params?.lang as string) || 'en';
   const isAr = lang === 'ar';
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeStep, setActiveStep] = useState(0);
+
+  // Track scroll progress through the 300vh container
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    if (latest < 0.33) {
+      setActiveStep(0);
+    } else if (latest < 0.66) {
+      setActiveStep(1);
+    } else {
+      setActiveStep(2);
+    }
+  });
+
+  useEffect(() => {
+    const current = scrollYProgress.get();
+    if (current < 0.33) {
+      setActiveStep(0);
+    } else if (current < 0.66) {
+      setActiveStep(1);
+    } else {
+      setActiveStep(2);
+    }
+  }, [scrollYProgress]);
+
+  // Smooth scroll to corresponding step in the 300vh sequence when clicked
+  const handleStepClick = (index: number) => {
+    setActiveStep(index);
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const containerTop = window.scrollY + rect.top;
+    const containerHeight = containerRef.current.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    const scrollableDistance = containerHeight - viewportHeight;
+
+    const targetProgress = [0.10, 0.50, 0.90][index];
+    const targetY = containerTop + scrollableDistance * targetProgress;
+
+    window.scrollTo({
+      top: targetY,
+      behavior: 'smooth',
+    });
+  };
+
   const cards = [
     // Card 1: Step 01 - Amber / Gold Accent
     {
       id: 'step1',
       stepNumber: '01',
+      navTitle: isAr ? 'رصد الاحتياج' : 'Demand Detection',
       tag: isAr ? 'الخطوة 01 // رصد الاحتياج المؤسسي' : 'STEP 01 // DEMAND DETECTION',
       tagColor: 'text-amber-400',
       headline: isAr
@@ -28,7 +79,7 @@ export default function HowItWorks() {
         {
           title: isAr ? 'استخبارات سوقية مستمرة >' : 'Continuous Market Intelligence >',
           desc: isAr
-            ? 'نرصد باستمرار مؤشرات التوظيف، إعادة الهيكلة، وفجوات الكفاءات عبر الشركات في السعودية والإمارات.'
+            ? 'نرصد باستمرار مؤشرات التوظيف، وإعادة الهيكلة، وفجوات الكفاءات عبر الشركات في السعودية والإمارات.'
             : 'We monitor hiring trends, restructuring mandates, and capability gaps across Saudi Arabia and the UAE.',
         },
         {
@@ -44,10 +95,9 @@ export default function HowItWorks() {
             : 'No generic public RFPs or dead directories, only active corporate organizations ready to upskill.',
         },
       ],
-      // Right side: Linear-styled container
       canvasBg: 'bg-[#16171B] border-[#26282D]',
       console: (
-        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-4 sm:p-5 shadow-2xl space-y-3 font-sans">
+        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3.5 sm:p-5 shadow-2xl space-y-3 font-sans">
           {/* Console Window Header */}
           <div className="flex items-center justify-between pb-3 border-b border-[#26282D] text-xs">
             <div className="flex items-center gap-2">
@@ -67,7 +117,7 @@ export default function HowItWorks() {
           </div>
 
           {/* Lead Item 1 */}
-          <div className="p-3 rounded-lg bg-[#16171B] border border-[#26282D] space-y-1.5 text-xs">
+          <div className="p-2.5 sm:p-3 rounded-lg bg-[#16171B] border border-[#26282D] space-y-1.5 text-xs">
             <div className="flex items-center justify-between">
               <span className="font-semibold text-white">
                 {isAr ? 'الخدمات المالية والمصرفية · الرياض' : 'Banking & FinTech · Riyadh'}
@@ -83,7 +133,7 @@ export default function HowItWorks() {
           </div>
 
           {/* Lead Item 2 */}
-          <div className="p-3 rounded-lg bg-[#16171B] border border-[#26282D] space-y-1.5 text-xs">
+          <div className="p-2.5 sm:p-3 rounded-lg bg-[#16171B] border border-[#26282D] space-y-1.5 text-xs">
             <div className="flex items-center justify-between">
               <span className="font-semibold text-white">
                 {isAr ? 'الطاقة والبنية التحتية · الظهران' : 'Energy & Infrastructure · Dhahran'}
@@ -107,6 +157,7 @@ export default function HowItWorks() {
     {
       id: 'step2',
       stepNumber: '02',
+      navTitle: isAr ? 'التأهيل والربط' : 'Fit Scoring',
       tag: isAr ? 'الخطوة 02 // التأهيل والربط الذكي' : 'STEP 02 // FIT SCORING & QUALIFICATION',
       tagColor: 'text-purple-400',
       headline: isAr
@@ -134,10 +185,9 @@ export default function HowItWorks() {
             : 'Strict validation across timeline, participant level, delivery format, and ROI performance metrics.',
         },
       ],
-      // Right side: Linear-styled container
       canvasBg: 'bg-[#16171B] border-[#26282D]',
       console: (
-        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-4 sm:p-5 shadow-2xl space-y-3 font-sans">
+        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3.5 sm:p-5 shadow-2xl space-y-3 font-sans">
           {/* Console Window Header */}
           <div className="flex items-center justify-between pb-3 border-b border-[#26282D] text-xs">
             <div className="flex items-center gap-2">
@@ -194,6 +244,7 @@ export default function HowItWorks() {
     {
       id: 'step3',
       stepNumber: '03',
+      navTitle: isAr ? 'التقديم والتعاقد' : 'Engagement',
       tag: isAr ? 'الخطوة 03 // التقديم المباشر والتعاقد' : 'STEP 03 // ENGAGEMENT & SUCCESS',
       tagColor: 'text-teal-400',
       headline: isAr
@@ -221,10 +272,9 @@ export default function HowItWorks() {
             : 'If an introduction does not meet confirmed qualification criteria, we replace it at zero cost.',
         },
       ],
-      // Right side: Linear-styled container
       canvasBg: 'bg-[#16171B] border-[#26282D]',
       console: (
-        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-4 sm:p-5 shadow-2xl space-y-3 font-sans">
+        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3.5 sm:p-5 shadow-2xl space-y-3 font-sans">
           {/* Console Window Header */}
           <div className="flex items-center justify-between pb-3 border-b border-[#26282D] text-xs">
             <div className="flex items-center gap-2">
@@ -244,7 +294,7 @@ export default function HowItWorks() {
           </div>
 
           {/* Status Box */}
-          <div className="p-3 rounded-lg bg-[#16171B] border border-[#26282D] space-y-1.5 text-xs">
+          <div className="p-2.5 sm:p-3 rounded-lg bg-[#16171B] border border-[#26282D] space-y-1.5 text-xs">
             <div className="flex items-center justify-between">
               <span className="text-neutral-400">{isAr ? 'حالة الفرصة' : 'Pipeline Status'}</span>
               <span className="font-semibold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded text-[11px] border border-emerald-500/30">
@@ -271,75 +321,107 @@ export default function HowItWorks() {
     },
   ];
 
+  const activeCard = cards[activeStep];
+
   return (
     <section
+      ref={containerRef}
       id="how-it-works"
       data-nav-dark="true"
-      className="relative bg-[#08090A] text-white py-20 sm:py-28 lg:py-36 overflow-hidden"
+      className="relative bg-[#08090A] text-white min-h-[300vh]"
     >
       {/* Subtle Pure AMOLED Ambient Lighting (Zero Grids) */}
       <div className="absolute top-1/4 start-1/4 w-[600px] h-[600px] bg-blue-600/[0.04] blur-[180px] pointer-events-none rounded-full" />
       <div className="absolute bottom-1/4 end-1/4 w-[600px] h-[600px] bg-purple-600/[0.03] blur-[180px] pointer-events-none rounded-full" />
 
-      <div className="container-site relative z-10 px-4 sm:px-6 lg:px-8 w-full max-w-7xl mx-auto">
-        
-        {/* Section Header */}
-        <div className="mb-14 sm:mb-20 text-start max-w-3xl">
-          <Reveal>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/15 text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-4">
-              <span className="h-1.5 w-1.5 rounded-full bg-white/70" />
-              <span>{dict.how_it_works?.eyebrow || (isAr ? 'في ثلاث خطوات فقط' : 'Just in three steps')}</span>
-            </div>
-
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
+      {/* Sticky Pinned Viewport Container */}
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden py-4 sm:py-6 lg:py-8 px-4 sm:px-6 lg:px-8">
+        <div className="container-site relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center">
+          
+          {/* Section Header: Centered without eyebrow badge */}
+          <div className="mb-4 sm:mb-6 text-center max-w-3xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
               {dict.how_it_works?.title || (isAr ? 'نرصد بدقة المنشآت التي تواجه فجوات تدريبية ومهارية حقيقية' : 'We pinpoint organizations facing real skill & training gaps')}
             </h2>
 
-            <p className="mt-4 text-sm sm:text-base text-neutral-400 font-sans leading-relaxed">
-              {dict.how_it_works?.subtitle || (isAr ? 'منهجيتنا: كيف نربط السوق ونتحقق من الاحتياج ونطابق المزود الأنسب' : 'OUR APPROACH: How We Connect the Market: Learn, Diagnose, and Get Matched')}
+            <p className="mt-2 text-sm sm:text-base text-neutral-400 font-sans leading-relaxed">
+              {isAr ? 'تعلم، شخص، وطابق' : 'Learn, Diagnose, and Get Matched'}
             </p>
-          </Reveal>
-        </div>
+          </div>
 
-        {/* 3 Horizontal Showcase Cards Stack (Twingate / Linear Style) */}
-        <div className="space-y-8 sm:space-y-10">
-          {cards.map((card, index) => (
-            <Reveal key={card.id} delay={index * 0.1}>
-              <div className="relative rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] hover:border-white/20 transition-all duration-300 p-6 sm:p-8 lg:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.7)] overflow-hidden">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* 3 Step Switcher Pills */}
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6 w-full max-w-lg">
+            {cards.map((card, idx) => {
+              const isActive = activeStep === idx;
+              return (
+                <button
+                  key={card.id}
+                  onClick={() => handleStepClick(idx)}
+                  className={`group relative flex-1 flex items-center justify-center gap-2 py-2 px-3 sm:px-4 rounded-full border transition-all duration-200 text-xs sm:text-sm font-medium ${
+                    isActive
+                      ? 'bg-white/[0.08] text-white border-white/30 shadow-sm'
+                      : 'bg-transparent text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
+                  }`}
+                >
+                  <span className={`text-[11px] font-mono font-bold ${isActive ? card.tagColor : 'text-neutral-500'}`}>
+                    {card.stepNumber}
+                  </span>
+                  <span className="hidden sm:inline truncate">
+                    {card.navTitle}
+                  </span>
+                  {isActive && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Fixed Showcase Card (with AnimatePresence) */}
+          <div className="w-full">
+            <AnimatePresence mode="wait">
+              <m.div
+                key={activeCard.id}
+                initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -12, scale: 0.98 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
+                className="relative rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] hover:border-white/20 transition-colors duration-300 p-5 sm:p-6 lg:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.75)] overflow-hidden max-h-[72vh] sm:max-h-none overflow-y-auto sm:overflow-visible"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
                   
-                  {/* Left Column: Category Tag, Title, Action Pill, 3 Points with Chevrons */}
+                  {/* Left Column: Category Tag, Title, Action Link, 3 Points with Chevrons */}
                   <div className="lg:col-span-6 flex flex-col items-start text-start">
                     {/* Eyebrow Tag with Accent Color */}
-                    <div className={`${card.tagColor} text-xs font-bold uppercase tracking-wider mb-2.5`}>
-                      {card.tag}
+                    <div className={`${activeCard.tagColor} text-xs font-bold uppercase tracking-wider mb-2`}>
+                      {activeCard.tag}
                     </div>
 
                     {/* High-Contrast Bold Headline */}
-                    <h3 className="text-2xl sm:text-3xl lg:text-[34px] font-heading font-medium text-white tracking-[-0.03em] leading-tight mb-4">
-                      {card.headline}
+                    <h3 className="text-xl sm:text-2xl lg:text-[26px] font-heading font-medium text-white tracking-[-0.03em] leading-snug mb-3">
+                      {activeCard.headline}
                     </h3>
 
                     {/* Linear Style Action Link (Learn more ->) */}
                     <Link
-                      href={card.actionHref}
-                      className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-white transition-colors duration-200 mb-6 group"
+                      href={activeCard.actionHref}
+                      className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-neutral-300 hover:text-white transition-colors duration-200 mb-4 group"
                     >
-                      <span>{card.actionText}</span>
+                      <span>{activeCard.actionText}</span>
                       <ArrowRight
-                        size={15}
+                        size={14}
                         className="rtl:-scale-x-100 text-neutral-400 group-hover:text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all"
                       />
                     </Link>
 
                     {/* 3 Points with Chevrons */}
-                    <div className="space-y-4 w-full pt-1 border-t border-[#26282D]">
-                      {card.points.map((pt) => (
-                        <div key={pt.title} className="space-y-1">
-                          <div className="text-sm sm:text-base font-semibold text-neutral-100 font-heading">
+                    <div className="space-y-2.5 sm:space-y-3 w-full pt-1 border-t border-[#26282D]">
+                      {activeCard.points.map((pt) => (
+                        <div key={pt.title} className="space-y-0.5">
+                          <div className="text-xs sm:text-sm font-semibold text-neutral-100 font-heading">
                             {pt.title}
                           </div>
-                          <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-sans">
+                          <p className="text-[11px] sm:text-xs text-neutral-400 leading-relaxed font-sans">
                             {pt.desc}
                           </p>
                         </div>
@@ -349,19 +431,43 @@ export default function HowItWorks() {
 
                   {/* Right Column: Accent Tinted Canvas with Dark Console */}
                   <div className="lg:col-span-6 w-full">
-                    <div className={`w-full rounded-2xl ${card.canvasBg} border p-4 sm:p-7 shadow-inner relative overflow-hidden flex items-center justify-center`}>
-                      {card.console}
+                    <div className={`w-full rounded-2xl ${activeCard.canvasBg} border p-3.5 sm:p-5 shadow-inner relative overflow-hidden flex items-center justify-center`}>
+                      {activeCard.console}
                     </div>
                   </div>
 
                 </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
 
+                {/* Bottom Step Switcher Indicators inside card */}
+                <div className="flex items-center justify-between pt-3.5 mt-3.5 border-t border-[#26282D] text-xs text-neutral-400 w-full">
+                  <div className="flex items-center gap-2">
+                    {cards.map((c, dotIdx) => (
+                      <button
+                        key={dotIdx}
+                        onClick={() => handleStepClick(dotIdx)}
+                        aria-label={`Go to step ${dotIdx + 1}`}
+                        className={`h-1.5 rounded-full transition-all duration-300 ${
+                          activeStep === dotIdx ? 'w-7 bg-white' : 'w-2 bg-neutral-700 hover:bg-neutral-500'
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => handleStepClick((activeStep + 1) % cards.length)}
+                    className="inline-flex items-center gap-1.5 font-medium text-xs text-neutral-300 hover:text-white transition-colors"
+                  >
+                    <span>{isAr ? 'الخطوة التالية' : 'Next Step'}</span>
+                    <ArrowRight size={13} className="rtl:-scale-x-100" />
+                  </button>
+                </div>
+
+              </m.div>
+            </AnimatePresence>
+          </div>
+
+        </div>
       </div>
     </section>
   );
 }
-
