@@ -14,7 +14,7 @@ export default function FinalCta() {
   return (
     <section
       data-nav-dark="true"
-      className="relative overflow-hidden bg-[#000000] text-neutral-400 border-t border-[#1A1A1A] pt-0 pb-16 sm:pb-20 lg:pb-24"
+      className="relative overflow-hidden bg-[#000000] text-neutral-400 pt-0 pb-16 sm:pb-20 lg:pb-24"
     >
       {/* Ambient glowing radial backlight */}
       <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[850px] h-[360px] bg-gradient-to-b from-blue-600/[0.08] to-transparent blur-[140px] pointer-events-none rounded-full transform-gpu" />

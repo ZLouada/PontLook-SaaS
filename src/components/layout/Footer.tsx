@@ -19,7 +19,7 @@ export default function Footer() {
   return (
     <footer data-nav-dark="true" className="relative bg-[#000000] text-neutral-400 overflow-hidden">
       {/* 1. HORIZON BRAND LOCKUP (PRE-FOOTER ELEMENT) */}
-      <div className="relative pt-0 pb-16 sm:pb-20 lg:pb-24 border-t border-[#1A1A1A] overflow-hidden bg-[#000000]">
+      <div className="relative pt-0 pb-16 sm:pb-20 lg:pb-24 overflow-hidden bg-[#000000]">
         {/* Ambient glowing radial backlight */}
         <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[850px] h-[360px] bg-gradient-to-b from-blue-600/[0.08] to-transparent blur-[140px] pointer-events-none rounded-full transform-gpu" />
 
@@ -64,7 +64,7 @@ export default function Footer() {
       </div>
 
       {/* 2. UNIVERSAL 4-COLUMN FOOTER LAYOUT */}
-      <div className="bg-[#000000] text-neutral-400 border-t border-[#1A1A1A] pt-16 pb-12 px-6 lg:px-12">
+      <div className="bg-[#000000] text-neutral-400 pt-16 pb-12 px-6 lg:px-12">
         <div className="container-site relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mx-auto">
           {/* Column 1: Mission & Registered Entity */}
           <div className="space-y-4">
@@ -161,7 +161,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Copyright Line */}
-        <div className="container-site border-t border-[#1A1A1A] mt-12 pt-8 mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-neutral-400 text-center sm:text-start">
+        <div className="container-site border-t border-white/[0.06] mt-12 pt-8 mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-neutral-400 text-center sm:text-start">
           <p>
             &copy; {year} PontLook, operating under Firstnestcare, LLC. All rights reserved.
           </p>

@@ -355,7 +355,7 @@ export default function WhyDifferent() {
   return (
     <section
       data-nav-dark="true"
-      className="relative bg-[#000000] text-white py-10 sm:py-16 lg:py-20 border-t border-[#1F1F1F]"
+      className="relative bg-[#000000] text-white py-10 sm:py-16 lg:py-20"
     >
       <div className="container-site relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Section Header */}

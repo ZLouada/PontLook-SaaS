@@ -561,7 +561,7 @@ export default function LeadTiers(_props?: {
   return (
     <section
       data-nav-dark="true"
-      className="relative py-16 sm:py-24 lg:py-32 bg-[#000000] text-white border-t border-[#1F1F1F]"
+      className="relative py-16 sm:py-24 lg:py-32 bg-[#000000] text-white"
     >
       {/* Pure AMOLED Ambient Glow (Zero Grids) */}
       <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/[0.04] blur-[180px] pointer-events-none rounded-full" />

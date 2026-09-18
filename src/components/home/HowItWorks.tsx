@@ -275,7 +275,7 @@ export default function HowItWorks() {
     <section
       id="how-it-works"
       data-nav-dark="true"
-      className="relative bg-[#000000] text-white py-20 sm:py-28 lg:py-36 border-t border-[#1F1F1F] overflow-hidden"
+      className="relative bg-[#000000] text-white py-20 sm:py-28 lg:py-36 overflow-hidden"
     >
       {/* Subtle Pure AMOLED Ambient Lighting (Zero Grids) */}
       <div className="absolute top-1/4 start-1/4 w-[600px] h-[600px] bg-blue-600/[0.04] blur-[180px] pointer-events-none rounded-full" />
