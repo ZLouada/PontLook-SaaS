@@ -41,16 +41,16 @@ export default function Button({
 
   const variantClasses = {
     primary:
-      'bg-transparent hover:bg-slate-900/5 text-slate-900 border border-slate-300 hover:border-slate-500 shadow-xs',
+      'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs rounded-xl',
     secondary:
-      'bg-transparent hover:bg-slate-100 text-slate-700 border border-slate-200/90 hover:border-slate-300 shadow-xs',
+      'bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs rounded-xl',
     outline:
-      'bg-transparent border border-slate-200/80 text-slate-800 hover:bg-slate-50 hover:border-slate-300',
+      'bg-transparent border border-[#26282D] text-neutral-300 hover:text-white hover:border-white/30 rounded-xl',
     dark:
-      'bg-white/[0.06] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/40 backdrop-blur-md shadow-xs',
+      'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs rounded-xl',
   }[variant];
 
-  const baseClasses = `inline-flex items-center justify-center rounded-full transition-all duration-300 transform-gpu cursor-pointer select-none ${sizeClasses} ${variantClasses} ${className}`;
+  const baseClasses = `inline-flex items-center justify-center rounded-xl transition-all duration-300 transform-gpu cursor-pointer select-none ${sizeClasses} ${variantClasses} ${className}`;
 
   const motionVariants = {
     whileHover: { y: -2.5 },

@@ -115,24 +115,24 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: Loca
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <section className="bg-hero-gradient pt-36 pb-20 relative overflow-hidden">
+      <section className="bg-[#08090A] pt-36 pb-20 relative overflow-hidden">
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto">
           <Reveal>
             <span className="chip mx-auto">
               {isAr ? 'المساعدة والمعلومات' : 'Help & Information'}
             </span>
-            <h1 className="mt-6 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl text-slate-800 font-heading">
+            <h1 className="mt-6 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl text-white font-heading">
               {isAr ? (
                 <>
-                  الأسئلة الأكثر <span className="text-primary">شيوعاً وتكراراً</span>
+                  الأسئلة الأكثر <span className="text-white">شيوعاً وتكراراً</span>
                 </>
               ) : (
                 <>
-                  Frequently Asked <span className="text-primary">Questions</span>
+                  Frequently Asked <span className="text-white">Questions</span>
                 </>
               )}
             </h1>
-            <p className="mt-6 text-xl leading-relaxed text-slate-600 max-w-2xl mx-auto">
+            <p className="mt-6 text-xl leading-relaxed text-neutral-400 max-w-2xl mx-auto">
               {isAr
                 ? 'كل ما تحتاج معرفته حول كيفية قيام بونت لوك بربط مزودي تدريب الشركات بصناع القرار المؤهلين في المنطقة.'
                 : 'Everything you need to know about how PontLook connects corporate training companies with qualified enterprise decision makers.'}
@@ -141,16 +141,16 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: Loca
         </div>
       </section>
 
-      <section className="bg-white py-24" id="faq">
+      <section className="bg-[#08090A] py-24 border-t border-[#26282D]" id="faq">
         <div className="container-site max-w-3xl mx-auto">
           <FAQAccordion faqs={faqs} />
 
           <Reveal delay={0.4}>
-            <div className="mt-16 bg-gradient-to-br from-primary-50 to-white border border-primary-100 p-10 rounded-3xl text-center shadow-sm">
-              <h3 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
+            <div className="mt-16 bg-[#0F1013] border border-[#26282D] p-10 rounded-2xl text-center shadow-sm">
+              <h3 className="text-2xl font-semibold text-white mb-4 font-heading">
                 {isAr ? 'هل ما زال لديك أي استفسار؟' : 'Still have questions?'}
               </h3>
-              <p className="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
+              <p className="text-neutral-400 text-lg mb-8 max-w-2xl mx-auto">
                 {isAr
                   ? 'فريقنا جاهز لمساعدتك دائماً. تواصل معنا لمناقشة متطلباتك المحددة وكيف يمكننا دعم نمو أعمالك في أسواق المنطقة.'
                   : 'We’re here to help. Reach out to our team to discuss your specific needs and how we can support your growth across the region.'}

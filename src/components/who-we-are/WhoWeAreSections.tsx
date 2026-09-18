@@ -68,13 +68,13 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
 
   return (
     <section
-      className="relative overflow-hidden bg-slate-50/60 py-20 sm:py-28 border-t border-slate-200/80"
+      className="relative overflow-hidden bg-[#08090A] py-20 sm:py-28 text-white"
       aria-labelledby="mission-title"
     >
       <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header Block */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-5">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600" />
@@ -84,7 +84,7 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
 
           <h2
             id="mission-title"
-            className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-slate-900 font-heading tracking-tight leading-[1.15] mb-6"
+            className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-[1.15] mb-6"
           >
             {isAr ? (
               <>
@@ -99,7 +99,7 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
             )}
           </h2>
 
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto font-normal">
+          <p className="text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-normal">
             {isAr
               ? 'لفترة طويلة، عانى سوق تدريب الشركات من الاحتكاك وعدم التكافؤ. تغرق المؤسسات في كتالوجات غير ملائمة، بينما يعتمد أفضل مزودو التدريب على اتصالات عشوائية.'
               : 'For too long, the corporate training market has been plagued by friction. Enterprises waste weeks sifting through generic catalogs, while elite providers rely on unpredictable outbound outreach.'}
@@ -109,9 +109,9 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
         {/* Split Comparison Cards (2-column layout matching Picture 4) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
           {/* Card 1: The Traditional Way (Negative / Friction State) */}
-          <div className="rounded-3xl border border-slate-200/90 bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col">
+          <div className="rounded-3xl border border-[#26282D] bg-[#0F1013] overflow-hidden shadow-xl transition-all duration-300 flex flex-col text-white">
             {/* Real Cluttered Desk Photo Header */}
-            <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-slate-900">
+            <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-[#08090A]">
               <Image
                 src="/images/traditional-cluttered-desk.webp"
                 alt={isAr ? 'بيئة العمل التقليدية المزدحمة' : 'Traditional cluttered and overwhelmed desk'}
@@ -124,7 +124,7 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
 
               {/* Badges overlaid on top of photo (as shown in picture 4) */}
               <div className="absolute top-4 start-4 end-4 flex items-center justify-between pointer-events-none">
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-slate-900 text-[11px] font-bold uppercase tracking-wider shadow-sm border border-white/60">
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider shadow-sm border border-white/60">
                   {isAr ? 'البحث التقليدي عن التدريب' : 'TRADITIONAL TRAINING SEARCH'}
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600 text-white text-[11px] font-bold uppercase tracking-wider shadow-md">
@@ -137,21 +137,21 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
             {/* Content Area */}
             <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
               <div>
-                <h3 className="text-2xl sm:text-[26px] font-bold text-slate-900 font-heading mb-5">
+                <h3 className="text-2xl sm:text-[26px] font-bold text-white font-heading mb-5">
                   {isAr ? 'الطريقة التقليدية' : 'The Traditional Way'}
                 </h3>
 
                 {/* Soft Red Container with negative points */}
-                <div className="rounded-2xl bg-red-50/70 border border-red-200/70 p-5 sm:p-6 space-y-4">
+                <div className="rounded-2xl bg-[#16171B] border border-red-900/30 p-5 sm:p-6 space-y-4">
                   {traditionalPoints.map((point, idx) => (
                     <div key={idx} className="flex items-start gap-3.5">
                       <div className="w-6 h-6 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 mt-0.5 border border-red-200">
                         <XCircle size={15} />
                       </div>
                       <div className="text-sm">
-                        <p className="font-semibold text-slate-900">
+                        <p className="font-semibold text-white">
                           {point.title}:{' '}
-                          <span className="font-normal text-slate-700">{point.desc}</span>
+                          <span className="font-normal text-neutral-300">{point.desc}</span>
                         </p>
                       </div>
                     </div>
@@ -162,9 +162,9 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
           </div>
 
           {/* Card 2: The PontLook Way (Positive / Solution State) */}
-          <div className="rounded-3xl border border-blue-200/90 bg-white overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col">
-            {/* Real Clean Office Photo Header */}
-            <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-slate-900">
+          <div className="rounded-3xl border border-[#26282D] bg-[#0F1013] overflow-hidden shadow-xl transition-all duration-300 flex flex-col text-white">
+            {/* Real Clean Architecture Photo Header */}
+            <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-[#08090A]">
               <Image
                 src="/images/pontlook-clean-office.webp"
                 alt={isAr ? 'مكتب عصري ومشرق يجسد دقة بونت لوك' : 'Clean, bright modern executive desk'}
@@ -175,13 +175,13 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
 
-              {/* Badges overlaid on top of photo (as shown in picture 4) */}
+              {/* Badges overlaid on top of photo */}
               <div className="absolute top-4 start-4 end-4 flex items-center justify-between pointer-events-none">
-                <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0052FF] text-white text-[11px] font-bold uppercase tracking-wider shadow-md">
+                <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-white/[0.08] text-white text-[11px] font-bold uppercase tracking-wider border border-white/20 shadow-md">
                   {isAr ? 'طريقة بونت لوك' : 'THE PONTLOOK WAY'}
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-600 text-white text-[11px] font-bold uppercase tracking-wider shadow-md">
-                  <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold uppercase tracking-wider border border-emerald-500/30 shadow-md">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                   {isAr ? 'موثق ومباشر' : 'VERIFIED & DIRECT'}
                 </span>
               </div>
@@ -190,21 +190,21 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
             {/* Content Area */}
             <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
               <div>
-                <h3 className="text-2xl sm:text-[26px] font-bold text-slate-900 font-heading mb-5">
+                <h3 className="text-2xl sm:text-[26px] font-bold text-white font-heading mb-5">
                   {isAr ? 'طريقة بونت لوك' : 'The PontLook Way'}
                 </h3>
 
                 {/* Soft Emerald Container with positive points */}
-                <div className="rounded-2xl bg-emerald-50/70 border border-emerald-200/70 p-5 sm:p-6 space-y-4">
+                <div className="rounded-2xl bg-[#16171B] border border-emerald-900/30 p-5 sm:p-6 space-y-4">
                   {pontlookPoints.map((point, idx) => (
                     <div key={idx} className="flex items-start gap-3.5">
-                      <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-200">
+                      <div className="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-500/20">
                         <CheckCircle2 size={15} />
                       </div>
                       <div className="text-sm">
-                        <p className="font-semibold text-slate-900">
+                        <p className="font-semibold text-white">
                           {point.title}:{' '}
-                          <span className="font-normal text-slate-700">{point.desc}</span>
+                          <span className="font-normal text-neutral-300">{point.desc}</span>
                         </p>
                       </div>
                     </div>
@@ -275,20 +275,20 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
 
   return (
     <section
-      className="relative overflow-hidden bg-white py-24 sm:py-32 border-t border-slate-200/80"
+      className="relative overflow-hidden bg-[#08090A] py-24 sm:py-32 text-white"
       aria-labelledby="value-model-title"
     >
       <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-5">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5">
             <ShieldCheck size={14} className="text-blue-600" />
             <span>{isAr ? 'تسعير شفاف ومواءمة مصالح حقيقية' : 'TRANSPARENT PRICING & INCENTIVE ALIGNMENT'}</span>
           </div>
 
           <h2
             id="value-model-title"
-            className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-slate-900 font-heading tracking-tight leading-[1.15] mb-6"
+            className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-[1.15] mb-6"
           >
             {isAr ? (
               <>
@@ -301,7 +301,7 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
             )}
           </h2>
 
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto font-normal">
+          <p className="text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-normal">
             {isAr
               ? 'نربط نموذج عملنا مباشرة بالقيمة الملموسة. تستفيد الشركات من محرك التشخيص مجاناً، بينما يدفع مزودو التدريب فقط مقابل الفرص الموثقة.'
               : 'We align our revenue directly with customer value. Enterprises access our diagnostic network for free, while training providers only pay for verified, budget-confirmed introductions.'}
@@ -315,8 +315,8 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
               key={idx}
               className={`rounded-3xl p-8 sm:p-9 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 ${
                 card.isFeatured
-                  ? 'bg-gradient-to-b from-blue-50/50 via-white to-white border-2 border-primary/40 shadow-lg shadow-blue-500/10 relative ring-1 ring-blue-500/20'
-                  : 'bg-white border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-slate-300'
+                  ? 'bg-[#0F1013] border border-white/30 shadow-2xl relative text-white'
+                  : 'bg-[#0F1013] border border-[#26282D] shadow-xl hover:border-white/20 text-white'
               }`}
             >
               {card.isFeatured && (
@@ -327,33 +327,33 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
 
               <div>
                 {/* Eyebrow */}
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-4">
                   {card.eyebrow}
                 </span>
 
                 {/* Price Display */}
                 <div className="mb-6">
-                  <div className={`text-4xl sm:text-5xl font-extrabold font-heading tracking-tight ${card.isFeatured ? 'text-primary' : 'text-slate-900'}`}>
+                  <div className={`text-4xl sm:text-5xl font-extrabold font-heading tracking-tight ${card.isFeatured ? 'text-primary' : 'text-white'}`}>
                     {card.price}
                   </div>
-                  <div className="text-sm font-medium text-slate-500 mt-1">
+                  <div className="text-sm font-medium text-neutral-400 mt-1">
                     {card.priceSub}
                   </div>
                 </div>
 
                 {/* Divider */}
-                <div className="h-px bg-slate-100 my-6" />
+                <div className="h-px bg-[#26282D] my-6" />
 
                 {/* Core Promise */}
-                <p className="text-sm sm:text-base text-slate-700 leading-relaxed mb-6 font-normal">
+                <p className="text-sm sm:text-base text-neutral-300 leading-relaxed mb-6 font-normal">
                   {card.promise}
                 </p>
 
                 {/* Checklist */}
                 <div className="space-y-3.5 mb-8">
                   {card.points.map((point, pIdx) => (
-                    <div key={pIdx} className="flex items-start gap-3 text-sm text-slate-600">
-                      <CheckCircle2 size={18} className="text-emerald-600 shrink-0 mt-0.5" />
+                    <div key={pIdx} className="flex items-start gap-3 text-sm text-neutral-400">
+                      <CheckCircle2 size={18} className="text-emerald-400 shrink-0 mt-0.5" />
                       <span>{point}</span>
                     </div>
                   ))}
@@ -361,12 +361,12 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
               </div>
 
               {/* Tag / Footer Pill */}
-              <div className="pt-6 border-t border-slate-100">
+              <div className="pt-6 border-t border-[#26282D]">
                 <span
                   className={`inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-full ${
                     card.isFeatured
-                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                      : 'bg-slate-100 text-slate-700 border border-slate-200'
+                      ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                      : 'bg-[#16171B] text-neutral-300 border border-[#26282D]'
                   }`}
                 >
                   {card.tag}
@@ -503,7 +503,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
 
   return (
     <section
-      className="relative overflow-hidden bg-slate-50/60 text-slate-900 py-24 sm:py-32 border-t border-slate-200/80"
+      className="relative overflow-hidden bg-[#08090A] text-white py-24 sm:py-32"
       aria-labelledby="journey-title"
     >
       {/* Dynamic Ambient Background Glows (Light Mode) */}
@@ -513,14 +513,14 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
       <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-5">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5">
             <Workflow size={14} className="text-blue-600" />
             <span>{isAr ? 'آلية العمل خطوة بخطوة' : 'HOW IT WORKS IN PRACTICE'}</span>
           </div>
 
           <h2
             id="journey-title"
-            className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-slate-900 font-heading tracking-tight leading-[1.15] mb-5"
+            className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-[1.15] mb-5"
           >
             {isAr ? (
               <>
@@ -535,7 +535,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
             )}
           </h2>
 
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto font-normal">
+          <p className="text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-normal">
             {isAr
               ? 'جسر شفاف وسلس يربط الاحتياج التدريبي المشخص بالحلول العملية ذات العائد الاستثماري القابل للقياس.'
               : 'A seamless, transparent bridge from diagnosed skill deficit to measurable business impact.'}
@@ -547,7 +547,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
           {steps.map((step, idx) => (
             <div
               key={idx}
-              className="relative rounded-3xl border border-slate-200/90 bg-white hover:border-primary/50 p-6 sm:p-8 lg:p-9 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 group overflow-hidden"
+              className="relative rounded-3xl border border-[#26282D] bg-[#0F1013] hover:border-white/30 p-6 sm:p-8 lg:p-9 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-xl text-white group overflow-hidden"
             >
               {/* Ambient Corner Glow on Hover */}
               <div
@@ -567,7 +567,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
                       <span className="text-xs font-bold text-primary uppercase tracking-wider block">
                         {step.step}
                       </span>
-                      <span className="text-[11px] font-medium text-slate-400">
+                      <span className="text-[11px] font-medium text-neutral-400">
                         STEP {step.num}
                       </span>
                     </div>
@@ -586,26 +586,26 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 font-heading tracking-tight mb-3 group-hover:text-primary transition-colors relative z-10">
+                <h3 className="text-xl sm:text-2xl font-bold text-white font-heading tracking-tight mb-3 group-hover:text-primary transition-colors relative z-10">
                   {step.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-sm text-slate-600 leading-relaxed mb-6 font-normal relative z-10">
+                <p className="text-sm text-neutral-400 leading-relaxed mb-6 font-normal relative z-10">
                   {step.desc}
                 </p>
               </div>
 
               {/* Deliverables / Checklist in dedicated micro-panel */}
-              <div className="rounded-2xl bg-slate-50/80 border border-slate-200/70 p-4 sm:p-5 space-y-3 group-hover:border-slate-300/80 transition-colors mt-2 relative z-10">
+              <div className="rounded-2xl bg-[#16171B]/80 border border-[#26282D]/70 p-4 sm:p-5 space-y-3 group-hover:border-white/20 transition-colors mt-2 relative z-10">
                 {step.points.map((point, pIdx) => (
-                  <div key={pIdx} className="flex items-start gap-3 text-xs sm:text-sm text-slate-700">
-                    <div className="w-5 h-5 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center shrink-0 mt-0.5 text-emerald-600">
-                      <CheckCircle2 size={13} className="text-emerald-600" />
+                  <div key={pIdx} className="flex items-start gap-3 text-xs sm:text-sm text-neutral-300">
+                    <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">
+                      <CheckCircle2 size={13} className="text-emerald-400" />
                     </div>
                     <div>
-                      <span className="font-semibold text-slate-900">{point.label}: </span>
-                      <span className="font-normal text-slate-600">{point.text}</span>
+                      <span className="font-semibold text-white">{point.label}: </span>
+                      <span className="font-normal text-neutral-400">{point.text}</span>
                     </div>
                   </div>
                 ))}
@@ -615,7 +615,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
         </div>
 
         {/* Micro-CTA Footer */}
-        <div className="mt-16 pt-8 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-slate-500">
+        <div className="mt-16 pt-8 border-t border-[#26282D]/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-neutral-400">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             <span>
@@ -625,7 +625,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
             </span>
             <Link
               href={`/${lang}/find-training`}
-              className="text-slate-900 hover:text-primary font-semibold underline underline-offset-4 ms-1 transition-colors"
+              className="text-white hover:text-primary font-semibold underline underline-offset-4 ms-1 transition-colors"
             >
               {isAr ? 'سجل احتياجك التدريبي مجاناً ←' : 'Post a Training Need →'}
             </Link>
@@ -640,7 +640,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
             </span>
             <Link
               href={`/${lang}/for-providers`}
-              className="text-slate-900 hover:text-primary font-semibold underline underline-offset-4 ms-1 transition-colors"
+              className="text-white hover:text-primary font-semibold underline underline-offset-4 ms-1 transition-colors"
             >
               {isAr ? 'انضم كشريك تدريب معتمد ←' : 'Apply as an Approved Provider →'}
             </Link>

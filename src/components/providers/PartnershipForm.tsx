@@ -152,10 +152,10 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
 
   if (isSubmitted) {
     return (
-      <div className="bg-white border border-slate-200/70 rounded-3xl text-center p-6 sm:p-14 shadow-sm">
-        <CheckCircle2 size={48} className="mx-auto text-emerald-500" />
-        <h3 className="mt-5 text-2xl font-semibold text-slate-800 font-heading">{successTitle}</h3>
-        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 font-sans">
+      <div className="bg-[#0F1013] border border-[#26282D] rounded-2xl sm:rounded-3xl text-center p-6 sm:p-14 shadow-2xl">
+        <CheckCircle2 size={48} className="mx-auto text-emerald-400" />
+        <h3 className="mt-5 text-2xl font-semibold text-white font-heading">{successTitle}</h3>
+        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-neutral-400 font-sans">
           {successMessage}
         </p>
       </div>
@@ -163,12 +163,12 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
   }
 
   return (
-    <div className="bg-white border border-slate-200/70 rounded-3xl p-5 sm:p-12 shadow-sm">
+    <div className="bg-[#0F1013] border border-[#26282D] rounded-2xl sm:rounded-3xl p-5 sm:p-12 shadow-2xl">
       <div className="mb-8 text-center sm:text-start">
-        <h2 className="text-2xl sm:text-3xl font-semibold text-slate-800 font-heading">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-white font-heading">
           {formTitle}
         </h2>
-        <p className="mt-2 text-sm text-slate-600 font-sans">
+        <p className="mt-2 text-sm text-neutral-400 font-sans">
           {formSubtitle}
         </p>
       </div>
@@ -289,10 +289,10 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
                   type="button"
                   onClick={(e) => toggleSpecialty(e, s)}
                   aria-pressed={active}
-                  className={`rounded-full border px-4 py-2.5 min-h-[44px] inline-flex items-center justify-center text-sm font-medium transition-all active:scale-95 touch-manipulation ${
+                  className={`rounded-xl border px-4 py-2.5 min-h-[44px] inline-flex items-center justify-center text-sm font-medium transition-all active:scale-95 touch-manipulation ${
                     active
-                      ? 'border-primary bg-primary text-white'
-                      : 'border-slate-200 bg-white text-body hover:border-primary-300'
+                      ? 'border-white/30 bg-white/[0.10] text-white shadow-xs'
+                      : 'border-[#26282D] bg-[#16171B] text-neutral-300 hover:border-white/20'
                   }`}
                 >
                   {s}

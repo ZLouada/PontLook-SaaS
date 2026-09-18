@@ -45,7 +45,7 @@
     }
   }
   body {
-    @apply bg-background font-sans text-muted-foreground;
+    @apply bg-[#08090A] font-sans text-neutral-300;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -59,7 +59,7 @@
   h4,
   h5,
   h6 {
-    @apply font-heading text-slate-900 font-semibold;
+    @apply font-heading text-white font-semibold;
     letter-spacing: -0.025em;
     line-height: 1.12;
     font-feature-settings: "kern" 1, "liga" 1;
@@ -97,10 +97,10 @@
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition-all duration-200 transform-gpu;
   }
   .btn-primary {
-    @apply btn bg-transparent hover:bg-slate-900/5 text-slate-900 border border-slate-300 hover:border-slate-500 shadow-sm hover:-translate-y-0.5 active:translate-y-0;
+    @apply btn bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm hover:-translate-y-0.5 active:translate-y-0;
   }
   .btn-secondary {
-    @apply btn border border-slate-200/90 bg-transparent text-slate-700 hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0;
+    @apply btn border border-[#26282D] bg-transparent text-neutral-300 hover:text-white hover:border-white/30 hover:bg-white/[0.04] shadow-sm hover:-translate-y-0.5 active:translate-y-0;
   }
 
   /* Linear-style UI components from Obsidian specifications */
@@ -115,21 +115,21 @@
   }
 
   .card {
-    @apply rounded-3xl border border-slate-200/80 bg-card p-6 sm:p-8 shadow-apple transition-all duration-300 hover:shadow-lg hover:border-slate-300;
+    @apply rounded-3xl border border-[#26282D] bg-[#0F1013] text-white p-6 sm:p-8 shadow-apple transition-all duration-300 hover:shadow-lg hover:border-white/20;
   }
 
   .chip {
-    @apply inline-flex items-center rounded-full border border-border bg-white px-4 py-1.5 text-xs font-mono font-medium uppercase tracking-wider text-muted-foreground;
+    @apply inline-flex items-center rounded-full border border-[#26282D] bg-[#16171B] px-4 py-1.5 text-xs font-sans font-semibold uppercase tracking-wider text-neutral-300;
   }
 
   .field-label {
-    @apply mb-1.5 block text-sm font-medium text-slate-700;
+    @apply mb-1.5 block text-sm font-medium text-neutral-300;
   }
   .field-input {
-    @apply w-full rounded-2xl border border-border bg-white px-4 py-3.5 sm:px-5 sm:py-4 text-[16px] sm:text-sm text-slate-800 placeholder:text-slate-400 transition-colors focus:border-accent focus:ring-1 focus:ring-accent;
+    @apply w-full rounded-2xl border border-[#26282D] bg-[#16171B] px-4 py-3.5 sm:px-5 sm:py-4 text-[16px] sm:text-sm text-white placeholder:text-neutral-500 transition-colors focus:border-white/40 focus:ring-1 focus:ring-white/40;
   }
   .field-error {
-    @apply mt-1.5 text-xs font-medium text-red-600;
+    @apply mt-1.5 text-xs font-medium text-red-400;
   }
 
   .pb-safe {
@@ -137,33 +137,37 @@
   }
 
   .prose-custom {
-    @apply text-base leading-relaxed text-muted-foreground;
+    @apply text-base leading-relaxed text-neutral-300;
   }
   .prose-custom h2 {
-    @apply mt-10 mb-4 text-2xl font-semibold text-slate-800 font-heading;
+    @apply mt-10 mb-4 text-2xl font-semibold text-white font-heading;
   }
   .prose-custom h3 {
-    @apply mt-8 mb-3 text-xl font-semibold text-slate-800 font-heading;
+    @apply mt-8 mb-3 text-xl font-semibold text-white font-heading;
   }
   .prose-custom p {
-    @apply mb-5 text-slate-600 leading-relaxed;
+    @apply mb-5 text-neutral-300 leading-relaxed;
   }
   .prose-custom ul,
   .prose-custom ol {
-    @apply mb-5 ms-5 list-disc space-y-2 text-slate-600;
+    @apply mb-5 ms-5 list-disc space-y-2 text-neutral-300;
   }
   .prose-custom ol {
     @apply list-decimal;
   }
   .prose-custom strong {
-    @apply font-semibold text-slate-800;
+    @apply font-semibold text-white;
   }
   .prose-custom blockquote {
-    @apply my-6 border-s-4 border-accent ps-5 italic text-slate-600;
+    @apply my-6 border-s-4 border-[#26282D] ps-5 italic text-neutral-400;
   }
   .prose-custom a {
-    @apply font-medium text-accent underline underline-offset-2;
+    @apply font-medium text-white underline underline-offset-2 hover:text-neutral-200;
   }
+}
+
+.bg-hero-gradient {
+  background-color: #08090A;
 }
 
 /* Minimalist Modern Utilities */

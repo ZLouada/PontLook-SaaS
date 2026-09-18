@@ -23,10 +23,10 @@ export default function Card({
     <m.div
       whileHover={hoverLift ? { y: -5 } : undefined}
       transition={{ type: 'spring', stiffness: 350, damping: 22 }}
-      className={`relative rounded-2xl bg-white p-6 sm:p-8 border border-slate-200/70 shadow-sm transition-all duration-300 transform-gpu will-change-transform ${
+      className={`relative rounded-2xl bg-[#0F1013] p-6 sm:p-8 border border-[#26282D] text-white shadow-xl transition-all duration-300 transform-gpu will-change-transform ${
         accentBorder
-          ? 'border-blue-500/40 shadow-sm'
-          : 'hover:border-slate-300 hover:shadow'
+          ? 'border-white/30'
+          : 'hover:border-white/20'
       } ${className}`}
       {...props}
     >

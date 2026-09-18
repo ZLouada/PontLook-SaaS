@@ -463,13 +463,13 @@ export default function LeadTiers(_props?: {
   if (mode === 'providers') {
     const tiers = isAr ? TIERS_AR : TIERS_EN;
     return (
-      <section className="py-12 sm:py-16 lg:py-20 bg-slate-50/50">
+      <section className="py-12 sm:py-16 lg:py-20 bg-[#08090A] text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-            <h2 className="text-3xl sm:text-4xl font-semibold text-slate-900 tracking-tight font-heading">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight font-heading">
               {isAr ? 'تدفق متوقع لفرص الشركات والمؤسسات' : 'A predictable pipeline of enterprise opportunities'}
             </h2>
-            <p className="mt-4 text-base text-slate-600">
+            <p className="mt-4 text-base text-neutral-400">
               {isAr
                 ? 'يتم تقييم كل فرصة بناءً على التحقق من صانع القرار، وحجم الشركة، والميزانية، والجدول الزمني، وعمق الاحتياج لتكون على دراية تامة بتفاصيل كل فرصة.'
                 : "Every lead is scored on decision maker verification, company size, budget, timeline, and depth of need, so you always know exactly what you're walking into."}
@@ -482,25 +482,25 @@ export default function LeadTiers(_props?: {
               return (
                 <div
                   key={tier.step}
-                  className={`sticky top-28 ${config.zIndexClass} ${config.spacingClass} liquid-glass-panel rounded-3xl p-6 sm:p-10 ${config.shadowClass} transition-transform duration-200`}
+                  className={`sticky top-28 ${config.zIndexClass} ${config.spacingClass} bg-[#0F1013] border border-[#26282D] text-white rounded-3xl p-6 sm:p-10 ${config.shadowClass} transition-transform duration-200`}
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     {/* Left Details */}
                     <div className="lg:col-span-7 space-y-4">
                       <div className="flex items-center gap-2">
-                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white">
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/[0.08] text-white border border-[#26282D]">
                           {tier.step}
                         </span>
-                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-[#16171B] text-neutral-300 border border-[#26282D]">
                           {tier.badge}
                         </span>
                       </div>
 
-                      <h3 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight leading-snug font-heading">
+                      <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-snug font-heading">
                         {tier.title}
                       </h3>
 
-                      <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
+                      <p className="text-sm sm:text-base text-neutral-400 leading-relaxed font-sans">
                         {tier.description}
                       </p>
 
@@ -508,7 +508,7 @@ export default function LeadTiers(_props?: {
                         <div className="pt-2">
                           <Link
                             href={`/${lang}/for-providers/apply`}
-                            className="inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 font-medium text-sm backdrop-blur-md shadow-sm active:scale-[0.98] transition-all"
+                            className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 font-medium text-sm backdrop-blur-md shadow-sm active:scale-[0.98] transition-all"
                           >
                             <span>{isAr ? 'قدم للانضمام إلى الشراكة' : 'Apply for partnership'}</span>
                             <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
@@ -519,25 +519,25 @@ export default function LeadTiers(_props?: {
 
                     {/* Right Preview Card */}
                     <div className="lg:col-span-5">
-                      <div className="rounded-2xl liquid-glass-panel-inset p-6 space-y-4">
-                        <div className="text-xs font-semibold text-slate-500 tracking-wide uppercase">
+                      <div className="rounded-2xl bg-[#16171B] border border-[#26282D] p-6 space-y-4 text-white">
+                        <div className="text-xs font-semibold text-neutral-400 tracking-wide uppercase">
                           {tier.project}
                         </div>
 
                         <div>
-                          <div className="flex justify-between text-xs font-semibold text-slate-700 mb-1.5">
+                          <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1.5">
                             <span>{isAr ? 'دقة التطابق' : 'Match Accuracy'}</span>
-                            <span className="font-bold text-slate-900 tabular-nums">{tier.accuracy}</span>
+                            <span className="font-bold text-white tabular-nums">{tier.accuracy}</span>
                           </div>
-                          <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
+                          <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
                             <div className={`h-full rounded-full ${tier.barColor} ${tier.barWidth}`} />
                           </div>
                         </div>
 
-                        <ul className="space-y-2.5 pt-2 text-xs text-slate-700">
+                        <ul className="space-y-2.5 pt-2 text-xs text-neutral-300">
                           {tier.checklist.map((item, cIdx) => (
                             <li key={cIdx} className="flex items-center gap-2">
-                              <span className="flex-shrink-0 text-emerald-600 font-bold">✓</span>
+                              <span className="flex-shrink-0 text-emerald-400 font-bold">✓</span>
                               <span>{item}</span>
                             </li>
                           ))}

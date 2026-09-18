@@ -10,7 +10,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#0052FF',
+  themeColor: '#08090A',
 };
 
 export async function generateMetadata({
@@ -157,7 +157,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={lang === 'ar' ? 'font-arabic' : ''}>
+      <body className={`bg-[#08090A] text-neutral-300 antialiased selection:bg-white/20 selection:text-white ${lang === 'ar' ? 'font-arabic' : ''}`}>
         <DictionaryProvider dictionary={dictionary}>
           <FramerMotionProvider>
             <Navbar lang={lang} />

@@ -6,20 +6,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: '#FAFAFA',
+        background: '#08090A',
         'background-dark': '#08090A',
         'canvas-dark': '#08090A',
         'card-base': '#0F1013',
         'card-inner': '#16171B',
         'card-border': '#26282D',
-        foreground: '#1E293B',
-        muted: '#F1F5F9',
-        'muted-foreground': '#475569',
+        foreground: '#FFFFFF',
+        muted: '#16171B',
+        'muted-foreground': '#A1A1AA',
         accent: '#0052FF',
         'accent-secondary': '#4D7CFF',
         'accent-foreground': '#FFFFFF',
-        border: '#E2E8F0',
-        card: '#FFFFFF',
+        border: '#26282D',
+        card: '#0F1013',
         ring: '#0052FF',
         primary: {
           DEFAULT: '#0052FF',

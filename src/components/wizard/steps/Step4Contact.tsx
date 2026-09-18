@@ -88,12 +88,12 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
     >
       <div>
         <div className="flex items-center gap-2">
-          <ShieldCheck size={22} className="text-emerald-600" />
-          <h2 className="font-heading text-xl font-semibold tracking-normal text-slate-800 sm:text-2xl">
+          <ShieldCheck size={22} className="text-emerald-400" />
+          <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
             Enterprise Verification & Contact Details
           </h2>
         </div>
-        <p className="mt-1 text-sm text-slate-600">
+        <p className="mt-1 text-sm text-neutral-400">
           We only release curated proposals to verified corporate decision makers.
         </p>
       </div>
@@ -140,21 +140,21 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
         />
 
         <div className="w-full">
-          <label htmlFor="country" className="mb-2 block text-sm font-semibold text-slate-800">
+          <label htmlFor="country" className="mb-2 block text-sm font-semibold text-neutral-300">
             Primary Country of Operation
           </label>
           <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-4 text-slate-400">
+            <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-4 text-neutral-500">
               <Globe size={18} />
             </div>
             <select
               id="country"
               value={selectedCountry}
               onChange={handleCountryChange}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 ps-11 text-base sm:text-sm font-medium text-slate-800 shadow-sm transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full rounded-xl border border-[#26282D] bg-[#16171B] px-4 py-3.5 ps-11 text-base sm:text-sm font-medium text-white shadow-sm transition-all focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
             >
               {GCC_COUNTRIES.map((c) => (
-                <option key={c.code} value={c.name}>
+                <option key={c.code} value={c.name} className="bg-[#16171B] text-white">
                   {c.flag} {c.name}
                 </option>
               ))}
@@ -179,16 +179,16 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
 
       <input type="text" {...register('_gotcha')} style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 
-      <div className="rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50/90 via-teal-50/60 to-emerald-50/40 p-4 sm:p-5">
+      <div className="rounded-2xl border border-[#26282D] bg-[#16171B] p-4 sm:p-5">
         <div className="flex items-start gap-3.5">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-sm">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#0F1013] border border-[#26282D] text-emerald-400 shadow-sm">
             <Lock size={18} />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-emerald-950">
+            <h4 className="text-sm font-bold text-white">
               Enterprise Confidentiality Guarantee
             </h4>
-            <p className="mt-1 text-xs leading-relaxed text-emerald-900/80">
+            <p className="mt-1 text-xs leading-relaxed text-neutral-400">
               🔒 Your request is private and shared with a <strong>maximum of 3 matched providers</strong> who fit your exact domain and procurement specifications. Zero vendor spam or unsolicited cold calls.
             </p>
           </div>

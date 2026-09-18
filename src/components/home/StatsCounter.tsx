@@ -28,10 +28,10 @@ function Counter({ end, suffix }: { end: number; suffix: string }) {
   return (
     <span
       ref={ref}
-      className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tabular-nums tracking-[-0.03em] flex items-baseline"
+      className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-semibold text-white tabular-nums tracking-[-0.03em] font-heading flex items-baseline"
     >
       <m.span>{rounded}</m.span>
-      <span className="text-2xl sm:text-4xl text-accent ms-1 font-semibold">{suffix}</span>
+      <span className="text-2xl sm:text-4xl text-neutral-400 ms-1 font-normal">{suffix}</span>
     </span>
   );
 }
@@ -47,8 +47,8 @@ export default function StatsCounter() {
   ];
 
   return (
-    <section className="relative bg-gradient-to-b from-white via-slate-50/50 to-white py-12 sm:py-16 lg:py-20 border-t border-slate-200/60 overflow-hidden">
-      <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-gradient-to-r from-accent/[0.06] via-accent-secondary/[0.06] to-accent/[0.06] blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
+    <section className="relative bg-[#08090A] py-12 sm:py-16 lg:py-20 border-t border-[#26282D] overflow-hidden">
+      <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-white/[0.02] blur-3xl -z-10 transform-gpu pointer-events-none rounded-full" />
 
       <div className="container-site px-4 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
@@ -64,12 +64,12 @@ export default function StatsCounter() {
                 whileHover={{ y: -4 }}
                 className="transform-gpu will-change-transform"
               >
-                <div className="h-full flex flex-col items-start p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white/90 backdrop-blur-md shadow-apple hover:shadow-xl hover:border-accent/40 transition-all duration-300">
-                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-accent/10 text-accent mb-4 sm:mb-6 border border-accent/20">
+                <div className="h-full flex flex-col items-start p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-[#26282D] bg-[#0F1013] hover:border-white/20 transition-all duration-300 shadow-2xl">
+                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-[#16171B] text-white mb-4 sm:mb-6 border border-[#26282D]">
                     <Icon size={20} className="sm:w-[22px] sm:h-[22px]" />
                   </div>
                   <Counter end={s.end} suffix={s.suffix} />
-                  <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm font-medium text-slate-600 tracking-normal leading-snug">
+                  <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm font-normal text-neutral-400 tracking-normal leading-snug">
                     {s.label}
                   </p>
                 </div>
@@ -78,7 +78,7 @@ export default function StatsCounter() {
           })}
         </div>
 
-        <p className="mt-10 sm:mt-16 text-center text-xs font-semibold text-slate-500 tracking-wider uppercase">
+        <p className="mt-10 sm:mt-16 text-center text-xs font-semibold text-neutral-500 tracking-wider uppercase">
           {dict.stats.caption}
         </p>
       </div>

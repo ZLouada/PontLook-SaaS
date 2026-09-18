@@ -169,22 +169,22 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(returnsFaqSchema) }}
       />
-      <section className="bg-hero-gradient pt-36 pb-16 relative overflow-hidden">
+      <section className="bg-[#08090A] pt-36 pb-16 relative overflow-hidden border-b border-[#26282D]">
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6">
           <Reveal>
             <span className="chip mx-auto">{isAr ? 'دعم العملاء والسياسات' : 'Customer Support & Policies'}</span>
-            <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-slate-800 leading-tight font-heading">
+            <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-white leading-tight font-heading tracking-[-0.03em]">
               {isAr ? (
                 <>
-                  سياسة الاسترجاع <span className="text-primary">والأسئلة الشائعة</span>
+                  سياسة الاسترجاع <span className="text-white">والأسئلة الشائعة</span>
                 </>
               ) : (
                 <>
-                  Returns &amp; FAQ <span className="text-primary">Policy</span>
+                  Returns &amp; FAQ <span className="text-white">Policy</span>
                 </>
               )}
             </h1>
-            <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
+            <p className="mt-4 text-base sm:text-lg text-neutral-400 max-w-2xl mx-auto font-sans">
               {isAr
                 ? 'إرشادات واضحة وشفافة لطلبات المنتجات وضمان الجودة والإلغاء والاسترداد المالي.'
                 : 'Clear, transparent guidelines for merchandise orders, quality assurance, cancellations, and refunds.'}
@@ -193,20 +193,20 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
         </div>
       </section>
 
-      <section className="bg-white py-12 border-t border-slate-100">
+      <section className="bg-[#08090A] py-12 border-b border-[#26282D]">
         <div className="container-site max-w-5xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {policyHighlights.map((item, index) => {
               const Icon = item.icon;
               return (
                 <Reveal key={index} delay={index * 0.08}>
-                  <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/70 h-full flex flex-col justify-between">
+                  <div className="p-6 rounded-2xl bg-[#0F1013] border border-[#26282D] h-full flex flex-col justify-between hover:border-white/20 transition-all">
                     <div>
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
+                      <div className="w-10 h-10 rounded-xl bg-[#16171B] border border-[#26282D] text-white flex items-center justify-center mb-4">
                         <Icon size={20} />
                       </div>
-                      <h3 className="text-base font-semibold text-slate-800 mb-2">{item.title}</h3>
-                      <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+                      <h3 className="text-base font-semibold text-white mb-2 font-heading">{item.title}</h3>
+                      <p className="text-xs text-neutral-400 leading-relaxed font-sans">{item.desc}</p>
                     </div>
                   </div>
                 </Reveal>
@@ -216,12 +216,12 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
         </div>
       </section>
 
-      <section className="bg-white py-16">
+      <section className="bg-[#08090A] py-16">
         <div className="container-site max-w-4xl mx-auto px-6">
           <Reveal>
-            <div className="prose prose-slate max-w-none space-y-12 text-slate-700 leading-relaxed font-sans">
-              <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
-                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
+            <div className="prose prose-invert max-w-none space-y-12 text-neutral-300 leading-relaxed font-sans">
+              <div className="bg-[#0F1013] p-8 rounded-2xl sm:rounded-3xl border border-[#26282D]">
+                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
                   1. Made to Order Fulfillment Policy
                 </h2>
                 <p className="mb-4">
@@ -233,92 +233,92 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
               </div>
 
               <div>
-                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
+                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
                   2. 30 Day Quality Guarantee & Defect Reporting
                 </h2>
                 <p className="mb-4">
                   We stand by the quality of our merchandise. If your order arrives with any of the following issues, you are entitled to a replacement item at no extra charge or a full refund:
                 </p>
-                <ul className="list-disc pl-6 space-y-2 text-slate-600 mb-6">
+                <ul className="list-disc pl-6 space-y-2 text-neutral-400 mb-6">
                   <li>Manufacturing, stitching, or material defects.</li>
                   <li>Misprinted, skewed, or discolored graphics.</li>
                   <li>Items damaged during transit.</li>
                   <li>Receiving the incorrect item, color, or size relative to your order receipt.</li>
                 </ul>
 
-                <div className="p-6 bg-primary/5 border border-primary/20 rounded-2xl">
-                  <h3 className="text-lg font-semibold text-slate-800 mb-2 flex items-center gap-2">
-                    <ShieldCheck size={20} className="text-primary" />
+                <div className="p-6 bg-[#0F1013] border border-[#26282D] rounded-2xl">
+                  <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2 font-heading">
+                    <ShieldCheck size={20} className="text-white" />
                     How to Submit a Quality Claim:
                   </h3>
-                  <ol className="list-decimal pl-6 space-y-2 text-slate-700 text-sm">
-                    <li>Contact our support team within <strong>30 days of delivery</strong> at <a href="mailto:contact@pontlook.com" className="text-primary hover:underline">contact@pontlook.com</a>.</li>
+                  <ol className="list-decimal pl-6 space-y-2 text-neutral-300 text-sm">
+                    <li>Contact our support team within <strong>30 days of delivery</strong> at <a href="mailto:contact@pontlook.com" className="text-white underline underline-offset-4 hover:text-neutral-300">contact@pontlook.com</a>.</li>
                     <li>Provide your order number and full name.</li>
                     <li>Attach clear photographs showing the defect, damage, or misprint alongside the shipping label.</li>
                   </ol>
-                  <p className="mt-3 text-xs text-slate-500">
+                  <p className="mt-3 text-xs text-neutral-500">
                     Once verified, a replacement will be dispatched immediately, or a refund will be issued without requiring you to ship the defective item back.
                   </p>
                 </div>
               </div>
 
               <div>
-                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
+                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
                   3. Order Cancellation Policy
                 </h2>
                 <p className="mb-4">
                   Because production begins rapidly after an order is placed:
                 </p>
-                <ul className="list-disc pl-6 space-y-2 text-slate-600">
+                <ul className="list-disc pl-6 space-y-2 text-neutral-400">
                   <li>
-                    <strong>Pre Production Cancellations:</strong> You may request an order cancellation by contacting us immediately after ordering. If production has not commenced, your order will be cancelled and fully refunded.
+                    <strong className="text-white">Pre Production Cancellations:</strong> You may request an order cancellation by contacting us immediately after ordering. If production has not commenced, your order will be cancelled and fully refunded.
                   </li>
                   <li>
-                    <strong>In Production Orders:</strong> Once Fourthwall transmits the item to the manufacturing queue, the order cannot be cancelled, modified, or recalled.
+                    <strong className="text-white">In Production Orders:</strong> Once Fourthwall transmits the item to the manufacturing queue, the order cannot be cancelled, modified, or recalled.
                   </li>
                 </ul>
               </div>
 
-              <div className="bg-slate-50/80 p-8 rounded-3xl border border-slate-200/70">
-                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
+              <div className="bg-[#0F1013] p-8 rounded-2xl sm:rounded-3xl border border-[#26282D]">
+                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
                   4. Refund Processing & Payment Authorization
                 </h2>
                 <p className="mb-4">
                   All approved refunds are submitted to your original form of payment:
                 </p>
-                <ul className="list-disc pl-6 space-y-3 text-slate-600">
+                <ul className="list-disc pl-6 space-y-3 text-neutral-400">
                   <li>
-                    <strong>Credit / Debit Cards:</strong> Refunds will appear on your bank statement within 3 to 7 business days, depending on your card issuer.
+                    <strong className="text-white">Credit / Debit Cards:</strong> Refunds will appear on your bank statement within 3 to 7 business days, depending on your card issuer.
                   </li>
                   <li>
-                    <strong>PayPal:</strong> Refunds credited to PayPal accounts are typically available within 24 to 48 hours.
+                    <strong className="text-white">PayPal:</strong> Refunds credited to PayPal accounts are typically available within 24 to 48 hours.
                   </li>
                   <li>
-                    <strong>Currency:</strong> Refunds are issued in the currency of original purchase (USD / local equivalent).
+                    <strong className="text-white">Currency:</strong> Refunds are issued in the currency of original purchase (USD / local equivalent).
                   </li>
                 </ul>
               </div>
 
               <div>
-                <h2 className="text-2xl font-semibold text-slate-800 mb-4 font-heading">
+                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
                   5. Fourthwall Fulfillment Partner Terms
                 </h2>
                 <p className="mb-4">
                   PontLook partners with <strong>Fourthwall</strong> for ecommerce hosting, payment processing, manufacturing, and global logisitic fulfillment. By purchasing merchandise on our store:
                 </p>
-                <ul className="list-disc pl-6 space-y-2 text-slate-600">
+                <ul className="list-disc pl-6 space-y-2 text-neutral-400">
                   <li>Your order is processed securely through Fourthwall&apos;s PCI compliant checkout infrastructure.</li>
                   <li>Global shipping and delivery times are estimated at checkout based on destination customs and local postal operations.</li>
                   <li>PontLook and Fourthwall adhere strictly to international consumer protection regulations and carrier claims procedures.</li>
                 </ul>
               </div>
 
-              <div className="bg-primary/5 p-8 rounded-3xl border border-primary/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div className="bg-[#0F1013] p-8 rounded-2xl sm:rounded-3xl border border-[#26282D] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                 <div>
-                  <h2 className="text-2xl font-semibold text-slate-800 mb-2 font-heading">
+                  <h2 className="text-2xl font-semibold text-white mb-2 font-heading">
                     Need Help With an Order?
                   </h2>
-                  <p className="text-slate-600 text-sm">
+                  <p className="text-neutral-400 text-sm">
                     Our support team is ready to assist you with any questions regarding returns, orders, or quality inquiries.
                   </p>
                 </div>

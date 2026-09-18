@@ -92,9 +92,9 @@ export default function ContactForm() {
   if (submitted) {
     return (
       <div className="card text-center !p-6 sm:!p-12">
-        <CheckCircle2 size={48} className="mx-auto text-emerald-500" />
-        <h3 className="mt-5 text-2xl font-semibold text-slate-800 font-heading">{dict.contact.form.successTitle}</h3>
-        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
+        <CheckCircle2 size={48} className="mx-auto text-emerald-400" />
+        <h3 className="mt-5 text-2xl font-semibold text-white font-heading">{dict.contact.form.successTitle}</h3>
+        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-neutral-400">
           {dict.contact.form.successMessage}
         </p>
       </div>
@@ -125,12 +125,12 @@ export default function ContactForm() {
         <div>
           <label htmlFor="topic" className="field-label">{dict.contact.form.topic}</label>
           <select id="topic" className="field-input" {...register('topic')}>
-            <option value="">{dict.contact.form.topicPlaceholder}</option>
-            <option value="provider">{dict.contact.form.topics.provider}</option>
-            <option value="company">{dict.contact.form.topics.company}</option>
-            <option value="partnership">{dict.contact.form.topics.partnership}</option>
-            <option value="media">{dict.contact.form.topics.media}</option>
-            <option value="other">{dict.contact.form.topics.other}</option>
+            <option value="" className="bg-[#16171B] text-white">{dict.contact.form.topicPlaceholder}</option>
+            <option value="provider" className="bg-[#16171B] text-white">{dict.contact.form.topics.provider}</option>
+            <option value="company" className="bg-[#16171B] text-white">{dict.contact.form.topics.company}</option>
+            <option value="partnership" className="bg-[#16171B] text-white">{dict.contact.form.topics.partnership}</option>
+            <option value="media" className="bg-[#16171B] text-white">{dict.contact.form.topics.media}</option>
+            <option value="other" className="bg-[#16171B] text-white">{dict.contact.form.topics.other}</option>
           </select>
           {errors.topic && <p className="field-error" role="alert">{errors.topic.message}</p>}
         </div>

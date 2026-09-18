@@ -323,56 +323,56 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
   if (isSubmitted) {
     return (
       <div className="max-w-2xl mx-auto py-12 px-4 sm:px-6">
-        <div className="bg-white border border-slate-200/80 rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden shadow-xl">
+        <div className="bg-[#0F1013] border border-[#26282D] rounded-2xl p-8 sm:p-12 text-center relative overflow-hidden shadow-xl">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-32 bg-blue-500/10 blur-3xl pointer-events-none" />
 
-          <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-emerald-50 border border-emerald-200 text-emerald-600 mb-6 shadow-sm">
+          <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 mb-6 shadow-sm">
             <CheckCircle2 size={40} />
           </div>
 
-          <div className="inline-block px-3.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono text-primary font-semibold uppercase tracking-wider mb-4">
+          <div className="inline-block px-3.5 py-1 rounded-full bg-[#16171B] border border-[#26282D] text-xs font-mono text-neutral-300 font-semibold uppercase tracking-wider mb-4">
             {applicationRef || 'PL PRV CONFIRMED'}
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900 font-heading tracking-tight mb-3">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight mb-3">
             {isAr ? 'تم استلام طلب الشراكة بنجاح' : 'Partner Application Received'}
           </h2>
 
-          <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-lg mx-auto mb-8 font-normal">
+          <p className="text-neutral-400 text-sm sm:text-base leading-relaxed max-w-lg mx-auto mb-8 font-normal">
             {isAr
               ? 'شكراً لكم. يقوم فريق الشراكات بمراجعة بيانات مؤسستكم التدريبية، وسنتواصل معكم عبر البريد والواتساب خلال يومي عمل لجدولة مكالمة التأهيل وبدء استقبال الفرص.'
               : 'Thank you for applying. Our partnerships team is reviewing your profile and credentials. We will reach out via email and WhatsApp within 2 business days to schedule your qualification call.'}
           </p>
 
           {/* Roadmap */}
-          <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 sm:p-6 text-start mb-8 space-y-4">
-            <div className="text-xs font-mono uppercase tracking-widest text-primary font-semibold">
+          <div className="bg-[#16171B] border border-[#26282D] rounded-2xl p-5 sm:p-6 text-start mb-8 space-y-4">
+            <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-semibold">
               {isAr ? 'مسار التأهيل والاعتماد' : 'Qualification Roadmap'}
             </div>
 
             <div className="flex items-start gap-3">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-white text-xs font-bold font-mono">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white text-black text-xs font-bold font-mono">
                 1
               </span>
               <div>
-                <div className="text-sm font-semibold text-slate-900">
+                <div className="text-sm font-semibold text-white">
                   {isAr ? 'مراجعة الاعتمادات وسجل التدريب' : 'Faculty & Credential Verification'}
                 </div>
-                <div className="text-xs text-slate-500 mt-0.5">
+                <div className="text-xs text-neutral-400 mt-0.5">
                   {isAr ? 'خلال يومي عمل كحد أقصى' : 'Completed within 2 business days'}
                 </div>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-700 text-xs font-bold font-mono">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#0F1013] border border-[#26282D] text-neutral-300 text-xs font-bold font-mono">
                 2
               </span>
               <div>
-                <div className="text-sm font-semibold text-slate-900">
+                <div className="text-sm font-semibold text-white">
                   {isAr ? 'مكالمة التعارف والتوافق 20 دقيقة' : '20 Minute Alignment Consultation'}
                 </div>
-                <div className="text-xs text-slate-500 mt-0.5">
+                <div className="text-xs text-neutral-400 mt-0.5">
                   {isAr
                     ? 'تحديد مجالات التركيز والميزانيات المستهدفة'
                     : 'Target budget tiers and industry preferences alignment'}
@@ -381,14 +381,14 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
             </div>
 
             <div className="flex items-start gap-3">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white border border-slate-200 text-slate-700 text-xs font-bold font-mono">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#0F1013] border border-[#26282D] text-neutral-300 text-xs font-bold font-mono">
                 3
               </span>
               <div>
-                <div className="text-sm font-semibold text-slate-900">
+                <div className="text-sm font-semibold text-white">
                   {isAr ? 'تفعيل العضوية واستقبال الفرص' : 'Network Activation & Lead Delivery'}
                 </div>
-                <div className="text-xs text-slate-500 mt-0.5">
+                <div className="text-xs text-neutral-400 mt-0.5">
                   {isAr
                     ? 'استلام بيانات أصحاب القرار للشركات المهتمة'
                     : 'Receive verified decision maker opportunities directly'}
@@ -400,7 +400,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               href={`/${lang}/for-providers`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-full bg-transparent hover:bg-slate-900/5 text-slate-900 font-semibold text-sm border border-slate-300 hover:border-slate-500 shadow-xs active:scale-[0.98] transition-all duration-200"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-sm border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
             >
               <span>{isAr ? 'العودة لصفحة مزودي التدريب' : 'Return to Providers Overview'}</span>
               <ArrowRight size={16} className={isAr ? 'rotate-180' : ''} />
@@ -408,7 +408,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
 
             <Link
               href={`/${lang}`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-full bg-transparent hover:bg-slate-100 text-slate-700 hover:text-slate-900 font-semibold text-sm border border-slate-200 shadow-xs transition-all duration-200"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-sm border border-[#26282D] hover:border-white/20 shadow-xs transition-all duration-200"
             >
               <span>{isAr ? 'الصفحة الرئيسية' : 'Homepage'}</span>
             </Link>
@@ -424,42 +424,42 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
       <div className="flex items-center justify-between gap-4 mb-6 sm:mb-8">
         <Link
           href={`/${lang}/for-providers`}
-          className="inline-flex items-center gap-2 text-xs font-mono text-slate-500 hover:text-primary transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono text-neutral-400 hover:text-white transition-colors"
         >
           <ArrowLeft size={14} className={isAr ? 'rotate-180' : ''} />
           <span>{isAr ? 'العودة إلى نظرة عامة' : 'Back to Providers Overview'}</span>
         </Link>
 
         <div className="flex items-center gap-2">
-          <span className="font-mono text-xs text-primary font-semibold uppercase tracking-wider">
+          <span className="font-mono text-xs text-neutral-300 font-semibold uppercase tracking-wider">
             {isAr ? `الخطوة ${step} من 4` : `Step ${step} of 4`}
           </span>
         </div>
       </div>
 
       {/* Sleek Progress Bar */}
-      <div className="w-full h-2 bg-slate-200/80 rounded-full overflow-hidden mb-8 border border-slate-200/60">
+      <div className="w-full h-2 bg-[#16171B] rounded-full overflow-hidden mb-8 border border-[#26282D]">
         <div
-          className="h-full bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 ease-out"
+          className="h-full bg-white transition-all duration-300 ease-out"
           style={{ width: `${(step / 4) * 100}%` }}
         />
       </div>
 
       {/* Main Card Container */}
-      <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 relative overflow-hidden shadow-xl shadow-slate-100/70">
-        <div className="pointer-events-none absolute top-0 right-0 w-80 h-32 bg-blue-500/5 blur-3xl" />
+      <div className="bg-[#0F1013] border border-[#26282D] rounded-2xl p-6 sm:p-10 relative overflow-hidden shadow-xl">
+        <div className="pointer-events-none absolute top-0 right-0 w-80 h-32 bg-white/[0.02] blur-3xl" />
 
         {/* Step 1: Organization & Identity */}
         {step === 1 && (
           <div>
             <div className="mb-6 sm:mb-8">
-              <span className="inline-block px-3 py-1 rounded-full bg-blue-50 border border-blue-200 font-mono text-xs text-blue-700 font-semibold uppercase tracking-wider mb-3">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-xs text-neutral-300 font-semibold uppercase tracking-wider mb-3">
                 {isAr ? 'الخطوة 1 · معلومات المنشأة' : 'Step 1 · Basic Information'}
               </span>
-              <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 font-heading tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight">
                 {isAr ? 'معلومات عن مؤسستكم التدريبية' : 'Tell us about your training organization'}
               </h1>
-              <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+              <p className="mt-2 text-sm text-neutral-400 leading-relaxed">
                 {isAr
                   ? 'نتعاون مع المعاهد التدريبية المعتمدة ومراكز التدريب المتخصصة لتزويدهم بعملاء مؤسسيين مؤهلين.'
                   : 'We partner with accredited boutique academies and enterprise training institutions across the GCC.'}
@@ -468,7 +468,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
 
             <div className="space-y-5">
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-slate-700 font-medium mb-2">
+                <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-medium mb-2">
                   {isAr ? 'اسم الشركة أو المعهد التدريبي' : 'Company or Institute Name'}{' '}
                   <span className="text-red-500">*</span>
                 </label>
@@ -480,12 +480,12 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                   placeholder={
                     isAr ? 'مثال: أكاديمية المستقبل للتدريب والتطوير' : 'e.g. Apex Executive Academy'
                   }
-                  className="w-full bg-white border border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 transition-all outline-none shadow-xs"
+                  className="w-full bg-[#16171B] border border-[#26282D] focus:border-white/40 focus:ring-1 focus:ring-white/20 rounded-xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 transition-all outline-none shadow-xs"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-slate-700 font-medium mb-2">
+                <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-medium mb-2">
                   {isAr ? 'الموقع الإلكتروني أو الملف التعريفي' : 'Website or Portfolio Link'}
                 </label>
                 <input
@@ -493,13 +493,13 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                   value={formData.website}
                   onChange={(e) => setFormData({ ...formData, website: e.target.value })}
                   placeholder="https://..."
-                  className="w-full bg-white border border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 transition-all outline-none shadow-xs"
+                  className="w-full bg-[#16171B] border border-[#26282D] focus:border-white/40 focus:ring-1 focus:ring-white/20 rounded-xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 transition-all outline-none shadow-xs"
                 />
               </div>
 
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-slate-700 font-medium mb-2">
+                  <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-medium mb-2">
                     {isAr ? 'الاسم الكامل لمسؤول التواصل' : 'Your Full Name'}{' '}
                     <span className="text-red-500">*</span>
                   </label>
@@ -509,12 +509,12 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     placeholder={isAr ? 'الاسم الثلاثي' : 'e.g. Tariq Al Mansoor'}
-                    className="w-full bg-white border border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 transition-all outline-none shadow-xs"
+                    className="w-full bg-[#16171B] border border-[#26282D] focus:border-white/40 focus:ring-1 focus:ring-white/20 rounded-xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 transition-all outline-none shadow-xs"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-slate-700 font-medium mb-2">
+                  <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-medium mb-2">
                     {isAr ? 'المسمى الوظيفي' : 'Your Job Title / Seniority'}{' '}
                     <span className="text-red-500">*</span>
                   </label>
@@ -528,13 +528,13 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                         ? 'مثال: الرئيس التنفيذي، مدير تطوير الأعمال'
                         : 'e.g. Managing Director, Head of Corporate Training'
                     }
-                    className="w-full bg-white border border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 transition-all outline-none shadow-xs"
+                    className="w-full bg-[#16171B] border border-[#26282D] focus:border-white/40 focus:ring-1 focus:ring-white/20 rounded-xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 transition-all outline-none shadow-xs"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-slate-700 font-medium mb-2">
+                <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-medium mb-2">
                   {isAr ? 'سنوات الخبرة في التدريب المؤسسي' : 'Years Operating in Enterprise Training'}
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -547,8 +547,8 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                         onClick={() => setFormData({ ...formData, yearsInBusiness: opt.value })}
                         className={`px-3 py-3 rounded-xl border text-xs sm:text-sm font-medium transition-all ${
                           isSelected
-                            ? 'bg-blue-50 border-primary text-primary font-semibold shadow-xs'
-                            : 'bg-slate-50/70 border-slate-200 text-slate-700 hover:bg-white hover:border-blue-300'
+                            ? 'bg-white/[0.08] border-white/40 text-white font-semibold shadow-xs'
+                            : 'bg-[#16171B] border-[#26282D] text-neutral-300 hover:bg-white/[0.04] hover:border-white/20'
                         }`}
                       >
                         {opt.label}
@@ -565,13 +565,13 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
         {step === 2 && (
           <div>
             <div className="mb-6 sm:mb-8">
-              <span className="inline-block px-3 py-1 rounded-full bg-blue-50 border border-blue-200 font-mono text-xs text-blue-700 font-semibold uppercase tracking-wider mb-3">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-xs text-neutral-300 font-semibold uppercase tracking-wider mb-3">
                 {isAr ? 'الخطوة 2 · مجالات التدريب والتخصص' : 'Step 2 · Capabilities & Focus'}
               </span>
-              <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 font-heading tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight">
                 {isAr ? 'ما هي مجالات تخصصكم التدريبي؟' : 'What are your core training specialties?'}
               </h1>
-              <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+              <p className="mt-2 text-sm text-neutral-400 leading-relaxed">
                 {isAr
                   ? 'حدد كافة المجالات التي تمتلكون فيها برامج معتمدة وخبرات تنفيذية مثبتة مع كبرى الشركات.'
                   : 'Select all disciplines where your faculty holds accredited credentials and verified client outcomes.'}
@@ -580,7 +580,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
 
             <div className="space-y-6">
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-slate-700 font-medium mb-3">
+                <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-medium mb-3">
                   {isAr ? 'مجالات التدريب الأساسية' : 'Core Training Disciplines'}{' '}
                   <span className="text-red-500">*</span>
                 </label>
@@ -594,16 +594,16 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                         onClick={() => toggleSpecialty(dom)}
                         className={`text-start p-3.5 rounded-xl border flex items-center justify-between gap-3 text-xs sm:text-sm transition-all ${
                           isSelected
-                            ? 'bg-blue-50 border-primary text-primary font-semibold shadow-xs'
-                            : 'bg-slate-50/70 border-slate-200 text-slate-700 hover:bg-white hover:border-blue-300'
+                            ? 'bg-white/[0.08] border-white/40 text-white font-semibold shadow-xs'
+                            : 'bg-[#16171B] border-[#26282D] text-neutral-300 hover:bg-white/[0.04] hover:border-white/20'
                         }`}
                       >
                         <span className="leading-snug">{dom}</span>
                         <span
                           className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-[10px] transition-all ${
                             isSelected
-                              ? 'bg-primary border-primary text-white'
-                              : 'border-slate-300 bg-white'
+                              ? 'bg-white border-white text-black'
+                              : 'border-[#26282D] bg-[#16171B]'
                           }`}
                         >
                           {isSelected && <Check size={12} strokeWidth={3} />}
@@ -615,7 +615,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-slate-700 font-medium mb-3">
+                <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-medium mb-3">
                   {isAr ? 'طرق التنفيذ والتقديم' : 'Primary Delivery Formats'}{' '}
                   <span className="text-red-500">*</span>
                 </label>
@@ -629,8 +629,8 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                         onClick={() => toggleDeliveryMode(mode.id)}
                         className={`p-3.5 rounded-xl border text-center text-xs sm:text-sm font-medium transition-all ${
                           isSelected
-                            ? 'bg-blue-50 border-primary text-primary font-semibold shadow-xs'
-                            : 'bg-slate-50/70 border-slate-200 text-slate-700 hover:bg-white hover:border-blue-300'
+                            ? 'bg-white/[0.08] border-white/40 text-white font-semibold shadow-xs'
+                            : 'bg-[#16171B] border-[#26282D] text-neutral-300 hover:bg-white/[0.04] hover:border-white/20'
                         }`}
                       >
                         {mode.label}
@@ -647,13 +647,13 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
         {step === 3 && (
           <div>
             <div className="mb-6 sm:mb-8">
-              <span className="inline-block px-3 py-1 rounded-full bg-blue-50 border border-blue-200 font-mono text-xs text-blue-700 font-semibold uppercase tracking-wider mb-3">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-xs text-neutral-300 font-semibold uppercase tracking-wider mb-3">
                 {isAr ? 'الخطوة 3 · التغطية الجغرافية والحجم' : 'Step 3 · Geographic Reach & Scale'}
               </span>
-              <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 font-heading tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight">
                 {isAr ? 'أين تنفذون برامجكم التدريبية؟' : 'Where do you deliver corporate programs?'}
               </h1>
-              <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+              <p className="mt-2 text-sm text-neutral-400 leading-relaxed">
                 {isAr
                   ? 'يستقبل بونت لوك طلبات تدريبية مستمرة من جهات وشركات كبرى في مدن الأعمال الخليجية.'
                   : 'PontLook receives corporate training requests across major business hubs in the GCC.'}
@@ -662,7 +662,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
 
             <div className="space-y-6">
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-slate-700 font-medium mb-3">
+                <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-medium mb-3">
                   {isAr ? 'الأسواق والمناطق المستهدفة' : 'Active Target GCC Markets'}{' '}
                   <span className="text-red-500">*</span>
                 </label>
@@ -676,16 +676,16 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                         onClick={() => toggleMarket(mkt)}
                         className={`w-full text-start p-3.5 rounded-xl border flex items-center justify-between gap-3 text-xs sm:text-sm transition-all ${
                           isSelected
-                            ? 'bg-blue-50 border-primary text-primary font-semibold shadow-xs'
-                            : 'bg-slate-50/70 border-slate-200 text-slate-700 hover:bg-white hover:border-blue-300'
+                            ? 'bg-white/[0.08] border-white/40 text-white font-semibold shadow-xs'
+                            : 'bg-[#16171B] border-[#26282D] text-neutral-300 hover:bg-white/[0.04] hover:border-white/20'
                         }`}
                       >
                         <span>{mkt}</span>
                         <span
                           className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-[10px] transition-all ${
                             isSelected
-                              ? 'bg-primary border-primary text-white'
-                              : 'border-slate-300 bg-white'
+                              ? 'bg-white border-white text-black'
+                              : 'border-[#26282D] bg-[#16171B]'
                           }`}
                         >
                           {isSelected && <Check size={12} strokeWidth={3} />}
@@ -697,7 +697,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-slate-700 font-medium mb-3">
+                <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-medium mb-3">
                   {isAr ? 'الحجم النموذجي للمجموعات التدريبية' : 'Typical Cohort Engagement Scale'}
                 </label>
                 <div className="grid gap-2.5 sm:grid-cols-2">
@@ -710,8 +710,8 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                         onClick={() => setFormData({ ...formData, cohortScale: opt.value })}
                         className={`p-3.5 text-start rounded-xl border text-xs sm:text-sm font-medium transition-all ${
                           isSelected
-                            ? 'bg-blue-50 border-primary text-primary font-semibold shadow-xs'
-                            : 'bg-slate-50/70 border-slate-200 text-slate-700 hover:bg-white hover:border-blue-300'
+                            ? 'bg-white/[0.08] border-white/40 text-white font-semibold shadow-xs'
+                            : 'bg-[#16171B] border-[#26282D] text-neutral-300 hover:bg-white/[0.04] hover:border-white/20'
                         }`}
                       >
                         {opt.label}
@@ -722,7 +722,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-slate-700 font-medium mb-2">
+                <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-medium mb-2">
                   {isAr ? 'أبرز الاعتمادات أو العملاء السابقين' : 'Notable Accreditations or Past Clients'}
                 </label>
                 <textarea
@@ -734,7 +734,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                       ? 'مثال: اعتمادات معهد PMI، هيئات تنظيمية محلية، أو تجارب سابقة مع كبرى الهيئات والشركات...'
                       : 'e.g. PMI, NEBOSH, HRCI accreditations, or notable enterprise and government track record...'
                   }
-                  className="w-full bg-white border border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 transition-all outline-none resize-none shadow-xs"
+                  className="w-full bg-[#16171B] border border-[#26282D] focus:border-white/40 focus:ring-1 focus:ring-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-500 transition-all outline-none resize-none shadow-xs"
                 />
               </div>
             </div>
@@ -745,13 +745,13 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
         {step === 4 && (
           <div>
             <div className="mb-6 sm:mb-8">
-              <span className="inline-block px-3 py-1 rounded-full bg-blue-50 border border-blue-200 font-mono text-xs text-blue-700 font-semibold uppercase tracking-wider mb-3">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-xs text-neutral-300 font-semibold uppercase tracking-wider mb-3">
                 {isAr ? 'الخطوة 4 · التواصل والتحقق' : 'Step 4 · Verification & Next Steps'}
               </span>
-              <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 font-heading tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight">
                 {isAr ? 'بيانات التواصل لاستقبال الفرص' : 'Where should we deliver qualified opportunities?'}
               </h1>
-              <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+              <p className="mt-2 text-sm text-neutral-400 leading-relaxed">
                 {isAr
                   ? 'سيتواصل فريق الشراكات معكم لجدولة مكالمة التحقق ومطابقة أولى الفرص التدريبية المتاحة.'
                   : 'Our partnerships team will reach out directly to finalize accreditation verification and begin lead delivery.'}
@@ -760,7 +760,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
 
             <div className="space-y-5">
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-slate-700 font-medium mb-2">
+                <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-medium mb-2">
                   {isAr ? 'البريد الإلكتروني الرسمي للعمل' : 'Official Work Email'}{' '}
                   <span className="text-red-500">*</span>
                 </label>
@@ -771,14 +771,14 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                     value={formData.businessEmail}
                     onChange={(e) => setFormData({ ...formData, businessEmail: e.target.value })}
                     placeholder="partner@institution.com"
-                    className="w-full bg-white border border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 transition-all outline-none shadow-xs"
+                    className="w-full bg-[#16171B] border border-[#26282D] focus:border-white/40 focus:ring-1 focus:ring-white/20 rounded-xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 transition-all outline-none shadow-xs"
                   />
-                  <Mail size={16} className="absolute end-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <Mail size={16} className="absolute end-4 top-1/2 -translate-y-1/2 text-neutral-500" />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-slate-700 font-medium mb-2">
+                <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-medium mb-2">
                   {isAr ? 'رقم الهاتف المباشر أو الواتساب' : 'Direct Phone or WhatsApp with Country Code'}{' '}
                   <span className="text-red-500">*</span>
                 </label>
@@ -789,23 +789,23 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+966 50 123 4567"
-                    className="w-full bg-white border border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 transition-all outline-none shadow-xs"
+                    className="w-full bg-[#16171B] border border-[#26282D] focus:border-white/40 focus:ring-1 focus:ring-white/20 rounded-xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 transition-all outline-none shadow-xs"
                   />
-                  <Phone size={16} className="absolute end-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <Phone size={16} className="absolute end-4 top-1/2 -translate-y-1/2 text-neutral-500" />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-mono uppercase tracking-wider text-slate-700 font-medium mb-2">
+                <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-medium mb-2">
                   {isAr ? 'كيف سمعتم عن بونت لوك؟' : 'How did you hear about PontLook?'}
                 </label>
                 <select
                   value={formData.referralSource}
                   onChange={(e) => setFormData({ ...formData, referralSource: e.target.value })}
-                  className="w-full bg-white border border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3.5 text-sm text-slate-900 transition-all outline-none shadow-xs"
+                  className="w-full bg-[#16171B] border border-[#26282D] focus:border-white/40 focus:ring-1 focus:ring-white/20 rounded-xl px-4 py-3.5 text-sm text-white transition-all outline-none shadow-xs"
                 >
                   {referralOptions.map((opt) => (
-                    <option key={opt} value={opt} className="bg-white text-slate-900">
+                    <option key={opt} value={opt} className="bg-[#16171B] text-white">
                       {opt}
                     </option>
                   ))}
@@ -819,9 +819,9 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                     type="checkbox"
                     checked={formData.agreementConfirmed}
                     onChange={(e) => setFormData({ ...formData, agreementConfirmed: e.target.checked })}
-                    className="mt-1 h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
+                    className="mt-1 h-4 w-4 rounded border-[#26282D] bg-[#16171B] text-white focus:ring-white/20"
                   />
-                  <span className="text-xs sm:text-sm text-slate-600 group-hover:text-slate-900 leading-relaxed select-none">
+                  <span className="text-xs sm:text-sm text-neutral-400 group-hover:text-neutral-200 leading-relaxed select-none">
                     {isAr
                       ? 'أؤكد أن مؤسستنا تمتلك مدربين معتمدين وجاهزية فعلية لتنفيذ برامج التدريب المؤسسي للشركات.'
                       : 'I confirm that our organization has verified trainers and active capacity to deliver corporate training programs.'}
@@ -840,13 +840,13 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
         )}
 
         {/* Actions Bar */}
-        <div className="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between gap-4">
+        <div className="mt-8 pt-6 border-t border-[#26282D] flex items-center justify-between gap-4">
           {step > 1 ? (
             <button
               type="button"
               onClick={handleBack}
               disabled={isSubmitting}
-              className="inline-flex items-center gap-2 py-3 px-5 rounded-full bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-medium text-xs sm:text-sm border border-slate-200 shadow-xs transition-all"
+              className="inline-flex items-center gap-2 py-3 px-5 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-xs sm:text-sm border border-[#26282D] hover:border-white/20 shadow-xs transition-all"
             >
               <ArrowLeft size={16} className={isAr ? 'rotate-180' : ''} />
               <span>{isAr ? 'السابق' : 'Previous'}</span>
@@ -859,7 +859,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
             <button
               type="button"
               onClick={handleNext}
-              className="inline-flex items-center justify-center gap-2 py-3.5 px-7 rounded-full bg-transparent hover:bg-slate-900/5 text-slate-900 font-semibold text-xs sm:text-sm border border-slate-300 hover:border-slate-500 shadow-xs active:scale-[0.98] transition-all"
+              className="inline-flex items-center justify-center gap-2 py-3.5 px-7 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-xs sm:text-sm border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all"
             >
               <span>{isAr ? 'المتابعة' : 'Continue'}</span>
               <ArrowRight size={16} className={isAr ? 'rotate-180' : ''} />
@@ -869,7 +869,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
               type="button"
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-full bg-transparent hover:bg-slate-900/5 text-slate-900 font-semibold text-xs sm:text-sm border border-slate-300 hover:border-slate-500 shadow-xs active:scale-[0.98] disabled:opacity-50 transition-all"
+              className="inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-xs sm:text-sm border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] disabled:opacity-50 transition-all"
             >
               <span>
                 {isSubmitting
@@ -888,18 +888,18 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
 
       {/* Trust Micro-Badges at the bottom */}
       <div className="mt-8 grid grid-cols-3 gap-3 text-center">
-        <div className="p-3 bg-white/80 border border-slate-200 rounded-2xl shadow-xs">
-          <div className="text-xs font-mono text-slate-600 font-medium">
+        <div className="p-3 bg-[#0F1013] border border-[#26282D] rounded-xl shadow-xs">
+          <div className="text-xs font-mono text-neutral-400 font-medium">
             {isAr ? '0$ رسوم اشتراك' : 'Zero Retainers'}
           </div>
         </div>
-        <div className="p-3 bg-white/80 border border-slate-200 rounded-2xl shadow-xs">
-          <div className="text-xs font-mono text-slate-600 font-medium">
+        <div className="p-3 bg-[#0F1013] border border-[#26282D] rounded-xl shadow-xs">
+          <div className="text-xs font-mono text-neutral-400 font-medium">
             {isAr ? 'شركات موثقة فقط' : 'Vetted Enterprise Buyers'}
           </div>
         </div>
-        <div className="p-3 bg-white/80 border border-slate-200 rounded-2xl shadow-xs">
-          <div className="text-xs font-mono text-slate-600 font-medium">
+        <div className="p-3 bg-[#0F1013] border border-[#26282D] rounded-xl shadow-xs">
+          <div className="text-xs font-mono text-neutral-400 font-medium">
             {isAr ? 'رد خلال يومي عمل' : '2 Day Response SLA'}
           </div>
         </div>

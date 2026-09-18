@@ -110,34 +110,34 @@ export default async function ForProvidersPage({
   return (
     <>
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-hero-gradient min-h-[100dvh] flex flex-col justify-between items-center pt-24 sm:pt-28 pb-6 sm:pb-8 px-4 sm:px-6">
+      <div className="relative overflow-hidden bg-[#08090A] min-h-[100dvh] flex flex-col justify-between items-center pt-24 sm:pt-28 pb-6 sm:pb-8 px-4 sm:px-6">
         {/* Ambient Depth Glows */}
-        <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-gradient-to-r from-blue-500/10 via-primary/5 to-blue-500/10 blur-3xl -z-10 rounded-full" />
-        <div className="pointer-events-none absolute top-10 start-1/4 w-[400px] h-[400px] bg-blue-500/5 blur-3xl -z-10 rounded-full" />
+        <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-white/[0.02] blur-3xl -z-10 rounded-full" />
+        <div className="pointer-events-none absolute top-10 start-1/4 w-[400px] h-[400px] bg-white/[0.01] blur-3xl -z-10 rounded-full" />
 
         {/* Vertically Centered Content (Optically balanced) */}
         <div className="container-site relative z-10 mx-auto max-w-4xl text-center my-auto -translate-y-3 sm:-translate-y-6 py-2">
           <Reveal className="flex flex-col items-center">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-5 shadow-xs">
-              <ShieldCheck size={14} className="text-blue-600" />
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5 shadow-xs">
+              <ShieldCheck size={14} className="text-white" />
               <span>{isAr ? 'لمزودي ومراكز التدريب المعتمدين' : 'For Approved Training Providers'}</span>
             </span>
 
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-slate-900 leading-[1.12] sm:leading-[1.08] font-heading tracking-tight">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.08] font-heading tracking-tight">
               {isAr ? (
                 <>
                   فرص تدريبية للشركات والمؤسسات <br className="hidden sm:inline" />
-                  <span className="text-primary font-bold">حسب الطلب</span>
+                  <span className="text-white font-bold">حسب الطلب</span>
                 </>
               ) : (
                 <>
                   Enterprise Training Leads <br className="hidden sm:inline" />
-                  <span className="text-primary font-bold">On Demand</span>
+                  <span className="text-white font-bold">On Demand</span>
                 </>
               )}
             </h1>
 
-            <p className="mt-4 sm:mt-5 text-base sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto font-normal">
+            <p className="mt-4 sm:mt-5 text-base sm:text-xl text-neutral-400 leading-relaxed max-w-2xl mx-auto font-normal">
               {isAr
                 ? 'تواصل مباشرة مع صناع القرار في كبرى المنشآت والشركات التي تبحث بنشاط عن حلول تدريبية. بدون رسوم شهرية ثابتة، الدفع فقط لكل فرصة مؤكدة ومؤهلة.'
                 : 'Connect directly with verified corporate decision makers actively seeking training solutions. Zero retainers, 100% pay per lead.'}
@@ -146,7 +146,7 @@ export default async function ForProvidersPage({
             <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto">
               <Link
                 href={`/${lang}/for-providers/apply`}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-full bg-transparent hover:bg-slate-900/5 text-slate-900 font-semibold text-base border border-slate-300 hover:border-slate-500 shadow-xs active:scale-[0.98] transition-all duration-200"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
               >
                 <span>{isAr ? 'قدم للانضمام إلى شبكتنا' : 'Apply to Join Network'}</span>
                 <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
@@ -154,28 +154,28 @@ export default async function ForProvidersPage({
 
               <a
                 href="#tiers"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-full bg-transparent hover:bg-slate-100 text-slate-700 hover:text-slate-900 font-semibold text-base border border-slate-200 shadow-xs active:scale-[0.98] transition-all duration-200"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-base border border-[#26282D] hover:border-white/20 shadow-xs active:scale-[0.98] transition-all duration-200"
               >
                 <span>{isAr ? 'استعرض فئات الفرص' : 'Explore Opportunity Tiers'}</span>
               </a>
             </div>
 
-            <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-xs sm:text-sm text-slate-600">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-xs border border-slate-200/80 shadow-xs">
-                <CheckCircle2 size={15} className="text-primary shrink-0" />
-                <span className="font-medium text-slate-700">
+            <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-xs sm:text-sm text-neutral-400">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">
+                <CheckCircle2 size={15} className="text-white shrink-0" />
+                <span className="font-medium text-neutral-300">
                   {isAr ? 'بدون أي رسوم إدارة شهرية' : 'Zero Monthly Retainers'}
                 </span>
               </div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-xs border border-slate-200/80 shadow-xs">
-                <CheckCircle2 size={15} className="text-primary shrink-0" />
-                <span className="font-medium text-slate-700">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">
+                <CheckCircle2 size={15} className="text-white shrink-0" />
+                <span className="font-medium text-neutral-300">
                   {isAr ? 'ميزانيات تدريب مؤكدة ومعتمدة' : 'Verified Budgets'}
                 </span>
               </div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-xs border border-slate-200/80 shadow-xs">
-                <CheckCircle2 size={15} className="text-primary shrink-0" />
-                <span className="font-medium text-slate-700">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">
+                <CheckCircle2 size={15} className="text-white shrink-0" />
+                <span className="font-medium text-neutral-300">
                   {isAr ? 'ضمان استبدال بنسبة 100%' : '100% Replacement Guarantee'}
                 </span>
               </div>
@@ -187,19 +187,19 @@ export default async function ForProvidersPage({
         <div className="relative z-10 pb-3 sm:pb-4 flex flex-col items-center">
           <a
             href="#why-partner"
-            className="group flex flex-col items-center text-slate-400 hover:text-primary transition-colors text-xs font-medium"
+            className="group flex flex-col items-center text-neutral-500 hover:text-white transition-colors text-xs font-medium"
             aria-label={isAr ? 'انتقل إلى الأسفل' : 'Scroll down'}
           >
             <span className="mb-1 hidden sm:inline tracking-wider uppercase text-[11px] font-semibold">
               {isAr ? 'اكتشف المزيد' : 'Discover More'}
             </span>
-            <ChevronDown size={18} className="animate-bounce text-slate-400 group-hover:text-primary" />
+            <ChevronDown size={18} className="animate-bounce text-neutral-500 group-hover:text-white" />
           </a>
         </div>
       </div>
 
       {/* Why Partner Section */}
-      <section id="why-partner" className="bg-white py-12 sm:py-20 border-t border-slate-100 scroll-mt-16">
+      <section id="why-partner" className="bg-[#08090A] py-12 sm:py-20 border-t border-[#26282D] scroll-mt-16">
         <div className="container-site max-w-6xl mx-auto px-4 sm:px-6 space-y-14 sm:space-y-24">
           <div>
             <SectionHeading
@@ -215,12 +215,12 @@ export default async function ForProvidersPage({
             <div className="mt-8 sm:mt-10 grid gap-5 sm:gap-6 md:grid-cols-3">
               {providerBenefits.map((b, i) => (
                 <Reveal key={b.title} delay={i * 0.1}>
-                  <div className="card h-full text-center flex flex-col items-center !p-6 sm:!p-8 bg-slate-50/80 border border-slate-200/70 rounded-3xl hover:bg-white hover:shadow-md transition-all duration-300">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary mb-4">
+                  <div className="card h-full text-center flex flex-col items-center !p-6 sm:!p-8 bg-[#0F1013] border border-[#26282D] rounded-2xl hover:border-white/20 transition-all duration-300">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#16171B] border border-[#26282D] text-white mb-4">
                       <b.icon size={24} />
                     </span>
-                    <h3 className="text-lg font-semibold text-slate-800 font-heading">{b.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-600">{b.text}</p>
+                    <h3 className="text-lg font-semibold text-white font-heading">{b.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-neutral-400">{b.text}</p>
                   </div>
                 </Reveal>
               ))}
@@ -234,18 +234,18 @@ export default async function ForProvidersPage({
           {/* Bottom Provider Application CTA Card */}
           <div id="apply" className="scroll-mt-24">
             <Reveal className="mx-auto max-w-4xl">
-              <div className="bg-gradient-to-b from-blue-50/70 via-white to-blue-50/40 border border-blue-100 p-8 sm:p-14 rounded-3xl text-center relative overflow-hidden shadow-sm">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-blue-400/10 blur-3xl pointer-events-none" />
+              <div className="bg-[#0F1013] border border-[#26282D] p-8 sm:p-14 rounded-2xl text-center relative overflow-hidden shadow-sm">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-white/[0.02] blur-3xl pointer-events-none" />
 
-                <span className="text-xs font-bold uppercase tracking-widest text-primary bg-blue-50 border border-blue-200 px-4 py-1.5 rounded-full inline-block mb-5">
+                <span className="text-xs font-bold uppercase tracking-widest text-neutral-300 bg-[#16171B] border border-[#26282D] px-4 py-1.5 rounded-full inline-block mb-5">
                   {isAr ? 'طلب الانضمام للشراكة' : 'PROVIDER QUALIFICATION'}
                 </span>
 
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-900 font-heading leading-tight mb-4">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-4">
                   {isAr ? 'جاهز لتوسيع قاعدة عملائك المؤسسيين؟' : 'Ready to Scale Your Enterprise Pipeline?'}
                 </h2>
 
-                <p className="text-base sm:text-lg text-slate-600 font-normal leading-relaxed max-w-2xl mx-auto mb-8">
+                <p className="text-base sm:text-lg text-neutral-400 font-normal leading-relaxed max-w-2xl mx-auto mb-8">
                   {isAr
                     ? 'أكمل نموذج التأهيل وسيقوم فريق الشراكات بمراجعة بياناتك والتواصل معك خلال يومي عمل لبدء استقبال الفرص المؤكدة.'
                     : 'Complete our streamlined qualification form. Our partnerships team will review your profile and reach out within 2 business days to begin delivering verified demand.'}
@@ -254,7 +254,7 @@ export default async function ForProvidersPage({
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Link
                     href={`/${lang}/for-providers/apply`}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-transparent hover:bg-slate-900/5 text-slate-900 font-semibold text-base border border-slate-300 hover:border-slate-500 shadow-xs active:scale-[0.98] transition-all duration-200"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
                   >
                     <span>{isAr ? 'ابدأ طلب التأهيل للشراكة' : 'Apply for Provider Partnership'}</span>
                     <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
@@ -262,7 +262,7 @@ export default async function ForProvidersPage({
 
                   <a
                     href="#tiers"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-full bg-transparent hover:bg-slate-100 text-slate-700 hover:text-slate-900 font-semibold text-base border border-slate-200 shadow-xs transition-all duration-200"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-base border border-[#26282D] hover:border-white/20 shadow-xs transition-all duration-200"
                   >
                     <span>{isAr ? 'مراجعة معايير الفرص' : 'Review Opportunity Criteria'}</span>
                   </a>
