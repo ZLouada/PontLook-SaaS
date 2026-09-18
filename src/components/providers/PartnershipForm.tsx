@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CheckCircle2, Send } from 'lucide-react';
+import { Check, Send } from 'lucide-react';
 
 type PartnershipFormProps = {
   dict?: any;
@@ -153,7 +153,9 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
   if (isSubmitted) {
     return (
       <div className="bg-[#0F1013] border border-[#26282D] rounded-2xl sm:rounded-3xl text-center p-6 sm:p-14 shadow-2xl">
-        <CheckCircle2 size={48} className="mx-auto text-emerald-400" />
+        <div className="w-14 h-14 mx-auto rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4">
+          <Check size={28} />
+        </div>
         <h3 className="mt-5 text-2xl font-semibold text-white font-heading">{successTitle}</h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-neutral-400 font-sans">
           {successMessage}

@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 
 export default function HowItWorks() {
@@ -264,17 +264,15 @@ export default function HowItWorks() {
 
           {/* Checklist items */}
           <div className="space-y-1 pt-0.5 text-xs text-neutral-300">
-            <div className="flex items-center gap-2 p-1.5 sm:p-2 rounded-lg bg-[#16171B] border border-[#26282D]">
-              <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
-              <span className="truncate">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-[#16171B] border border-[#26282D]">
+              <span className="truncate block">
                 {isAr
                   ? 'صاحب القرار: رئيس الموارد البشرية التنفيذي'
                   : 'Decision Maker: Chief Human Resources Officer'}
               </span>
             </div>
-            <div className="flex items-center gap-2 p-1.5 sm:p-2 rounded-lg bg-[#16171B] border border-[#26282D]">
-              <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
-              <span className="truncate">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-[#16171B] border border-[#26282D]">
+              <span className="truncate block">
                 {isAr
                   ? 'الجدول الزمني المعتمد: خلال 30 يوماً'
                   : 'Timeline: Deployment within 30 days'}
@@ -332,8 +330,7 @@ export default function HowItWorks() {
                 {isAr ? 'لوحة التعاقد المباشر' : 'Direct Engagement Console'}
               </span>
             </div>
-            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-teal-400 text-[10px] font-medium">
-              <CheckCircle2 size={12} />
+            <div className="px-2 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-teal-400 text-[10px] font-medium">
               <span>{isAr ? 'تم التقديم' : 'Intro Complete'}</span>
             </div>
           </div>

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { CheckCircle2, Send, Loader2 } from 'lucide-react';
+import { Check, Send, Loader2 } from 'lucide-react';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 
 const schema = z.object({
@@ -92,7 +92,9 @@ export default function ContactForm() {
   if (submitted) {
     return (
       <div className="card text-center !p-6 sm:!p-12">
-        <CheckCircle2 size={48} className="mx-auto text-emerald-400" />
+        <div className="w-14 h-14 mx-auto rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4">
+          <Check size={28} />
+        </div>
         <h3 className="mt-5 text-2xl font-semibold text-white font-heading">{dict.contact.form.successTitle}</h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-neutral-400">
           {dict.contact.form.successMessage}

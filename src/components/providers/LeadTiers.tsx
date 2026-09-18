@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { useParams } from 'next/navigation';
 
@@ -534,10 +534,9 @@ export default function LeadTiers(_props?: {
                           </div>
                         </div>
 
-                        <ul className="space-y-2 sm:space-y-2.5 pt-1 text-xs text-neutral-300">
+                        <ul className="space-y-1.5 sm:space-y-2 pt-1 text-xs text-neutral-300">
                           {tier.checklist.map((item, cIdx) => (
-                            <li key={cIdx} className="flex items-center gap-2">
-                              <span className="flex-shrink-0 text-emerald-400 font-bold">✓</span>
+                            <li key={cIdx}>
                               <span>{item}</span>
                             </li>
                           ))}
@@ -692,10 +691,9 @@ export default function LeadTiers(_props?: {
                         </div>
                       </div>
 
-                      <ul className="space-y-2 pt-1 text-xs text-neutral-200">
+                      <ul className="space-y-1.5 pt-1 text-xs text-neutral-200">
                         {checklist.map((item: string, cIdx: number) => (
-                          <li key={cIdx} className="flex items-center gap-2">
-                            <CheckCircle2 size={14} className={`flex-shrink-0 ${theme.checkColor || 'text-emerald-400'}`} />
+                          <li key={cIdx}>
                             <span>{item}</span>
                           </li>
                         ))}

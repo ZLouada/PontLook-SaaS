@@ -9,7 +9,6 @@ import {
   Target,
   Briefcase,
   Building2,
-  CheckCircle2,
   ArrowRight,
   Layers,
   FileCheck2,
@@ -243,7 +242,6 @@ export default async function FindTrainingPage({
                 </span>
               </div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">
-                <CheckCircle2 size={15} className="text-emerald-400 shrink-0" />
                 <span className="font-medium text-neutral-300">
                   {isAr ? 'بدون رسائل تسويقية عشوائية' : 'Zero Vendor Spam'}
                 </span>

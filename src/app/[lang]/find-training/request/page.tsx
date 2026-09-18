@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowLeft, Building2, ShieldCheck, BadgeDollarSign, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Building2, ShieldCheck, BadgeDollarSign, Clock } from 'lucide-react';
 import MultiStepFunnel from '@/components/funnel/MultiStepFunnel';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
@@ -117,7 +117,7 @@ export default async function FindTrainingRequestPage({
               <span>{isAr ? 'صفر تكلفة للشركات' : '$0 Cost for Buyers'}</span>
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <CheckCircle2 size={15} className="text-emerald-400" />
+              <Clock size={15} className="text-white" />
               <span>{isAr ? 'عروض خلال 48 ساعة' : 'Proposals in 48 Hours'}</span>
             </span>
             <span className="inline-flex items-center gap-1.5">

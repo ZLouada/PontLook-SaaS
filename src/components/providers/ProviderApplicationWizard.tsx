@@ -5,7 +5,6 @@ import Link from 'next/link';
 import {
   ArrowRight,
   ArrowLeft,
-  CheckCircle2,
   Phone,
   Mail,
   Check,
@@ -327,7 +326,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-32 bg-blue-500/10 blur-3xl pointer-events-none" />
 
           <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 mb-6 shadow-sm">
-            <CheckCircle2 size={40} />
+            <Check size={36} />
           </div>
 
           <div className="inline-block px-3.5 py-1 rounded-full bg-[#16171B] border border-[#26282D] text-xs font-mono text-neutral-300 font-semibold uppercase tracking-wider mb-4">

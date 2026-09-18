@@ -7,7 +7,6 @@ import {
   Building2,
   Handshake,
   BookOpen,
-  CheckCircle2,
   ArrowRight,
   ExternalLink,
   X,
@@ -189,16 +188,13 @@ export default function WhyDifferent() {
             <ShieldCheck size={14} className="text-emerald-400 shrink-0" />
           </div>
           <div className="space-y-1.5 text-[11px] text-neutral-300 font-sans">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+            <div>
               <span>{c?.match?.check1 || (isAr ? 'متخصص في مجال عمل منشأتك' : 'Specialized in your industry')}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+            <div>
               <span>{c?.match?.check2 || (isAr ? 'سجل تدريبي موثق في المنطقة' : 'Verified delivery track record')}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+            <div>
               <span>{c?.match?.check3 || (isAr ? 'متوافق مع جدولك وميزانيتك' : 'Aligned with your timeline & budget')}</span>
             </div>
           </div>
@@ -613,17 +609,9 @@ export default function WhyDifferent() {
                           initial={{ opacity: 0, x: isAr ? 12 : -12 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.24 + pIdx * 0.06, type: 'spring', stiffness: 320, damping: 22 }}
-                          className="flex items-start gap-2"
+                          className="leading-snug"
                         >
-                          <m.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: [0, 1.3, 1] }}
-                            transition={{ delay: 0.26 + pIdx * 0.06, duration: 0.3 }}
-                            className="shrink-0 mt-0.5"
-                          >
-                            <CheckCircle2 size={13} className={activeCard.theme.checkColor} />
-                          </m.div>
-                          <span className="leading-snug">{point}</span>
+                          {point}
                         </m.li>
                       ))}
                     </ul>

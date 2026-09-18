@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  CheckCircle2,
   XCircle,
   ShieldCheck,
   ClipboardCheck,
@@ -198,18 +197,13 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
                 </h3>
 
                 {/* Soft Emerald Container with positive points */}
-                <div className="rounded-2xl bg-[#16171B] border border-emerald-900/30 p-5 sm:p-6 space-y-4">
+                <div className="rounded-2xl bg-[#16171B] border border-emerald-900/30 p-5 sm:p-6 space-y-3.5">
                   {pontlookPoints.map((point, idx) => (
-                    <div key={idx} className="flex items-start gap-3.5">
-                      <div className="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-500/20">
-                        <CheckCircle2 size={15} />
-                      </div>
-                      <div className="text-sm">
-                        <p className="font-semibold text-white">
-                          {point.title}:{' '}
-                          <span className="font-normal text-neutral-300">{point.desc}</span>
-                        </p>
-                      </div>
+                    <div key={idx} className="text-sm">
+                      <p className="font-semibold text-white">
+                        {point.title}:{' '}
+                        <span className="font-normal text-neutral-300">{point.desc}</span>
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -353,10 +347,9 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
                 </p>
 
                 {/* Checklist */}
-                <div className="space-y-3.5 mb-8">
+                <div className="space-y-2.5 mb-8">
                   {card.points.map((point, pIdx) => (
-                    <div key={pIdx} className="flex items-start gap-3 text-sm text-neutral-400">
-                      <CheckCircle2 size={18} className="text-emerald-400 shrink-0 mt-0.5" />
+                    <div key={pIdx} className="text-sm text-neutral-400">
                       <span>{point}</span>
                     </div>
                   ))}
@@ -698,16 +691,11 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
                   </div>
 
                   {/* 3 Checklist Deliverables */}
-                  <ul className="space-y-3 pt-2">
+                  <ul className="space-y-2.5 pt-2">
                     {currentStep.points.map((point, pIdx) => (
-                      <li key={pIdx} className="flex items-start gap-3 text-xs sm:text-sm">
-                        <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">
-                          <CheckCircle2 size={13} className="text-emerald-400" />
-                        </div>
-                        <div className="leading-snug font-sans">
-                          <span className="font-semibold text-white">{point.label}: </span>
-                          <span className="text-neutral-400">{point.text}</span>
-                        </div>
+                      <li key={pIdx} className="text-xs sm:text-sm leading-snug font-sans">
+                        <span className="font-semibold text-white">{point.label}: </span>
+                        <span className="text-neutral-400">{point.text}</span>
                       </li>
                     ))}
                   </ul>

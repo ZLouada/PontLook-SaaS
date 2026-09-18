@@ -8,7 +8,7 @@ import {
   Video,
   Layers,
   Globe,
-  CheckCircle2,
+  Sparkles,
   BookOpen,
   Check,
 } from 'lucide-react';
@@ -285,7 +285,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-2">
                       {opt.recommended ? (
-                        <CheckCircle2 size={16} className="text-white" />
+                        <Sparkles size={16} className="text-white" />
                       ) : (
                         <BookOpen size={16} className="text-neutral-500" />
                       )}

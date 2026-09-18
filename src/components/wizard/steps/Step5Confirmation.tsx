@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { m } from 'framer-motion';
 import {
-  CheckCircle2,
+  Check,
   Clock,
   MailCheck,
   ShieldCheck,
@@ -236,7 +236,7 @@ Thank you for choosing PontLook.com : The GCC Corporate Training Matchmaking Net
               <span>Preparing Report...</span>
             ) : downloadSuccess ? (
               <>
-                <CheckCircle2 size={16} className="text-emerald-400" />
+                <Check size={16} className="text-emerald-400" />
                 <span>Downloaded Successfully</span>
               </>
             ) : (

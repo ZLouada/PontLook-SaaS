@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import {
   ShieldCheck,
   Building2,
-  CheckCircle2,
   ArrowRight,
   FileText,
   ChevronRight,
@@ -252,7 +251,6 @@ export default async function SolutionLandingPage({ params }: PageProps) {
                   <span>{isAr ? 'مجاني 100% للشركات والمؤسسات' : '100% Free for Corporate Buyers'}</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <CheckCircle2 size={15} className="text-emerald-400 shrink-0" />
                   <span>{isAr ? 'بدون رسائل تسويقية عشوائية' : 'Zero Cold Vendor Spam'}</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
