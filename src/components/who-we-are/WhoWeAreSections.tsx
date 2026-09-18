@@ -12,7 +12,10 @@ import {
   GraduationCap,
   BarChart3,
   Workflow,
+  ArrowRight,
+  ArrowLeft,
 } from 'lucide-react';
+import { m, AnimatePresence } from 'framer-motion';
 
 interface WhoWeAreProps {
   lang?: 'en' | 'ar';
@@ -381,25 +384,56 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
 }
 
 /* ==========================================================================
-   SECTION 4: THE END-TO-END TRAINING JOURNEY (4-STEP LIGHT CARDS)
+   SECTION 4: THE END TO END TRAINING JOURNEY (UNIFIED MASTER CARD)
    ========================================================================== */
 export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
   const isAr = lang === 'ar';
+  const [activeStep, setActiveStep] = useState(0);
+
+  // Mobile swipe handling
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const minDistance = 50;
+    if (isAr) {
+      if (distance > minDistance) {
+        setActiveStep((prev) => (prev === 0 ? steps.length - 1 : prev - 1));
+      } else if (distance < -minDistance) {
+        setActiveStep((prev) => (prev + 1) % steps.length);
+      }
+    } else {
+      if (distance > minDistance) {
+        setActiveStep((prev) => (prev + 1) % steps.length);
+      } else if (distance < -minDistance) {
+        setActiveStep((prev) => (prev === 0 ? steps.length - 1 : prev - 1));
+      }
+    }
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
 
   const steps = [
     {
       num: '01',
+      navTitle: isAr ? '01 فجوة المهارات' : '01 Enterprise Need',
       step: isAr ? 'المرحلة 1: احتياج المؤسسة' : 'Stage 1: Enterprise Need',
       title: isAr ? 'فجوة مهارات مؤسسية وتشخيص' : 'Enterprise Skill Gap & Diagnostic',
       desc: isAr
         ? 'تحدد إدارة الموارد البشرية عجزاً تشغيلياً أو قيادياً حرجاً. استيعاب دقيق: حجم المجموعات، طريقة التنفيذ، المتطلبات بالرياض ودبي، والميزانية.'
         : 'HR identifies a critical operational or leadership deficiency. Deep intake: cohort sizing, delivery mode, Riyadh/Dubai onsite requirements, approved budget.',
       tag: isAr ? 'تم التحقق من النطاق والميزانية' : 'Scope & Budget Verified',
-      isLive: true,
       icon: ClipboardCheck,
-      iconBg: 'bg-blue-50 border-blue-100 text-primary group-hover:bg-primary group-hover:text-white group-hover:border-primary',
-      badgeColor: 'text-emerald-700 bg-emerald-50 border-emerald-200',
-      dotColor: 'bg-emerald-500',
+      iconColor: 'text-blue-400',
+      iconBg: 'bg-blue-600/20 text-blue-400 border-blue-500/30',
       points: [
         {
           label: isAr ? 'تم تصنيف الفجوة' : 'Deficiency Tagged',
@@ -417,17 +451,16 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
     },
     {
       num: '02',
-      step: isAr ? 'جسر الربط المحوري' : 'Stage 2: Focal Bridge',
+      navTitle: isAr ? '02 توفيق الخبراء' : '02 Specialist Match',
+      step: isAr ? 'المرحلة 2: جسر الربط المحوري' : 'Stage 2: Focal Bridge',
       title: isAr ? 'توفيق دقيق ومختار' : 'Curated Specialist Matchmaking',
       desc: isAr
         ? 'فرز ذكي وبشري يسلمك 2 إلى 3 خبراء معتمدين مع عروض متوافقة تماماً مع الميزانية. تتجاوز المؤسسة مكالمات المبيعات العشوائية وتقيّم الأنسب فوراً.'
         : 'AI + Human curation delivering 2 to 3 vetted specialists with budget aligned proposals. HR skips sales pitches and evaluates proven providers.',
       tag: isAr ? 'محرك بونت لوك المركزي' : 'PontLook Core Engine',
-      isLive: false,
       icon: Handshake,
-      iconBg: 'bg-indigo-50 border-indigo-100 text-indigo-700 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600',
-      badgeColor: 'text-blue-700 bg-blue-50 border-blue-200',
-      dotColor: 'bg-blue-500',
+      iconColor: 'text-indigo-400',
+      iconBg: 'bg-indigo-600/20 text-indigo-400 border-indigo-500/30',
       points: [
         {
           label: isAr ? 'عروض لنخبة المزودين' : '2 to 3 Vetted Specialists',
@@ -445,17 +478,16 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
     },
     {
       num: '03',
+      navTitle: isAr ? '03 تنفيذ مخصص' : '03 Tailored Rollout',
       step: isAr ? 'المرحلة 3: إطلاق سلس' : 'Stage 3: Seamless Rollout',
       title: isAr ? 'تنفيذ تدريبي مخصص وتأهيل' : 'Tailored Delivery Execution',
       desc: isAr
         ? 'توقيع التعاقد، مواءمة المناهج التدريبية، وبدء المدربين والخبراء. يركز مزودو التدريب بنسبة 100% على تقديم أعلى جودة وتفاعل.'
         : 'Contract execution, tailored curriculum, and facilitator onboarding. Providers focus 100% of their energy on high impact workshop delivery.',
       tag: isAr ? 'اكتمل التأهيل والبدء' : 'Onboarding Ready',
-      isLive: false,
       icon: GraduationCap,
-      iconBg: 'bg-teal-50 border-teal-100 text-teal-700 group-hover:bg-teal-600 group-hover:text-white group-hover:border-teal-600',
-      badgeColor: 'text-teal-700 bg-teal-50 border-teal-200',
-      dotColor: 'bg-teal-500',
+      iconColor: 'text-teal-400',
+      iconBg: 'bg-teal-600/20 text-teal-400 border-teal-500/30',
       points: [
         {
           label: isAr ? 'مواءمة المناهج التدريبية' : 'Tailored Curriculum',
@@ -473,17 +505,16 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
     },
     {
       num: '04',
+      navTitle: isAr ? '04 عائد موثق' : '04 Measurable ROI',
       step: isAr ? 'المرحلة 4: عائد موثق' : 'Stage 4: Verified ROI',
       title: isAr ? 'إغلاق فجوة المهارات وعائد استثماري' : 'Closed Skill Gap & Measurable ROI',
       desc: isAr
         ? 'ارتقاء ملموس بالكفاءات، تقييم موظفين دقيق، وعائد استثماري مستدام لإدارة الشركة. تم سد فجوة الكفاءة بنجاح.'
         : 'Measurable capability uplift, employee post evaluation, and sustained ROI delivered to executive leadership.',
       tag: isAr ? 'عائد استثماري ملموس' : 'Measurable ROI',
-      isLive: false,
       icon: BarChart3,
-      iconBg: 'bg-emerald-50 border-emerald-100 text-emerald-700 group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600',
-      badgeColor: 'text-emerald-700 bg-emerald-50 border-emerald-200',
-      dotColor: 'bg-emerald-500',
+      iconColor: 'text-emerald-400',
+      iconBg: 'bg-emerald-600/20 text-emerald-400 border-emerald-500/30',
       points: [
         {
           label: isAr ? 'ارتقاء ملموس بالكفاءات' : 'Measurable Capability Uplift',
@@ -501,20 +532,22 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
     },
   ];
 
+  const currentStep = steps[activeStep] || steps[0];
+
   return (
     <section
-      className="relative overflow-hidden bg-[#08090A] text-white py-24 sm:py-32"
+      className="relative overflow-hidden bg-[#08090A] text-white py-20 sm:py-28"
       aria-labelledby="journey-title"
     >
-      {/* Dynamic Ambient Background Glows (Light Mode) */}
+      {/* Dynamic Ambient Background Glows */}
       <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 h-[550px] w-[1000px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(0,82,255,0.04),transparent_70%)] blur-[140px]" />
       <div className="pointer-events-none absolute bottom-1/4 end-10 h-[380px] w-[450px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.04),transparent_70%)] blur-[100px]" />
 
-      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5">
-            <Workflow size={14} className="text-blue-600" />
+            <Workflow size={14} className="text-blue-500" />
             <span>{isAr ? 'آلية العمل خطوة بخطوة' : 'HOW IT WORKS IN PRACTICE'}</span>
           </div>
 
@@ -525,97 +558,167 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
             {isAr ? (
               <>
                 رحلة التدريب المتكاملة <br className="hidden sm:inline" />
-                <span className="text-primary font-bold">من البداية حتى قياس الأثر</span>
+                <span className="text-blue-400 font-bold">من البداية حتى قياس الأثر</span>
               </>
             ) : (
               <>
                 The End to End <br className="hidden sm:inline" />
-                <span className="text-primary font-bold">Training Journey</span>
+                <span className="text-blue-400 font-bold">Training Journey</span>
               </>
             )}
           </h2>
 
-          <p className="text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-normal">
+          <p className="text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-normal font-sans">
             {isAr
               ? 'جسر شفاف وسلس يربط الاحتياج التدريبي المشخص بالحلول العملية ذات العائد الاستثماري القابل للقياس.'
               : 'A seamless, transparent bridge from diagnosed skill deficit to measurable business impact.'}
           </p>
         </div>
 
-        {/* 2x2 Grid of Pure Light Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
-          {steps.map((step, idx) => (
-            <div
-              key={idx}
-              className="relative rounded-3xl border border-[#26282D] bg-[#0F1013] hover:border-white/30 p-6 sm:p-8 lg:p-9 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-xl text-white group overflow-hidden"
-            >
-              {/* Ambient Corner Glow on Hover */}
-              <div
-                className="absolute -top-20 -end-20 w-52 h-52 bg-gradient-to-bl from-blue-500/[0.04] via-transparent to-transparent rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform duration-500"
-              />
+        {/* 4-Step Segmented Navigation Header (Touch-optimized) */}
+        <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-6 sm:mb-8 w-full max-w-4xl mx-auto overflow-x-auto scrollbar-none py-1">
+          {steps.map((s, idx) => {
+            const isActive = activeStep === idx;
+            return (
+              <button
+                key={s.num}
+                type="button"
+                onClick={() => setActiveStep(idx)}
+                className={`group relative flex-1 min-w-[130px] sm:min-w-0 flex items-center justify-center gap-2 py-2.5 sm:py-3 px-3 sm:px-4 rounded-2xl border transition-all duration-200 text-xs font-medium cursor-pointer active:scale-95 ${
+                  isActive
+                    ? 'bg-white/[0.08] text-white border-white/30 shadow-lg'
+                    : 'bg-[#0F1013] text-neutral-400 border-[#26282D] hover:border-white/20 hover:text-neutral-200'
+                }`}
+              >
+                <span className={`text-[11px] font-mono font-bold ${isActive ? 'text-blue-400' : 'text-neutral-500'}`}>
+                  {s.num}
+                </span>
+                <span className="truncate">
+                  {s.navTitle}
+                </span>
+                {isActive && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse shrink-0" />
+                )}
+              </button>
+            );
+          })}
+        </div>
 
-              <div>
-                {/* Card Top Header: Step Number, Icon, and Tag */}
-                <div className="flex items-center justify-between gap-4 mb-6 relative z-10">
-                  <div className="flex items-center gap-3.5">
-                    <div
-                      className={`w-12 h-12 rounded-2xl border flex items-center justify-center shadow-xs transition-all duration-300 ${step.iconBg}`}
-                    >
-                      <step.icon size={22} className="transition-transform duration-300 group-hover:scale-110" />
-                    </div>
-                    <div>
-                      <span className="text-xs font-bold text-primary uppercase tracking-wider block">
-                        {step.step}
-                      </span>
-                      <span className="text-[11px] font-medium text-neutral-400">
-                        STEP {step.num}
-                      </span>
-                    </div>
+        {/* Unified Master Card Container (Houses the entire 4-stage journey in ONE card) */}
+        <div
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          className="relative rounded-3xl border border-[#26282D] bg-[#0F1013] p-6 sm:p-10 lg:p-12 shadow-2xl overflow-hidden text-white transition-all duration-300"
+        >
+          {/* Ambient Corner Glow */}
+          <div className="absolute -top-24 -end-24 w-72 h-72 bg-gradient-to-bl from-blue-500/[0.06] via-purple-500/[0.03] to-transparent rounded-full blur-3xl pointer-events-none" />
+
+          <AnimatePresence mode="wait">
+            <m.div
+              key={currentStep.num}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10"
+            >
+              {/* Left Column: Stage Metadata, Title, Description & Step Controls */}
+              <div className="lg:col-span-6 space-y-5">
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] text-xs font-semibold text-white">
+                    <currentStep.icon size={15} className={currentStep.iconColor} />
+                    <span>{currentStep.step}</span>
+                    <span className="text-neutral-500 font-mono">· {currentStep.num}</span>
                   </div>
 
-                  <span
-                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide border ${step.badgeColor}`}
-                  >
-                    <span
-                      className={`w-1.5 h-1.5 rounded-full ${step.dotColor} ${
-                        step.isLive ? 'animate-pulse' : ''
-                      }`}
-                    />
-                    <span>{step.tag}</span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>{currentStep.tag}</span>
                   </span>
                 </div>
 
-                {/* Title */}
-                <h3 className="text-xl sm:text-2xl font-bold text-white font-heading tracking-tight mb-3 group-hover:text-primary transition-colors relative z-10">
-                  {step.title}
+                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white font-heading tracking-tight leading-tight">
+                  {currentStep.title}
                 </h3>
 
-                {/* Description */}
-                <p className="text-sm text-neutral-400 leading-relaxed mb-6 font-normal relative z-10">
-                  {step.desc}
+                <p className="text-sm sm:text-base text-neutral-300 leading-relaxed font-sans font-normal">
+                  {currentStep.desc}
                 </p>
+
+                {/* Directional Step Navigation */}
+                <div className="pt-3 flex items-center gap-3">
+                  <button
+                    type="button"
+                    disabled={activeStep === 0}
+                    onClick={() => setActiveStep((prev) => Math.max(prev - 1, 0))}
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-medium bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 hover:text-white border border-[#26282D] disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer active:scale-95 font-sans"
+                  >
+                    <ArrowLeft size={14} className="rtl:-scale-x-100" />
+                    <span>{isAr ? 'المرحلة السابقة' : 'Previous Stage'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    disabled={activeStep === steps.length - 1}
+                    onClick={() => setActiveStep((prev) => Math.min(prev + 1, steps.length - 1))}
+                    className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-medium bg-white/[0.08] hover:bg-white/[0.14] text-white border border-white/20 hover:border-white/30 transition-all cursor-pointer active:scale-95 shadow-sm font-sans"
+                  >
+                    <span>{isAr ? 'المرحلة التالية' : 'Next Stage'}</span>
+                    <ArrowRight size={14} className="rtl:-scale-x-100" />
+                  </button>
+                </div>
               </div>
 
-              {/* Deliverables / Checklist in dedicated micro-panel */}
-              <div className="rounded-2xl bg-[#16171B]/80 border border-[#26282D]/70 p-4 sm:p-5 space-y-3 group-hover:border-white/20 transition-colors mt-2 relative z-10">
-                {step.points.map((point, pIdx) => (
-                  <div key={pIdx} className="flex items-start gap-3 text-xs sm:text-sm text-neutral-300">
-                    <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">
-                      <CheckCircle2 size={13} className="text-emerald-400" />
+              {/* Right Column: Deliverables & Verification Console */}
+              <div className="lg:col-span-6">
+                <div className="rounded-2xl bg-[#16171B] border border-[#26282D] p-5 sm:p-6 space-y-4 shadow-xl">
+                  {/* Console Top Bar */}
+                  <div className="flex items-center justify-between pb-3 border-b border-[#26282D]">
+                    <div className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-sans">
+                      {isAr ? 'مخرجات المرحلة والتحقق المعتمد' : 'Key Deliverables & Verification'}
                     </div>
-                    <div>
-                      <span className="font-semibold text-white">{point.label}: </span>
-                      <span className="font-normal text-neutral-400">{point.text}</span>
+                    <div className="text-xs font-bold text-blue-400 font-mono">
+                      {activeStep + 1} / {steps.length}
                     </div>
                   </div>
-                ))}
+
+                  {/* Progress Gauge */}
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between text-[11px] text-neutral-400 font-sans">
+                      <span>{isAr ? 'مستوى تقدم رحلة التدريب' : 'Journey Progress'}</span>
+                      <span className="font-semibold text-white">{((activeStep + 1) / steps.length) * 100}%</span>
+                    </div>
+                    <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-blue-500 to-emerald-400 rounded-full transition-all duration-500"
+                        style={{ width: `${((activeStep + 1) / steps.length) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* 3 Checklist Deliverables */}
+                  <ul className="space-y-3 pt-2">
+                    {currentStep.points.map((point, pIdx) => (
+                      <li key={pIdx} className="flex items-start gap-3 text-xs sm:text-sm">
+                        <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">
+                          <CheckCircle2 size={13} className="text-emerald-400" />
+                        </div>
+                        <div className="leading-snug font-sans">
+                          <span className="font-semibold text-white">{point.label}: </span>
+                          <span className="text-neutral-400">{point.text}</span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </div>
-          ))}
+            </m.div>
+          </AnimatePresence>
         </div>
 
         {/* Micro-CTA Footer */}
-        <div className="mt-16 pt-8 border-t border-[#26282D]/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-neutral-400">
+        <div className="mt-14 pt-8 border-t border-[#26282D]/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-neutral-400">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             <span>
@@ -625,14 +728,14 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
             </span>
             <Link
               href={`/${lang}/find-training`}
-              className="text-white hover:text-primary font-semibold underline underline-offset-4 ms-1 transition-colors"
+              className="text-white hover:text-blue-400 font-semibold underline underline-offset-4 ms-1 transition-colors"
             >
               {isAr ? 'سجل احتياجك التدريبي مجاناً ←' : 'Post a Training Need →'}
             </Link>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-primary" />
+            <span className="w-2 h-2 rounded-full bg-blue-500" />
             <span>
               {isAr
                 ? 'هل أنت مركز تدريب مؤسسي معتمد؟'
@@ -640,7 +743,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
             </span>
             <Link
               href={`/${lang}/for-providers`}
-              className="text-white hover:text-primary font-semibold underline underline-offset-4 ms-1 transition-colors"
+              className="text-white hover:text-blue-400 font-semibold underline underline-offset-4 ms-1 transition-colors"
             >
               {isAr ? 'انضم كشريك تدريب معتمد ←' : 'Apply as an Approved Provider →'}
             </Link>
