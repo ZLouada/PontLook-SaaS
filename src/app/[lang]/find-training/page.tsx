@@ -6,8 +6,6 @@ import SectionHeading from '@/components/shared/SectionHeading';
 import {
   BadgeCheck,
   BadgeDollarSign,
-  Target,
-  Sparkles,
   ArrowRight,
   SlidersHorizontal,
   Scale,
@@ -117,42 +115,6 @@ const howItWorksStepsAr = [
   },
 ];
 
-const keyAdvantagesEn = [
-  {
-    icon: Target,
-    title: 'Precise Enterprise Domain Matching',
-    text: 'We match your workforce transformation KPIs directly with specialized providers in Riyadh, Dubai, Abu Dhabi, and Doha who have delivered verified outcomes.',
-  },
-  {
-    icon: BadgeCheck,
-    title: 'Vetted Faculty & Accreditations',
-    text: 'Every training provider in our network undergoes rigorous vetting for instructor credentials, client references, and local regulatory compliance.',
-  },
-  {
-    icon: Sparkles,
-    title: 'Zero Obligation & Zero Cost',
-    text: 'Our matchmaking service is 100% free for hiring companies. Review detailed proposals and interview lead facilitators with zero commitment.',
-  },
-];
-
-const keyAdvantagesAr = [
-  {
-    icon: Target,
-    title: 'مطابقة دقيقة لمتطلبات المنشآت الإقليمية',
-    text: 'نربط أهدافك ومؤشرات أدائك التدريبية مباشرة مع مزودي تدريب في الرياض ودبي وأبوظبي والدوحة حققوا نتائج موثوقة.',
-  },
-  {
-    icon: BadgeCheck,
-    title: 'مدربون معتمدون ومراجع موثوقة',
-    text: 'يخضع كل مزود تدريب في شبكتنا لفحص صارم لاعتمادات المدربين، ومراجع العملاء السابقة، والتوافق التنظيمي المحلي.',
-  },
-  {
-    icon: Sparkles,
-    title: 'مجاني تماماً وبدون أي التزام',
-    text: 'خدمة الربط والترشيح مجانية 100% للجهات الطالبة للتدريب. راجع العروض التفصيلية وقابل مسؤولي البرامج بحرية كاملة.',
-  },
-];
-
 export default async function FindTrainingPage({
   params,
 }: {
@@ -163,7 +125,6 @@ export default async function FindTrainingPage({
   const isAr = lang === 'ar';
 
   const trustMetrics = isAr ? trustMetricsAr : trustMetricsEn;
-  const keyAdvantages = isAr ? keyAdvantagesAr : keyAdvantagesEn;
   const steps = isAr ? howItWorksStepsAr : howItWorksStepsEn;
 
   return (
@@ -292,37 +253,6 @@ export default async function FindTrainingPage({
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-neutral-400 font-normal">
                       {st.desc}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-
-          {/* Key Advantages Section */}
-          <div>
-            <SectionHeading
-              eyebrow={isAr ? 'لماذا بونت لوك' : 'Why PontLook'}
-              title={isAr ? 'كيف تستفيد كبرى المنشآت والشركات' : 'How Leading Enterprises Benefit'}
-              subtitle={
-                isAr
-                  ? 'مصمم خصيصاً لتلبية معايير المشتريات المؤسسية وتطوير رأس المال البشري بأعلى معايير الدقة.'
-                  : 'Designed specifically for enterprise procurement standards and high impact human capital development.'
-              }
-            />
-
-            <div className="mt-10 sm:mt-12 grid gap-6 md:grid-cols-3">
-              {keyAdvantages.map((adv, i) => (
-                <Reveal key={adv.title} delay={i * 0.1}>
-                  <div className="group flex h-full flex-col rounded-2xl border border-[#26282D] bg-[#0F1013] p-7 sm:p-8 shadow-xl shadow-black/40 transition-all hover:border-white/20">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/10 text-white shadow-sm transition-transform duration-200 group-hover:scale-105 group-hover:border-white/20">
-                      <adv.icon size={22} strokeWidth={1.75} />
-                    </div>
-                    <h3 className="mt-5 text-lg font-semibold text-white font-heading">
-                      {adv.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-neutral-400 font-normal">
-                      {adv.text}
                     </p>
                   </div>
                 </Reveal>
