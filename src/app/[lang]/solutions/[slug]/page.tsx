@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
-  ShieldCheck,
+  BadgeCheck,
   Building2,
   ArrowRight,
   FileText,
@@ -10,6 +10,8 @@ import {
   Zap,
   BadgeDollarSign,
   Quote,
+  SlidersHorizontal,
+  Scale,
 } from 'lucide-react';
 import { Locale } from '@/i18n';
 import { SEO_LANDING_PAGES, ALL_SOLUTION_SLUGS } from '@/data/seoLandingPages';
@@ -238,7 +240,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
                   variant="secondary"
                   size="lg"
                   className="w-full sm:w-auto py-3.5 px-6 justify-center min-h-[48px]"
-                  leftIcon={<ShieldCheck size={16} />}
+                  leftIcon={<BadgeCheck size={16} strokeWidth={1.75} />}
                 >
                   {isAr ? 'انضم كمركز تدريب معتمد' : "I'm a Training Provider"}
                 </Button>
@@ -247,14 +249,14 @@ export default async function SolutionLandingPage({ params }: PageProps) {
               {/* Trust Checkmarks */}
               <div className="mt-8 flex flex-wrap items-center justify-center gap-5 sm:gap-7 text-xs font-medium text-neutral-400">
                 <span className="inline-flex items-center gap-1.5">
-                  <BadgeDollarSign size={15} className="text-neutral-400 shrink-0" />
+                  <BadgeDollarSign size={15} strokeWidth={1.75} className="text-neutral-400 shrink-0" />
                   <span>{isAr ? 'مجاني 100% للشركات والمؤسسات' : '100% Free for Corporate Buyers'}</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <span>{isAr ? 'بدون رسائل تسويقية عشوائية' : 'Zero Cold Vendor Spam'}</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <ShieldCheck size={15} className="text-neutral-400 shrink-0" />
+                  <BadgeCheck size={15} strokeWidth={1.75} className="text-neutral-400 shrink-0" />
                   <span>{isAr ? 'تأكيد هوية واختيار دقيق' : 'Verified Decision Maker Privacy'}</span>
                 </span>
               </div>
@@ -351,21 +353,30 @@ export default async function SolutionLandingPage({ params }: PageProps) {
             />
 
             <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-              {content.workflow.map((item, i) => (
-                <Reveal key={item.step} delay={i * 0.1}>
-                  <div className="relative h-full flex flex-col rounded-2xl sm:rounded-3xl border border-[#26282D] bg-[#0F1013] p-6 sm:p-8 hover:border-white/20 transition-all">
-                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#16171B] border border-[#26282D] text-white font-bold text-sm mb-5">
-                      {item.step}
+              {content.workflow.map((item, i) => {
+                const stepIcons = [SlidersHorizontal, BadgeCheck, Scale];
+                const StepIcon = stepIcons[i] || BadgeCheck;
+                return (
+                  <Reveal key={item.step} delay={i * 0.1}>
+                    <div className="group relative h-full flex flex-col rounded-2xl sm:rounded-3xl border border-[#26282D] bg-[#0F1013] p-6 sm:p-8 hover:border-white/20 transition-all shadow-xl shadow-black/40">
+                      <div className="flex items-center justify-between mb-5">
+                        <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/10 text-white shadow-sm transition-transform duration-200 group-hover:scale-105 group-hover:border-white/20">
+                          <StepIcon size={20} strokeWidth={1.75} />
+                        </span>
+                        <span className="text-xl font-mono font-bold text-neutral-500 tracking-wider">
+                          {item.step}
+                        </span>
+                      </div>
+                      <h3 className="font-heading text-lg font-semibold text-white leading-snug">
+                        {item.title}
+                      </h3>
+                      <p className="mt-3 text-xs sm:text-sm text-neutral-400 leading-relaxed flex-1 font-normal">
+                        {item.desc}
+                      </p>
                     </div>
-                    <h3 className="font-heading text-lg font-semibold text-white leading-snug">
-                      {item.title}
-                    </h3>
-                    <p className="mt-3 text-xs sm:text-sm text-neutral-400 leading-relaxed flex-1">
-                      {item.desc}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
+                  </Reveal>
+                );
+              })}
             </div>
           </div>
         </section>

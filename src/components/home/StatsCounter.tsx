@@ -65,8 +65,8 @@ export default function StatsCounter() {
                 className="transform-gpu will-change-transform"
               >
                 <div className="h-full flex flex-col items-start p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-[#26282D] bg-[#0F1013] hover:border-white/20 transition-all duration-300 shadow-2xl">
-                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-[#16171B] text-white mb-4 sm:mb-6 border border-[#26282D]">
-                    <Icon size={20} className="sm:w-[22px] sm:h-[22px]" />
+                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] text-white mb-4 sm:mb-6 border border-white/10 shadow-sm">
+                    <Icon size={20} strokeWidth={1.75} className="sm:w-[22px] sm:h-[22px]" />
                   </div>
                   <Counter end={s.end} suffix={s.suffix} />
                   <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm font-normal text-neutral-400 tracking-normal leading-snug">

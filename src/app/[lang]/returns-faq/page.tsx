@@ -202,8 +202,8 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
                 <Reveal key={index} delay={index * 0.08}>
                   <div className="p-6 rounded-2xl bg-[#0F1013] border border-[#26282D] h-full flex flex-col justify-between hover:border-white/20 transition-all">
                     <div>
-                      <div className="w-10 h-10 rounded-xl bg-[#16171B] border border-[#26282D] text-white flex items-center justify-center mb-4">
-                        <Icon size={20} />
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/10 text-white flex items-center justify-center mb-4 shadow-sm">
+                        <Icon size={20} strokeWidth={1.75} />
                       </div>
                       <h3 className="text-base font-semibold text-white mb-2 font-heading">{item.title}</h3>
                       <p className="text-xs text-neutral-400 leading-relaxed font-sans">{item.desc}</p>

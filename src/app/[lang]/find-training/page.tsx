@@ -4,14 +4,14 @@ import Link from 'next/link';
 import Reveal from '@/components/shared/Reveal';
 import SectionHeading from '@/components/shared/SectionHeading';
 import {
-  ShieldCheck,
+  BadgeCheck,
   BadgeDollarSign,
   Target,
-  Briefcase,
+  Sparkles,
   Building2,
   ArrowRight,
-  Layers,
-  FileCheck2,
+  SlidersHorizontal,
+  Scale,
   ChevronDown,
 } from 'lucide-react';
 import { Locale, i18n } from '@/i18n/config';
@@ -79,19 +79,19 @@ const trustMetricsAr = [
 const howItWorksStepsEn = [
   {
     step: '01',
-    icon: Layers,
+    icon: SlidersHorizontal,
     title: 'Specify Training Needs',
     desc: 'Define your targeted skills, delivery mode, city, and cohort size in our 60 second interactive questionnaire.',
   },
   {
     step: '02',
-    icon: ShieldCheck,
+    icon: BadgeCheck,
     title: 'Matching & Faculty Vetting',
     desc: 'Our matching desk screens 120+ accredited providers to select facilitators with verified enterprise outcomes.',
   },
   {
     step: '03',
-    icon: FileCheck2,
+    icon: Scale,
     title: 'Compare Itemized Proposals',
     desc: 'Receive 2 to 3 tailored proposals within 48 hours with custom syllabi, transparent pricing, and zero purchase obligation.',
   },
@@ -100,19 +100,19 @@ const howItWorksStepsEn = [
 const howItWorksStepsAr = [
   {
     step: '01',
-    icon: Layers,
+    icon: SlidersHorizontal,
     title: 'حدد المتطلبات والاحتياج',
     desc: 'حدد المهارات المستهدفة، وأسلوب التدريب، والمدينة، وحجم الفريق في نموذج تفاعلي يستغرق 60 ثانية فقط.',
   },
   {
     step: '02',
-    icon: ShieldCheck,
+    icon: BadgeCheck,
     title: 'المطابقة والتحقق من المدربين',
     desc: 'يفحص فريقنا أكثر من 120 مزود تدريب معتمد لاختيار أفضل المدربين أصحاب السجلات والإنجازات الموثوقة.',
   },
   {
     step: '03',
-    icon: FileCheck2,
+    icon: Scale,
     title: 'استلم وقارن العروض',
     desc: 'استلم من 2 إلى 3 عروض مفصلة خلال 48 ساعة متضمنة خطط البرامج والتكاليف الشفافة، وبدون أي التزام بالشراء.',
   },
@@ -125,12 +125,12 @@ const keyAdvantagesEn = [
     text: 'We match your workforce transformation KPIs directly with specialized providers in Riyadh, Dubai, Abu Dhabi, and Doha who have delivered verified outcomes.',
   },
   {
-    icon: ShieldCheck,
+    icon: BadgeCheck,
     title: 'Vetted Faculty & Accreditations',
     text: 'Every training provider in our network undergoes rigorous vetting for instructor credentials, client references, and local regulatory compliance.',
   },
   {
-    icon: Briefcase,
+    icon: Sparkles,
     title: 'Zero Obligation & Zero Cost',
     text: 'Our matchmaking service is 100% free for hiring companies. Review detailed proposals and interview lead facilitators with zero commitment.',
   },
@@ -143,12 +143,12 @@ const keyAdvantagesAr = [
     text: 'نربط أهدافك ومؤشرات أدائك التدريبية مباشرة مع مزودي تدريب في الرياض ودبي وأبوظبي والدوحة حققوا نتائج موثوقة.',
   },
   {
-    icon: ShieldCheck,
+    icon: BadgeCheck,
     title: 'مدربون معتمدون ومراجع موثوقة',
     text: 'يخضع كل مزود تدريب في شبكتنا لفحص صارم لاعتمادات المدربين، ومراجع العملاء السابقة، والتوافق التنظيمي المحلي.',
   },
   {
-    icon: Briefcase,
+    icon: Sparkles,
     title: 'مجاني تماماً وبدون أي التزام',
     text: 'خدمة الربط والترشيح مجانية 100% للجهات الطالبة للتدريب. راجع العروض التفصيلية وقابل مسؤولي البرامج بحرية كاملة.',
   },
@@ -247,7 +247,7 @@ export default async function FindTrainingPage({
                 </span>
               </div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">
-                <ShieldCheck size={15} className="text-white shrink-0" />
+                <BadgeCheck size={15} className="text-white shrink-0" />
                 <span className="font-medium text-neutral-300">
                   {isAr ? 'خصوصية تامة لصناع القرار' : 'Verified Decision Maker Privacy'}
                 </span>
@@ -288,12 +288,12 @@ export default async function FindTrainingPage({
             <div className="mt-10 sm:mt-12 grid gap-6 md:grid-cols-3">
               {steps.map((st, i) => (
                 <Reveal key={st.step} delay={i * 0.1}>
-                  <div className="h-full flex flex-col p-7 sm:p-8 bg-[#0F1013] border border-[#26282D] rounded-2xl hover:border-white/20 transition-all duration-300">
+                  <div className="group h-full flex flex-col p-7 sm:p-8 bg-[#0F1013] border border-[#26282D] rounded-2xl hover:border-white/20 transition-all duration-300 shadow-xl shadow-black/40">
                     <div className="flex items-center justify-between mb-5">
-                      <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#16171B] border border-[#26282D] text-white">
-                        <st.icon size={22} />
+                      <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/10 text-white shadow-sm transition-transform duration-200 group-hover:scale-105 group-hover:border-white/20">
+                        <st.icon size={22} strokeWidth={1.75} />
                       </span>
-                      <span className="text-2xl font-mono font-bold text-neutral-600">
+                      <span className="text-2xl font-mono font-bold text-neutral-500 tracking-wider">
                         {st.step}
                       </span>
                     </div>
@@ -324,9 +324,9 @@ export default async function FindTrainingPage({
             <div className="mt-10 sm:mt-12 grid gap-6 md:grid-cols-3">
               {keyAdvantages.map((adv, i) => (
                 <Reveal key={adv.title} delay={i * 0.1}>
-                  <div className="flex h-full flex-col rounded-2xl border border-[#26282D] bg-[#0F1013] p-7 sm:p-8 shadow-sm transition-all hover:border-white/20">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#16171B] border border-[#26282D] text-white">
-                      <adv.icon size={24} />
+                  <div className="group flex h-full flex-col rounded-2xl border border-[#26282D] bg-[#0F1013] p-7 sm:p-8 shadow-xl shadow-black/40 transition-all hover:border-white/20">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/10 text-white shadow-sm transition-transform duration-200 group-hover:scale-105 group-hover:border-white/20">
+                      <adv.icon size={22} strokeWidth={1.75} />
                     </div>
                     <h3 className="mt-5 text-lg font-semibold text-white font-heading">
                       {adv.title}

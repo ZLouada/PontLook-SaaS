@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import {
   Target,
-  ShieldCheck,
+  BadgeCheck,
   Building2,
   Handshake,
   BookOpen,
@@ -152,11 +152,11 @@ export default function WhyDifferent() {
       ),
     },
 
-    // Card 2: Matched Directly with the Right Training Partner (ShieldCheck icon)
+    // Card 2: Matched Directly with the Right Training Partner (BadgeCheck icon)
     {
       id: 'match',
       index: '02',
-      icon: ShieldCheck,
+      icon: BadgeCheck,
       badge: isAr ? 'المطابقة المباشرة' : 'Direct Matching',
       title: c?.match?.title || (isAr ? 'ربط مباشر مع الشريك التدريبي الأنسب' : 'Matched Directly with the Right Training Partner'),
       angle: isAr ? 'بدون عروض تسويقية مزعجة' : 'Zero Cold Sales Pitches',
@@ -185,7 +185,7 @@ export default function WhyDifferent() {
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
           <div className="text-xs font-semibold text-white pb-1.5 border-b border-[#26282D] flex items-center justify-between font-sans">
             <span>{c?.match?.mockupHeader || (isAr ? 'قائمة معايير توافق الشريك' : 'Partner Fit Checklist')}</span>
-            <ShieldCheck size={14} className="text-emerald-400 shrink-0" />
+            <BadgeCheck size={14} className="text-emerald-400 shrink-0" />
           </div>
           <div className="space-y-1.5 text-[11px] text-neutral-300 font-sans">
             <div>
@@ -468,7 +468,7 @@ export default function WhyDifferent() {
                   {/* Card Front Bottom */}
                   <div className="pt-2 border-t border-[#26282D] flex items-center justify-between">
                     <div className={`h-8 w-8 rounded-lg ${theme.iconBg} flex items-center justify-center font-bold text-white transition-transform duration-200 group-hover:scale-105`}>
-                      <Icon size={16} />
+                      <Icon size={16} strokeWidth={1.75} />
                     </div>
 
                     <div className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-300 group-hover:text-white transition-colors duration-200">

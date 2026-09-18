@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ShieldCheck, Building2, BookOpen, Globe2 } from 'lucide-react';
+import { BadgeCheck, Building2, Compass, Globe } from 'lucide-react';
 import { m } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { useParams } from 'next/navigation';
@@ -15,7 +15,7 @@ export default function TrustBar() {
 
   const values = [
     {
-      icon: ShieldCheck,
+      icon: BadgeCheck,
       title: dict.trust_bar?.needs?.title || 'Verified Needs',
       desc: dict.trust_bar?.needs?.desc || 'Enterprise L&D requests verified directly with HR leaders',
       badge: isAr ? 'طلب موثق' : 'Verified Demand',
@@ -27,13 +27,13 @@ export default function TrustBar() {
       badge: isAr ? 'تواصل مباشر' : 'Direct Link',
     },
     {
-      icon: BookOpen,
+      icon: Compass,
       title: dict.trust_bar?.insights?.title || 'Actionable L&D guides & insights',
       desc: dict.trust_bar?.insights?.desc || 'Benchmarking and curated market intelligence',
       badge: isAr ? 'أبحاث حصرية' : 'Market Intel',
     },
     {
-      icon: Globe2,
+      icon: Globe,
       title: dict.trust_bar?.gcc?.title || 'Regional Focus',
       desc: dict.trust_bar?.gcc?.desc || 'Saudi Arabia, UAE and GCC focused enterprise landscape',
       badge: isAr ? 'السعودية والإمارات' : 'KSA & UAE',
@@ -85,9 +85,9 @@ export default function TrustBar() {
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                   {/* Icon container */}
-                  <div className="relative flex h-10 w-10 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl bg-transparent text-white border border-white/10 group-hover:border-white/25 transition-all duration-300">
-                    <Icon size={19} className="sm:hidden" />
-                    <Icon size={26} className="hidden sm:block" />
+                  <div className="relative flex h-10 w-10 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] text-white border border-white/10 group-hover:border-white/25 shadow-sm transition-all duration-300">
+                    <Icon size={19} strokeWidth={1.75} className="sm:hidden" />
+                    <Icon size={24} strokeWidth={1.75} className="hidden sm:block" />
                   </div>
 
                   {/* Content */}

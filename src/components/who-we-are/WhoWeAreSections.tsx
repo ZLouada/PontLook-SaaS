@@ -5,11 +5,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {
   XCircle,
-  ShieldCheck,
-  ClipboardCheck,
+  BadgeCheck,
+  SlidersHorizontal,
   Handshake,
   GraduationCap,
-  BarChart3,
+  TrendingUp,
   Workflow,
   ArrowRight,
   ArrowLeft,
@@ -279,7 +279,7 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5">
-            <ShieldCheck size={14} className="text-blue-600" />
+            <BadgeCheck size={14} strokeWidth={1.75} className="text-blue-400" />
             <span>{isAr ? 'تسعير شفاف ومواءمة مصالح حقيقية' : 'TRANSPARENT PRICING & INCENTIVE ALIGNMENT'}</span>
           </div>
 
@@ -424,7 +424,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
         ? 'تحدد إدارة الموارد البشرية عجزاً تشغيلياً أو قيادياً حرجاً. استيعاب دقيق: حجم المجموعات، طريقة التنفيذ، المتطلبات بالرياض ودبي، والميزانية.'
         : 'HR identifies a critical operational or leadership deficiency. Deep intake: cohort sizing, delivery mode, Riyadh/Dubai onsite requirements, approved budget.',
       tag: isAr ? 'تم التحقق من النطاق والميزانية' : 'Scope & Budget Verified',
-      icon: ClipboardCheck,
+      icon: SlidersHorizontal,
       iconColor: 'text-blue-400',
       iconBg: 'bg-blue-600/20 text-blue-400 border-blue-500/30',
       points: [
@@ -451,7 +451,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
         ? 'فرز ذكي وبشري يسلمك 2 إلى 3 خبراء معتمدين مع عروض متوافقة تماماً مع الميزانية. تتجاوز المؤسسة مكالمات المبيعات العشوائية وتقيّم الأنسب فوراً.'
         : 'AI + Human curation delivering 2 to 3 vetted specialists with budget aligned proposals. HR skips sales pitches and evaluates proven providers.',
       tag: isAr ? 'محرك بونت لوك المركزي' : 'PontLook Core Engine',
-      icon: Handshake,
+      icon: BadgeCheck,
       iconColor: 'text-indigo-400',
       iconBg: 'bg-indigo-600/20 text-indigo-400 border-indigo-500/30',
       points: [
@@ -505,7 +505,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
         ? 'ارتقاء ملموس بالكفاءات، تقييم موظفين دقيق، وعائد استثماري مستدام لإدارة الشركة. تم سد فجوة الكفاءة بنجاح.'
         : 'Measurable capability uplift, employee post evaluation, and sustained ROI delivered to executive leadership.',
       tag: isAr ? 'عائد استثماري ملموس' : 'Measurable ROI',
-      icon: BarChart3,
+      icon: TrendingUp,
       iconColor: 'text-emerald-400',
       iconBg: 'bg-emerald-600/20 text-emerald-400 border-emerald-500/30',
       points: [
@@ -620,7 +620,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
               <div className="lg:col-span-6 space-y-5">
                 <div className="flex items-center gap-2.5 flex-wrap">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] text-xs font-semibold text-white">
-                    <currentStep.icon size={15} className={currentStep.iconColor} />
+                    <currentStep.icon size={15} strokeWidth={1.75} className={currentStep.iconColor} />
                     <span>{currentStep.step}</span>
                     <span className="text-neutral-500 font-mono">· {currentStep.num}</span>
                   </div>
