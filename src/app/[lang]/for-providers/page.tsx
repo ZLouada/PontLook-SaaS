@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
@@ -109,164 +110,280 @@ export default async function ForProvidersPage({
 
   return (
     <>
-      {/* Hero Section */}
-      <div className="relative overflow-hidden bg-[#08090A] min-h-[100dvh] flex flex-col justify-between items-center pt-24 sm:pt-28 pb-6 sm:pb-8 px-4 sm:px-6">
+      {/* 1. HERO SECTION (Left-Aligned, Orange Brand Accent, Dashboard Mockup) */}
+      <section className="relative overflow-hidden bg-[#08090A] pt-28 sm:pt-36 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8">
         {/* Ambient Depth Glows */}
-        <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-white/[0.02] blur-3xl -z-10 rounded-full" />
-        <div className="pointer-events-none absolute top-10 start-1/4 w-[400px] h-[400px] bg-white/[0.01] blur-3xl -z-10 rounded-full" />
+        <div className="pointer-events-none absolute top-1/4 start-0 w-[600px] h-[500px] bg-orange-500/[0.03] blur-[160px] -z-10 rounded-full" />
+        <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-blue-500/[0.02] blur-[160px] -z-10 rounded-full" />
 
-        {/* Vertically Centered Content (Optically balanced) */}
-        <div className="container-site relative z-10 mx-auto max-w-4xl text-center my-auto -translate-y-3 sm:-translate-y-6 py-2">
-          <Reveal className="flex flex-col items-center">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5 shadow-xs">
-              <ShieldCheck size={14} className="text-white" />
-              <span>{isAr ? 'لمزودي ومراكز التدريب المعتمدين' : 'For Approved Training Providers'}</span>
-            </span>
-
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.08] font-heading tracking-tight">
-              {isAr ? (
-                <>
-                  فرص تدريبية للشركات والمؤسسات <br className="hidden sm:inline" />
-                  <span className="text-white font-bold">حسب الطلب</span>
-                </>
-              ) : (
-                <>
-                  Enterprise Training Leads <br className="hidden sm:inline" />
-                  <span className="text-white font-bold">On Demand</span>
-                </>
-              )}
-            </h1>
-
-            <p className="mt-4 sm:mt-5 text-base sm:text-xl text-neutral-400 leading-relaxed max-w-2xl mx-auto font-normal">
-              {isAr
-                ? 'تواصل مباشرة مع صناع القرار في كبرى المنشآت والشركات التي تبحث بنشاط عن حلول تدريبية. بدون رسوم شهرية ثابتة، الدفع فقط لكل فرصة مؤكدة ومؤهلة.'
-                : 'Connect directly with verified corporate decision makers actively seeking training solutions. Zero retainers, 100% pay per lead.'}
-            </p>
-
-            <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto">
-              <Link
-                href={`/${lang}/for-providers/apply`}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
-              >
-                <span>{isAr ? 'قدم للانضمام إلى شبكتنا' : 'Apply to Join Network'}</span>
-                <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
-              </Link>
-
-              <a
-                href="#tiers"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-base border border-[#26282D] hover:border-white/20 shadow-xs active:scale-[0.98] transition-all duration-200"
-              >
-                <span>{isAr ? 'استعرض فئات الفرص' : 'Explore Opportunity Tiers'}</span>
-              </a>
-            </div>
-
-            <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-xs sm:text-sm text-neutral-400">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">
-                <CheckCircle2 size={15} className="text-white shrink-0" />
-                <span className="font-medium text-neutral-300">
-                  {isAr ? 'بدون أي رسوم إدارة شهرية' : 'Zero Monthly Retainers'}
-                </span>
+        <div className="container-site max-w-6xl mx-auto">
+          {/* Top Left-Aligned Header Block */}
+          <div className="max-w-3xl text-start">
+            <Reveal>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5 shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00] animate-pulse" />
+                <span>{isAr ? 'لمزودي ومراكز التدريب المعتمدين' : 'For Approved Training Providers'}</span>
               </div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">
-                <CheckCircle2 size={15} className="text-white shrink-0" />
-                <span className="font-medium text-neutral-300">
-                  {isAr ? 'ميزانيات تدريب مؤكدة ومعتمدة' : 'Verified Budgets'}
-                </span>
+
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.1] sm:leading-[1.05] font-heading tracking-tight text-start">
+                {isAr ? (
+                  <>
+                    فرص تدريبية للشركات <br />
+                    <span className="text-[#FF5C00] font-bold">حسب الطلب.</span>
+                  </>
+                ) : (
+                  <>
+                    Enterprise Training Leads <br />
+                    <span className="text-[#FF5C00] font-bold">On Demand.</span>
+                  </>
+                )}
+              </h1>
+
+              <p className="mt-4 sm:mt-5 text-base sm:text-lg text-neutral-300 leading-relaxed max-w-2xl font-normal font-sans text-start">
+                {isAr
+                  ? 'تواصل مباشرة مع صناع القرار في كبرى المنشآت والشركات التي تبحث بنشاط عن حلول تدريبية. بدون رسوم شهرية ثابتة، الدفع فقط لكل فرصة مؤكدة ومؤهلة.'
+                  : 'Connect directly with verified corporate decision makers actively seeking training solutions. Zero retainers, 100% pay per lead.'}
+              </p>
+
+              {/* Minimized Action Buttons (Orange Primary + Glass Secondary) */}
+              <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3 w-full sm:w-auto">
+                <Link
+                  href={`/${lang}/for-providers/apply`}
+                  className="inline-flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm shadow-lg shadow-orange-500/20 active:scale-95 transition-all duration-200 font-sans"
+                >
+                  <span>{isAr ? 'قدم للانضمام إلى شبكتنا' : 'Apply to Join Network'}</span>
+                  <ArrowRight size={15} className="rtl:-scale-x-100" />
+                </Link>
+
+                <a
+                  href="#tiers"
+                  className="inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-neutral-200 hover:text-white font-medium text-sm border border-[#26282D] hover:border-white/20 active:scale-95 transition-all duration-200 font-sans"
+                >
+                  <span>{isAr ? 'استعرض فئات الفرص' : 'Explore Opportunity Tiers'}</span>
+                </a>
               </div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">
-                <CheckCircle2 size={15} className="text-white shrink-0" />
-                <span className="font-medium text-neutral-300">
-                  {isAr ? 'ضمان استبدال بنسبة 100%' : '100% Replacement Guarantee'}
-                </span>
+
+              {/* Trust Value Badges */}
+              <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-2.5 sm:gap-4 text-xs text-neutral-400">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D]">
+                  <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
+                  <span className="font-medium text-neutral-300">
+                    {isAr ? 'بدون أي رسوم إدارة شهرية' : 'Zero Monthly Retainers'}
+                  </span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D]">
+                  <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
+                  <span className="font-medium text-neutral-300">
+                    {isAr ? 'ميزانيات تدريب مؤكدة ومعتمدة' : 'Verified Budgets'}
+                  </span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D]">
+                  <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
+                  <span className="font-medium text-neutral-300">
+                    {isAr ? 'ضمان استبدال بنسبة 100%' : '100% Replacement Guarantee'}
+                  </span>
+                </div>
               </div>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* Bottom Bouncing Scroll Down Prompt */}
-        <div className="relative z-10 pb-3 sm:pb-4 flex flex-col items-center">
-          <a
-            href="#why-partner"
-            className="group flex flex-col items-center text-neutral-500 hover:text-white transition-colors text-xs font-medium"
-            aria-label={isAr ? 'انتقل إلى الأسفل' : 'Scroll down'}
-          >
-            <span className="mb-1 hidden sm:inline tracking-wider uppercase text-[11px] font-semibold">
-              {isAr ? 'اكتشف المزيد' : 'Discover More'}
-            </span>
-            <ChevronDown size={18} className="animate-bounce text-neutral-500 group-hover:text-white" />
-          </a>
-        </div>
-      </div>
-
-      {/* Why Partner Section */}
-      <section id="why-partner" className="bg-[#08090A] py-12 sm:py-20 border-t border-[#26282D] scroll-mt-16">
-        <div className="container-site max-w-6xl mx-auto px-4 sm:px-6 space-y-14 sm:space-y-24">
-          <div>
-            <SectionHeading
-              eyebrow={isAr ? 'لماذا الشراكة مع بونت لوك' : 'Why Partner with PontLook'}
-              title={isAr ? 'تدفق متوقع لفرص الشركات والمؤسسات' : 'Predictable Enterprise Pipeline'}
-              subtitle={
-                isAr
-                  ? 'مصمم خصيصاً لمزودي التدريب الساعين للحصول على فرص موثقة دون أي اشتراكات دورية.'
-                  : 'Designed specifically for professional training providers seeking verified opportunities without retainers.'
-              }
-            />
-
-            <div className="mt-8 sm:mt-10 grid gap-5 sm:gap-6 md:grid-cols-3">
-              {providerBenefits.map((b, i) => (
-                <Reveal key={b.title} delay={i * 0.1}>
-                  <div className="card h-full text-center flex flex-col items-center !p-6 sm:!p-8 bg-[#0F1013] border border-[#26282D] rounded-2xl hover:border-white/20 transition-all duration-300">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#16171B] border border-[#26282D] text-white mb-4">
-                      <b.icon size={24} />
-                    </span>
-                    <h3 className="text-lg font-semibold text-white font-heading">{b.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-neutral-400">{b.text}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+            </Reveal>
           </div>
 
-          <div id="tiers" className="scroll-mt-24">
+          {/* Sized Dashboard Mockup Preview (Like ecomflow reference) */}
+          <div className="mt-12 sm:mt-16 relative">
+            <div className="rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] p-5 sm:p-7 shadow-2xl shadow-black overflow-hidden relative">
+              {/* Window Ambient Sheen */}
+              <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
+
+              {/* Portal Header */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[#26282D]">
+                <div className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-lg bg-[#FF5C00]/15 border border-[#FF5C00]/30 flex items-center justify-center p-1.5">
+                    <Image
+                      src="/PontLook-Logo-Orange.png"
+                      alt="PontLook"
+                      width={24}
+                      height={24}
+                      className="object-contain"
+                    />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-white font-heading flex items-center gap-2">
+                      <span>PontLook Provider Portal</span>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#FF5C00]/20 text-[#FF5C00] border border-[#FF5C00]/30">
+                        {isAr ? 'مباشر ومحدث' : 'Live Feed'}
+                      </span>
+                    </div>
+                    <div className="text-xs text-neutral-400 font-sans">
+                      {isAr ? 'منصة توجيه وتوزيع طلبات التدريب المؤكدة' : 'Verified Enterprise Training Routing Desk'}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-xs font-mono text-neutral-300">
+                    {isAr ? 'النظام متصل وجاهز للربط' : '100% Match Engine Active'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Key Metrics Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 my-5 sm:my-6">
+                <div className="rounded-xl bg-[#16171B] border border-[#26282D] p-3.5 sm:p-4">
+                  <div className="text-[11px] font-medium text-neutral-400 uppercase font-sans">
+                    {isAr ? 'قيمة الفرص المتاحة' : 'Pipeline Value'}
+                  </div>
+                  <div className="text-xl sm:text-2xl font-bold text-white font-heading mt-1 tabular-nums">
+                    {isAr ? '680,000 ر.س' : '$180,000'}
+                  </div>
+                  <div className="text-[10px] font-medium text-[#FF5C00] mt-0.5 font-sans">
+                    {isAr ? 'ميزانيات معتمدة ومؤكدة' : 'Confirmed Corporate Budgets'}
+                  </div>
+                </div>
+
+                <div className="rounded-xl bg-[#16171B] border border-[#26282D] p-3.5 sm:p-4">
+                  <div className="text-[11px] font-medium text-neutral-400 uppercase font-sans">
+                    {isAr ? 'الفرص المؤهلة النشطة' : 'Active Mandates'}
+                  </div>
+                  <div className="text-xl sm:text-2xl font-bold text-white font-heading mt-1 tabular-nums">
+                    18
+                  </div>
+                  <div className="text-[10px] font-medium text-emerald-400 mt-0.5 font-sans">
+                    {isAr ? '+4 فرص اليوم' : '+4 New Today'}
+                  </div>
+                </div>
+
+                <div className="rounded-xl bg-[#16171B] border border-[#26282D] p-3.5 sm:p-4">
+                  <div className="text-[11px] font-medium text-neutral-400 uppercase font-sans">
+                    {isAr ? 'دقة التوافق التدريبي' : 'Match Accuracy'}
+                  </div>
+                  <div className="text-xl sm:text-2xl font-bold text-white font-heading mt-1 tabular-nums">
+                    98.6%
+                  </div>
+                  <div className="text-[10px] font-medium text-blue-400 mt-0.5 font-sans">
+                    {isAr ? 'بناءً على التخصص وسابقة الأعمال' : 'GCC Verified Track Record'}
+                  </div>
+                </div>
+
+                <div className="rounded-xl bg-[#16171B] border border-[#26282D] p-3.5 sm:p-4">
+                  <div className="text-[11px] font-medium text-neutral-400 uppercase font-sans">
+                    {isAr ? 'سرعة الربط المباشر' : 'Direct Intro Time'}
+                  </div>
+                  <div className="text-xl sm:text-2xl font-bold text-white font-heading mt-1 tabular-nums">
+                    {isAr ? '24 ساعة' : '24 Hours'}
+                  </div>
+                  <div className="text-[10px] font-medium text-purple-400 mt-0.5 font-sans">
+                    {isAr ? 'تواصل مباشر مع صناع القرار' : 'Direct Decision Maker Intro'}
+                  </div>
+                </div>
+              </div>
+
+              {/* Live Incoming Demand Feed Preview */}
+              <div className="space-y-2.5">
+                <div className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-sans px-1">
+                  {isAr ? 'أحدث فرص التدريب المعتمدة للربط' : 'Recent Verified Mandates Ready for Matching'}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="rounded-xl bg-[#16171B] border border-[#26282D] p-4 space-y-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#FF5C00]/15 text-[#FF5C00] border border-[#FF5C00]/30 font-sans">
+                        {isAr ? 'القيادة التنفيذية · الرياض' : 'Executive Leadership · Riyadh'}
+                      </span>
+                      <span className="text-xs font-bold text-white tabular-nums font-sans">
+                        {isAr ? '160,000 ر.س' : 'SAR 160,000'}
+                      </span>
+                    </div>
+                    <div className="text-sm font-semibold text-white font-heading">
+                      {isAr ? 'برنامج تطوير القيادات العليا والتعاقب الوظيفي' : 'Senior Executive Succession Track'}
+                    </div>
+                    <div className="text-xs text-neutral-400 font-sans flex items-center justify-between">
+                      <span>{isAr ? 'بنك تجاري رائد · 2,400+ موظف' : 'Tier 1 Commercial Bank · 2,400+ Staff'}</span>
+                      <span className="text-emerald-400 font-medium">{isAr ? 'توافق 99%' : '99% Fit'}</span>
+                    </div>
+                  </div>
+
+                  <div className="rounded-xl bg-[#16171B] border border-[#26282D] p-4 space-y-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-500/15 text-blue-400 border border-blue-500/30 font-sans">
+                        {isAr ? 'التحول الرقمي والأمن السيبراني · دبي' : 'Cloud & Cyber Architecture · Dubai'}
+                      </span>
+                      <span className="text-xs font-bold text-white tabular-nums font-sans">
+                        $65,000
+                      </span>
+                    </div>
+                    <div className="text-sm font-semibold text-white font-heading">
+                      {isAr ? 'معسكرات تدريب مكثفة للمهندسين' : 'Enterprise Engineering Intensive Bootcamp'}
+                    </div>
+                    <div className="text-xs text-neutral-400 font-sans flex items-center justify-between">
+                      <span>{isAr ? 'مجموعة اتصالات إقليمية · 4,500+ موظف' : 'Regional Telecom Group · 4,500+ Staff'}</span>
+                      <span className="text-emerald-400 font-medium">{isAr ? 'توافق 97%' : '97% Fit'}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. WHY PARTNER SECTION (Redesigned matching Pasted image 20260918161220.png) */}
+      <section id="why-partner" className="bg-[#08090A] py-16 sm:py-24 border-t border-[#26282D] scroll-mt-16">
+        <div className="container-site max-w-6xl mx-auto px-4 sm:px-6">
+          <Reveal>
+            {/* Left-Aligned Header */}
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white font-heading text-start mb-6 sm:mb-8">
+              {isAr ? 'كيف تعمل الشراكة:' : 'How it works:'}
+            </h2>
+
+            {/* 3 Clean Numbered Cards (Icons removed, inline number badges 1, 2, 3) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+              {providerBenefits.map((b, i) => (
+                <div
+                  key={b.title}
+                  className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-6 sm:p-7 text-start flex flex-col justify-start hover:border-white/20 transition-all duration-300 shadow-lg"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="w-7 h-7 rounded-full bg-white/[0.08] border border-white/10 text-white flex items-center justify-center text-xs font-bold font-mono shrink-0">
+                      {i + 1}
+                    </span>
+                    <h3 className="text-base sm:text-lg font-semibold text-white font-heading">
+                      {b.title}
+                    </h3>
+                  </div>
+                  <p className="text-xs sm:text-sm leading-relaxed text-neutral-400 font-sans font-normal">
+                    {b.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+
+          {/* 3. OPPORTUNITY TIERS SECTION */}
+          <div id="tiers" className="scroll-mt-24 pt-16 sm:pt-24">
             <LeadTiers mode="providers" dict={dict} lang={lang} />
           </div>
 
-          {/* Bottom Provider Application CTA Card */}
-          <div id="apply" className="scroll-mt-24">
-            <Reveal className="mx-auto max-w-4xl">
-              <div className="bg-[#0F1013] border border-[#26282D] p-8 sm:p-14 rounded-2xl text-center relative overflow-hidden shadow-sm">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-white/[0.02] blur-3xl pointer-events-none" />
+          {/* 4. BOTTOM CTA SECTION (No window background, single orange button, second button removed) */}
+          <div id="apply" className="scroll-mt-24 pt-16 sm:pt-24 pb-8 sm:pb-12 text-center max-w-3xl mx-auto px-4">
+            <Reveal>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-4">
+                {isAr ? 'جاهز لتوسيع قاعدة عملائك المؤسسيين؟' : 'Ready to Scale Your Enterprise Pipeline?'}
+              </h2>
 
-                <span className="text-xs font-bold uppercase tracking-widest text-neutral-300 bg-[#16171B] border border-[#26282D] px-4 py-1.5 rounded-full inline-block mb-5">
-                  {isAr ? 'طلب الانضمام للشراكة' : 'PROVIDER QUALIFICATION'}
-                </span>
+              <p className="text-sm sm:text-base text-neutral-400 font-normal leading-relaxed max-w-2xl mx-auto mb-8 font-sans">
+                {isAr
+                  ? 'أكمل نموذج التأهيل وسيقوم فريق الشراكات بمراجعة بياناتك والتواصل معك خلال يومي عمل لبدء استقبال الفرص المؤكدة.'
+                  : 'Complete our streamlined qualification form. Our partnerships team will review your profile and reach out within 2 business days to begin delivering verified demand.'}
+              </p>
 
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-4">
-                  {isAr ? 'جاهز لتوسيع قاعدة عملائك المؤسسيين؟' : 'Ready to Scale Your Enterprise Pipeline?'}
-                </h2>
-
-                <p className="text-base sm:text-lg text-neutral-400 font-normal leading-relaxed max-w-2xl mx-auto mb-8">
-                  {isAr
-                    ? 'أكمل نموذج التأهيل وسيقوم فريق الشراكات بمراجعة بياناتك والتواصل معك خلال يومي عمل لبدء استقبال الفرص المؤكدة.'
-                    : 'Complete our streamlined qualification form. Our partnerships team will review your profile and reach out within 2 business days to begin delivering verified demand.'}
-                </p>
-
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <Link
-                    href={`/${lang}/for-providers/apply`}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
-                  >
-                    <span>{isAr ? 'ابدأ طلب التأهيل للشراكة' : 'Apply for Provider Partnership'}</span>
-                    <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
-                  </Link>
-
-                  <a
-                    href="#tiers"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-base border border-[#26282D] hover:border-white/20 shadow-xs transition-all duration-200"
-                  >
-                    <span>{isAr ? 'مراجعة معايير الفرص' : 'Review Opportunity Criteria'}</span>
-                  </a>
-                </div>
+              <div className="flex justify-center">
+                <Link
+                  href={`/${lang}/for-providers/apply`}
+                  className="inline-flex items-center justify-center gap-2 py-3 px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans"
+                >
+                  <span>{isAr ? 'ابدأ طلب التأهيل للشراكة' : 'Apply for Provider Partnership'}</span>
+                  <ArrowRight size={17} className="rtl:-scale-x-100" />
+                </Link>
               </div>
             </Reveal>
           </div>

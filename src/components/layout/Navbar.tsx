@@ -20,6 +20,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const [isDarkSection, setIsDarkSection] = useState(false);
   const pathname = usePathname() || `/${lang}`;
   const dict = useDictionary();
+  const isForProviders = pathname?.includes('/for-providers');
+  const logoSrc = isForProviders ? '/PontLook-Logo-Orange.png' : '/PontLook-Logo-White.png';
 
   const otherLang = lang === 'en' ? 'ar' : 'en';
   const switchHref = (() => {
@@ -110,7 +112,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           >
             <div className="relative flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center">
               <Image
-                src="/PontLook-Logo-White.png"
+                src={logoSrc}
                 alt="PontLook Corporate Training Matchmaking Logo"
                 width={32}
                 height={32}
@@ -233,7 +235,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       >
                         <div className="relative flex h-8 w-8 shrink-0 items-center">
                           <Image
-                            src="/PontLook-Logo-White.png"
+                            src={logoSrc}
                             alt="PontLook Logo"
                             width={32}
                             height={32}
