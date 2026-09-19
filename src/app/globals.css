@@ -297,4 +297,38 @@
               0 2px 8px -2px rgba(0, 0, 0, 0.3) !important;
 }
 
+/* 3D Perspective Showcase Card for Providers Hero */
+.provider-showcase-ltr {
+  transform-origin: 10% 20%;
+  transform: rotateX(8deg) rotateY(-6deg);
+}
+
+@media (min-width: 640px) {
+  .provider-showcase-ltr {
+    transform-origin: 10% 20%;
+    transform: rotateX(12deg) rotateY(-10deg);
+  }
+}
+
+.provider-showcase-ltr:hover {
+  transform: rotateX(4deg) rotateY(-3deg);
+}
+
+.provider-showcase-rtl {
+  transform-origin: 90% 20%;
+  transform: rotateX(8deg) rotateY(6deg);
+}
+
+@media (min-width: 640px) {
+  .provider-showcase-rtl {
+    transform-origin: 90% 20%;
+    transform: rotateX(12deg) rotateY(10deg);
+  }
+}
+
+.provider-showcase-rtl:hover {
+  transform: rotateX(4deg) rotateY(3deg);
+}
+
+
 

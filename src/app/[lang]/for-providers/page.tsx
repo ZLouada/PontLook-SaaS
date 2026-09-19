@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import ProviderHeroDashboard from '@/components/providers/ProviderHeroDashboard';
+import ProviderHeroShowcase from '@/components/providers/ProviderHeroShowcase';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
@@ -160,9 +160,9 @@ export default async function ForProvidersPage({
             </Reveal>
           </div>
 
-          {/* 3D Perspective Dashboard Showcase (matching exact ecomflow.com/partners UI from screenshot) */}
-          <Reveal delay={0.15} className="mt-8 sm:mt-12 w-full">
-            <ProviderHeroDashboard isAr={isAr} />
+          {/* 3D Perspective Image Showcase (matching exact reference screenshot) */}
+          <Reveal delay={0.15} className="mt-6 sm:mt-8 lg:mt-10 w-full">
+            <ProviderHeroShowcase isAr={isAr} />
           </Reveal>
         </div>
       </section>
