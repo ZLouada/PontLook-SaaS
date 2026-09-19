@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
+import ProviderHeroDashboard from '@/components/providers/ProviderHeroDashboard';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
@@ -160,38 +160,9 @@ export default async function ForProvidersPage({
             </Reveal>
           </div>
 
-          {/* 3D Perspective Showcase Card (matching ecomflow.com/partners presentation) */}
-          <Reveal delay={0.15} className="mt-10 sm:mt-14 w-full">
-            <div className="relative w-full [perspective:1400px] sm:[perspective:1800px] select-none py-2 sm:py-4">
-              {/* Ambient Glows behind the 3D card */}
-              <div className="pointer-events-none absolute -top-10 start-1/4 w-3/4 h-3/4 bg-orange-500/[0.08] blur-[130px] rounded-full -z-10" />
-              <div className="pointer-events-none absolute bottom-0 end-10 w-1/2 h-1/2 bg-blue-500/[0.03] blur-[120px] rounded-full -z-10" />
-
-              {/* 3D Tilted Card Container */}
-              <div
-                className="relative rounded-2xl sm:rounded-3xl border border-white/15 bg-[#0F1013] overflow-hidden shadow-[0_25px_70px_-15px_rgba(0,0,0,0.95),0_0_50px_rgba(255,92,0,0.06)] transition-transform duration-700 ease-out hover:[transform:rotateX(6deg)_rotateY(0deg)_rotateZ(0deg)]"
-                style={{
-                  transform: isAr
-                    ? 'rotateX(14deg) rotateY(8deg) rotateZ(-2deg)'
-                    : 'rotateX(14deg) rotateY(-8deg) rotateZ(2deg)',
-                  transformStyle: 'preserve-3d',
-                }}
-              >
-                {/* Image */}
-                <Image
-                  src="/providers-hero.png"
-                  alt={isAr ? 'فريق العمليات وشبكة مزودي التدريب' : 'PontLook Enterprise Provider Network Operations'}
-                  width={1200}
-                  height={675}
-                  priority
-                  className="w-full h-auto object-cover select-none pointer-events-none transform-gpu"
-                />
-
-                {/* Subtle Glass Reflection & Inner Ring */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-white/[0.08] rounded-2xl sm:rounded-3xl" />
-                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl sm:rounded-3xl" />
-              </div>
-            </div>
+          {/* 3D Perspective Dashboard Showcase (matching exact ecomflow.com/partners UI from screenshot) */}
+          <Reveal delay={0.15} className="mt-8 sm:mt-12 w-full">
+            <ProviderHeroDashboard isAr={isAr} />
           </Reveal>
         </div>
       </section>
