@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import ProviderHeroShowcase from '@/components/providers/ProviderHeroShowcase';
+import Image from 'next/image';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
@@ -110,14 +110,41 @@ export default async function ForProvidersPage({
 
   return (
     <>
-      {/* 1. HERO SECTION (Left-Aligned, Orange Brand Accent) */}
-      <section className="relative overflow-hidden bg-[#08090A] pt-20 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8">
-        {/* Ambient Depth Glows */}
-        <div className="pointer-events-none absolute top-1/4 start-0 w-[600px] h-[500px] bg-orange-500/[0.03] blur-[160px] -z-10 rounded-full" />
-        <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-blue-500/[0.02] blur-[160px] -z-10 rounded-full" />
+      {/* 1. HERO SECTION (Atmospheric Office Workspace Background) */}
+      <section className="relative overflow-hidden bg-[#08090A] min-h-[75vh] sm:min-h-[80vh] lg:min-h-[85vh] flex items-center pt-28 sm:pt-36 lg:pt-40 pb-20 sm:pb-28 lg:pb-32 px-4 sm:px-6 lg:px-8">
+        {/* Workspace Background Image */}
+        <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+          <Image
+            src="/providers-hero.png"
+            alt={isAr ? 'بيئة عمل تدريب الشركات' : 'Corporate training providers workspace'}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center opacity-55 sm:opacity-65"
+          />
+        </div>
 
-        <div className="container-site max-w-6xl mx-auto">
-          {/* Top Left-Aligned Header Block */}
+        {/* Directional Overlay: Solid behind text, translucent over image on the opposite side */}
+        <div
+          className={`pointer-events-none absolute inset-0 z-[1] ${
+            isAr
+              ? 'bg-gradient-to-l from-[#08090A] 20% via-[#08090A]/92 55% to-[#08090A]/35 sm:to-[#08090A]/20 100%'
+              : 'bg-gradient-to-r from-[#08090A] 20% via-[#08090A]/92 55% to-[#08090A]/35 sm:to-[#08090A]/20 100%'
+          }`}
+        />
+
+        {/* Top Edge Fade from Navbar */}
+        <div className="pointer-events-none absolute top-0 inset-x-0 h-24 sm:h-32 bg-gradient-to-b from-[#08090A] to-transparent z-[2]" />
+
+        {/* Bottom Edge Seamless Fade into Why-Partner Section */}
+        <div className="pointer-events-none absolute bottom-0 inset-x-0 h-32 sm:h-48 bg-gradient-to-t from-[#08090A] via-[#08090A]/85 to-transparent z-[2]" />
+
+        {/* Ambient Depth Glows */}
+        <div className="pointer-events-none absolute top-1/4 start-0 w-[550px] h-[450px] bg-orange-500/[0.08] blur-[160px] z-[3] rounded-full" />
+        <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-blue-500/[0.02] blur-[160px] z-[3] rounded-full" />
+
+        <div className="container-site max-w-6xl mx-auto relative z-10 w-full">
+          {/* Left-Aligned Header Block */}
           <div className="max-w-3xl text-start">
             <Reveal>
               <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.1] sm:leading-[1.05] font-heading tracking-tight text-start">
@@ -140,11 +167,11 @@ export default async function ForProvidersPage({
                   : 'Connect directly with verified corporate decision makers actively seeking training solutions. Zero retainers, 100% pay per lead.'}
               </p>
 
-              {/* Hero Action Buttons (Orange Primary + Light Secondary matching ecomflow.com/partners) */}
-              <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3 w-full sm:w-auto">
+              {/* Hero Action Buttons */}
+              <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-3.5 w-full sm:w-auto">
                 <Link
                   href={`/${lang}/for-providers/apply`}
-                  className="inline-flex items-center justify-center gap-2 py-3 px-7 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans"
+                  className="inline-flex items-center justify-center gap-2 py-3.5 px-7 sm:px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans"
                 >
                   <span>{isAr ? 'انضم كشريك تدريب' : 'Become a Partner'}</span>
                   <ArrowRight size={16} className="rtl:-scale-x-100" />
@@ -152,18 +179,13 @@ export default async function ForProvidersPage({
 
                 <a
                   href="#why-partner"
-                  className="inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-white hover:bg-neutral-200 text-[#08090A] font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans"
+                  className="inline-flex items-center justify-center gap-2 py-3.5 px-6 sm:px-7 rounded-xl bg-white hover:bg-neutral-200 text-[#08090A] font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans"
                 >
                   <span>{isAr ? 'اعرف المزيد' : 'Learn more'}</span>
                 </a>
               </div>
             </Reveal>
           </div>
-
-          {/* 3D Perspective Image Showcase (matching exact reference screenshot) */}
-          <Reveal delay={0.15} className="mt-6 sm:mt-8 lg:mt-10 w-full">
-            <ProviderHeroShowcase isAr={isAr} />
-          </Reveal>
         </div>
       </section>
 
