@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
@@ -139,25 +140,59 @@ export default async function ForProvidersPage({
                   : 'Connect directly with verified corporate decision makers actively seeking training solutions. Zero retainers, 100% pay per lead.'}
               </p>
 
-              {/* Minimized Action Buttons (Orange Primary + Glass Secondary) */}
+              {/* Hero Action Buttons (Orange Primary + Light Secondary matching ecomflow.com/partners) */}
               <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3 w-full sm:w-auto">
                 <Link
                   href={`/${lang}/for-providers/apply`}
-                  className="inline-flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm shadow-lg shadow-orange-500/20 active:scale-95 transition-all duration-200 font-sans"
+                  className="inline-flex items-center justify-center gap-2 py-3 px-7 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans"
                 >
-                  <span>{isAr ? 'قدم للانضمام إلى شبكتنا' : 'Apply to Join Network'}</span>
-                  <ArrowRight size={15} className="rtl:-scale-x-100" />
+                  <span>{isAr ? 'انضم كشريك تدريب' : 'Become a Partner'}</span>
+                  <ArrowRight size={16} className="rtl:-scale-x-100" />
                 </Link>
 
                 <a
-                  href="#tiers"
-                  className="inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-neutral-200 hover:text-white font-medium text-sm border border-[#26282D] hover:border-white/20 active:scale-95 transition-all duration-200 font-sans"
+                  href="#why-partner"
+                  className="inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-white hover:bg-neutral-200 text-[#08090A] font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans"
                 >
-                  <span>{isAr ? 'استعرض فئات الفرص' : 'Explore Opportunity Tiers'}</span>
+                  <span>{isAr ? 'اعرف المزيد' : 'Learn more'}</span>
                 </a>
               </div>
             </Reveal>
           </div>
+
+          {/* 3D Perspective Showcase Card (matching ecomflow.com/partners presentation) */}
+          <Reveal delay={0.15} className="mt-10 sm:mt-14 w-full">
+            <div className="relative w-full [perspective:1400px] sm:[perspective:1800px] select-none py-2 sm:py-4">
+              {/* Ambient Glows behind the 3D card */}
+              <div className="pointer-events-none absolute -top-10 start-1/4 w-3/4 h-3/4 bg-orange-500/[0.08] blur-[130px] rounded-full -z-10" />
+              <div className="pointer-events-none absolute bottom-0 end-10 w-1/2 h-1/2 bg-blue-500/[0.03] blur-[120px] rounded-full -z-10" />
+
+              {/* 3D Tilted Card Container */}
+              <div
+                className="relative rounded-2xl sm:rounded-3xl border border-white/15 bg-[#0F1013] overflow-hidden shadow-[0_25px_70px_-15px_rgba(0,0,0,0.95),0_0_50px_rgba(255,92,0,0.06)] transition-transform duration-700 ease-out hover:[transform:rotateX(6deg)_rotateY(0deg)_rotateZ(0deg)]"
+                style={{
+                  transform: isAr
+                    ? 'rotateX(14deg) rotateY(8deg) rotateZ(-2deg)'
+                    : 'rotateX(14deg) rotateY(-8deg) rotateZ(2deg)',
+                  transformStyle: 'preserve-3d',
+                }}
+              >
+                {/* Image */}
+                <Image
+                  src="/providers-hero.png"
+                  alt={isAr ? 'فريق العمليات وشبكة مزودي التدريب' : 'PontLook Enterprise Provider Network Operations'}
+                  width={1200}
+                  height={675}
+                  priority
+                  className="w-full h-auto object-cover select-none pointer-events-none transform-gpu"
+                />
+
+                {/* Subtle Glass Reflection & Inner Ring */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-white/[0.08] rounded-2xl sm:rounded-3xl" />
+                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl sm:rounded-3xl" />
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
