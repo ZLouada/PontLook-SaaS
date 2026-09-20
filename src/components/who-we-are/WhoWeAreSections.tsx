@@ -77,14 +77,6 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
       <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header Block */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600" />
-            </span>
-            <span>{isAr ? 'رسالتنا وسبب وجودنا' : 'OUR MISSION & WHY WE EXIST'}</span>
-          </div>
-
           <h2
             id="mission-title"
             className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-[1.15] mb-6"
@@ -127,10 +119,10 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
 
               {/* Badges overlaid on top of photo (as shown in picture 4) */}
               <div className="absolute top-4 start-4 end-4 flex items-center justify-between pointer-events-none">
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider shadow-sm border border-white/60">
+                <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0F1013]/90 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider shadow-md border border-[#26282D]">
                   {isAr ? 'البحث التقليدي عن التدريب' : 'TRADITIONAL TRAINING SEARCH'}
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600 text-white text-[11px] font-bold uppercase tracking-wider shadow-md">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/90 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider shadow-md border border-red-500/40">
                   <span className="w-1.5 h-1.5 rounded-full bg-white" />
                   {isAr ? 'أسابيع ضائعة' : 'WEEKS LOST'}
                 </span>
@@ -180,10 +172,10 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
 
               {/* Badges overlaid on top of photo */}
               <div className="absolute top-4 start-4 end-4 flex items-center justify-between pointer-events-none">
-                <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-white/[0.08] text-white text-[11px] font-bold uppercase tracking-wider border border-white/20 shadow-md">
+                <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0F1013]/90 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider border border-[#26282D] shadow-md">
                   {isAr ? 'طريقة بونت لوك' : 'THE PONTLOOK WAY'}
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold uppercase tracking-wider border border-emerald-500/30 shadow-md">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/80 backdrop-blur-md text-emerald-400 text-[11px] font-bold uppercase tracking-wider border border-emerald-500/40 shadow-md">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                   {isAr ? 'موثق ومباشر' : 'VERIFIED & DIRECT'}
                 </span>
@@ -279,11 +271,6 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
       <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-5">
-            <BadgeCheck size={14} strokeWidth={1.75} className="text-blue-400" />
-            <span>{isAr ? 'تسعير شفاف ومواءمة مصالح حقيقية' : 'TRANSPARENT PRICING & INCENTIVE ALIGNMENT'}</span>
-          </div>
-
           <h2
             id="value-model-title"
             className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-[1.15] mb-6"
