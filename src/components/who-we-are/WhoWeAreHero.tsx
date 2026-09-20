@@ -8,15 +8,29 @@ interface WhoWeAreHeroProps {
   lang?: 'en' | 'ar';
 }
 
-interface LaserPulse {
-  lineX: number;
+interface LineColumn {
   colIndex: number;
+  x: number;
+  displacement: number; // Horizontal string pluck displacement
+  velocity: number;
+  flash: number; // Dot brightness flash (0 to 1)
+}
+
+interface Comet {
+  lineIndex: number;
   currentY: number;
   length: number;
   speed: number;
-  colorType: 'blue' | 'cyan' | 'white';
+  colorType: 'cyan' | 'blue' | 'white';
   opacity: number;
-  direction: 1 | -1; // 1 = down, -1 = up
+  direction: 1 | -1;
+}
+
+interface WaveRipple {
+  currentX: number;
+  direction: 1 | -1;
+  speed: number;
+  amplitude: number;
 }
 
 export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
@@ -40,13 +54,34 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
     let mouseY = -9999;
     let isMouseInside = false;
 
-    // Line dots flash state: Map<colIndex, flashIntensity (0 to 1)>
-    const dotFlashes = new Map<number, number>();
-
-    // Array of living laser pulses traveling along the lines
-    const pulses: LaserPulse[] = [];
+    let columns: LineColumn[] = [];
+    const comets: Comet[] = [];
+    const waveRipples: WaveRipple[] = [];
 
     let lastAutoSpawnTime = 0;
+    let lastAmbientRippleTime = 0;
+
+    // Physical harmonic wave function that defines the undulating top line/dots
+    const getWaveY = (x: number, t: number, w: number): number => {
+      const baseOffset = height < 500 ? 45 : 65;
+      // Multi-frequency sine waves combining into organic ocean swell
+      const w1 = Math.sin(x * 0.0038 + t * 0.0016) * 32;
+      const w2 = Math.sin(x * 0.0085 - t * 0.0022) * 18;
+      const w3 = Math.cos(x * 0.0022 + t * 0.0009) * 22;
+      const w4 = Math.sin(x * 0.015 + t * 0.0031) * 8;
+
+      // Subtle mouse gravity dip
+      let mouseDip = 0;
+      if (isMouseInside) {
+        const dist = Math.abs(x - mouseX);
+        if (dist < 180) {
+          const factor = 1 - dist / 180;
+          mouseDip = Math.sin(dist * 0.04 - t * 0.008) * 16 * factor;
+        }
+      }
+
+      return baseOffset + w1 + w2 + w3 + w4 + mouseDip;
+    };
 
     const updateDimensions = () => {
       const parent = canvas.parentElement;
@@ -58,37 +93,51 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Re-initialize columns
+      const spacing = width < 640 ? 18 : 24;
+      const numLines = Math.ceil(width / spacing) + 1;
+      const startX = (width % spacing) / 2;
+
+      columns = [];
+      for (let i = 0; i <= numLines; i++) {
+        columns.push({
+          colIndex: i,
+          x: startX + i * spacing,
+          displacement: 0,
+          velocity: 0,
+          flash: 0,
+        });
+      }
     };
 
     updateDimensions();
 
-    const spawnPulse = (
-      colIndex: number,
-      lineX: number,
+    const spawnComet = (
+      colIdx: number,
       startY: number,
       direction: 1 | -1 = 1,
-      customSpeed?: number
+      speedBonus = 0,
+      forcedColor?: 'cyan' | 'blue' | 'white'
     ) => {
-      if (pulses.length > 60) return; // Prevent excessive density
-      const colors: ('blue' | 'cyan' | 'white')[] = ['blue', 'cyan', 'blue', 'white'];
-      const colorType = colors[Math.floor(Math.random() * colors.length)];
-      const speed = customSpeed || 400 + Math.random() * 500;
-      const length = 50 + Math.random() * 70;
+      if (comets.length > 70) return;
+      const colors: ('cyan' | 'blue' | 'white')[] = ['cyan', 'blue', 'cyan', 'white'];
+      const colorType = forcedColor || colors[Math.floor(Math.random() * colors.length)];
+      const speed = 400 + Math.random() * 450 + speedBonus;
+      const length = 60 + Math.random() * 80;
 
-      pulses.push({
-        lineX,
-        colIndex,
+      comets.push({
+        lineIndex: colIdx,
         currentY: startY,
         length,
         speed,
         colorType,
-        opacity: 0.85 + Math.random() * 0.15,
+        opacity: 0.9 + Math.random() * 0.1,
         direction,
       });
 
-      // Flash top dot if spawning near top
-      if (Math.abs(startY - 2) < 20) {
-        dotFlashes.set(colIndex, 1.0);
+      if (columns[colIdx]) {
+        columns[colIdx].flash = 1.0;
       }
     };
 
@@ -102,25 +151,27 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
         mouseX = newX;
         mouseY = newY;
 
-        // Check if mouse crossed any lines between prevMouseX and newX
-        if (prevMouseX > -9000 && Math.abs(newX - prevMouseX) > 2) {
-          const spacing = width < 640 ? 18 : 24;
-          const startX = (width % spacing) / 2;
+        if (prevMouseX > -9000) {
+          const deltaX = newX - prevMouseX;
+          const mouseSpeed = Math.hypot(deltaX, newY - prevMouseY);
+
+          // Pluck columns crossed by the cursor
           const minX = Math.min(prevMouseX, newX);
           const maxX = Math.max(prevMouseX, newX);
 
-          const minCol = Math.floor((minX - startX) / spacing);
-          const maxCol = Math.ceil((maxX - startX) / spacing);
+          for (let i = 0; i < columns.length; i++) {
+            const col = columns[i];
+            if (col.x >= minX - 4 && col.x <= maxX + 4) {
+              // Pluck the string with spring physics
+              const pluckStrength = Math.sign(deltaX) * Math.min(mouseSpeed * 0.45, 20);
+              col.velocity += pluckStrength * 35;
+              col.flash = 1.0;
 
-          for (let col = minCol; col <= maxCol; col++) {
-            const lineX = startX + col * spacing;
-            if (lineX >= minX && lineX <= maxX && lineX >= 0 && lineX <= width) {
-              // Mouse crossed this line -> shoot downward and upward pulses
-              spawnPulse(col, lineX, newY, 1, 600 + Math.random() * 400);
-              if (Math.random() > 0.4) {
-                spawnPulse(col, lineX, newY, -1, 500 + Math.random() * 300);
+              // Spawn energetic comet
+              spawnComet(i, newY, 1, 200 + mouseSpeed * 2, 'cyan');
+              if (Math.random() > 0.5) {
+                spawnComet(i, newY, -1, 150 + mouseSpeed, 'white');
               }
-              dotFlashes.set(col, 1.0);
             }
           }
         }
@@ -148,195 +199,260 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
     window.addEventListener('mouseleave', handlePointerLeave);
     window.addEventListener('resize', updateDimensions);
 
-    // Initial ambient pulses to populate scene immediately
-    const spacing = width < 640 ? 18 : 24;
-    const totalLines = Math.ceil(width / spacing) + 1;
-    const startX = (width % spacing) / 2;
+    // Initial ambient comets
     for (let i = 0; i < 15; i++) {
-      const col = Math.floor(Math.random() * totalLines);
-      const lineX = startX + col * spacing;
-      spawnPulse(col, lineX, Math.random() * (height || 400), 1);
+      const randomCol = Math.floor(Math.random() * columns.length);
+      spawnComet(randomCol, 100 + Math.random() * 300, 1);
     }
 
-    // Animation Render Loop
+    // Main 60fps Animation Loop
     const render = (time: number) => {
       const dt = Math.min((time - lastTime) / 1000, 0.1);
       lastTime = time;
 
       ctx.clearRect(0, 0, width, height);
 
-      const currentSpacing = width < 640 ? 18 : 24;
-      const baseY = 2; // Baseline at top
-      const numLines = Math.ceil(width / currentSpacing) + 1;
-      const actualStartX = (width % currentSpacing) / 2;
-
-      // Auto-spawn ambient energetic pulses so it's CONSTANTLY live
-      if (time - lastAutoSpawnTime > 160) {
+      // Periodically spawn ambient comets across waving columns
+      if (time - lastAutoSpawnTime > 140) {
         lastAutoSpawnTime = time;
-        const col = Math.floor(Math.random() * numLines);
-        const lineX = actualStartX + col * currentSpacing;
-        if (lineX >= 0 && lineX <= width) {
-          spawnPulse(col, lineX, baseY, 1, 350 + Math.random() * 450);
-          if (Math.random() > 0.7) {
-            // Also spawn occasional bottom or middle rebound pulse
-            const col2 = Math.floor(Math.random() * numLines);
-            const lineX2 = actualStartX + col2 * currentSpacing;
-            spawnPulse(col2, lineX2, height * (0.6 + Math.random() * 0.3), -1, 300 + Math.random() * 300);
-          }
+        if (columns.length > 0) {
+          const colIdx = Math.floor(Math.random() * columns.length);
+          const col = columns[colIdx];
+          const startY = getWaveY(col.x, time, width);
+          spawnComet(colIdx, startY, 1, 0);
+
+          // Subtle natural pluck on random column
+          col.velocity += (Math.random() - 0.5) * 80;
         }
       }
 
-      // Draw horizontal top baseline connecting all tick nodes
+      // Periodically trigger a majestic ocean ripple across the strings
+      if (time - lastAmbientRippleTime > 2200) {
+        lastAmbientRippleTime = time;
+        const dir = Math.random() > 0.5 ? 1 : -1;
+        waveRipples.push({
+          currentX: dir === 1 ? -50 : width + 50,
+          direction: dir,
+          speed: 750,
+          amplitude: 14,
+        });
+      }
+
+      // Advance wave ripples
+      for (let r = waveRipples.length - 1; r >= 0; r--) {
+        const ripple = waveRipples[r];
+        const prevX = ripple.currentX;
+        ripple.currentX += ripple.direction * ripple.speed * dt;
+
+        // Pluck columns that the ripple hits
+        for (let i = 0; i < columns.length; i++) {
+          const col = columns[i];
+          const minX = Math.min(prevX, ripple.currentX);
+          const maxX = Math.max(prevX, ripple.currentX);
+          if (col.x >= minX && col.x <= maxX) {
+            col.velocity += ripple.direction * ripple.amplitude * 25;
+            col.flash = 0.8;
+            if (Math.random() > 0.6) {
+              const startY = getWaveY(col.x, time, width);
+              spawnComet(i, startY, 1, 100, 'blue');
+            }
+          }
+        }
+
+        if (
+          (ripple.direction === 1 && ripple.currentX > width + 100) ||
+          (ripple.direction === -1 && ripple.currentX < -100)
+        ) {
+          waveRipples.splice(r, 1);
+        }
+      }
+
+      // 1. UPDATE AND DRAW STRING SPRING PHYSICS FOR EACH COLUMN
+      const SPRING_TENSION = 180;
+      const SPRING_DAMPING = 9;
+
+      for (let i = 0; i < columns.length; i++) {
+        const col = columns[i];
+
+        // Spring acceleration: F = -k*x - c*v
+        const acc = -SPRING_TENSION * col.displacement - SPRING_DAMPING * col.velocity;
+        col.velocity += acc * dt;
+        col.displacement += col.velocity * dt;
+
+        // Flash decay
+        if (col.flash > 0) {
+          col.flash = Math.max(0, col.flash - dt * 2.8);
+        }
+      }
+
+      // 2. DRAW ROLLING CONTINUOUS WAVE BASELINE CONNECTING ALL TICK DOTS
       ctx.beginPath();
+      for (let i = 0; i < columns.length; i++) {
+        const col = columns[i];
+        const waveY = getWaveY(col.x, time, width);
+        const drawX = col.x + col.displacement;
+
+        if (i === 0) {
+          ctx.moveTo(drawX, waveY);
+        } else {
+          ctx.lineTo(drawX, waveY);
+        }
+      }
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
       ctx.lineWidth = 1;
-      ctx.moveTo(0, baseY);
-      ctx.lineTo(width, baseY);
       ctx.stroke();
 
-      // Render vertical lines with living harmonic shimmer waves
-      for (let i = 0; i <= numLines; i++) {
-        const x = actualStartX + i * currentSpacing;
-        if (x < 0 || x > width) continue;
+      // 3. DRAW WAVING VERTICAL LINES
+      for (let i = 0; i < columns.length; i++) {
+        const col = columns[i];
+        const topY = getWaveY(col.x, time, width);
 
-        // Multi-frequency harmonic wave for continuous organic shimmer
+        // Harmonic shimmer factor
         const phase = i * 0.18;
-        const wave =
-          0.45 * Math.sin(time * 0.0018 + phase) +
-          0.35 * Math.sin(time * 0.0032 + phase * 1.6) +
-          0.2 * Math.cos(time * 0.0009 + phase * 0.7);
+        const waveShimmer =
+          0.45 * Math.sin(time * 0.002 + phase) +
+          0.35 * Math.sin(time * 0.0035 + phase * 1.5) +
+          0.2 * Math.cos(time * 0.001 + phase * 0.8);
 
-        // Proximity to mouse cursor
+        // Proximity to mouse
         let proximity = 0;
         if (isMouseInside) {
-          const distToMouse = Math.abs(x - mouseX);
-          if (distToMouse < 130) {
-            proximity = Math.max(0, 1 - distToMouse / 130);
+          const dist = Math.abs(col.x - mouseX);
+          if (dist < 120) {
+            proximity = Math.max(0, 1 - dist / 120);
           }
         }
 
-        // Column flash decay
-        let flash = dotFlashes.get(i) || 0;
-        if (flash > 0) {
-          flash = Math.max(0, flash - dt * 2.8);
-          dotFlashes.set(i, flash);
-        }
+        const boost = Math.max(proximity, col.flash);
 
-        // Calculate line vertical gradient
-        const lineGrad = ctx.createLinearGradient(x, baseY, x, height);
+        // Draw curved vibrating string line from topY to height
+        const lineGrad = ctx.createLinearGradient(col.x, topY, col.x, height);
 
-        if (proximity > 0 || flash > 0.1) {
-          const boost = Math.max(proximity, flash);
-          const topAlpha = 0.12 + boost * 0.35;
+        if (boost > 0.08) {
+          const topAlpha = 0.14 + boost * 0.4;
           lineGrad.addColorStop(0, `rgba(96, 165, 250, ${topAlpha})`);
-          lineGrad.addColorStop(0.3, `rgba(96, 165, 250, ${topAlpha * 0.75})`);
-          lineGrad.addColorStop(0.7, `rgba(255, 255, 255, ${topAlpha * 0.2})`);
+          lineGrad.addColorStop(0.35, `rgba(96, 165, 250, ${topAlpha * 0.75})`);
+          lineGrad.addColorStop(0.75, `rgba(255, 255, 255, ${topAlpha * 0.2})`);
           lineGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-
-          ctx.beginPath();
-          ctx.strokeStyle = lineGrad;
-          ctx.lineWidth = 1 + boost * 0.6;
-          ctx.moveTo(x, baseY);
-          ctx.lineTo(x, height);
-          ctx.stroke();
         } else {
-          // Standard living shimmering line
-          const shimmerAlpha = Math.max(0.03, 0.065 + wave * 0.035);
-          lineGrad.addColorStop(0, `rgba(255, 255, 255, ${shimmerAlpha * 1.5})`);
-          lineGrad.addColorStop(0.35, `rgba(255, 255, 255, ${shimmerAlpha})`);
-          lineGrad.addColorStop(0.75, `rgba(255, 255, 255, ${shimmerAlpha * 0.35})`);
+          const baseAlpha = Math.max(0.03, 0.07 + waveShimmer * 0.035);
+          lineGrad.addColorStop(0, `rgba(255, 255, 255, ${baseAlpha * 1.5})`);
+          lineGrad.addColorStop(0.35, `rgba(255, 255, 255, ${baseAlpha})`);
+          lineGrad.addColorStop(0.75, `rgba(255, 255, 255, ${baseAlpha * 0.35})`);
           lineGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-
-          ctx.beginPath();
-          ctx.strokeStyle = lineGrad;
-          ctx.lineWidth = 1;
-          ctx.moveTo(x, baseY);
-          ctx.lineTo(x, height);
-          ctx.stroke();
         }
-
-        // Draw top tick dot
-        const dotBaseAlpha = 0.22 + wave * 0.12;
-        const totalDotAlpha = Math.min(1, dotBaseAlpha + proximity * 0.65 + flash * 0.85);
-        const dotRadius = proximity > 0 ? 1.5 + proximity * 1.5 : flash > 0.2 ? 2.2 : 1.5;
 
         ctx.beginPath();
-        ctx.arc(x, baseY, dotRadius, 0, Math.PI * 2);
+        ctx.strokeStyle = lineGrad;
+        ctx.lineWidth = boost > 0.1 ? 1 + boost * 0.7 : 1;
 
-        if (proximity > 0 || flash > 0.2) {
-          ctx.fillStyle = `rgba(147, 197, 253, ${totalDotAlpha})`;
+        // Trace vertical line with standing-wave string vibration curvature
+        const segments = 12;
+        const stepY = (height - topY) / segments;
+        ctx.moveTo(col.x + col.displacement, topY);
+
+        for (let s = 1; s <= segments; s++) {
+          const curY = topY + s * stepY;
+          // Sine standing wave along the line's length: zero at top and bottom, peak in middle
+          const progress = s / segments;
+          const harmonicSway = Math.sin(progress * Math.PI);
+          const curX = col.x + col.displacement * harmonicSway;
+          ctx.lineTo(curX, curY);
+        }
+        ctx.stroke();
+
+        // 4. DRAW TOP TICK DOT AT WAVE CREST
+        const dotAlpha = Math.min(1, 0.25 + waveShimmer * 0.15 + boost * 0.75);
+        const dotRadius = boost > 0.1 ? 1.8 + boost * 1.5 : 1.6;
+        const dotX = col.x + col.displacement;
+
+        ctx.beginPath();
+        ctx.arc(dotX, topY, dotRadius, 0, Math.PI * 2);
+
+        if (boost > 0.15) {
+          ctx.fillStyle = `rgba(147, 197, 253, ${dotAlpha})`;
           ctx.fill();
 
-          // Soft ambient halo around active dot
+          // Ambient halo around glowing dot
           ctx.beginPath();
-          ctx.arc(x, baseY, dotRadius * 2.8, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(59, 130, 246, ${totalDotAlpha * 0.25})`;
+          ctx.arc(dotX, topY, dotRadius * 2.8, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(59, 130, 246, ${dotAlpha * 0.3})`;
           ctx.fill();
         } else {
-          ctx.fillStyle = `rgba(255, 255, 255, ${totalDotAlpha})`;
+          ctx.fillStyle = `rgba(255, 255, 255, ${dotAlpha})`;
           ctx.fill();
         }
       }
 
-      // Update and render shooting laser pulses
-      for (let j = pulses.length - 1; j >= 0; j--) {
-        const p = pulses[j];
-
-        // Move pulse
-        p.currentY += p.direction * p.speed * dt;
-
-        const headY = p.currentY;
-        const tailY = p.currentY - p.direction * p.length;
-        const minY = Math.min(headY, tailY);
-        const maxY = Math.max(headY, tailY);
-
-        // Check if pulse has left visible canvas
-        if (p.direction === 1 && tailY > height) {
-          pulses.splice(j, 1);
-          continue;
-        }
-        if (p.direction === -1 && tailY < baseY) {
-          // Hit top terminator dot -> flash!
-          dotFlashes.set(p.colIndex, 1.0);
-          pulses.splice(j, 1);
+      // 5. UPDATE AND RENDER SHOOTING COMETS (LASER PULSES) RIDING THE WAVES
+      for (let j = comets.length - 1; j >= 0; j--) {
+        const c = comets[j];
+        const col = columns[c.lineIndex];
+        if (!col) {
+          comets.splice(j, 1);
           continue;
         }
 
-        // Draw laser gradient trail along line
-        const pulseGrad = ctx.createLinearGradient(p.lineX, tailY, p.lineX, headY);
+        const topY = getWaveY(col.x, time, width);
+        c.currentY += c.direction * c.speed * dt;
 
-        if (p.colorType === 'cyan') {
-          pulseGrad.addColorStop(0, 'rgba(56, 189, 248, 0)');
-          pulseGrad.addColorStop(0.65, `rgba(56, 189, 248, ${p.opacity * 0.5})`);
-          pulseGrad.addColorStop(1, `rgba(224, 242, 254, ${p.opacity})`);
-        } else if (p.colorType === 'white') {
-          pulseGrad.addColorStop(0, 'rgba(255, 255, 255, 0)');
-          pulseGrad.addColorStop(0.65, `rgba(191, 219, 254, ${p.opacity * 0.5})`);
-          pulseGrad.addColorStop(1, `rgba(255, 255, 255, ${p.opacity})`);
+        const headY = c.currentY;
+        const tailY = c.currentY - c.direction * c.length;
+
+        // Bound checks
+        if (c.direction === 1 && tailY > height) {
+          comets.splice(j, 1);
+          continue;
+        }
+        if (c.direction === -1 && tailY < topY) {
+          col.flash = 1.0;
+          comets.splice(j, 1);
+          continue;
+        }
+
+        // Calculate X position along the vibrating line standing wave
+        const getXAtY = (yVal: number) => {
+          const prog = Math.max(0, Math.min(1, (yVal - topY) / Math.max(1, height - topY)));
+          return col.x + col.displacement * Math.sin(prog * Math.PI);
+        };
+
+        const headX = getXAtY(headY);
+        const tailX = getXAtY(tailY);
+
+        const cometGrad = ctx.createLinearGradient(tailX, tailY, headX, headY);
+
+        if (c.colorType === 'cyan') {
+          cometGrad.addColorStop(0, 'rgba(56, 189, 248, 0)');
+          cometGrad.addColorStop(0.65, `rgba(56, 189, 248, ${c.opacity * 0.5})`);
+          cometGrad.addColorStop(1, `rgba(224, 242, 254, ${c.opacity})`);
+        } else if (c.colorType === 'white') {
+          cometGrad.addColorStop(0, 'rgba(255, 255, 255, 0)');
+          cometGrad.addColorStop(0.65, `rgba(191, 219, 254, ${c.opacity * 0.5})`);
+          cometGrad.addColorStop(1, `rgba(255, 255, 255, ${c.opacity})`);
         } else {
           // Blue
-          pulseGrad.addColorStop(0, 'rgba(59, 130, 246, 0)');
-          pulseGrad.addColorStop(0.6, `rgba(96, 165, 250, ${p.opacity * 0.6})`);
-          pulseGrad.addColorStop(1, `rgba(191, 219, 254, ${p.opacity})`);
+          cometGrad.addColorStop(0, 'rgba(59, 130, 246, 0)');
+          cometGrad.addColorStop(0.6, `rgba(96, 165, 250, ${c.opacity * 0.6})`);
+          cometGrad.addColorStop(1, `rgba(191, 219, 254, ${c.opacity})`);
         }
 
         ctx.beginPath();
-        ctx.strokeStyle = pulseGrad;
-        ctx.lineWidth = 1.75;
-        ctx.moveTo(p.lineX, tailY);
-        ctx.lineTo(p.lineX, headY);
+        ctx.strokeStyle = cometGrad;
+        ctx.lineWidth = 2;
+        ctx.moveTo(tailX, tailY);
+        ctx.lineTo(headX, headY);
         ctx.stroke();
 
         // Glowing particle head
-        if (headY >= baseY && headY <= height) {
+        if (headY >= topY && headY <= height) {
           ctx.beginPath();
-          ctx.arc(p.lineX, headY, 1.5, 0, Math.PI * 2);
+          ctx.arc(headX, headY, 1.75, 0, Math.PI * 2);
           ctx.fillStyle = '#ffffff';
           ctx.fill();
 
           ctx.beginPath();
-          ctx.arc(p.lineX, headY, 4, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(96, 165, 250, 0.4)';
+          ctx.arc(headX, headY, 4.5, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(96, 165, 250, 0.45)';
           ctx.fill();
         }
       }
@@ -395,9 +511,9 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
         </Reveal>
       </div>
 
-      {/* ATTIO-STYLE LIVE ANIMATED VERTICAL LINES CURTAIN (FULL SPACE UNDER FIRST CONTENT) */}
-      <div className="relative flex-1 w-full flex flex-col items-center justify-end min-h-[380px] sm:min-h-[460px] mx-auto">
-        {/* Full-width interactive Canvas with Attio Pinstripes, Living Waves, and Shooting Laser Pulses */}
+      {/* ATTIO-STYLE LIVE ANIMATED VERTICAL LINES CURTAIN WITH ROLLING OCEAN WAVES */}
+      <div className="relative flex-1 w-full flex flex-col items-center justify-end min-h-[380px] sm:min-h-[480px] mx-auto">
+        {/* Full-width interactive Canvas with Waving Baseline, Guitar String Physics & Comets */}
         <div
           className="absolute inset-0 w-full h-full pointer-events-auto [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)] overflow-hidden"
           aria-hidden="true"
@@ -405,7 +521,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
           <canvas ref={canvasRef} className="w-full h-full block cursor-crosshair" />
         </div>
 
-        {/* BOTTOM FLOATING PILL (Matching Attio's bottom pill in media_1789923371719.png) */}
+        {/* BOTTOM FLOATING PILL */}
         <div className="relative z-10 mb-2 sm:mb-4">
           <button
             onClick={scrollToMission}
