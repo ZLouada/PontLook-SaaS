@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {
   XCircle,
+  CheckCircle2,
   BadgeCheck,
   SlidersHorizontal,
   Handshake,
@@ -190,13 +191,18 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
                 </h3>
 
                 {/* Soft Emerald Container with positive points */}
-                <div className="rounded-2xl bg-[#16171B] border border-emerald-900/30 p-5 sm:p-6 space-y-3.5">
+                <div className="rounded-2xl bg-[#16171B] border border-emerald-900/30 p-5 sm:p-6 space-y-4">
                   {pontlookPoints.map((point, idx) => (
-                    <div key={idx} className="text-sm">
-                      <p className="font-semibold text-white">
-                        {point.title}:{' '}
-                        <span className="font-normal text-neutral-300">{point.desc}</span>
-                      </p>
+                    <div key={idx} className="flex items-start gap-3.5">
+                      <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-200">
+                        <CheckCircle2 size={15} />
+                      </div>
+                      <div className="text-sm">
+                        <p className="font-semibold text-white">
+                          {point.title}:{' '}
+                          <span className="font-normal text-neutral-300">{point.desc}</span>
+                        </p>
+                      </div>
                     </div>
                   ))}
                 </div>
