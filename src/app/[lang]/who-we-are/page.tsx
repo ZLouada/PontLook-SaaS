@@ -6,6 +6,7 @@ import { ArrowRight } from 'lucide-react';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import WhoWeAreSections from '@/components/who-we-are/WhoWeAreSections';
+import WhoWeAreHero from '@/components/who-we-are/WhoWeAreHero';
 
 export async function generateMetadata({
   params,
@@ -60,34 +61,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
   return (
     <>
       {/* Hero Section */}
-      <section data-nav-dark="true" className="bg-[#08090A] text-white pt-28 sm:pt-36 pb-10 sm:pb-14 relative overflow-hidden">
-        {/* Ambient Depth Glows */}
-        <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-blue-600/[0.04] blur-3xl -z-10 rounded-full" />
-        <div className="pointer-events-none absolute top-10 start-1/4 w-[400px] h-[400px] bg-blue-500/[0.03] blur-3xl -z-10 rounded-full" />
-
-        <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6">
-          <Reveal className="flex flex-col items-center">
-            <h1 className="text-3xl sm:text-5xl lg:text-[56px] font-semibold text-white leading-[1.12] sm:leading-[1.1] font-heading tracking-tight">
-              {isAr ? (
-                <>
-                  من نحن: منصة التوفيق والربط الرائدة <br className="hidden sm:inline" />
-                  لتدريب الشركات في <span className="text-blue-400 font-bold">المنطقة</span>
-                </>
-              ) : (
-                <>
-                  Who We Are: The Corporate Training <br className="hidden sm:inline" />
-                  <span className="text-blue-400 font-bold">Matchmaking Platform</span>
-                </>
-              )}
-            </h1>
-            <p className="mt-5 text-base sm:text-xl leading-relaxed text-neutral-400 max-w-2xl sm:max-w-3xl mx-auto font-normal">
-              {isAr
-                ? 'نربط شركات ومزودي التدريب بصناع القرار في كبرى المؤسسات الذين لديهم احتياجات وتحديات حقيقية يسعون لحلها.'
-                : 'We connect corporate training companies with enterprise decision makers who already have a real workforce challenge to solve.'}
-            </p>
-          </Reveal>
-        </div>
-      </section>
+      <WhoWeAreHero lang={lang} />
 
       {/* Narrative Flow:
           • Section 2: Mission & Split Card Comparison Engine
