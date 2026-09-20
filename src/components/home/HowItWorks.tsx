@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { ArrowRight } from 'lucide-react';
-import { m, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 
 export default function HowItWorks() {
   const dict = useDictionary();
@@ -13,7 +13,12 @@ export default function HowItWorks() {
   const lang = (params?.lang as string) || 'en';
   const isAr = lang === 'ar';
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
+
+  // Lock flag to prevent scroll listener from glitching/overriding manual tab clicks
+  const isManualClickRef = useRef(false);
+  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Touch swipe support for mobile
   const touchStartX = useRef<number | null>(null);
@@ -50,8 +55,83 @@ export default function HowItWorks() {
     }
   };
 
+  // Track scroll progress through the 300vh container on desktop
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    // If a manual button click initiated smooth scrolling, ignore scroll updates to avoid glitching
+    if (isManualClickRef.current) return;
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
+
+    if (latest < 0.33) {
+      setActiveStep(0);
+    } else if (latest < 0.66) {
+      setActiveStep(1);
+    } else {
+      setActiveStep(2);
+    }
+  });
+
+  useEffect(() => {
+    if (isManualClickRef.current) return;
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
+    const current = scrollYProgress.get();
+    if (current < 0.33) {
+      setActiveStep(0);
+    } else if (current < 0.66) {
+      setActiveStep(1);
+    } else {
+      setActiveStep(2);
+    }
+  }, [scrollYProgress]);
+
+  // Release lock if user scrolls manually with mouse wheel or touch gesture
+  useEffect(() => {
+    const handleUserScroll = () => {
+      if (isManualClickRef.current) {
+        isManualClickRef.current = false;
+        if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+      }
+    };
+    window.addEventListener('wheel', handleUserScroll, { passive: true });
+    window.addEventListener('touchmove', handleUserScroll, { passive: true });
+    return () => {
+      window.removeEventListener('wheel', handleUserScroll);
+      window.removeEventListener('touchmove', handleUserScroll);
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    };
+  }, []);
+
+  // Smooth scroll to corresponding step in the 300vh sequence without glitching
   const handleStepClick = (index: number) => {
     setActiveStep(index);
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      return;
+    }
+    if (!containerRef.current) return;
+
+    isManualClickRef.current = true;
+    const rect = containerRef.current.getBoundingClientRect();
+    const containerTop = window.scrollY + rect.top;
+    const containerHeight = containerRef.current.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    const scrollableDistance = containerHeight - viewportHeight;
+
+    const targetProgress = [0.10, 0.50, 0.90][index];
+    const targetY = containerTop + scrollableDistance * targetProgress;
+
+    window.scrollTo({
+      top: targetY,
+      behavior: 'smooth',
+    });
+
+    if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    clickTimeoutRef.current = setTimeout(() => {
+      isManualClickRef.current = false;
+    }, 850);
   };
 
   const cards = [
@@ -62,7 +142,6 @@ export default function HowItWorks() {
       navTitle: isAr ? 'رصد الاحتياج' : 'Demand Detection',
       tag: isAr ? 'الخطوة 01 // رصد الاحتياج المؤسسي' : 'STEP 01 // DEMAND DETECTION',
       tagColor: 'text-amber-400',
-      glowColor: 'bg-amber-500/[0.08]',
       headline: isAr
         ? 'رصد احتياجات التدريب المؤسسي المؤكدة قبل طرحها في السوق'
         : 'Detect verified enterprise training demand before it goes public',
@@ -88,28 +167,36 @@ export default function HowItWorks() {
             : 'No generic public RFPs or dead directories, only active corporate organizations ready to upskill.',
         },
       ],
-      preview: (
-        <div className="w-full space-y-3 font-sans">
-          {/* Floating Header */}
-          <div className="flex items-center justify-between px-1">
-            <span className="text-neutral-400 text-xs font-medium">
-              {isAr ? 'رادار الاحتياج المؤسسي' : 'Enterprise Demand Feed'}
-            </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-medium">
+      canvasBg: 'bg-[#16171B] border-[#26282D]',
+      console: (
+        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2 font-sans">
+          {/* Console Window Header */}
+          <div className="flex items-center justify-between pb-2 border-b border-[#26282D] text-xs">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+              </div>
+              <span className="text-neutral-400 text-[11px] font-medium ms-2">
+                {isAr ? 'رادار الاحتياج المؤسسي' : 'Enterprise Demand Feed'}
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-[10px] font-medium">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>{isAr ? 'إشارة نشطة' : 'Active Signal'}</span>
             </div>
           </div>
 
           {/* Lead Item 1 */}
-          <div className="p-3.5 sm:p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.05] border border-white/[0.08] transition-colors space-y-1.5 text-xs shadow-lg">
+          <div className="p-2 sm:p-2.5 rounded-lg bg-[#16171B] border border-[#26282D] space-y-1 text-xs">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-white text-sm">
+              <span className="font-semibold text-white">
                 {isAr ? 'الخدمات المالية والمصرفية · الرياض' : 'Banking & FinTech · Riyadh'}
               </span>
-              <span className="font-bold text-emerald-400 tabular-nums text-sm">SAR 450,000+</span>
+              <span className="font-bold text-emerald-400 tabular-nums">SAR 450,000+</span>
             </div>
-            <div className="flex items-center justify-between text-neutral-400 text-xs">
+            <div className="flex items-center justify-between text-neutral-400 text-[11px]">
               <span>{isAr ? '1,200+ موظف' : '1,200+ Employees'}</span>
               <span className="text-amber-400 font-medium">
                 {isAr ? 'أولوية عاجلة · القيادة التنفيذية' : 'High Intent · Executive Leadership'}
@@ -118,16 +205,16 @@ export default function HowItWorks() {
           </div>
 
           {/* Lead Item 2 */}
-          <div className="p-3.5 sm:p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.05] border border-white/[0.08] transition-colors space-y-1.5 text-xs shadow-lg">
+          <div className="p-2 sm:p-2.5 rounded-lg bg-[#16171B] border border-[#26282D] space-y-1 text-xs">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-white text-sm">
+              <span className="font-semibold text-white">
                 {isAr ? 'الطاقة والبنية التحتية · الظهران' : 'Energy & Infrastructure · Dhahran'}
               </span>
-              <span className="font-bold text-blue-400 text-sm">
+              <span className="font-bold text-blue-400">
                 {isAr ? 'ميزانية مؤكدة' : 'Confirmed Budget'}
               </span>
             </div>
-            <div className="flex items-center justify-between text-neutral-400 text-xs">
+            <div className="flex items-center justify-between text-neutral-400 text-[11px]">
               <span>{isAr ? 'التحول الرقمي والذكاء الاصطناعي' : 'Digital Transformation & AI'}</span>
               <span className="text-emerald-400 font-medium">
                 {isAr ? 'موعد التنفيذ: الربع الثاني' : 'Deployment: Q2'}
@@ -145,7 +232,6 @@ export default function HowItWorks() {
       navTitle: isAr ? 'التأهيل والربط' : 'Fit Scoring',
       tag: isAr ? 'الخطوة 02 // التأهيل والربط الذكي' : 'STEP 02 // FIT SCORING & QUALIFICATION',
       tagColor: 'text-purple-400',
-      glowColor: 'bg-purple-500/[0.08]',
       headline: isAr
         ? 'تأهيل دقيق لأصحاب القرار، الميزانيات، والجداول الزمنية'
         : 'Score and qualify decision makers, budgets, and timelines',
@@ -171,41 +257,49 @@ export default function HowItWorks() {
             : 'Strict validation across timeline, participant level, delivery format, and ROI performance metrics.',
         },
       ],
-      preview: (
-        <div className="w-full space-y-3 font-sans">
-          {/* Floating Header */}
-          <div className="flex items-center justify-between px-1">
-            <span className="text-neutral-400 text-xs font-medium">
-              {isAr ? 'منظومة المطابقة الذكية' : 'AI Match & Qualification'}
-            </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-bold">
+      canvasBg: 'bg-[#16171B] border-[#26282D]',
+      console: (
+        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2 font-sans">
+          {/* Console Window Header */}
+          <div className="flex items-center justify-between pb-2 border-b border-[#26282D] text-xs">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+              </div>
+              <span className="text-neutral-400 text-[11px] font-medium ms-2">
+                {isAr ? 'منظومة المطابقة الذكية' : 'AI Match & Qualification'}
+              </span>
+            </div>
+            <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-xs font-bold">
               <span>94%</span>
-              <span className="text-[10px] font-normal text-neutral-400">{isAr ? 'تطابق' : 'Match'}</span>
+              <span className="text-[10px] font-normal">{isAr ? 'تطابق' : 'Match'}</span>
             </div>
           </div>
 
           {/* Progress Bar */}
-          <div className="p-3.5 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] space-y-2 text-xs shadow-lg">
-            <div className="flex justify-between text-neutral-300 font-medium">
+          <div className="space-y-1">
+            <div className="flex justify-between text-xs text-neutral-300 font-medium">
               <span>{isAr ? 'معايير التأهيل المكتملة' : 'Criteria Fulfilled'}</span>
               <span className="font-bold text-white">4 / 4 Complete</span>
             </div>
-            <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+            <div className="h-1.5 w-full bg-[#16171B] border border-[#26282D] rounded-full overflow-hidden p-0.5">
               <div className="h-full bg-gradient-to-r from-purple-500 to-emerald-400 rounded-full w-[94%]" />
             </div>
           </div>
 
           {/* Checklist items */}
-          <div className="space-y-2 text-xs text-neutral-300">
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-              <span className="truncate block text-xs sm:text-sm">
+          <div className="space-y-1 pt-0.5 text-xs text-neutral-300">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-[#16171B] border border-[#26282D]">
+              <span className="truncate block">
                 {isAr
                   ? 'صاحب القرار: رئيس الموارد البشرية التنفيذي'
                   : 'Decision Maker: Chief Human Resources Officer'}
               </span>
             </div>
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-              <span className="truncate block text-xs sm:text-sm">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-[#16171B] border border-[#26282D]">
+              <span className="truncate block">
                 {isAr
                   ? 'الجدول الزمني المعتمد: خلال 30 يوماً'
                   : 'Timeline: Deployment within 30 days'}
@@ -223,7 +317,6 @@ export default function HowItWorks() {
       navTitle: isAr ? 'التقديم والتعاقد' : 'Engagement',
       tag: isAr ? 'الخطوة 03 // التقديم المباشر والتعاقد' : 'STEP 03 // ENGAGEMENT & SUCCESS',
       tagColor: 'text-teal-400',
-      glowColor: 'bg-teal-500/[0.08]',
       headline: isAr
         ? 'تقديم مباشر وتواصل شخصي مع ضمان الدفع مقابل النتائج'
         : 'Direct warm introductions with pay on success guarantees',
@@ -249,36 +342,44 @@ export default function HowItWorks() {
             : 'If an introduction does not meet confirmed qualification criteria, we replace it at zero cost.',
         },
       ],
-      preview: (
-        <div className="w-full space-y-3 font-sans">
-          {/* Floating Header */}
-          <div className="flex items-center justify-between px-1">
-            <span className="text-neutral-400 text-xs font-medium">
-              {isAr ? 'لوحة التعاقد المباشر' : 'Direct Engagement Console'}
-            </span>
-            <div className="px-2.5 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-300 text-[11px] font-medium">
+      canvasBg: 'bg-[#16171B] border-[#26282D]',
+      console: (
+        <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2 font-sans">
+          {/* Console Window Header */}
+          <div className="flex items-center justify-between pb-2 border-b border-[#26282D] text-xs">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+                <span className="h-2 w-2 rounded-full bg-white/20" />
+              </div>
+              <span className="text-neutral-400 text-[11px] font-medium ms-2">
+                {isAr ? 'لوحة التعاقد المباشر' : 'Direct Engagement Console'}
+              </span>
+            </div>
+            <div className="px-2 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-teal-400 text-[10px] font-medium">
               <span>{isAr ? 'تم التقديم' : 'Intro Complete'}</span>
             </div>
           </div>
 
           {/* Status Box */}
-          <div className="p-3.5 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] space-y-2 text-xs shadow-lg">
+          <div className="p-2 sm:p-2.5 rounded-lg bg-[#16171B] border border-[#26282D] space-y-1 text-xs">
             <div className="flex items-center justify-between">
-              <span className="text-neutral-400 text-xs">{isAr ? 'حالة الفرصة' : 'Pipeline Status'}</span>
-              <span className="font-semibold text-emerald-400 bg-emerald-500/15 px-2.5 py-0.5 rounded text-[11px] border border-emerald-500/30">
+              <span className="text-neutral-400">{isAr ? 'حالة الفرصة' : 'Pipeline Status'}</span>
+              <span className="font-semibold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded text-[10px] border border-emerald-500/30">
                 {isAr ? 'مرحلة تقديم العرض الفني' : 'Proposal Review Stage'}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-neutral-400 text-xs">{isAr ? 'ضمان الفرصة' : 'Guarantee SLA'}</span>
-              <span className="font-medium text-white text-xs">
+              <span className="text-neutral-400">{isAr ? 'ضمان الفرصة' : 'Guarantee SLA'}</span>
+              <span className="font-medium text-white text-[11px]">
                 {isAr ? 'ضمان استبدال خلال 5 أيام' : '5 Day Replacement Guarantee'}
               </span>
             </div>
           </div>
 
           {/* Contract Terms */}
-          <div className="p-3.5 sm:p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-between text-xs text-neutral-400 shadow-lg">
+          <div className="pt-0.5 flex items-center justify-between text-xs text-neutral-400">
             <span>{isAr ? 'بدون عمولات خفية' : 'Zero hidden fees'}</span>
             <span className="font-bold text-teal-400">
               {isAr ? 'علاقة تعاقدية مباشرة 100%' : '100% Direct Contract'}
@@ -293,153 +394,153 @@ export default function HowItWorks() {
 
   return (
     <section
+      ref={containerRef}
       id="how-it-works"
       data-nav-dark="true"
-      className="relative bg-[#08090A] text-white py-16 sm:py-20 lg:py-28 overflow-hidden"
+      className="relative bg-[#08090A] text-white py-12 sm:py-16 lg:py-0 lg:min-h-[300vh]"
     >
       {/* Pure AMOLED Ambient Lighting */}
       <div className="absolute top-1/4 start-1/4 w-[600px] h-[600px] bg-blue-600/[0.04] blur-[180px] pointer-events-none rounded-full" />
       <div className="absolute bottom-1/4 end-1/4 w-[600px] h-[600px] bg-purple-600/[0.03] blur-[180px] pointer-events-none rounded-full" />
 
-      <div className="container-site relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="mb-8 sm:mb-10 text-center max-w-3xl mx-auto shrink-0">
-          <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
-            {dict.how_it_works?.title || (isAr ? 'نرصد بدقة المنشآت التي تواجه فجوات تدريبية ومهارية حقيقية' : 'We pinpoint organizations facing real skill & training gaps')}
-          </h2>
+      {/* Viewport Container: Normal Flow on Mobile, Sticky on Desktop */}
+      <div className="relative lg:sticky lg:top-0 lg:h-screen lg:max-h-[100dvh] lg:flex lg:flex-col lg:justify-center pt-0 lg:pt-28 pb-0 lg:pb-6 px-4 sm:px-6 lg:px-8">
+        <div className="container-site relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center my-auto">
+          
+          {/* Section Header */}
+          <div className="mb-4 sm:mb-5 text-center max-w-3xl mx-auto shrink-0">
+            <h2 className="text-2xl sm:text-3xl lg:text-[28px] font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
+              {dict.how_it_works?.title || (isAr ? 'نرصد بدقة المنشآت التي تواجه فجوات تدريبية ومهارية حقيقية' : 'We pinpoint organizations facing real skill & training gaps')}
+            </h2>
 
-          <p className="mt-2.5 text-sm sm:text-base text-neutral-400 font-sans leading-relaxed">
-            {isAr ? 'تعلم، شخص، وطابق' : 'Learn, Diagnose, and Get Matched'}
-          </p>
-        </div>
+            <p className="mt-1.5 text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed">
+              {isAr ? 'تعلم، شخص، وطابق' : 'Learn, Diagnose, and Get Matched'}
+            </p>
+          </div>
 
-        {/* 3 Step Switcher Tabs */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 w-full max-w-lg shrink-0">
-          {cards.map((card, idx) => {
-            const isActive = activeStep === idx;
-            return (
-              <button
-                key={card.id}
-                onClick={() => handleStepClick(idx)}
-                className={`group relative flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-3 sm:px-4 rounded-full border transition-all duration-200 text-xs sm:text-sm font-medium active:scale-95 ${
-                  isActive
-                    ? 'bg-white/[0.08] text-white border-white/30 shadow-sm'
-                    : 'bg-transparent text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
-                }`}
+          {/* 3 Step Switcher Tabs (Touch-optimized for Mobile & Desktop) */}
+          <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-4 sm:mb-5 w-full max-w-lg shrink-0">
+            {cards.map((card, idx) => {
+              const isActive = activeStep === idx;
+              return (
+                <button
+                  key={card.id}
+                  onClick={() => handleStepClick(idx)}
+                  className={`group relative flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2.5 sm:px-3.5 rounded-full border transition-all duration-200 text-xs font-medium active:scale-95 ${
+                    isActive
+                      ? 'bg-white/[0.08] text-white border-white/30 shadow-sm'
+                      : 'bg-transparent text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
+                  }`}
+                >
+                  <span className={`text-[11px] font-mono font-bold ${isActive ? card.tagColor : 'text-neutral-500'}`}>
+                    {card.stepNumber}
+                  </span>
+                  <span className="truncate">
+                    {card.navTitle}
+                  </span>
+                  {isActive && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse shrink-0" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Showcase Card: Touch-Swipeable on Mobile */}
+          <div
+            className="w-full"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <AnimatePresence mode="wait">
+              <m.div
+                key={activeCard.id}
+                initial={{ opacity: 0, y: 10, scale: 0.99 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.99 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+                className="relative rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] hover:border-white/20 transition-colors duration-300 p-4 sm:p-5 lg:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.75)] overflow-hidden"
               >
-                <span className={`text-[11px] sm:text-xs font-mono font-bold ${isActive ? card.tagColor : 'text-neutral-500'}`}>
-                  {card.stepNumber}
-                </span>
-                <span className="truncate">
-                  {card.navTitle}
-                </span>
-                {isActive && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse shrink-0" />
-                )}
-              </button>
-            );
-          })}
-        </div>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center">
+                  
+                  {/* Left Column: Category Tag, Title, Action Link, 3 Points with Chevrons */}
+                  <div className="lg:col-span-6 flex flex-col items-start text-start">
+                    {/* Eyebrow Tag with Accent Color */}
+                    <div className={`${activeCard.tagColor} text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-1.5`}>
+                      {activeCard.tag}
+                    </div>
 
-        {/* Frameless Showcase Area: Touch-Swipeable on Mobile */}
-        <div
-          className="w-full"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          <AnimatePresence mode="wait">
-            <m.div
-              key={activeCard.id}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.18, ease: 'easeOut' }}
-              className="relative w-full"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                
-                {/* Left Column: Category Tag, Title, Action Link, 3 Points with Chevrons */}
-                <div className="lg:col-span-6 flex flex-col items-start text-start">
-                  {/* Eyebrow Tag with Accent Color */}
-                  <div className={`${activeCard.tagColor} text-xs font-bold uppercase tracking-wider mb-2`}>
-                    {activeCard.tag}
+                    {/* High-Contrast Bold Headline */}
+                    <h3 className="text-lg sm:text-xl lg:text-[22px] font-heading font-medium text-white tracking-[-0.025em] leading-snug mb-2">
+                      {activeCard.headline}
+                    </h3>
+
+                    {/* Linear Style Action Link (Learn more ->) */}
+                    <Link
+                      href={activeCard.actionHref}
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-300 hover:text-white transition-colors duration-200 mb-3 group"
+                    >
+                      <span>{activeCard.actionText}</span>
+                      <ArrowRight
+                        size={13}
+                        className="rtl:-scale-x-100 text-neutral-400 group-hover:text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all"
+                      />
+                    </Link>
+
+                    {/* 3 Points with Chevrons */}
+                    <div className="space-y-2 w-full pt-1.5 border-t border-[#26282D]">
+                      {activeCard.points.map((pt) => (
+                        <div key={pt.title} className="space-y-0.5">
+                          <div className="text-xs sm:text-[13px] font-semibold text-neutral-100 font-heading">
+                            {pt.title}
+                          </div>
+                          <p className="text-[11px] sm:text-xs text-neutral-400 leading-snug font-sans">
+                            {pt.desc}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
-                  {/* High-Contrast Bold Headline */}
-                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-heading font-semibold text-white tracking-tight leading-snug mb-3">
-                    {activeCard.headline}
-                  </h3>
+                  {/* Right Column: Accent Tinted Canvas with Dark Console */}
+                  <div className="lg:col-span-6 w-full">
+                    <div className={`w-full rounded-2xl ${activeCard.canvasBg} border p-3 sm:p-4 shadow-inner relative overflow-hidden flex items-center justify-center`}>
+                      {activeCard.console}
+                    </div>
+                  </div>
 
-                  {/* Linear Style Action Link (Learn more ->) */}
-                  <Link
-                    href={activeCard.actionHref}
-                    className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-neutral-300 hover:text-white transition-colors duration-200 mb-5 group"
-                  >
-                    <span>{activeCard.actionText}</span>
-                    <ArrowRight
-                      size={14}
-                      className="rtl:-scale-x-100 text-neutral-400 group-hover:text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all"
-                    />
-                  </Link>
+                </div>
 
-                  {/* 3 Points with Chevrons */}
-                  <div className="space-y-3.5 w-full pt-3 border-t border-white/[0.08]">
-                    {activeCard.points.map((pt) => (
-                      <div key={pt.title} className="space-y-1">
-                        <div className="text-xs sm:text-sm font-semibold text-neutral-100 font-heading">
-                          {pt.title}
-                        </div>
-                        <p className="text-xs sm:text-[13px] text-neutral-400 leading-relaxed font-sans">
-                          {pt.desc}
-                        </p>
-                      </div>
+                {/* Bottom Step Switcher Indicators inside card */}
+                <div className="flex items-center justify-between pt-3 mt-3 border-t border-[#26282D] text-xs text-neutral-400 w-full">
+                  <div className="flex items-center gap-2">
+                    {cards.map((c, dotIdx) => (
+                      <button
+                        key={dotIdx}
+                        onClick={() => handleStepClick(dotIdx)}
+                        aria-label={`Go to step ${dotIdx + 1}`}
+                        className={`h-1.5 rounded-full transition-all duration-300 ${
+                          activeStep === dotIdx ? 'w-6 bg-white' : 'w-2 bg-neutral-700 hover:bg-neutral-500'
+                        }`}
+                      />
                     ))}
                   </div>
+
+                  <button
+                    onClick={() => handleStepClick((activeStep + 1) % cards.length)}
+                    className="inline-flex items-center gap-1 font-medium text-xs text-neutral-300 hover:text-white transition-colors"
+                  >
+                    <span>{isAr ? 'الخطوة التالية' : 'Next Step'}</span>
+                    <ArrowRight size={12} className="rtl:-scale-x-100" />
+                  </button>
                 </div>
 
-                {/* Right Column: Floating Data Preview with Soft Ambient Glow */}
-                <div className="lg:col-span-6 w-full relative">
-                  {/* Atmospheric Glow behind floating items */}
-                  <div
-                    className={`pointer-events-none absolute -inset-4 blur-[80px] rounded-full transition-colors duration-500 ${activeCard.glowColor}`}
-                  />
-                  <div className="relative z-10 w-full">
-                    {activeCard.preview}
-                  </div>
-                </div>
+              </m.div>
+            </AnimatePresence>
+          </div>
 
-              </div>
-
-              {/* Bottom Step Switcher Indicators */}
-              <div className="flex items-center justify-between pt-6 mt-8 border-t border-white/[0.08] text-xs text-neutral-400 w-full">
-                <div className="flex items-center gap-2">
-                  {cards.map((c, dotIdx) => (
-                    <button
-                      key={dotIdx}
-                      onClick={() => handleStepClick(dotIdx)}
-                      aria-label={`Go to step ${dotIdx + 1}`}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${
-                        activeStep === dotIdx ? 'w-7 bg-white' : 'w-2 bg-neutral-700 hover:bg-neutral-500'
-                      }`}
-                    />
-                  ))}
-                </div>
-
-                <button
-                  onClick={() => handleStepClick((activeStep + 1) % cards.length)}
-                  className="inline-flex items-center gap-1.5 font-medium text-xs sm:text-sm text-neutral-300 hover:text-white transition-colors"
-                >
-                  <span>{isAr ? 'الخطوة التالية' : 'Next Step'}</span>
-                  <ArrowRight size={14} className="rtl:-scale-x-100" />
-                </button>
-              </div>
-
-            </m.div>
-          </AnimatePresence>
         </div>
-
       </div>
     </section>
   );

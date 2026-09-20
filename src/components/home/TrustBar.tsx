@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { BadgeCheck, Building2, Compass, Globe } from 'lucide-react';
 import { m } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { useParams } from 'next/navigation';
@@ -15,25 +14,21 @@ export default function TrustBar() {
 
   const values = [
     {
-      icon: BadgeCheck,
       title: dict.trust_bar?.needs?.title || 'Verified Needs',
       desc: dict.trust_bar?.needs?.desc || 'Enterprise L&D requests verified directly with HR leaders',
       badge: isAr ? 'طلب موثق' : 'Verified Demand',
     },
     {
-      icon: Building2,
       title: dict.trust_bar?.access?.title || 'Direct Access',
       desc: dict.trust_bar?.access?.desc || 'No intermediaries, connect straight to talent and procurement heads',
       badge: isAr ? 'تواصل مباشر' : 'Direct Link',
     },
     {
-      icon: Compass,
       title: dict.trust_bar?.insights?.title || 'Actionable L&D guides & insights',
       desc: dict.trust_bar?.insights?.desc || 'Benchmarking and curated market intelligence',
       badge: isAr ? 'أبحاث حصرية' : 'Market Intel',
     },
     {
-      icon: Globe,
       title: dict.trust_bar?.gcc?.title || 'Regional Focus',
       desc: dict.trust_bar?.gcc?.desc || 'Saudi Arabia, UAE and GCC focused enterprise landscape',
       badge: isAr ? 'السعودية والإمارات' : 'KSA & UAE',
@@ -73,41 +68,32 @@ export default function TrustBar() {
             animationPlayState: isPaused ? 'paused' : 'running',
           }}
         >
-          {marqueeItems.map((v, i) => {
-            const Icon = v.icon;
-            return (
-              <div
-                key={`${v.title}-${i}`}
-                className="w-[260px] sm:w-[360px] md:w-[440px] shrink-0 mx-2 sm:mx-4"
-              >
-                <div className="group relative flex items-center gap-3.5 sm:gap-5 p-3.5 sm:p-5 rounded-2xl bg-transparent border border-white/10 hover:border-white/25 hover:bg-white/[0.02] transition-all duration-300">
-                  {/* Subtle hover gradient on card */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+          {marqueeItems.map((v, i) => (
+            <div
+              key={`${v.title}-${i}`}
+              className="w-[240px] sm:w-[320px] md:w-[380px] shrink-0 mx-2 sm:mx-3.5"
+            >
+              <div className="group relative p-4 sm:p-5 rounded-2xl bg-transparent border border-white/10 hover:border-white/25 hover:bg-white/[0.02] transition-all duration-300">
+                {/* Subtle hover gradient on card */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-                  {/* Icon container */}
-                  <div className="relative flex h-10 w-10 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] text-white border border-white/10 group-hover:border-white/25 shadow-sm transition-all duration-300">
-                    <Icon size={19} strokeWidth={1.75} className="sm:hidden" />
-                    <Icon size={24} strokeWidth={1.75} className="hidden sm:block" />
-                  </div>
-
-                  {/* Content */}
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-1.5 mb-1">
-                      <span className="font-medium text-xs sm:text-base text-white tracking-[-0.02em] truncate block group-hover:text-white transition-colors">
-                        {v.title}
-                      </span>
-                      <span className="shrink-0 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-medium bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/25 group-hover:text-neutral-200 transition-colors">
-                        {v.badge}
-                      </span>
-                    </div>
-                    <span className="text-[11px] sm:text-sm text-neutral-400 block font-normal leading-snug line-clamp-2">
-                      {v.desc}
+                {/* Content */}
+                <div className="min-w-0">
+                  <div className="flex items-center justify-between gap-2 mb-1.5">
+                    <span className="font-medium text-xs sm:text-base text-white tracking-[-0.02em] truncate block group-hover:text-white transition-colors">
+                      {v.title}
+                    </span>
+                    <span className="shrink-0 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-medium bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/25 group-hover:text-neutral-200 transition-colors">
+                      {v.badge}
                     </span>
                   </div>
+                  <span className="text-[11px] sm:text-sm text-neutral-400 block font-normal leading-snug line-clamp-2">
+                    {v.desc}
+                  </span>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </m.div>
       </div>
     </section>
