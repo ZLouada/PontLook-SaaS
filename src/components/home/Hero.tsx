@@ -6,7 +6,6 @@ import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { ArrowRight } from 'lucide-react';
 import Reveal from '@/components/shared/Reveal';
-import OrbBadge from '@/components/shared/OrbBadge';
 
 export default function Hero() {
   const dict = useDictionary();
@@ -44,25 +43,6 @@ export default function Hero() {
         <div className="flex flex-col items-center text-center">
           
           <Reveal>
-            {/* Live Enterprise Training Radar Pill */}
-            <div className="mb-6 sm:mb-8 inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#16171B]/85 border border-[#26282D] hover:border-white/30 backdrop-blur-xl shadow-xl transition-all duration-300">
-              <OrbBadge state="searching" size={20} />
-              <span className="text-xs sm:text-sm font-medium">
-                <span
-                  className="t-shimmer"
-                  data-text={
-                    isAr
-                      ? 'رادار الاحتياج التدريبي المؤسسي · رصد مستمر عبر دول الخليج'
-                      : 'AI Enterprise Training Radar · Active Across GCC'
-                  }
-                >
-                  {isAr
-                    ? 'رادار الاحتياج التدريبي المؤسسي · رصد مستمر عبر دول الخليج'
-                    : 'AI Enterprise Training Radar · Active Across GCC'}
-                </span>
-              </span>
-            </div>
-
             {/* Linear-Style Centered Headline in White */}
             <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-[64px] xl:text-[72px] font-medium tracking-[-0.035em] leading-[1.12] sm:leading-[1.08] text-white max-w-4xl mx-auto px-2">
               {dict.hero.headline}
