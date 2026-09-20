@@ -23,6 +23,20 @@ import {
 } from '../schemas';
 import { StepNavigation } from '../fields';
 import OrbBadge from '@/components/shared/OrbBadge';
+import CountryFlag from '@/components/shared/CountryFlag';
+
+const CITY_COUNTRY_MAP: Record<string, string> = {
+  'Riyadh': 'SA',
+  'Dubai': 'AE',
+  'Abu Dhabi': 'AE',
+  'Doha': 'QA',
+  'Jeddah': 'SA',
+  'Kuwait City': 'KW',
+  'Manama': 'BH',
+  'Muscat': 'OM',
+  'Dammam / Khobar': 'SA',
+  'Other GCC Location': 'OTHER',
+};
 
 const modeIcons = {
   in_person: MapPin,
@@ -185,18 +199,23 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
           <div className="mt-3.5 flex flex-wrap gap-2">
             {GCC_CITIES.map((city) => {
               const isSelected = selectedCity === city;
+              const flagCode = CITY_COUNTRY_MAP[city] || 'OTHER';
               return (
                 <button
                   key={city}
                   type="button"
                   onClick={() => setValue('city', city, { shouldValidate: true })}
-                  className={`rounded-xl px-4 py-2.5 min-h-[44px] inline-flex items-center justify-center text-xs sm:text-sm font-medium transition-all active:scale-95 touch-manipulation ${
+                  className={`rounded-xl px-3.5 py-2.5 min-h-[44px] inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-medium transition-all active:scale-95 touch-manipulation ${
                     isSelected
                       ? 'bg-white text-black font-semibold shadow-sm'
                       : 'border border-[#26282D] bg-[#0F1013] text-neutral-300 hover:border-white/20 hover:bg-white/[0.05]'
                   }`}
                 >
-                  {city}
+                  <CountryFlag
+                    code={flagCode}
+                    className="w-4 h-3 rounded-xs border border-white/10 shrink-0"
+                  />
+                  <span>{city}</span>
                 </button>
               );
             })}

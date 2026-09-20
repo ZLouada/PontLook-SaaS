@@ -96,8 +96,12 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
       <header
         className={`fixed inset-x-0 mx-auto z-50 liquid-glass-morph-header ${
           scrolled
-            ? `top-0 w-full rounded-none py-2.5 px-4 liquid-glass-mobile-scrolled pt-[max(0.625rem,env(safe-area-inset-top))] ${isDesktop ? 'sm:top-3 sm:w-[90%] sm:max-w-5xl sm:rounded-full sm:py-2.5 sm:px-6 liquid-glass-capsule-dark' : ''}`
-            : 'top-0 w-full max-w-full rounded-none py-3.5 sm:py-4 px-4 sm:px-8 lg:px-12 liquid-glass-top-dark pt-[max(0.875rem,env(safe-area-inset-top))]'
+            ? `top-0 w-full rounded-none px-4 pb-3 pt-[max(1.125rem,calc(env(safe-area-inset-top,0px)+0.75rem))] liquid-glass-mobile-scrolled ${
+                isDesktop
+                  ? 'sm:top-3 sm:w-[90%] sm:max-w-5xl sm:rounded-full sm:py-2.5 sm:px-6 liquid-glass-capsule-dark'
+                  : ''
+              }`
+            : 'top-0 w-full max-w-full rounded-none px-4 sm:px-8 lg:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-dark'
         }`}
       >
         <nav
@@ -229,7 +233,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   animate={{ x: 0 }}
                   exit={slideExit}
                   transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                  className="fixed inset-y-0 end-0 z-[9999] flex h-full h-[100dvh] w-[85vw] max-w-[340px] flex-col justify-between border-s border-[#26282D] bg-[#0F1013] p-5 sm:p-6 shadow-2xl overflow-y-auto"
+                  className="fixed inset-y-0 end-0 z-[9999] flex h-full h-[100dvh] w-[85vw] max-w-[340px] flex-col justify-between border-s border-[#26282D] bg-[#0F1013] px-5 sm:px-6 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+1rem))] pb-[max(1.5rem,calc(env(safe-area-inset-bottom,0px)+1rem))] shadow-2xl overflow-y-auto"
                   role="document"
                   aria-label="Mobile navigation"
                 >

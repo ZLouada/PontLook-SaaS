@@ -10,6 +10,7 @@ import {
   Check,
 } from 'lucide-react';
 import OrbBadge from '@/components/shared/OrbBadge';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 interface ProviderApplicationWizardProps {
   lang: string;
@@ -65,6 +66,15 @@ const GCC_MARKETS_AR = [
   'دولة الكويت',
   'البحرين وسلطنة عمان',
 ];
+
+// Map each market label (EN index) to its flag code(s)
+const MARKET_FLAG_CODES: Record<number, string[]> = {
+  0: ['SA'],           // Saudi Arabia
+  1: ['AE'],           // UAE
+  2: ['QA'],           // Qatar
+  3: ['KW'],           // Kuwait
+  4: ['BH', 'OM'],     // Bahrain & Oman
+};
 
 const YEARS_OPTIONS_EN = [
   { value: 'under_2', label: 'Less than 2 years' },
@@ -665,8 +675,9 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                   <span className="text-red-500">*</span>
                 </label>
                 <div className="space-y-2">
-                  {gccMarkets.map((mkt) => {
+                  {gccMarkets.map((mkt, mktIdx) => {
                     const isSelected = formData.markets.includes(mkt);
+                    const flags = MARKET_FLAG_CODES[mktIdx] || [];
                     return (
                       <button
                         key={mkt}
@@ -678,7 +689,18 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
                             : 'bg-[#16171B] border-[#26282D] text-neutral-300 hover:bg-white/[0.04] hover:border-white/20'
                         }`}
                       >
-                        <span>{mkt}</span>
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <div className="flex items-center gap-1 shrink-0">
+                            {flags.map((code) => (
+                              <CountryFlag
+                                key={code}
+                                code={code}
+                                className="w-5 h-3.5 rounded-sm shadow-sm border border-white/10"
+                              />
+                            ))}
+                          </div>
+                          <span className="truncate">{mkt}</span>
+                        </div>
                         <span
                           className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-[10px] transition-all ${
                             isSelected
