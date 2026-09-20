@@ -1,96 +1,29 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import { ArrowUp, ArrowRight, ArrowDown, Sparkles, CheckCircle2, ChevronRight, Users, Award } from 'lucide-react';
-import { m, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { ArrowDown } from 'lucide-react';
 import Reveal from '@/components/shared/Reveal';
 
 interface WhoWeAreHeroProps {
   lang?: 'en' | 'ar';
 }
 
-interface Scenario {
-  id: string;
-  queryEn: string;
-  queryAr: string;
-  headerEn: string;
-  headerAr: string;
-  badgeEn: string;
-  badgeAr: string;
-  titleEn: string;
-  titleAr: string;
-  snippetEn: string;
-  snippetAr: string;
-  actionEn: string;
-  actionAr: string;
-  budgetEn: string;
-  budgetAr: string;
+interface LaserPulse {
+  lineX: number;
+  colIndex: number;
+  currentY: number;
+  length: number;
+  speed: number;
+  colorType: 'blue' | 'cyan' | 'white';
+  opacity: number;
+  direction: 1 | -1; // 1 = down, -1 = up
 }
-
-const SCENARIOS: Scenario[] = [
-  {
-    id: 'leadership',
-    queryEn: 'Find accredited executive leadership training in Riyadh...',
-    queryAr: 'ابحث عن تدريب قيادة تنفيذية معتمد في الرياض...',
-    headerEn: 'Based on verified enterprise challenge in Riyadh, matched with 2 accredited providers:',
-    headerAr: 'بناءً على احتياج مؤسسي مؤكد في الرياض، تم التوفيق مع مزودين معتمدين:',
-    badgeEn: 'Enterprise Brief • Verified',
-    badgeAr: 'كراسة معتمدة • تم التحقق',
-    titleEn: 'RE: Executive Leadership & Strategic Governance',
-    titleAr: 'بخصوص: ورشة عمل القيادة التنفيذية والحوكمة الاستراتيجية',
-    snippetEn: 'Pre-scoped for 45 C-suite & VP directors. Objective: Leading through organizational scale & AI transformation.',
-    snippetAr: 'تم تشخيص النطاق لـ 45 قيادياً تنفيذياً. الهدف: القيادة خلال التوسع المؤسسي والتحول الرقمي.',
-    actionEn: '↳ 2 Vetted proposals ready for HR evaluation',
-    actionAr: '↳ تم تجهيز عرضين تدريبيين مفحوصين لمراجعة الموارد البشرية',
-    budgetEn: 'SAR 180,000 Budget Confirmed',
-    budgetAr: 'الميزانية معتمدة: 180,000 ر.س',
-  },
-  {
-    id: 'cyber',
-    queryEn: 'Cybersecurity compliance certification for 180 employees...',
-    queryAr: 'شهادة الامتثال للأمن السيبراني لـ 180 موظفاً...',
-    headerEn: 'Based on your regulatory requirements in GCC, matched with top specialized firm:',
-    headerAr: 'بناءً على المتطلبات التنظيمية في الخليج، تم التوفيق مع مزود متخصص معتمد:',
-    badgeEn: 'Financial Sector RFP',
-    badgeAr: 'كراسة القطاع المالي',
-    titleEn: 'RE: ISO 27001 & Cyber Risk Defense Simulation',
-    titleAr: 'بخصوص: محاكاة الدفاع السيبراني والامتثال لمعايير ISO 27001',
-    snippetEn: 'Hands-on live cyber range drills. Zero theoretical slides; 100% applied defensive scenarios for banking staff.',
-    snippetAr: 'تدريب عملي ومحاكاة هجمات حية. صفر شرائح نظرية؛ تطبيق عملي بنسبة 100% لموظفي البنوك.',
-    actionEn: '↳ Facilitator profile & curriculum pre-screened',
-    actionAr: '↳ تم فحص واعتماد السيرة الذاتية للمدرب والمنهج مسبقاً',
-    budgetEn: 'SAR 240,000 Approved Scope',
-    budgetAr: 'نطاق معتمد: 240,000 ر.س',
-  },
-  {
-    id: 'sales',
-    queryEn: 'Enterprise B2B negotiation coaching for enterprise sales reps...',
-    queryAr: 'تدريب تفاوض مبيعات الشركات B2B لفريق المبيعات...',
-    headerEn: 'Based on high-value B2B enterprise pipeline goals, matched with elite sales coach:',
-    headerAr: 'بناءً على أهداف إغلاق الصفقات الكبرى، تم التوفيق مع مدرب مبيعات مؤسسية رائد:',
-    badgeEn: 'Revenue Accelerator Brief',
-    badgeAr: 'كراسة تنمية الإيرادات',
-    titleEn: 'RE: High-Stakes Deal Negotiation & Closing Academy',
-    titleAr: 'بخصوص: أكاديمية التفاوض المتقدم وإغلاق الصفقات الكبرى',
-    snippetEn: 'Live deal roleplay with real enterprise procurement scenarios. Target: Increase win rates from 22% to 38%.',
-    snippetAr: 'محاكاة تفاوض حية مع سيناريوهات مشتريات حقيقية. الهدف: رفع معدل إغلاق الصفقات من 22% إلى 38%.',
-    actionEn: '↳ Tailored engagement brief ready for kick-off',
-    actionAr: '↳ كراسة مخصصة جاهزة لانطلاق التدريب فوراً',
-    budgetEn: 'SAR 150,000 Budget Confirmed',
-    budgetAr: 'الميزانية معتمدة: 150,000 ر.س',
-  },
-];
 
 export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
   const isAr = lang === 'ar';
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const [activeScenarioIdx, setActiveScenarioIdx] = useState(0);
-  const activeScenario = SCENARIOS[activeScenarioIdx];
-
-  // Smooth Attio-style interactive vertical lines canvas
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -98,10 +31,22 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
     if (!ctx) return;
 
     let animationFrameId: number;
-    let mouseX = -9999;
-    let mouseY = -9999;
     let width = 0;
     let height = 0;
+    let lastTime = performance.now();
+    let prevMouseX = -9999;
+    let prevMouseY = -9999;
+    let mouseX = -9999;
+    let mouseY = -9999;
+    let isMouseInside = false;
+
+    // Line dots flash state: Map<colIndex, flashIntensity (0 to 1)>
+    const dotFlashes = new Map<number, number>();
+
+    // Array of living laser pulses traveling along the lines
+    const pulses: LaserPulse[] = [];
+
+    let lastAutoSpawnTime = 0;
 
     const updateDimensions = () => {
       const parent = canvas.parentElement;
@@ -110,99 +55,288 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       width = rect.width;
       height = rect.height;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     updateDimensions();
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseX = e.clientX - rect.left;
-      mouseY = e.clientY - rect.top;
+    const spawnPulse = (
+      colIndex: number,
+      lineX: number,
+      startY: number,
+      direction: 1 | -1 = 1,
+      customSpeed?: number
+    ) => {
+      if (pulses.length > 60) return; // Prevent excessive density
+      const colors: ('blue' | 'cyan' | 'white')[] = ['blue', 'cyan', 'blue', 'white'];
+      const colorType = colors[Math.floor(Math.random() * colors.length)];
+      const speed = customSpeed || 400 + Math.random() * 500;
+      const length = 50 + Math.random() * 70;
+
+      pulses.push({
+        lineX,
+        colIndex,
+        currentY: startY,
+        length,
+        speed,
+        colorType,
+        opacity: 0.85 + Math.random() * 0.15,
+        direction,
+      });
+
+      // Flash top dot if spawning near top
+      if (Math.abs(startY - 2) < 20) {
+        dotFlashes.set(colIndex, 1.0);
+      }
     };
 
-    const handleMouseLeave = () => {
+    const handlePointerMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const newX = e.clientX - rect.left;
+      const newY = e.clientY - rect.top;
+
+      if (newX >= 0 && newX <= width && newY >= 0 && newY <= height) {
+        isMouseInside = true;
+        mouseX = newX;
+        mouseY = newY;
+
+        // Check if mouse crossed any lines between prevMouseX and newX
+        if (prevMouseX > -9000 && Math.abs(newX - prevMouseX) > 2) {
+          const spacing = width < 640 ? 18 : 24;
+          const startX = (width % spacing) / 2;
+          const minX = Math.min(prevMouseX, newX);
+          const maxX = Math.max(prevMouseX, newX);
+
+          const minCol = Math.floor((minX - startX) / spacing);
+          const maxCol = Math.ceil((maxX - startX) / spacing);
+
+          for (let col = minCol; col <= maxCol; col++) {
+            const lineX = startX + col * spacing;
+            if (lineX >= minX && lineX <= maxX && lineX >= 0 && lineX <= width) {
+              // Mouse crossed this line -> shoot downward and upward pulses
+              spawnPulse(col, lineX, newY, 1, 600 + Math.random() * 400);
+              if (Math.random() > 0.4) {
+                spawnPulse(col, lineX, newY, -1, 500 + Math.random() * 300);
+              }
+              dotFlashes.set(col, 1.0);
+            }
+          }
+        }
+
+        prevMouseX = newX;
+        prevMouseY = newY;
+      } else {
+        isMouseInside = false;
+        mouseX = -9999;
+        mouseY = -9999;
+        prevMouseX = -9999;
+        prevMouseY = -9999;
+      }
+    };
+
+    const handlePointerLeave = () => {
+      isMouseInside = false;
       mouseX = -9999;
       mouseY = -9999;
+      prevMouseX = -9999;
+      prevMouseY = -9999;
     };
 
-    const parent = canvas.parentElement;
-    if (parent) {
-      parent.addEventListener('mousemove', handleMouseMove);
-      parent.addEventListener('mouseleave', handleMouseLeave);
-    }
+    window.addEventListener('mousemove', handlePointerMove, { passive: true });
+    window.addEventListener('mouseleave', handlePointerLeave);
     window.addEventListener('resize', updateDimensions);
 
-    // Render loop
-    const render = () => {
+    // Initial ambient pulses to populate scene immediately
+    const spacing = width < 640 ? 18 : 24;
+    const totalLines = Math.ceil(width / spacing) + 1;
+    const startX = (width % spacing) / 2;
+    for (let i = 0; i < 15; i++) {
+      const col = Math.floor(Math.random() * totalLines);
+      const lineX = startX + col * spacing;
+      spawnPulse(col, lineX, Math.random() * (height || 400), 1);
+    }
+
+    // Animation Render Loop
+    const render = (time: number) => {
+      const dt = Math.min((time - lastTime) / 1000, 0.1);
+      lastTime = time;
+
       ctx.clearRect(0, 0, width, height);
 
-      const spacing = width < 640 ? 18 : 24; // Distance between vertical lines
-      const baseY = 2; // Baseline top Y coordinate
-      const totalLines = Math.ceil(width / spacing) + 1;
-      const startX = (width % spacing) / 2;
+      const currentSpacing = width < 640 ? 18 : 24;
+      const baseY = 2; // Baseline at top
+      const numLines = Math.ceil(width / currentSpacing) + 1;
+      const actualStartX = (width % currentSpacing) / 2;
 
-      // Draw top baseline rule
+      // Auto-spawn ambient energetic pulses so it's CONSTANTLY live
+      if (time - lastAutoSpawnTime > 160) {
+        lastAutoSpawnTime = time;
+        const col = Math.floor(Math.random() * numLines);
+        const lineX = actualStartX + col * currentSpacing;
+        if (lineX >= 0 && lineX <= width) {
+          spawnPulse(col, lineX, baseY, 1, 350 + Math.random() * 450);
+          if (Math.random() > 0.7) {
+            // Also spawn occasional bottom or middle rebound pulse
+            const col2 = Math.floor(Math.random() * numLines);
+            const lineX2 = actualStartX + col2 * currentSpacing;
+            spawnPulse(col2, lineX2, height * (0.6 + Math.random() * 0.3), -1, 300 + Math.random() * 300);
+          }
+        }
+      }
+
+      // Draw horizontal top baseline connecting all tick nodes
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
       ctx.lineWidth = 1;
       ctx.moveTo(0, baseY);
       ctx.lineTo(width, baseY);
       ctx.stroke();
 
-      // Draw vertical lines and top tick dots
-      for (let i = 0; i <= totalLines; i++) {
-        const x = startX + i * spacing;
+      // Render vertical lines with living harmonic shimmer waves
+      for (let i = 0; i <= numLines; i++) {
+        const x = actualStartX + i * currentSpacing;
         if (x < 0 || x > width) continue;
 
-        // Proximity to mouse cursor
-        const distToMouse = Math.abs(x - mouseX);
-        const maxDist = 140;
-        const proximity = Math.max(0, 1 - distToMouse / maxDist);
+        // Multi-frequency harmonic wave for continuous organic shimmer
+        const phase = i * 0.18;
+        const wave =
+          0.45 * Math.sin(time * 0.0018 + phase) +
+          0.35 * Math.sin(time * 0.0032 + phase * 1.6) +
+          0.2 * Math.cos(time * 0.0009 + phase * 0.7);
 
-        // Calculate gradient for line
-        const grad = ctx.createLinearGradient(x, baseY, x, height);
-        
-        if (proximity > 0) {
-          // Highlighted line near mouse cursor
-          const baseAlpha = 0.08 + proximity * 0.28;
-          grad.addColorStop(0, `rgba(96, 165, 250, ${baseAlpha})`);
-          grad.addColorStop(0.35, `rgba(96, 165, 250, ${baseAlpha * 0.7})`);
-          grad.addColorStop(0.75, `rgba(255, 255, 255, ${baseAlpha * 0.25})`);
-          grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        // Proximity to mouse cursor
+        let proximity = 0;
+        if (isMouseInside) {
+          const distToMouse = Math.abs(x - mouseX);
+          if (distToMouse < 130) {
+            proximity = Math.max(0, 1 - distToMouse / 130);
+          }
+        }
+
+        // Column flash decay
+        let flash = dotFlashes.get(i) || 0;
+        if (flash > 0) {
+          flash = Math.max(0, flash - dt * 2.8);
+          dotFlashes.set(i, flash);
+        }
+
+        // Calculate line vertical gradient
+        const lineGrad = ctx.createLinearGradient(x, baseY, x, height);
+
+        if (proximity > 0 || flash > 0.1) {
+          const boost = Math.max(proximity, flash);
+          const topAlpha = 0.12 + boost * 0.35;
+          lineGrad.addColorStop(0, `rgba(96, 165, 250, ${topAlpha})`);
+          lineGrad.addColorStop(0.3, `rgba(96, 165, 250, ${topAlpha * 0.75})`);
+          lineGrad.addColorStop(0.7, `rgba(255, 255, 255, ${topAlpha * 0.2})`);
+          lineGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
           ctx.beginPath();
-          ctx.strokeStyle = grad;
-          ctx.lineWidth = 1 + proximity * 0.5;
+          ctx.strokeStyle = lineGrad;
+          ctx.lineWidth = 1 + boost * 0.6;
           ctx.moveTo(x, baseY);
           ctx.lineTo(x, height);
           ctx.stroke();
-
-          // Highlighted top dot
-          ctx.beginPath();
-          ctx.arc(x, baseY, 2 + proximity * 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(147, 197, 253, ${0.4 + proximity * 0.6})`;
-          ctx.fill();
         } else {
-          // Normal elegant subdued line
-          grad.addColorStop(0, 'rgba(255, 255, 255, 0.07)');
-          grad.addColorStop(0.3, 'rgba(255, 255, 255, 0.04)');
-          grad.addColorStop(0.7, 'rgba(255, 255, 255, 0.015)');
-          grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+          // Standard living shimmering line
+          const shimmerAlpha = Math.max(0.03, 0.065 + wave * 0.035);
+          lineGrad.addColorStop(0, `rgba(255, 255, 255, ${shimmerAlpha * 1.5})`);
+          lineGrad.addColorStop(0.35, `rgba(255, 255, 255, ${shimmerAlpha})`);
+          lineGrad.addColorStop(0.75, `rgba(255, 255, 255, ${shimmerAlpha * 0.35})`);
+          lineGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
           ctx.beginPath();
-          ctx.strokeStyle = grad;
+          ctx.strokeStyle = lineGrad;
           ctx.lineWidth = 1;
           ctx.moveTo(x, baseY);
           ctx.lineTo(x, height);
           ctx.stroke();
+        }
 
-          // Normal subtle top dot
+        // Draw top tick dot
+        const dotBaseAlpha = 0.22 + wave * 0.12;
+        const totalDotAlpha = Math.min(1, dotBaseAlpha + proximity * 0.65 + flash * 0.85);
+        const dotRadius = proximity > 0 ? 1.5 + proximity * 1.5 : flash > 0.2 ? 2.2 : 1.5;
+
+        ctx.beginPath();
+        ctx.arc(x, baseY, dotRadius, 0, Math.PI * 2);
+
+        if (proximity > 0 || flash > 0.2) {
+          ctx.fillStyle = `rgba(147, 197, 253, ${totalDotAlpha})`;
+          ctx.fill();
+
+          // Soft ambient halo around active dot
           ctx.beginPath();
-          ctx.arc(x, baseY, 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
+          ctx.arc(x, baseY, dotRadius * 2.8, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(59, 130, 246, ${totalDotAlpha * 0.25})`;
+          ctx.fill();
+        } else {
+          ctx.fillStyle = `rgba(255, 255, 255, ${totalDotAlpha})`;
+          ctx.fill();
+        }
+      }
+
+      // Update and render shooting laser pulses
+      for (let j = pulses.length - 1; j >= 0; j--) {
+        const p = pulses[j];
+
+        // Move pulse
+        p.currentY += p.direction * p.speed * dt;
+
+        const headY = p.currentY;
+        const tailY = p.currentY - p.direction * p.length;
+        const minY = Math.min(headY, tailY);
+        const maxY = Math.max(headY, tailY);
+
+        // Check if pulse has left visible canvas
+        if (p.direction === 1 && tailY > height) {
+          pulses.splice(j, 1);
+          continue;
+        }
+        if (p.direction === -1 && tailY < baseY) {
+          // Hit top terminator dot -> flash!
+          dotFlashes.set(p.colIndex, 1.0);
+          pulses.splice(j, 1);
+          continue;
+        }
+
+        // Draw laser gradient trail along line
+        const pulseGrad = ctx.createLinearGradient(p.lineX, tailY, p.lineX, headY);
+
+        if (p.colorType === 'cyan') {
+          pulseGrad.addColorStop(0, 'rgba(56, 189, 248, 0)');
+          pulseGrad.addColorStop(0.65, `rgba(56, 189, 248, ${p.opacity * 0.5})`);
+          pulseGrad.addColorStop(1, `rgba(224, 242, 254, ${p.opacity})`);
+        } else if (p.colorType === 'white') {
+          pulseGrad.addColorStop(0, 'rgba(255, 255, 255, 0)');
+          pulseGrad.addColorStop(0.65, `rgba(191, 219, 254, ${p.opacity * 0.5})`);
+          pulseGrad.addColorStop(1, `rgba(255, 255, 255, ${p.opacity})`);
+        } else {
+          // Blue
+          pulseGrad.addColorStop(0, 'rgba(59, 130, 246, 0)');
+          pulseGrad.addColorStop(0.6, `rgba(96, 165, 250, ${p.opacity * 0.6})`);
+          pulseGrad.addColorStop(1, `rgba(191, 219, 254, ${p.opacity})`);
+        }
+
+        ctx.beginPath();
+        ctx.strokeStyle = pulseGrad;
+        ctx.lineWidth = 1.75;
+        ctx.moveTo(p.lineX, tailY);
+        ctx.lineTo(p.lineX, headY);
+        ctx.stroke();
+
+        // Glowing particle head
+        if (headY >= baseY && headY <= height) {
+          ctx.beginPath();
+          ctx.arc(p.lineX, headY, 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(p.lineX, headY, 4, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(96, 165, 250, 0.4)';
           ctx.fill();
         }
       }
@@ -210,14 +344,12 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    animationFrameId = requestAnimationFrame(render);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      if (parent) {
-        parent.removeEventListener('mousemove', handleMouseMove);
-        parent.removeEventListener('mouseleave', handleMouseLeave);
-      }
+      window.removeEventListener('mousemove', handlePointerMove);
+      window.removeEventListener('mouseleave', handlePointerLeave);
       window.removeEventListener('resize', updateDimensions);
     };
   }, []);
@@ -233,16 +365,16 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
     <section
       data-nav-dark="true"
       ref={containerRef}
-      className="bg-[#08090A] text-white min-h-[100dvh] flex flex-col justify-between pt-28 sm:pt-32 lg:pt-36 pb-6 sm:pb-10 relative overflow-hidden select-none"
+      className="bg-[#08090A] text-white min-h-[100dvh] flex flex-col justify-between pt-28 sm:pt-32 lg:pt-36 pb-8 relative overflow-hidden select-none"
     >
       {/* Ambient Depth Glows */}
       <div className="pointer-events-none absolute top-10 start-1/2 -translate-x-1/2 w-[1000px] h-[450px] bg-blue-600/[0.04] blur-3xl -z-10 rounded-full" />
       <div className="pointer-events-none absolute top-4 start-1/4 w-[500px] h-[350px] bg-blue-500/[0.03] blur-3xl -z-10 rounded-full" />
 
-      {/* TOP CONTENT (First Content) */}
-      <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6 mb-6 sm:mb-8">
+      {/* TOP CONTENT (First Content - Headline & Subtitle Only) */}
+      <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6 mb-6 sm:mb-10">
         <Reveal className="flex flex-col items-center">
-          <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-semibold text-white leading-[1.12] sm:leading-[1.1] font-heading tracking-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-[56px] font-semibold text-white leading-[1.12] sm:leading-[1.1] font-heading tracking-tight">
             {isAr ? (
               <>
                 من نحن: منصة التوفيق والربط الرائدة <br className="hidden sm:inline" />
@@ -263,125 +395,21 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
         </Reveal>
       </div>
 
-      {/* ATTIO-STYLE VERTICAL LINES CURTAIN SECTION (UNDER THE FIRST CONTENT) */}
-      <div className="relative flex-1 w-full flex flex-col items-center justify-center min-h-[360px] sm:min-h-[420px] max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Background Canvas with Attio Pinstripe Grid & Dots */}
+      {/* ATTIO-STYLE LIVE ANIMATED VERTICAL LINES CURTAIN (FULL SPACE UNDER FIRST CONTENT) */}
+      <div className="relative flex-1 w-full flex flex-col items-center justify-end min-h-[380px] sm:min-h-[460px] mx-auto">
+        {/* Full-width interactive Canvas with Attio Pinstripes, Living Waves, and Shooting Laser Pulses */}
         <div
-          className="absolute inset-0 w-full h-full pointer-events-auto [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] overflow-hidden"
+          className="absolute inset-0 w-full h-full pointer-events-auto [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)] overflow-hidden"
           aria-hidden="true"
         >
-          <canvas ref={canvasRef} className="w-full h-full block" />
+          <canvas ref={canvasRef} className="w-full h-full block cursor-crosshair" />
         </div>
 
-        {/* FLOATING INTERACTIVE ATTIO-STYLE CARD */}
-        <div className="relative z-10 w-full max-w-2xl mx-auto flex flex-col items-center">
-          {/* Main Container matching Attio's ask container */}
-          <div className="w-full rounded-2xl bg-[#0F1013]/90 backdrop-blur-xl border border-[#26282D] shadow-2xl p-3 sm:p-5 transition-all">
-            {/* Search / Query Input Bar */}
-            <div className="relative flex items-center justify-between gap-3 rounded-xl bg-[#17181D] border border-[#2B2D33] px-3.5 sm:px-4 py-2.5 sm:py-3 shadow-inner">
-              <span className="text-xs sm:text-sm text-neutral-400 truncate select-none font-normal">
-                {isAr ? activeScenario.queryAr : activeScenario.queryEn}
-              </span>
-              <div className="flex items-center gap-2 shrink-0">
-                <button
-                  type="button"
-                  aria-label={isAr ? 'إرسال' : 'Submit query'}
-                  className="size-7 sm:size-8 rounded-lg bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shadow-md shadow-blue-600/20 transition-transform active:scale-95"
-                >
-                  <ArrowUp size={16} />
-                </button>
-              </div>
-            </div>
-
-            {/* Response Section */}
-            <div className="mt-4 px-1">
-              <p className="text-xs sm:text-[13px] text-neutral-400 font-medium leading-relaxed">
-                {isAr ? activeScenario.headerAr : activeScenario.headerEn}
-              </p>
-
-              {/* Nested Result Brief Card (Attio Email / Artifact Card) */}
-              <AnimatePresence mode="wait">
-                <m.div
-                  key={activeScenario.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.25, ease: 'easeOut' }}
-                  className="mt-3 rounded-xl bg-[#141519] border border-[#26282D] hover:border-neutral-700 p-3.5 sm:p-4 shadow-lg transition-colors"
-                >
-                  {/* Top Bar: Badge + Stacked Avatars */}
-                  <div className="flex items-center justify-between gap-2 border-b border-[#212328] pb-2.5 mb-2.5">
-                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-neutral-300 uppercase tracking-wider">
-                      <CheckCircle2 size={12} className="text-blue-400" />
-                      {isAr ? activeScenario.badgeAr : activeScenario.badgeEn}
-                    </span>
-
-                    <div className="flex items-center -space-x-1.5 rtl:space-x-reverse">
-                      <div className="w-5 h-5 rounded-full bg-blue-600 border border-[#141519] flex items-center justify-center text-[9px] font-bold text-white">
-                        P1
-                      </div>
-                      <div className="w-5 h-5 rounded-full bg-emerald-600 border border-[#141519] flex items-center justify-center text-[9px] font-bold text-white">
-                        P2
-                      </div>
-                      <span className="text-[10px] font-medium text-neutral-400 ps-2">
-                        {isAr ? '2 معتمدين' : '2 Vetted'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Title & Snippet */}
-                  <h2 className="text-xs sm:text-sm font-semibold text-white tracking-tight">
-                    {isAr ? activeScenario.titleAr : activeScenario.titleEn}
-                  </h2>
-                  <p className="mt-1 text-[11px] sm:text-xs text-neutral-400 leading-relaxed font-normal">
-                    {isAr ? activeScenario.snippetAr : activeScenario.snippetEn}
-                  </p>
-
-                  {/* Footer metadata & Action */}
-                  <div className="mt-3 pt-2.5 border-t border-[#212328] flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-[11px] font-medium text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors">
-                      {isAr ? activeScenario.actionAr : activeScenario.actionEn}
-                    </span>
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-white/[0.04] border border-[#26282D] text-neutral-300">
-                      {isAr ? activeScenario.budgetAr : activeScenario.budgetEn}
-                    </span>
-                  </div>
-                </m.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Quick Scenario Switcher Chips */}
-            <div className="mt-3.5 pt-3 border-t border-[#212328] flex items-center justify-center gap-2 flex-wrap">
-              {SCENARIOS.map((sc, idx) => (
-                <button
-                  key={sc.id}
-                  onClick={() => setActiveScenarioIdx(idx)}
-                  className={`text-[11px] px-2.5 py-1 rounded-full border transition-all ${
-                    activeScenarioIdx === idx
-                      ? 'bg-blue-500/10 border-blue-500/40 text-blue-400 font-semibold'
-                      : 'bg-white/[0.02] border-[#26282D] text-neutral-400 hover:text-neutral-200 hover:border-neutral-600'
-                  }`}
-                >
-                  {idx === 0
-                    ? isAr
-                      ? 'القيادة التنفيذية'
-                      : 'Executive Leadership'
-                    : idx === 1
-                    ? isAr
-                      ? 'الأمن السيبراني'
-                      : 'Cybersecurity'
-                    : isAr
-                    ? 'المبيعات المؤسسية'
-                    : 'B2B Sales'}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* BOTTOM FLOATING PILL (Matching Attio's Bottom Question Pill) */}
+        {/* BOTTOM FLOATING PILL (Matching Attio's bottom pill in media_1789923371719.png) */}
+        <div className="relative z-10 mb-2 sm:mb-4">
           <button
             onClick={scrollToMission}
-            className="mt-5 sm:mt-6 inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#16171B]/90 hover:bg-[#1C1D23] border border-[#2B2D33] hover:border-neutral-600 text-xs sm:text-sm text-neutral-300 hover:text-white shadow-xl backdrop-blur-md transition-all active:scale-95 group"
+            className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#111215]/80 hover:bg-[#16171B] border border-[#26282D] hover:border-neutral-600 text-xs sm:text-sm text-neutral-300 hover:text-white shadow-2xl backdrop-blur-xl transition-all active:scale-95 group"
           >
             <span>
               {isAr
