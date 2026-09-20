@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
 import Reveal from '@/components/shared/Reveal';
-import SectionHeading from '@/components/shared/SectionHeading';
 import { Target, CircleDollarSign, TrendingUp, ArrowRight } from 'lucide-react';
 import { constructAlternates } from '@/lib/seo';
 
@@ -110,38 +108,11 @@ export default async function ForProvidersPage({
 
   return (
     <>
-      {/* 1. HERO SECTION (Atmospheric Office Workspace Background) */}
-      <section className="relative overflow-hidden bg-[#08090A] min-h-[75vh] sm:min-h-[80vh] lg:min-h-[85vh] flex items-center pt-28 sm:pt-36 lg:pt-40 pb-20 sm:pb-28 lg:pb-32 px-4 sm:px-6 lg:px-8">
-        {/* Workspace Background Image */}
-        <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-          <Image
-            src="/providers-hero.png"
-            alt={isAr ? 'بيئة عمل تدريب الشركات' : 'Corporate training providers workspace'}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center opacity-55 sm:opacity-65"
-          />
-        </div>
-
-        {/* Directional Overlay: Solid behind text, translucent over image on the opposite side */}
-        <div
-          className={`pointer-events-none absolute inset-0 z-[1] ${
-            isAr
-              ? 'bg-gradient-to-l from-[#08090A] 20% via-[#08090A]/92 55% to-[#08090A]/35 sm:to-[#08090A]/20 100%'
-              : 'bg-gradient-to-r from-[#08090A] 20% via-[#08090A]/92 55% to-[#08090A]/35 sm:to-[#08090A]/20 100%'
-          }`}
-        />
-
-        {/* Top Edge Fade from Navbar */}
-        <div className="pointer-events-none absolute top-0 inset-x-0 h-24 sm:h-32 bg-gradient-to-b from-[#08090A] to-transparent z-[2]" />
-
-        {/* Bottom Edge Seamless Fade into Why-Partner Section */}
-        <div className="pointer-events-none absolute bottom-0 inset-x-0 h-32 sm:h-48 bg-gradient-to-t from-[#08090A] via-[#08090A]/85 to-transparent z-[2]" />
-
+      {/* 1. HERO SECTION */}
+      <section className="relative overflow-hidden bg-[#08090A] pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8">
         {/* Ambient Depth Glows */}
-        <div className="pointer-events-none absolute top-1/4 start-0 w-[550px] h-[450px] bg-orange-500/[0.08] blur-[160px] z-[3] rounded-full" />
-        <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-blue-500/[0.02] blur-[160px] z-[3] rounded-full" />
+        <div className="pointer-events-none absolute top-1/4 start-0 w-[550px] h-[450px] bg-orange-500/[0.05] blur-[160px] -z-10 rounded-full" />
+        <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-blue-500/[0.02] blur-[160px] -z-10 rounded-full" />
 
         <div className="container-site max-w-6xl mx-auto relative z-10 w-full">
           {/* Left-Aligned Header Block */}
