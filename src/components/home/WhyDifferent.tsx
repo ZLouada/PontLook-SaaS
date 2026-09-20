@@ -424,7 +424,7 @@ export default function WhyDifferent() {
             return (
               <div
                 key={it.id}
-                className="relative w-[78vw] sm:w-[290px] lg:w-auto shrink-0 lg:shrink snap-center [perspective:1000px] h-[340px] sm:h-[370px] lg:h-[390px]"
+                className="relative w-[78vw] sm:w-[290px] lg:w-auto shrink-0 lg:shrink snap-center h-[340px] sm:h-[370px] lg:h-[390px]"
                 onClick={() => setActiveModalId(it.id)}
               >
                 <m.div
@@ -433,18 +433,8 @@ export default function WhyDifferent() {
                     scale: 1.02,
                     transition: { type: 'spring', stiffness: 350, damping: 20 },
                   }}
-                  whileTap={{ scale: 0.97 }}
-                  animate={{
-                    rotateY: isSelected ? (isAr ? -180 : 180) : 0,
-                  }}
-                  transition={{
-                    duration: 0.5,
-                    type: 'spring',
-                    stiffness: 280,
-                    damping: 24,
-                  }}
-                  style={{ transformStyle: 'preserve-3d' }}
-                  className="group relative w-full h-full rounded-2xl bg-[#0F1013] border border-[#26282D] hover:border-white/20 p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-xl shadow-black/80 transition-colors duration-200 transform-gpu"
+                  whileTap={{ scale: 0.98 }}
+                  className="group relative w-full h-full rounded-2xl bg-[#0F1013] border border-[#26282D] hover:border-white/20 p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-xl shadow-black/80 transition-colors duration-200"
                 >
                   {/* Card Front Top */}
                   <div className="space-y-2.5">
@@ -502,47 +492,40 @@ export default function WhyDifferent() {
       {/* POP-UP WINDOW (PHONE-OPTIMIZED MODAL DIALOG WITH SCROLLABLE BODY, FIXED ACTION BUTTON, 3D SPRING ENTRANCE) */}
       <AnimatePresence>
         {activeCard && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+          <div className="fixed inset-0 z-[100] isolate flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
             {/* Backdrop with Smooth Fade-In (Click in empty space to return to normal card) */}
             <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
+              transition={{ duration: 0.2 }}
               onClick={() => setActiveModalId(null)}
-              className="fixed inset-0 bg-black/90 backdrop-blur-md cursor-pointer"
+              className="fixed inset-0 bg-black/80 backdrop-blur-md cursor-pointer"
             />
 
-            {/* Modal Pop-up Window with 3D Flip & Pop-up spring animation */}
+            {/* Modal Pop-up Window with Clean 2D Spring Animation (Zero 3D skew / zero clipping glitches) */}
             <m.div
               initial={{
                 opacity: 0,
-                scale: 0.85,
-                rotateX: 15,
-                rotateY: isAr ? -30 : 30,
-                y: 30,
+                scale: 0.95,
+                y: 16,
               }}
               animate={{
                 opacity: 1,
                 scale: 1,
-                rotateX: 0,
-                rotateY: 0,
                 y: 0,
               }}
               exit={{
                 opacity: 0,
-                scale: 0.85,
-                rotateX: -15,
-                rotateY: isAr ? 30 : -30,
-                y: 25,
+                scale: 0.95,
+                y: 12,
               }}
               transition={{
                 type: 'spring',
-                stiffness: 320,
-                damping: 26,
+                stiffness: 380,
+                damping: 28,
               }}
-              style={{ transformStyle: 'preserve-3d', perspective: 1200 }}
-              className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] text-white shadow-2xl shadow-black my-auto overflow-hidden transform-gpu"
+              className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] text-white shadow-2xl shadow-black my-auto overflow-hidden"
             >
               {/* Modal Top Bar (Fixed Header) */}
               <m.div

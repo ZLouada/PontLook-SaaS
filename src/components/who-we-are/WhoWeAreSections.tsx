@@ -73,7 +73,7 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
   return (
     <section
       id="our-mission"
-      className="relative overflow-hidden bg-[#08090A] pt-4 sm:pt-8 pb-20 sm:pb-28 text-white"
+      className="relative overflow-hidden bg-[#08090A] pt-16 sm:pt-20 pb-20 sm:pb-28 text-white scroll-mt-24 sm:scroll-mt-28"
       aria-labelledby="mission-title"
     >
       <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
@@ -569,7 +569,8 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
 
   return (
     <section
-      className="relative overflow-hidden bg-[#08090A] text-white py-20 sm:py-28"
+      id="training-journey"
+      className="relative overflow-hidden bg-[#08090A] text-white pt-20 sm:pt-28 pb-20 sm:pb-28 scroll-mt-24 sm:scroll-mt-28"
       aria-labelledby="journey-title"
     >
       {/* Dynamic Ambient Background Glows */}
@@ -609,7 +610,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
         </div>
 
         {/* 4-Step Segmented Navigation Header (Touch-optimized with live white line) */}
-        <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-6 sm:mb-8 w-full max-w-4xl mx-auto overflow-x-auto scrollbar-none py-1">
+        <div className="flex items-center justify-start sm:justify-center gap-2 sm:gap-3 mb-6 sm:mb-8 w-full max-w-4xl mx-auto overflow-x-auto scrollbar-none px-4 sm:px-0 py-1">
           {steps.map((s, idx) => {
             const isActive = activeStep === idx;
             return (
@@ -617,23 +618,25 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
                 key={s.num}
                 type="button"
                 onClick={() => handleStepChange(idx)}
-                className={`group relative flex-1 min-w-[140px] sm:min-w-0 flex flex-col justify-between py-2.5 sm:py-3 px-3 sm:px-4 rounded-2xl border transition-all duration-200 text-xs font-medium cursor-pointer active:scale-95 ${
+                className={`group relative shrink-0 sm:flex-1 min-w-[125px] sm:min-w-0 flex flex-col justify-between py-2.5 sm:py-3 px-3 sm:px-4 rounded-2xl border transition-all duration-200 text-xs font-medium cursor-pointer active:scale-95 ${
                   isActive
                     ? 'bg-white/[0.08] text-white border-white/30 shadow-lg'
                     : 'bg-[#0F1013] text-neutral-400 border-[#26282D] hover:border-white/20 hover:text-neutral-200'
                 }`}
               >
                 <div className="flex items-center justify-between w-full gap-2 mb-2">
-                  <div className="flex items-center gap-2 truncate">
-                    <span className={`text-[11px] font-mono font-bold ${isActive ? 'text-white' : 'text-neutral-500'}`}>
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <span className={`text-[11px] font-mono font-bold shrink-0 ${isActive ? 'text-white' : 'text-neutral-500'}`}>
                       {s.num}
                     </span>
-                    <span className="truncate">
+                    <span className="text-[11px] sm:text-xs font-semibold whitespace-nowrap truncate">
                       {s.navTitle.replace(/^\d+\s*/, '')}
                     </span>
                   </div>
                   {isActive && (
-                    <OrbBadge state={s.orb as any} size={20} />
+                    <div className="shrink-0">
+                      <OrbBadge state={s.orb as any} size={20} />
+                    </div>
                   )}
                 </div>
 

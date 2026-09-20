@@ -141,6 +141,7 @@ export default function HowItWorks() {
       id: 'step1',
       stepNumber: '01',
       navTitle: isAr ? 'رصد الاحتياج' : 'Demand Detection',
+      shortTitle: isAr ? 'رصد الاحتياج' : 'Demand',
       tag: isAr ? 'الخطوة 01 // رصد الاحتياج المؤسسي' : 'STEP 01 // DEMAND DETECTION',
       tagColor: 'text-amber-400',
       headline: isAr
@@ -231,12 +232,13 @@ export default function HowItWorks() {
       id: 'step2',
       stepNumber: '02',
       navTitle: isAr ? 'التأهيل والربط' : 'Fit Scoring',
+      shortTitle: isAr ? 'التأهيل' : 'Scoring',
       tag: isAr ? 'الخطوة 02 // التأهيل والربط الذكي' : 'STEP 02 // FIT SCORING & QUALIFICATION',
       tagColor: 'text-purple-400',
       headline: isAr
-        ? 'تأهيل دقيق لأصحاب القرار، الميزانيات، والجداول الزمنية'
-        : 'Score and qualify decision makers, budgets, and timelines',
-      actionText: isAr ? 'اكتشف آلية المطابقة' : 'Learn more',
+        ? 'تأهيل دقيق يطابق المتطلبات الحقيقية مع نخبة الخبراء'
+        : 'Deep AI & human scoring matching actual enterprise constraints',
+      actionText: isAr ? 'طابق برنامجك الآن' : 'Get matched',
       actionHref: `/${lang}/find-training`,
       points: [
         {
@@ -317,6 +319,7 @@ export default function HowItWorks() {
       id: 'step3',
       stepNumber: '03',
       navTitle: isAr ? 'التقديم والتعاقد' : 'Engagement',
+      shortTitle: isAr ? 'التعاقد' : 'Engagement',
       tag: isAr ? 'الخطوة 03 // التقديم المباشر والتعاقد' : 'STEP 03 // ENGAGEMENT & SUCCESS',
       tagColor: 'text-teal-400',
       headline: isAr
@@ -400,7 +403,7 @@ export default function HowItWorks() {
       ref={containerRef}
       id="how-it-works"
       data-nav-dark="true"
-      className="relative bg-[#08090A] text-white py-12 sm:py-16 lg:py-0 lg:min-h-[300vh]"
+      className="relative bg-[#08090A] text-white pt-20 pb-12 sm:pt-24 sm:pb-16 lg:py-0 lg:min-h-[300vh] scroll-mt-24 sm:scroll-mt-28"
     >
       {/* Pure AMOLED Ambient Lighting */}
       <div className="absolute top-1/4 start-1/4 w-[600px] h-[600px] bg-blue-600/[0.04] blur-[180px] pointer-events-none rounded-full" />
@@ -422,30 +425,33 @@ export default function HowItWorks() {
           </div>
 
           {/* 3 Step Switcher Tabs (Touch-optimized for Mobile & Desktop) */}
-          <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-4 sm:mb-5 w-full max-w-lg shrink-0">
+          <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-4 sm:mb-5 w-full max-w-lg px-2 sm:px-0 shrink-0">
             {cards.map((card, idx) => {
               const isActive = activeStep === idx;
               return (
                 <button
                   key={card.id}
                   onClick={() => handleStepClick(idx)}
-                  className={`group relative flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2.5 sm:px-3.5 rounded-full border transition-all duration-200 text-xs font-medium active:scale-95 ${
+                  className={`group relative flex-1 min-w-0 flex items-center justify-center gap-1 sm:gap-2 py-2 px-2 sm:px-3.5 rounded-full border transition-all duration-200 text-xs font-medium active:scale-95 ${
                     isActive
                       ? 'bg-white/[0.08] text-white border-white/30 shadow-sm'
                       : 'bg-transparent text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
                   }`}
                 >
-                  <span className={`text-[11px] font-mono font-bold ${isActive ? card.tagColor : 'text-neutral-500'}`}>
+                  <span className={`text-[11px] font-mono font-bold shrink-0 ${isActive ? card.tagColor : 'text-neutral-500'}`}>
                     {card.stepNumber}
                   </span>
                   <span className="truncate">
-                    {card.navTitle}
+                    <span className="inline sm:hidden">{card.shortTitle}</span>
+                    <span className="hidden sm:inline">{card.navTitle}</span>
                   </span>
                   {isActive && (
-                    <OrbBadge
-                      state={idx === 0 ? 'searching' : idx === 1 ? 'solving' : 'connecting'}
-                      size={20}
-                    />
+                    <div className="shrink-0">
+                      <OrbBadge
+                        state={idx === 0 ? 'searching' : idx === 1 ? 'solving' : 'connecting'}
+                        size={20}
+                      />
+                    </div>
                   )}
                 </button>
               );
