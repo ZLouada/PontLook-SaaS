@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Check, Send, Loader2 } from 'lucide-react';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
+import OrbBadge from '@/components/shared/OrbBadge';
 
 const schema = z.object({
   name: z.string().trim().min(2, 'Your name is required').max(100, 'Name is too long'),
@@ -91,11 +92,11 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="card text-center !p-6 sm:!p-12">
-        <div className="w-14 h-14 mx-auto rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4">
-          <Check size={28} />
+      <div className="card text-center !p-6 sm:!p-12 relative overflow-hidden">
+        <div className="flex justify-center mb-6">
+          <OrbBadge state="connecting" size={64} label={dict.contact?.form?.successTitle || 'Transmission Confirmed'} />
         </div>
-        <h3 className="mt-5 text-2xl font-semibold text-white font-heading">{dict.contact.form.successTitle}</h3>
+        <h3 className="mt-2 text-2xl font-semibold text-white font-heading">{dict.contact.form.successTitle}</h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-neutral-400">
           {dict.contact.form.successMessage}
         </p>
@@ -111,7 +112,7 @@ export default function ContactForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className="field-label">{dict.contact.form.name}</label>
-          <input id="name" placeholder={dict.contact.form.namePlaceholder} className="field-input" {...register('name')} />
+          <input id="name" type="text" placeholder={dict.contact.form.namePlaceholder} className="field-input" {...register('name')} />
           {errors.name && <p className="field-error" role="alert">{errors.name.message}</p>}
         </div>
         <div>
@@ -121,7 +122,7 @@ export default function ContactForm() {
         </div>
         <div>
           <label htmlFor="company" className="field-label">{dict.contact.form.company}</label>
-          <input id="company" placeholder={dict.contact.form.companyPlaceholder} className="field-input" {...register('company')} />
+          <input id="company" type="text" placeholder={dict.contact.form.companyPlaceholder} className="field-input" {...register('company')} />
           {errors.company && <p className="field-error" role="alert">{errors.company.message}</p>}
         </div>
         <div>
@@ -142,11 +143,11 @@ export default function ContactForm() {
         <textarea id="message" rows={5} placeholder={dict.contact.form.messagePlaceholder} className="field-input" {...register('message')} />
         {errors.message && <p className="field-error" role="alert">{errors.message.message}</p>}
       </div>
-      <button type="submit" disabled={isLoading} className="btn-primary mt-7 w-full sm:w-auto min-h-[48px] py-3.5 sm:py-3 text-base sm:text-sm font-semibold disabled:opacity-60 inline-flex items-center justify-center gap-2 active:scale-[0.98] touch-manipulation">
+      <button type="submit" disabled={isLoading} className="btn-primary mt-7 w-full sm:w-auto min-h-[48px] py-3.5 sm:py-3 text-base sm:text-sm font-semibold disabled:opacity-60 inline-flex items-center justify-center gap-2.5 active:scale-[0.98] touch-manipulation">
         {isLoading ? (
           <>
-            <span>{dict.contact.form.submitting}</span>
-            <Loader2 size={16} className="animate-spin" />
+            <OrbBadge state="listening" size={20} />
+            <span className="t-shimmer">{dict.contact.form.submitting}</span>
           </>
         ) : (
           <>

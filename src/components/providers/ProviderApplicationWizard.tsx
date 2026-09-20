@@ -9,6 +9,7 @@ import {
   Mail,
   Check,
 } from 'lucide-react';
+import OrbBadge from '@/components/shared/OrbBadge';
 
 interface ProviderApplicationWizardProps {
   lang: string;
@@ -325,12 +326,8 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
         <div className="bg-[#0F1013] border border-[#26282D] rounded-2xl p-8 sm:p-12 text-center relative overflow-hidden shadow-xl">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-32 bg-blue-500/10 blur-3xl pointer-events-none" />
 
-          <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 mb-6 shadow-sm">
-            <Check size={36} />
-          </div>
-
-          <div className="inline-block px-3.5 py-1 rounded-full bg-[#16171B] border border-[#26282D] text-xs font-mono text-neutral-300 font-semibold uppercase tracking-wider mb-4">
-            {applicationRef || 'PL PRV CONFIRMED'}
+          <div className="flex justify-center mb-6">
+            <OrbBadge state="solving" size={64} label={applicationRef || 'PL PRV CONFIRMED'} />
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight mb-3">
@@ -430,9 +427,11 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
         </Link>
 
         <div className="flex items-center gap-2">
-          <span className="font-mono text-xs text-neutral-300 font-semibold uppercase tracking-wider">
-            {isAr ? `الخطوة ${step} من 4` : `Step ${step} of 4`}
-          </span>
+          <OrbBadge
+            state={step === 1 ? 'working' : step === 2 ? 'shaping' : step === 3 ? 'weaving' : 'connecting'}
+            size={20}
+            label={isAr ? `الخطوة ${step} من 4` : `Step ${step} of 4`}
+          />
         </div>
       </div>
 

@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowDown } from 'lucide-react';
 import Reveal from '@/components/shared/Reveal';
+import OrbBadge from '@/components/shared/OrbBadge';
 
 interface WhoWeAreHeroProps {
   lang?: 'en' | 'ar';
@@ -247,6 +248,25 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
       {/* TOP CONTENT (Headline & Subtitle Only) */}
       <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6 mb-6 sm:mb-10">
         <Reveal className="flex flex-col items-center">
+          {/* Top Architectural Status Pill */}
+          <div className="mb-5 sm:mb-6 inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#16171B]/85 border border-[#26282D] hover:border-white/30 backdrop-blur-xl shadow-xl transition-all duration-300">
+            <OrbBadge state="weaving" size={20} />
+            <span className="text-xs sm:text-sm font-medium">
+              <span
+                className="t-shimmer"
+                data-text={
+                  isAr
+                    ? 'منظومة التوفيق والربط الذكي · شفافية تامة 100%'
+                    : 'Intelligent Matchmaking Architecture · 100% Transparent'
+                }
+              >
+                {isAr
+                  ? 'منظومة التوفيق والربط الذكي · شفافية تامة 100%'
+                  : 'Intelligent Matchmaking Architecture · 100% Transparent'}
+              </span>
+            </span>
+          </div>
+
           <h1 className="text-3xl sm:text-5xl lg:text-[56px] font-semibold text-white leading-[1.12] sm:leading-[1.1] font-heading tracking-tight">
             {isAr ? (
               <>
@@ -281,8 +301,9 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
         <div className="relative z-10 mb-2 sm:mb-4">
           <button
             onClick={scrollToMission}
-            className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#111215]/80 hover:bg-[#16171B] border border-[#26282D] hover:border-neutral-600 text-xs sm:text-sm text-neutral-300 hover:text-white shadow-2xl backdrop-blur-xl transition-all active:scale-95 group"
+            className="inline-flex items-center gap-3 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#111215]/80 hover:bg-[#16171B] border border-[#26282D] hover:border-neutral-600 text-xs sm:text-sm text-neutral-300 hover:text-white shadow-2xl backdrop-blur-xl transition-all active:scale-95 group"
           >
+            <OrbBadge state="solving" size={20} />
             <span>
               {isAr
                 ? 'كيف تضمن PontLook جودة التدريب بدون اشتراك شهري؟'

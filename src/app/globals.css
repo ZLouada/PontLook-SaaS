@@ -297,5 +297,41 @@
               0 2px 8px -2px rgba(0, 0, 0, 0.3) !important;
 }
 
+/* Shimmer text for living thinking orbs */
+.t-shimmer {
+  position: relative;
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.65);
+}
+.t-shimmer::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.95) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 350% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: t-shimmer 2.4s linear infinite;
+}
+@keyframes t-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: 0% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-shimmer::before { animation: none !important; }
+}
 
-
+.orb-glow {
+  box-shadow: 0 0 20px -3px rgba(255, 255, 255, 0.12), inset 0 0 12px -2px rgba(255, 255, 255, 0.08);
+}

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { m } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { useParams } from 'next/navigation';
+import OrbBadge, { type OrbState } from '@/components/shared/OrbBadge';
 
 export default function TrustBar() {
   const dict = useDictionary();
@@ -12,26 +13,30 @@ export default function TrustBar() {
   const isAr = lang === 'ar';
   const [isPaused, setIsPaused] = useState(false);
 
-  const values = [
+  const values: Array<{ title: string; desc: string; badge: string; orb: OrbState }> = [
     {
       title: dict.trust_bar?.needs?.title || 'Verified Needs',
       desc: dict.trust_bar?.needs?.desc || 'Enterprise L&D requests verified directly with HR leaders',
       badge: isAr ? 'طلب موثق' : 'Verified Demand',
+      orb: 'solving',
     },
     {
       title: dict.trust_bar?.access?.title || 'Direct Access',
       desc: dict.trust_bar?.access?.desc || 'No intermediaries, connect straight to talent and procurement heads',
       badge: isAr ? 'تواصل مباشر' : 'Direct Link',
+      orb: 'connecting',
     },
     {
       title: dict.trust_bar?.insights?.title || 'Actionable L&D guides & insights',
       desc: dict.trust_bar?.insights?.desc || 'Benchmarking and curated market intelligence',
       badge: isAr ? 'أبحاث حصرية' : 'Market Intel',
+      orb: 'composing',
     },
     {
       title: dict.trust_bar?.gcc?.title || 'Regional Focus',
       desc: dict.trust_bar?.gcc?.desc || 'Saudi Arabia, UAE and GCC focused enterprise landscape',
       badge: isAr ? 'السعودية والإمارات' : 'KSA & UAE',
+      orb: 'searching',
     },
   ];
 
@@ -83,8 +88,9 @@ export default function TrustBar() {
                     <span className="font-medium text-xs sm:text-base text-white tracking-[-0.02em] truncate block group-hover:text-white transition-colors">
                       {v.title}
                     </span>
-                    <span className="shrink-0 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-medium bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/25 group-hover:text-neutral-200 transition-colors">
-                      {v.badge}
+                    <span className="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-medium bg-[#16171B] text-neutral-300 border border-white/10 group-hover:border-white/30 group-hover:text-white transition-colors">
+                      <OrbBadge state={v.orb} size={20} />
+                      <span>{v.badge}</span>
                     </span>
                   </div>
                   <span className="text-[11px] sm:text-sm text-neutral-400 block font-normal leading-snug line-clamp-2">

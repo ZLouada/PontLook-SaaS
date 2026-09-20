@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { useParams } from 'next/navigation';
+import OrbBadge from '@/components/shared/OrbBadge';
 
 interface TierData {
   step: string;
@@ -491,8 +492,12 @@ export default function LeadTiers(_props?: {
                         <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-semibold bg-white/[0.08] text-white border border-[#26282D]">
                           {tier.step}
                         </span>
-                        <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-medium bg-[#16171B] text-neutral-300 border border-[#26282D]">
-                          {tier.badge}
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-medium bg-[#16171B] text-neutral-300 border border-[#26282D]">
+                          <OrbBadge
+                            state={idx === 0 ? 'solving' : idx === 1 ? 'weaving' : idx === 2 ? 'searching' : 'connecting'}
+                            size={20}
+                          />
+                          <span>{tier.badge}</span>
                         </span>
                       </div>
 

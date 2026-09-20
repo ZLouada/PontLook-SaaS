@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { ArrowRight } from 'lucide-react';
 import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import OrbBadge from '@/components/shared/OrbBadge';
 
 export default function HowItWorks() {
   const dict = useDictionary();
@@ -182,8 +183,8 @@ export default function HowItWorks() {
                 {isAr ? 'رادار الاحتياج المؤسسي' : 'Enterprise Demand Feed'}
               </span>
             </div>
-            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-[10px] font-medium">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-[10px] font-medium">
+              <OrbBadge state="searching" size={20} />
               <span>{isAr ? 'إشارة نشطة' : 'Active Signal'}</span>
             </div>
           </div>
@@ -272,7 +273,8 @@ export default function HowItWorks() {
                 {isAr ? 'منظومة المطابقة الذكية' : 'AI Match & Qualification'}
               </span>
             </div>
-            <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-xs font-bold">
+            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-xs font-bold">
+              <OrbBadge state="solving" size={20} />
               <span>94%</span>
               <span className="text-[10px] font-normal">{isAr ? 'تطابق' : 'Match'}</span>
             </div>
@@ -357,7 +359,8 @@ export default function HowItWorks() {
                 {isAr ? 'لوحة التعاقد المباشر' : 'Direct Engagement Console'}
               </span>
             </div>
-            <div className="px-2 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-teal-400 text-[10px] font-medium">
+            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-teal-400 text-[10px] font-medium">
+              <OrbBadge state="connecting" size={20} />
               <span>{isAr ? 'تم التقديم' : 'Intro Complete'}</span>
             </div>
           </div>
@@ -439,7 +442,10 @@ export default function HowItWorks() {
                     {card.navTitle}
                   </span>
                   {isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse shrink-0" />
+                    <OrbBadge
+                      state={idx === 0 ? 'searching' : idx === 1 ? 'solving' : 'connecting'}
+                      size={20}
+                    />
                   )}
                 </button>
               );

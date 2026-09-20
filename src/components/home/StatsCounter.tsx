@@ -5,6 +5,7 @@ import { useInView, useMotionValue, useTransform, animate, m, useReducedMotion }
 import { Building2, CalendarCheck, Clock, Globe } from 'lucide-react';
 import Card from '@/components/shared/Card';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
+import OrbBadge, { type OrbState } from '@/components/shared/OrbBadge';
 
 function Counter({ end, suffix }: { end: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -39,11 +40,17 @@ function Counter({ end, suffix }: { end: number; suffix: string }) {
 export default function StatsCounter() {
   const dict = useDictionary();
 
-  const stats = [
-    { icon: Building2, end: dict.stats.companies.value, suffix: dict.stats.companies.suffix, label: dict.stats.companies.label },
-    { icon: CalendarCheck, end: dict.stats.meetings.value, suffix: dict.stats.meetings.suffix, label: dict.stats.meetings.label },
-    { icon: Clock, end: dict.stats.turnaround.value, suffix: dict.stats.turnaround.suffix, label: dict.stats.turnaround.label },
-    { icon: Globe, end: dict.stats.markets.value, suffix: dict.stats.markets.suffix, label: dict.stats.markets.label },
+  const stats: Array<{
+    icon: any;
+    orb: OrbState;
+    end: number;
+    suffix: string;
+    label: string;
+  }> = [
+    { icon: Building2, orb: 'working', end: dict.stats.companies.value, suffix: dict.stats.companies.suffix, label: dict.stats.companies.label },
+    { icon: CalendarCheck, orb: 'connecting', end: dict.stats.meetings.value, suffix: dict.stats.meetings.suffix, label: dict.stats.meetings.label },
+    { icon: Clock, orb: 'solving', end: dict.stats.turnaround.value, suffix: dict.stats.turnaround.suffix, label: dict.stats.turnaround.label },
+    { icon: Globe, orb: 'searching', end: dict.stats.markets.value, suffix: dict.stats.markets.suffix, label: dict.stats.markets.label },
   ];
 
   return (
@@ -65,8 +72,13 @@ export default function StatsCounter() {
                 className="transform-gpu will-change-transform"
               >
                 <div className="h-full flex flex-col items-start p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-[#26282D] bg-[#0F1013] hover:border-white/20 transition-all duration-300 shadow-2xl">
-                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] text-white mb-4 sm:mb-6 border border-white/10 shadow-sm">
-                    <Icon size={20} strokeWidth={1.75} className="sm:w-[22px] sm:h-[22px]" />
+                  <div className="w-full flex items-center justify-between mb-4 sm:mb-6">
+                    <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] text-white border border-white/10 shadow-sm">
+                      <Icon size={20} strokeWidth={1.75} className="sm:w-[22px] sm:h-[22px]" />
+                    </div>
+                    <div className="p-1.5 rounded-full bg-[#16171B] border border-[#26282D]">
+                      <OrbBadge state={s.orb} size={20} />
+                    </div>
                   </div>
                   <Counter end={s.end} suffix={s.suffix} />
                   <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm font-normal text-neutral-400 tracking-normal leading-snug">

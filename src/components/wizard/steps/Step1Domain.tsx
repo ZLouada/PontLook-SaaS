@@ -26,6 +26,7 @@ import {
   type WizardData,
 } from '../schemas';
 import { StepNavigation } from '../fields';
+import OrbBadge from '@/components/shared/OrbBadge';
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Users,
@@ -276,9 +277,12 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
     >
       <div>
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
-            What training domains do you need?
-          </h2>
+          <div className="flex items-center gap-2.5">
+            <OrbBadge state="shaping" size={20} />
+            <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
+              What training domains do you need?
+            </h2>
+          </div>
           {selectedCount > 0 && (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-white">
               <Layers size={13} />

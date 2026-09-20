@@ -10,6 +10,7 @@ import { m, AnimatePresence } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Locale } from '@/i18n';
 import Button from '@/components/shared/Button';
+import OrbBadge from '@/components/shared/OrbBadge';
 
 export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const [scrolled, setScrolled] = useState(false);
@@ -170,8 +171,16 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             })}
           </ul>
 
-          {/* Right Actions: Language Switcher in Liquid Glass */}
+          {/* Right Actions: Language Switcher & Status in Liquid Glass */}
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Live Network Status Indicator */}
+            <div className="hidden xl:inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B]/90 backdrop-blur-md text-neutral-300">
+              <OrbBadge state="connecting" size={20} />
+              <span className="text-[11px] font-medium text-neutral-300">
+                {lang === 'ar' ? 'الشبكة متصلة' : 'Network Active'}
+              </span>
+            </div>
+
             <Link
               href={switchHref}
               className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30 active:scale-95 transition-all duration-200"
@@ -254,6 +263,14 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       >
                         <X size={20} />
                       </button>
+                    </div>
+
+                    {/* Live Network Status in Mobile Drawer */}
+                    <div className="mt-4 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B] text-neutral-300 w-fit">
+                      <OrbBadge state="connecting" size={20} />
+                      <span className="text-[11px] text-neutral-300">
+                        {lang === 'ar' ? 'المطابقة المباشرة نشطة' : 'Live Matchmaking Active'}
+                      </span>
                     </div>
 
                     {/* Navigation Links List */}

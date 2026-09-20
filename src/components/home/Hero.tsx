@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { ArrowRight } from 'lucide-react';
 import Reveal from '@/components/shared/Reveal';
+import OrbBadge from '@/components/shared/OrbBadge';
 
 export default function Hero() {
   const dict = useDictionary();
@@ -43,6 +44,25 @@ export default function Hero() {
         <div className="flex flex-col items-center text-center">
           
           <Reveal>
+            {/* Live Enterprise Training Radar Pill */}
+            <div className="mb-6 sm:mb-8 inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#16171B]/85 border border-[#26282D] hover:border-white/30 backdrop-blur-xl shadow-xl transition-all duration-300">
+              <OrbBadge state="searching" size={20} />
+              <span className="text-xs sm:text-sm font-medium">
+                <span
+                  className="t-shimmer"
+                  data-text={
+                    isAr
+                      ? 'رادار الاحتياج التدريبي المؤسسي · رصد مستمر عبر دول الخليج'
+                      : 'AI Enterprise Training Radar · Active Across GCC'
+                  }
+                >
+                  {isAr
+                    ? 'رادار الاحتياج التدريبي المؤسسي · رصد مستمر عبر دول الخليج'
+                    : 'AI Enterprise Training Radar · Active Across GCC'}
+                </span>
+              </span>
+            </div>
+
             {/* Linear-Style Centered Headline in White */}
             <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-[64px] xl:text-[72px] font-medium tracking-[-0.035em] leading-[1.12] sm:leading-[1.08] text-white max-w-4xl mx-auto px-2">
               {dict.hero.headline}
@@ -75,6 +95,33 @@ export default function Hero() {
                   className="rtl:-scale-x-100 text-neutral-400 group-hover:text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all"
                 />
               </Link>
+            </div>
+          </Reveal>
+
+          {/* Live Autonomous Activity Ticker */}
+          <Reveal delay={0.22}>
+            <div className="mt-10 sm:mt-14 flex items-center justify-center">
+              <div className="inline-flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#111215]/85 border border-[#26282D] hover:border-white/25 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.8)] transition-all duration-300">
+                <OrbBadge state="solving" size={20} speed={1.2} />
+                <span className="text-xs sm:text-sm">
+                  <span
+                    className="t-shimmer font-medium"
+                    data-text={
+                      isAr
+                        ? 'المطابقة الحية: تحليل 34 احتياج تدريبي نشط هذا الأسبوع...'
+                        : 'Live Matchmaker: Analyzing 34 active enterprise cohorts this week...'
+                    }
+                  >
+                    {isAr
+                      ? 'المطابقة الحية: تحليل 34 احتياج تدريبي نشط هذا الأسبوع...'
+                      : 'Live Matchmaker: Analyzing 34 active enterprise cohorts this week...'}
+                  </span>
+                </span>
+                <span className="hidden md:inline-flex items-center gap-1.5 ms-1 ps-2.5 border-s border-[#26282D] text-[11px] text-emerald-400 font-medium">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>98.4% SLA</span>
+                </span>
+              </div>
             </div>
           </Reveal>
 

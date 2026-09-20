@@ -5,6 +5,7 @@ import { m } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { usePathname } from 'next/navigation';
+import OrbBadge from '@/components/shared/OrbBadge';
 
 export default function FinalCta() {
   const dict = useDictionary();
@@ -43,6 +44,11 @@ export default function FinalCta() {
         >
           {/* Subtle top inner sheen */}
           <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
+
+          {/* Listening Orb Indicator for Attentive Consultation */}
+          <div className="relative z-10 flex flex-col items-center -mb-2">
+            <OrbBadge state="listening" size={64} speed={0.9} />
+          </div>
 
           <div className="relative z-10 space-y-3 max-w-xl">
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-white tracking-tight font-heading">

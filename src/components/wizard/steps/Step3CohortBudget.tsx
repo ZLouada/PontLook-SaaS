@@ -20,6 +20,7 @@ import {
   type WizardData,
 } from '../schemas';
 import { StepNavigation } from '../fields';
+import OrbBadge from '@/components/shared/OrbBadge';
 
 type Step3Props = {
   data: WizardData;
@@ -87,8 +88,8 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
     >
       <section className="space-y-3">
         <div>
-          <div className="flex items-center gap-2">
-            <Users size={20} className="text-white" />
+          <div className="flex items-center gap-2.5">
+            <OrbBadge state="working" size={20} />
             <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
               Target Cohort Size
             </h2>

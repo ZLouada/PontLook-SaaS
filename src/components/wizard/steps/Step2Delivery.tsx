@@ -22,6 +22,7 @@ import {
   type WizardData,
 } from '../schemas';
 import { StepNavigation } from '../fields';
+import OrbBadge from '@/components/shared/OrbBadge';
 
 const modeIcons = {
   in_person: MapPin,
@@ -88,9 +89,12 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
     >
       <section className="space-y-3">
         <div>
-          <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
-            How should the training be delivered?
-          </h2>
+          <div className="flex items-center gap-2.5">
+            <OrbBadge state="weaving" size={20} />
+            <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
+              How should the training be delivered?
+            </h2>
+          </div>
           <p className="mt-1 text-sm text-neutral-400">
             Choose the instructional format that best fits your workforce location and logistics.
           </p>

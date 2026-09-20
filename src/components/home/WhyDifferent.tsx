@@ -15,6 +15,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { m, AnimatePresence } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
+import OrbBadge from '@/components/shared/OrbBadge';
 
 interface CardTheme {
   accentText: string;
@@ -138,7 +139,7 @@ export default function WhyDifferent() {
                 </div>
               </div>
             </div>
-            <span className="h-2 w-2 rounded-full bg-blue-500" />
+            <OrbBadge state="shaping" size={20} />
           </div>
           <div className="flex flex-wrap gap-1.5 pt-0.5">
             <span className="px-2 py-0.5 rounded-md bg-blue-500/15 text-blue-400 text-[10px] font-medium border border-blue-500/30 font-sans">
@@ -185,7 +186,7 @@ export default function WhyDifferent() {
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
           <div className="text-xs font-semibold text-white pb-1.5 border-b border-[#26282D] flex items-center justify-between font-sans">
             <span>{c?.match?.mockupHeader || (isAr ? 'قائمة معايير توافق الشريك' : 'Partner Fit Checklist')}</span>
-            <BadgeCheck size={14} className="text-emerald-400 shrink-0" />
+            <OrbBadge state="weaving" size={20} />
           </div>
           <div className="space-y-1.5 text-[11px] text-neutral-300 font-sans">
             <div>
@@ -242,8 +243,8 @@ export default function WhyDifferent() {
             </span>
           </div>
           <div className="flex items-center gap-2.5 pt-0.5">
-            <div className="h-7 w-7 rounded-lg bg-purple-600/20 text-purple-400 flex items-center justify-center shrink-0">
-              <Building2 size={15} />
+            <div className="h-7 w-7 rounded-lg bg-purple-600/20 flex items-center justify-center shrink-0">
+              <OrbBadge state="connecting" size={20} />
             </div>
             <div className="min-w-0 font-sans">
               <div className="text-[11px] font-semibold text-white truncate">
@@ -289,7 +290,7 @@ export default function WhyDifferent() {
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-1.5">
           <div className="flex items-center justify-between pb-1 border-b border-[#26282D] text-xs font-semibold text-white font-sans">
             <span>{c?.ready?.mockupHeader || (isAr ? 'جاهزية الشراكة | مؤكدة' : 'Partnership Readiness | Confirmed')}</span>
-            <Handshake size={14} className="text-amber-400 shrink-0" />
+            <OrbBadge state="working" size={20} />
           </div>
           <div className="space-y-1 text-[10px] sm:text-[11px] font-sans">
             <div className="flex justify-between items-center">
@@ -342,7 +343,7 @@ export default function WhyDifferent() {
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-1.5">
           <div className="flex items-center justify-between pb-1 border-b border-[#26282D] text-xs font-semibold text-white font-sans">
             <span>{c?.hub?.mockupHeader || (isAr ? 'أحدث أدلة ومقالات المنصة' : 'Latest L&D Resources')}</span>
-            <BookOpen size={13} className="text-cyan-400 shrink-0" />
+            <OrbBadge state="composing" size={20} />
           </div>
           <div className="space-y-1.5 pt-0.5 font-sans">
             <div className="flex items-center justify-between gap-2 text-[10px] sm:text-[11px]">

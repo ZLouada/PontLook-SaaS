@@ -12,6 +12,7 @@ import {
   Step4Contact,
   Step5Confirmation,
 } from './steps';
+import OrbBadge from '@/components/shared/OrbBadge';
 
 const STEP_DEFINITIONS = [
   { step: 1, title: 'Training Scope', short: 'Scope' },
@@ -257,9 +258,9 @@ export default function FindTrainingWizard() {
               <Clock size={13} className="text-neutral-400" />
               <span>(~60 seconds)</span>
             </span>
-            <span className="hidden items-center gap-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-400 sm:inline-flex">
-              <ShieldCheck size={12} />
-              <span>Auto saving</span>
+            <span className="hidden items-center gap-1.5 rounded-full bg-[#16171B] border border-[#26282D] px-2.5 py-0.5 text-[11px] font-medium text-neutral-300 sm:inline-flex">
+              <OrbBadge state="breathing" size={20} />
+              <span>Auto-saving session</span>
             </span>
           </div>
         </div>

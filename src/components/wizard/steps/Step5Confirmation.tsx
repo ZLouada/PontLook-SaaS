@@ -14,6 +14,7 @@ import {
   Building2,
   ArrowRight,
 } from 'lucide-react';
+import OrbBadge from '@/components/shared/OrbBadge';
 import {
   TRAINING_DOMAINS,
   DELIVERY_MODES,
@@ -133,12 +134,11 @@ Thank you for choosing PontLook.com : The GCC Corporate Training Matchmaking Net
       className="space-y-8"
     >
       <div className="rounded-2xl border border-[#26282D] bg-[#0F1013] p-6 text-center sm:p-8">
-        <div className="inline-flex items-center gap-2.5 rounded-full border border-[#26282D] bg-[#16171B] px-4 py-1.5 shadow-sm">
-          <span className="relative flex h-3 w-3">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500" />
-          </span>
-          <span className="text-xs font-bold uppercase tracking-wider text-neutral-300">
+        <div className="flex flex-col items-center justify-center mb-3">
+          <OrbBadge state="solving" size={64} speed={1.1} />
+        </div>
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#26282D] bg-[#16171B] px-4 py-1.5 shadow-sm">
+          <span className="text-xs font-semibold uppercase tracking-wider text-neutral-300">
             Matching in Progress · 120+ Vetted Providers
           </span>
         </div>

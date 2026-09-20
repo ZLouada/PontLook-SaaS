@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Reveal from '@/components/shared/Reveal';
 import ContactForm from '@/components/contact/ContactForm';
+import OrbBadge from '@/components/shared/OrbBadge';
 import { Mail, MapPin, Clock } from 'lucide-react';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
@@ -80,7 +81,7 @@ export default async function ContactPage({
     <div className="bg-[#08090A]">
       <section className="container-site grid gap-14 pt-36 pb-24 lg:grid-cols-5">
         <Reveal className="lg:col-span-2">
-          <span className="chip">{contactData.chip}</span>
+          <OrbBadge state="listening" size={20} label={contactData.chip} />
           <h1 className="mt-5 text-4xl font-semibold leading-tight text-white font-heading">
             {contactData.title}
           </h1>
