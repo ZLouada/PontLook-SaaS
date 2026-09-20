@@ -462,8 +462,8 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
       tag: isAr ? 'تم التحقق من النطاق والميزانية' : 'Scope & Budget Verified',
       orb: 'shaping' as const,
       icon: SlidersHorizontal,
-      iconColor: 'text-blue-400',
-      iconBg: 'bg-blue-600/20 text-blue-400 border-blue-500/30',
+      iconColor: 'text-neutral-200',
+      iconBg: 'bg-white/10 text-white border-white/20',
       points: [
         {
           label: isAr ? 'تم تصنيف الفجوة' : 'Deficiency Tagged',
@@ -777,14 +777,14 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
             </span>
             <Link
               href={`/${lang}/find-training`}
-              className="text-white hover:text-blue-400 font-semibold underline underline-offset-4 ms-1 transition-colors"
+              className="text-white hover:text-neutral-300 font-semibold underline underline-offset-4 ms-1 transition-colors"
             >
               {isAr ? 'سجل احتياجك التدريبي مجاناً ←' : 'Post a Training Need →'}
             </Link>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-blue-500" />
+            <span className="w-2 h-2 rounded-full bg-white/60" />
             <span>
               {isAr
                 ? 'هل أنت مركز تدريب مؤسسي معتمد؟'
@@ -792,7 +792,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
             </span>
             <Link
               href={`/${lang}/for-providers`}
-              className="text-white hover:text-blue-400 font-semibold underline underline-offset-4 ms-1 transition-colors"
+              className="text-white hover:text-neutral-300 font-semibold underline underline-offset-4 ms-1 transition-colors"
             >
               {isAr ? 'انضم كشريك تدريب معتمد ←' : 'Apply as an Approved Provider →'}
             </Link>

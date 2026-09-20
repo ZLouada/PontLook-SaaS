@@ -34,9 +34,8 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/35 rtl:bg-gradient-to-l rtl:from-black/85 rtl:via-black/60 rtl:to-black/35" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#08090A] via-black/25 to-black/60" />
 
-        {/* Ambient warm and cool glows echoing the bridge lights */}
-        <div className="absolute top-1/2 end-1/4 w-[500px] h-[500px] bg-amber-500/[0.06] blur-[150px] rounded-full" />
-        <div className="absolute bottom-10 start-1/4 w-[600px] h-[400px] bg-[#0052FF]/[0.08] blur-[160px] rounded-full" />
+        {/* Ambient subtle warm glow echoing the bridge lighting */}
+        <div className="absolute top-1/2 end-1/4 w-[500px] h-[500px] bg-amber-500/[0.04] blur-[150px] rounded-full" />
       </div>
 
       <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-5xl">

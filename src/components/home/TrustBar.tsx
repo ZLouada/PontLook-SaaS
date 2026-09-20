@@ -46,7 +46,7 @@ export default function TrustBar() {
   return (
     <section
       data-nav-dark="true"
-      className="relative bg-[#08090A] text-white pt-10 pb-10 sm:py-12 overflow-hidden"
+      className="relative bg-[#08090A] text-white py-6 sm:py-12 overflow-hidden"
     >
       {/* Edge gradient mask for smooth fade in/out */}
       <div className="absolute inset-y-0 start-0 w-16 sm:w-32 bg-gradient-to-r rtl:bg-gradient-to-l from-[#08090A] via-[#08090A]/80 to-transparent z-20 pointer-events-none" />

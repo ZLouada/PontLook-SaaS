@@ -141,7 +141,7 @@ export default function HowItWorks() {
       id: 'step1',
       stepNumber: '01',
       navTitle: isAr ? 'رصد الاحتياج' : 'Demand Detection',
-      shortTitle: isAr ? 'رصد الاحتياج' : 'Demand',
+      shortTitle: isAr ? 'رصد' : 'Demand',
       tag: isAr ? 'الخطوة 01 // رصد الاحتياج المؤسسي' : 'STEP 01 // DEMAND DETECTION',
       tagColor: 'text-amber-400',
       headline: isAr
@@ -403,19 +403,19 @@ export default function HowItWorks() {
       ref={containerRef}
       id="how-it-works"
       data-nav-dark="true"
-      className="relative bg-[#08090A] text-white pt-20 pb-12 sm:pt-24 sm:pb-16 lg:py-0 lg:min-h-[300vh] scroll-mt-24 sm:scroll-mt-28"
+      className="relative bg-[#08090A] text-white pt-8 pb-12 sm:pt-20 sm:pb-16 lg:py-0 lg:min-h-[300vh] scroll-mt-24 sm:scroll-mt-28"
     >
-      {/* Pure AMOLED Ambient Lighting */}
-      <div className="absolute top-1/4 start-1/4 w-[600px] h-[600px] bg-blue-600/[0.04] blur-[180px] pointer-events-none rounded-full" />
-      <div className="absolute bottom-1/4 end-1/4 w-[600px] h-[600px] bg-purple-600/[0.03] blur-[180px] pointer-events-none rounded-full" />
+      {/* Pure AMOLED Ambient Lighting - Zero Blue Lights */}
+      <div className="absolute top-1/4 start-1/4 w-[600px] h-[600px] bg-white/[0.015] blur-[180px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-1/4 end-1/4 w-[600px] h-[600px] bg-white/[0.01] blur-[180px] pointer-events-none rounded-full" />
 
       {/* Viewport Container: Normal Flow on Mobile, Sticky on Desktop */}
-      <div className="relative lg:sticky lg:top-0 lg:h-screen lg:max-h-[100dvh] lg:flex lg:flex-col lg:justify-center pt-0 lg:pt-28 pb-0 lg:pb-6 px-4 sm:px-6 lg:px-8">
-        <div className="container-site relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center my-auto">
+      <div className="relative lg:sticky lg:top-0 lg:h-screen lg:max-h-[100dvh] lg:flex lg:flex-col lg:justify-center pt-0 lg:pt-28 pb-0 lg:pb-6 px-0 sm:px-6 lg:px-8">
+        <div className="container-site relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center my-auto px-4 sm:px-8">
           
           {/* Section Header */}
-          <div className="mb-4 sm:mb-5 text-center max-w-3xl mx-auto shrink-0">
-            <h2 className="text-2xl sm:text-3xl lg:text-[28px] font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
+          <div className="mb-4 sm:mb-5 text-center max-w-3xl mx-auto shrink-0 px-2">
+            <h2 className="text-xl sm:text-3xl lg:text-[28px] font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
               {dict.how_it_works?.title || (isAr ? 'نرصد بدقة المنشآت التي تواجه فجوات تدريبية ومهارية حقيقية' : 'We pinpoint organizations facing real skill & training gaps')}
             </h2>
 
@@ -424,15 +424,15 @@ export default function HowItWorks() {
             </p>
           </div>
 
-          {/* 3 Step Switcher Tabs (Touch-optimized for Mobile & Desktop) */}
-          <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-4 sm:mb-5 w-full max-w-lg px-2 sm:px-0 shrink-0">
+          {/* 3 Step Switcher Tabs (Touch-friendly, Zero-clipping on Mobile) */}
+          <div className="flex items-center justify-start sm:justify-center gap-1.5 sm:gap-2.5 mb-4 sm:mb-5 w-full max-w-lg mx-auto overflow-x-auto scrollbar-none px-4 sm:px-0 py-1">
             {cards.map((card, idx) => {
               const isActive = activeStep === idx;
               return (
                 <button
                   key={card.id}
                   onClick={() => handleStepClick(idx)}
-                  className={`group relative flex-1 min-w-0 flex items-center justify-center gap-1 sm:gap-2 py-2 px-2 sm:px-3.5 rounded-full border transition-all duration-200 text-xs font-medium active:scale-95 ${
+                  className={`group relative shrink-0 sm:flex-1 min-w-[105px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-3 sm:px-3.5 rounded-full border transition-all duration-200 text-xs font-medium active:scale-95 ${
                     isActive
                       ? 'bg-white/[0.08] text-white border-white/30 shadow-sm'
                       : 'bg-transparent text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
@@ -442,7 +442,7 @@ export default function HowItWorks() {
                     {card.stepNumber}
                   </span>
                   <span className="truncate">
-                    <span className="inline sm:hidden">{card.shortTitle}</span>
+                    <span className="sm:hidden">{card.shortTitle}</span>
                     <span className="hidden sm:inline">{card.navTitle}</span>
                   </span>
                   {isActive && (
@@ -472,26 +472,26 @@ export default function HowItWorks() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 0.99 }}
                 transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="relative rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] hover:border-white/20 transition-colors duration-300 p-4 sm:p-5 lg:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.75)] overflow-hidden"
+                className="relative rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] hover:border-white/20 transition-colors duration-300 p-3.5 sm:p-5 lg:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.75)] overflow-hidden"
               >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-8 items-center">
                   
                   {/* Left Column: Category Tag, Title, Action Link, 3 Points with Chevrons */}
                   <div className="lg:col-span-6 flex flex-col items-start text-start">
                     {/* Eyebrow Tag with Accent Color */}
-                    <div className={`${activeCard.tagColor} text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-1.5`}>
+                    <div className={`${activeCard.tagColor} text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-1`}>
                       {activeCard.tag}
                     </div>
 
                     {/* High-Contrast Bold Headline */}
-                    <h3 className="text-lg sm:text-xl lg:text-[22px] font-heading font-medium text-white tracking-[-0.025em] leading-snug mb-2">
+                    <h3 className="text-base sm:text-xl lg:text-[22px] font-heading font-medium text-white tracking-[-0.025em] leading-snug mb-2">
                       {activeCard.headline}
                     </h3>
 
                     {/* Linear Style Action Link (Learn more ->) */}
                     <Link
                       href={activeCard.actionHref}
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-300 hover:text-white transition-colors duration-200 mb-3 group"
+                      className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-300 hover:text-white transition-colors duration-200 mb-2.5 group"
                     >
                       <span>{activeCard.actionText}</span>
                       <ArrowRight
@@ -501,7 +501,7 @@ export default function HowItWorks() {
                     </Link>
 
                     {/* 3 Points with Chevrons */}
-                    <div className="space-y-2 w-full pt-1.5 border-t border-[#26282D]">
+                    <div className="space-y-1.5 sm:space-y-2 w-full pt-1.5 border-t border-[#26282D]">
                       {activeCard.points.map((pt) => (
                         <div key={pt.title} className="space-y-0.5">
                           <div className="text-xs sm:text-[13px] font-semibold text-neutral-100 font-heading">
@@ -517,7 +517,7 @@ export default function HowItWorks() {
 
                   {/* Right Column: Accent Tinted Canvas with Dark Console */}
                   <div className="lg:col-span-6 w-full">
-                    <div className={`w-full rounded-2xl ${activeCard.canvasBg} border p-3 sm:p-4 shadow-inner relative overflow-hidden flex items-center justify-center`}>
+                    <div className={`w-full rounded-xl sm:rounded-2xl ${activeCard.canvasBg} border p-2.5 sm:p-4 shadow-inner relative overflow-hidden flex items-center justify-center`}>
                       {activeCard.console}
                     </div>
                   </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Target,
   BadgeCheck,
@@ -51,7 +52,22 @@ export default function WhyDifferent() {
 
   const [activeModalId, setActiveModalId] = useState<string | null>(null);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (activeModalId) {
+      const originalStyle = window.getComputedStyle(document.body).overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalStyle;
+      };
+    }
+  }, [activeModalId]);
 
   const handleScroll = () => {
     if (!carouselRef.current) return;
@@ -116,18 +132,18 @@ export default function WhyDifferent() {
         isAr ? 'تجنب هدر الميزانيات في تدريب غير مجدٍ' : 'Zero wasted corporate training budget',
       ],
       theme: {
-        accentText: 'text-blue-400',
+        accentText: 'text-neutral-200',
         badgeBg: 'bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200',
         iconBg: 'bg-transparent text-white border border-white/10 group-hover:border-white/20',
         buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
-        checkColor: 'text-blue-400',
-        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-blue-400 group-hover:border-blue-500/30',
+        checkColor: 'text-emerald-400',
+        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-white group-hover:border-white/30',
       },
       mockup: (
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
           <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
-              <div className="h-7 w-7 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center shrink-0">
+              <div className="h-7 w-7 rounded-lg bg-white/10 text-white flex items-center justify-center shrink-0">
                 <Target size={14} />
               </div>
               <div>
@@ -142,7 +158,7 @@ export default function WhyDifferent() {
             <OrbBadge state="shaping" size={20} />
           </div>
           <div className="flex flex-wrap gap-1.5 pt-0.5">
-            <span className="px-2 py-0.5 rounded-md bg-blue-500/15 text-blue-400 text-[10px] font-medium border border-blue-500/30 font-sans">
+            <span className="px-2 py-0.5 rounded-md bg-white/10 text-neutral-300 text-[10px] font-medium border border-white/20 font-sans">
               {c?.diagnose?.tag1 || (isAr ? '# فجوات القيادة والتقنية' : '# Leadership & Tech Gaps')}
             </span>
             <span className="px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 text-[10px] font-medium border border-emerald-500/30 font-sans">
@@ -384,8 +400,8 @@ export default function WhyDifferent() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-6 sm:mb-12 text-center max-w-3xl mx-auto space-y-2.5 sm:space-y-3"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-blue-400 text-xs font-semibold uppercase tracking-wider font-sans">
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-neutral-300 text-xs font-semibold uppercase tracking-wider font-sans">
+            <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
             <span>{dict.why_different?.eyebrow || (isAr ? 'تحليلات سوقية قابلة للتنفيذ' : 'ACTIONABLE MARKET INTELLIGENCE')}</span>
           </div>
 
@@ -481,7 +497,7 @@ export default function WhyDifferent() {
               type="button"
               onClick={() => scrollToCard(idx)}
               className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                activeCardIndex === idx ? 'w-5 bg-blue-500' : 'w-1.5 bg-white/20 hover:bg-white/40'
+                activeCardIndex === idx ? 'w-5 bg-white' : 'w-1.5 bg-white/20 hover:bg-white/40'
               }`}
               aria-label={`Go to slide ${idx + 1}`}
             />
@@ -489,22 +505,24 @@ export default function WhyDifferent() {
         </div>
       </div>
 
-      {/* POP-UP WINDOW (PHONE-OPTIMIZED MODAL DIALOG WITH SCROLLABLE BODY, FIXED ACTION BUTTON, 3D SPRING ENTRANCE) */}
-      <AnimatePresence>
-        {activeCard && (
-          <div className="fixed inset-0 z-[100] isolate flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-            {/* Backdrop with Smooth Fade-In (Click in empty space to return to normal card) */}
-            <m.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={() => setActiveModalId(null)}
-              className="fixed inset-0 bg-black/80 backdrop-blur-md cursor-pointer"
-            />
+      {/* POP-UP WINDOW (RENDERED VIA PORTAL DIRECTLY INTO document.body FOR FLAWLESS VIEWPORT POSITIONING) */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {activeCard && (
+              <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true">
+                {/* Backdrop with Smooth Fade-In (Click in empty space to return to normal card) */}
+                <m.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  onClick={() => setActiveModalId(null)}
+                  className="fixed inset-0 bg-black/85 backdrop-blur-sm cursor-pointer"
+                />
 
-            {/* Modal Pop-up Window with Clean 2D Spring Animation (Zero 3D skew / zero clipping glitches) */}
-            <m.div
+                {/* Modal Pop-up Window with Clean 2D Spring Animation (Zero 3D skew / zero clipping glitches) */}
+                <m.div
               initial={{
                 opacity: 0,
                 scale: 0.95,
@@ -655,9 +673,11 @@ export default function WhyDifferent() {
                 )}
               </m.div>
             </m.div>
-          </div>
+              </div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </section>
   );
 }
