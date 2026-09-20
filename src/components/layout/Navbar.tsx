@@ -96,8 +96,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
       <header
         className={`fixed inset-x-0 mx-auto z-50 liquid-glass-morph-header ${
           scrolled
-            ? 'top-0 sm:top-3 w-full sm:w-[90%] sm:max-w-5xl rounded-none sm:rounded-full py-2.5 sm:py-2.5 px-4 sm:px-6 liquid-glass-mobile-scrolled sm:liquid-glass-capsule-dark'
-            : 'top-0 w-full max-w-full rounded-none py-3.5 sm:py-4 px-4 sm:px-8 lg:px-12 liquid-glass-top-dark'
+            ? `top-0 w-full rounded-none py-2.5 px-4 liquid-glass-mobile-scrolled pt-[max(0.625rem,env(safe-area-inset-top))] ${isDesktop ? 'sm:top-3 sm:w-[90%] sm:max-w-5xl sm:rounded-full sm:py-2.5 sm:px-6 liquid-glass-capsule-dark' : ''}`
+            : 'top-0 w-full max-w-full rounded-none py-3.5 sm:py-4 px-4 sm:px-8 lg:px-12 liquid-glass-top-dark pt-[max(0.875rem,env(safe-area-inset-top))]'
         }`}
       >
         <nav

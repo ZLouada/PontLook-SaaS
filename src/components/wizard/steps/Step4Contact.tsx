@@ -11,6 +11,7 @@ import {
   Globe,
   ShieldCheck,
   Lock,
+  ChevronDown,
 } from 'lucide-react';
 import {
   GCC_COUNTRIES,
@@ -20,6 +21,7 @@ import {
 } from '../schemas';
 import { FormTextField, PhoneInputWithCountry, StepNavigation } from '../fields';
 import OrbBadge from '@/components/shared/OrbBadge';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 type Step4Props = {
   data: WizardData;
@@ -54,6 +56,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
   });
 
   const selectedCountry = watch('country');
+  const currentCountry = GCC_COUNTRIES.find((c) => c.name === selectedCountry) || GCC_COUNTRIES[0];
 
   const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const countryName = e.target.value;
@@ -68,34 +71,22 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        e.stopPropagation();
-        handleSubmit(
-          (values) => onNext(values, e),
-          (validationErrors) => {
-            console.warn('Step 4 validation errors:', validationErrors);
-            const firstKey = Object.keys(validationErrors)[0];
-            if (firstKey) {
-              const el = document.querySelector(`[name="${firstKey}"]`) as HTMLElement;
-              if (el) {
-                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                el.focus();
-              }
-            }
-          }
-        )(e);
+        handleSubmit((vals) => onNext(vals, e))(e);
       }}
-      noValidate
       className="space-y-6"
     >
-      <div>
-        <div className="flex items-center gap-2.5">
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
           <OrbBadge state="connecting" size={20} />
-          <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
-            Enterprise Verification & Contact Details
-          </h2>
+          <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
+            Final Step // Enterprise Verification
+          </span>
         </div>
-        <p className="mt-1 text-sm text-neutral-400">
-          We only release curated proposals to verified corporate decision makers.
+        <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-heading">
+          Where should verified providers send their proposals?
+        </h3>
+        <p className="text-sm text-neutral-400 font-sans">
+          All inquiries are verified by PontLook. Direct executive access only, zero automated vendor solicitations.
         </p>
       </div>
 
@@ -145,21 +136,24 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
             Primary Country of Operation
           </label>
           <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-4 text-neutral-500">
-              <Globe size={18} />
+            <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
+              <CountryFlag code={currentCountry.code} className="w-5 h-3.5 rounded-sm shadow-sm border border-white/10" />
             </div>
             <select
               id="country"
               value={selectedCountry}
               onChange={handleCountryChange}
-              className="w-full rounded-xl border border-[#26282D] bg-[#16171B] px-4 py-3.5 ps-11 text-base sm:text-sm font-medium text-white shadow-sm transition-all focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
+              className="w-full appearance-none rounded-xl border border-[#26282D] bg-[#16171B] px-4 py-3.5 ps-11 pe-9 text-base sm:text-sm font-medium text-white shadow-sm transition-all focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
             >
               {GCC_COUNTRIES.map((c) => (
                 <option key={c.code} value={c.name} className="bg-[#16171B] text-white">
-                  {c.flag} {c.name}
+                  {c.name}
                 </option>
               ))}
             </select>
+            <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-3 text-neutral-500">
+              <ChevronDown size={15} />
+            </div>
           </div>
           {errors.country && (
             <p className="mt-1.5 text-xs font-medium text-red-600" role="alert">
@@ -175,6 +169,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
           codeError={errors.phoneCountryCode}
           phoneError={errors.phoneNumber}
           hint="For proposal dispatch notifications & verification"
+          selectedDialCode={watch('phoneCountryCode')}
         />
       </div>
 
@@ -190,7 +185,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
               Enterprise Confidentiality Guarantee
             </h4>
             <p className="mt-1 text-xs leading-relaxed text-neutral-400">
-              🔒 Your request is private and shared with a <strong>maximum of 3 matched providers</strong> who fit your exact domain and procurement specifications. Zero vendor spam or unsolicited cold calls.
+              Your request is private and shared with a <strong>maximum of 3 matched providers</strong> who fit your exact domain and procurement specifications. Zero vendor spam or unsolicited cold calls.
             </p>
           </div>
         </div>

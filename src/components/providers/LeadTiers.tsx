@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { m } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { useParams } from 'next/navigation';
 import OrbBadge from '@/components/shared/OrbBadge';
@@ -568,7 +569,7 @@ export default function LeadTiers(_props?: {
       className="relative py-16 sm:py-24 lg:py-32 bg-[#08090A] text-white"
     >
       {/* Pure AMOLED Ambient Glow (Zero Grids) */}
-      <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-600/[0.04] blur-[180px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-white/[0.015] blur-[180px] pointer-events-none rounded-full" />
 
       <div className="container-site relative z-10 px-4 sm:px-8 lg:px-12">
         {/* Section Header */}
@@ -631,9 +632,14 @@ export default function LeadTiers(_props?: {
             const theme = card.clayTheme;
 
             return (
-              <div
+              <m.div
                 key={card.id}
-                className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass} ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-all duration-300 transform-gpu`}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+                whileHover={{ scale: 1.012, transition: { duration: 0.25 } }}
+                className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass} ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 transform-gpu`}
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
                   {/* Left Details */}
@@ -706,7 +712,7 @@ export default function LeadTiers(_props?: {
                     </div>
                   </div>
                 </div>
-              </div>
+              </m.div>
             );
           })}
         </div>

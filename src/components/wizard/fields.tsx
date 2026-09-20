@@ -4,6 +4,7 @@ import React from 'react';
 import type { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import { ChevronRight, ArrowLeft, ArrowRight, Loader2, Lock } from 'lucide-react';
 import { GCC_COUNTRIES } from './schemas';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 type BaseProps = {
   label: string;
@@ -165,6 +166,7 @@ export function PhoneInputWithCountry({
   phoneError,
   codeError,
   hint,
+  selectedDialCode,
 }: {
   label: string;
   phoneRegistration: UseFormRegisterReturn;
@@ -172,9 +174,11 @@ export function PhoneInputWithCountry({
   phoneError?: FieldError;
   codeError?: FieldError;
   hint?: string;
+  selectedDialCode?: string;
 }) {
   const phoneId = phoneRegistration.name;
   const hasError = Boolean(phoneError || codeError);
+  const activeCountry = GCC_COUNTRIES.find((c) => c.dialCode === selectedDialCode) || GCC_COUNTRIES[0];
 
   return (
     <div className="w-full">
@@ -186,15 +190,18 @@ export function PhoneInputWithCountry({
       </div>
 
       <div className="flex gap-2">
-        <div className="relative w-[115px] sm:w-[145px] shrink-0">
+        <div className="relative w-[130px] sm:w-[155px] shrink-0">
+          <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
+            <CountryFlag code={activeCountry.code} className="w-5 h-3.5 rounded-sm shadow-sm border border-white/10" />
+          </div>
           <select
             id={codeRegistration.name}
-            className="w-full appearance-none rounded-xl border border-[#26282D] bg-[#16171B] px-3 py-3.5 pe-7 text-base sm:text-sm font-medium text-white shadow-sm transition-all hover:border-white/20 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
+            className="w-full appearance-none rounded-xl border border-[#26282D] bg-[#16171B] ps-10 pe-6 py-3.5 text-base sm:text-sm font-medium text-white shadow-sm transition-all hover:border-white/20 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
             {...codeRegistration}
           >
             {GCC_COUNTRIES.map((c) => (
               <option key={c.code} value={c.dialCode} className="bg-[#16171B] text-white">
-                {c.flag} {c.dialCode} ({c.code})
+                {c.dialCode} ({c.name})
               </option>
             ))}
           </select>
