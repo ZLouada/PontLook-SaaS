@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
@@ -138,21 +137,6 @@ export default async function ForProvidersPage({
           {/* Left-Aligned Header Block */}
           <div className="max-w-3xl text-start">
             <Reveal>
-              {/* Partner Network Badge with New Brand Logo */}
-              <div className="mb-6 inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-orange-500/30 text-xs font-mono text-neutral-300">
-                <Image
-                  src="/images/brand/pontlook-logo-orange.png"
-                  alt="PontLook for Providers"
-                  width={112}
-                  height={28}
-                  className="h-5 w-auto object-contain"
-                  priority
-                />
-                <span className="text-orange-400 border-s border-neutral-700 ps-2 uppercase tracking-wider font-semibold">
-                  {isAr ? 'شبكة المزودين المعتمدة' : 'Verified Partner Network'}
-                </span>
-              </div>
-
               <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.1] sm:leading-[1.05] font-heading tracking-tight text-start">
                 {isAr ? (
                   <>

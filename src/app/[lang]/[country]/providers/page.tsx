@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight, ChevronRight } from 'lucide-react';
@@ -185,17 +184,10 @@ export default async function CountryProvidersPage({ params }: ProvidersPageProp
         <section className="container-site max-w-6xl mx-auto px-4 sm:px-6 mb-16 sm:mb-24">
           <Reveal>
             <div className="max-w-4xl text-start">
-              <div className="mb-6 inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#16171B] border border-orange-500/30 text-xs font-mono text-neutral-300">
-                <Image
-                  src="/images/brand/pontlook-logo-orange.png"
-                  alt="PontLook for Providers"
-                  width={112}
-                  height={28}
-                  className="h-5 w-auto object-contain"
-                />
-                <span className="text-orange-400 border-s border-neutral-700 ps-2 uppercase tracking-wider font-semibold">
-                  {countryName} • {isAr ? 'شبكة المزودين المعتمدة' : 'Accredited Provider Network'}
-                </span>
+              <div className="mb-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs font-mono text-neutral-300">
+                <span className="font-semibold text-white">{countryName}</span>
+                <span className="text-neutral-500">•</span>
+                <span className="text-neutral-400">{isAr ? 'شبكة المزودين المعتمدة' : 'Accredited Provider Network'}</span>
               </div>
 
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight font-heading mb-6">
