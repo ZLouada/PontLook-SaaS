@@ -180,3 +180,40 @@ export function buildFAQSchema(faqs: Array<{ q: string; a: string }>) {
     })),
   };
 }
+
+/**
+ * 6. Provider Network Organization Schema
+ */
+export function buildProviderNetworkSchema({
+  lang = 'en',
+  canonicalUrl = `${SITE_URL}/for-providers`,
+}: {
+  lang?: 'en' | 'ar';
+  canonicalUrl?: string;
+} = {}) {
+  const isAr = lang === 'ar';
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    '@id': `${canonicalUrl}#organization`,
+    name: isAr ? 'شبكة مزودي التدريب المعتمدين | PontLook' : 'PontLook for Providers Network',
+    legalName: 'PontLook Enterprise Matchmaking Ltd.',
+    url: canonicalUrl,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SITE_URL}/images/brand/pontlook-logo-orange.png`,
+      caption: 'PontLook for Providers Logo',
+      width: 400,
+      height: 100,
+    },
+    image: `${SITE_URL}/images/brand/og-providers.png`,
+    description: isAr
+      ? 'شبكة أكاديميات ومزودي التدريب المعتمدين للشركات في منطقة الشرق الأوسط والعالم.'
+      : 'Accredited enterprise corporate training provider network connecting academies with verified corporate buyers.',
+    sameAs: [
+      'https://www.linkedin.com/company/pontlook',
+      'https://twitter.com/pontlook',
+      'https://blog.pontlook.com',
+    ],
+  };
+}

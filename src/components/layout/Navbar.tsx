@@ -22,7 +22,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const [isDarkSection, setIsDarkSection] = useState(false);
   const pathname = usePathname() || `/${lang}`;
   const dict = useDictionary();
-  const isForProviders = pathname?.includes('/for-providers');
+  const isForProviders = pathname?.includes('/for-providers') || pathname?.endsWith('/providers');
   const logoSrc = isForProviders ? '/PontLook-Logo-Orange.png' : '/PontLook-Logo-White.png';
 
   const otherLang = lang === 'en' ? 'ar' : 'en';
@@ -267,18 +267,33 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                         className="flex items-center gap-2.5"
                         aria-label="PontLook home"
                       >
-                        <div className="relative flex h-8 w-8 shrink-0 items-center">
-                          <Image
-                            src={logoSrc}
-                            alt="PontLook Logo"
-                            width={32}
-                            height={32}
-                            className="object-contain"
-                          />
-                        </div>
-                        <span className="font-heading font-bold text-xl text-white tracking-tight">
-                          PontLook
-                        </span>
+                        {isForProviders ? (
+                          <div className="relative flex items-center">
+                            <Image
+                              src="/images/brand/pontlook-logo-orange.png"
+                              alt="PontLook for Providers Logo"
+                              width={140}
+                              height={35}
+                              className="h-7 w-auto object-contain"
+                              priority
+                            />
+                          </div>
+                        ) : (
+                          <>
+                            <div className="relative flex h-8 w-8 shrink-0 items-center">
+                              <Image
+                                src="/PontLook-Logo-White.png"
+                                alt="PontLook Logo"
+                                width={32}
+                                height={32}
+                                className="object-contain"
+                              />
+                            </div>
+                            <span className="font-heading font-bold text-xl text-white tracking-tight">
+                              PontLook
+                            </span>
+                          </>
+                        )}
                       </Link>
                       <button
                         type="button"
@@ -329,17 +344,29 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
                   {/* Drawer Footer Actions */}
                   <div className="mt-8 pt-6 border-t border-[#26282D] space-y-4 pb-8">
-                    <Button
-                      href={`/${lang}/find-training`}
-                      onClick={() => setOpen(false)}
-                      variant="primary"
-                      size="md"
-                      className="w-full justify-center min-h-[48px]"
-                      leftIcon={<ShieldCheck size={18} />}
-                      rightIcon={<ArrowRight size={17} className="rtl:-scale-x-100" />}
-                    >
-                      {dict.nav.get_matched}
-                    </Button>
+                    {isForProviders ? (
+                      <Link
+                        href={`/${lang}/for-providers/apply`}
+                        onClick={() => setOpen(false)}
+                        className="inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm w-full shadow-lg shadow-orange-500/25 active:scale-95 transition-all min-h-[48px]"
+                      >
+                        <ShieldCheck size={18} />
+                        <span>{lang === 'ar' ? 'انضم كشريك تدريب' : 'Apply as Provider'}</span>
+                        <ArrowRight size={17} className="rtl:-scale-x-100" />
+                      </Link>
+                    ) : (
+                      <Button
+                        href={`/${lang}/find-training`}
+                        onClick={() => setOpen(false)}
+                        variant="primary"
+                        size="md"
+                        className="w-full justify-center min-h-[48px]"
+                        leftIcon={<ShieldCheck size={18} />}
+                        rightIcon={<ArrowRight size={17} className="rtl:-scale-x-100" />}
+                      >
+                        {dict.nav.get_matched}
+                      </Button>
+                    )}
 
                     <div className="flex items-center justify-between pt-2 px-1">
                       <span className="text-xs font-medium text-neutral-400">

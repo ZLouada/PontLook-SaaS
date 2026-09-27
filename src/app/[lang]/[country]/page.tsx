@@ -3,15 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
-  Building2,
-  MapPin,
   ArrowRight,
-  ShieldCheck,
   ChevronRight,
-  Briefcase,
-  Layers,
-  Award,
-  Globe2,
 } from 'lucide-react';
 import {
   CountryCode,
@@ -25,7 +18,6 @@ import {
   buildBreadcrumbSchema,
   buildFAQSchema,
 } from '@/lib/seo/schema';
-import { Signal } from '@/components/shared/Signal';
 import Reveal from '@/components/shared/Reveal';
 import FAQAccordion from '@/components/faq/FAQAccordion';
 
@@ -171,8 +163,8 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
 
       <div className="bg-[#08090A] min-h-screen text-white pt-24 sm:pt-28 pb-20 overflow-hidden">
         {/* Ambient Glows */}
-        <div className="pointer-events-none absolute top-20 start-0 w-[500px] h-[400px] bg-blue-500/[0.04] blur-[150px] -z-10 rounded-full" />
-        <div className="pointer-events-none absolute top-40 end-0 w-[550px] h-[450px] bg-orange-500/[0.03] blur-[160px] -z-10 rounded-full" />
+        <div className="pointer-events-none absolute top-20 start-0 w-[500px] h-[400px] bg-white/[0.02] blur-[150px] -z-10 rounded-full" />
+        <div className="pointer-events-none absolute top-40 end-0 w-[550px] h-[450px] bg-white/[0.01] blur-[160px] -z-10 rounded-full" />
 
         {/* 1. BREADCRUMBS */}
         <div className="container-site max-w-6xl mx-auto px-4 sm:px-6 mb-8">
@@ -189,11 +181,9 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
         <section className="container-site max-w-6xl mx-auto px-4 sm:px-6 mb-16 sm:mb-24">
           <Reveal>
             <div className="max-w-4xl text-start">
-              <div className="mb-6 inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#16171B]/90 border border-[#26282D] hover:border-white/20 backdrop-blur-xl shadow-lg transition-all duration-300">
-                <Signal tone="accent" size={16} />
-                <span className="text-xs font-semibold text-neutral-300 flex items-center gap-2">
-                  <Globe2 size={13} className="text-[#0052FF]" />
-                  <span>{countryName}</span>
+              <div className="mb-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B]/90 border border-[#26282D] hover:border-white/20 backdrop-blur-xl shadow-lg transition-all duration-300">
+                <span className="text-xs font-medium text-neutral-300">
+                  {countryName}
                 </span>
                 <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-white/[0.08] text-white">
                   {country.currency}
@@ -215,17 +205,18 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
               <div className="flex flex-wrap items-center gap-4">
                 <Link
                   href={`/${lang}/find-training`}
-                  className="inline-flex items-center justify-center gap-2 py-3.5 px-7 rounded-xl bg-[#0052FF] hover:bg-[#0047E0] text-white font-semibold text-sm sm:text-base shadow-lg shadow-blue-500/25 active:scale-95 transition-all"
+                  className="inline-flex items-center justify-center gap-2.5 py-3.5 px-7 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group sheen"
                 >
                   <span>{isAr ? `البحث عن مزود تدريب في ${countryName}` : `Find Providers in ${countryName}`}</span>
-                  <ArrowRight size={16} className="rtl:-scale-x-100" />
+                  <ArrowRight size={16} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                 </Link>
 
                 <Link
                   href={`/${lang}/${countryCode}/locations`}
-                  className="inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-[#16171B] hover:bg-[#1E2026] text-white font-semibold text-sm sm:text-base border border-[#26282D] shadow-sm active:scale-95 transition-all"
+                  className="inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md transition-all duration-200 group"
                 >
                   <span>{isAr ? 'استعراض المدن والمناطق' : 'Browse Regional Hubs'}</span>
+                  <ArrowRight size={15} className="rtl:-scale-x-100 text-neutral-400 group-hover:text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all" />
                 </Link>
               </div>
             </div>
@@ -237,8 +228,7 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
           <div className="rounded-2xl bg-gradient-to-r from-[#0F1013] via-[#16171B] to-[#0F1013] border border-[#26282D] p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
             <div className="space-y-2 max-w-2xl">
               <div className="flex items-center gap-2">
-                <Award size={18} className="text-[#0052FF]" />
-                <span className="text-xs uppercase font-mono font-semibold tracking-wider text-[#0052FF]">
+                <span className="text-xs uppercase font-mono font-medium tracking-wider text-neutral-400">
                   {isAr ? 'المبادرات والمعايير الوطنية' : 'National Workforce Mandates'}
                 </span>
               </div>
@@ -285,16 +275,15 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-mono text-[#0052FF] font-semibold flex items-center gap-1.5">
-                      <MapPin size={13} />
-                      <span>{isAr ? city.nameAr : city.nameEn}</span>
+                    <span className="text-xs font-mono text-neutral-300 font-medium">
+                      {isAr ? city.nameAr : city.nameEn}
                     </span>
                     <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-white/[0.05] text-neutral-400">
                       {country.currency}
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-semibold text-white font-heading group-hover:text-blue-400 transition-colors mb-2">
+                  <h3 className="text-lg font-semibold text-white font-heading group-hover:text-neutral-200 transition-colors mb-2">
                     {isAr ? city.heroTitleAr : city.heroTitleEn}
                   </h3>
 
@@ -325,10 +314,10 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
             </div>
             <Link
               href={`/${lang}/${countryCode}/services`}
-              className="text-xs font-semibold text-[#0052FF] hover:text-blue-400 hidden sm:inline-flex items-center gap-1"
+              className="text-xs font-medium text-neutral-400 hover:text-white hidden sm:inline-flex items-center gap-1.5 transition-colors group"
             >
               <span>{isAr ? 'دليل الخدمات بالكامل' : 'All Services'}</span>
-              <ArrowRight size={13} className="rtl:-scale-x-100" />
+              <ArrowRight size={13} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
             </Link>
           </div>
 
@@ -340,7 +329,7 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
                 className="group rounded-2xl bg-[#0F1013] border border-[#26282D] p-6 hover:border-white/20 transition-all duration-300 shadow-lg flex flex-col justify-between"
               >
                 <div>
-                  <h3 className="text-base font-semibold text-white font-heading group-hover:text-blue-400 transition-colors mb-2">
+                  <h3 className="text-base font-semibold text-white font-heading group-hover:text-neutral-200 transition-colors mb-2">
                     {isAr ? svc.titleAr : svc.titleEn}
                   </h3>
                   <p className="text-xs text-neutral-400 leading-relaxed mb-4 line-clamp-3">
@@ -350,7 +339,7 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
 
                 <div className="pt-3 border-t border-[#26282D] flex items-center justify-between text-xs text-neutral-400">
                   <span className="truncate pe-2 text-[11px] font-mono">{isAr ? svc.accreditationAr : svc.accreditationEn}</span>
-                  <ArrowRight size={13} className="rtl:-scale-x-100 text-[#0052FF] shrink-0" />
+                  <ArrowRight size={13} className="rtl:-scale-x-100 text-neutral-400 group-hover:text-white shrink-0 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                 </div>
               </Link>
             ))}
@@ -362,7 +351,7 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             <div className="rounded-3xl bg-[#0F1013] border border-[#26282D] p-8 sm:p-10 flex flex-col justify-between shadow-xl">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#0052FF] font-mono">
+                <span className="text-xs font-medium uppercase tracking-wider text-neutral-400 font-mono">
                   {isAr ? 'للشركات والمشترين' : 'Enterprise Matchmaking'}
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-semibold text-white font-heading mt-2 mb-3">
@@ -378,10 +367,10 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
               <div>
                 <Link
                   href={`/${lang}/find-training`}
-                  className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-[#0052FF] hover:bg-[#0047E0] text-white font-semibold text-sm shadow-lg shadow-blue-500/25 active:scale-95 transition-all"
+                  className="inline-flex items-center justify-center gap-2.5 w-full py-3.5 px-6 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-medium text-sm border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group sheen"
                 >
                   <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Start Free Training Intake'}</span>
-                  <ArrowRight size={15} className="rtl:-scale-x-100" />
+                  <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>

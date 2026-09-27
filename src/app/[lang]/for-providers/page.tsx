@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
 import Reveal from '@/components/shared/Reveal';
 import { Target, CircleDollarSign, TrendingUp, ArrowRight } from 'lucide-react';
-import { constructAlternates } from '@/lib/seo';
+import { constructAlternates, providerIcons } from '@/lib/seo/metadata';
+import { buildProviderNetworkSchema } from '@/lib/seo/schema';
 
 export async function generateMetadata({
   params,
@@ -28,6 +30,7 @@ export async function generateMetadata({
       absolute: title,
     },
     description,
+    icons: providerIcons,
     alternates: constructAlternates(lang, 'for-providers'),
     openGraph: {
       title,
@@ -38,12 +41,18 @@ export async function generateMetadata({
       type: 'website',
       images: [
         {
-          url: '/og-image.png',
+          url: '/images/brand/og-providers.png',
           width: 1200,
           height: 630,
           alt: title,
         },
       ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['/images/brand/og-providers.png'],
     },
   };
 }
@@ -106,18 +115,44 @@ export default async function ForProvidersPage({
 
   const providerBenefits = isAr ? providerBenefitsAr : providerBenefitsEn;
 
+  const providerSchema = buildProviderNetworkSchema({
+    lang,
+    canonicalUrl: `https://pontlook.com/${lang}/for-providers`,
+  });
+
   return (
     <>
+      {/* Search Engine & Rich Snippets Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(providerSchema) }}
+      />
+
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-[#08090A] pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8">
         {/* Ambient Depth Glows */}
         <div className="pointer-events-none absolute top-1/4 start-0 w-[550px] h-[450px] bg-orange-500/[0.05] blur-[160px] -z-10 rounded-full" />
-        <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-blue-500/[0.02] blur-[160px] -z-10 rounded-full" />
+        <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-orange-500/[0.02] blur-[160px] -z-10 rounded-full" />
 
         <div className="container-site max-w-6xl mx-auto relative z-10 w-full">
           {/* Left-Aligned Header Block */}
           <div className="max-w-3xl text-start">
             <Reveal>
+              {/* Partner Network Badge with New Brand Logo */}
+              <div className="mb-6 inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-orange-500/30 text-xs font-mono text-neutral-300">
+                <Image
+                  src="/images/brand/pontlook-logo-orange.png"
+                  alt="PontLook for Providers"
+                  width={112}
+                  height={28}
+                  className="h-5 w-auto object-contain"
+                  priority
+                />
+                <span className="text-orange-400 border-s border-neutral-700 ps-2 uppercase tracking-wider font-semibold">
+                  {isAr ? 'شبكة المزودين المعتمدة' : 'Verified Partner Network'}
+                </span>
+              </div>
+
               <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.1] sm:leading-[1.05] font-heading tracking-tight text-start">
                 {isAr ? (
                   <>

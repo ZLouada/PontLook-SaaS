@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Locale, i18n } from '@/i18n/config';
-import { constructAlternates } from '@/lib/seo';
+import { constructAlternates, providerIcons } from '@/lib/seo/metadata';
+import { buildProviderNetworkSchema } from '@/lib/seo/schema';
 import ProviderApplicationWizard from '@/components/providers/ProviderApplicationWizard';
 
 export async function generateMetadata({
@@ -24,6 +25,7 @@ export async function generateMetadata({
       absolute: title,
     },
     description,
+    icons: providerIcons,
     alternates: constructAlternates(lang, 'for-providers/apply'),
     openGraph: {
       title,
@@ -34,12 +36,18 @@ export async function generateMetadata({
       type: 'website',
       images: [
         {
-          url: '/og-image.png',
+          url: '/images/brand/og-providers.png',
           width: 1200,
           height: 630,
           alt: title,
         },
       ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['/images/brand/og-providers.png'],
     },
   };
 }
@@ -57,8 +65,18 @@ export default async function ProviderApplyPage({
   const lang = resolvedParams?.lang || 'en';
   const isAr = lang === 'ar';
 
+  const providerSchema = buildProviderNetworkSchema({
+    lang,
+    canonicalUrl: `https://pontlook.com/${lang}/for-providers/apply`,
+  });
+
   return (
     <div className="min-h-screen bg-[#08090A] pt-24 sm:pt-28 pb-16 relative overflow-hidden">
+      {/* Search Engine & Rich Snippets Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(providerSchema) }}
+      />
       {/* Ambient background glows */}
       <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-white/[0.02] blur-3xl -z-10 rounded-full" />
       <div className="pointer-events-none absolute top-10 start-1/4 w-[350px] h-[350px] bg-white/[0.01] blur-3xl -z-10 rounded-full" />

@@ -334,7 +334,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
     return (
       <div className="max-w-2xl mx-auto py-12 px-4 sm:px-6">
         <div className="bg-[#0F1013] border border-[#26282D] rounded-2xl p-8 sm:p-12 text-center relative overflow-hidden shadow-xl">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-32 bg-blue-500/10 blur-3xl pointer-events-none" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-32 bg-orange-500/10 blur-3xl pointer-events-none" />
 
           <div className="flex justify-center mb-6">
             <Seal size={56} label={applicationRef || undefined} />
@@ -445,7 +445,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
       {/* Sleek Progress Bar */}
       <div className="w-full h-2 bg-[#16171B] rounded-full overflow-hidden mb-8 border border-[#26282D]">
         <div
-          className="h-full bg-white transition-all duration-300 ease-out"
+          className="h-full bg-[#FF5C00] transition-all duration-300 ease-out"
           style={{ width: `${(step / 4) * 100}%` }}
         />
       </div>

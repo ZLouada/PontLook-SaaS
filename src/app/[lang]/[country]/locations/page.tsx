@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { MapPin, ArrowRight, ChevronRight, Building2, Globe2 } from 'lucide-react';
+import { ArrowRight, ChevronRight } from 'lucide-react';
 import {
   CountryCode,
   ALL_COUNTRY_CODES,
@@ -12,7 +12,6 @@ import {
   buildOrganizationSchema,
   buildBreadcrumbSchema,
 } from '@/lib/seo/schema';
-import { Signal } from '@/components/shared/Signal';
 import Reveal from '@/components/shared/Reveal';
 
 export const dynamic = 'force-static';
@@ -145,8 +144,7 @@ export default async function LocationsIndexPage({ params }: LocationsIndexProps
         <section className="container-site max-w-6xl mx-auto px-4 sm:px-6 mb-12 sm:mb-16">
           <Reveal>
             <div className="max-w-3xl text-start">
-              <div className="mb-5 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] text-xs font-mono text-neutral-300">
-                <Globe2 size={13} className="text-[#0052FF]" />
+              <div className="mb-5 inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] text-xs font-mono text-neutral-300">
                 <span>{countryName} • {isAr ? 'دليل المدن والمراكز الإقليمية' : 'Regional Hubs Directory'}</span>
               </div>
 
@@ -175,16 +173,15 @@ export default async function LocationsIndexPage({ params }: LocationsIndexProps
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-semibold text-[#0052FF] flex items-center gap-1.5 font-mono">
-                      <MapPin size={14} />
-                      <span>{isAr ? city.nameAr : city.nameEn}</span>
+                    <span className="text-xs font-mono font-medium text-neutral-300">
+                      {isAr ? city.nameAr : city.nameEn}
                     </span>
                     <span className="text-[10px] uppercase font-mono px-2.5 py-0.5 rounded-full bg-white/[0.05] text-neutral-300">
                       {country.currency}
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-semibold text-white font-heading mb-2 group-hover:text-blue-400 transition-colors">
+                  <h3 className="text-lg font-semibold text-white font-heading mb-2 group-hover:text-neutral-200 transition-colors">
                     {isAr ? city.heroTitleAr : city.heroTitleEn}
                   </h3>
 
@@ -208,10 +205,10 @@ export default async function LocationsIndexPage({ params }: LocationsIndexProps
 
                 <Link
                   href={`/${lang}/${countryCode}/locations/${city.slug}`}
-                  className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-white/[0.05] hover:bg-[#0052FF] text-white font-medium text-xs transition-all duration-200"
+                  className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-medium text-xs border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group/btn sheen"
                 >
                   <span>{isAr ? `استعراض مزودي ${city.nameAr}` : `Explore ${city.nameEn} Hub`}</span>
-                  <ArrowRight size={13} className="rtl:-scale-x-100" />
+                  <ArrowRight size={13} className="rtl:-scale-x-100 group-hover/btn:translate-x-0.5 rtl:group-hover/btn:-translate-x-0.5 transition-transform" />
                 </Link>
               </div>
             ))}

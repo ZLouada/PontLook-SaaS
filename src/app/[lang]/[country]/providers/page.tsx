@@ -2,13 +2,13 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowRight, ChevronRight, ShieldCheck, CheckCircle2, Award, Users } from 'lucide-react';
+import { ArrowRight, ChevronRight } from 'lucide-react';
 import {
   CountryCode,
   ALL_COUNTRY_CODES,
   getCountryData,
 } from '@/data/geoData';
-import { constructRegionalAlternates, SITE_URL } from '@/lib/seo/metadata';
+import { constructRegionalAlternates, SITE_URL, providerIcons } from '@/lib/seo/metadata';
 import {
   buildOrganizationSchema,
   buildBreadcrumbSchema,
@@ -67,6 +67,7 @@ export async function generateMetadata({ params }: ProvidersPageProps): Promise<
   return {
     title: { absolute: title },
     description,
+    icons: providerIcons,
     alternates: constructRegionalAlternates({
       countryCode,
       lang,
@@ -81,7 +82,7 @@ export async function generateMetadata({ params }: ProvidersPageProps): Promise<
       type: 'website',
       images: [
         {
-          url: '/og-image.png',
+          url: '/images/brand/og-providers.png',
           width: 1200,
           height: 630,
           alt: title,
@@ -92,6 +93,7 @@ export async function generateMetadata({ params }: ProvidersPageProps): Promise<
       card: 'summary_large_image',
       title,
       description,
+      images: ['/images/brand/og-providers.png'],
     },
   };
 }
@@ -211,17 +213,18 @@ export default async function CountryProvidersPage({ params }: ProvidersPageProp
               <div className="flex flex-wrap items-center gap-4">
                 <Link
                   href={`/${lang}/for-providers/apply`}
-                  className="inline-flex items-center justify-center gap-2 py-3.5 px-7 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all"
+                  className="inline-flex items-center justify-center gap-2.5 py-3.5 px-7 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-medium text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-[0.98] transition-all duration-200 group"
                 >
                   <span>{isAr ? 'تقديم طلب الانضمام للشبكة' : 'Apply for Provider Partnership'}</span>
-                  <ArrowRight size={16} className="rtl:-scale-x-100" />
+                  <ArrowRight size={16} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                 </Link>
 
                 <Link
                   href={`/${lang}/find-training`}
-                  className="inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-[#16171B] hover:bg-[#1E2026] text-white font-semibold text-sm sm:text-base border border-[#26282D] shadow-sm active:scale-95 transition-all"
+                  className="inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md transition-all duration-200 group"
                 >
                   <span>{isAr ? 'أنا مشتري أبحث عن تدريب' : 'I Am a Buyer Seeking Training'}</span>
+                  <ArrowRight size={15} className="rtl:-scale-x-100 text-neutral-400 group-hover:text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all" />
                 </Link>
               </div>
             </div>

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Calculator, CheckCircle2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { CountryData, CityData } from '@/data/geoData';
 
 interface CityBudgetCalculatorProps {
@@ -31,8 +31,7 @@ export default function CityBudgetCalculator({ country, city, lang }: CityBudget
     <div className="rounded-3xl bg-[#0F1013] border border-[#26282D] p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-[#26282D]">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-xs font-mono text-neutral-300 mb-3">
-            <Calculator size={13} className="text-[#0052FF]" />
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-xs font-mono text-neutral-300 mb-3">
             <span>{isAr ? 'حاسبة الميزانية المؤسسية التقديرية' : 'Corporate Budget Estimator'}</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-semibold text-white font-heading">
@@ -48,7 +47,7 @@ export default function CityBudgetCalculator({ country, city, lang }: CityBudget
         </div>
 
         <div className="flex items-center gap-2 bg-[#16171B] p-1.5 rounded-2xl border border-[#26282D] self-start lg:self-auto">
-          <span className="text-xs font-semibold px-3 py-1.5 rounded-xl bg-[#0052FF] text-white">
+          <span className="text-xs font-mono font-medium px-3 py-1.5 rounded-xl bg-white/[0.08] text-white border border-white/10">
             {country.currency}
           </span>
           <span className="text-xs text-neutral-400 px-2 font-mono">
@@ -71,17 +70,17 @@ export default function CityBudgetCalculator({ country, city, lang }: CityBudget
                 onClick={() => setSelectedCohort(idx)}
                 className={`w-full flex items-center justify-between p-3.5 sm:p-4 rounded-xl text-start text-xs sm:text-sm transition-all duration-200 border ${
                   selectedCohort === idx
-                    ? 'bg-[#16171B] border-[#0052FF] text-white shadow-md shadow-blue-500/10'
-                    : 'bg-transparent border-[#26282D] text-neutral-300 hover:border-neutral-700'
+                    ? 'bg-white/[0.05] border-white/30 text-white'
+                    : 'bg-transparent border-[#26282D] text-neutral-300 hover:border-white/20'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <div
                     className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
-                      selectedCohort === idx ? 'border-[#0052FF] bg-[#0052FF]' : 'border-neutral-600'
+                      selectedCohort === idx ? 'border-white bg-white' : 'border-neutral-600'
                     }`}
                   >
-                    {selectedCohort === idx && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                    {selectedCohort === idx && <div className="w-1.5 h-1.5 rounded-full bg-[#08090A]" />}
                   </div>
                   <span className="font-medium">{isAr ? opt.nameAr : opt.nameEn}</span>
                 </div>
@@ -90,12 +89,12 @@ export default function CityBudgetCalculator({ country, city, lang }: CityBudget
           </div>
 
           <div className="pt-2 flex flex-wrap items-center gap-4 text-xs text-neutral-400">
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 size={13} className="text-emerald-400" />
+            <span className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0" />
               {isAr ? 'عروض معتمدة من 3 أكاديميات' : '3 Verified Academy Bids'}
             </span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 size={13} className="text-emerald-400" />
+            <span className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0" />
               {isAr ? 'استجابة خلال 48 ساعة' : '48-Hour Response SLA'}
             </span>
           </div>
@@ -117,10 +116,10 @@ export default function CityBudgetCalculator({ country, city, lang }: CityBudget
           <div className="pt-2">
             <Link
               href={`/${lang}/find-training`}
-              className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-[#0052FF] hover:bg-[#0047E0] text-white font-medium text-xs sm:text-sm shadow-lg shadow-blue-500/25 active:scale-95 transition-all"
+              className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-medium text-xs sm:text-sm border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group sheen"
             >
               <span>{isAr ? 'طلب عروض أسعار دقيقة مجاناً' : 'Request Exact Bids for Free'}</span>
-              <ArrowRight size={15} className="rtl:-scale-x-100" />
+              <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>

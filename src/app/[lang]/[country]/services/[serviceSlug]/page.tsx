@@ -4,13 +4,6 @@ import { notFound } from 'next/navigation';
 import {
   ArrowRight,
   ChevronRight,
-  ShieldCheck,
-  CheckCircle2,
-  Users,
-  Calendar,
-  Award,
-  Layers,
-  Sparkles,
 } from 'lucide-react';
 import {
   CountryCode,
@@ -208,8 +201,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
         <section className="container-site max-w-6xl mx-auto px-4 sm:px-6 mb-16 sm:mb-20">
           <Reveal>
             <div className="max-w-4xl text-start">
-              <div className="mb-5 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] text-xs font-mono text-neutral-300">
-                <Award size={13} className="text-[#0052FF]" />
+              <div className="mb-5 inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] text-xs font-mono text-neutral-300">
                 <span>{countryName} • {isAr ? service.accreditationAr : service.accreditationEn}</span>
               </div>
 
@@ -226,17 +218,18 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
               <div className="flex flex-wrap items-center gap-4">
                 <Link
                   href={`/${lang}/find-training`}
-                  className="inline-flex items-center justify-center gap-2 py-3.5 px-7 rounded-xl bg-[#0052FF] hover:bg-[#0047E0] text-white font-semibold text-sm sm:text-base shadow-lg shadow-blue-500/25 active:scale-95 transition-all"
+                  className="inline-flex items-center justify-center gap-2.5 py-3.5 px-7 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group sheen"
                 >
                   <span>{isAr ? 'طلب عروض تدريب مخصصة' : 'Request Tailored Bids'}</span>
-                  <ArrowRight size={16} className="rtl:-scale-x-100" />
+                  <ArrowRight size={16} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                 </Link>
 
                 <Link
                   href={`/${lang}/${countryCode}/locations`}
-                  className="inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-[#16171B] hover:bg-[#1E2026] text-white font-semibold text-sm sm:text-base border border-[#26282D] shadow-sm active:scale-95 transition-all"
+                  className="inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md transition-all duration-200 group"
                 >
                   <span>{isAr ? 'استعراض المدن المتاحة' : 'View Delivery Locations'}</span>
+                  <ArrowRight size={15} className="rtl:-scale-x-100 text-neutral-400 group-hover:text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all" />
                 </Link>
               </div>
             </div>
@@ -249,7 +242,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
             {/* Core Curriculum Modules */}
             <div className="lg:col-span-7 rounded-2xl bg-[#0F1013] border border-[#26282D] p-6 sm:p-8 space-y-6 shadow-xl">
               <div>
-                <span className="text-xs font-semibold text-[#0052FF] uppercase font-mono tracking-wider">
+                <span className="text-xs font-medium text-neutral-400 uppercase font-mono tracking-wider">
                   {isAr ? 'المحتوى والمهارات الأساسية' : 'Core Capabilities'}
                 </span>
                 <h3 className="text-xl font-semibold text-white font-heading mt-1">
@@ -272,7 +265,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
             {/* Delivery Formats & Audience */}
             <div className="lg:col-span-5 space-y-6">
               <div className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-6 sm:p-8 space-y-4 shadow-xl">
-                <span className="text-xs font-semibold text-[#0052FF] uppercase font-mono tracking-wider">
+                <span className="text-xs font-medium text-neutral-400 uppercase font-mono tracking-wider">
                   {isAr ? 'صيغ التنفيذ' : 'Delivery Formats'}
                 </span>
                 <h4 className="text-lg font-semibold text-white font-heading">
@@ -281,7 +274,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
                 <div className="space-y-2">
                   {(isAr ? service.deliveryFormatsAr : service.deliveryFormatsEn).map((format) => (
                     <div key={format} className="flex items-center gap-2.5 text-xs sm:text-sm text-neutral-300">
-                      <CheckCircle2 size={15} className="text-emerald-400 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0" />
                       <span>{format}</span>
                     </div>
                   ))}

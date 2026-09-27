@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowRight, ChevronRight, Layers, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ChevronRight } from 'lucide-react';
 import {
   CountryCode,
   ALL_COUNTRY_CODES,
@@ -146,8 +146,7 @@ export default async function ServicesIndexPage({ params }: ServicesIndexProps) 
         <section className="container-site max-w-6xl mx-auto px-4 sm:px-6 mb-12 sm:mb-16">
           <Reveal>
             <div className="max-w-3xl text-start">
-              <div className="mb-5 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] text-xs font-mono text-neutral-300">
-                <Layers size={13} className="text-[#0052FF]" />
+              <div className="mb-5 inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] text-xs font-mono text-neutral-300">
                 <span>{countryName} • {isAr ? 'مجالات التدريب المؤسسي' : 'Enterprise Service Catalog'}</span>
               </div>
 
@@ -176,12 +175,12 @@ export default async function ServicesIndexPage({ params }: ServicesIndexProps) 
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-mono text-[#0052FF] font-semibold">
+                    <span className="text-xs font-mono text-neutral-400 font-medium">
                       {isAr ? svc.accreditationAr : svc.accreditationEn}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-semibold text-white font-heading mb-3 group-hover:text-blue-400 transition-colors">
+                  <h3 className="text-xl font-semibold text-white font-heading mb-3 group-hover:text-neutral-200 transition-colors">
                     {isAr ? svc.titleAr : svc.titleEn}
                   </h3>
 
@@ -202,10 +201,10 @@ export default async function ServicesIndexPage({ params }: ServicesIndexProps) 
                     <span className="text-xs font-semibold text-neutral-300 block">
                       {isAr ? 'أهم المحاور التدريبية:' : 'Core Modules:'}
                     </span>
-                    <ul className="space-y-1">
+                    <ul className="space-y-2">
                       {(isAr ? svc.keyModulesAr : svc.keyModulesEn).map((mod) => (
                         <li key={mod} className="text-xs text-neutral-300 flex items-start gap-2">
-                          <CheckCircle2 size={13} className="text-[#0052FF] shrink-0 mt-0.5" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0 mt-1.5" />
                           <span>{mod}</span>
                         </li>
                       ))}
@@ -216,10 +215,10 @@ export default async function ServicesIndexPage({ params }: ServicesIndexProps) 
                 <div className="pt-4 border-t border-[#26282D]">
                   <Link
                     href={`/${lang}/${countryCode}/services/${svc.slug}`}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#0052FF] hover:bg-[#0047E0] text-white font-medium text-xs sm:text-sm shadow-lg shadow-blue-500/20 active:scale-95 transition-all"
+                    className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-medium text-xs sm:text-sm border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group/btn sheen"
                   >
                     <span>{isAr ? `استكشاف ${svc.titleAr}` : `View ${svc.titleEn}`}</span>
-                    <ArrowRight size={14} className="rtl:-scale-x-100" />
+                    <ArrowRight size={14} className="rtl:-scale-x-100 group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1 transition-transform" />
                   </Link>
                 </div>
               </div>
