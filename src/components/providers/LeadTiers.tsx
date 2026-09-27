@@ -467,13 +467,23 @@ export default function LeadTiers(_props?: {
   if (mode === 'providers') {
     const tiers = isAr ? TIERS_AR : TIERS_EN;
     return (
-      <section className="py-12 sm:py-16 lg:py-20 bg-[#08090A] text-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight font-heading">
+      <section
+        data-nav-dark="true"
+        className="relative py-16 sm:py-24 lg:py-32 bg-[#08090A] text-white"
+      >
+        {/* ambient glow */}
+        <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-orange-500/[0.02] blur-[180px] pointer-events-none rounded-full" />
+
+        <div className="container-site relative z-10 px-4 sm:px-8 lg:px-12">
+          <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-4">
+              <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
+              <span>{isAr ? 'مستويات التأهيل والمطابقة' : 'QUALIFICATION TIERS'}</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight font-heading">
               {isAr ? 'تدفق متوقع لفرص الشركات والمؤسسات' : 'A predictable pipeline of enterprise opportunities'}
             </h2>
-            <p className="mt-4 text-base text-neutral-400">
+            <p className="mt-4 text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-sans">
               {isAr
                 ? 'يتم تقييم كل فرصة بناءً على التحقق من صانع القرار، وحجم الشركة، والميزانية، والجدول الزمني، وعمق الاحتياج لتكون على دراية تامة بتفاصيل كل فرصة.'
                 : "Every lead is scored on decision maker verification, company size, budget, timeline, and depth of need, so you always know exactly what you're walking into."}
@@ -484,73 +494,81 @@ export default function LeadTiers(_props?: {
             {tiers.map((tier, idx) => {
               const config = CARD_CONFIGS[idx] || CARD_CONFIGS[0];
               return (
-                <Spotlight
+                <m.div
                   key={tier.step}
-                  radius={340}
-                  className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass} bg-[#0F1013] border border-[#26282D] text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-all duration-300 transform-gpu hover:border-white/20`}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={viewportOnce}
+                  transition={{ duration: dur.slow, delay: idx * 0.08, ease: ease.out }}
+                  className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass}`}
                 >
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-center">
-                    {/* Left Details */}
-                    <div className="lg:col-span-7 space-y-3 sm:space-y-4">
-                      <div className="flex items-center gap-2">
-                        <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-semibold bg-white/[0.08] text-white border border-[#26282D]">
-                          {tier.step}
-                        </span>
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-medium bg-[#16171B] text-neutral-300 border border-[#26282D]">
-                          <Signal tone={mode === 'providers' ? 'orange' : undefined} size={16} speed={1 - idx * 0.12} />
-                          <span>{tier.badge}</span>
-                        </span>
+                  <Spotlight
+                    radius={340}
+                    className={`bg-[#0F1013] border border-[#26282D] hover:border-orange-500/40 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 transform-gpu`}
+                  >
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-center">
+                      {/* Left Details */}
+                      <div className="lg:col-span-7 space-y-3 sm:space-y-4">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-semibold bg-white/[0.08] text-white border border-[#26282D]">
+                            {tier.step}
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-medium bg-[#16171B] text-neutral-300 border border-[#26282D]">
+                            <Signal tone="orange" size={16} speed={1 - idx * 0.12} />
+                            <span>{tier.badge}</span>
+                          </span>
+                        </div>
+
+                        <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-white tracking-tight leading-snug font-heading">
+                          {tier.title}
+                        </h3>
+
+                        <p className="text-xs sm:text-sm lg:text-base text-neutral-400 leading-relaxed font-sans">
+                          {tier.description}
+                        </p>
+
+                        {tier.isCtaCard && (
+                          <div className="pt-2">
+                            <Link
+                              href={`/${lang}/for-providers/apply`}
+                              className="inline-flex items-center justify-center px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-medium text-sm shadow-lg shadow-orange-500/20 active:scale-95 transition-all"
+                            >
+                              <span>{isAr ? 'قدم للانضمام إلى الشراكة' : 'Apply for partnership'}</span>
+                              <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
+                            </Link>
+                          </div>
+                        )}
                       </div>
 
-                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-white tracking-tight leading-snug font-heading">
-                        {tier.title}
-                      </h3>
-
-                      <p className="text-xs sm:text-sm lg:text-base text-neutral-400 leading-relaxed font-sans">
-                        {tier.description}
-                      </p>
-
-                      {tier.isCtaCard && (
-                        <div className="pt-2">
-                          <Link
-                            href={`/${lang}/for-providers/apply`}
-                            className="inline-flex items-center justify-center px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-medium text-sm shadow-lg shadow-orange-500/20 active:scale-95 transition-all"
-                          >
-                            <span>{isAr ? 'قدم للانضمام إلى الشراكة' : 'Apply for partnership'}</span>
-                            <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
-                          </Link>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Right Preview Card */}
-                    <div className="lg:col-span-5">
-                      <div className="rounded-xl sm:rounded-2xl bg-[#16171B] border border-[#26282D] p-4 sm:p-6 space-y-3 sm:space-y-4 text-white">
-                        <div className="text-[11px] sm:text-xs font-semibold text-neutral-400 tracking-wide uppercase">
-                          {tier.project}
-                        </div>
-
-                        <div>
-                          <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1 sm:mb-1.5">
-                            <span>{isAr ? 'دقة التطابق' : 'Match Accuracy'}</span>
-                            <span className="font-bold text-white tabular-nums">{tier.accuracy}</span>
+                      {/* Right Preview Card */}
+                      <div className="lg:col-span-5">
+                        <div className="rounded-xl sm:rounded-2xl bg-[#16171B] border border-[#26282D] p-4 sm:p-6 space-y-3 sm:space-y-4 text-white">
+                          <div className="text-[11px] sm:text-xs font-semibold text-neutral-400 tracking-wide uppercase">
+                            {tier.project}
                           </div>
-                          <div className="h-1.5 sm:h-2 w-full rounded-full bg-white/10 overflow-hidden">
-                            <div className={`h-full rounded-full ${tier.barColor} ${tier.barWidth}`} />
-                          </div>
-                        </div>
 
-                        <ul className="space-y-1.5 sm:space-y-2 pt-1 text-xs text-neutral-300">
-                          {tier.checklist.map((item, cIdx) => (
-                            <li key={cIdx}>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
+                          <div>
+                            <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1 sm:mb-1.5">
+                              <span>{isAr ? 'دقة التطابق' : 'Match Accuracy'}</span>
+                              <span className="font-bold text-white tabular-nums">{tier.accuracy}</span>
+                            </div>
+                            <div className="h-1.5 sm:h-2 w-full rounded-full bg-white/10 overflow-hidden">
+                              <div className={`h-full rounded-full ${tier.barColor} ${tier.barWidth}`} />
+                            </div>
+                          </div>
+
+                          <ul className="space-y-1.5 sm:space-y-2 pt-1 text-xs text-neutral-300">
+                            {tier.checklist.map((item, cIdx) => (
+                              <li key={cIdx}>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Spotlight>
+                  </Spotlight>
+                </m.div>
               );
             })}
           </div>

@@ -292,7 +292,7 @@
    Hover effects
    ========================================================================== */
 /* Pointer-tracked highlight. Coordinates arrive as CSS vars from Spotlight.tsx. */
-.spotlight {
+.spotlight:not(.sticky) {
   position: relative;
 }
 .spotlight::after {

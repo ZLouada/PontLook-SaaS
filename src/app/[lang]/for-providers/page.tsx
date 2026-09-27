@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
 import Reveal from '@/components/shared/Reveal';
-import { Signal } from '@/components/shared/Signal';
 import { Target, CircleDollarSign, TrendingUp, ArrowRight } from 'lucide-react';
 import { constructAlternates } from '@/lib/seo';
 
@@ -120,24 +118,6 @@ export default async function ForProvidersPage({
           {/* Left-Aligned Header Block */}
           <div className="max-w-3xl text-start">
             <Reveal>
-              {/* Architectural Brand Pill for Providers */}
-              <div className="mb-6 sm:mb-8 inline-flex items-center gap-3 px-3.5 py-1.5 rounded-full bg-[#16171B]/90 border border-orange-500/30 hover:border-orange-500/50 backdrop-blur-xl shadow-lg shadow-orange-500/10 transition-all duration-300">
-                <Signal tone="orange" size={16} />
-                <div className="flex items-center gap-2.5">
-                  <Image
-                    src="/images/brand/pontlook-logo-orange.png"
-                    alt="PontLook for Providers"
-                    width={112}
-                    height={28}
-                    className="h-5 sm:h-6 w-auto object-contain"
-                    priority
-                  />
-                  <span className="text-[11px] font-semibold text-orange-400 tracking-wider uppercase font-mono border-s border-neutral-700/80 ps-2.5">
-                    {isAr ? 'شبكة المزودين المعتمدة' : 'Provider Network'}
-                  </span>
-                </div>
-              </div>
-
               <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.1] sm:leading-[1.05] font-heading tracking-tight text-start">
                 {isAr ? (
                   <>
@@ -211,36 +191,38 @@ export default async function ForProvidersPage({
               ))}
             </div>
           </Reveal>
+        </div>
+      </section>
 
-          {/* 3. OPPORTUNITY TIERS SECTION */}
-          <div id="tiers" className="scroll-mt-24 pt-16 sm:pt-24">
-            <LeadTiers mode="providers" dict={dict} lang={lang} />
-          </div>
+      {/* 3. OPPORTUNITY TIERS SECTION */}
+      <div id="tiers" className="scroll-mt-24">
+        <LeadTiers mode="providers" dict={dict} lang={lang} />
+      </div>
 
-          {/* 4. BOTTOM CTA SECTION (No window background, single orange button, second button removed) */}
-          <div id="apply" className="scroll-mt-24 pt-16 sm:pt-24 pb-8 sm:pb-12 text-center max-w-3xl mx-auto px-4">
-            <Reveal>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-4">
-                {isAr ? 'جاهز لتوسيع قاعدة عملائك المؤسسيين؟' : 'Ready to Scale Your Enterprise Pipeline?'}
-              </h2>
+      {/* 4. BOTTOM CTA SECTION */}
+      <section id="apply" className="bg-[#08090A] scroll-mt-24 pb-16 sm:pb-24 pt-4 text-center">
+        <div className="max-w-3xl mx-auto px-4">
+          <Reveal>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-4">
+              {isAr ? 'جاهز لتوسيع قاعدة عملائك المؤسسيين؟' : 'Ready to Scale Your Enterprise Pipeline?'}
+            </h2>
 
-              <p className="text-sm sm:text-base text-neutral-400 font-normal leading-relaxed max-w-2xl mx-auto mb-8 font-sans">
-                {isAr
-                  ? 'أكمل نموذج التأهيل وسيقوم فريق الشراكات بمراجعة بياناتك والتواصل معك خلال يومي عمل لبدء استقبال الفرص المؤكدة.'
-                  : 'Complete our streamlined qualification form. Our partnerships team will review your profile and reach out within 2 business days to begin delivering verified demand.'}
-              </p>
+            <p className="text-sm sm:text-base text-neutral-400 font-normal leading-relaxed max-w-2xl mx-auto mb-8 font-sans">
+              {isAr
+                ? 'أكمل نموذج التأهيل وسيقوم فريق الشراكات بمراجعة بياناتك والتواصل معك خلال يومي عمل لبدء استقبال الفرص المؤكدة.'
+                : 'Complete our streamlined qualification form. Our partnerships team will review your profile and reach out within 2 business days to begin delivering verified demand.'}
+            </p>
 
-              <div className="flex justify-center">
-                <Link
-                  href={`/${lang}/for-providers/apply`}
-                  className="inline-flex items-center justify-center gap-2 py-3 px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans"
-                >
-                  <span>{isAr ? 'ابدأ طلب التأهيل للشراكة' : 'Apply for Provider Partnership'}</span>
-                  <ArrowRight size={17} className="rtl:-scale-x-100" />
-                </Link>
-              </div>
-            </Reveal>
-          </div>
+            <div className="flex justify-center">
+              <Link
+                href={`/${lang}/for-providers/apply`}
+                className="inline-flex items-center justify-center gap-2 py-3 px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans"
+              >
+                <span>{isAr ? 'ابدأ طلب التأهيل للشراكة' : 'Apply for Provider Partnership'}</span>
+                <ArrowRight size={17} className="rtl:-scale-x-100" />
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
     </>
