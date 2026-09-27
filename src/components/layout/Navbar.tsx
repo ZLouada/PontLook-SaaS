@@ -23,7 +23,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const pathname = usePathname() || `/${lang}`;
   const dict = useDictionary();
   const isForProviders = pathname?.includes('/for-providers') || pathname?.endsWith('/providers');
-  const logoSrc = isForProviders ? '/PontLook-Logo-Orange.png' : '/PontLook-Logo-White.png';
 
   const otherLang = lang === 'en' ? 'ar' : 'en';
   const switchHref = (() => {
@@ -111,40 +110,22 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           className="container-site !px-0 flex items-center justify-between w-full"
           aria-label="Main navigation"
         >
-          {/* Brand Logo & Name */}
+          {/* Brand Logo */}
           <Link
             href={`/${lang}`}
             className="flex items-center gap-2 sm:gap-2.5 transition-transform duration-200 hover:scale-[1.02] active:scale-95"
             aria-label="PontLook home"
           >
-            {isForProviders ? (
-              <div className="relative flex items-center">
-                <Image
-                  src="/images/brand/pontlook-logo-orange.png"
-                  alt="PontLook for Providers Logo"
-                  width={140}
-                  height={35}
-                  className="h-7 sm:h-8 w-auto object-contain transition-opacity duration-200"
-                  priority
-                />
-              </div>
-            ) : (
-              <>
-                <div className="relative flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center">
-                  <Image
-                    src="/PontLook-Logo-White.png"
-                    alt="PontLook Corporate Training Matchmaking Logo"
-                    width={32}
-                    height={32}
-                    className="object-contain h-7 w-7 sm:h-8 sm:w-8 transition-opacity duration-200"
-                    priority
-                  />
-                </div>
-                <span className="font-heading font-bold text-lg sm:text-xl tracking-tight text-white">
-                  PontLook
-                </span>
-              </>
-            )}
+            <div className="relative flex items-center">
+              <Image
+                src="/images/brand/pontlook-logo-orange.png"
+                alt="PontLook Logo"
+                width={140}
+                height={35}
+                className="h-7 sm:h-8 w-auto object-contain transition-opacity duration-200"
+                priority
+              />
+            </div>
           </Link>
 
           {/* navigation links */}
@@ -267,33 +248,16 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                         className="flex items-center gap-2.5"
                         aria-label="PontLook home"
                       >
-                        {isForProviders ? (
-                          <div className="relative flex items-center">
-                            <Image
-                              src="/images/brand/pontlook-logo-orange.png"
-                              alt="PontLook for Providers Logo"
-                              width={140}
-                              height={35}
-                              className="h-7 w-auto object-contain"
-                              priority
-                            />
-                          </div>
-                        ) : (
-                          <>
-                            <div className="relative flex h-8 w-8 shrink-0 items-center">
-                              <Image
-                                src="/PontLook-Logo-White.png"
-                                alt="PontLook Logo"
-                                width={32}
-                                height={32}
-                                className="object-contain"
-                              />
-                            </div>
-                            <span className="font-heading font-bold text-xl text-white tracking-tight">
-                              PontLook
-                            </span>
-                          </>
-                        )}
+                        <div className="relative flex items-center">
+                          <Image
+                            src="/images/brand/pontlook-logo-orange.png"
+                            alt="PontLook Logo"
+                            width={140}
+                            height={35}
+                            className="h-7 w-auto object-contain"
+                            priority
+                          />
+                        </div>
                       </Link>
                       <button
                         type="button"

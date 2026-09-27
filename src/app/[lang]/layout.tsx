@@ -37,11 +37,16 @@ export async function generateMetadata({
     icons: {
       icon: [
         { url: '/favicon.ico', sizes: 'any' },
-        { url: '/PontlookIcon.png', type: 'image/png', sizes: '192x192' },
-        { url: '/PontlookIcon.png', type: 'image/png', sizes: '512x512' },
+        { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+        { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+        { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+        { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
       ],
       shortcut: '/favicon.ico',
-      apple: '/PontlookIcon.png',
+      apple: [
+        { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      ],
     },
     openGraph: {
       title: isAr
@@ -107,9 +112,9 @@ export default async function RootLayout({
         "url": "https://pontlook.com",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://pontlook.com/PontlookIcon.png",
-          "width": 512,
-          "height": 512
+          "url": "https://pontlook.com/images/brand/pontlook-logo-orange.png",
+          "width": 400,
+          "height": 100
         },
         "description": "B2B Corporate Training Matchmaking Platform connecting enterprise buyers with verified training providers across Saudi Arabia and the UAE.",
         "email": "contact@pontlook.com",

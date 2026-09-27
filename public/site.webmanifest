@@ -4,8 +4,8 @@
   "description": "PontLook bridges the gap between training providers, businesses, and professionals.",
   "start_url": "/en",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000080",
+  "background_color": "#08090A",
+  "theme_color": "#08090A",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

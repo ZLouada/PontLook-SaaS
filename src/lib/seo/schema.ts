@@ -14,10 +14,10 @@ export function buildOrganizationSchema() {
     url: SITE_URL,
     logo: {
       '@type': 'ImageObject',
-      url: `${SITE_URL}/PontLook-Logo.png`,
+      url: `${SITE_URL}/images/brand/pontlook-logo-orange.png`,
       caption: 'PontLook Corporate Training Matchmaking Platform',
-      width: 512,
-      height: 512,
+      width: 400,
+      height: 100,
     },
     description:
       'Premier corporate training matchmaking platform connecting enterprise HR leaders with vetted, accredited corporate training academies across the GCC, UK, US, and Australia.',

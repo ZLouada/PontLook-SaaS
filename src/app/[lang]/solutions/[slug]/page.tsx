@@ -133,7 +133,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
           '@type': 'Organization',
           name: 'PontLook',
           url: 'https://pontlook.com',
-          logo: 'https://pontlook.com/PontlookIcon.png',
+          logo: 'https://pontlook.com/images/brand/pontlook-logo-orange.png',
         },
         areaServed: [
           { '@type': 'Country', name: 'Saudi Arabia' },
