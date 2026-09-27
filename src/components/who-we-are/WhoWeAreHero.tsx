@@ -132,8 +132,50 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
       prevMouseY = -9999;
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!e.touches[0]) return;
+      const rect = canvas.getBoundingClientRect();
+      const newX = e.touches[0].clientX - rect.left;
+      const newY = e.touches[0].clientY - rect.top;
+
+      if (newX >= 0 && newX <= width && newY >= 0 && newY <= height) {
+        isMouseInside = true;
+        mouseX = newX;
+        mouseY = newY;
+
+        if (prevMouseX > -9000) {
+          const deltaX = newX - prevMouseX;
+          const touchSpeed = Math.hypot(deltaX, newY - prevMouseY);
+
+          const minX = Math.min(prevMouseX, newX);
+          const maxX = Math.max(prevMouseX, newX);
+
+          for (let i = 0; i < columns.length; i++) {
+            const col = columns[i];
+            if (col.x >= minX - 4 && col.x <= maxX + 4) {
+              const pluckStrength = Math.sign(deltaX) * Math.min(touchSpeed * 0.35, 16);
+              col.velocity += pluckStrength * 25;
+            }
+          }
+        }
+
+        prevMouseX = newX;
+        prevMouseY = newY;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      isMouseInside = false;
+      mouseX = -9999;
+      mouseY = -9999;
+      prevMouseX = -9999;
+      prevMouseY = -9999;
+    };
+
     window.addEventListener('mousemove', handlePointerMove, { passive: true });
     window.addEventListener('mouseleave', handlePointerLeave);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
     window.addEventListener('resize', updateDimensions);
 
     // 60fps render loop
@@ -228,6 +270,8 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('mousemove', handlePointerMove);
       window.removeEventListener('mouseleave', handlePointerLeave);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('resize', updateDimensions);
     };
   }, []);
@@ -243,10 +287,10 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
     <section
       data-nav-dark="true"
       ref={containerRef}
-      className="bg-[#08090A] text-white min-h-[100dvh] flex flex-col justify-between pt-28 sm:pt-32 lg:pt-36 pb-8 relative overflow-hidden select-none"
+      className="bg-[#08090A] text-white min-h-[100dvh] flex flex-col justify-between pt-24 sm:pt-32 lg:pt-36 pb-8 relative overflow-hidden select-none"
     >
       {/* TOP CONTENT (Headline & Subtitle Only) */}
-      <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6 mb-6 sm:mb-10">
+      <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-4 sm:px-6 mb-6 sm:mb-10">
         <Reveal className="flex flex-col items-center">
           {/* Top Architectural Status Pill */}
           <div className="mb-5 sm:mb-6 inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#16171B]/85 border border-[#26282D] hover:border-white/30 backdrop-blur-xl shadow-xl transition-all duration-300">
@@ -267,7 +311,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-[56px] font-semibold text-white leading-[1.12] sm:leading-[1.1] font-heading tracking-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-[56px] font-semibold text-white leading-[1.15] sm:leading-[1.1] font-heading tracking-tight">
             {isAr ? (
               <>
                 من نحن: منصة التوفيق والربط الرائدة <br className="hidden sm:inline" />

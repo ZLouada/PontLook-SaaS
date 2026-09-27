@@ -197,7 +197,16 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             </Link>
 
             {/* Mobile Controls */}
-            <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
+            <div className="flex items-center gap-2 lg:hidden">
+              <Link
+                href={switchHref}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30 active:scale-95 transition-all duration-200"
+                aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
+              >
+                <Globe size={13} className="text-neutral-400" />
+                <span className="font-semibold">{lang === 'en' ? 'العربية' : 'EN'}</span>
+              </Link>
+
               <button
                 type="button"
                 className="flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full transition-all active:scale-90 text-neutral-300 bg-[#16171B] border border-[#26282D] hover:bg-white/10 hover:text-white"
@@ -304,6 +313,47 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                         );
                       })}
                     </ul>
+
+                    {/* Regional Directory Shortcuts */}
+                    <div className="mt-5 pt-4 border-t border-[#26282D]">
+                      <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
+                        {lang === 'ar' ? 'المراكز الإقليمية · الخليج' : 'Regional Hubs · GCC'}
+                      </span>
+                      <div className="grid grid-cols-2 gap-2">
+                        <Link
+                          href={`/${lang}/sa`}
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-neutral-300 bg-[#16171B] hover:text-white hover:bg-white/[0.04] border border-[#26282D] transition-colors min-h-[40px]"
+                        >
+                          <span className="text-sm">🇸🇦</span>
+                          <span className="truncate">{lang === 'ar' ? 'السعودية' : 'Saudi Arabia'}</span>
+                        </Link>
+                        <Link
+                          href={`/${lang}/ae`}
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-neutral-300 bg-[#16171B] hover:text-white hover:bg-white/[0.04] border border-[#26282D] transition-colors min-h-[40px]"
+                        >
+                          <span className="text-sm">🇦🇪</span>
+                          <span className="truncate">{lang === 'ar' ? 'الإمارات' : 'UAE'}</span>
+                        </Link>
+                        <Link
+                          href={`/${lang}/qa`}
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-neutral-300 bg-[#16171B] hover:text-white hover:bg-white/[0.04] border border-[#26282D] transition-colors min-h-[40px]"
+                        >
+                          <span className="text-sm">🇶🇦</span>
+                          <span className="truncate">{lang === 'ar' ? 'قطر' : 'Qatar'}</span>
+                        </Link>
+                        <Link
+                          href={`/${lang}/kw`}
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-neutral-300 bg-[#16171B] hover:text-white hover:bg-white/[0.04] border border-[#26282D] transition-colors min-h-[40px]"
+                        >
+                          <span className="text-sm">🇰🇼</span>
+                          <span className="truncate">{lang === 'ar' ? 'الكويت' : 'Kuwait'}</span>
+                        </Link>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Drawer Footer Actions */}

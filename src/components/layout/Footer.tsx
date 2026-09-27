@@ -23,7 +23,7 @@ export default function Footer() {
       {/* 1. HORIZON BRAND LOCKUP (PRE-FOOTER ELEMENT) */}
       <div className="relative pt-0 pb-16 sm:pb-20 lg:pb-24 overflow-hidden bg-[#08090A]">
         {/* Ambient glowing radial backlight */}
-        <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[850px] h-[360px] bg-gradient-to-b from-blue-600/[0.08] to-transparent blur-[140px] pointer-events-none rounded-full transform-gpu" />
+        <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[850px] h-[360px] bg-gradient-to-b from-orange-500/[0.04] to-transparent blur-[140px] pointer-events-none rounded-full transform-gpu" />
 
         {/* Top shadow gradient overlay blending into the horizon line */}
         <div className="absolute top-0 inset-x-0 h-6 sm:h-10 bg-gradient-to-b from-[#08090A] via-[#08090A]/60 to-transparent pointer-events-none z-10" />
@@ -40,7 +40,7 @@ export default function Footer() {
 
         {/* Centered Floating Consultation Card Over Horizon */}
         <div className="container-site relative z-20 px-4 sm:px-8 lg:px-12 mx-auto">
-          <div className="relative z-10 -mt-10 max-w-2xl mx-auto rounded-2xl sm:rounded-3xl border border-[#26282D] hover:border-white/20 bg-[#0F1013]/95 backdrop-blur-2xl p-8 md:p-10 shadow-[0_24px_64px_rgba(0,0,0,0.9)] text-center flex flex-col items-center gap-6 transform-gpu transition-all duration-300">
+          <div className="relative z-10 -mt-10 max-w-2xl mx-auto rounded-2xl sm:rounded-3xl border border-[#26282D] hover:border-white/20 bg-[#0F1013]/95 backdrop-blur-2xl p-5 sm:p-8 md:p-10 shadow-[0_24px_64px_rgba(0,0,0,0.9)] text-center flex flex-col items-center gap-5 sm:gap-6 transform-gpu transition-all duration-300">
             {/* Subtle top inner sheen */}
             <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
 
@@ -151,13 +151,13 @@ export default function Footer() {
             <ul className="space-y-2 text-sm font-medium text-neutral-400">
               <li>
                 <a href="mailto:contact@pontlook.com" className="flex items-center gap-2.5 hover:text-white transition-colors py-1.5 inline-flex">
-                  <Mail size={15} className="text-[#0052FF] shrink-0" />
+                  <Mail size={15} className="text-[#FF5C00] shrink-0" />
                   <span>contact@pontlook.com</span>
                 </a>
               </li>
               <li>
                 <a href="https://www.linkedin.com/company/pontlook" className="flex items-center gap-2.5 hover:text-white transition-colors py-1.5 inline-flex" target="_blank" rel="noopener noreferrer">
-                  <Linkedin size={15} className="text-[#0052FF] shrink-0" />
+                  <Linkedin size={15} className="text-[#FF5C00] shrink-0" />
                   <span>LinkedIn</span>
                 </a>
               </li>
@@ -174,7 +174,7 @@ export default function Footer() {
             &copy; {year} PontLook, operating under Firstnestcare, LLC. All rights reserved.
           </p>
           <div className="flex items-center justify-center gap-2 text-neutral-400">
-            <ShieldCheck size={14} className="text-[#0052FF]" />
+            <ShieldCheck size={14} className="text-[#FF5C00]" />
             <span>{dict.footer?.badge || 'B2B Corporate Matchmaking Platform'}</span>
           </div>
         </div>

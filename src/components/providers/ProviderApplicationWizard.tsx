@@ -856,55 +856,59 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
           </div>
         )}
 
-        {/* Actions Bar */}
-        <div className="mt-8 pt-6 border-t border-[#26282D] flex items-center justify-between gap-4">
-          {step > 1 ? (
-            <button
-              type="button"
-              onClick={handleBack}
-              disabled={isSubmitting}
-              className="inline-flex items-center gap-2 py-3 px-5 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-xs sm:text-sm border border-[#26282D] hover:border-white/20 shadow-xs transition-all"
-            >
-              <ArrowLeft size={16} className={isAr ? 'rotate-180' : ''} />
-              <span>{isAr ? 'السابق' : 'Previous'}</span>
-            </button>
-          ) : (
-            <div />
-          )}
+        {/* Actions Bar: Sticky on mobile for effortless one-thumb completion */}
+        <div className="mt-8 pt-6 border-t border-[#26282D]">
+          <div className="sticky bottom-0 -mx-5 sm:mx-0 px-5 sm:px-0 py-3 sm:py-0 bg-[#0F1013]/95 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border-t border-[#26282D] sm:border-t-0 shadow-[0_-4px_12px_rgba(0,0,0,0.4)] sm:shadow-none pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:pb-0 z-20">
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
+              {step > 1 ? (
+                <button
+                  type="button"
+                  onClick={handleBack}
+                  disabled={isSubmitting}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-sm border border-[#26282D] hover:border-white/20 shadow-xs transition-all active:scale-[0.98] min-h-[44px] touch-manipulation"
+                >
+                  <ArrowLeft size={16} className={isAr ? 'rotate-180' : ''} />
+                  <span>{isAr ? 'السابق' : 'Previous'}</span>
+                </button>
+              ) : (
+                <div className="hidden sm:block" />
+              )}
 
-          {step < 4 ? (
-            <button
-              type="button"
-              onClick={handleNext}
-              className="inline-flex items-center justify-center gap-2 py-3.5 px-7 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-xs sm:text-sm border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all"
-            >
-              <span>{isAr ? 'المتابعة' : 'Continue'}</span>
-              <ArrowRight size={16} className={isAr ? 'rotate-180' : ''} />
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-              className="inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-xs sm:text-sm border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] disabled:opacity-50 transition-all"
-            >
-              <span>
-                {isSubmitting
-                  ? isAr
-                    ? 'جارٍ التقديم...'
-                    : 'Submitting...'
-                  : isAr
-                    ? 'إرسال طلب الانضمام للشراكة'
-                    : 'Submit Partner Application'}
-              </span>
-              <ArrowRight size={16} className={isAr ? 'rotate-180' : ''} />
-            </button>
-          )}
+              {step < 4 ? (
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-sm border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all min-h-[48px] touch-manipulation"
+                >
+                  <span>{isAr ? 'المتابعة' : 'Continue'}</span>
+                  <ArrowRight size={16} className={isAr ? 'rotate-180' : ''} />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm shadow-lg shadow-orange-500/25 active:scale-[0.98] disabled:opacity-50 transition-all min-h-[48px] touch-manipulation"
+                >
+                  <span>
+                    {isSubmitting
+                      ? isAr
+                        ? 'جارٍ التقديم...'
+                        : 'Submitting...'
+                      : isAr
+                        ? 'إرسال طلب الانضمام للشراكة'
+                        : 'Submit Partner Application'}
+                  </span>
+                  <ArrowRight size={16} className={isAr ? 'rotate-180' : ''} />
+                </button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Trust Micro-Badges at the bottom */}
-      <div className="mt-8 grid grid-cols-3 gap-3 text-center">
+      <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 text-center">
         <div className="p-3 bg-[#0F1013] border border-[#26282D] rounded-xl shadow-xs">
           <div className="text-xs font-mono text-neutral-400 font-medium">
             {isAr ? '0$ رسوم اشتراك' : 'Zero Retainers'}

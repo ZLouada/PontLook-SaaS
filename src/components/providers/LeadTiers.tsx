@@ -153,28 +153,28 @@ const TIERS_AR: TierData[] = [
 
 const CARD_CONFIGS = [
   {
-    zIndexClass: 'z-10',
-    topClass: 'top-16 sm:top-20 lg:top-24',
-    spacingClass: 'mb-12 sm:mb-16 lg:mb-20',
-    shadowClass: 'shadow-2xl shadow-[0_-12px_36px_rgba(0,0,0,0.85)]'
+    zIndexClass: 'lg:z-10',
+    topClass: 'lg:top-24',
+    spacingClass: 'mb-6 sm:mb-8 lg:mb-20',
+    shadowClass: 'shadow-xl lg:shadow-2xl lg:shadow-[0_-12px_36px_rgba(0,0,0,0.85)]'
   },
   {
-    zIndexClass: 'z-20',
-    topClass: 'top-20 sm:top-24 lg:top-28',
-    spacingClass: 'mb-12 sm:mb-16 lg:mb-20',
-    shadowClass: 'shadow-2xl shadow-[0_-16px_42px_rgba(0,0,0,0.9)]'
+    zIndexClass: 'lg:z-20',
+    topClass: 'lg:top-28',
+    spacingClass: 'mb-6 sm:mb-8 lg:mb-20',
+    shadowClass: 'shadow-xl lg:shadow-2xl lg:shadow-[0_-16px_42px_rgba(0,0,0,0.9)]'
   },
   {
-    zIndexClass: 'z-30',
-    topClass: 'top-24 sm:top-28 lg:top-32',
-    spacingClass: 'mb-12 sm:mb-16 lg:mb-20',
-    shadowClass: 'shadow-2xl shadow-[0_-20px_48px_rgba(0,0,0,0.95)]'
+    zIndexClass: 'lg:z-30',
+    topClass: 'lg:top-32',
+    spacingClass: 'mb-6 sm:mb-8 lg:mb-20',
+    shadowClass: 'shadow-xl lg:shadow-2xl lg:shadow-[0_-20px_48px_rgba(0,0,0,0.95)]'
   },
   {
-    zIndexClass: 'z-40',
-    topClass: 'top-28 sm:top-32 lg:top-36',
+    zIndexClass: 'lg:z-40',
+    topClass: 'lg:top-36',
     spacingClass: 'mb-0',
-    shadowClass: 'shadow-2xl shadow-[0_-24px_54px_rgba(0,0,0,0.98)]'
+    shadowClass: 'shadow-xl lg:shadow-2xl lg:shadow-[0_-24px_54px_rgba(0,0,0,0.98)]'
   }
 ];
 
@@ -500,11 +500,11 @@ export default function LeadTiers(_props?: {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={viewportOnce}
                   transition={{ duration: dur.slow, delay: idx * 0.08, ease: ease.out }}
-                  className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass}`}
+                  className={`relative lg:sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass}`}
                 >
                   <Spotlight
                     radius={340}
-                    className={`bg-[#0F1013] border border-[#26282D] hover:border-orange-500/40 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 transform-gpu`}
+                    className={`bg-[#0F1013] border border-[#26282D] hover:border-orange-500/40 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 transform-gpu`}
                   >
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-center">
                       {/* Left Details */}
@@ -656,7 +656,7 @@ export default function LeadTiers(_props?: {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={viewportOnce}
                 transition={{ duration: dur.slow, delay: idx * 0.08, ease: ease.out }}
-                className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass}`}
+                className={`relative lg:sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass}`}
               >
                 <Spotlight
                   radius={340}

@@ -202,10 +202,10 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
                   : `Connect corporate buyers and L&D leaders across ${countryName} with vetted, accredited corporate training institutions. On-site and hybrid executive capability building tailored to national regulatory standards.`}
               </p>
 
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
                 <Link
                   href={`/${lang}/find-training`}
-                  className="inline-flex items-center justify-center gap-2.5 py-3.5 px-7 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group sheen"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 py-3.5 px-7 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group sheen min-h-[48px]"
                 >
                   <span>{isAr ? `البحث عن مزود تدريب في ${countryName}` : `Find Providers in ${countryName}`}</span>
                   <ArrowRight size={16} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
@@ -213,7 +213,7 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
 
                 <Link
                   href={`/${lang}/${countryCode}/locations`}
-                  className="inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md transition-all duration-200 group"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md transition-all duration-200 group min-h-[48px]"
                 >
                   <span>{isAr ? 'استعراض المدن والمناطق' : 'Browse Regional Hubs'}</span>
                   <ArrowRight size={15} className="rtl:-scale-x-100 text-neutral-400 group-hover:text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all" />

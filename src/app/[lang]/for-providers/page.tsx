@@ -137,7 +137,7 @@ export default async function ForProvidersPage({
           {/* Left-Aligned Header Block */}
           <div className="max-w-3xl text-start">
             <Reveal>
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.1] sm:leading-[1.05] font-heading tracking-tight text-start">
+              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.05] font-heading tracking-tight text-start">
                 {isAr ? (
                   <>
                     فرص تدريبية للشركات <br />
@@ -158,10 +158,10 @@ export default async function ForProvidersPage({
               </p>
 
               {/* Hero Action Buttons */}
-              <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-3.5 w-full sm:w-auto">
+              <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5 w-full sm:w-auto">
                 <Link
                   href={`/${lang}/for-providers/apply`}
-                  className="inline-flex items-center justify-center gap-2 py-3.5 px-7 sm:px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-orange-500/50 focus-visible:outline-none"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-7 sm:px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-orange-500/50 focus-visible:outline-none min-h-[48px]"
                 >
                   <span>{isAr ? 'انضم كشريك تدريب' : 'Become a Partner'}</span>
                   <ArrowRight size={16} className="rtl:-scale-x-100" />
@@ -169,7 +169,7 @@ export default async function ForProvidersPage({
 
                 <a
                   href="#why-partner"
-                  className="inline-flex items-center justify-center gap-2 py-3.5 px-6 sm:px-7 rounded-xl bg-white hover:bg-neutral-200 text-[#08090A] font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:outline-none"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 sm:px-7 rounded-xl bg-white hover:bg-neutral-200 text-[#08090A] font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:outline-none min-h-[48px]"
                 >
                   <span>{isAr ? 'اعرف المزيد' : 'Learn more'}</span>
                 </a>
@@ -232,10 +232,10 @@ export default async function ForProvidersPage({
                 : 'Complete our streamlined qualification form. Our partnerships team will review your profile and reach out within 2 business days to begin delivering verified demand.'}
             </p>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center px-2">
               <Link
                 href={`/${lang}/for-providers/apply`}
-                className="inline-flex items-center justify-center gap-2 py-3 px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans min-h-[48px]"
               >
                 <span>{isAr ? 'ابدأ طلب التأهيل للشراكة' : 'Apply for Provider Partnership'}</span>
                 <ArrowRight size={17} className="rtl:-scale-x-100" />

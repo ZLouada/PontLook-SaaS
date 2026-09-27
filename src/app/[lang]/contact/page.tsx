@@ -79,13 +79,13 @@ export default async function ContactPage({
 
   return (
     <div className="bg-[#08090A]">
-      <section className="container-site grid gap-14 pt-36 pb-24 lg:grid-cols-5">
+      <section className="container-site grid gap-8 sm:gap-14 pt-24 sm:pt-36 pb-16 sm:pb-24 lg:grid-cols-5">
         <Reveal className="lg:col-span-2">
           <span className="chip gap-2 normal-case tracking-wider">
             <Signal size={14} />
             {contactData.chip}
           </span>
-          <h1 className="mt-5 text-4xl font-semibold leading-tight text-white font-heading">
+          <h1 className="mt-4 sm:mt-5 text-3xl sm:text-4xl font-semibold leading-tight text-white font-heading">
             {contactData.title}
           </h1>
           <p className="mt-4 text-lg leading-relaxed text-neutral-400">

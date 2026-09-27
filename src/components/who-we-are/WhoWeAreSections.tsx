@@ -302,11 +302,11 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
         </div>
 
         {/* 3 Pricing/Trust Architecture Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 items-stretch">
           {models.map((card, idx) => (
             <div
               key={idx}
-              className={`rounded-3xl p-8 sm:p-9 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 ${
+              className={`rounded-3xl p-5 sm:p-8 lg:p-9 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 ${
                 card.isFeatured
                   ? 'bg-[#0F1013] border border-white/30 shadow-2xl relative text-white'
                   : 'bg-[#0F1013] border border-[#26282D] shadow-xl hover:border-white/20 text-white'
@@ -661,7 +661,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
           onTouchEnd={handleTouchEnd}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
-          className="relative rounded-3xl border border-[#26282D] bg-[#0F1013] p-6 sm:p-10 lg:p-12 shadow-2xl overflow-hidden text-white transition-all duration-300"
+          className="relative rounded-3xl border border-[#26282D] bg-[#0F1013] p-4 sm:p-8 lg:p-12 shadow-2xl overflow-hidden text-white transition-all duration-300"
         >
           {/* Ambient Corner Glow */}
           <div className="absolute -top-24 -end-24 w-72 h-72 bg-gradient-to-bl from-blue-500/[0.06] via-purple-500/[0.03] to-transparent rounded-full blur-3xl pointer-events-none" />
