@@ -10,7 +10,8 @@ import { m, AnimatePresence } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Locale } from '@/i18n';
 import Button from '@/components/shared/Button';
-import OrbBadge from '@/components/shared/OrbBadge';
+import Signal from '@/components/shared/Signal';
+import ScrollProgress from '@/components/shared/ScrollProgress';
 
 export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const [scrolled, setScrolled] = useState(false);
@@ -93,6 +94,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
   return (
     <>
+      <ScrollProgress />
       <header
         className={`fixed inset-x-0 mx-auto z-50 liquid-glass-morph-header ${
           scrolled
@@ -130,7 +132,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             </span>
           </Link>
 
-          {/* Center Navigation Links with Odysser Gliding Indicator Pill */}
+          {/* navigation links */}
           <ul className="hidden lg:flex items-center gap-1 relative px-2">
             {links.map((l, index) => {
               const isActive = pathname === l.href;
@@ -153,7 +155,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                     {l.label}
                   </Link>
 
-                  {/* Kinetic Morphing Pill Indicator (Liquid Glass Meniscus) */}
+                  {/* hover pill */}
                   {isHovered && (
                     <m.div
                       layoutId="nav-pill"
@@ -162,11 +164,11 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                     />
                   )}
 
-                  {/* Active Subtle Bottom Dot if not currently hovered */}
+                  {/* Active indicator dot */}
                   {isActive && !isHovered && (
                     <m.div
                       layoutId="nav-active-indicator"
-                      className="absolute bottom-0 inset-x-3 h-0.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]"
+                      className="absolute bottom-0 inset-x-3 h-0.5 rounded-full bg-[#0052FF] shadow-[0_0_8px_rgba(0,82,255,0.7)]"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -175,11 +177,11 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             })}
           </ul>
 
-          {/* Right Actions: Language Switcher & Status in Liquid Glass */}
+          {/* language switcher and actions */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Live Network Status Indicator */}
             <div className="hidden xl:inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B]/90 backdrop-blur-md text-neutral-300">
-              <OrbBadge state="connecting" size={20} />
+              <Signal />
               <span className="text-[11px] font-medium text-neutral-300">
                 {lang === 'ar' ? 'الشبكة متصلة' : 'Network Active'}
               </span>
@@ -271,7 +273,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
                     {/* Live Network Status in Mobile Drawer */}
                     <div className="mt-4 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B] text-neutral-300 w-fit">
-                      <OrbBadge state="connecting" size={20} />
+                      <Signal />
                       <span className="text-[11px] text-neutral-300">
                         {lang === 'ar' ? 'المطابقة المباشرة نشطة' : 'Live Matchmaking Active'}
                       </span>

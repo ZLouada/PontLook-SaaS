@@ -16,7 +16,10 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { m, AnimatePresence } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-import OrbBadge from '@/components/shared/OrbBadge';
+import Signal from '@/components/shared/Signal';
+import Spotlight from '@/components/shared/Spotlight';
+import TextReveal from '@/components/shared/TextReveal';
+import { staggerContainer, staggerItem, viewportOnce } from '@/lib/motion';
 
 interface CardTheme {
   accentText: string;
@@ -129,7 +132,7 @@ export default function WhyDifferent() {
       takeaways: [
         isAr ? 'تحليل عميق لاحتياجات الفرق التنفيذية' : 'Deep departmental skill gap discovery',
         isAr ? 'تحديد أولويات البرامج ذات الأثر المباشر' : 'Prioritized ROI focused learning roadmaps',
-        isAr ? 'تجنب هدر الميزانيات في تدريب غير مجدٍ' : 'Zero wasted corporate training budget',
+        isAr ? 'تجنب هدر الميزانيات في تدريب غير مجدٍ' : 'Eliminate wasted corporate training budget',
       ],
       theme: {
         accentText: 'text-neutral-200',
@@ -155,7 +158,7 @@ export default function WhyDifferent() {
                 </div>
               </div>
             </div>
-            <OrbBadge state="shaping" size={20} />
+            <Signal />
           </div>
           <div className="flex flex-wrap gap-1.5 pt-0.5">
             <span className="px-2 py-0.5 rounded-md bg-white/10 text-neutral-300 text-[10px] font-medium border border-white/20 font-sans">
@@ -176,7 +179,7 @@ export default function WhyDifferent() {
       icon: BadgeCheck,
       badge: isAr ? 'المطابقة المباشرة' : 'Direct Matching',
       title: c?.match?.title || (isAr ? 'ربط مباشر مع الشريك التدريبي الأنسب' : 'Matched Directly with the Right Training Partner'),
-      angle: isAr ? 'بدون عروض تسويقية مزعجة' : 'Zero Cold Sales Pitches',
+      angle: isAr ? 'بدون عروض تسويقية مزعجة' : 'No Cold Sales Pitches',
       text:
         c?.match?.text ||
         (isAr
@@ -202,7 +205,7 @@ export default function WhyDifferent() {
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
           <div className="text-xs font-semibold text-white pb-1.5 border-b border-[#26282D] flex items-center justify-between font-sans">
             <span>{c?.match?.mockupHeader || (isAr ? 'قائمة معايير توافق الشريك' : 'Partner Fit Checklist')}</span>
-            <OrbBadge state="weaving" size={20} />
+            <Signal />
           </div>
           <div className="space-y-1.5 text-[11px] text-neutral-300 font-sans">
             <div>
@@ -238,7 +241,7 @@ export default function WhyDifferent() {
       takeaways: [
         isAr ? 'وصول مباشر إلى صناع القرار التنفيذيين' : 'Direct connection to CHROs and CLOs',
         isAr ? 'ميزانيات معتمدة ومؤكدة بالريال والدرهم' : 'Confirmed corporate budgets in SAR and AED',
-        isAr ? 'بدون وسطاء أو رسوم اشتراك شهرية' : 'Zero intermediaries and $0 monthly retainers',
+        isAr ? 'بدون وسطاء أو رسوم اشتراك شهرية' : 'Direct access without monthly retainers',
       ],
       theme: {
         accentText: 'text-purple-400',
@@ -260,7 +263,7 @@ export default function WhyDifferent() {
           </div>
           <div className="flex items-center gap-2.5 pt-0.5">
             <div className="h-7 w-7 rounded-lg bg-purple-600/20 flex items-center justify-center shrink-0">
-              <OrbBadge state="connecting" size={20} />
+              <Signal />
             </div>
             <div className="min-w-0 font-sans">
               <div className="text-[11px] font-semibold text-white truncate">
@@ -306,7 +309,7 @@ export default function WhyDifferent() {
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-1.5">
           <div className="flex items-center justify-between pb-1 border-b border-[#26282D] text-xs font-semibold text-white font-sans">
             <span>{c?.ready?.mockupHeader || (isAr ? 'جاهزية الشراكة | مؤكدة' : 'Partnership Readiness | Confirmed')}</span>
-            <OrbBadge state="working" size={20} />
+            <Signal />
           </div>
           <div className="space-y-1 text-[10px] sm:text-[11px] font-sans">
             <div className="flex justify-between items-center">
@@ -359,7 +362,7 @@ export default function WhyDifferent() {
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-1.5">
           <div className="flex items-center justify-between pb-1 border-b border-[#26282D] text-xs font-semibold text-white font-sans">
             <span>{c?.hub?.mockupHeader || (isAr ? 'أحدث أدلة ومقالات المنصة' : 'Latest L&D Resources')}</span>
-            <OrbBadge state="composing" size={20} />
+            <Signal />
           </div>
           <div className="space-y-1.5 pt-0.5 font-sans">
             <div className="flex items-center justify-between gap-2 text-[10px] sm:text-[11px]">
@@ -405,9 +408,11 @@ export default function WhyDifferent() {
             <span>{dict.why_different?.eyebrow || (isAr ? 'تحليلات سوقية قابلة للتنفيذ' : 'ACTIONABLE MARKET INTELLIGENCE')}</span>
           </div>
 
-          <h2 className="text-xl sm:text-3xl lg:text-4xl font-semibold text-white tracking-tight leading-tight font-heading">
-            {dict.why_different?.title || (isAr ? 'حلول حقيقية على مدونتنا. تعاقدات موثقة على منصتنا.' : 'Real Solutions on Our Blog. Verified Connections on Our Platform.')}
-          </h2>
+          <TextReveal
+            as="h2"
+            text={dict.why_different?.title || (isAr ? 'حلول حقيقية على مدونتنا. تعاقدات موثقة على منصتنا.' : 'Real Solutions on Our Blog. Verified Connections on Our Platform.')}
+            className="h-section"
+          />
 
           <p className="text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed max-w-2xl mx-auto">
             {dict.why_different?.subtitle ||
@@ -426,10 +431,14 @@ export default function WhyDifferent() {
           </m.div>
         </m.div>
 
-        {/* 5 Side-by-Side Cards (Mobile-Optimized Carousel, Desktop 5-Column Grid, Clean Pure Black) */}
-        <div
+        {/* cards grid / carousel */}
+        <m.div
           ref={carouselRef}
           onScroll={handleScroll}
+          variants={staggerContainer(0.08)}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportOnce}
           className="flex lg:grid lg:grid-cols-5 gap-3 sm:gap-4 overflow-x-auto lg:overflow-visible pb-3 sm:pb-4 lg:pb-0 snap-x snap-mandatory scrollbar-none items-stretch px-1 -mx-1"
         >
           {items.map((it) => {
@@ -438,20 +447,22 @@ export default function WhyDifferent() {
             const theme = it.theme;
 
             return (
-              <div
+              <m.div
                 key={it.id}
+                variants={staggerItem}
                 className="relative w-[78vw] sm:w-[290px] lg:w-auto shrink-0 lg:shrink snap-center h-[340px] sm:h-[370px] lg:h-[390px]"
                 onClick={() => setActiveModalId(it.id)}
               >
-                <m.div
-                  whileHover={{
-                    y: -6,
-                    scale: 1.02,
-                    transition: { type: 'spring', stiffness: 350, damping: 20 },
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group relative w-full h-full rounded-2xl bg-[#0F1013] border border-[#26282D] hover:border-white/20 p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-xl shadow-black/80 transition-colors duration-200"
-                >
+                <Spotlight radius={320} className="w-full h-full rounded-2xl">
+                  <m.div
+                    whileHover={{
+                      y: -5,
+                      scale: 1.01,
+                      transition: { type: 'spring', stiffness: 350, damping: 20 },
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                    className="surface group relative w-full h-full rounded-2xl p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-e2 hover:border-white/20 transition-colors duration-200"
+                  >
                   {/* Card Front Top */}
                   <div className="space-y-2.5">
                     <div className="flex items-center justify-between">
@@ -484,10 +495,11 @@ export default function WhyDifferent() {
                     </div>
                   </div>
                 </m.div>
-              </div>
+                </Spotlight>
+              </m.div>
             );
           })}
-        </div>
+        </m.div>
 
         {/* Mobile Swipe Pagination Dots Indicator (5 Cards) */}
         <div className="flex lg:hidden justify-center items-center gap-2 pt-3">
@@ -505,13 +517,13 @@ export default function WhyDifferent() {
         </div>
       </div>
 
-      {/* POP-UP WINDOW (RENDERED VIA PORTAL DIRECTLY INTO document.body FOR FLAWLESS VIEWPORT POSITIONING) */}
+      {/* modal, portalled to body */}
       {mounted &&
         createPortal(
           <AnimatePresence>
             {activeCard && (
               <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true">
-                {/* Backdrop with Smooth Fade-In (Click in empty space to return to normal card) */}
+                {/* backdrop */}
                 <m.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -521,7 +533,7 @@ export default function WhyDifferent() {
                   className="fixed inset-0 bg-black/85 backdrop-blur-sm cursor-pointer"
                 />
 
-                {/* Modal Pop-up Window with Clean 2D Spring Animation (Zero 3D skew / zero clipping glitches) */}
+                {/* modal content */}
                 <m.div
               initial={{
                 opacity: 0,

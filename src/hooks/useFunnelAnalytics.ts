@@ -60,7 +60,7 @@ export function useFunnelAnalytics() {
 
     // 1. In-Browser / Developer Console Logging in non-production
     if (process.env.NODE_ENV !== 'production') {
-      console.log(`📊 [Funnel Telemetry] ${eventName}`, enrichedPayload);
+      console.log(`[Funnel Telemetry] ${eventName}`, enrichedPayload);
     }
 
     // 2. PostHog Integration

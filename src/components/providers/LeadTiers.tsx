@@ -6,7 +6,9 @@ import { ArrowRight } from 'lucide-react';
 import { m } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { useParams } from 'next/navigation';
-import OrbBadge from '@/components/shared/OrbBadge';
+import Signal from '@/components/shared/Signal';
+import Spotlight from '@/components/shared/Spotlight';
+import { dur, ease, viewportOnce } from '@/lib/motion';
 
 interface TierData {
   step: string;
@@ -71,7 +73,7 @@ const TIERS_EN: TierData[] = [
     step: 'Step 4',
     badge: 'Partnership Model',
     title: 'Explore the partnership: Predictable enterprise client pipeline',
-    description: 'Every lead is verified before introduction. Zero monthly retainers, 5 lead proof of concept pilot, and a 5 day replacement guarantee.',
+    description: 'Every lead is verified before introduction. No monthly retainers, 5-lead proof of concept pilot, and a 5-day replacement guarantee.',
     project: 'Enterprise Provider Partnership',
     accuracy: '100% Guaranteed',
     barColor: 'bg-[#FF5C00]',
@@ -217,7 +219,7 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     checklist: [
       'Verified Budget: Pre approved corporate funding (SAR / AED)',
       'Direct Executive Access: Meet CHROs & CLOs directly',
-      'Zero Cold Prospecting: Qualified demand delivered to you',
+      'End Cold Prospecting: Qualified demand delivered to you',
     ],
     cta: 'Join the Provider Network',
     href: '/for-providers',
@@ -247,7 +249,7 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     checklist: [
       'Vetted Track Record: Proven regional corporate experience',
       'Tailored Curriculum: Aligned with your specific skill gaps',
-      'Zero Procurement Risk: Transparent, competitive proposals',
+      'De-Risked Procurement: Transparent, competitive proposals',
     ],
     cta: 'Get Matched for Training',
     href: '/find-training',
@@ -482,9 +484,10 @@ export default function LeadTiers(_props?: {
             {tiers.map((tier, idx) => {
               const config = CARD_CONFIGS[idx] || CARD_CONFIGS[0];
               return (
-                <div
+                <Spotlight
                   key={tier.step}
-                  className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass} bg-[#0F1013] border border-[#26282D] text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-all duration-300 transform-gpu`}
+                  radius={340}
+                  className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass} bg-[#0F1013] border border-[#26282D] text-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-all duration-300 transform-gpu hover:border-white/20`}
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-center">
                     {/* Left Details */}
@@ -494,10 +497,7 @@ export default function LeadTiers(_props?: {
                           {tier.step}
                         </span>
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-medium bg-[#16171B] text-neutral-300 border border-[#26282D]">
-                          <OrbBadge
-                            state={idx === 0 ? 'solving' : idx === 1 ? 'weaving' : idx === 2 ? 'searching' : 'connecting'}
-                            size={20}
-                          />
+                          <Signal size={16} speed={1 - idx * 0.12} />
                           <span>{tier.badge}</span>
                         </span>
                       </div>
@@ -550,7 +550,7 @@ export default function LeadTiers(_props?: {
                       </div>
                     </div>
                   </div>
-                </div>
+                </Spotlight>
               );
             })}
           </div>
@@ -559,7 +559,7 @@ export default function LeadTiers(_props?: {
     );
   }
 
-  // Section 5: Start with Our Insights, Partner for Real Impact (Pure Dark AMOLED with Sticky Stacking)
+  // Section 5: Partnership & Insights
   const exp = dict?.experience_cards;
   const fallbackCards = isAr ? EXPERIENCE_CARDS_AR : EXPERIENCE_CARDS_EN;
 
@@ -568,7 +568,7 @@ export default function LeadTiers(_props?: {
       data-nav-dark="true"
       className="relative py-16 sm:py-24 lg:py-32 bg-[#08090A] text-white"
     >
-      {/* Pure AMOLED Ambient Glow (Zero Grids) */}
+      {/* ambient glow */}
       <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-white/[0.015] blur-[180px] pointer-events-none rounded-full" />
 
       <div className="container-site relative z-10 px-4 sm:px-8 lg:px-12">
@@ -634,14 +634,17 @@ export default function LeadTiers(_props?: {
             return (
               <m.div
                 key={card.id}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-                whileHover={{ scale: 1.012, transition: { duration: 0.25 } }}
-                className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass} ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 transform-gpu`}
+                viewport={viewportOnce}
+                transition={{ duration: dur.slow, delay: idx * 0.08, ease: ease.out }}
+                className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass}`}
               >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+                <Spotlight
+                  radius={340}
+                  className={`${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 transform-gpu hover:border-white/20`}
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
                   {/* Left Details */}
                   <div className="lg:col-span-7 space-y-4">
                     {/* Layered Rounded Pill Badges */}
@@ -712,9 +715,10 @@ export default function LeadTiers(_props?: {
                     </div>
                   </div>
                 </div>
-              </m.div>
-            );
-          })}
+              </Spotlight>
+            </m.div>
+          );
+        })}
         </div>
       </div>
     </section>

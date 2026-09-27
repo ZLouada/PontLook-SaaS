@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Linkedin, Mail, MapPin, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
+import { m } from 'framer-motion';
+import { staggerContainer, staggerItem, viewportOnce } from '@/lib/motion';
 
 export default function Footer() {
   const dict = useDictionary();
@@ -65,9 +67,15 @@ export default function Footer() {
 
       {/* 2. UNIVERSAL 4-COLUMN FOOTER LAYOUT */}
       <div className="bg-[#08090A] text-neutral-400 pt-16 pb-12 px-6 lg:px-12">
-        <div className="container-site relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mx-auto">
+        <m.div
+          variants={staggerContainer(0.08)}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportOnce}
+          className="container-site relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mx-auto"
+        >
           {/* Column 1: Mission & Registered Entity */}
-          <div className="space-y-4">
+          <m.div variants={staggerItem} className="space-y-4">
             <p className="text-xs sm:text-sm leading-relaxed text-neutral-400 font-normal">
               {dict.footer?.about ||
                 'We identify enterprise organizations experiencing verified workforce challenges and connect them with the right corporate training providers. Qualified opportunities only, no retainers, no cold outreach.'}
@@ -76,10 +84,10 @@ export default function Footer() {
               <MapPin size={15} className="text-[#0052FF] shrink-0 mt-0.5" />
               <span>31 Continental Dr, Newark, Delaware 19713, US</span>
             </div>
-          </div>
+          </m.div>
 
           {/* Column 2: Platform */}
-          <nav aria-label="Footer: platform" className="space-y-3 sm:space-y-4">
+          <m.nav variants={staggerItem} aria-label="Footer: platform" className="space-y-3 sm:space-y-4">
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-neutral-200">PLATFORM</p>
             <ul className="space-y-1 text-sm font-medium text-neutral-400">
               <li>
@@ -108,10 +116,10 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-          </nav>
+          </m.nav>
 
           {/* Column 3: Legal & Compliance */}
-          <div className="space-y-3 sm:space-y-4">
+          <m.div variants={staggerItem} className="space-y-3 sm:space-y-4">
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-neutral-200">
               LEGAL &amp; COMPLIANCE
             </p>
@@ -135,10 +143,10 @@ export default function Footer() {
                 Firstnestcare, LLC · Delaware DE
               </li>
             </ul>
-          </div>
+          </m.div>
 
           {/* Column 4: Get In Touch */}
-          <div className="space-y-3 sm:space-y-4">
+          <m.div variants={staggerItem} className="space-y-3 sm:space-y-4">
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-neutral-200">GET IN TOUCH</p>
             <ul className="space-y-2 text-sm font-medium text-neutral-400">
               <li>
@@ -157,8 +165,8 @@ export default function Footer() {
                 {lang === 'ar' ? 'الرياض · دبي · نيوارك ديلاوير' : 'Riyadh · Dubai · Newark DE'}
               </li>
             </ul>
-          </div>
-        </div>
+          </m.div>
+        </m.div>
 
         {/* Bottom Copyright Line */}
         <div className="container-site border-t border-[#26282D] mt-12 pt-8 mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-neutral-400 text-center sm:text-start">

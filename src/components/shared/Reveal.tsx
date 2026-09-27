@@ -1,6 +1,7 @@
 'use client';
 
-import { m } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
+import { dur, ease, viewportOnce } from '@/lib/motion';
 
 type Props = {
   children: React.ReactNode;
@@ -10,13 +11,15 @@ type Props = {
 };
 
 export default function Reveal({ children, delay = 0, className, yOffset = 20 }: Props) {
+  const reduce = useReducedMotion();
+
   return (
     <m.div
       className={`transform-gpu will-change-transform ${className ?? ''}`}
-      initial={{ opacity: 0, y: yOffset }}
+      initial={{ opacity: 0, y: reduce ? 0 : yOffset }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.5, delay, ease: [0.21, 0.65, 0.36, 1] }}
+      viewport={viewportOnce}
+      transition={reduce ? { duration: 0.01 } : { duration: dur.slow, delay, ease: ease.out }}
     >
       {children}
     </m.div>

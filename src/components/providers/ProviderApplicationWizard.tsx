@@ -9,7 +9,7 @@ import {
   Mail,
   Check,
 } from 'lucide-react';
-import OrbBadge from '@/components/shared/OrbBadge';
+import Signal, { Seal } from '@/components/shared/Signal';
 import CountryFlag from '@/components/shared/CountryFlag';
 
 interface ProviderApplicationWizardProps {
@@ -337,7 +337,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-32 bg-blue-500/10 blur-3xl pointer-events-none" />
 
           <div className="flex justify-center mb-6">
-            <OrbBadge state="solving" size={64} label={applicationRef || 'PL PRV CONFIRMED'} />
+            <Seal size={56} label={applicationRef || undefined} />
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight mb-3">
@@ -436,12 +436,9 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
           <span>{isAr ? 'العودة إلى نظرة عامة' : 'Back to Providers Overview'}</span>
         </Link>
 
-        <div className="flex items-center gap-2">
-          <OrbBadge
-            state={step === 1 ? 'working' : step === 2 ? 'shaping' : step === 3 ? 'weaving' : 'connecting'}
-            size={20}
-            label={isAr ? `الخطوة ${step} من 4` : `Step ${step} of 4`}
-          />
+        <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
+          <Signal size={16} />
+          <span>{isAr ? `الخطوة ${step} من 4` : `Step ${step} of 4`}</span>
         </div>
       </div>
 

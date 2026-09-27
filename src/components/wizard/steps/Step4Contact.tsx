@@ -20,7 +20,7 @@ import {
   type WizardData,
 } from '../schemas';
 import { FormTextField, PhoneInputWithCountry, StepNavigation } from '../fields';
-import OrbBadge from '@/components/shared/OrbBadge';
+import Signal from '@/components/shared/Signal';
 import CountryFlag from '@/components/shared/CountryFlag';
 
 type Step4Props = {
@@ -77,7 +77,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
     >
       <div className="space-y-2">
         <div className="flex items-center gap-2">
-          <OrbBadge state="connecting" size={20} />
+          <Signal />
           <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
             Final Step // Enterprise Verification
           </span>

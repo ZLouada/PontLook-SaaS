@@ -6,7 +6,9 @@ import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { ArrowRight } from 'lucide-react';
 import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import OrbBadge from '@/components/shared/OrbBadge';
+import Signal from '@/components/shared/Signal';
+import TextReveal from '@/components/shared/TextReveal';
+import { spring, ease, dur } from '@/lib/motion';
 
 export default function HowItWorks() {
   const dict = useDictionary();
@@ -151,19 +153,19 @@ export default function HowItWorks() {
       actionHref: `/${lang}/for-providers`,
       points: [
         {
-          title: isAr ? 'استخبارات سوقية مستمرة >' : 'Continuous Market Intelligence >',
+          title: isAr ? 'استخبارات سوقية مستمرة' : 'Continuous Market Intelligence',
           desc: isAr
             ? 'نرصد باستمرار مؤشرات التوظيف، وإعادة الهيكلة، وفجوات الكفاءات عبر الشركات في السعودية والإمارات.'
             : 'We monitor hiring trends, restructuring mandates, and capability gaps across Saudi Arabia and the UAE.',
         },
         {
-          title: isAr ? 'ميزانيات تدريبية معتمدة >' : 'Verified Enterprise Budgets >',
+          title: isAr ? 'ميزانيات تدريبية معتمدة' : 'Verified Enterprise Budgets',
           desc: isAr
             ? 'كل إشارة احتياج ترصدها المنصة تقابلها ميزانية معتمدة مؤكدة مع أصحاب الصلاحية المالية.'
             : 'Every demand signal has verified allocated budget confirmed with corporate financial decision makers.',
         },
         {
-          title: isAr ? 'فرص حقيقية بدون تخمين >' : 'Zero Speculation >',
+          title: isAr ? 'فرص حقيقية مؤكدة' : 'Validated Requirements',
           desc: isAr
             ? 'لا وجود لمناقصات عامة مكررة أو أدلة جامدة، بل منظمات حقيقية مستعدة لبدء التدريب فوراً.'
             : 'No generic public RFPs or dead directories, only active corporate organizations ready to upskill.',
@@ -185,7 +187,7 @@ export default function HowItWorks() {
               </span>
             </div>
             <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-[10px] font-medium">
-              <OrbBadge state="searching" size={20} />
+              <Signal />
               <span>{isAr ? 'إشارة نشطة' : 'Active Signal'}</span>
             </div>
           </div>
@@ -233,28 +235,28 @@ export default function HowItWorks() {
       stepNumber: '02',
       navTitle: isAr ? 'التأهيل والربط' : 'Fit Scoring',
       shortTitle: isAr ? 'التأهيل' : 'Scoring',
-      tag: isAr ? 'الخطوة 02 // التأهيل والربط الذكي' : 'STEP 02 // FIT SCORING & QUALIFICATION',
+      tag: isAr ? 'الخطوة 02 // التأهيل والربط المعتمد' : 'STEP 02 // FIT SCORING & QUALIFICATION',
       tagColor: 'text-purple-400',
       headline: isAr
-        ? 'تأهيل دقيق يطابق المتطلبات الحقيقية مع نخبة الخبراء'
-        : 'Deep AI & human scoring matching actual enterprise constraints',
+        ? 'تقييم تحليلي وبشري دقيق يطابق المتطلبات الحقيقية مع نخبة الخبراء'
+        : 'Deep analyst and human scoring against real enterprise constraints',
       actionText: isAr ? 'طابق برنامجك الآن' : 'Get matched',
       actionHref: `/${lang}/find-training`,
       points: [
         {
-          title: isAr ? 'مؤشر تطابق 94% >' : '94% Match Fit Scoring >',
+          title: isAr ? 'مؤشر تطابق 94%' : '94% Match Fit Scoring',
           desc: isAr
             ? 'خوارزمية تقييم شاملة تطابق سجل إنجازات المزود، اعتمادات المدربين، ومنهجية التنفيذ.'
             : 'Proprietary algorithm evaluating provider track record, trainer accreditations, and methodology.',
         },
         {
-          title: isAr ? 'توثيق أصحاب القرار >' : 'CHRO & Talent Head Validation >',
+          title: isAr ? 'توثيق أصحاب القرار' : 'CHRO & Talent Head Validation',
           desc: isAr
             ? 'نتحقق شخصياً من الاحتياج مع مدراء التطوير ورؤساء قطاع الموارد البشرية أصحاب القرار النهائي.'
             : 'We directly confirm needs with Heads of L&D, Chief Human Resource Officers, and VP talent buyers.',
         },
         {
-          title: isAr ? 'استيفاء معايير التأهيل 4 من 4 >' : '4 Point Criteria Fulfillment >',
+          title: isAr ? 'استيفاء معايير التأهيل 4 من 4' : '4 Point Criteria Fulfillment',
           desc: isAr
             ? 'تحقق إلزامي من الجدول الزمني، مستوى المستفيدين، أسلوب التدريب، ومؤشرات قياس الأثر.'
             : 'Strict validation across timeline, participant level, delivery format, and ROI performance metrics.',
@@ -272,11 +274,11 @@ export default function HowItWorks() {
                 <span className="h-2 w-2 rounded-full bg-white/20" />
               </div>
               <span className="text-neutral-400 text-[11px] font-medium ms-2">
-                {isAr ? 'منظومة المطابقة الذكية' : 'AI Match & Qualification'}
+                {isAr ? 'منظومة المطابقة والتأهيل' : 'Match & Qualification'}
               </span>
             </div>
             <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-xs font-bold">
-              <OrbBadge state="solving" size={20} />
+              <Signal />
               <span>94%</span>
               <span className="text-[10px] font-normal">{isAr ? 'تطابق' : 'Match'}</span>
             </div>
@@ -329,22 +331,22 @@ export default function HowItWorks() {
       actionHref: `/${lang}/for-providers/apply`,
       points: [
         {
-          title: isAr ? 'تقديم شخصي واجتماع مباشر >' : 'Warm Executive Introduction >',
+          title: isAr ? 'تقديم شخصي واجتماع مباشر' : 'Warm Executive Introduction',
           desc: isAr
             ? 'تنسيق مباشر للاجتماعات وجدول الأعمال مع قادة المنشآت المستعدين لمراجعة العروض والبدء.'
             : 'Direct calendar access and tailored briefing with corporate decision makers ready for proposal review.',
         },
         {
-          title: isAr ? 'دفع حصري مقابل الفرصة المؤهلة >' : 'Strict Pay on Success Model >',
+          title: isAr ? 'دفع حصري مقابل الفرصة المؤهلة' : 'Strict Pay on Success Model',
           desc: isAr
             ? 'بدون اشتراكات شهرية، وبدون رسوم إدراج. تستثمر فقط عند استلام فرصة مؤهلة ومحققة.'
-            : 'Zero subscription fees, zero listing retainers. You only invest when a real qualified match is delivered.',
+            : 'No subscription fees or upfront retainers. You only invest when a real qualified match is delivered.',
         },
         {
-          title: isAr ? 'ضمان استبدال خلال 5 أيام >' : '5 Day Replacement SLA Guarantee >',
+          title: isAr ? 'ضمان استبدال خلال 5 أيام' : '5 Day Replacement SLA Guarantee',
           desc: isAr
             ? 'إذا لم تتطابق الفرصة مع معايير التأهيل المعتمدة، نستبدلها فوراً وبدون أي تكلفة إضافية.'
-            : 'If an introduction does not meet confirmed qualification criteria, we replace it at zero cost.',
+            : 'If an introduction does not meet confirmed qualification criteria, we replace it at our expense.',
         },
       ],
       canvasBg: 'bg-[#16171B] border-[#26282D]',
@@ -363,7 +365,7 @@ export default function HowItWorks() {
               </span>
             </div>
             <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-teal-400 text-[10px] font-medium">
-              <OrbBadge state="connecting" size={20} />
+              <Signal />
               <span>{isAr ? 'تم التقديم' : 'Intro Complete'}</span>
             </div>
           </div>
@@ -386,7 +388,7 @@ export default function HowItWorks() {
 
           {/* Contract Terms */}
           <div className="pt-0.5 flex items-center justify-between text-xs text-neutral-400">
-            <span>{isAr ? 'بدون عمولات خفية' : 'Zero hidden fees'}</span>
+            <span>{isAr ? 'بدون عمولات خفية' : 'No hidden fees'}</span>
             <span className="font-bold text-teal-400">
               {isAr ? 'علاقة تعاقدية مباشرة 100%' : '100% Direct Contract'}
             </span>
@@ -405,7 +407,7 @@ export default function HowItWorks() {
       data-nav-dark="true"
       className="relative bg-[#08090A] text-white pt-8 pb-12 sm:pt-20 sm:pb-16 lg:py-0 lg:min-h-[300vh] scroll-mt-24 sm:scroll-mt-28"
     >
-      {/* Pure AMOLED Ambient Lighting - Zero Blue Lights */}
+      {/* ambient glow */}
       <div className="absolute top-1/4 start-1/4 w-[600px] h-[600px] bg-white/[0.015] blur-[180px] pointer-events-none rounded-full" />
       <div className="absolute bottom-1/4 end-1/4 w-[600px] h-[600px] bg-white/[0.01] blur-[180px] pointer-events-none rounded-full" />
 
@@ -415,16 +417,18 @@ export default function HowItWorks() {
           
           {/* Section Header */}
           <div className="mb-4 sm:mb-5 text-center max-w-3xl mx-auto shrink-0 px-2">
-            <h2 className="text-xl sm:text-3xl lg:text-[28px] font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
-              {dict.how_it_works?.title || (isAr ? 'نرصد بدقة المنشآت التي تواجه فجوات تدريبية ومهارية حقيقية' : 'We pinpoint organizations facing real skill & training gaps')}
-            </h2>
+            <TextReveal
+              as="h2"
+              text={dict.how_it_works?.title || (isAr ? 'نرصد بدقة المنشآت التي تواجه فجوات تدريبية ومهارية حقيقية' : 'We pinpoint organizations facing real skill & training gaps')}
+              className="h-section"
+            />
 
             <p className="mt-1.5 text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed">
               {isAr ? 'تعلم، شخص، وطابق' : 'Learn, Diagnose, and Get Matched'}
             </p>
           </div>
 
-          {/* 3 Step Switcher Tabs (Touch-friendly, Zero-clipping on Mobile) */}
+          {/* step switcher tabs */}
           <div className="flex items-center justify-start sm:justify-center gap-1.5 sm:gap-2.5 mb-4 sm:mb-5 w-full max-w-lg mx-auto overflow-x-auto scrollbar-none px-4 sm:px-0 py-1">
             {cards.map((card, idx) => {
               const isActive = activeStep === idx;
@@ -434,23 +438,27 @@ export default function HowItWorks() {
                   onClick={() => handleStepClick(idx)}
                   className={`group relative shrink-0 sm:flex-1 min-w-[105px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-3 sm:px-3.5 rounded-full border transition-all duration-200 text-xs font-medium active:scale-95 ${
                     isActive
-                      ? 'bg-white/[0.08] text-white border-white/30 shadow-sm'
+                      ? 'text-white border-white/20'
                       : 'bg-transparent text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
                   }`}
                 >
-                  <span className={`text-[11px] font-mono font-bold shrink-0 ${isActive ? card.tagColor : 'text-neutral-500'}`}>
+                  {isActive && (
+                    <m.div
+                      layoutId="how-it-works-pill"
+                      className="absolute inset-0 z-0 rounded-full bg-white/[0.08] border border-[#26282D] backdrop-blur-md"
+                      transition={spring.soft}
+                    />
+                  )}
+                  <span className={`relative z-10 text-[11px] font-mono font-bold shrink-0 ${isActive ? card.tagColor : 'text-neutral-500'}`}>
                     {card.stepNumber}
                   </span>
-                  <span className="truncate">
+                  <span className="relative z-10 truncate">
                     <span className="sm:hidden">{card.shortTitle}</span>
                     <span className="hidden sm:inline">{card.navTitle}</span>
                   </span>
                   {isActive && (
-                    <div className="shrink-0">
-                      <OrbBadge
-                        state={idx === 0 ? 'searching' : idx === 1 ? 'solving' : 'connecting'}
-                        size={20}
-                      />
+                    <div className="relative z-10 shrink-0">
+                      <Signal size={18} />
                     </div>
                   )}
                 </button>
@@ -471,8 +479,8 @@ export default function HowItWorks() {
                 initial={{ opacity: 0, y: 10, scale: 0.99 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 0.99 }}
-                transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="relative rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] hover:border-white/20 transition-colors duration-300 p-3.5 sm:p-5 lg:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.75)] overflow-hidden"
+                transition={{ duration: dur.base, ease: ease.out }}
+                className="surface relative rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 shadow-e3 overflow-hidden hover:border-white/20 transition-colors duration-300"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-8 items-center">
                   

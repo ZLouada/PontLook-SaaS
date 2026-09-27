@@ -21,8 +21,6 @@ npm run dev
 
 ## Design tokens
 
-- Primary `#2451BF`, interactive `#3D7BFF`, accent `#7FB8FF`
-- Backgrounds: white with `#F4F7FF` gradients
-- Headings: Poppins · Body: Inter
+- Canvas `#08090A`, Surface `#0F1013` / `#16171B`, Hairline `#26282D`, Accent `#0052FF`
+- Typography: Inter (Latin) · IBM Plex Sans Arabic (Arabic)
 
-> Market statistics used on the site are illustrative placeholders, flagged for easy replacement once verified figures are available.

@@ -281,7 +281,7 @@ export const ar = {
       messagePlaceholder: "كيف يمكننا مساعدتك اليوم؟",
       submit: "إرسال الرسالة",
       submitting: "جارٍ الإرسال...",
-      successTitle: "تم إرسال رسالتك بنجاح",
+      successTitle: "تم استلام رسالتك",
       successMessage: "شكراً لتواصلك معنا. يقوم فريقنا بالرد على جميع الاستفسارات خلال يوم عمل واحد."
     }
   },

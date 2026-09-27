@@ -223,12 +223,12 @@ export async function POST(req: NextRequest) {
 
     if (slackWebhookUrl) {
       try {
-        const tierEmoji = leadScoreResult.tier === 'HOT' ? '🔥' : leadScoreResult.tier === 'WARM' ? '⚡' : '🎯';
+        const tierBadge = `[${leadScoreResult.tier}]`;
         await fetch(slackWebhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            text: `${tierEmoji} *New ${leadScoreResult.tier} Enterprise Lead (${leadScoreResult.score}/100)*: ${data.organizationName} (${data.country})\n• *Contact*: ${data.fullName} · ${data.jobTitle} (<mailto:${data.workEmail}|${data.workEmail}>)\n• *Domains*: ${domainNames}\n• *Cohort & Budget*: ${cohortLabel} | ${budgetLabel}\n• *Ref*: \`${leadId}\``,
+            text: `${tierBadge} *New ${leadScoreResult.tier} Enterprise Lead (${leadScoreResult.score}/100)*: ${data.organizationName} (${data.country})\n• *Contact*: ${data.fullName} · ${data.jobTitle} (<mailto:${data.workEmail}|${data.workEmail}>)\n• *Domains*: ${domainNames}\n• *Cohort & Budget*: ${cohortLabel} | ${budgetLabel}\n• *Ref*: \`${leadId}\``,
           }),
         });
       } catch (slackErr) {
@@ -268,7 +268,7 @@ export async function POST(req: NextRequest) {
     }
 
     const duration = Date.now() - startTime;
-    console.log(`✅ [Intake API] Processed lead ${leadId} in ${duration}ms (Tier: ${leadScoreResult.tier}, Score: ${leadScoreResult.score})`);
+    console.log(`[Intake API] Processed lead ${leadId} in ${duration}ms (Tier: ${leadScoreResult.tier}, Score: ${leadScoreResult.score})`);
 
     return NextResponse.json(
       {

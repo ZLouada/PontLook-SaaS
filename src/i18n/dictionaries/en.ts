@@ -283,7 +283,7 @@ export const en = {
       messagePlaceholder: "How can we help?",
       submit: "Send message",
       submitting: "Sending…",
-      successTitle: "Message sent",
+      successTitle: "Message received",
       successMessage: "Thanks for reaching out, we respond to every message within 1 business day."
     }
   },

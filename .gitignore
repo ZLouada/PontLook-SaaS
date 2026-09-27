@@ -19,6 +19,7 @@ sitemap.xml
 .DS_Store
 *.pem
 *.tsbuildinfo
+.claude/
 
 # Environment
 .env*.local

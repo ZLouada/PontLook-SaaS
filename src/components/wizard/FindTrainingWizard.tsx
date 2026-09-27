@@ -12,7 +12,7 @@ import {
   Step4Contact,
   Step5Confirmation,
 } from './steps';
-import OrbBadge from '@/components/shared/OrbBadge';
+import Signal from '@/components/shared/Signal';
 
 const STEP_DEFINITIONS = [
   { step: 1, title: 'Training Scope', short: 'Scope' },
@@ -259,7 +259,7 @@ export default function FindTrainingWizard() {
               <span>(~60 seconds)</span>
             </span>
             <span className="hidden items-center gap-1.5 rounded-full bg-[#16171B] border border-[#26282D] px-2.5 py-0.5 text-[11px] font-medium text-neutral-300 sm:inline-flex">
-              <OrbBadge state="breathing" size={20} />
+              <Signal />
               <span>Auto-saving session</span>
             </span>
           </div>

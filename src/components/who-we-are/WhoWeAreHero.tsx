@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowDown } from 'lucide-react';
 import Reveal from '@/components/shared/Reveal';
-import OrbBadge from '@/components/shared/OrbBadge';
+import Signal from '@/components/shared/Signal';
 
 interface WhoWeAreHeroProps {
   lang?: 'en' | 'ar';
@@ -250,19 +250,19 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
         <Reveal className="flex flex-col items-center">
           {/* Top Architectural Status Pill */}
           <div className="mb-5 sm:mb-6 inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#16171B]/85 border border-[#26282D] hover:border-white/30 backdrop-blur-xl shadow-xl transition-all duration-300">
-            <OrbBadge state="weaving" size={20} />
+            <Signal />
             <span className="text-xs sm:text-sm font-medium">
               <span
-                className="t-shimmer"
+                className="text-shimmer"
                 data-text={
                   isAr
-                    ? 'منظومة التوفيق والربط الذكي · شفافية تامة 100%'
-                    : 'Intelligent Matchmaking Architecture · 100% Transparent'
+                    ? 'منظومة التوفيق والربط المعتمد · شفافية تامة 100%'
+                    : 'Curated Matchmaking Architecture · 100% Transparent'
                 }
               >
                 {isAr
-                  ? 'منظومة التوفيق والربط الذكي · شفافية تامة 100%'
-                  : 'Intelligent Matchmaking Architecture · 100% Transparent'}
+                  ? 'منظومة التوفيق والربط المعتمد · شفافية تامة 100%'
+                  : 'Curated Matchmaking Architecture · 100% Transparent'}
               </span>
             </span>
           </div>
@@ -288,7 +288,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
         </Reveal>
       </div>
 
-      {/* ATTIO-STYLE CLEAN ANIMATED WAVE CURTAIN (NO LIGHTS) */}
+      {/* animated wave curtain */}
       <div className="relative flex-1 w-full flex flex-col items-center justify-end min-h-[380px] sm:min-h-[480px] mx-auto">
         <div
           className="absolute inset-0 w-full h-full pointer-events-auto [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)] overflow-hidden"
@@ -297,13 +297,13 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
           <canvas ref={canvasRef} className="w-full h-full block cursor-crosshair" />
         </div>
 
-        {/* BOTTOM FLOATING PILL */}
+        {/* scroll indicator */}
         <div className="relative z-10 mb-2 sm:mb-4">
           <button
             onClick={scrollToMission}
             className="inline-flex items-center gap-3 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#111215]/80 hover:bg-[#16171B] border border-[#26282D] hover:border-neutral-600 text-xs sm:text-sm text-neutral-300 hover:text-white shadow-2xl backdrop-blur-xl transition-all active:scale-95 group"
           >
-            <OrbBadge state="solving" size={20} />
+            <Signal />
             <span>
               {isAr
                 ? 'كيف تضمن PontLook جودة التدريب بدون اشتراك شهري؟'

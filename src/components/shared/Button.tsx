@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { m, HTMLMotionProps } from 'framer-motion';
+import { spring } from '@/lib/motion';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'dark';
 type ButtonSize = 'sm' | 'md' | 'lg';
@@ -41,13 +42,13 @@ export default function Button({
 
   const variantClasses = {
     primary:
-      'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs rounded-xl',
+      'sheen bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-e1 rounded-xl',
     secondary:
-      'bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs rounded-xl',
+      'bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md rounded-xl',
     outline:
       'bg-transparent border border-[#26282D] text-neutral-300 hover:text-white hover:border-white/30 rounded-xl',
     dark:
-      'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs rounded-xl',
+      'sheen bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-e1 rounded-xl',
   }[variant];
 
   const baseClasses = `inline-flex items-center justify-center rounded-xl transition-all duration-300 transform-gpu cursor-pointer select-none ${sizeClasses} ${variantClasses} ${className}`;
@@ -55,7 +56,7 @@ export default function Button({
   const motionVariants = {
     whileHover: { y: -2.5 },
     whileTap: { scale: 0.98 },
-    transition: { type: 'spring', stiffness: 400, damping: 20 },
+    transition: spring.snappy,
   };
 
   const content = (

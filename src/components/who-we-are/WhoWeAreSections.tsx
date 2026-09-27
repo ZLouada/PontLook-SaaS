@@ -16,7 +16,7 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 import { m, AnimatePresence } from 'framer-motion';
-import OrbBadge from '@/components/shared/OrbBadge';
+import Signal from '@/components/shared/Signal';
 
 interface WhoWeAreProps {
   lang?: 'en' | 'ar';
@@ -175,7 +175,7 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
               {/* Badges overlaid on top of photo */}
               <div className="absolute top-4 start-4 end-4 flex items-center justify-between pointer-events-none">
                 <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#0F1013]/90 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider border border-[#26282D] shadow-md">
-                  <OrbBadge state="weaving" size={20} />
+                  <Signal />
                   <span>{isAr ? 'طريقة بونت لوك' : 'THE PONTLOOK WAY'}</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/80 backdrop-blur-md text-emerald-400 text-[11px] font-bold uppercase tracking-wider border border-emerald-500/40 shadow-md">
@@ -289,7 +289,7 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
               </>
             ) : (
               <>
-                Pay Only for <span className="text-primary font-bold">Qualified Outcomes</span>. Zero Retainers.
+                Pay Only for <span className="text-primary font-bold">Qualified Outcomes</span>. No Retainers.
               </>
             )}
           </h2>
@@ -460,7 +460,6 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
         ? 'تحدد إدارة الموارد البشرية عجزاً تشغيلياً أو قيادياً حرجاً. استيعاب دقيق: حجم المجموعات، طريقة التنفيذ، المتطلبات بالرياض ودبي، والميزانية.'
         : 'HR identifies a critical operational or leadership deficiency. Deep intake: cohort sizing, delivery mode, Riyadh/Dubai onsite requirements, approved budget.',
       tag: isAr ? 'تم التحقق من النطاق والميزانية' : 'Scope & Budget Verified',
-      orb: 'shaping' as const,
       icon: SlidersHorizontal,
       iconColor: 'text-neutral-200',
       iconBg: 'bg-white/10 text-white border-white/20',
@@ -485,10 +484,9 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
       step: isAr ? 'المرحلة 2: جسر الربط المحوري' : 'Stage 2: Focal Bridge',
       title: isAr ? 'توفيق دقيق ومختار' : 'Curated Specialist Matchmaking',
       desc: isAr
-        ? 'فرز ذكي وبشري يسلمك 2 إلى 3 خبراء معتمدين مع عروض متوافقة تماماً مع الميزانية. تتجاوز المؤسسة مكالمات المبيعات العشوائية وتقيّم الأنسب فوراً.'
-        : 'AI + Human curation delivering 2 to 3 vetted specialists with budget aligned proposals. HR skips sales pitches and evaluates proven providers.',
+        ? 'فرز تحليلي وبشري يسلمك 2 إلى 3 خبراء معتمدين مع عروض متوافقة تماماً مع الميزانية. تتجاوز المؤسسة مكالمات المبيعات العشوائية وتقيّم الأنسب فوراً.'
+        : 'Analyst-led curation delivering 2 to 3 vetted specialists with budget aligned proposals. HR skips sales pitches and evaluates proven providers.',
       tag: isAr ? 'محرك بونت لوك المركزي' : 'PontLook Core Engine',
-      orb: 'solving' as const,
       icon: BadgeCheck,
       iconColor: 'text-indigo-400',
       iconBg: 'bg-indigo-600/20 text-indigo-400 border-indigo-500/30',
@@ -516,7 +514,6 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
         ? 'توقيع التعاقد، مواءمة المناهج التدريبية، وبدء المدربين والخبراء. يركز مزودو التدريب بنسبة 100% على تقديم أعلى جودة وتفاعل.'
         : 'Contract execution, tailored curriculum, and facilitator onboarding. Providers focus 100% of their energy on high impact workshop delivery.',
       tag: isAr ? 'اكتمل التأهيل والبدء' : 'Onboarding Ready',
-      orb: 'weaving' as const,
       icon: GraduationCap,
       iconColor: 'text-teal-400',
       iconBg: 'bg-teal-600/20 text-teal-400 border-teal-500/30',
@@ -544,7 +541,6 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
         ? 'ارتقاء ملموس بالكفاءات، تقييم موظفين دقيق، وعائد استثماري مستدام لإدارة الشركة. تم سد فجوة الكفاءة بنجاح.'
         : 'Measurable capability uplift, employee post evaluation, and sustained ROI delivered to executive leadership.',
       tag: isAr ? 'عائد استثماري ملموس' : 'Measurable ROI',
-      orb: 'connecting' as const,
       icon: TrendingUp,
       iconColor: 'text-emerald-400',
       iconBg: 'bg-emerald-600/20 text-emerald-400 border-emerald-500/30',
@@ -635,7 +631,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
                   </div>
                   {isActive && (
                     <div className="shrink-0">
-                      <OrbBadge state={s.orb as any} size={20} />
+                      <Signal size={16} />
                     </div>
                   )}
                 </div>
@@ -683,7 +679,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
               <div className="lg:col-span-6 space-y-5">
                 <div className="flex items-center gap-2.5 flex-wrap">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] text-xs font-semibold text-white">
-                    <OrbBadge state={currentStep.orb as any} size={20} />
+                    <Signal size={14} />
                     <span>{currentStep.step}</span>
                     <span className="text-neutral-500 font-mono">· {currentStep.num}</span>
                   </div>

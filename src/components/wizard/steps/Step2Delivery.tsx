@@ -11,6 +11,7 @@ import {
   Sparkles,
   BookOpen,
   Check,
+  Star,
 } from 'lucide-react';
 import {
   DELIVERY_MODES,
@@ -22,7 +23,7 @@ import {
   type WizardData,
 } from '../schemas';
 import { StepNavigation } from '../fields';
-import OrbBadge from '@/components/shared/OrbBadge';
+import Signal from '@/components/shared/Signal';
 import CountryFlag from '@/components/shared/CountryFlag';
 
 const CITY_COUNTRY_MAP: Record<string, string> = {
@@ -104,7 +105,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
       <section className="space-y-3">
         <div>
           <div className="flex items-center gap-2.5">
-            <OrbBadge state="weaving" size={20} />
+            <Signal />
             <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
               How should the training be delivered?
             </h2>
@@ -335,8 +336,9 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
 
                 {opt.recommended && (
                   <div className="mt-3">
-                    <span className="inline-flex items-center gap-1 rounded-full bg-[#16171B] border border-[#26282D] px-2.5 py-0.5 text-[10px] font-bold text-neutral-300">
-                      ★ Recommended for Enterprise Organizations
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#16171B] border border-[#26282D] px-2.5 py-0.5 text-[10px] font-bold text-neutral-300">
+                      <Star size={11} className="text-amber-400 fill-amber-400 shrink-0" />
+                      <span>Recommended for Enterprise Organizations</span>
                     </span>
                   </div>
                 )}
