@@ -2,6 +2,22 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { defaultLocale } from '@/i18n/config';
 
+interface RegionalMapping {
+  prefix: string;
+  targetLang: string;
+  targetCountry: string;
+}
+
+const REGIONAL_REWRITES: RegionalMapping[] = [
+  { prefix: '/ar-ae', targetLang: 'ar', targetCountry: 'ae' },
+  { prefix: '/en-sa', targetLang: 'en', targetCountry: 'sa' },
+  { prefix: '/ae', targetLang: 'en', targetCountry: 'ae' },
+  { prefix: '/sa', targetLang: 'ar', targetCountry: 'sa' },
+  { prefix: '/uk', targetLang: 'en', targetCountry: 'uk' },
+  { prefix: '/us', targetLang: 'en', targetCountry: 'us' },
+  { prefix: '/au', targetLang: 'en', targetCountry: 'au' },
+];
+
 export function middleware(request: NextRequest) {
   const host = request.headers.get('host') || '';
   const isWww = host.startsWith('www.');
@@ -39,7 +55,7 @@ export function middleware(request: NextRequest) {
     targetPath = `/${defaultLocale}`;
     shouldRedirect = true;
   } else if (targetPath.length > 1 && targetPath.endsWith('/')) {
-    // 4. Strip trailing slashes (e.g., /en/ -> /en, /en/find-training/ -> /en/find-training)
+    // 4. Strip trailing slashes (e.g., /en/ -> /en, /ae/ -> /ae)
     targetPath = targetPath.replace(/\/+$/, '');
     shouldRedirect = true;
   }
@@ -52,6 +68,17 @@ export function middleware(request: NextRequest) {
     const targetUrl = new URL(request.url);
     targetUrl.pathname = targetPath;
     return NextResponse.redirect(targetUrl, 301);
+  }
+
+  // 5. Regional clean URL rewrites (e.g. /ae/locations/dubai -> /en/ae/locations/dubai)
+  for (const mapping of REGIONAL_REWRITES) {
+    if (targetPath === mapping.prefix || targetPath.startsWith(`${mapping.prefix}/`)) {
+      const rest = targetPath.slice(mapping.prefix.length);
+      const internalDestination = `/${mapping.targetLang}/${mapping.targetCountry}${rest}`;
+      const rewriteUrl = new URL(request.url);
+      rewriteUrl.pathname = internalDestination;
+      return NextResponse.rewrite(rewriteUrl);
+    }
   }
 
   return NextResponse.next();

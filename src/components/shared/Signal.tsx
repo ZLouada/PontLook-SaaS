@@ -4,7 +4,7 @@ import React from 'react';
 import { m, useReducedMotion } from 'framer-motion';
 import { dur, ease } from '@/lib/motion';
 
-export type SignalTone = 'inherit' | 'emerald' | 'amber' | 'violet' | 'cyan' | 'white' | 'accent';
+export type SignalTone = 'inherit' | 'emerald' | 'amber' | 'violet' | 'cyan' | 'white' | 'accent' | 'orange';
 
 const TONE: Record<Exclude<SignalTone, 'inherit'>, string> = {
   emerald: '#34D399',
@@ -13,6 +13,7 @@ const TONE: Record<Exclude<SignalTone, 'inherit'>, string> = {
   cyan: '#22D3EE',
   white: '#FFFFFF',
   accent: '#4D7CFF',
+  orange: '#FF5C00',
 };
 
 function resolveTone(tone: SignalTone) {

@@ -5,16 +5,25 @@ import { HelpCircle, ChevronDown } from 'lucide-react';
 import Reveal from '@/components/shared/Reveal';
 
 export interface FAQItem {
-  question: string;
-  answer: string;
+  question?: string;
+  answer?: string;
+  q?: string;
+  a?: string;
 }
 
 interface FAQAccordionProps {
-  faqs: FAQItem[];
+  faqs?: FAQItem[];
+  items?: FAQItem[];
 }
 
-export default function FAQAccordion({ faqs }: FAQAccordionProps) {
+export default function FAQAccordion({ faqs, items }: FAQAccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const rawList = faqs || items || [];
+  const normalizedFaqs = rawList.map((f) => ({
+    question: f.question || f.q || '',
+    answer: f.answer || f.a || '',
+  }));
 
   const toggleFaq = (index: number) => {
     setOpenIndex((prev) => (prev === index ? null : index));
@@ -22,7 +31,7 @@ export default function FAQAccordion({ faqs }: FAQAccordionProps) {
 
   return (
     <div className="space-y-4">
-      {faqs.map((faq, i) => {
+      {normalizedFaqs.map((faq, i) => {
         const isOpen = openIndex === i;
 
         return (

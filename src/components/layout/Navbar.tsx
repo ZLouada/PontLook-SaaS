@@ -117,19 +117,34 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             className="flex items-center gap-2 sm:gap-2.5 transition-transform duration-200 hover:scale-[1.02] active:scale-95"
             aria-label="PontLook home"
           >
-            <div className="relative flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center">
-              <Image
-                src={logoSrc}
-                alt="PontLook Corporate Training Matchmaking Logo"
-                width={32}
-                height={32}
-                className="object-contain h-7 w-7 sm:h-8 sm:w-8 transition-opacity duration-200"
-                priority
-              />
-            </div>
-            <span className="font-heading font-bold text-lg sm:text-xl tracking-tight text-white">
-              PontLook
-            </span>
+            {isForProviders ? (
+              <div className="relative flex items-center">
+                <Image
+                  src="/images/brand/pontlook-logo-orange.png"
+                  alt="PontLook for Providers Logo"
+                  width={140}
+                  height={35}
+                  className="h-7 sm:h-8 w-auto object-contain transition-opacity duration-200"
+                  priority
+                />
+              </div>
+            ) : (
+              <>
+                <div className="relative flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center">
+                  <Image
+                    src="/PontLook-Logo-White.png"
+                    alt="PontLook Corporate Training Matchmaking Logo"
+                    width={32}
+                    height={32}
+                    className="object-contain h-7 w-7 sm:h-8 sm:w-8 transition-opacity duration-200"
+                    priority
+                  />
+                </div>
+                <span className="font-heading font-bold text-lg sm:text-xl tracking-tight text-white">
+                  PontLook
+                </span>
+              </>
+            )}
           </Link>
 
           {/* navigation links */}
@@ -168,7 +183,11 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   {isActive && !isHovered && (
                     <m.div
                       layoutId="nav-active-indicator"
-                      className="absolute bottom-0 inset-x-3 h-0.5 rounded-full bg-[#0052FF] shadow-[0_0_8px_rgba(0,82,255,0.7)]"
+                      className={`absolute bottom-0 inset-x-3 h-0.5 rounded-full ${
+                        isForProviders
+                          ? 'bg-[#FF5C00] shadow-[0_0_8px_rgba(255,92,0,0.7)]'
+                          : 'bg-[#0052FF] shadow-[0_0_8px_rgba(0,82,255,0.7)]'
+                      }`}
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}

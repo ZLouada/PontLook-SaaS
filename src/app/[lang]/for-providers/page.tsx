@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
 import Reveal from '@/components/shared/Reveal';
+import { Signal } from '@/components/shared/Signal';
 import { Target, CircleDollarSign, TrendingUp, ArrowRight } from 'lucide-react';
 import { constructAlternates } from '@/lib/seo';
 
@@ -118,6 +120,24 @@ export default async function ForProvidersPage({
           {/* Left-Aligned Header Block */}
           <div className="max-w-3xl text-start">
             <Reveal>
+              {/* Architectural Brand Pill for Providers */}
+              <div className="mb-6 sm:mb-8 inline-flex items-center gap-3 px-3.5 py-1.5 rounded-full bg-[#16171B]/90 border border-orange-500/30 hover:border-orange-500/50 backdrop-blur-xl shadow-lg shadow-orange-500/10 transition-all duration-300">
+                <Signal tone="orange" size={16} />
+                <div className="flex items-center gap-2.5">
+                  <Image
+                    src="/images/brand/pontlook-logo-orange.png"
+                    alt="PontLook for Providers"
+                    width={112}
+                    height={28}
+                    className="h-5 sm:h-6 w-auto object-contain"
+                    priority
+                  />
+                  <span className="text-[11px] font-semibold text-orange-400 tracking-wider uppercase font-mono border-s border-neutral-700/80 ps-2.5">
+                    {isAr ? 'شبكة المزودين المعتمدة' : 'Provider Network'}
+                  </span>
+                </div>
+              </div>
+
               <h1 className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.1] sm:leading-[1.05] font-heading tracking-tight text-start">
                 {isAr ? (
                   <>
@@ -142,7 +162,7 @@ export default async function ForProvidersPage({
               <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-3.5 w-full sm:w-auto">
                 <Link
                   href={`/${lang}/for-providers/apply`}
-                  className="inline-flex items-center justify-center gap-2 py-3.5 px-7 sm:px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans"
+                  className="inline-flex items-center justify-center gap-2 py-3.5 px-7 sm:px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-orange-500/50 focus-visible:outline-none"
                 >
                   <span>{isAr ? 'انضم كشريك تدريب' : 'Become a Partner'}</span>
                   <ArrowRight size={16} className="rtl:-scale-x-100" />
@@ -150,7 +170,7 @@ export default async function ForProvidersPage({
 
                 <a
                   href="#why-partner"
-                  className="inline-flex items-center justify-center gap-2 py-3.5 px-6 sm:px-7 rounded-xl bg-white hover:bg-neutral-200 text-[#08090A] font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans"
+                  className="inline-flex items-center justify-center gap-2 py-3.5 px-6 sm:px-7 rounded-xl bg-white hover:bg-neutral-200 text-[#08090A] font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:outline-none"
                 >
                   <span>{isAr ? 'اعرف المزيد' : 'Learn more'}</span>
                 </a>
@@ -160,7 +180,7 @@ export default async function ForProvidersPage({
         </div>
       </section>
 
-      {/* 2. WHY PARTNER SECTION (Redesigned matching Pasted image 20260918161220.png) */}
+      {/* 2. WHY PARTNER SECTION */}
       <section id="why-partner" className="bg-[#08090A] py-16 sm:py-24 scroll-mt-16">
         <div className="container-site max-w-6xl mx-auto px-4 sm:px-6">
           <Reveal>
@@ -169,15 +189,15 @@ export default async function ForProvidersPage({
               {isAr ? 'كيف تعمل الشراكة:' : 'How it works:'}
             </h2>
 
-            {/* 3 Clean Numbered Cards (Icons removed, inline number badges 1, 2, 3) */}
+            {/* 3 Clean Numbered Cards with Orange Accent Badges */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
               {providerBenefits.map((b, i) => (
                 <div
                   key={b.title}
-                  className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-6 sm:p-7 text-start flex flex-col justify-start hover:border-white/20 transition-all duration-300 shadow-lg"
+                  className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-6 sm:p-7 text-start flex flex-col justify-start hover:border-orange-500/30 hover:shadow-orange-500/10 hover:shadow-lg transition-all duration-300 shadow-lg group"
                 >
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="w-7 h-7 rounded-full bg-white/[0.08] border border-white/10 text-white flex items-center justify-center text-xs font-bold font-mono shrink-0">
+                    <span className="w-7 h-7 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 flex items-center justify-center text-xs font-bold font-mono shrink-0 group-hover:scale-105 transition-transform">
                       {i + 1}
                     </span>
                     <h3 className="text-base sm:text-lg font-semibold text-white font-heading">

@@ -497,7 +497,7 @@ export default function LeadTiers(_props?: {
                           {tier.step}
                         </span>
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-medium bg-[#16171B] text-neutral-300 border border-[#26282D]">
-                          <Signal size={16} speed={1 - idx * 0.12} />
+                          <Signal tone={mode === 'providers' ? 'orange' : undefined} size={16} speed={1 - idx * 0.12} />
                           <span>{tier.badge}</span>
                         </span>
                       </div>
