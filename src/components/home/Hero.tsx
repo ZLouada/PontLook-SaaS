@@ -8,6 +8,7 @@ import { ArrowRight, Sparkles } from '@/components/icons';
 import { m } from 'framer-motion';
 import TextReveal from '@/components/shared/TextReveal';
 import WordRotate from '@/components/shared/WordRotate';
+import HeroMatchSimulator from '@/components/home/HeroMatchSimulator';
 import { fadeUp, dur, ease } from '@/lib/motion';
 
 export default function Hero() {
@@ -129,6 +130,9 @@ export default function Hero() {
               />
             </Link>
           </m.div>
+
+          {/* Live GCC Matchmaking Simulator */}
+          <HeroMatchSimulator />
 
         </div>
       </div>

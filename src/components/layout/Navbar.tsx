@@ -5,18 +5,20 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowRight, ShieldCheck, Globe } from '@/components/icons';
+import { Menu, X, ArrowRight, ShieldCheck, Globe, Search } from '@/components/icons';
 import { m, AnimatePresence } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Locale } from '@/i18n';
 import Button from '@/components/shared/Button';
 import Signal from '@/components/shared/Signal';
 import ScrollProgress from '@/components/shared/ScrollProgress';
+import CommandMenu from '@/components/shared/CommandMenu';
 
 export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [commandOpen, setCommandOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isDarkSection, setIsDarkSection] = useState(false);
@@ -179,6 +181,20 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
           {/* language switcher and actions */}
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Quick Command Palette Trigger (Cmd+K) */}
+            <button
+              type="button"
+              onClick={() => setCommandOpen(true)}
+              className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B] text-neutral-400 hover:text-white hover:border-white/30 active:scale-95 transition-all duration-200"
+              aria-label={lang === 'ar' ? 'البحث السريع (⌘K)' : 'Quick search (⌘K)'}
+            >
+              <Search size={13} className="text-neutral-400" />
+              <span className="hidden md:inline">{lang === 'ar' ? 'بحث...' : 'Search...'}</span>
+              <kbd className="hidden sm:inline-block px-1.5 py-0.2 rounded bg-white/[0.08] text-[10px] font-mono text-neutral-300 border border-white/10">
+                ⌘K
+              </kbd>
+            </button>
+
             {/* Live Network Status Indicator */}
             <div className="hidden xl:inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B]/90 backdrop-blur-md text-neutral-300">
               <Signal />
@@ -402,6 +418,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           </AnimatePresence>,
           document.body
         )}
+
+      <CommandMenu open={commandOpen} onOpenChange={setCommandOpen} lang={lang} />
     </>
   );
 }

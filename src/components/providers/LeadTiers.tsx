@@ -9,6 +9,7 @@ import { useParams } from 'next/navigation';
 import Signal from '@/components/shared/Signal';
 import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
+import BorderBeam from '@/components/shared/BorderBeam';
 import { dur, ease, viewportOnce } from '@/lib/motion';
 
 interface TierData {
@@ -509,8 +510,11 @@ export default function LeadTiers(_props?: {
                   >
                     <Spotlight
                       radius={340}
-                      className={`bg-[#0F1013] border border-[#26282D] hover:border-orange-500/40 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300`}
+                      className={`relative overflow-hidden bg-[#0F1013] border border-[#26282D] hover:border-orange-500/40 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300`}
                     >
+                      {idx === 0 && (
+                        <BorderBeam size={260} duration={12} colorFrom="#FF5C00" colorTo="#4D7CFF" />
+                      )}
                       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-center">
                         {/* Left Details */}
                         <div className="lg:col-span-7 space-y-3 sm:space-y-4">

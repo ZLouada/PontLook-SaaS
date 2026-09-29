@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import Signal from '@/components/shared/Signal';
 import Spotlight from '@/components/shared/Spotlight';
 import Marquee from '@/components/shared/Marquee';
+import AccreditationRibbon from '@/components/home/AccreditationRibbon';
 
 export default function TrustBar() {
   const dict = useDictionary();
@@ -68,6 +69,10 @@ export default function TrustBar() {
       <div className="pointer-events-none absolute inset-y-0 end-0 z-20 w-16 bg-gradient-to-l from-[#08090A] via-[#08090A]/80 to-transparent rtl:bg-gradient-to-r sm:w-32" />
 
       <Marquee items={cards} duration={38} reverse={isAr} gap={24} className="py-2" />
+
+      <div className="mt-8 sm:mt-12">
+        <AccreditationRibbon />
+      </div>
     </section>
   );
 }

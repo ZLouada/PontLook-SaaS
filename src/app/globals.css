@@ -397,3 +397,15 @@
   0%   { background-position: 100% 0; }
   100% { background-position: 0% 0; }
 }
+
+/* ==========================================================================
+   Border Beam — Laser highlight travelling on card borders
+   ========================================================================== */
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+.animate-border-beam {
+  animation: border-beam var(--duration, 12s) infinite linear;
+}
