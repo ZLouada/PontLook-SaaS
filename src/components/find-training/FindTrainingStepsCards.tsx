@@ -18,6 +18,7 @@ import {
 import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
 import IconFrame from '@/components/shared/IconFrame';
+import CardTilt3D from '@/components/shared/CardTilt3D';
 
 interface FindTrainingStepsCardsProps {
   lang: string;
@@ -258,71 +259,72 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
       {/* 3 Interactive Step Spotlight Cards */}
       <div className="grid gap-6 md:grid-cols-3">
         {steps.map((st) => (
-          <Spotlight
-            key={st.id}
-            radius={280}
-            className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-7 sm:p-8 text-start flex flex-col justify-between hover:border-white/30 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_10px_30px_-10px_rgba(0,0,0,0.6)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_50px_-15px_rgba(0,0,0,0.9)] transition-all duration-300 group cursor-pointer relative overflow-hidden"
-          >
-            {/* Ambient hover aura */}
-            <div
-              className={`absolute -top-16 -end-16 w-36 h-36 rounded-full blur-3xl pointer-events-none transition-opacity duration-500 opacity-20 group-hover:opacity-70 ${
-                st.frameVariant === 'blue'
-                  ? 'bg-blue-500/30'
-                  : st.frameVariant === 'emerald'
-                  ? 'bg-emerald-500/30'
-                  : 'bg-orange-500/30'
-              }`}
-            />
-
-            <div
-              onClick={() => setActiveModalId(st.id)}
-              className="flex-1 flex flex-col justify-between focus:outline-none relative z-10"
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  setActiveModalId(st.id);
-                }
-              }}
-              aria-label={`${st.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect step details'}`}
+          <CardTilt3D key={st.id} maxTilt={6} glareOpacity={0.14} className="h-full">
+            <Spotlight
+              radius={280}
+              className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-7 sm:p-8 text-start flex flex-col justify-between hover:border-white/30 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_10px_30px_-10px_rgba(0,0,0,0.6)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_50px_-15px_rgba(0,0,0,0.9)] transition-all duration-300 group cursor-pointer relative overflow-hidden h-full"
             >
-              <div>
-                <div className="flex items-center justify-between mb-5">
-                  <IconFrame variant={st.frameVariant} size="md">
-                    <st.icon size={20} strokeWidth={1.8} />
-                  </IconFrame>
-                  <span className="text-2xl font-mono font-bold text-neutral-500 group-hover:text-white transition-colors tracking-wider">
-                    {st.step}
-                  </span>
+              {/* Ambient hover aura */}
+              <div
+                className={`absolute -top-16 -end-16 w-36 h-36 rounded-full blur-3xl pointer-events-none transition-opacity duration-500 opacity-20 group-hover:opacity-70 ${
+                  st.frameVariant === 'blue'
+                    ? 'bg-blue-500/30'
+                    : st.frameVariant === 'emerald'
+                    ? 'bg-emerald-500/30'
+                    : 'bg-orange-500/30'
+                }`}
+              />
+
+              <div
+                onClick={() => setActiveModalId(st.id)}
+                className="flex-1 flex flex-col justify-between focus:outline-none relative z-10"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setActiveModalId(st.id);
+                  }
+                }}
+                aria-label={`${st.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect step details'}`}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-5">
+                    <IconFrame variant={st.frameVariant} size="md">
+                      <st.icon size={20} strokeWidth={1.8} />
+                    </IconFrame>
+                    <span className="text-2xl font-mono font-bold text-neutral-500 group-hover:text-white transition-colors tracking-wider">
+                      {st.step}
+                    </span>
+                  </div>
+
+                  <div className="mb-2">
+                    <span className="text-[11px] font-semibold text-neutral-400 bg-white/[0.04] px-2.5 py-0.5 rounded-full border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200 transition-colors">
+                      {st.badge}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg font-semibold text-white font-heading group-hover:text-neutral-100 transition-colors">
+                    {st.title}
+                  </h3>
+
+                  <p className="mt-2 text-sm leading-relaxed text-neutral-400 font-sans font-normal line-clamp-3">
+                    {st.desc}
+                  </p>
                 </div>
 
-                <div className="mb-2">
-                  <span className="text-[11px] font-semibold text-neutral-400 bg-white/[0.04] px-2.5 py-0.5 rounded-full border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200 transition-colors">
-                    {st.badge}
+                {/* Bottom Trigger Hint */}
+                <div className="mt-6 pt-4 border-t border-[#26282D] flex items-center justify-between text-xs font-medium text-neutral-400 group-hover:text-white transition-colors">
+                  <span className="inline-flex items-center gap-1.5 text-[11px] text-neutral-400 group-hover:text-white font-sans">
+                    <span>{isAr ? 'عرض تفاصيل الخطوة ومخرجاتها' : 'Inspect details & deliverables'}</span>
+                  </span>
+                  <span className="w-6 h-6 rounded-full bg-white/[0.04] group-hover:bg-white/15 flex items-center justify-center text-neutral-400 group-hover:text-white transition-all">
+                    <ArrowRight size={13} className="rtl:-scale-x-100 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
                   </span>
                 </div>
-
-                <h3 className="text-lg font-semibold text-white font-heading group-hover:text-neutral-100 transition-colors">
-                  {st.title}
-                </h3>
-
-                <p className="mt-2 text-sm leading-relaxed text-neutral-400 font-sans font-normal line-clamp-3">
-                  {st.desc}
-                </p>
               </div>
-
-              {/* Bottom Trigger Hint */}
-              <div className="mt-6 pt-4 border-t border-[#26282D] flex items-center justify-between text-xs font-medium text-neutral-400 group-hover:text-white transition-colors">
-                <span className="inline-flex items-center gap-1.5 text-[11px] text-neutral-400 group-hover:text-white font-sans">
-                  <span>{isAr ? 'عرض تفاصيل الخطوة ومخرجاتها' : 'Inspect details & deliverables'}</span>
-                </span>
-                <span className="w-6 h-6 rounded-full bg-white/[0.04] group-hover:bg-white/15 flex items-center justify-center text-neutral-400 group-hover:text-white transition-all">
-                  <ArrowRight size={13} className="rtl:-scale-x-100 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
-                </span>
-              </div>
-            </div>
-          </Spotlight>
+            </Spotlight>
+          </CardTilt3D>
         ))}
       </div>
 

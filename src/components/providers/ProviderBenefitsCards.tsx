@@ -19,6 +19,7 @@ import {
 import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
 import IconFrame from '@/components/shared/IconFrame';
+import CardTilt3D from '@/components/shared/CardTilt3D';
 
 interface ProviderBenefitsCardsProps {
   lang: string;
@@ -258,71 +259,72 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
       {/* 3 Interactive Spotlight Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         {benefits.map((b) => (
-          <Spotlight
-            key={b.id}
-            radius={280}
-            className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-6 sm:p-7 text-start flex flex-col justify-between hover:border-orange-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_10px_30px_-10px_rgba(0,0,0,0.6)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_50px_-15px_rgba(255,92,0,0.15)] transition-all duration-300 group cursor-pointer relative overflow-hidden"
-          >
-            {/* Ambient hover aura */}
-            <div
-              className={`absolute -top-16 -end-16 w-36 h-36 rounded-full blur-3xl pointer-events-none transition-opacity duration-500 opacity-20 group-hover:opacity-70 ${
-                b.frameVariant === 'brand'
-                  ? 'bg-orange-500/30'
-                  : b.frameVariant === 'blue'
-                  ? 'bg-blue-500/30'
-                  : 'bg-emerald-500/30'
-              }`}
-            />
-
-            <div
-              onClick={() => setActiveModalId(b.id)}
-              className="flex-1 flex flex-col justify-between focus:outline-none relative z-10"
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  setActiveModalId(b.id);
-                }
-              }}
-              aria-label={`${b.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect breakdown'}`}
+          <CardTilt3D key={b.id} maxTilt={6} glareOpacity={0.14} className="h-full">
+            <Spotlight
+              radius={280}
+              className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-6 sm:p-7 text-start flex flex-col justify-between hover:border-orange-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_10px_30px_-10px_rgba(0,0,0,0.6)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_50px_-15px_rgba(255,92,0,0.15)] transition-all duration-300 group cursor-pointer relative overflow-hidden h-full"
             >
-              <div>
-                {/* Header row: Index & Badge */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-7 h-7 rounded-full bg-orange-500/10 border border-orange-500/30 text-[#FF5C00] flex items-center justify-center text-xs font-bold font-mono shrink-0 group-hover:scale-105 transition-transform">
-                      {b.index}
-                    </span>
-                    <span className="text-[11px] font-semibold text-neutral-400 bg-white/[0.04] px-2.5 py-0.5 rounded-full border border-white/10 group-hover:border-orange-500/30 group-hover:text-orange-300 transition-colors">
-                      {b.badge}
-                    </span>
+              {/* Ambient hover aura */}
+              <div
+                className={`absolute -top-16 -end-16 w-36 h-36 rounded-full blur-3xl pointer-events-none transition-opacity duration-500 opacity-20 group-hover:opacity-70 ${
+                  b.frameVariant === 'brand'
+                    ? 'bg-orange-500/30'
+                    : b.frameVariant === 'blue'
+                    ? 'bg-blue-500/30'
+                    : 'bg-emerald-500/30'
+                }`}
+              />
+
+              <div
+                onClick={() => setActiveModalId(b.id)}
+                className="flex-1 flex flex-col justify-between focus:outline-none relative z-10"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setActiveModalId(b.id);
+                  }
+                }}
+                aria-label={`${b.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect breakdown'}`}
+              >
+                <div>
+                  {/* Header row: Index & Badge */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2.5">
+                      <span className="w-7 h-7 rounded-full bg-orange-500/10 border border-orange-500/30 text-[#FF5C00] flex items-center justify-center text-xs font-bold font-mono shrink-0 group-hover:scale-105 transition-transform">
+                        {b.index}
+                      </span>
+                      <span className="text-[11px] font-semibold text-neutral-400 bg-white/[0.04] px-2.5 py-0.5 rounded-full border border-white/10 group-hover:border-orange-500/30 group-hover:text-orange-300 transition-colors">
+                        {b.badge}
+                      </span>
+                    </div>
+                    <IconFrame variant={b.frameVariant} size="xs">
+                      <b.icon size={14} />
+                    </IconFrame>
                   </div>
-                  <IconFrame variant={b.frameVariant} size="xs">
-                    <b.icon size={14} />
-                  </IconFrame>
+
+                  <h3 className="text-base sm:text-lg font-semibold text-white font-heading group-hover:text-orange-400 transition-colors">
+                    {b.title}
+                  </h3>
+
+                  <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-neutral-400 font-sans font-normal line-clamp-3">
+                    {b.text}
+                  </p>
                 </div>
 
-                <h3 className="text-base sm:text-lg font-semibold text-white font-heading group-hover:text-orange-400 transition-colors">
-                  {b.title}
-                </h3>
-
-                <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-neutral-400 font-sans font-normal line-clamp-3">
-                  {b.text}
-                </p>
+                {/* Bottom Interactive Trigger Pill */}
+                <div className="mt-5 pt-4 border-t border-[#26282D] flex items-center justify-between text-xs font-medium text-neutral-400 group-hover:text-white transition-colors">
+                  <span className="inline-flex items-center gap-1.5 text-[11px] text-orange-400/90 font-sans">
+                    <span>{isAr ? 'عرض التفاصيل والضمانات' : 'Inspect breakdown & SLAs'}</span>
+                  </span>
+                  <span className="w-6 h-6 rounded-full bg-white/[0.04] group-hover:bg-orange-500/20 flex items-center justify-center text-neutral-400 group-hover:text-[#FF5C00] transition-all">
+                    <ArrowRight size={13} className="rtl:-scale-x-100 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
+                  </span>
+                </div>
               </div>
-
-              {/* Bottom Interactive Trigger Pill */}
-              <div className="mt-5 pt-4 border-t border-[#26282D] flex items-center justify-between text-xs font-medium text-neutral-400 group-hover:text-white transition-colors">
-                <span className="inline-flex items-center gap-1.5 text-[11px] text-orange-400/90 font-sans">
-                  <span>{isAr ? 'عرض التفاصيل والضمانات' : 'Inspect breakdown & SLAs'}</span>
-                </span>
-                <span className="w-6 h-6 rounded-full bg-white/[0.04] group-hover:bg-orange-500/20 flex items-center justify-center text-neutral-400 group-hover:text-[#FF5C00] transition-all">
-                  <ArrowRight size={13} className="rtl:-scale-x-100 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
-                </span>
-              </div>
-            </div>
-          </Spotlight>
+            </Spotlight>
+          </CardTilt3D>
         ))}
       </div>
 

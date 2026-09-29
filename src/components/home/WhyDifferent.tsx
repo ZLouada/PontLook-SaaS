@@ -19,6 +19,7 @@ import { useDictionary } from '@/components/providers/DictionaryProvider';
 import Signal from '@/components/shared/Signal';
 import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
+import CardTilt3D from '@/components/shared/CardTilt3D';
 import IconFrame, { type IconFrameVariant } from '@/components/shared/IconFrame';
 import { staggerContainer, staggerItem, viewportOnce } from '@/lib/motion';
 
@@ -482,51 +483,48 @@ export default function WhyDifferent() {
                 className="relative w-[78vw] sm:w-[290px] lg:w-auto shrink-0 lg:shrink snap-center h-[340px] sm:h-[370px] lg:h-[390px]"
                 onClick={() => setActiveModalId(it.id)}
               >
-                <Spotlight radius={320} className="w-full h-full rounded-2xl">
-                  <m.div
-                    whileHover={{
-                      y: -6,
-                      scale: 1.015,
-                      transition: { type: 'spring', stiffness: 350, damping: 20 },
-                    }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`surface group relative w-full h-full rounded-2xl p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_10px_30px_-10px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-300 ${cardGlow}`}
-                  >
-                    {/* Ambient subtle back-glow on hover */}
-                    <div className={`pointer-events-none absolute -top-10 -end-10 w-28 h-28 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${cardAura}`} />
-                  {/* Card Front Top */}
-                  <div className="space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-medium font-sans ${theme.badgeBg}`}>
-                        {it.badge}
-                      </span>
-                      <span className="text-[11px] font-mono text-neutral-400">
-                        {it.index}
-                      </span>
+                <CardTilt3D maxTilt={7} glareOpacity={0.14} className="w-full h-full">
+                  <Spotlight radius={320} className="w-full h-full rounded-2xl">
+                    <m.div
+                      whileTap={{ scale: 0.98 }}
+                      className={`surface group relative w-full h-full rounded-2xl p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_10px_30px_-10px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-300 ${cardGlow}`}
+                    >
+                      {/* Ambient subtle back-glow on hover */}
+                      <div className={`pointer-events-none absolute -top-10 -end-10 w-28 h-28 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${cardAura}`} />
+                    {/* Card Front Top */}
+                    <div className="space-y-2.5">
+                      <div className="flex items-center justify-between">
+                        <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-medium font-sans ${theme.badgeBg}`}>
+                          {it.badge}
+                        </span>
+                        <span className="text-[11px] font-mono text-neutral-400">
+                          {it.index}
+                        </span>
+                      </div>
+
+                      <h3 className="text-base sm:text-lg font-semibold text-white tracking-tight leading-snug font-heading group-hover:text-white">
+                        {it.title}
+                      </h3>
+
+                      <p className="text-xs text-neutral-400 font-sans leading-relaxed line-clamp-2">
+                        {it.text}
+                      </p>
                     </div>
 
-                    <h3 className="text-base sm:text-lg font-semibold text-white tracking-tight leading-snug font-heading group-hover:text-white">
-                      {it.title}
-                    </h3>
+                    {/* Card Front Bottom */}
+                    <div className="pt-2 border-t border-[#26282D] flex items-center justify-between">
+                      <IconFrame variant={it.themeVariant} size="sm">
+                        <Icon size={16} strokeWidth={1.75} />
+                      </IconFrame>
 
-                    <p className="text-xs text-neutral-400 font-sans leading-relaxed line-clamp-2">
-                      {it.text}
-                    </p>
-                  </div>
-
-                  {/* Card Front Bottom */}
-                  <div className="pt-2 border-t border-[#26282D] flex items-center justify-between">
-                    <IconFrame variant={it.themeVariant} size="sm">
-                      <Icon size={16} strokeWidth={1.75} />
-                    </IconFrame>
-
-                    <div className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-300 group-hover:text-white transition-colors duration-200">
-                      <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
-                      <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-neutral-400 group-hover:text-white" />
+                      <div className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-300 group-hover:text-white transition-colors duration-200">
+                        <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
+                        <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-neutral-400 group-hover:text-white" />
+                      </div>
                     </div>
-                  </div>
-                </m.div>
-                </Spotlight>
+                  </m.div>
+                  </Spotlight>
+                </CardTilt3D>
               </m.div>
             );
           })}
