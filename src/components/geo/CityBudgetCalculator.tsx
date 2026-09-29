@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@/components/icons';
 import { CountryData, CityData } from '@/data/geoData';
 
 interface CityBudgetCalculatorProps {

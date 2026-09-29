@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Reveal from '@/components/shared/Reveal';
 import Link from 'next/link';
-import { PackageCheck, Clock, RefreshCw, CreditCard, ShieldCheck, Mail } from 'lucide-react';
+import { PackageCheck, Clock, RefreshCw, CreditCard, ShieldCheck, Mail } from '@/components/icons';
 
 import { Locale, i18n } from '@/i18n/config';
 

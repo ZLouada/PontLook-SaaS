@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Reveal from '@/components/shared/Reveal';
 import ContactForm from '@/components/contact/ContactForm';
 import Signal from '@/components/shared/Signal';
-import { Mail, MapPin, Clock } from 'lucide-react';
+import { Mail, MapPin, Clock } from '@/components/icons';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 

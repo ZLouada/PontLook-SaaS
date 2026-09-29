@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import {
   ArrowRight,
   ChevronRight,
-} from 'lucide-react';
+} from '@/components/icons';
 import {
   CountryCode,
   ALL_COUNTRY_CODES,

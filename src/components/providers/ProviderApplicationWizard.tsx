@@ -8,7 +8,7 @@ import {
   Phone,
   Mail,
   Check,
-} from 'lucide-react';
+} from '@/components/icons';
 import Signal, { Seal } from '@/components/shared/Signal';
 import CountryFlag from '@/components/shared/CountryFlag';
 
@@ -911,7 +911,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
       <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 text-center">
         <div className="p-3 bg-[#0F1013] border border-[#26282D] rounded-xl shadow-xs">
           <div className="text-xs font-mono text-neutral-400 font-medium">
-            {isAr ? '0$ رسوم اشتراك' : 'Zero Retainers'}
+            {isAr ? '0$ رسوم اشتراك' : 'No Subscription Fee'}
           </div>
         </div>
         <div className="p-3 bg-[#0F1013] border border-[#26282D] rounded-xl shadow-xs">

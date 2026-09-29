@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@/components/icons';
 import { m } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { useParams } from 'next/navigation';

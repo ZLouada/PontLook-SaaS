@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowRight, ShieldCheck, Globe } from 'lucide-react';
+import { Menu, X, ArrowRight, ShieldCheck, Globe } from '@/components/icons';
 import { m, AnimatePresence } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Locale } from '@/i18n';

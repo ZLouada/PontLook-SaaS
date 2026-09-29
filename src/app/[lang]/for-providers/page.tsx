@@ -4,7 +4,7 @@ import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
 import Reveal from '@/components/shared/Reveal';
-import { Target, CircleDollarSign, TrendingUp, ArrowRight } from 'lucide-react';
+import { Target, CircleDollarSign, TrendingUp, ArrowRight } from '@/components/icons';
 import { constructAlternates, providerIcons } from '@/lib/seo/metadata';
 import { buildProviderNetworkSchema } from '@/lib/seo/schema';
 
@@ -22,7 +22,7 @@ export async function generateMetadata({
     : 'Corporate Training Leads & Matchmaking | PontLook';
   const description = isAr
     ? 'احصل على فرص تعاقد وتدريب معتمدة مع كبرى الشركات في السعودية والإمارات. بدون اشتراكات شهرية أو رسوم احتجاز، ادفع فقط مقابل كل عميل مهتم ومؤهل.'
-    : 'Acquire vetted enterprise corporate training leads in Saudi Arabia and the UAE. Zero retainers or monthly fees, pay strictly per qualified decision maker.';
+    : 'Acquire vetted enterprise corporate training leads in Saudi Arabia and the UAE. No retainers or monthly fees — pay strictly per qualified decision maker.';
 
   return {
     title: {
@@ -63,7 +63,7 @@ export async function generateStaticParams() {
 const providerBenefitsEn = [
   {
     icon: CircleDollarSign,
-    title: 'Zero Retainer Risk',
+    title: 'Pay Per Lead, Not Per Month',
     text: 'No monthly management fees or fixed retainers. You pay strictly per verified decision maker delivered ($50 to $200 per lead).',
   },
   {
@@ -154,7 +154,7 @@ export default async function ForProvidersPage({
               <p className="mt-4 sm:mt-5 text-base sm:text-lg text-neutral-300 leading-relaxed max-w-2xl font-normal font-sans text-start">
                 {isAr
                   ? 'تواصل مباشرة مع صناع القرار في كبرى المنشآت والشركات التي تبحث بنشاط عن حلول تدريبية. بدون رسوم شهرية ثابتة، الدفع فقط لكل فرصة مؤكدة ومؤهلة.'
-                  : 'Connect directly with verified corporate decision makers actively seeking training solutions. Zero retainers, 100% pay per lead.'}
+                  : 'Connect directly with verified corporate decision makers actively seeking training solutions. No retainers, 100% pay per lead.'}
               </p>
 
               {/* Hero Action Buttons */}

@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import {
   ArrowRight,
   ChevronRight,
-} from 'lucide-react';
+} from '@/components/icons';
 import {
   CountryCode,
   ALL_COUNTRY_CODES,
@@ -382,7 +382,7 @@ export default async function LocalizedCityPage({ params }: CityPageProps) {
                 <p className="text-sm text-neutral-400 leading-relaxed mb-6 font-sans">
                   {isAr
                     ? `قدم متطلباتك التدريبية في 60 ثانية، واحصل على 3 عروض مخصصة من أكاديميات معتمدة بدون أي رسوم وساطة أو التزامات.`
-                    : `Specify your training requirements in 60 seconds. Receive 3 direct, curated bids from accredited academies with zero broker markup.`}
+                    : `Specify your training requirements in 60 seconds. Receive 3 direct, curated bids from accredited academies with no broker markup.`}
                 </p>
               </div>
 
@@ -418,7 +418,7 @@ export default async function LocalizedCityPage({ params }: CityPageProps) {
                 <p className="text-sm text-neutral-400 leading-relaxed mb-6 font-sans">
                   {isAr
                     ? `استقبل طلبات تدريب مؤهلة من كبرى الشركات وصناع القرار في ${cityName}. بدون اشتراكات شهرية، الدفع فقط لكل عميل مهتم ومؤهل.`
-                    : `Receive verified, pre-qualified corporate training inquiries from decision makers across ${cityName}. Zero retainers, 100% pay-per-lead.`}
+                    : `Receive verified, pre-qualified corporate training inquiries from decision makers across ${cityName}. No retainers, 100% pay-per-lead.`}
                 </p>
               </div>
 

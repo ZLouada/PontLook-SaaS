@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowLeft, Building2, BadgeCheck, BadgeDollarSign, Clock } from 'lucide-react';
+import { ArrowLeft, Building2, BadgeCheck, BadgeDollarSign, Clock } from '@/components/icons';
 import MultiStepFunnel from '@/components/funnel/MultiStepFunnel';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
@@ -143,7 +143,7 @@ export default async function FindTrainingRequestPage({
           </div>
           <div className="p-3 bg-[#0F1013] border border-[#26282D] rounded-xl shadow-xs">
             <div className="text-xs text-neutral-400 font-semibold">
-              {isAr ? 'بدون أي التزام بالشراء' : 'Zero Purchase Obligation'}
+              {isAr ? 'بدون أي التزام بالشراء' : 'No obligation to buy'}
             </div>
           </div>
           <div className="p-3 bg-[#0F1013] border border-[#26282D] rounded-xl shadow-xs">

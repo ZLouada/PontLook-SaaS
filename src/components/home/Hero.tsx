@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@/components/icons';
 import { m } from 'framer-motion';
 import TextReveal from '@/components/shared/TextReveal';
 import { fadeUp, dur, ease } from '@/lib/motion';

@@ -11,7 +11,7 @@ import {
   ArrowRight,
   ExternalLink,
   X,
-} from 'lucide-react';
+} from '@/components/icons';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { m, AnimatePresence } from 'framer-motion';

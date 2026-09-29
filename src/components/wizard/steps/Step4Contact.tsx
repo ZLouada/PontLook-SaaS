@@ -12,7 +12,7 @@ import {
   ShieldCheck,
   Lock,
   ChevronDown,
-} from 'lucide-react';
+} from '@/components/icons';
 import {
   GCC_COUNTRIES,
   step4ContactSchema,
@@ -185,7 +185,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
               Enterprise Confidentiality Guarantee
             </h4>
             <p className="mt-1 text-xs leading-relaxed text-neutral-400">
-              Your request is private and shared with a <strong>maximum of 3 matched providers</strong> who fit your exact domain and procurement specifications. Zero vendor spam or unsolicited cold calls.
+              Your request is private and shared with a <strong>maximum of 3 matched providers</strong> who fit your exact domain and procurement specifications. No vendor spam, no unsolicited cold calls.
             </p>
           </div>
         </div>

@@ -153,7 +153,7 @@ export async function POST(req: NextRequest) {
           <div class="roadmap-desc">Receive 2 to 3 itemized proposals with custom syllabi and transparent pricing.</div>
         </div>
         <div class="roadmap-item">
-          <div class="roadmap-title">&#128274; Zero Obligation</div>
+          <div class="roadmap-title">&#128274; No Obligation</div>
           <div class="roadmap-desc">Interview lead facilitators before making any procurement commitment.</div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Check, Send } from 'lucide-react';
+import { Check, Send } from '@/components/icons';
 
 type PartnershipFormProps = {
   dict?: any;

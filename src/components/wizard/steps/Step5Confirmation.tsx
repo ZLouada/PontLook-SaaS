@@ -13,7 +13,7 @@ import {
   FileText,
   Building2,
   ArrowRight,
-} from 'lucide-react';
+} from '@/components/icons';
 import Signal, { Seal } from '@/components/shared/Signal';
 import {
   TRAINING_DOMAINS,
@@ -191,7 +191,7 @@ Thank you for choosing PontLook.com : The GCC Corporate Training Matchmaking Net
             </div>
             <div className="mt-3">
               <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-300">
-                Milestone 3 · Zero Obligation
+                Milestone 3 · No Obligation
               </span>
               <h3 className="font-heading mt-0.5 text-sm font-semibold text-white">
                 Instructor Interview & Terms

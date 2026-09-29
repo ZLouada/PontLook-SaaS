@@ -14,7 +14,7 @@ import {
   Workflow,
   ArrowRight,
   ArrowLeft,
-} from 'lucide-react';
+} from '@/components/icons';
 import { m, AnimatePresence } from 'framer-motion';
 import Signal from '@/components/shared/Signal';
 
@@ -227,10 +227,10 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
     {
       eyebrow: isAr ? 'للمؤسسات والشركات' : 'FOR ENTERPRISE BUYERS',
       price: isAr ? 'مجاني 100%' : '100% Free',
-      priceSub: isAr ? 'بدون أي رسوم نهائياً' : 'Zero Fees, Always',
+      priceSub: isAr ? 'بدون أي رسوم نهائياً' : 'Free, always',
       promise: isAr
         ? 'وصول كامل إلى محرك التشخيص، وتحديد المواصفات، وقائمة الشركاء المؤهلين بدون أي رسوم اشتراك شهرية أو عمولات خفية.'
-        : 'Corporate teams access the diagnostic engine, requirements scoping, and curated partner shortlist with zero retainers and zero platform fees.',
+        : 'Corporate teams access the diagnostic engine, requirements scoping, and curated partner shortlist with no retainers and no platform fees.',
       points: [
         isAr ? 'تشخيص دقيق للاحتياجات التدريبية قبل التوفيق' : 'No subscription fees or hidden service markups',
         isAr ? 'تقييم حر وغير ملزم لـ 2 إلى 3 مزودين معتمدين' : 'Evaluate 2 to 3 vetted specialists with zero pressure',
@@ -247,7 +247,7 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
         ? 'تخلص من تكاليف التسويق البارد. ادفع فقط عند الربط المباشر بصناع قرار معتمدين لديهم ميزانيات معتمدة واحتياجات مؤكدة.'
         : 'Eliminate business development overhead. Providers only pay when connected with verified enterprise decision makers with confirmed budgets and active training mandates.',
       points: [
-        isAr ? 'بدون أي اشتراكات أو تكاليف تأسيسية دورية' : 'Zero upfront retainers or arbitrary monthly agency fees',
+        isAr ? 'بدون أي اشتراكات أو تكاليف تأسيسية دورية' : 'No upfront retainers, no arbitrary monthly agency fees',
         isAr ? 'بيانات كاملة وسياق تفصيلي لاحتياجات العميل' : 'Comprehensive intake briefs with verified budget parameters',
         isAr ? 'ضمان استبدال فوري بنسبة 100% لأي فرصة غير مطابقة' : '100% replacement guarantee if scope criteria are not met',
       ],
@@ -527,7 +527,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
           text: isAr ? 'مواءمة مباشرة مع نخبة الميسرين المعتمدين' : 'Direct alignment with master trainers',
         },
         {
-          label: isAr ? 'جاهزية المتدربين' : 'Zero Administrative Drag',
+          label: isAr ? 'جاهزية المتدربين' : 'Cohort Readiness',
           text: isAr ? 'انطلاق سلس للبرنامج وتأهيل كامل للمتدربين' : 'Seamless kickoff and cohort onboarding',
         },
       ],

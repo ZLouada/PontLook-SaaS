@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Check, Send, Loader2 } from 'lucide-react';
+import { Check, Send, Loader2 } from '@/components/icons';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import Signal, { Seal } from '@/components/shared/Signal';
 

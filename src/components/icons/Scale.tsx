@@ -1,0 +1,40 @@
+import React, { forwardRef } from 'react';
+
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
+  size?: number | string;
+  strokeWidth?: number | string;
+}
+
+export const Scale = forwardRef<SVGSVGElement, IconProps>((
+  {
+    size = 24,
+    strokeWidth,
+    className = '',
+    style,
+    color = 'currentColor',
+    ...props
+  },
+  ref
+) => {
+  return (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 68 68"
+      width={size}
+      height={size}
+      fill="currentColor"
+      stroke="none"
+      {...(strokeWidth ? { strokeWidth } : {})}
+      className={className}
+      style={style}
+      aria-hidden="true"
+      {...props}
+    >
+      <path d="M66 45.83a.27.27 0 0 0 0-.12.09.09 0 0 0 0-.05l-10-28v-.08a.47.47 0 0 0 0-.09.92.92 0 0 0-.16-.2 1.18 1.18 0 0 0-.23-.16 1.14 1.14 0 0 0-.26-.09L55 17H37v-3.81a6 6 0 1 0-6 0V17H12.81a1.14 1.14 0 0 0-.26.09 1.18 1.18 0 0 0-.23.16.92.92 0 0 0-.16.2.47.47 0 0 0 0 .09v.08l-10 28a.09.09 0 0 0 0 .05.27.27 0 0 0 0 .12A.47.47 0 0 0 2 46a11 11 0 0 0 22 0 .47.47 0 0 0 0-.17.27.27 0 0 0 0-.12.09.09 0 0 0 0-.05L14.42 19H31v34.81A6 6 0 0 0 28.08 58H21a3 3 0 0 0-3 3v5h32v-5a3 3 0 0 0-3-3h-7.08A6 6 0 0 0 37 53.81V19h16.58l-9.5 26.61a.09.09 0 0 0 0 .05.27.27 0 0 0 0 .12.47.47 0 0 0-.08.22 11 11 0 0 0 22 0 .47.47 0 0 0 0-.17zM21.58 45H4.42L13 21zm24.84 0L55 21l8.58 24z" fill="currentColor" className="svgShape color000000-0"/>
+    </svg>
+  );
+});
+
+Scale.displayName = 'Scale';
+export default Scale;

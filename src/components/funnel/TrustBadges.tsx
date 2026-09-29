@@ -5,7 +5,7 @@ import {
   ShieldCheck,
   Lock,
   BadgeCheck,
-} from 'lucide-react';
+} from '@/components/icons';
 
 const ACCREDITATIONS = [
   { name: 'SHRM', desc: 'Recertification Aligned' },

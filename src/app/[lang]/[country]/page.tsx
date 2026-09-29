@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import {
   ArrowRight,
   ChevronRight,
-} from 'lucide-react';
+} from '@/components/icons';
 import {
   CountryCode,
   ALL_COUNTRY_CODES,
@@ -395,7 +395,7 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
                 <p className="text-sm text-neutral-400 leading-relaxed mb-6 font-sans">
                   {isAr
                     ? `استقبل عملاء وطلبات تدريب حقيقية ومؤهلة من كبرى الشركات في ${countryName}. نموذج دفع مقابل النتائج فقط بدون رسوم شهرية.`
-                    : `Receive pre-qualified corporate training demand across ${countryName}. Zero retainers, 100% pay-per-lead performance model.`}
+                    : `Receive pre-qualified corporate training demand across ${countryName}. No retainers — a 100% pay-per-lead performance model.`}
                 </p>
               </div>
 

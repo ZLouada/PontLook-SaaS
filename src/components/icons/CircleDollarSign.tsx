@@ -1,0 +1,40 @@
+import React, { forwardRef } from 'react';
+
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
+  size?: number | string;
+  strokeWidth?: number | string;
+}
+
+export const CircleDollarSign = forwardRef<SVGSVGElement, IconProps>((
+  {
+    size = 24,
+    strokeWidth,
+    className = '',
+    style,
+    color = 'currentColor',
+    ...props
+  },
+  ref
+) => {
+  return (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 32 32"
+      width={size}
+      height={size}
+      fill="currentColor"
+      stroke="none"
+      {...(strokeWidth ? { strokeWidth } : {})}
+      className={className}
+      style={style}
+      aria-hidden="true"
+      {...props}
+    >
+      <g color="#000" fontFamily="sans-serif" fontWeight="400"><path fill="currentColor" d="M13.738 9.91c-1.89 0-3.441 1.633-3.441 3.695 0 2.057 1.542 3.682 3.424 3.692h.035c1.882-.01 3.426-1.635 3.426-3.692 0-2.062-1.554-3.695-3.444-3.695zm-.218.799h.607v.514c.401.055.71.21.928.466.22.255.332.603.332 1.045h-.752c0-.146-.02-.278-.057-.4a.921.921 0 0 0-.154-.316.716.716 0 0 0-.258-.21.803.803 0 0 0-.353-.076c-.138 0-.258.02-.358.057a.647.647 0 0 0-.404.395.97.97 0 0 0 0 .595c.034.083.09.16.168.229.077.069.177.134.3.197.127.061.282.121.465.18.236.068.443.145.623.23.181.083.334.178.457.29.124.11.217.24.28.386.063.146.094.314.094.506a1.135 1.135 0 0 1-.377.89c-.12.11-.268.197-.44.262s-.365.11-.58.131v.42h-.6v-.42c-.18-.02-.354-.06-.523-.121a1.4 1.4 0 0 1-.451-.266 1.257 1.257 0 0 1-.31-.433 1.566 1.566 0 0 1-.116-.633h.756c0 .185.027.337.082.459.054.122.126.22.215.291a.777.777 0 0 0 .297.15 1.418 1.418 0 0 0 .73-.01.888.888 0 0 0 .303-.154.667.667 0 0 0 .19-.24.775.775 0 0 0 .011-.592.67.67 0 0 0-.168-.232 1.175 1.175 0 0 0-.297-.2 3.164 3.164 0 0 0-.437-.175 4.232 4.232 0 0 1-.62-.219 1.974 1.974 0 0 1-.464-.297 1.21 1.21 0 0 1-.293-.392 1.244 1.244 0 0 1-.1-.512c0-.179.029-.342.086-.49.06-.148.145-.276.254-.385.112-.109.247-.198.404-.268.158-.069.335-.116.53-.14z" overflow="visible" transform="translate(-.512 -.488)"></path><path d="M27.029 8.91v12.787H3.727v1.397h24.54V8.91z" overflow="visible" transform="translate(-.512 -.488)" fill="currentColor"></path><path d="M29.268 11.305v12.789H5.971v1.394h24.54V11.305z" overflow="visible" transform="translate(-.512 -.488)" fill="currentColor"></path><path fill="currentColor" d="M1.488 6.514v14.183H26.03V6.514zM6.021 8.91h15.475l.076.406c.191.997.917 1.754 1.823 1.948l.394.086v4.513l-.394.086c-.902.196-1.623.949-1.815 1.942l-.078.406h-.414c-3.155-.006-4.955-.002-7.332 0l-.018.002-.017-.002H6.016l-.08-.406c-.193-.993-.913-1.747-1.815-1.942l-.394-.086V11.35l.394-.086c.905-.194 1.631-.951 1.822-1.948z" overflow="visible" transform="translate(-.512 -.488)"></path></g>
+    </svg>
+  );
+});
+
+CircleDollarSign.displayName = 'CircleDollarSign';
+export default CircleDollarSign;

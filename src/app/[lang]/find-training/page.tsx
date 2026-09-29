@@ -10,7 +10,7 @@ import {
   SlidersHorizontal,
   Scale,
   ChevronDown,
-} from 'lucide-react';
+} from '@/components/icons';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 
@@ -194,7 +194,7 @@ export default async function FindTrainingPage({
               </div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">
                 <span className="font-medium text-neutral-300">
-                  {isAr ? 'بدون رسائل تسويقية عشوائية' : 'Zero Vendor Spam'}
+                  {isAr ? 'بدون رسائل تسويقية عشوائية' : 'No cold outreach'}
                 </span>
               </div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import type { FieldError, UseFormRegisterReturn } from 'react-hook-form';
-import { ChevronRight, ArrowLeft, ArrowRight, Loader2, Lock } from 'lucide-react';
+import { ChevronRight, ArrowLeft, ArrowRight, Loader2, Lock } from '@/components/icons';
 import { GCC_COUNTRIES } from './schemas';
 import CountryFlag from '@/components/shared/CountryFlag';
 

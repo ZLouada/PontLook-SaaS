@@ -123,7 +123,7 @@ export const en = {
         checklist: [
           "Verified Budget: Pre approved corporate funding (SAR / AED)",
           "Direct Executive Access: Meet CHROs & CLOs directly",
-          "Zero Cold Prospecting: Qualified demand delivered to you"
+          "No cold prospecting: qualified demand comes to you"
         ],
         cta: "Join the Provider Network",
         href: "/for-providers"
@@ -140,7 +140,7 @@ export const en = {
         checklist: [
           "Vetted Track Record: Proven regional corporate experience",
           "Tailored Curriculum: Aligned with your specific skill gaps",
-          "Zero Procurement Risk: Transparent, competitive proposals"
+          "Low procurement risk: transparent, competitive proposals"
         ],
         cta: "Get Matched for Training",
         href: "/find-training"

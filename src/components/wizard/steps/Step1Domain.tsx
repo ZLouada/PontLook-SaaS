@@ -16,7 +16,7 @@ import {
   Sliders,
   Layers,
   type LucideIcon,
-} from 'lucide-react';
+} from '@/components/icons';
 import {
   TRAINING_CATEGORIES,
   type TrainingCategory,

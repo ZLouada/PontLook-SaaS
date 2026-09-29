@@ -2,13 +2,13 @@ import { z } from 'zod';
 export * from './trainingDomains';
 
 export const GCC_COUNTRIES = [
-  { code: 'SA', name: 'Saudi Arabia', dialCode: '+966', flag: '🇸🇦' },
-  { code: 'AE', name: 'United Arab Emirates', dialCode: '+971', flag: '🇦🇪' },
-  { code: 'QA', name: 'Qatar', dialCode: '+974', flag: '🇶🇦' },
-  { code: 'KW', name: 'Kuwait', dialCode: '+965', flag: '🇰🇼' },
-  { code: 'OM', name: 'Oman', dialCode: '+968', flag: '🇴🇲' },
-  { code: 'BH', name: 'Bahrain', dialCode: '+973', flag: '🇧🇭' },
-  { code: 'OTHER', name: 'Other Region', dialCode: '+', flag: '🌐' },
+  { code: 'SA', name: 'Saudi Arabia', dialCode: '+966' },
+  { code: 'AE', name: 'United Arab Emirates', dialCode: '+971' },
+  { code: 'QA', name: 'Qatar', dialCode: '+974' },
+  { code: 'KW', name: 'Kuwait', dialCode: '+965' },
+  { code: 'OM', name: 'Oman', dialCode: '+968' },
+  { code: 'BH', name: 'Bahrain', dialCode: '+973' },
+  { code: 'OTHER', name: 'Other Region', dialCode: '+' },
 ] as const;
 
 export const GCC_CITIES = [

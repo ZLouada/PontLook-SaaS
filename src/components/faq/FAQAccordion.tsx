@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { HelpCircle, ChevronDown } from 'lucide-react';
+import { HelpCircle, ChevronDown } from '@/components/icons';
 import Reveal from '@/components/shared/Reveal';
 
 export interface FAQItem {

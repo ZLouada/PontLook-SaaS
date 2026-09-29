@@ -10,7 +10,7 @@ import {
   HelpCircle,
   Check,
   Clock,
-} from 'lucide-react';
+} from '@/components/icons';
 import {
   COHORT_SIZES,
   TIMELINES,
@@ -280,7 +280,7 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
         onBack={onBack}
         nextLabel="Continue to Enterprise Verification"
         isSubmitting={isSubmitting}
-        trustMessage="Zero obligation · Free for corporate buyers"
+        trustMessage="No obligation · Free for corporate buyers"
       />
     </form>
   );

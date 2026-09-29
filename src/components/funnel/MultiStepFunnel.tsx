@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { AnimatePresence, m } from 'framer-motion';
-import { Clock, ShieldCheck } from 'lucide-react';
+import { Clock, ShieldCheck } from '@/components/icons';
 import {
   STORAGE_KEY,
   type WizardData,

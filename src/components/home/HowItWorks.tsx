@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@/components/icons';
 import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import Signal from '@/components/shared/Signal';
 import TextReveal from '@/components/shared/TextReveal';

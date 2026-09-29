@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown } from '@/components/icons';
 import Reveal from '@/components/shared/Reveal';
 import Signal from '@/components/shared/Signal';
 

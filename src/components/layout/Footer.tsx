@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Linkedin, Mail, MapPin, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Linkedin, Mail, MapPin, ShieldCheck, ArrowRight } from '@/components/icons';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { m } from 'framer-motion';
 import { staggerContainer, staggerItem, viewportOnce } from '@/lib/motion';
@@ -40,7 +40,7 @@ export default function Footer() {
 
         {/* Centered Floating Consultation Card Over Horizon */}
         <div className="container-site relative z-20 px-4 sm:px-8 lg:px-12 mx-auto">
-          <div className="relative z-10 -mt-10 max-w-2xl mx-auto rounded-2xl sm:rounded-3xl border border-[#26282D] hover:border-white/20 bg-[#0F1013]/95 backdrop-blur-2xl p-5 sm:p-8 md:p-10 shadow-[0_24px_64px_rgba(0,0,0,0.9)] text-center flex flex-col items-center gap-5 sm:gap-6 transform-gpu transition-all duration-300">
+          <div className="relative z-10 -mt-10 max-w-2xl mx-auto rounded-2xl sm:rounded-3xl border border-[#26282D] hover:border-white/20 bg-[#0F1013]/95 backdrop-blur-2xl p-5 sm:p-8 md:p-10 shadow-e4 text-center flex flex-col items-center gap-5 sm:gap-6 transform-gpu transition-all duration-300">
             {/* Subtle top inner sheen */}
             <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
 

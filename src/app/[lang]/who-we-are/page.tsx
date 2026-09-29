@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Reveal from '@/components/shared/Reveal';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@/components/icons';
 
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';

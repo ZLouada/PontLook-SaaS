@@ -12,7 +12,7 @@ import {
   Quote,
   SlidersHorizontal,
   Scale,
-} from 'lucide-react';
+} from '@/components/icons';
 import { Locale } from '@/i18n';
 import { SEO_LANDING_PAGES, ALL_SOLUTION_SLUGS } from '@/data/seoLandingPages';
 import FAQAccordion from '@/components/faq/FAQAccordion';
@@ -253,7 +253,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
                   <span>{isAr ? 'مجاني 100% للشركات والمؤسسات' : '100% Free for Corporate Buyers'}</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <span>{isAr ? 'بدون رسائل تسويقية عشوائية' : 'Zero Cold Vendor Spam'}</span>
+                  <span>{isAr ? 'بدون رسائل تسويقية عشوائية' : 'No cold vendor outreach'}</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <BadgeCheck size={15} strokeWidth={1.75} className="text-neutral-400 shrink-0" />
@@ -392,7 +392,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
               subtitle={
                 isAr
                   ? 'كل ما يهمك معرفته حول آلية الفرز، سرية البيانات، وشروط الاعتماد.'
-                  : 'Everything you need to know about our vetting standards, zero fee buyer model, and onboarding speeds.'
+                  : 'Everything you need to know about our vetting standards, free-for-buyers model, and onboarding speeds.'
               }
             />
 

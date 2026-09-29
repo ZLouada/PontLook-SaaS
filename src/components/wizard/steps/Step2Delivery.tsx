@@ -12,7 +12,7 @@ import {
   BookOpen,
   Check,
   Star,
-} from 'lucide-react';
+} from '@/components/icons';
 import {
   DELIVERY_MODES,
   DELIVERY_LANGUAGES,
@@ -357,7 +357,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
         onBack={onBack}
         nextLabel="Continue to Cohort & Budget"
         isSubmitting={isSubmitting}
-        trustMessage="Zero spam guarantee · 3 curated matches maximum"
+        trustMessage="No spam, ever · 3 curated matches maximum"
       />
     </form>
   );

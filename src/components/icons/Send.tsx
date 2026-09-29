@@ -1,0 +1,40 @@
+import React, { forwardRef } from 'react';
+
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
+  size?: number | string;
+  strokeWidth?: number | string;
+}
+
+export const Send = forwardRef<SVGSVGElement, IconProps>((
+  {
+    size = 24,
+    strokeWidth,
+    className = '',
+    style,
+    color = 'currentColor',
+    ...props
+  },
+  ref
+) => {
+  return (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 96 96"
+      width={size}
+      height={size}
+      fill="currentColor"
+      stroke="none"
+      {...(strokeWidth ? { strokeWidth } : {})}
+      className={className}
+      style={style}
+      aria-hidden="true"
+      {...props}
+    >
+      <path fill="currentColor" fillRule="evenodd" d="M90.853 6.9457C91.6138 7.47412 92.0201 8.37989 91.9087 9.29947L84.3668 71.5938C84.2808 72.3037 83.895 72.9428 83.3068 73.3496C82.7187 73.7563 81.9845 73.8917 81.2899 73.7215L61.0844 68.7706L47.3677 86.9328C46.8371 87.6353 45.9761 88.007 45.101 87.9113C44.2259 87.8157 43.4655 87.2667 43.0993 86.4662L31.9598 62.1162L3.71098 55.4455C2.69296 55.2051 1.93223 54.3563 1.8043 53.3182C1.67637 52.28 2.20829 51.272 3.13749 50.7916L88.2788 6.77818C89.1017 6.35281 90.0923 6.41727 90.853 6.9457ZM36.7553 60.5797L43.9185 76.2379L45.4845 62.6957C45.5365 62.2461 45.7095 61.819 45.9852 61.4601L70.0725 30.0959L36.7553 60.5797ZM73.8423 19.8696L11.4335 52.1316L33.0123 57.2273L73.8423 19.8696ZM85.8474 17.7643L52.2846 61.4666L79.7418 68.1943L85.8474 17.7643ZM50.1258 66.0855L55.7971 67.4751L48.9107 76.5932L50.1258 66.0855Z" clipRule="evenodd" className="svgShape color12182b-0"/>
+    </svg>
+  );
+});
+
+Send.displayName = 'Send';
+export default Send;
