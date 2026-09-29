@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Reveal from '@/components/shared/Reveal';
+import TextReveal from '@/components/shared/TextReveal';
 import ContactForm from '@/components/contact/ContactForm';
 import Signal from '@/components/shared/Signal';
 import { Mail, MapPin, Clock } from '@/components/icons';
@@ -85,9 +86,12 @@ export default async function ContactPage({
             <Signal size={14} />
             {contactData.chip}
           </span>
-          <h1 className="mt-4 sm:mt-5 text-3xl sm:text-4xl font-semibold leading-tight text-white font-heading">
-            {contactData.title}
-          </h1>
+          <TextReveal
+            as="h1"
+            onScroll={false}
+            text={contactData.title}
+            className="mt-4 sm:mt-5 text-3xl sm:text-4xl font-semibold leading-tight text-white font-heading"
+          />
           <p className="mt-4 text-lg leading-relaxed text-neutral-400">
             {contactData.subtitle}
           </p>

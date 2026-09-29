@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Reveal from '@/components/shared/Reveal';
+import TextReveal from '@/components/shared/TextReveal';
 import FAQAccordion from '@/components/faq/FAQAccordion';
 import Link from 'next/link';
 import { Locale, i18n } from '@/i18n/config';
@@ -121,17 +122,12 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: Loca
             <span className="chip mx-auto">
               {isAr ? 'المساعدة والمعلومات' : 'Help & Information'}
             </span>
-            <h1 className="mt-6 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl text-white font-heading">
-              {isAr ? (
-                <>
-                  الأسئلة الأكثر <span className="text-white">شيوعاً وتكراراً</span>
-                </>
-              ) : (
-                <>
-                  Frequently Asked <span className="text-white">Questions</span>
-                </>
-              )}
-            </h1>
+            <TextReveal
+              as="h1"
+              onScroll={false}
+              text={isAr ? 'الأسئلة الأكثر شيوعاً وتكراراً' : 'Frequently Asked Questions'}
+              className="mt-6 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl text-white font-heading"
+            />
             <p className="mt-6 text-xl leading-relaxed text-neutral-400 max-w-2xl mx-auto">
               {isAr
                 ? 'كل ما تحتاج معرفته حول كيفية قيام بونت لوك بربط مزودي تدريب الشركات بصناع القرار المؤهلين في المنطقة.'
@@ -147,9 +143,11 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: Loca
 
           <Reveal delay={0.4}>
             <div className="mt-16 bg-[#0F1013] border border-[#26282D] p-10 rounded-2xl text-center shadow-sm">
-              <h3 className="text-2xl font-semibold text-white mb-4 font-heading">
-                {isAr ? 'هل ما زال لديك أي استفسار؟' : 'Still have questions?'}
-              </h3>
+              <TextReveal
+                as="h3"
+                text={isAr ? 'هل ما زال لديك أي استفسار؟' : 'Still have questions?'}
+                className="text-2xl font-semibold text-white mb-4 font-heading text-center"
+              />
               <p className="text-neutral-400 text-lg mb-8 max-w-2xl mx-auto">
                 {isAr
                   ? 'فريقنا جاهز لمساعدتك دائماً. تواصل معنا لمناقشة متطلباتك المحددة وكيف يمكننا دعم نمو أعمالك في أسواق المنطقة.'

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -14,9 +15,12 @@ import {
   Workflow,
   ArrowRight,
   ArrowLeft,
+  X,
+  Target,
 } from '@/components/icons';
 import { m, AnimatePresence } from 'framer-motion';
 import Signal from '@/components/shared/Signal';
+import TextReveal from '@/components/shared/TextReveal';
 
 interface WhoWeAreProps {
   lang?: 'en' | 'ar';
@@ -79,22 +83,15 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
       <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header Block */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <h2
-            id="mission-title"
+          <TextReveal
+            as="h2"
+            text={
+              isAr
+                ? 'إصلاح منظومة تدريب الشركات المنفصلة عن الواقع'
+                : 'Fixing the Disconnected Corporate Training Ecosystem'
+            }
             className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-[1.15] mb-6"
-          >
-            {isAr ? (
-              <>
-                إصلاح منظومة تدريب الشركات <br className="hidden sm:inline" />
-                <span className="text-primary font-bold">المنفصلة عن الواقع</span>
-              </>
-            ) : (
-              <>
-                Fixing the Disconnected <br className="hidden sm:inline" />
-                <span className="text-primary font-bold">Corporate Training Ecosystem</span>
-              </>
-            )}
-          </h2>
+          />
 
           <p className="text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-normal">
             {isAr
@@ -380,8 +377,34 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [modalStageIndex, setModalStageIndex] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
   const elapsedRef = useRef(0);
   const STEP_DURATION = 5000; // 5 seconds per stage
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock body scroll and listen for Escape key when pop-up window is open
+  useEffect(() => {
+    if (modalStageIndex === null) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setModalStageIndex(null);
+      }
+    };
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [modalStageIndex]);
 
   const handleStepChange = (newStep: number) => {
     elapsedRef.current = 0;
@@ -395,7 +418,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
   }, [activeStep]);
 
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || modalStageIndex !== null) return;
 
     const startTime = performance.now() - elapsedRef.current;
     let animationFrameId: number;
@@ -417,7 +440,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
 
     animationFrameId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [activeStep, isPaused]);
+  }, [activeStep, isPaused, modalStageIndex]);
 
   // Mobile swipe handling
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -477,6 +500,48 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
           text: isAr ? 'تحديد الميزانية والأهداف التدريبية مسبقاً' : 'Pre-allocated budget & learning objectives',
         },
       ],
+      takeaways: [
+        isAr ? 'حصر الفجوات التشغيلية والقيادية بالتعاون مع مسؤولي الموارد البشرية' : 'Comprehensive workforce deficiency audit conducted with HR leaders',
+        isAr ? 'تحديد دقيق لأعداد الموظفين المستهدفين والمدن (الرياض، دبي، أو افتراضياً)' : 'Exact cohort sizing and location mapping (Riyadh, Dubai, or live-virtual)',
+        isAr ? 'مواءمة الميزانية المعتمدة قبل طرح المتطلبات على المزودين' : 'Pre-allocated budget validation prior to provider engagement',
+      ],
+      mockup: (
+        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
+          <div className="flex items-center justify-between pb-2 border-b border-[#26282D]">
+            <div className="flex items-center gap-2">
+              <div className="h-7 w-7 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">
+                <SlidersHorizontal size={14} />
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-white">
+                  {isAr ? 'مصفوفة تشخيص فجوات الكفاءة' : 'Capability Gap Matrix'}
+                </div>
+                <div className="text-[10px] text-neutral-400">
+                  {isAr ? 'حصر متطلبات الفوج والأهداف' : 'Pre-Delivery Diagnostic Brief'}
+                </div>
+              </div>
+            </div>
+            <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              {isAr ? 'تم التحقق' : 'Verified'}
+            </span>
+          </div>
+
+          <div className="space-y-1.5 text-[11px]">
+            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <span className="text-neutral-400">{isAr ? 'فجوة القيادة التنفيذية:' : 'Executive Leadership Gap:'}</span>
+              <span className="text-white font-medium">{isAr ? '35 مدير إدارة · الرياض' : '35 Managers · Riyadh'}</span>
+            </div>
+            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <span className="text-neutral-400">{isAr ? 'التحول الرقمي والذكاء الاصطناعي:' : 'Digital Transformation:'}</span>
+              <span className="text-blue-400 font-medium">{isAr ? '60 محلل بيانات · تدريب هجين' : '60 Analysts · Hybrid'}</span>
+            </div>
+            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <span className="text-neutral-400">{isAr ? 'الميزانية والجدول الزمني:' : 'Budget & Timeline:'}</span>
+              <span className="text-emerald-400 font-medium">{isAr ? 'معتمدة بالكامل · انطلاق فوري' : 'Fully Approved · Q1 Start'}</span>
+            </div>
+          </div>
+        </div>
+      ),
     },
     {
       num: '02',
@@ -504,6 +569,48 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
           text: isAr ? 'سجل إنجازات وتقييمات موثقة للمدربين' : 'Verified instructor credentials & past client ratings',
         },
       ],
+      takeaways: [
+        isAr ? 'استلام 2 إلى 3 عروض مفصلة من نخبة مزودي التدريب المفحوصين' : '2 to 3 tailored proposals from pre-vetted elite corporate providers',
+        isAr ? 'تسعير شفاف وبنود واضحة متطابقة 100% مع الميزانية بدون عمولات خفية' : '100% itemized pricing aligned to budget with zero intermediary markups',
+        isAr ? 'درجة ثقة وملاءمة 98% مبنية على سجل تدريب مؤسسي موثق' : '98% verified fit confidence supported by regional GCC track records',
+      ],
+      mockup: (
+        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
+          <div className="flex items-center justify-between pb-2 border-b border-[#26282D]">
+            <div className="flex items-center gap-2">
+              <div className="h-7 w-7 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-bold">
+                <BadgeCheck size={14} />
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-white">
+                  {isAr ? 'لوحة فحص ومطابقة الخبراء' : 'Curated Matchmaking Console'}
+                </div>
+                <div className="text-[10px] text-neutral-400">
+                  {isAr ? 'أفضل 3 عروض متوافقة' : 'Top 3 Shortlisted Proposals'}
+                </div>
+              </div>
+            </div>
+            <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+              {isAr ? 'مطابقة 98%' : '98% Fit'}
+            </span>
+          </div>
+
+          <div className="space-y-1.5 text-[11px]">
+            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <span className="text-white font-medium">{isAr ? 'مزود أ (خبير قيادة معتمد):' : 'Provider Alpha (Leadership):'}</span>
+              <span className="text-emerald-400 font-semibold">{isAr ? 'توافق 98% · 20+ عميل خليجي' : '98% Match · 20+ GCC Clients'}</span>
+            </div>
+            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <span className="text-white font-medium">{isAr ? 'مزود ب (معهد تدريب مرخص):' : 'Provider Beta (Operations):'}</span>
+              <span className="text-blue-400 font-semibold">{isAr ? 'توافق 95% · ورش عمل تفاعلية' : '95% Match · Interactive Onsite'}</span>
+            </div>
+            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <span className="text-white font-medium">{isAr ? 'مزود ج (تطوير تنفيذي):' : 'Provider Gamma (Executive):'}</span>
+              <span className="text-neutral-300 font-semibold">{isAr ? 'توافق 92% · تسعير مطابق' : '92% Match · Budget Aligned'}</span>
+            </div>
+          </div>
+        </div>
+      ),
     },
     {
       num: '03',
@@ -531,6 +638,48 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
           text: isAr ? 'انطلاق سلس للبرنامج وتأهيل كامل للمتدربين' : 'Seamless kickoff and cohort onboarding',
         },
       ],
+      takeaways: [
+        isAr ? 'مواءمة المنهج والمحتوى التدريبي مع حالات عملية واقعية من بيئة المنشأة' : 'Curriculum adapted with real workplace case studies and organizational datasets',
+        isAr ? 'اجتماع تنسيق ومواءمة مباشر مع كبار المدربين والميسرين قبل انطلاق البرنامج' : 'Direct alignment briefing between master facilitators and executive sponsors',
+        isAr ? 'جاهزية كاملة للمتدربين مع تأهيل رقمي وجداول حضور دقيقة' : 'Seamless cohort kickoff, digital workbook onboarding, and attendance tracking',
+      ],
+      mockup: (
+        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
+          <div className="flex items-center justify-between pb-2 border-b border-[#26282D]">
+            <div className="flex items-center gap-2">
+              <div className="h-7 w-7 rounded-lg bg-teal-500/10 text-teal-400 flex items-center justify-center font-bold">
+                <GraduationCap size={14} />
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-white">
+                  {isAr ? 'خطة التنفيذ ومواءمة المنهج' : 'Execution & Syllabus Tracker'}
+                </div>
+                <div className="text-[10px] text-neutral-400">
+                  {isAr ? 'جاهزية الفوج والمدربين' : 'Cohort Readiness Console'}
+                </div>
+              </div>
+            </div>
+            <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-teal-500/10 text-teal-400 border border-teal-500/20">
+              {isAr ? 'انطلاق سلس' : 'Kickoff Ready'}
+            </span>
+          </div>
+
+          <div className="space-y-1.5 text-[11px]">
+            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <span className="text-neutral-400">{isAr ? 'المرحلة 1: القياس القبلي والتأهيل:' : 'Phase 1: Pre-Assessment & Setup:'}</span>
+              <span className="text-emerald-400 font-medium">{isAr ? 'اكتمل 100%' : '100% Completed'}</span>
+            </div>
+            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <span className="text-neutral-400">{isAr ? 'المرحلة 2: ورش العمل التطبيقية:' : 'Phase 2: Applied Simulations:'}</span>
+              <span className="text-teal-400 font-medium">{isAr ? 'قيد التنفيذ التفاعلي' : 'Active In-Progress'}</span>
+            </div>
+            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <span className="text-neutral-400">{isAr ? 'المرحلة 3: مشروع التخرج المهني:' : 'Phase 3: Real Business Capstone:'}</span>
+              <span className="text-neutral-300 font-medium">{isAr ? 'مجدول بنهاية الشهر' : 'Scheduled End-of-Month'}</span>
+            </div>
+          </div>
+        </div>
+      ),
     },
     {
       num: '04',
@@ -558,6 +707,51 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
           text: isAr ? 'تحقيق قيمة تشغيلية حقيقية لإدارة الشركة' : 'Tangible business return for leadership',
         },
       ],
+      takeaways: [
+        isAr ? 'قياس كمي ودقيق لارتقاء كفاءات المتدربين مقارنة بالتقييم القبلي' : 'Quantitative post-evaluation measuring capability lift against baseline metrics',
+        isAr ? 'تقارير أثر تفصيلية واستبانات رضا موثقة تُقدم للإدارة التنفيذية' : 'Executive report detailing participant mastery, satisfaction, and operational impact',
+        isAr ? 'عائد استثماري ملموس ومستدام يعزز إنتاجية المنشأة ويقلل الهدر' : 'Defensible ROI delivered to C-suite, closing workforce skill gaps definitively',
+      ],
+      mockup: (
+        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
+          <div className="flex items-center justify-between pb-2 border-b border-[#26282D]">
+            <div className="flex items-center gap-2">
+              <div className="h-7 w-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
+                <TrendingUp size={14} />
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-white">
+                  {isAr ? 'لوحة قياس الأثر والعائد المؤسسي' : 'Executive ROI Impact Dashboard'}
+                </div>
+                <div className="text-[10px] text-neutral-400">
+                  {isAr ? 'مخرجات التقييم البعدي للمتدربين' : 'Post-Training Workforce Uplift'}
+                </div>
+              </div>
+            </div>
+            <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              {isAr ? 'عائد موثق' : 'Verified ROI'}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2 text-center text-xs">
+            <div className="p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <div className="text-[10px] text-neutral-400 font-sans">{isAr ? 'ارتقاء الكفاءة' : 'Efficiency'}</div>
+              <div className="text-sm font-bold text-emerald-400 mt-0.5">+38%</div>
+              <div className="text-[9px] text-neutral-500">{isAr ? 'تحسن تشغيلي' : 'Ops Uplift'}</div>
+            </div>
+            <div className="p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <div className="text-[10px] text-neutral-400 font-sans">{isAr ? 'ثبات المعرفة' : 'Retention'}</div>
+              <div className="text-sm font-bold text-white mt-0.5">94%</div>
+              <div className="text-[9px] text-neutral-500">{isAr ? 'اختبار بعدي' : 'Post-Test'}</div>
+            </div>
+            <div className="p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <div className="text-[10px] text-neutral-400 font-sans">{isAr ? 'تقييم المدرب' : 'Rating'}</div>
+              <div className="text-sm font-bold text-orange-400 mt-0.5">4.9 / 5</div>
+              <div className="text-[9px] text-neutral-500">{isAr ? 'رضا المشاركين' : 'Satisfaction'}</div>
+            </div>
+          </div>
+        </div>
+      ),
     },
   ];
 
@@ -581,22 +775,15 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
             <span>{isAr ? 'آلية العمل خطوة بخطوة' : 'HOW IT WORKS IN PRACTICE'}</span>
           </div>
 
-          <h2
-            id="journey-title"
+          <TextReveal
+            as="h2"
+            text={
+              isAr
+                ? 'رحلة التدريب المتكاملة من البداية حتى قياس الأثر'
+                : 'The End to End Training Journey'
+            }
             className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-[1.15] mb-5"
-          >
-            {isAr ? (
-              <>
-                رحلة التدريب المتكاملة <br className="hidden sm:inline" />
-                <span className="text-blue-400 font-bold">من البداية حتى قياس الأثر</span>
-              </>
-            ) : (
-              <>
-                The End to End <br className="hidden sm:inline" />
-                <span className="text-blue-400 font-bold">Training Journey</span>
-              </>
-            )}
-          </h2>
+          />
 
           <p className="text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-normal font-sans">
             {isAr
@@ -756,6 +943,21 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
                       </li>
                     ))}
                   </ul>
+
+                  {/* Interactive Stage Deep Dive Trigger */}
+                  <div className="pt-2 border-t border-[#26282D]/80">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsPaused(true);
+                        setModalStageIndex(activeStep);
+                      }}
+                      className="w-full py-2.5 px-4 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 hover:border-white/20 text-xs font-semibold text-white flex items-center justify-center gap-2 transition-all cursor-pointer font-sans group active:scale-95"
+                    >
+                      <span>{isAr ? 'عرض وثائق ومخرجات هذه المرحلة' : 'Inspect Deliverables & Artifacts'}</span>
+                      <ArrowRight size={13} className="rtl:-scale-x-100 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </m.div>
@@ -795,6 +997,162 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
           </div>
         </div>
       </div>
+
+      {/* Stage Detail Pop-Up Modal */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {modalStageIndex !== null && steps[modalStageIndex] && (
+              <div
+                className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="journey-modal-title"
+              >
+                {/* Backdrop */}
+                <m.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  onClick={() => setModalStageIndex(null)}
+                  className="fixed inset-0 bg-black/85 backdrop-blur-sm cursor-pointer"
+                />
+
+                {/* Modal Container */}
+                <m.div
+                  initial={{ opacity: 0, scale: 0.95, y: 16 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 12 }}
+                  transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+                  className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] text-white shadow-2xl shadow-black my-auto overflow-hidden"
+                >
+                  {/* Header */}
+                  <m.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1, duration: 0.25 }}
+                    className="flex items-center justify-between p-4 sm:p-5 border-b border-[#26282D] gap-3 shrink-0"
+                  >
+                    <div className="flex items-center gap-2.5 flex-wrap">
+                      <div className={`h-8 w-8 rounded-lg ${steps[modalStageIndex].iconBg} flex items-center justify-center font-bold`}>
+                        {React.createElement(steps[modalStageIndex].icon, { size: 16 })}
+                      </div>
+                      <span className="px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold font-sans bg-white/[0.06] text-white border border-white/10">
+                        {steps[modalStageIndex].step}
+                      </span>
+                      <span className="text-[11px] sm:text-xs font-medium font-sans text-neutral-400">
+                        {steps[modalStageIndex].tag}
+                      </span>
+                    </div>
+
+                    <m.button
+                      type="button"
+                      whileHover={{ rotate: 90, scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => setModalStageIndex(null)}
+                      aria-label={isAr ? 'إغلاق النافذة' : 'Close modal'}
+                      className="h-8 w-8 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center transition-colors shrink-0 cursor-pointer"
+                    >
+                      <X size={15} />
+                    </m.button>
+                  </m.div>
+
+                  {/* Scrollable Body */}
+                  <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 overscroll-contain">
+                    <m.div
+                      initial={{ opacity: 0, x: isAr ? 15 : -15 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.15, duration: 0.3 }}
+                    >
+                      <h3
+                        id="journey-modal-title"
+                        className="text-base sm:text-xl font-semibold text-white tracking-tight leading-snug font-heading"
+                      >
+                        {steps[modalStageIndex].title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed mt-1.5">
+                        {steps[modalStageIndex].desc}
+                      </p>
+                    </m.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 items-stretch">
+                      {/* Takeaways / SLAs */}
+                      <m.div
+                        initial={{ opacity: 0, scale: 0.96, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{ delay: 0.2, duration: 0.3 }}
+                        className="rounded-xl p-3.5 sm:p-4 bg-[#16171B] border border-[#26282D] flex flex-col justify-between space-y-2.5"
+                      >
+                        <div className="text-[11px] font-semibold text-neutral-300 uppercase tracking-wider font-sans">
+                          {isAr ? 'شروط وضمانات المرحلة' : 'Deliverables & SLAs'}
+                        </div>
+                        <ul className="space-y-2 text-xs text-neutral-200 font-sans">
+                          {steps[modalStageIndex].takeaways.map((point: string, pIdx: number) => (
+                            <m.li
+                              key={pIdx}
+                              initial={{ opacity: 0, x: isAr ? 12 : -12 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{
+                                delay: 0.24 + pIdx * 0.06,
+                                type: 'spring',
+                                stiffness: 320,
+                                damping: 22,
+                              }}
+                              className="flex items-start gap-2 leading-relaxed"
+                            >
+                              <BadgeCheck size={14} className="text-blue-400 shrink-0 mt-0.5" />
+                              <span>{point}</span>
+                            </m.li>
+                          ))}
+                        </ul>
+                      </m.div>
+
+                      {/* Mockup proof widget */}
+                      <m.div
+                        initial={{ opacity: 0, x: isAr ? -15 : 15, scale: 0.96 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        transition={{ delay: 0.22, duration: 0.35 }}
+                        className="flex items-center"
+                      >
+                        {steps[modalStageIndex].mockup}
+                      </m.div>
+                    </div>
+                  </div>
+
+                  {/* Fixed Footer */}
+                  <m.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.28, duration: 0.3 }}
+                    className="p-3.5 sm:p-5 border-t border-[#26282D] bg-[#0F1013] shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                  >
+                    <span className="text-[11px] text-neutral-400 font-sans hidden sm:inline">
+                      {isAr ? 'انقر في المساحة الفارغة أو زر Esc للإغلاق' : 'Click outside or press Esc to close'}
+                    </span>
+
+                    <m.div
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                      className="w-full sm:w-auto"
+                    >
+                      <Link
+                        href={`/${lang}/find-training/request`}
+                        onClick={() => setModalStageIndex(null)}
+                        className="w-full inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs sm:text-sm active:scale-[0.98] transition-all font-sans shadow-md shadow-blue-500/20"
+                      >
+                        <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals'}</span>
+                        <ArrowRight size={14} className="ms-1.5 rtl:-scale-x-100" />
+                      </Link>
+                    </m.div>
+                  </m.div>
+                </m.div>
+              </div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
     </section>
   );
 }

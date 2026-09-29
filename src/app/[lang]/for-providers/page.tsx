@@ -3,8 +3,10 @@ import Link from 'next/link';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
+import ProviderBenefitsCards from '@/components/providers/ProviderBenefitsCards';
 import Reveal from '@/components/shared/Reveal';
-import { Target, CircleDollarSign, TrendingUp, ArrowRight } from '@/components/icons';
+import TextReveal from '@/components/shared/TextReveal';
+import { ArrowRight } from '@/components/icons';
 import { constructAlternates, providerIcons } from '@/lib/seo/metadata';
 import { buildProviderNetworkSchema } from '@/lib/seo/schema';
 
@@ -60,42 +62,6 @@ export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
 }
 
-const providerBenefitsEn = [
-  {
-    icon: CircleDollarSign,
-    title: 'Pay Per Lead, Not Per Month',
-    text: 'No monthly management fees or fixed retainers. You pay strictly per verified decision maker delivered ($50 to $200 per lead).',
-  },
-  {
-    icon: Target,
-    title: 'Qualified Enterprise Buyers',
-    text: 'Every lead has confirmed corporate training needs, authority, and explicit problem definitions tied to Saudization, Emiratization, or digital upskilling.',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Consistent Pipeline',
-    text: 'Keep your business development active and predictable throughout the year, even during delivery seasons.',
-  },
-];
-
-const providerBenefitsAr = [
-  {
-    icon: CircleDollarSign,
-    title: 'انعدام مخاطر الرسوم الشهرية',
-    text: 'لا توجد رسوم إدارة أو اشتراكات شهرية ثابتة. الدفع يتم حصراً لكل صانع قرار مؤكد ومؤهل يتم تقديمه لك.',
-  },
-  {
-    icon: Target,
-    title: 'عملاء مؤسسيون تم تأهيل احتياجاتهم',
-    text: 'كل فرصة تدريبية تتضمن احتياجاً مؤسسياً مؤكداً، وصلاحية قرار واضحة، ومتطلبات متوافقة مع أهداف التوطين أو التحول الرقمي.',
-  },
-  {
-    icon: TrendingUp,
-    title: 'تدفق مستمر لفرص الأعمال',
-    text: 'حافظ على استمرارية ونمو أعمالك على مدار العام، حتى خلال مواسم التدريب والتنفيذ الميداني.',
-  },
-];
-
 export default async function ForProvidersPage({
   params,
 }: {
@@ -111,8 +77,6 @@ export default async function ForProvidersPage({
   } catch (err) {
     console.error('Error loading dictionary:', err);
   }
-
-  const providerBenefits = isAr ? providerBenefitsAr : providerBenefitsEn;
 
   const providerSchema = buildProviderNetworkSchema({
     lang,
@@ -137,19 +101,12 @@ export default async function ForProvidersPage({
           {/* Left-Aligned Header Block */}
           <div className="max-w-3xl text-start">
             <Reveal>
-              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.05] font-heading tracking-tight text-start">
-                {isAr ? (
-                  <>
-                    فرص تدريبية للشركات <br />
-                    <span className="text-[#FF5C00] font-bold">حسب الطلب.</span>
-                  </>
-                ) : (
-                  <>
-                    Enterprise Training Leads <br />
-                    <span className="text-[#FF5C00] font-bold">On Demand.</span>
-                  </>
-                )}
-              </h1>
+              <TextReveal
+                as="h1"
+                onScroll={false}
+                text={isAr ? 'فرص تدريبية للشركات حسب الطلب' : 'Enterprise Training Leads On Demand'}
+                className="text-3xl sm:text-5xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.05] font-heading tracking-tight text-start"
+              />
 
               <p className="mt-4 sm:mt-5 text-base sm:text-lg text-neutral-300 leading-relaxed max-w-2xl font-normal font-sans text-start">
                 {isAr
@@ -182,34 +139,7 @@ export default async function ForProvidersPage({
       {/* 2. WHY PARTNER SECTION */}
       <section id="why-partner" className="bg-[#08090A] py-16 sm:py-24 scroll-mt-16">
         <div className="container-site max-w-6xl mx-auto px-4 sm:px-6">
-          <Reveal>
-            {/* Left-Aligned Header */}
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white font-heading text-start mb-6 sm:mb-8">
-              {isAr ? 'كيف تعمل الشراكة:' : 'How it works:'}
-            </h2>
-
-            {/* 3 Clean Numbered Cards with Orange Accent Badges */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-              {providerBenefits.map((b, i) => (
-                <div
-                  key={b.title}
-                  className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-6 sm:p-7 text-start flex flex-col justify-start hover:border-orange-500/30 hover:shadow-orange-500/10 hover:shadow-lg transition-all duration-300 shadow-lg group"
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="w-7 h-7 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 flex items-center justify-center text-xs font-bold font-mono shrink-0 group-hover:scale-105 transition-transform">
-                      {i + 1}
-                    </span>
-                    <h3 className="text-base sm:text-lg font-semibold text-white font-heading">
-                      {b.title}
-                    </h3>
-                  </div>
-                  <p className="text-xs sm:text-sm leading-relaxed text-neutral-400 font-sans font-normal">
-                    {b.text}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </Reveal>
+          <ProviderBenefitsCards lang={lang} />
         </div>
       </section>
 
@@ -222,9 +152,11 @@ export default async function ForProvidersPage({
       <section id="apply" className="bg-[#08090A] scroll-mt-24 pb-16 sm:pb-24 pt-4 text-center">
         <div className="max-w-3xl mx-auto px-4">
           <Reveal>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-4">
-              {isAr ? 'جاهز لتوسيع قاعدة عملائك المؤسسيين؟' : 'Ready to Scale Your Enterprise Pipeline?'}
-            </h2>
+            <TextReveal
+              as="h2"
+              text={isAr ? 'جاهز لتوسيع قاعدة عملائك المؤسسيين؟' : 'Ready to Scale Your Enterprise Pipeline?'}
+              className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-4 text-center"
+            />
 
             <p className="text-sm sm:text-base text-neutral-400 font-normal leading-relaxed max-w-2xl mx-auto mb-8 font-sans">
               {isAr

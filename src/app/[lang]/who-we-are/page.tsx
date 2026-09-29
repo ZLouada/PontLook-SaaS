@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Reveal from '@/components/shared/Reveal';
+import TextReveal from '@/components/shared/TextReveal';
 import { ArrowRight } from '@/components/icons';
 
 import { Locale, i18n } from '@/i18n/config';
@@ -80,9 +81,11 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                 {isAr ? 'ضماننا' : 'OUR GUARANTEE'}
               </span>
               
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-6">
-                {isAr ? 'وعدنا لك' : 'Our Promise'}
-              </h2>
+              <TextReveal
+                as="h2"
+                text={isAr ? 'وعدنا لك' : 'Our Promise'}
+                className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-6 text-center"
+              />
               
               <p className="text-lg md:text-xl text-neutral-300 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
                 {isAr ? (

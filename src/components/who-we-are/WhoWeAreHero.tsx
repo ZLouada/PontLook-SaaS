@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import { ArrowDown } from '@/components/icons';
 import Reveal from '@/components/shared/Reveal';
 import Signal from '@/components/shared/Signal';
+import TextReveal from '@/components/shared/TextReveal';
 
 interface WhoWeAreHeroProps {
   lang?: 'en' | 'ar';
@@ -311,19 +312,16 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl lg:text-[56px] font-semibold text-white leading-[1.15] sm:leading-[1.1] font-heading tracking-tight">
-            {isAr ? (
-              <>
-                من نحن: منصة التوفيق والربط الرائدة <br className="hidden sm:inline" />
-                لتدريب الشركات في <span className="text-white font-bold">المنطقة</span>
-              </>
-            ) : (
-              <>
-                Who We Are: The Corporate Training <br className="hidden sm:inline" />
-                <span className="text-white font-bold">Matchmaking Platform</span>
-              </>
-            )}
-          </h1>
+          <TextReveal
+            as="h1"
+            onScroll={false}
+            text={
+              isAr
+                ? 'من نحن: منصة التوفيق والربط الرائدة لتدريب الشركات في المنطقة'
+                : 'Who We Are: The Corporate Training Matchmaking Platform'
+            }
+            className="text-2xl sm:text-4xl lg:text-[56px] font-semibold text-white leading-[1.15] sm:leading-[1.1] font-heading tracking-tight"
+          />
           <p className="mt-4 sm:mt-5 text-base sm:text-lg lg:text-xl leading-relaxed text-neutral-400 max-w-2xl sm:max-w-3xl mx-auto font-normal">
             {isAr
               ? 'نربط شركات ومزودي التدريب بصناع القرار في كبرى المؤسسات الذين لديهم احتياجات وتحديات حقيقية يسعون لحلها.'
