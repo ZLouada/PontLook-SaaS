@@ -143,20 +143,21 @@
     background-color: #0F1013;
     border: 1px solid #26282D;
     box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
-      0 1px 2px 0 rgba(0, 0, 0, 0.6);
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+      0 1px 3px 0 rgba(0, 0, 0, 0.6),
+      0 12px 28px -8px rgba(0, 0, 0, 0.5);
   }
   .surface-inner {
     background-color: #16171B;
     border: 1px solid #26282D;
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
   }
 
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition-all duration-200 transform-gpu;
   }
   .btn-primary {
-    @apply btn sheen bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm hover:-translate-y-0.5 active:translate-y-0;
+    @apply btn sheen bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10 hover:border-white/30 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),0_2px_8px_rgba(0,0,0,0.4)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25),0_0_20px_rgba(255,255,255,0.08)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98];
   }
 
   .card {
@@ -167,14 +168,14 @@
   }
 
   .chip {
-    @apply inline-flex items-center rounded-full border border-[#26282D] bg-[#16171B] px-4 py-1.5 text-xs font-sans font-semibold uppercase tracking-wider text-neutral-300;
+    @apply inline-flex items-center rounded-full border border-[#26282D] bg-[#16171B] px-4 py-1.5 text-xs font-sans font-semibold uppercase tracking-wider text-neutral-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)];
   }
 
   .field-label {
     @apply mb-1.5 block text-sm font-medium text-neutral-300;
   }
   .field-input {
-    @apply w-full rounded-2xl border border-[#26282D] bg-[#16171B] px-4 py-3.5 sm:px-5 sm:py-4 text-[16px] sm:text-sm text-white placeholder:text-neutral-500 transition-colors focus:border-white/40 focus:ring-1 focus:ring-white/40;
+    @apply w-full rounded-2xl border border-[#26282D] bg-[#16171B] px-4 py-3.5 sm:px-5 sm:py-4 text-[16px] sm:text-sm text-white placeholder:text-neutral-500 transition-all duration-200 focus:border-white/40 focus:ring-1 focus:ring-white/40 shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)];
   }
   .field-error {
     @apply mt-1.5 text-xs font-medium text-red-400;

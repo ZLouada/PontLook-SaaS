@@ -490,7 +490,7 @@ export default function WhyDifferent() {
                       transition: { type: 'spring', stiffness: 350, damping: 20 },
                     }}
                     whileTap={{ scale: 0.98 }}
-                    className={`surface group relative w-full h-full rounded-2xl p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-e2 overflow-hidden transition-all duration-300 ${cardGlow}`}
+                    className={`surface group relative w-full h-full rounded-2xl p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_10px_30px_-10px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-300 ${cardGlow}`}
                   >
                     {/* Ambient subtle back-glow on hover */}
                     <div className={`pointer-events-none absolute -top-10 -end-10 w-28 h-28 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${cardAura}`} />
@@ -586,7 +586,7 @@ export default function WhyDifferent() {
                 stiffness: 380,
                 damping: 28,
               }}
-              className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] text-white shadow-2xl shadow-black my-auto overflow-hidden"
+              className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013]/98 backdrop-blur-2xl border border-white/15 text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_25px_60px_-15px_rgba(0,0,0,0.95)] my-auto overflow-hidden"
             >
               {/* Modal Top Bar (Fixed Header) */}
               <m.div

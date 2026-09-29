@@ -18,6 +18,7 @@ import {
 } from '@/components/icons';
 import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
+import IconFrame from '@/components/shared/IconFrame';
 
 interface ProviderBenefitsCardsProps {
   lang: string;
@@ -27,6 +28,7 @@ interface BenefitItem {
   id: string;
   index: string;
   icon: React.ElementType;
+  frameVariant: 'brand' | 'blue' | 'emerald';
   badge: string;
   title: string;
   angle: string;
@@ -69,6 +71,7 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
       id: 'pay-per-lead',
       index: '01',
       icon: CircleDollarSign,
+      frameVariant: 'brand',
       badge: isAr ? 'نموذج الدفع بالأداء' : 'Performance-Based',
       title: isAr ? 'انعدام مخاطر الرسوم الشهرية' : 'Pay Per Lead, Not Per Month',
       angle: isAr ? 'صفر اشتراكات ثابتة · دفع حصري لكل صانع قرار' : 'Zero Retainers · Pay Per Qualified Buyer',
@@ -125,6 +128,7 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
       id: 'qualified-buyers',
       index: '02',
       icon: Target,
+      frameVariant: 'blue',
       badge: isAr ? 'معايير BANT التنفيذية' : 'BANT Verified',
       title: isAr ? 'عملاء مؤسسيون تم تأهيل احتياجاتهم' : 'Qualified Enterprise Buyers',
       angle: isAr ? 'صلاحيات ميزانية معتمدة واحتياجات دقيقة' : 'Confirmed Budget Authority & Strategic Scope',
@@ -178,6 +182,7 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
       id: 'consistent-pipeline',
       index: '03',
       icon: TrendingUp,
+      frameVariant: 'emerald',
       badge: isAr ? 'استقرار الإيرادات' : 'Revenue Predictability',
       title: isAr ? 'تدفق مستمر لفرص الأعمال' : 'Consistent Pipeline',
       angle: isAr ? 'توزيع ذكي للطلب المؤسسي على مدار الفصول' : 'Multi-City GCC Inflow Across All Quarters',
@@ -256,11 +261,22 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
           <Spotlight
             key={b.id}
             radius={280}
-            className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-6 sm:p-7 text-start flex flex-col justify-between hover:border-orange-500/40 hover:shadow-orange-500/10 hover:shadow-xl transition-all duration-300 shadow-lg group cursor-pointer relative"
+            className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-6 sm:p-7 text-start flex flex-col justify-between hover:border-orange-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_10px_30px_-10px_rgba(0,0,0,0.6)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_50px_-15px_rgba(255,92,0,0.15)] transition-all duration-300 group cursor-pointer relative overflow-hidden"
           >
+            {/* Ambient hover aura */}
+            <div
+              className={`absolute -top-16 -end-16 w-36 h-36 rounded-full blur-3xl pointer-events-none transition-opacity duration-500 opacity-20 group-hover:opacity-70 ${
+                b.frameVariant === 'brand'
+                  ? 'bg-orange-500/30'
+                  : b.frameVariant === 'blue'
+                  ? 'bg-blue-500/30'
+                  : 'bg-emerald-500/30'
+              }`}
+            />
+
             <div
               onClick={() => setActiveModalId(b.id)}
-              className="flex-1 flex flex-col justify-between focus:outline-none"
+              className="flex-1 flex flex-col justify-between focus:outline-none relative z-10"
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
@@ -282,9 +298,9 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                       {b.badge}
                     </span>
                   </div>
-                  <div className="h-7 w-7 rounded-lg bg-white/[0.04] text-neutral-400 group-hover:text-white flex items-center justify-center transition-colors">
-                    <b.icon size={15} />
-                  </div>
+                  <IconFrame variant={b.frameVariant} size="xs">
+                    <b.icon size={14} />
+                  </IconFrame>
                 </div>
 
                 <h3 className="text-base sm:text-lg font-semibold text-white font-heading group-hover:text-orange-400 transition-colors">
@@ -337,7 +353,7 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: 12 }}
                   transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-                  className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] text-white shadow-2xl shadow-black my-auto overflow-hidden"
+                  className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013]/98 backdrop-blur-2xl border border-white/15 text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_25px_60px_-15px_rgba(0,0,0,0.95)] my-auto overflow-hidden"
                 >
                   {/* Fixed Header */}
                   <m.div
@@ -347,9 +363,9 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                     className="flex items-center justify-between p-4 sm:p-5 border-b border-[#26282D] gap-3 shrink-0"
                   >
                     <div className="flex items-center gap-2.5 flex-wrap">
-                      <div className="h-8 w-8 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center font-bold">
-                        <activeBenefit.icon size={16} />
-                      </div>
+                      <IconFrame variant={activeBenefit.frameVariant} size="sm">
+                        <activeBenefit.icon size={15} />
+                      </IconFrame>
                       <span className="px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold font-sans bg-orange-500/10 text-orange-400 border border-orange-500/20">
                         {activeBenefit.badge}
                       </span>

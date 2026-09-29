@@ -510,7 +510,7 @@ export default function LeadTiers(_props?: {
                   >
                     <Spotlight
                       radius={340}
-                      className={`relative overflow-hidden bg-[#0F1013] border border-[#26282D] hover:border-orange-500/40 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300`}
+                      className={`relative overflow-hidden bg-[#0F1013] border border-[#26282D] hover:border-orange-500/40 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
                     >
                       {idx === 0 && (
                         <BorderBeam size={260} duration={12} colorFrom="#FF5C00" colorTo="#4D7CFF" />
@@ -674,7 +674,7 @@ export default function LeadTiers(_props?: {
                 >
                   <Spotlight
                     radius={340}
-                    className={`${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-white/20`}
+                    className={`${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
                   >
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
                     {/* Left Details */}

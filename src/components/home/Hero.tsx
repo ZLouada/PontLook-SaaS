@@ -71,7 +71,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: ease.out }}
-            className="mb-4 sm:mb-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B]/80 border border-white/15 backdrop-blur-xl shadow-[0_0_20px_rgba(255,255,255,0.03)]"
+            className="mb-4 sm:mb-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B]/90 border border-white/15 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),0_0_20px_rgba(255,255,255,0.04)]"
           >
             <Sparkles size={14} className="text-amber-400 animate-pulse" />
             <span className="text-xs font-medium text-neutral-300">
@@ -95,7 +95,7 @@ export default function Hero() {
             className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm md:text-base text-neutral-400 font-sans"
           >
             <span>{isAr ? 'عروض تدريبية معتمدة في' : 'Enterprise capability solutions in'}</span>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 shadow-inner backdrop-blur-sm">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-md">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <WordRotate words={capabilityWords} />
             </span>
@@ -111,7 +111,7 @@ export default function Hero() {
           >
             <Link
               href={`/${lang}/for-providers`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-gradient-to-r from-white/[0.08] to-white/[0.03] hover:from-white/[0.14] hover:to-white/[0.08] text-white font-medium text-sm sm:text-base border border-white/15 hover:border-white/35 backdrop-blur-xl shadow-[0_0_25px_rgba(255,255,255,0.05)] active:scale-[0.98] transition-all duration-200 group sheen"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-gradient-to-r from-white/[0.08] to-white/[0.03] hover:from-white/[0.14] hover:to-white/[0.08] text-white font-medium text-sm sm:text-base border border-white/15 hover:border-white/35 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2),0_4px_20px_rgba(0,0,0,0.5)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.3),0_8px_30px_rgba(255,255,255,0.1)] active:scale-[0.98] transition-all duration-200 group sheen"
             >
               <span>{isAr ? 'انضم إلى شبكتنا' : 'Join the network'}</span>
               <ArrowRight
@@ -122,7 +122,7 @@ export default function Hero() {
 
             <Link
               href={`/${lang}/who-we-are`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md transition-all duration-200 group"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] transition-all duration-200 group"
             >
               <span>{isAr ? 'من نحن' : 'Who we are'}</span>
               <ArrowRight

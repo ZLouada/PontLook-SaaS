@@ -7,6 +7,7 @@ import { Linkedin, Mail, MapPin, ShieldCheck, ArrowRight } from '@/components/ic
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { m } from 'framer-motion';
 import IconFrame from '@/components/shared/IconFrame';
+import BorderBeam from '@/components/shared/BorderBeam';
 import { staggerContainer, staggerItem, viewportOnce } from '@/lib/motion';
 
 export default function Footer() {
@@ -41,7 +42,8 @@ export default function Footer() {
 
         {/* Centered Floating Consultation Card Over Horizon */}
         <div className="container-site relative z-20 px-4 sm:px-8 lg:px-12 mx-auto">
-          <div className="relative z-10 -mt-10 max-w-2xl mx-auto rounded-2xl sm:rounded-3xl border border-[#26282D] hover:border-white/20 bg-[#0F1013]/95 backdrop-blur-2xl p-5 sm:p-8 md:p-10 shadow-e4 text-center flex flex-col items-center gap-5 sm:gap-6 transform-gpu transition-all duration-300">
+          <div className="relative z-10 -mt-10 max-w-2xl mx-auto rounded-2xl sm:rounded-3xl border border-[#26282D] hover:border-white/30 bg-[#0F1013]/95 backdrop-blur-2xl p-5 sm:p-8 md:p-10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_20px_50px_-10px_rgba(0,0,0,0.8)] text-center flex flex-col items-center gap-5 sm:gap-6 transform-gpu transition-all duration-300 overflow-hidden">
+            <BorderBeam size={260} duration={14} colorFrom="#FF5C00" colorTo="#4D7CFF" />
             {/* Subtle top inner sheen */}
             <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
 
@@ -57,7 +59,7 @@ export default function Footer() {
 
             <Link
               href={`/${lang}/contact`}
-              className="relative z-10 inline-flex items-center justify-center gap-2.5 bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 font-medium px-8 py-3.5 rounded-xl text-sm sm:text-base min-h-[48px] backdrop-blur-md shadow-sm hover:scale-105 active:scale-95 transition-all group"
+              className="relative z-10 inline-flex items-center justify-center gap-2.5 bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10 hover:border-white/30 font-medium px-8 py-3.5 rounded-xl text-sm sm:text-base min-h-[48px] backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(255,255,255,0.08)] hover:scale-[1.02] active:scale-[0.98] transition-all group"
             >
               <span>{dict.final_cta?.btn_call || (lang === 'ar' ? 'احجز استشارة' : 'Book a consultation')}</span>
               <ArrowRight size={17} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />

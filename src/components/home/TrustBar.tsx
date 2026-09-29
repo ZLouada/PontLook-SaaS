@@ -39,14 +39,14 @@ export default function TrustBar() {
     <Spotlight
       key={v.title}
       radius={280}
-      className="group h-full w-[240px] sm:w-[320px] md:w-[380px] rounded-2xl border border-white/10 bg-white/[0.015] p-4 sm:p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/30 hover:bg-white/[0.04] shadow-sm"
+      className="group h-full w-[240px] sm:w-[320px] md:w-[380px] rounded-2xl border border-white/10 bg-[#0F1013]/90 p-4 sm:p-5 backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:bg-[#16171B]/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_4px_16px_rgba(0,0,0,0.4)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_10px_25px_-5px_rgba(0,0,0,0.7)]"
     >
       <div className="relative min-w-0">
         <div className="mb-1.5 flex items-center justify-between gap-2">
           <span className="block truncate text-xs font-medium tracking-[-0.02em] text-white sm:text-base">
             {v.title}
           </span>
-          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-[#16171B] px-2.5 py-0.5 text-[9px] font-medium text-neutral-300 transition-colors group-hover:border-white/30 group-hover:text-white sm:text-[10px]">
+          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-0.5 text-[9px] font-medium text-neutral-300 transition-colors group-hover:border-white/35 group-hover:text-white sm:text-[10px] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]">
             <Signal size={12} speed={1 - i * 0.1} />
             <span>{v.badge}</span>
           </span>

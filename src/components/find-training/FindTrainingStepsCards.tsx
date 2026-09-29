@@ -17,6 +17,7 @@ import {
 } from '@/components/icons';
 import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
+import IconFrame from '@/components/shared/IconFrame';
 
 interface FindTrainingStepsCardsProps {
   lang: string;
@@ -26,6 +27,7 @@ interface StepItem {
   id: string;
   step: string;
   icon: React.ElementType;
+  frameVariant: 'blue' | 'emerald' | 'brand';
   badge: string;
   title: string;
   angle: string;
@@ -68,6 +70,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
       id: 'step-specify',
       step: '01',
       icon: SlidersHorizontal,
+      frameVariant: 'blue',
       badge: isAr ? 'استيعاب دقيق' : 'Rapid Scoping',
       title: isAr ? 'حدد المتطلبات والاحتياج' : 'Specify Training Needs',
       angle: isAr ? 'استبيان تفاعلي خلال 60 ثانية بدون تعقيدات' : '60-Second Interactive Intake',
@@ -121,6 +124,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
       id: 'step-matching',
       step: '02',
       icon: BadgeCheck,
+      frameVariant: 'emerald',
       badge: isAr ? 'فحص واعتماد الخبراء' : 'Dual-Screening Vetting',
       title: isAr ? 'المطابقة والتحقق من المدربين' : 'Matching & Faculty Vetting',
       angle: isAr ? 'فرز أكثر من 120 مزود معتمد لضمان نخبة الميسرين' : 'Screening 120+ Accredited GCC Entities',
@@ -180,6 +184,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
       id: 'step-compare',
       step: '03',
       icon: Scale,
+      frameVariant: 'brand',
       badge: isAr ? 'مقارنة شفافة' : 'Proposal Comparison',
       title: isAr ? 'استلم وقارن العروض' : 'Compare Itemized Proposals',
       angle: isAr ? '2 إلى 3 عروض مفصلة خلال 48 ساعة وبدون أي التزام' : '2 to 3 Proposals in 48h · Zero Obligation',
@@ -256,11 +261,22 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
           <Spotlight
             key={st.id}
             radius={280}
-            className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-7 sm:p-8 text-start flex flex-col justify-between hover:border-white/30 hover:shadow-xl hover:shadow-black/50 transition-all duration-300 shadow-xl group cursor-pointer relative"
+            className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-7 sm:p-8 text-start flex flex-col justify-between hover:border-white/30 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_10px_30px_-10px_rgba(0,0,0,0.6)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_50px_-15px_rgba(0,0,0,0.9)] transition-all duration-300 group cursor-pointer relative overflow-hidden"
           >
+            {/* Ambient hover aura */}
+            <div
+              className={`absolute -top-16 -end-16 w-36 h-36 rounded-full blur-3xl pointer-events-none transition-opacity duration-500 opacity-20 group-hover:opacity-70 ${
+                st.frameVariant === 'blue'
+                  ? 'bg-blue-500/30'
+                  : st.frameVariant === 'emerald'
+                  ? 'bg-emerald-500/30'
+                  : 'bg-orange-500/30'
+              }`}
+            />
+
             <div
               onClick={() => setActiveModalId(st.id)}
-              className="flex-1 flex flex-col justify-between focus:outline-none"
+              className="flex-1 flex flex-col justify-between focus:outline-none relative z-10"
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
@@ -273,9 +289,9 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
             >
               <div>
                 <div className="flex items-center justify-between mb-5">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/10 text-white shadow-sm transition-transform duration-200 group-hover:scale-105 group-hover:border-white/20">
-                    <st.icon size={22} strokeWidth={1.75} />
-                  </span>
+                  <IconFrame variant={st.frameVariant} size="md">
+                    <st.icon size={20} strokeWidth={1.8} />
+                  </IconFrame>
                   <span className="text-2xl font-mono font-bold text-neutral-500 group-hover:text-white transition-colors tracking-wider">
                     {st.step}
                   </span>
@@ -337,7 +353,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: 12 }}
                   transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-                  className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] text-white shadow-2xl shadow-black my-auto overflow-hidden"
+                  className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013]/98 backdrop-blur-2xl border border-white/15 text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_25px_60px_-15px_rgba(0,0,0,0.95)] my-auto overflow-hidden"
                 >
                   {/* Fixed Header */}
                   <m.div
@@ -347,9 +363,9 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                     className="flex items-center justify-between p-4 sm:p-5 border-b border-[#26282D] gap-3 shrink-0"
                   >
                     <div className="flex items-center gap-2.5 flex-wrap">
-                      <div className="h-8 w-8 rounded-lg bg-white/10 text-white flex items-center justify-center font-bold">
-                        <activeStepItem.icon size={16} />
-                      </div>
+                      <IconFrame variant={activeStepItem.frameVariant} size="sm">
+                        <activeStepItem.icon size={15} />
+                      </IconFrame>
                       <span className="px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold font-sans bg-white/10 text-white border border-white/20">
                         {activeStepItem.badge}
                       </span>

@@ -21,6 +21,7 @@ import {
 import { m, AnimatePresence } from 'framer-motion';
 import Signal from '@/components/shared/Signal';
 import TextReveal from '@/components/shared/TextReveal';
+import BorderBeam from '@/components/shared/BorderBeam';
 
 interface WhoWeAreProps {
   lang?: 'en' | 'ar';
@@ -103,7 +104,7 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
         {/* Split Comparison Cards (2-column layout matching Picture 4) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
           {/* Card 1: The Traditional Way (Negative / Friction State) */}
-          <div className="rounded-3xl border border-[#26282D] bg-[#0F1013] overflow-hidden shadow-xl transition-all duration-300 flex flex-col text-white">
+          <div className="rounded-3xl border border-[#26282D] hover:border-red-900/40 bg-[#0F1013] overflow-hidden shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_15px_35px_-10px_rgba(0,0,0,0.6)] transition-all duration-300 flex flex-col text-white">
             {/* Real Cluttered Desk Photo Header */}
             <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-[#08090A]">
               <Image
@@ -156,7 +157,8 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
           </div>
 
           {/* Card 2: The PontLook Way (Positive / Solution State) */}
-          <div className="rounded-3xl border border-[#26282D] bg-[#0F1013] overflow-hidden shadow-xl transition-all duration-300 flex flex-col text-white">
+          <div className="rounded-3xl border border-white/20 hover:border-white/35 bg-[#0F1013] overflow-hidden shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_50px_-10px_rgba(0,0,0,0.8)] transition-all duration-300 flex flex-col text-white relative">
+            <BorderBeam size={260} duration={14} colorFrom="#FF5C00" colorTo="#10B981" />
             {/* Real Clean Architecture Photo Header */}
             <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-[#08090A]">
               <Image
@@ -303,14 +305,17 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
           {models.map((card, idx) => (
             <div
               key={idx}
-              className={`rounded-3xl p-5 sm:p-8 lg:p-9 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 ${
+              className={`rounded-3xl p-5 sm:p-8 lg:p-9 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 relative overflow-hidden ${
                 card.isFeatured
-                  ? 'bg-[#0F1013] border border-white/30 shadow-2xl relative text-white'
-                  : 'bg-[#0F1013] border border-[#26282D] shadow-xl hover:border-white/20 text-white'
+                  ? 'bg-[#0F1013] border border-white/30 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_50px_-10px_rgba(255,92,0,0.15)] text-white'
+                  : 'bg-[#0F1013] border border-[#26282D] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_10px_30px_-10px_rgba(0,0,0,0.6)] hover:border-white/20 text-white'
               }`}
             >
               {card.isFeatured && (
-                <div className="absolute -top-3.5 start-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-white text-[11px] font-bold uppercase tracking-wider shadow-md">
+                <BorderBeam size={260} duration={12} colorFrom="#FF5C00" colorTo="#FF9500" />
+              )}
+              {card.isFeatured && (
+                <div className="absolute -top-3.5 start-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-white text-[11px] font-bold uppercase tracking-wider shadow-md z-10">
                   {isAr ? 'النموذج الأكثر فاعلية' : 'CORE REVENUE MODEL'}
                 </div>
               )}
@@ -848,8 +853,9 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
           onTouchEnd={handleTouchEnd}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
-          className="relative rounded-3xl border border-[#26282D] bg-[#0F1013] p-4 sm:p-8 lg:p-12 shadow-2xl overflow-hidden text-white transition-all duration-300"
+          className="relative rounded-3xl border border-[#26282D] hover:border-white/25 bg-[#0F1013] p-4 sm:p-8 lg:p-12 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_24px_50px_-12px_rgba(0,0,0,0.85)] overflow-hidden text-white transition-all duration-300"
         >
+          <BorderBeam size={320} duration={16} colorFrom="#FF5C00" colorTo="#0052FF" />
           {/* Ambient Corner Glow */}
           <div className="absolute -top-24 -end-24 w-72 h-72 bg-gradient-to-bl from-blue-500/[0.06] via-purple-500/[0.03] to-transparent rounded-full blur-3xl pointer-events-none" />
 
