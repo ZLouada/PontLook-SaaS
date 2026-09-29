@@ -452,6 +452,28 @@ export default function WhyDifferent() {
             const Icon = it.icon;
             const isSelected = activeModalId === it.id;
             const theme = it.theme;
+            const glowStyles: Record<string, string> = {
+              brand: 'hover:border-orange-500/35 hover:shadow-[0_0_30px_rgba(255,92,0,0.12)]',
+              emerald: 'hover:border-emerald-500/35 hover:shadow-[0_0_30px_rgba(16,185,129,0.12)]',
+              purple: 'hover:border-purple-500/35 hover:shadow-[0_0_30px_rgba(168,85,247,0.12)]',
+              amber: 'hover:border-amber-500/35 hover:shadow-[0_0_30px_rgba(245,158,11,0.12)]',
+              cyan: 'hover:border-cyan-500/35 hover:shadow-[0_0_30px_rgba(6,182,212,0.12)]',
+              blue: 'hover:border-blue-500/35 hover:shadow-[0_0_30px_rgba(59,130,246,0.12)]',
+              default: 'hover:border-white/20 hover:shadow-e2',
+            };
+
+            const auraColor: Record<string, string> = {
+              brand: 'bg-orange-500/10',
+              emerald: 'bg-emerald-500/10',
+              purple: 'bg-purple-500/10',
+              amber: 'bg-amber-500/10',
+              cyan: 'bg-cyan-500/10',
+              blue: 'bg-blue-500/10',
+              default: 'bg-white/5',
+            };
+
+            const cardGlow = glowStyles[it.themeVariant || 'default'] || glowStyles.default;
+            const cardAura = auraColor[it.themeVariant || 'default'] || auraColor.default;
 
             return (
               <m.div
@@ -463,13 +485,15 @@ export default function WhyDifferent() {
                 <Spotlight radius={320} className="w-full h-full rounded-2xl">
                   <m.div
                     whileHover={{
-                      y: -5,
-                      scale: 1.01,
+                      y: -6,
+                      scale: 1.015,
                       transition: { type: 'spring', stiffness: 350, damping: 20 },
                     }}
                     whileTap={{ scale: 0.98 }}
-                    className="surface group relative w-full h-full rounded-2xl p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-e2 hover:border-white/20 transition-colors duration-200"
+                    className={`surface group relative w-full h-full rounded-2xl p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-e2 overflow-hidden transition-all duration-300 ${cardGlow}`}
                   >
+                    {/* Ambient subtle back-glow on hover */}
+                    <div className={`pointer-events-none absolute -top-10 -end-10 w-28 h-28 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${cardAura}`} />
                   {/* Card Front Top */}
                   <div className="space-y-2.5">
                     <div className="flex items-center justify-between">

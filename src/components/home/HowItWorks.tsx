@@ -8,6 +8,7 @@ import { ArrowRight } from '@/components/icons';
 import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import Signal from '@/components/shared/Signal';
 import TextReveal from '@/components/shared/TextReveal';
+import BorderBeam from '@/components/shared/BorderBeam';
 import { spring, ease, dur } from '@/lib/motion';
 
 export default function HowItWorks() {
@@ -482,6 +483,7 @@ export default function HowItWorks() {
                 transition={{ duration: dur.base, ease: ease.out }}
                 className="surface relative rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 shadow-e3 overflow-hidden hover:border-white/20 transition-colors duration-300"
               >
+                <BorderBeam size={280} duration={12} colorFrom="#FF5C00" colorTo="#0052FF" />
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-8 items-center">
                   
                   {/* Left Column: Category Tag, Title, Action Link, 3 Points with Chevrons */}

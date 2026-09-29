@@ -8,7 +8,6 @@ import { ArrowRight, Sparkles } from '@/components/icons';
 import { m } from 'framer-motion';
 import TextReveal from '@/components/shared/TextReveal';
 import WordRotate from '@/components/shared/WordRotate';
-import HeroMatchSimulator from '@/components/home/HeroMatchSimulator';
 import { fadeUp, dur, ease } from '@/lib/motion';
 
 export default function Hero() {
@@ -60,7 +59,8 @@ export default function Hero() {
         <div className="absolute inset-0 grain pointer-events-none" />
 
         {/* ambient glow */}
-        <div className="absolute top-1/2 end-1/4 w-[500px] h-[500px] bg-amber-500/[0.04] blur-[150px] rounded-full" />
+        <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-amber-500/[0.03] blur-[160px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/2 end-1/4 w-[500px] h-[500px] bg-orange-500/[0.04] blur-[150px] rounded-full pointer-events-none" />
       </div>
 
       <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-5xl">
@@ -71,7 +71,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: ease.out }}
-            className="mb-4 sm:mb-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] border border-white/10 backdrop-blur-md shadow-sm"
+            className="mb-4 sm:mb-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B]/80 border border-white/15 backdrop-blur-xl shadow-[0_0_20px_rgba(255,255,255,0.03)]"
           >
             <Sparkles size={14} className="text-amber-400 animate-pulse" />
             <span className="text-xs font-medium text-neutral-300">
@@ -95,7 +95,8 @@ export default function Hero() {
             className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm md:text-base text-neutral-400 font-sans"
           >
             <span>{isAr ? 'عروض تدريبية معتمدة في' : 'Enterprise capability solutions in'}</span>
-            <span className="px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10 shadow-inner">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 shadow-inner backdrop-blur-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <WordRotate words={capabilityWords} />
             </span>
           </m.div>
@@ -110,7 +111,7 @@ export default function Hero() {
           >
             <Link
               href={`/${lang}/for-providers`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-white/[0.05] hover:bg-white/[0.10] text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98] transition-all duration-200 group sheen"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-gradient-to-r from-white/[0.08] to-white/[0.03] hover:from-white/[0.14] hover:to-white/[0.08] text-white font-medium text-sm sm:text-base border border-white/15 hover:border-white/35 backdrop-blur-xl shadow-[0_0_25px_rgba(255,255,255,0.05)] active:scale-[0.98] transition-all duration-200 group sheen"
             >
               <span>{isAr ? 'انضم إلى شبكتنا' : 'Join the network'}</span>
               <ArrowRight
@@ -130,9 +131,6 @@ export default function Hero() {
               />
             </Link>
           </m.div>
-
-          {/* Live GCC Matchmaking Simulator */}
-          <HeroMatchSimulator />
 
         </div>
       </div>
