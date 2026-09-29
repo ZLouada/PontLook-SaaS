@@ -12,6 +12,7 @@ export const ArrowDown = forwardRef<SVGSVGElement, IconProps>((
     className = '',
     style,
     color = 'currentColor',
+    fill = 'currentColor',
     ...props
   },
   ref
@@ -23,15 +24,14 @@ export const ArrowDown = forwardRef<SVGSVGElement, IconProps>((
       viewBox="0 0 24 24"
       width={size}
       height={size}
-      fill="currentColor"
+      fill={fill}
       stroke="none"
-      {...(strokeWidth ? { strokeWidth } : {})}
       className={className}
       style={style}
       aria-hidden="true"
       {...props}
     >
-      <path d="M11.293,22.707a1,1,0,0,0,1.414,0l6-6a1,1,0,0,0-1.414-1.414L13,19.586V2a1,1,0,0,0-2,0V19.586L6.707,15.293a1,1,0,0,0-1.414,1.414Z" fill="currentColor"></path>
+      <path d="M17.71,11.29a1,1,0,0,0-1.42,0L13,14.59V7a1,1,0,0,0-2,0v7.59l-3.29-3.3a1,1,0,0,0-1.42,1.42l5,5a1,1,0,0,0,.33.21.94.94,0,0,0,.76,0,1,1,0,0,0,.33-.21l5-5A1,1,0,0,0,17.71,11.29Z"/>
     </svg>
   );
 });

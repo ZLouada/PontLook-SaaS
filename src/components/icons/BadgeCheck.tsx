@@ -12,6 +12,7 @@ export const BadgeCheck = forwardRef<SVGSVGElement, IconProps>((
     className = '',
     style,
     color = 'currentColor',
+    fill = 'currentColor',
     ...props
   },
   ref
@@ -23,15 +24,14 @@ export const BadgeCheck = forwardRef<SVGSVGElement, IconProps>((
       viewBox="0 0 24 24"
       width={size}
       height={size}
-      fill="none"
-      stroke="currentColor"
-      {...(strokeWidth ? { strokeWidth } : {})}
+      fill={fill}
+      stroke="none"
       className={className}
       style={style}
       aria-hidden="true"
       {...props}
     >
-      <path fill="none" stroke="currentColor" d="M12 2L15 6L20 7L17 12L18 18L12 15L6 18L7 12L4 7L9 6L12 2Z"></path><path fill="none" stroke="currentColor" d="M9 10.5L11.5 13L15.5 9"></path>
+      <path d="M19.63,3.65a1,1,0,0,0-.84-.2,8,8,0,0,1-6.22-1.27,1,1,0,0,0-1.14,0A8,8,0,0,1,5.21,3.45a1,1,0,0,0-.84.2A1,1,0,0,0,4,4.43v7.45a9,9,0,0,0,3.77,7.33l3.65,2.6a1,1,0,0,0,1.16,0l3.65-2.6A9,9,0,0,0,20,11.88V4.43A1,1,0,0,0,19.63,3.65ZM18,11.88a7,7,0,0,1-2.93,5.7L12,19.77,8.93,17.58A7,7,0,0,1,6,11.88V5.58a10,10,0,0,0,6-1.39,10,10,0,0,0,6,1.39ZM13.54,9.59l-2.69,2.7-.89-.9a1,1,0,0,0-1.42,1.42l1.6,1.6a1,1,0,0,0,1.42,0L15,11a1,1,0,0,0-1.42-1.42Z"/>
     </svg>
   );
 });

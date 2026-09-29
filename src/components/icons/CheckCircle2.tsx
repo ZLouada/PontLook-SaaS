@@ -12,6 +12,7 @@ export const CheckCircle2 = forwardRef<SVGSVGElement, IconProps>((
     className = '',
     style,
     color = 'currentColor',
+    fill = 'currentColor',
     ...props
   },
   ref
@@ -20,18 +21,17 @@ export const CheckCircle2 = forwardRef<SVGSVGElement, IconProps>((
     <svg
       ref={ref}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 256 256"
+      viewBox="0 0 24 24"
       width={size}
       height={size}
-      fill="none"
-      stroke="currentColor"
-      {...(strokeWidth ? { strokeWidth } : {})}
+      fill={fill}
+      stroke="none"
       className={className}
       style={style}
       aria-hidden="true"
       {...props}
     >
-      <rect width="256" height="256" fill="none"></rect><polyline fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16" points="172 104 113.333 160 84 132"></polyline><circle cx="128" cy="128" r="96" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16"></circle>
+      <path d="M14.72,8.79l-4.29,4.3L8.78,11.44a1,1,0,1,0-1.41,1.41l2.35,2.36a1,1,0,0,0,.71.29,1,1,0,0,0,.7-.29l5-5a1,1,0,0,0,0-1.42A1,1,0,0,0,14.72,8.79ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"/>
     </svg>
   );
 });

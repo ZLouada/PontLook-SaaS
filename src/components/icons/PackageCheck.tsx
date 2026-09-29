@@ -12,6 +12,7 @@ export const PackageCheck = forwardRef<SVGSVGElement, IconProps>((
     className = '',
     style,
     color = 'currentColor',
+    fill = 'currentColor',
     ...props
   },
   ref
@@ -20,18 +21,17 @@ export const PackageCheck = forwardRef<SVGSVGElement, IconProps>((
     <svg
       ref={ref}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 32 32"
+      viewBox="0 0 24 24"
       width={size}
       height={size}
-      fill="currentColor"
+      fill={fill}
       stroke="none"
-      {...(strokeWidth ? { strokeWidth } : {})}
       className={className}
       style={style}
       aria-hidden="true"
       {...props}
     >
-      <path d="M23 16c-3.863 0-7 3.137-7 7s3.137 7 7 7 7-3.137 7-7-3.137-7-7-7ZM4 26h9a1 1 0 0 0 0-2H4V5a1 1 0 0 1 1-1h6v8a1 1 0 0 0 1.447.894L16 11.118l3.553 1.776A1 1 0 0 0 21 12V4h6a1 1 0 0 1 1 1v10a1 1 0 0 0 2 0V5c0-1.656-1.344-3-3-3H5C3.344 2 2 3.344 2 5v22c0 1.656 1.344 3 3 3h10a1 1 0 0 0 0-2H5a1 1 0 0 1-1-1v-1Zm19-8c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5Zm-3.207 5.707 2 2a.999.999 0 0 0 1.414 0l3-3a1 1 0 0 0-1.414-1.414L22.5 23.586l-1.293-1.293a1 1 0 0 0-1.414 1.414ZM19 4h-6v6.382l2.553-1.276a.998.998 0 0 1 .894 0L19 10.382V4Z" fill="currentColor" className="svgShape color000000-0"/>
+      <path d="M19,2H5A3,3,0,0,0,2,5V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V5A3,3,0,0,0,19,2ZM10,4h4V7.13l-1.45-1a1,1,0,0,0-1.1,0L10,7.13ZM20,19a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4H8V9a1,1,0,0,0,.53.88,1,1,0,0,0,1-.05L12,8.2l2.45,1.63A1,1,0,0,0,16,9V4h3a1,1,0,0,1,1,1Z"/>
     </svg>
   );
 });

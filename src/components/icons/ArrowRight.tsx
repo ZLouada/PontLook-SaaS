@@ -12,6 +12,7 @@ export const ArrowRight = forwardRef<SVGSVGElement, IconProps>((
     className = '',
     style,
     color = 'currentColor',
+    fill = 'currentColor',
     ...props
   },
   ref
@@ -20,18 +21,17 @@ export const ArrowRight = forwardRef<SVGSVGElement, IconProps>((
     <svg
       ref={ref}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 32 32"
+      viewBox="0 0 24 24"
       width={size}
       height={size}
-      fill="currentColor"
+      fill={fill}
       stroke="none"
-      {...(strokeWidth ? { strokeWidth } : {})}
       className={className}
       style={style}
       aria-hidden="true"
       {...props}
     >
-      <path d="M28.66 17.11a1.19 1.19 0 0 0 .09-.15l.1-.2.06-.2a.84.84 0 0 0 .05-.17 2 2 0 0 0 0-.78.84.84 0 0 0-.05-.17l-.06-.2-.1-.2a1.19 1.19 0 0 0-.09-.15 1.79 1.79 0 0 0-.25-.31l-10-10a2 2 0 0 0-2.82 2.82l6.58 6.6H5a2 2 0 0 0 0 4h17.17l-6.58 6.59a2 2 0 1 0 2.82 2.82l10-10a1.79 1.79 0 0 0 .25-.3Z" fill="currentColor"></path>
+      <path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z"/>
     </svg>
   );
 });

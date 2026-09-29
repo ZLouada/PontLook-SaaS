@@ -12,6 +12,7 @@ export const Sparkles = forwardRef<SVGSVGElement, IconProps>((
     className = '',
     style,
     color = 'currentColor',
+    fill = 'currentColor',
     ...props
   },
   ref
@@ -20,18 +21,17 @@ export const Sparkles = forwardRef<SVGSVGElement, IconProps>((
     <svg
       ref={ref}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 64 64"
+      viewBox="0 0 24 24"
       width={size}
       height={size}
-      fill="currentColor"
+      fill={fill}
       stroke="none"
-      {...(strokeWidth ? { strokeWidth } : {})}
       className={className}
       style={style}
       aria-hidden="true"
       {...props}
     >
-      <path fill="currentColor" d="M39.927,32.1C27.165,35.386,24.386,38.165,21.1,50.927a.1.1,0,0,1-.19,0C17.614,38.165,14.835,35.386,2.073,32.1a.1.1,0,0,1,0-.19c12.762-3.291,15.541-6.07,18.832-18.832a.1.1,0,0,1,.19,0c3.291,12.762,6.07,15.541,18.832,18.832A.1.1,0,0,1,39.927,32.1Z" className="svgShape color9ceaef-0"/><path fill="currentColor" d="M25.939,31.912c-2.979-1.037-3.858-3.749-4.854-6.849a.089.089,0,0,0-.17,0c-1,3.1-1.875,5.812-4.854,6.849a.094.094,0,0,0,0,.176c2.979,1.037,3.858,3.749,4.854,6.849a.089.089,0,0,0,.17,0c1-3.1,1.875-5.812,4.854-6.849A.094.094,0,0,0,25.939,31.912Z" className="svgShape colore9ff70-1"/><path fill="currentColor" d="M61.926,15.094c-8.868,2.125-10.707,3.964-12.832,12.832a.1.1,0,0,1-.188,0c-2.125-8.868-3.964-10.707-12.832-12.832a.1.1,0,0,1,0-.188c8.868-2.125,10.707-3.964,12.832-12.832a.1.1,0,0,1,.188,0c2.125,8.868,3.964,10.707,12.832,12.832A.1.1,0,0,1,61.926,15.094Z" className="svgShape color07beb8-2"/><rect width="2" height="2" x="48" y="12" fill="currentColor" className="svgShape color9ceaef-3"/><rect width="2" height="2" x="48" y="16" fill="currentColor" className="svgShape color9ceaef-4"/><rect width="2" height="2" x="50" y="14" fill="currentColor" className="svgShape color9ceaef-5"/><rect width="2" height="2" x="46" y="14" fill="currentColor" className="svgShape color9ceaef-6"/><path fill="currentColor" d="M61.926,49.094c-8.868,2.125-10.707,3.964-12.832,12.832a.1.1,0,0,1-.188,0c-2.125-8.868-3.964-10.707-12.832-12.832a.1.1,0,0,1,0-.188c8.868-2.125,10.707-3.964,12.832-12.832a.1.1,0,0,1,.188,0c2.125,8.868,3.964,10.707,12.832,12.832A.1.1,0,0,1,61.926,49.094Z" className="svgShape color07beb8-7"/><rect width="2" height="2" x="48" y="46" fill="currentColor" className="svgShape color9ceaef-8"/><rect width="2" height="2" x="48" y="50" fill="currentColor" className="svgShape color9ceaef-9"/><rect width="2" height="2" x="50" y="48" fill="currentColor" className="svgShape color9ceaef-10"/><rect width="2" height="2" x="46" y="48" fill="currentColor" className="svgShape color9ceaef-11"/>
+      <path d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68a1,1,0,0,0,.4,1,1,1,0,0,0,1.05.07L12,18.76l5.1,2.68a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.89l.72,4.19-3.76-2a1,1,0,0,0-.94,0l-3.76,2,.72-4.19a1,1,0,0,0-.29-.89l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z"/>
     </svg>
   );
 });

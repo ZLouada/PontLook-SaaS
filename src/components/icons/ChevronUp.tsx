@@ -12,6 +12,7 @@ export const ChevronUp = forwardRef<SVGSVGElement, IconProps>((
     className = '',
     style,
     color = 'currentColor',
+    fill = 'currentColor',
     ...props
   },
   ref
@@ -20,18 +21,17 @@ export const ChevronUp = forwardRef<SVGSVGElement, IconProps>((
     <svg
       ref={ref}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 2000 2000"
+      viewBox="0 0 24 24"
       width={size}
       height={size}
-      fill="currentColor"
+      fill={fill}
       stroke="none"
-      {...(strokeWidth ? { strokeWidth } : {})}
       className={className}
       style={style}
       aria-hidden="true"
       {...props}
     >
-      <path d="M1744,1436c-16.4,0-32.8-6.2-45.3-18.7L1000,718.5l-698.7,698.7c-25,25-65.5,25-90.5,0c-25-25-25-65.5,0-90.5l744-744c25-25,65.5-25,90.5,0l744,744c25,25,25,65.5,0,90.5C1776.8,1429.8,1760.4,1436,1744,1436z" fill="currentColor"></path>
+      <path d="M17,13.41,12.71,9.17a1,1,0,0,0-1.42,0L7.05,13.41a1,1,0,0,0,0,1.42,1,1,0,0,0,1.41,0L12,11.29l3.54,3.54a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29A1,1,0,0,0,17,13.41Z"/>
     </svg>
   );
 });

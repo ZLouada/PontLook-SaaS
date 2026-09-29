@@ -12,6 +12,7 @@ export const RefreshCw = forwardRef<SVGSVGElement, IconProps>((
     className = '',
     style,
     color = 'currentColor',
+    fill = 'currentColor',
     ...props
   },
   ref
@@ -23,15 +24,14 @@ export const RefreshCw = forwardRef<SVGSVGElement, IconProps>((
       viewBox="0 0 24 24"
       width={size}
       height={size}
-      fill="currentColor"
+      fill={fill}
       stroke="none"
-      {...(strokeWidth ? { strokeWidth } : {})}
       className={className}
       style={style}
       aria-hidden="true"
       {...props}
     >
-      <path d="M12 4a8 8 0 0 1 4.985 1.758H15.242a1 1 0 0 0 0 2h4a1 1 0 0 0 1-1v-4a1 1 0 1 0-2 0V4.206A9.983 9.983 0 0 0 2 12a1 1 0 0 0 2 0A8.009 8.009 0 0 1 12 4zM21 11a1 1 0 0 0-1 1A7.986 7.986 0 0 1 7.015 18.242H8.757a1 1 0 1 0 0-2h-4a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V19.794A9.984 9.984 0 0 0 22 12 1 1 0 0 0 21 11z" fill="currentColor" className="svgShape color000000-0"/>
+      <path d="M19.91,15.51H15.38a1,1,0,0,0,0,2h2.4A8,8,0,0,1,4,12a1,1,0,0,0-2,0,10,10,0,0,0,16.88,7.23V21a1,1,0,0,0,2,0V16.5A1,1,0,0,0,19.91,15.51ZM12,2A10,10,0,0,0,5.12,4.77V3a1,1,0,0,0-2,0V7.5a1,1,0,0,0,1,1h4.5a1,1,0,0,0,0-2H6.22A8,8,0,0,1,20,12a1,1,0,0,0,2,0A10,10,0,0,0,12,2Z"/>
     </svg>
   );
 });

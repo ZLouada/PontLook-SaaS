@@ -12,6 +12,7 @@ export const Check = forwardRef<SVGSVGElement, IconProps>((
     className = '',
     style,
     color = 'currentColor',
+    fill = 'currentColor',
     ...props
   },
   ref
@@ -20,18 +21,17 @@ export const Check = forwardRef<SVGSVGElement, IconProps>((
     <svg
       ref={ref}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 500 500"
+      viewBox="0 0 24 24"
       width={size}
       height={size}
-      fill="none"
-      stroke="currentColor"
-      {...(strokeWidth ? { strokeWidth } : {})}
+      fill={fill}
+      stroke="none"
       className={className}
       style={style}
       aria-hidden="true"
       {...props}
     >
-      <path d="M355 425H145c-38.66 0-70-31.34-70-70V145c0-38.66 31.34-70 70-70h210c38.66 0 70 31.34 70 70v210c0 38.66-31.34 70-70 70" fill="none" stroke="currentColor" strokeWidth="20" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10"></path><path d="m137 240.99 86.99 86.99L466.11 85.86" fill="none" stroke="#c33" strokeWidth="50" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10"></path>
+      <path d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"/>
     </svg>
   );
 });

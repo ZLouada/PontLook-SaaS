@@ -12,6 +12,7 @@ export const Zap = forwardRef<SVGSVGElement, IconProps>((
     className = '',
     style,
     color = 'currentColor',
+    fill = 'currentColor',
     ...props
   },
   ref
@@ -20,18 +21,17 @@ export const Zap = forwardRef<SVGSVGElement, IconProps>((
     <svg
       ref={ref}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 256 256"
+      viewBox="0 0 24 24"
       width={size}
       height={size}
-      fill="none"
-      stroke="currentColor"
-      {...(strokeWidth ? { strokeWidth } : {})}
+      fill={fill}
+      stroke="none"
       className={className}
       style={style}
       aria-hidden="true"
       {...props}
     >
-      <rect width="256" height="256" fill="none"/><polygon fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16" points="96 239.992 112 159.992 48 135.992 160 15.992 144 95.992 208 119.992 96 239.992" className="svgStroke colorStroke000000-1"/>
+      <path d="M19.89,9.55A1,1,0,0,0,19,9H14V3a1,1,0,0,0-.69-1,1,1,0,0,0-1.12.36l-8,11a1,1,0,0,0-.08,1A1,1,0,0,0,5,15h5v6a1,1,0,0,0,.69.95A1.12,1.12,0,0,0,11,22a1,1,0,0,0,.81-.41l8-11A1,1,0,0,0,19.89,9.55ZM12,17.92V14a1,1,0,0,0-1-1H7l5-6.92V10a1,1,0,0,0,1,1h4Z"/>
     </svg>
   );
 });

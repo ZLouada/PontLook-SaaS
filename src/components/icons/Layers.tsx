@@ -12,6 +12,7 @@ export const Layers = forwardRef<SVGSVGElement, IconProps>((
     className = '',
     style,
     color = 'currentColor',
+    fill = 'currentColor',
     ...props
   },
   ref
@@ -20,18 +21,17 @@ export const Layers = forwardRef<SVGSVGElement, IconProps>((
     <svg
       ref={ref}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 96 96"
+      viewBox="0 0 24 24"
       width={size}
       height={size}
-      fill="none"
-      stroke="currentColor"
-      {...(strokeWidth ? { strokeWidth } : {})}
+      fill={fill}
+      stroke="none"
       className={className}
       style={style}
       aria-hidden="true"
       {...props}
     >
-      <g clipPath="url(#clip0_1073_6628)"><path stroke="currentColor" strokeWidth="5" d="M15.5259 37.7862C12.1857 35.8631 12.1857 31.0432 15.5259 29.12L44.5073 12.4338C46.6694 11.1889 49.3306 11.1889 51.4927 12.4338L80.4741 29.12C83.8143 31.0432 83.8143 35.8631 80.4741 37.7862L51.4927 54.4725C49.3306 55.7173 46.6694 55.7173 44.5072 54.4724L15.5259 37.7862Z" fill="none" className="svgStroke colorStroke000000-1"/><path stroke="currentColor" strokeWidth="5" d="M20.6316 40.7273L15.5259 43.6669C12.1857 45.5901 12.1857 50.4099 15.5259 52.3331L44.5072 69.0193C46.6694 70.2642 49.3306 70.2642 51.4927 69.0193L80.4741 52.3331C83.8143 50.4099 83.8143 45.5901 80.4741 43.6669L75.3684 40.7273" fill="none" className="svgStroke colorStroke000000-2"/><path stroke="currentColor" strokeWidth="5" d="M20.6316 55.2741L15.5259 58.2138C12.1857 60.1369 12.1857 64.9568 15.5259 66.88L44.5072 83.5662C46.6694 84.8111 49.3306 84.8111 51.4927 83.5662L80.4741 66.88C83.8143 64.9568 83.8143 60.1369 80.4741 58.2138L74.6667 54.8701" fill="none" className="svgStroke colorStroke000000-3"/></g><defs><clipPath id="clip0_1073_6628"><rect width="96" height="96" fill="currentColor"/></clipPath></defs>
+      <path d="M21,2H9A1,1,0,0,0,8,3V7H6A1,1,0,0,0,5,8v4H3a1,1,0,0,0-1,1v8a1,1,0,0,0,1,1h8a1,1,0,0,0,1-1V19h4a1,1,0,0,0,1-1V16h4a1,1,0,0,0,1-1V3A1,1,0,0,0,21,2ZM10,20H4V14h6Zm5-3H12V13a1,1,0,0,0-1-1H7V9h8Zm5-3H17V8a1,1,0,0,0-1-1H10V4H20Z"/>
     </svg>
   );
 });
