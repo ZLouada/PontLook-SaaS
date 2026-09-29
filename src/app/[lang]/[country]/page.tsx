@@ -20,6 +20,8 @@ import {
 } from '@/lib/seo/schema';
 import Reveal from '@/components/shared/Reveal';
 import FAQAccordion from '@/components/faq/FAQAccordion';
+import TextReveal from '@/components/shared/TextReveal';
+import IconFrame from '@/components/shared/IconFrame';
 
 export const dynamic = 'force-static';
 
@@ -190,11 +192,16 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-semibold text-white leading-[1.15] sm:leading-[1.1] font-heading tracking-tight text-start mb-6">
-                {isAr
-                  ? `أكاديميات ومزودو التدريب المؤسسي المعتمدون في ${countryName}`
-                  : `Accredited Corporate Training Academies in ${countryName}`}
-              </h1>
+              <TextReveal
+                as="h1"
+                text={
+                  isAr
+                    ? `أكاديميات ومزودو التدريب المؤسسي المعتمدون في ${countryName}`
+                    : `Accredited Corporate Training Academies in ${countryName}`
+                }
+                onScroll={false}
+                className="text-3xl sm:text-5xl lg:text-6xl font-semibold text-white leading-[1.15] sm:leading-[1.1] font-heading tracking-tight text-start mb-6"
+              />
 
               <p className="text-base sm:text-lg text-neutral-300 leading-relaxed max-w-3xl font-normal font-sans text-start mb-8 sm:mb-10">
                 {isAr
@@ -257,9 +264,11 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
         <section className="container-site max-w-6xl mx-auto px-4 sm:px-6 mb-16 sm:mb-24">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-semibold text-white font-heading">
-                {isAr ? `المراكز الإقليمية في ${countryName}` : `Regional City Hubs in ${countryName}`}
-              </h2>
+              <TextReveal
+                as="h2"
+                text={isAr ? `المراكز الإقليمية في ${countryName}` : `Regional City Hubs in ${countryName}`}
+                className="text-2xl sm:text-3xl font-semibold text-white font-heading"
+              />
               <p className="text-xs sm:text-sm text-neutral-400 mt-1">
                 {isAr ? 'اختر مدينتك للاطلاع على مزودي التدريب والأسعار والقطاعات المحلية:' : 'Select your city to view accredited providers, delivery formats, and local investment benchmarks:'}
               </p>
@@ -305,9 +314,11 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
         <section className="container-site max-w-6xl mx-auto px-4 sm:px-6 mb-16 sm:mb-24">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-semibold text-white font-heading">
-                {isAr ? `تخصصات التدريب المؤسسي في ${countryName}` : `Corporate Training Verticals in ${countryName}`}
-              </h2>
+              <TextReveal
+                as="h2"
+                text={isAr ? `تخصصات التدريب المؤسسي في ${countryName}` : `Corporate Training Verticals in ${countryName}`}
+                className="text-2xl sm:text-3xl font-semibold text-white font-heading"
+              />
               <p className="text-xs sm:text-sm text-neutral-400 mt-1">
                 {isAr ? 'برامج معتمدة موجهة للإدارة العليا وفرق العمل التخصصية:' : 'Accredited executive programs for corporate departments and leadership:'}
               </p>
@@ -415,9 +426,11 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
         {/* 7. COUNTRY FAQS */}
         <section className="container-site max-w-4xl mx-auto px-4 sm:px-6">
           <div className="text-start mb-8">
-            <h2 className="text-2xl sm:text-3xl font-semibold text-white font-heading">
-              {isAr ? `الأسئلة الشائعة حول التدريب في ${countryName}` : `Frequently Asked Questions • ${countryName}`}
-            </h2>
+            <TextReveal
+              as="h2"
+              text={isAr ? `الأسئلة الشائعة حول التدريب في ${countryName}` : `Frequently Asked Questions • ${countryName}`}
+              className="text-2xl sm:text-3xl font-semibold text-white font-heading"
+            />
             <p className="text-xs sm:text-sm text-neutral-400 mt-1">
               {isAr ? 'معلومات حول معايير التأهيل، والأسعار، وإجراءات التعاقد:' : 'Key information regarding procurement guidelines, pricing, and provider vetting:'}
             </p>

@@ -12,6 +12,9 @@ type Props = {
   delay?: number;
   /** Set false to play on mount instead of on scroll (above-the-fold copy). */
   onScroll?: boolean;
+  /** Words to emphasize with gradient highlight */
+  highlightWords?: string[];
+  highlightClassName?: string;
 };
 
 export default function TextReveal({
@@ -20,13 +23,30 @@ export default function TextReveal({
   className = '',
   delay = 0,
   onScroll = true,
+  highlightWords = [],
+  highlightClassName = 'bg-gradient-to-r from-amber-300 via-orange-400 to-amber-200 bg-clip-text text-transparent font-bold',
 }: Props) {
   const reduce = useReducedMotion();
   const words = text.split(/\s+/).filter(Boolean);
 
+  const cleanWord = (w: string) => w.toLowerCase().replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '');
+  const highlightsNormalized = highlightWords.map((hw) => cleanWord(hw));
+
   if (reduce) {
     const Plain = as;
-    return <Plain className={className}>{text}</Plain>;
+    return (
+      <Plain className={className}>
+        {words.map((word, i) => {
+          const isHighlighted = highlightsNormalized.includes(cleanWord(word));
+          return (
+            <React.Fragment key={`${word}-${i}`}>
+              <span className={isHighlighted ? highlightClassName : undefined}>{word}</span>
+              {i < words.length - 1 ? ' ' : null}
+            </React.Fragment>
+          );
+        })}
+      </Plain>
+    );
   }
 
   const Tag = m[as];
@@ -42,20 +62,29 @@ export default function TextReveal({
       transition={{ delayChildren: delay }}
       {...play}
     >
-      {words.map((word, i) => (
-        <React.Fragment key={`${word}-${i}`}>
-          {/* wrapper clips, inner span travels */}
-          <span
-            className="inline-block overflow-hidden align-bottom"
-            style={{ paddingBottom: '0.14em', marginBottom: '-0.14em' }}
-          >
-            <m.span className="inline-block will-change-transform" variants={wordItem}>
-              {word}
-            </m.span>
-          </span>
-          {i < words.length - 1 ? ' ' : null}
-        </React.Fragment>
-      ))}
+      {words.map((word, i) => {
+        const isHighlighted = highlightsNormalized.includes(cleanWord(word));
+
+        return (
+          <React.Fragment key={`${word}-${i}`}>
+            {/* wrapper clips, inner span travels */}
+            <span
+              className="inline-block overflow-hidden align-bottom"
+              style={{ paddingBottom: '0.14em', marginBottom: '-0.14em' }}
+            >
+              <m.span
+                className={`inline-block will-change-transform ${
+                  isHighlighted ? highlightClassName : ''
+                }`}
+                variants={wordItem}
+              >
+                {word}
+              </m.span>
+            </span>
+            {i < words.length - 1 ? ' ' : null}
+          </React.Fragment>
+        );
+      })}
     </Tag>
   );
 }

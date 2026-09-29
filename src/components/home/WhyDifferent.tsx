@@ -19,6 +19,7 @@ import { useDictionary } from '@/components/providers/DictionaryProvider';
 import Signal from '@/components/shared/Signal';
 import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
+import IconFrame, { type IconFrameVariant } from '@/components/shared/IconFrame';
 import { staggerContainer, staggerItem, viewportOnce } from '@/lib/motion';
 
 interface CardTheme {
@@ -44,6 +45,7 @@ interface CardItem {
   takeaways: string[];
   mockup: React.ReactNode;
   theme: CardTheme;
+  themeVariant: IconFrameVariant;
 }
 
 export default function WhyDifferent() {
@@ -142,13 +144,14 @@ export default function WhyDifferent() {
         checkColor: 'text-emerald-400',
         flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-white group-hover:border-white/30',
       },
+      themeVariant: 'brand',
       mockup: (
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
           <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
-              <div className="h-7 w-7 rounded-lg bg-white/10 text-white flex items-center justify-center shrink-0">
+              <IconFrame variant="brand" size="xs">
                 <Target size={14} />
-              </div>
+              </IconFrame>
               <div>
                 <div className="text-xs font-semibold text-white font-sans">
                   {c?.diagnose?.mockupHeader || (isAr ? 'تقييم فجوات الكفاءات' : 'Skill Gap Assessment')}
@@ -201,6 +204,7 @@ export default function WhyDifferent() {
         checkColor: 'text-emerald-400',
         flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-emerald-400 group-hover:border-emerald-500/30',
       },
+      themeVariant: 'emerald',
       mockup: (
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
           <div className="text-xs font-semibold text-white pb-1.5 border-b border-[#26282D] flex items-center justify-between font-sans">
@@ -251,6 +255,7 @@ export default function WhyDifferent() {
         checkColor: 'text-purple-400',
         flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-purple-400 group-hover:border-purple-500/30',
       },
+      themeVariant: 'purple',
       mockup: (
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
           <div className="flex items-center justify-between">
@@ -305,6 +310,7 @@ export default function WhyDifferent() {
         checkColor: 'text-amber-400',
         flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-amber-400 group-hover:border-amber-500/30',
       },
+      themeVariant: 'amber',
       mockup: (
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-1.5">
           <div className="flex items-center justify-between pb-1 border-b border-[#26282D] text-xs font-semibold text-white font-sans">
@@ -358,6 +364,7 @@ export default function WhyDifferent() {
         checkColor: 'text-cyan-400',
         flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-cyan-400 group-hover:border-cyan-500/30',
       },
+      themeVariant: 'cyan',
       mockup: (
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-1.5">
           <div className="flex items-center justify-between pb-1 border-b border-[#26282D] text-xs font-semibold text-white font-sans">
@@ -485,9 +492,9 @@ export default function WhyDifferent() {
 
                   {/* Card Front Bottom */}
                   <div className="pt-2 border-t border-[#26282D] flex items-center justify-between">
-                    <div className={`h-8 w-8 rounded-lg ${theme.iconBg} flex items-center justify-center font-bold text-white transition-transform duration-200 group-hover:scale-105`}>
+                    <IconFrame variant={it.themeVariant} size="sm">
                       <Icon size={16} strokeWidth={1.75} />
-                    </div>
+                    </IconFrame>
 
                     <div className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-300 group-hover:text-white transition-colors duration-200">
                       <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
@@ -565,9 +572,9 @@ export default function WhyDifferent() {
                 className="flex items-center justify-between p-4 sm:p-5 border-b border-[#26282D] gap-3 shrink-0"
               >
                 <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
-                  <div className={`h-7 w-7 sm:h-8 sm:w-8 rounded-lg ${activeCard.theme.iconBg} flex items-center justify-center font-bold`}>
+                  <IconFrame variant={activeCard.themeVariant} size="sm">
                     <activeCard.icon size={15} />
-                  </div>
+                  </IconFrame>
                   <span className={`px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold font-sans ${activeCard.theme.badgeBg}`}>
                     {activeCard.badge}
                   </span>

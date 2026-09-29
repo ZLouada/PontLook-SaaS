@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { AnimatePresence, m } from 'framer-motion';
 import { Clock, ShieldCheck } from '@/components/icons';
 import { STORAGE_KEY, type WizardData, TRAINING_DOMAINS, DELIVERY_MODES, COHORT_SIZES, TIMELINES, BUDGET_BANDS } from './schemas';
@@ -14,11 +15,18 @@ import {
 } from './steps';
 import Signal from '@/components/shared/Signal';
 
-const STEP_DEFINITIONS = [
+const STEP_DEFINITIONS_EN = [
   { step: 1, title: 'Training Scope', short: 'Scope' },
   { step: 2, title: 'Delivery & Region', short: 'Delivery' },
   { step: 3, title: 'Cohort & Budget', short: 'Cohort & Budget' },
   { step: 4, title: 'Enterprise Verification', short: 'Verification' },
+];
+
+const STEP_DEFINITIONS_AR = [
+  { step: 1, title: 'مجال التدريب', short: 'المجال' },
+  { step: 2, title: 'طريقة التنفيذ والمنطقة', short: 'التنفيذ' },
+  { step: 3, title: 'حجم المجموعة والميزانية', short: 'الميزانية' },
+  { step: 4, title: 'التحقق المؤسسي', short: 'التحقق' },
 ];
 
 type SavedSession = {
@@ -28,6 +36,10 @@ type SavedSession = {
 };
 
 export default function FindTrainingWizard() {
+  const params = useParams();
+  const isAr = params?.lang === 'ar';
+  const stepDefs = isAr ? STEP_DEFINITIONS_AR : STEP_DEFINITIONS_EN;
+
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [formData, setFormData] = useState<WizardData>({});
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -235,7 +247,7 @@ export default function FindTrainingWizard() {
     );
   }
 
-  const progressPercentage = ((currentStep - 1) / (STEP_DEFINITIONS.length - 1)) * 100;
+  const progressPercentage = ((currentStep - 1) / (stepDefs.length - 1)) * 100;
 
   return (
     <div id="find-training-wizard-container" className="w-full space-y-6">
@@ -246,27 +258,27 @@ export default function FindTrainingWizard() {
               {currentStep}
             </span>
             <span className="text-sm font-semibold text-white">
-              Step {currentStep} of 4:
+              {isAr ? `الخطوة ${currentStep} من 4:` : `Step ${currentStep} of 4:`}
             </span>
             <span className="text-sm font-medium text-neutral-400">
-              {STEP_DEFINITIONS[currentStep - 1]?.title}
+              {stepDefs[currentStep - 1]?.title}
             </span>
           </div>
 
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center gap-1 text-xs font-semibold text-neutral-400">
               <Clock size={13} className="text-neutral-400" />
-              <span>(~60 seconds)</span>
+              <span>{isAr ? '(~60 ثانية)' : '(~60 seconds)'}</span>
             </span>
             <span className="hidden items-center gap-1.5 rounded-full bg-[#16171B] border border-[#26282D] px-2.5 py-0.5 text-[11px] font-medium text-neutral-300 sm:inline-flex">
               <Signal />
-              <span>Auto-saving session</span>
+              <span>{isAr ? 'حفظ تلقائي للجلسة' : 'Auto-saving session'}</span>
             </span>
           </div>
         </div>
 
         <div className="mt-4 grid grid-cols-4 gap-2">
-          {STEP_DEFINITIONS.map((def) => {
+          {stepDefs.map((def) => {
             const isCompleted = def.step < currentStep;
             const isCurrent = def.step === currentStep;
 

@@ -4,9 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { ArrowRight } from '@/components/icons';
+import { ArrowRight, Sparkles } from '@/components/icons';
 import { m } from 'framer-motion';
 import TextReveal from '@/components/shared/TextReveal';
+import WordRotate from '@/components/shared/WordRotate';
 import { fadeUp, dur, ease } from '@/lib/motion';
 
 export default function Hero() {
@@ -14,6 +15,22 @@ export default function Hero() {
   const params = useParams();
   const lang = (params?.lang as string) || 'en';
   const isAr = lang === 'ar';
+
+  const capabilityWords = isAr
+    ? [
+        'القيادة التنفيذية الاستراتيجية',
+        'التحول الرقمي والذكاء الاصطناعي',
+        'المبيعات والتفاوض التجاري',
+        'الحوكمة والمخاطر والالتزام',
+        'الأمن السيبراني والبنية التقنية',
+      ]
+    : [
+        'Executive Leadership & Strategy',
+        'AI & Digital Transformation',
+        'Strategic B2B Sales & Negotiation',
+        'Governance, Risk & Compliance',
+        'Cybersecurity & Tech Infrastructure',
+      ];
 
   return (
     <section
@@ -48,6 +65,19 @@ export default function Hero() {
       <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-5xl">
         <div className="flex flex-col items-center text-center">
           
+          {/* Eyebrow badge with glowing Sparkles icon */}
+          <m.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: ease.out }}
+            className="mb-4 sm:mb-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] border border-white/10 backdrop-blur-md shadow-sm"
+          >
+            <Sparkles size={14} className="text-amber-400 animate-pulse" />
+            <span className="text-xs font-medium text-neutral-300">
+              {isAr ? 'منصة التوفيق المؤسسي المعتمدة في الخليج' : 'Verified GCC Corporate Training Matchmaking'}
+            </span>
+          </m.div>
+
           {/* hero headline */}
           <TextReveal
             as="h1"
@@ -55,6 +85,19 @@ export default function Hero() {
             onScroll={false}
             className="display max-w-4xl mx-auto px-2"
           />
+
+          {/* Dynamic rotating words sub-headline */}
+          <m.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25, duration: 0.6, ease: ease.out }}
+            className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm md:text-base text-neutral-400 font-sans"
+          >
+            <span>{isAr ? 'عروض تدريبية معتمدة في' : 'Enterprise capability solutions in'}</span>
+            <span className="px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10 shadow-inner">
+              <WordRotate words={capabilityWords} />
+            </span>
+          </m.div>
 
           {/* CTAs */}
           <m.div

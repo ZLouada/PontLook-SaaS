@@ -334,7 +334,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
     return (
       <div className="max-w-2xl mx-auto py-12 px-4 sm:px-6">
         <div className="bg-[#0F1013] border border-[#26282D] rounded-2xl p-8 sm:p-12 text-center relative overflow-hidden shadow-xl">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-32 bg-orange-500/10 blur-3xl pointer-events-none" />
+          <div className="absolute top-0 inset-x-0 mx-auto w-80 h-32 bg-orange-500/10 blur-3xl pointer-events-none" />
 
           <div className="flex justify-center mb-6">
             <Seal size={56} label={applicationRef || undefined} />
@@ -452,7 +452,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
 
       {/* Main Card Container */}
       <div className="bg-[#0F1013] border border-[#26282D] rounded-2xl p-6 sm:p-10 relative overflow-hidden shadow-xl">
-        <div className="pointer-events-none absolute top-0 right-0 w-80 h-32 bg-white/[0.02] blur-3xl" />
+        <div className="pointer-events-none absolute top-0 end-0 w-80 h-32 bg-white/[0.02] blur-3xl" />
 
         {/* Step 1: Organization & Identity */}
         {step === 1 && (

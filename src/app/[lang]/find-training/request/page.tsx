@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, Building2, BadgeCheck, BadgeDollarSign, Clock } from '@/components/icons';
 import MultiStepFunnel from '@/components/funnel/MultiStepFunnel';
+import TextReveal from '@/components/shared/TextReveal';
+import IconFrame from '@/components/shared/IconFrame';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 
@@ -85,7 +87,7 @@ export default async function FindTrainingRequestPage({
             href={`/${lang}/find-training`}
             className="inline-flex items-center gap-2 text-xs font-semibold text-neutral-400 hover:text-white transition-colors"
           >
-            <ArrowLeft size={14} className={isAr ? 'rotate-180' : ''} />
+            <ArrowLeft size={14} className="rtl:-scale-x-100" />
             <span>{isAr ? 'العودة لنظرة عامة' : 'Back to Training Overview'}</span>
           </Link>
 
@@ -101,9 +103,12 @@ export default async function FindTrainingRequestPage({
             <span>{isAr ? 'خدمة مجانية 100% للشركات' : '100% Free for Enterprises'}</span>
           </span>
 
-          <h1 className="text-2xl sm:text-4xl font-semibold text-white font-heading tracking-tight">
-            {isAr ? 'حدد متطلبات التدريب المؤسسي' : 'Define Your Workforce Training Scope'}
-          </h1>
+          <TextReveal
+            as="h1"
+            text={isAr ? 'حدد متطلبات التدريب المؤسسي' : 'Define Your Workforce Training Scope'}
+            onScroll={false}
+            className="text-2xl sm:text-4xl font-semibold text-white font-heading tracking-tight"
+          />
 
           <p className="mt-2 text-sm sm:text-base text-neutral-400 leading-relaxed">
             {isAr
@@ -112,16 +117,22 @@ export default async function FindTrainingRequestPage({
           </p>
 
           <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-xs font-medium text-neutral-400">
-            <span className="inline-flex items-center gap-1.5">
-              <BadgeDollarSign size={15} strokeWidth={1.75} className="text-white" />
+            <span className="inline-flex items-center gap-2">
+              <IconFrame variant="brand" size="xs">
+                <BadgeDollarSign size={14} strokeWidth={1.75} />
+              </IconFrame>
               <span>{isAr ? 'صفر تكلفة للشركات' : '$0 Cost for Buyers'}</span>
             </span>
-            <span className="inline-flex items-center gap-1.5">
-              <Clock size={15} strokeWidth={1.75} className="text-white" />
+            <span className="inline-flex items-center gap-2">
+              <IconFrame variant="brand" size="xs">
+                <Clock size={14} strokeWidth={1.75} />
+              </IconFrame>
               <span>{isAr ? 'عروض خلال 48 ساعة' : 'Proposals in 48 Hours'}</span>
             </span>
-            <span className="inline-flex items-center gap-1.5">
-              <BadgeCheck size={15} strokeWidth={1.75} className="text-white" />
+            <span className="inline-flex items-center gap-2">
+              <IconFrame variant="brand" size="xs">
+                <BadgeCheck size={14} strokeWidth={1.75} />
+              </IconFrame>
               <span>{isAr ? 'سرية تامة ومضمونة' : 'Strict Confidentiality'}</span>
             </span>
           </div>

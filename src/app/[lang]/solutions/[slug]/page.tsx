@@ -19,6 +19,8 @@ import FAQAccordion from '@/components/faq/FAQAccordion';
 import Button from '@/components/shared/Button';
 import SectionHeading from '@/components/shared/SectionHeading';
 import Reveal from '@/components/shared/Reveal';
+import TextReveal from '@/components/shared/TextReveal';
+import IconFrame from '@/components/shared/IconFrame';
 import { constructAlternates } from '@/lib/seo';
 
 export const dynamic = 'force-static';
@@ -213,9 +215,12 @@ export default async function SolutionLandingPage({ params }: PageProps) {
               </div>
 
               {/* Dynamic H1 */}
-              <h1 className="font-heading text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.03em] text-white leading-[1.12]">
-                {content.h1}
-              </h1>
+              <TextReveal
+                as="h1"
+                text={content.h1}
+                onScroll={false}
+                className="font-heading text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.03em] text-white leading-[1.12]"
+              />
 
               {/* Subtitle */}
               <p className="mt-5 text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-sans">
@@ -272,8 +277,10 @@ export default async function SolutionLandingPage({ params }: PageProps) {
             <Reveal>
               <div className="relative rounded-2xl sm:rounded-3xl border border-[#26282D] bg-[#0F1013] p-6 sm:p-9 shadow-2xl overflow-hidden">
                 <div className="flex items-center justify-between gap-3 pb-4 border-b border-[#26282D]">
-                  <div className="inline-flex items-center gap-2">
-                    <FileText size={18} className="text-white" />
+                  <div className="inline-flex items-center gap-2.5">
+                    <IconFrame variant="brand" size="xs">
+                      <FileText size={15} />
+                    </IconFrame>
                     <span className="text-xs font-semibold uppercase tracking-wider text-white">
                       {isAr ? 'ملخص تحليلي تنفيذي (GEO Synthesis)' : 'Executive Briefing & Market Synthesis'}
                     </span>
@@ -360,9 +367,9 @@ export default async function SolutionLandingPage({ params }: PageProps) {
                   <Reveal key={item.step} delay={i * 0.1}>
                     <div className="group relative h-full flex flex-col rounded-2xl sm:rounded-3xl border border-[#26282D] bg-[#0F1013] p-6 sm:p-8 hover:border-white/20 transition-all shadow-xl shadow-black/40">
                       <div className="flex items-center justify-between mb-5">
-                        <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/10 text-white shadow-sm transition-transform duration-200 group-hover:scale-105 group-hover:border-white/20">
+                        <IconFrame variant="brand" size="md">
                           <StepIcon size={20} strokeWidth={1.75} />
-                        </span>
+                        </IconFrame>
                         <span className="text-xl font-mono font-bold text-neutral-500 tracking-wider">
                           {item.step}
                         </span>
@@ -425,11 +432,15 @@ export default async function SolutionLandingPage({ params }: PageProps) {
                 </span>
               </div>
 
-              <h2 className="font-heading text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.03em] text-white leading-tight">
-                {isAr
-                  ? 'جاهز لتأهيل كوادر منشأتك بأعلى المعايير؟'
-                  : 'Ready to Equip Your Workforce with Proven Training Partners?'}
-              </h2>
+              <TextReveal
+                as="h2"
+                text={
+                  isAr
+                    ? 'جاهز لتأهيل كوادر منشأتك بأعلى المعايير؟'
+                    : 'Ready to Equip Your Workforce with Proven Training Partners?'
+                }
+                className="font-heading text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.03em] text-white leading-tight"
+              />
 
               <p className="mt-4 text-sm sm:text-base text-neutral-400 leading-relaxed max-w-2xl mx-auto font-sans">
                 {isAr

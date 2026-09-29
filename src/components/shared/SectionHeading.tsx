@@ -2,6 +2,7 @@
 
 import Reveal from './Reveal';
 import Badge from './Badge';
+import TextReveal from './TextReveal';
 
 type Props = {
   eyebrow?: string;
@@ -27,9 +28,11 @@ export default function SectionHeading({
           <Badge variant="accent">{eyebrow}</Badge>
         </div>
       )}
-      <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-[-0.025em] leading-[1.12]">
-        {title}
-      </h2>
+      <TextReveal
+        as="h2"
+        text={title}
+        className="font-heading text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-[-0.025em] leading-[1.12]"
+      />
       {subtitle && (
         <p className="mt-4 sm:mt-5 text-base sm:text-lg text-neutral-400 font-normal leading-[1.65] max-w-2xl mx-auto">
           {subtitle}

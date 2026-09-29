@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Linkedin, Mail, MapPin, ShieldCheck, ArrowRight } from '@/components/icons';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { m } from 'framer-motion';
+import IconFrame from '@/components/shared/IconFrame';
 import { staggerContainer, staggerItem, viewportOnce } from '@/lib/motion';
 
 export default function Footer() {
@@ -81,8 +82,10 @@ export default function Footer() {
                 'We identify enterprise organizations experiencing verified workforce challenges and connect them with the right corporate training providers. Qualified opportunities only, no retainers, no cold outreach.'}
             </p>
             <div className="pt-2 flex items-start gap-2.5 text-xs text-neutral-300 font-medium leading-snug">
-              <MapPin size={15} className="text-[#0052FF] shrink-0 mt-0.5" />
-              <span>31 Continental Dr, Newark, Delaware 19713, US</span>
+              <IconFrame variant="blue" size="xs">
+                <MapPin size={13} />
+              </IconFrame>
+              <span className="pt-1">31 Continental Dr, Newark, Delaware 19713, US</span>
             </div>
           </m.div>
 
@@ -150,14 +153,18 @@ export default function Footer() {
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-neutral-200">GET IN TOUCH</p>
             <ul className="space-y-2 text-sm font-medium text-neutral-400">
               <li>
-                <a href="mailto:contact@pontlook.com" className="flex items-center gap-2.5 hover:text-white transition-colors py-1.5 inline-flex">
-                  <Mail size={15} className="text-[#FF5C00] shrink-0" />
+                <a href="mailto:contact@pontlook.com" className="flex items-center gap-2.5 hover:text-white transition-colors py-1 inline-flex group">
+                  <IconFrame variant="brand" size="xs">
+                    <Mail size={13} />
+                  </IconFrame>
                   <span>contact@pontlook.com</span>
                 </a>
               </li>
               <li>
-                <a href="https://www.linkedin.com/company/pontlook" className="flex items-center gap-2.5 hover:text-white transition-colors py-1.5 inline-flex" target="_blank" rel="noopener noreferrer">
-                  <Linkedin size={15} className="text-[#FF5C00] shrink-0" />
+                <a href="https://www.linkedin.com/company/pontlook" className="flex items-center gap-2.5 hover:text-white transition-colors py-1 inline-flex group" target="_blank" rel="noopener noreferrer">
+                  <IconFrame variant="brand" size="xs">
+                    <Linkedin size={13} />
+                  </IconFrame>
                   <span>LinkedIn</span>
                 </a>
               </li>

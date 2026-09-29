@@ -8,6 +8,7 @@ import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { useParams } from 'next/navigation';
 import Signal from '@/components/shared/Signal';
 import Spotlight from '@/components/shared/Spotlight';
+import TextReveal from '@/components/shared/TextReveal';
 import { dur, ease, viewportOnce } from '@/lib/motion';
 
 interface TierData {
@@ -480,9 +481,11 @@ export default function LeadTiers(_props?: {
               <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
               <span>{isAr ? 'مستويات التأهيل والمطابقة' : 'QUALIFICATION TIERS'}</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight font-heading">
-              {isAr ? 'تدفق متوقع لفرص الشركات والمؤسسات' : 'A predictable pipeline of enterprise opportunities'}
-            </h2>
+            <TextReveal
+              as="h2"
+              text={isAr ? 'تدفق متوقع لفرص الشركات والمؤسسات' : 'A predictable pipeline of enterprise opportunities'}
+              className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight font-heading"
+            />
             <p className="mt-4 text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-sans">
               {isAr
                 ? 'يتم تقييم كل فرصة بناءً على التحقق من صانع القرار، وحجم الشركة، والميزانية، والجدول الزمني، وعمق الاحتياج لتكون على دراية تامة بتفاصيل كل فرصة.'
@@ -599,9 +602,11 @@ export default function LeadTiers(_props?: {
             <span>{isAr ? 'خيارات الشراكة والتعاون' : 'COLLABORATION PATHWAYS'}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-[-0.03em] leading-tight font-heading">
-            {exp?.title || (isAr ? 'ابدأ برؤى وأبحاث مدروسة. اعقد شراكات تثمر أثراً حقيقياً.' : 'Start with Our Insights. Partner for Real Impact.')}
-          </h2>
+          <TextReveal
+            as="h2"
+            text={exp?.title || (isAr ? 'ابدأ برؤى وأبحاث مدروسة. اعقد شراكات تثمر أثراً حقيقياً.' : 'Start with Our Insights. Partner for Real Impact.')}
+            className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-[-0.03em] leading-tight font-heading"
+          />
           <p className="mt-4 text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-sans">
             {exp?.subtitle ||
               (isAr
