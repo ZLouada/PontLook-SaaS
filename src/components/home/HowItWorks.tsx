@@ -9,6 +9,9 @@ import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motio
 import Signal from '@/components/shared/Signal';
 import TextReveal from '@/components/shared/TextReveal';
 import BorderBeam from '@/components/shared/BorderBeam';
+import CardTilt3D from '@/components/shared/CardTilt3D';
+import Magnetic from '@/components/shared/Magnetic';
+import BorderGlow from '@/components/shared/BorderGlow';
 import { spring, ease, dur } from '@/lib/motion';
 
 export default function HowItWorks() {
@@ -434,35 +437,36 @@ export default function HowItWorks() {
             {cards.map((card, idx) => {
               const isActive = activeStep === idx;
               return (
-                <button
-                  key={card.id}
-                  onClick={() => handleStepClick(idx)}
-                  className={`group relative shrink-0 sm:flex-1 min-w-[105px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-3 sm:px-3.5 rounded-full border transition-all duration-200 text-xs font-medium active:scale-95 ${
-                    isActive
-                      ? 'text-white border-white/20'
-                      : 'bg-transparent text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
-                  }`}
-                >
-                  {isActive && (
-                    <m.div
-                      layoutId="how-it-works-pill"
-                      className="absolute inset-0 z-0 rounded-full bg-white/[0.08] border border-[#26282D] backdrop-blur-md"
-                      transition={spring.soft}
-                    />
-                  )}
-                  <span className={`relative z-10 text-[11px] font-mono font-bold shrink-0 ${isActive ? card.tagColor : 'text-neutral-500'}`}>
-                    {card.stepNumber}
-                  </span>
-                  <span className="relative z-10 truncate">
-                    <span className="sm:hidden">{card.shortTitle}</span>
-                    <span className="hidden sm:inline">{card.navTitle}</span>
-                  </span>
-                  {isActive && (
-                    <div className="relative z-10 shrink-0">
-                      <Signal size={18} />
-                    </div>
-                  )}
-                </button>
+                <Magnetic key={card.id} strength={0.18} activeDistance={25}>
+                  <button
+                    onClick={() => handleStepClick(idx)}
+                    className={`group relative shrink-0 sm:flex-1 min-w-[105px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-3 sm:px-3.5 rounded-full border transition-all duration-200 text-xs font-medium active:scale-95 ${
+                      isActive
+                        ? 'text-white border-white/20'
+                        : 'bg-transparent text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
+                    }`}
+                  >
+                    {isActive && (
+                      <m.div
+                        layoutId="how-it-works-pill"
+                        className="absolute inset-0 z-0 rounded-full bg-white/[0.08] border border-[#26282D] backdrop-blur-md"
+                        transition={spring.soft}
+                      />
+                    )}
+                    <span className={`relative z-10 text-[11px] font-mono font-bold shrink-0 ${isActive ? card.tagColor : 'text-neutral-500'}`}>
+                      {card.stepNumber}
+                    </span>
+                    <span className="relative z-10 truncate">
+                      <span className="sm:hidden">{card.shortTitle}</span>
+                      <span className="hidden sm:inline">{card.navTitle}</span>
+                    </span>
+                    {isActive && (
+                      <div className="relative z-10 shrink-0">
+                        <Signal size={18} />
+                      </div>
+                    )}
+                  </button>
+                </Magnetic>
               );
             })}
           </div>
@@ -484,7 +488,8 @@ export default function HowItWorks() {
                 className="surface relative rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 shadow-e3 overflow-hidden hover:border-white/20 transition-colors duration-300"
               >
                 <BorderBeam size={280} duration={12} colorFrom="#FF5C00" colorTo="#0052FF" />
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-8 items-center">
+                <BorderGlow glowColor="rgba(255, 92, 0, 0.4)" size={320} opacity={0.6} />
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-8 items-center relative z-10">
                   
                   {/* Left Column: Category Tag, Title, Action Link, 3 Points with Chevrons */}
                   <div className="lg:col-span-6 flex flex-col items-start text-start">
@@ -527,9 +532,11 @@ export default function HowItWorks() {
 
                   {/* Right Column: Accent Tinted Canvas with Dark Console */}
                   <div className="lg:col-span-6 w-full">
-                    <div className={`w-full rounded-xl sm:rounded-2xl ${activeCard.canvasBg} border p-2.5 sm:p-4 shadow-inner relative overflow-hidden flex items-center justify-center`}>
-                      {activeCard.console}
-                    </div>
+                    <CardTilt3D maxTilt={6} glareOpacity={0.14} className="w-full">
+                      <div className={`w-full rounded-xl sm:rounded-2xl ${activeCard.canvasBg} border p-2.5 sm:p-4 shadow-inner relative overflow-hidden flex items-center justify-center`}>
+                        {activeCard.console}
+                      </div>
+                    </CardTilt3D>
                   </div>
 
                 </div>

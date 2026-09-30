@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation';
 import Signal from '@/components/shared/Signal';
 import Spotlight from '@/components/shared/Spotlight';
 import Marquee from '@/components/shared/Marquee';
+import CardTilt3D from '@/components/shared/CardTilt3D';
+import BorderGlow from '@/components/shared/BorderGlow';
 
 export default function TrustBar() {
   const dict = useDictionary();
@@ -36,26 +38,33 @@ export default function TrustBar() {
   ];
 
   const cards = values.map((v, i) => (
-    <Spotlight
+    <CardTilt3D
       key={v.title}
-      radius={280}
-      className="group h-full w-[240px] sm:w-[320px] md:w-[380px] rounded-2xl border border-white/10 bg-[#0F1013]/90 p-4 sm:p-5 backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:bg-[#16171B]/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_4px_16px_rgba(0,0,0,0.4)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_10px_25px_-5px_rgba(0,0,0,0.7)]"
+      maxTilt={5}
+      glareOpacity={0.12}
+      className="h-full w-[240px] sm:w-[320px] md:w-[380px]"
     >
-      <div className="relative min-w-0">
-        <div className="mb-1.5 flex items-center justify-between gap-2">
-          <span className="block truncate text-xs font-medium tracking-[-0.02em] text-white sm:text-base">
-            {v.title}
-          </span>
-          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-0.5 text-[9px] font-medium text-neutral-300 transition-colors group-hover:border-white/35 group-hover:text-white sm:text-[10px] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]">
-            <Signal size={12} speed={1 - i * 0.1} />
-            <span>{v.badge}</span>
+      <Spotlight
+        radius={280}
+        className="group relative h-full w-full rounded-2xl border border-white/10 bg-[#0F1013]/90 p-4 sm:p-5 backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:bg-[#16171B]/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_4px_16px_rgba(0,0,0,0.4)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_10px_25px_-5px_rgba(0,0,0,0.7)] overflow-hidden"
+      >
+        <BorderGlow glowColor="rgba(245, 158, 11, 0.35)" size={220} opacity={0.6} />
+        <div className="relative z-10 min-w-0">
+          <div className="mb-1.5 flex items-center justify-between gap-2">
+            <span className="block truncate text-xs font-medium tracking-[-0.02em] text-white sm:text-base">
+              {v.title}
+            </span>
+            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-0.5 text-[9px] font-medium text-neutral-300 transition-colors group-hover:border-white/35 group-hover:text-white sm:text-[10px] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]">
+              <Signal size={12} speed={1 - i * 0.1} />
+              <span>{v.badge}</span>
+            </span>
+          </div>
+          <span className="block text-[11px] font-normal leading-snug text-neutral-400 line-clamp-2 sm:text-sm">
+            {v.desc}
           </span>
         </div>
-        <span className="block text-[11px] font-normal leading-snug text-neutral-400 line-clamp-2 sm:text-sm">
-          {v.desc}
-        </span>
-      </div>
-    </Spotlight>
+      </Spotlight>
+    </CardTilt3D>
   ));
 
   return (

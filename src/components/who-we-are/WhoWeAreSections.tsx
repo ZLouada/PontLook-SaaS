@@ -22,6 +22,9 @@ import { m, AnimatePresence } from 'framer-motion';
 import Signal from '@/components/shared/Signal';
 import TextReveal from '@/components/shared/TextReveal';
 import BorderBeam from '@/components/shared/BorderBeam';
+import CardTilt3D from '@/components/shared/CardTilt3D';
+import Magnetic from '@/components/shared/Magnetic';
+import BorderGlow from '@/components/shared/BorderGlow';
 
 interface WhoWeAreProps {
   lang?: 'en' | 'ar';
@@ -104,112 +107,118 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
         {/* Split Comparison Cards (2-column layout matching Picture 4) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
           {/* Card 1: The Traditional Way (Negative / Friction State) */}
-          <div className="rounded-3xl border border-[#26282D] hover:border-red-900/40 bg-[#0F1013] overflow-hidden shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_15px_35px_-10px_rgba(0,0,0,0.6)] transition-all duration-300 flex flex-col text-white">
-            {/* Real Cluttered Desk Photo Header */}
-            <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-[#08090A]">
-              <Image
-                src="/images/traditional-cluttered-desk.webp"
-                alt={isAr ? 'بيئة العمل التقليدية المزدحمة' : 'Traditional cluttered and overwhelmed desk'}
-                fill
-                className="object-cover brightness-[0.85] contrast-[1.05]"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+          <CardTilt3D maxTilt={4} glareOpacity={0.10} className="h-full">
+            <div className="rounded-3xl border border-[#26282D] hover:border-red-900/40 bg-[#0F1013] overflow-hidden shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_15px_35px_-10px_rgba(0,0,0,0.6)] transition-all duration-300 flex flex-col text-white h-full relative">
+              <BorderGlow glowColor="rgba(239, 68, 68, 0.3)" size={280} opacity={0.5} />
+              {/* Real Cluttered Desk Photo Header */}
+              <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-[#08090A]">
+                <Image
+                  src="/images/traditional-cluttered-desk.webp"
+                  alt={isAr ? 'بيئة العمل التقليدية المزدحمة' : 'Traditional cluttered and overwhelmed desk'}
+                  fill
+                  className="object-cover brightness-[0.85] contrast-[1.05]"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
 
-              {/* Badges overlaid on top of photo (as shown in picture 4) */}
-              <div className="absolute top-4 start-4 end-4 flex items-center justify-between pointer-events-none">
-                <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0F1013]/90 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider shadow-md border border-[#26282D]">
-                  {isAr ? 'البحث التقليدي عن التدريب' : 'TRADITIONAL TRAINING SEARCH'}
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/90 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider shadow-md border border-red-500/40">
-                  <span className="w-1.5 h-1.5 rounded-full bg-white" />
-                  {isAr ? 'أسابيع ضائعة' : 'WEEKS LOST'}
-                </span>
+                {/* Badges overlaid on top of photo (as shown in picture 4) */}
+                <div className="absolute top-4 start-4 end-4 flex items-center justify-between pointer-events-none">
+                  <span className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#0F1013]/90 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider shadow-md border border-[#26282D]">
+                    {isAr ? 'البحث التقليدي عن التدريب' : 'TRADITIONAL TRAINING SEARCH'}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/90 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider shadow-md border border-red-500/40">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                    {isAr ? 'أسابيع ضائعة' : 'WEEKS LOST'}
+                  </span>
+                </div>
               </div>
-            </div>
 
-            {/* Content Area */}
-            <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
-              <div>
-                <h3 className="text-2xl sm:text-[26px] font-bold text-white font-heading mb-5">
-                  {isAr ? 'الطريقة التقليدية' : 'The Traditional Way'}
-                </h3>
+              {/* Content Area */}
+              <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between relative z-10">
+                <div>
+                  <h3 className="text-2xl sm:text-[26px] font-bold text-white font-heading mb-5">
+                    {isAr ? 'الطريقة التقليدية' : 'The Traditional Way'}
+                  </h3>
 
-                {/* Soft Red Container with negative points */}
-                <div className="rounded-2xl bg-[#16171B] border border-red-900/30 p-5 sm:p-6 space-y-4">
-                  {traditionalPoints.map((point, idx) => (
-                    <div key={idx} className="flex items-start gap-3.5">
-                      <div className="w-6 h-6 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 mt-0.5 border border-red-200">
-                        <XCircle size={15} />
+                  {/* Soft Red Container with negative points */}
+                  <div className="rounded-2xl bg-[#16171B] border border-red-900/30 p-5 sm:p-6 space-y-4">
+                    {traditionalPoints.map((point, idx) => (
+                      <div key={idx} className="flex items-start gap-3.5">
+                        <div className="w-6 h-6 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 mt-0.5 border border-red-200">
+                          <XCircle size={15} />
+                        </div>
+                        <div className="text-sm">
+                          <p className="font-semibold text-white">
+                            {point.title}:{' '}
+                            <span className="font-normal text-neutral-300">{point.desc}</span>
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-sm">
-                        <p className="font-semibold text-white">
-                          {point.title}:{' '}
-                          <span className="font-normal text-neutral-300">{point.desc}</span>
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </CardTilt3D>
 
           {/* Card 2: The PontLook Way (Positive / Solution State) */}
-          <div className="rounded-3xl border border-white/20 hover:border-white/35 bg-[#0F1013] overflow-hidden shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_50px_-10px_rgba(0,0,0,0.8)] transition-all duration-300 flex flex-col text-white relative">
-            <BorderBeam size={260} duration={14} colorFrom="#FF5C00" colorTo="#10B981" />
-            {/* Real Clean Architecture Photo Header */}
-            <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-[#08090A]">
-              <Image
-                src="/images/pontlook-clean-office.webp"
-                alt={isAr ? 'مكتب عصري ومشرق يجسد دقة بونت لوك' : 'Clean, bright modern executive desk'}
-                fill
-                className="object-cover contrast-[1.05]"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
+          <CardTilt3D maxTilt={4} glareOpacity={0.12} className="h-full">
+            <div className="rounded-3xl border border-white/20 hover:border-white/35 bg-[#0F1013] overflow-hidden shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_50px_-10px_rgba(0,0,0,0.8)] transition-all duration-300 flex flex-col text-white relative h-full">
+              <BorderBeam size={260} duration={14} colorFrom="#FF5C00" colorTo="#10B981" />
+              <BorderGlow glowColor="rgba(16, 185, 129, 0.35)" size={280} opacity={0.5} />
+              {/* Real Clean Architecture Photo Header */}
+              <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-[#08090A]">
+                <Image
+                  src="/images/pontlook-clean-office.webp"
+                  alt={isAr ? 'مكتب عصري ومشرق يجسد دقة بونت لوك' : 'Clean, bright modern executive desk'}
+                  fill
+                  className="object-cover contrast-[1.05]"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
 
-              {/* Badges overlaid on top of photo */}
-              <div className="absolute top-4 start-4 end-4 flex items-center justify-between pointer-events-none">
-                <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#0F1013]/90 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider border border-[#26282D] shadow-md">
-                  <Signal />
-                  <span>{isAr ? 'طريقة بونت لوك' : 'THE PONTLOOK WAY'}</span>
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/80 backdrop-blur-md text-emerald-400 text-[11px] font-bold uppercase tracking-wider border border-emerald-500/40 shadow-md">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  {isAr ? 'موثق ومباشر' : 'VERIFIED & DIRECT'}
-                </span>
+                {/* Badges overlaid on top of photo */}
+                <div className="absolute top-4 start-4 end-4 flex items-center justify-between pointer-events-none">
+                  <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#0F1013]/90 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider border border-[#26282D] shadow-md">
+                    <Signal />
+                    <span>{isAr ? 'طريقة بونت لوك' : 'THE PONTLOOK WAY'}</span>
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/80 backdrop-blur-md text-emerald-400 text-[11px] font-bold uppercase tracking-wider border border-emerald-500/40 shadow-md">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    {isAr ? 'موثق ومباشر' : 'VERIFIED & DIRECT'}
+                  </span>
+                </div>
               </div>
-            </div>
 
-            {/* Content Area */}
-            <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
-              <div>
-                <h3 className="text-2xl sm:text-[26px] font-bold text-white font-heading mb-5">
-                  {isAr ? 'طريقة بونت لوك' : 'The PontLook Way'}
-                </h3>
+              {/* Content Area */}
+              <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between relative z-10">
+                <div>
+                  <h3 className="text-2xl sm:text-[26px] font-bold text-white font-heading mb-5">
+                    {isAr ? 'طريقة بونت لوك' : 'The PontLook Way'}
+                  </h3>
 
-                {/* Soft Emerald Container with positive points */}
-                <div className="rounded-2xl bg-[#16171B] border border-emerald-900/30 p-5 sm:p-6 space-y-4">
-                  {pontlookPoints.map((point, idx) => (
-                    <div key={idx} className="flex items-start gap-3.5">
-                      <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-200">
-                        <CheckCircle2 size={15} />
+                  {/* Soft Emerald Container with positive points */}
+                  <div className="rounded-2xl bg-[#16171B] border border-emerald-900/30 p-5 sm:p-6 space-y-4">
+                    {pontlookPoints.map((point, idx) => (
+                      <div key={idx} className="flex items-start gap-3.5">
+                        <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-200">
+                          <CheckCircle2 size={15} />
+                        </div>
+                        <div className="text-sm">
+                          <p className="font-semibold text-white">
+                            {point.title}:{' '}
+                            <span className="font-normal text-neutral-300">{point.desc}</span>
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-sm">
-                        <p className="font-semibold text-white">
-                          {point.title}:{' '}
-                          <span className="font-normal text-neutral-300">{point.desc}</span>
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </CardTilt3D>
         </div>
       </div>
     </section>

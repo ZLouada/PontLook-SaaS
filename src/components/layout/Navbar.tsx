@@ -13,6 +13,7 @@ import Button from '@/components/shared/Button';
 import Signal from '@/components/shared/Signal';
 import ScrollProgress from '@/components/shared/ScrollProgress';
 import CommandMenu from '@/components/shared/CommandMenu';
+import Magnetic from '@/components/shared/Magnetic';
 
 export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const [scrolled, setScrolled] = useState(false);
@@ -182,18 +183,20 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           {/* language switcher and actions */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Quick Command Palette Trigger (Cmd+K) */}
-            <button
-              type="button"
-              onClick={() => setCommandOpen(true)}
-              className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B] text-neutral-400 hover:text-white hover:border-white/30 active:scale-95 transition-all duration-200"
-              aria-label={lang === 'ar' ? 'البحث السريع (⌘K)' : 'Quick search (⌘K)'}
-            >
-              <Search size={13} className="text-neutral-400" />
-              <span className="hidden md:inline">{lang === 'ar' ? 'بحث...' : 'Search...'}</span>
-              <kbd className="hidden sm:inline-block px-1.5 py-0.2 rounded bg-white/[0.08] text-[10px] font-mono text-neutral-300 border border-white/10">
-                ⌘K
-              </kbd>
-            </button>
+            <Magnetic strength={0.16} activeDistance={25}>
+              <button
+                type="button"
+                onClick={() => setCommandOpen(true)}
+                className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B] text-neutral-400 hover:text-white hover:border-white/30 active:scale-95 transition-all duration-200"
+                aria-label={lang === 'ar' ? 'البحث السريع (⌘K)' : 'Quick search (⌘K)'}
+              >
+                <Search size={13} className="text-neutral-400" />
+                <span className="hidden md:inline">{lang === 'ar' ? 'بحث...' : 'Search...'}</span>
+                <kbd className="hidden sm:inline-block px-1.5 py-0.2 rounded bg-white/[0.08] text-[10px] font-mono text-neutral-300 border border-white/10">
+                  ⌘K
+                </kbd>
+              </button>
+            </Magnetic>
 
             {/* Live Network Status Indicator */}
             <div className="hidden xl:inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B]/90 backdrop-blur-md text-neutral-300">
@@ -203,14 +206,16 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               </span>
             </div>
 
-            <Link
-              href={switchHref}
-              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30 active:scale-95 transition-all duration-200"
-              aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
-            >
-              <Globe size={13} className="text-neutral-400" />
-              <span>{lang === 'en' ? 'العربية' : 'English'}</span>
-            </Link>
+            <Magnetic strength={0.16} activeDistance={25} className="hidden lg:inline-flex">
+              <Link
+                href={switchHref}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30 active:scale-95 transition-all duration-200"
+                aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
+              >
+                <Globe size={13} className="text-neutral-400" />
+                <span>{lang === 'en' ? 'العربية' : 'English'}</span>
+              </Link>
+            </Magnetic>
 
             {/* Mobile Controls */}
             <div className="flex items-center gap-2 lg:hidden">

@@ -6,6 +6,8 @@ import LeadTiers from '@/components/providers/LeadTiers';
 import ProviderBenefitsCards from '@/components/providers/ProviderBenefitsCards';
 import Reveal from '@/components/shared/Reveal';
 import TextReveal from '@/components/shared/TextReveal';
+import NeuralGridBackground from '@/components/shared/NeuralGridBackground';
+import Magnetic from '@/components/shared/Magnetic';
 import { ArrowRight } from '@/components/icons';
 import { constructAlternates, providerIcons } from '@/lib/seo/metadata';
 import { buildProviderNetworkSchema } from '@/lib/seo/schema';
@@ -96,6 +98,7 @@ export default async function ForProvidersPage({
         {/* Ambient Depth Glows */}
         <div className="pointer-events-none absolute top-1/4 start-0 w-[550px] h-[450px] bg-orange-500/[0.05] blur-[160px] -z-10 rounded-full" />
         <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-orange-500/[0.02] blur-[160px] -z-10 rounded-full" />
+        <NeuralGridBackground className="z-0 opacity-40" gridSize={36} interactiveRadius={160} activeColor="rgba(255, 92, 0, 0.6)" />
 
         <div className="container-site max-w-6xl mx-auto relative z-10 w-full">
           {/* Left-Aligned Header Block */}
@@ -116,20 +119,24 @@ export default async function ForProvidersPage({
 
               {/* Hero Action Buttons */}
               <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5 w-full sm:w-auto">
-                <Link
-                  href={`/${lang}/for-providers/apply`}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-7 sm:px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-orange-500/50 focus-visible:outline-none min-h-[48px]"
-                >
-                  <span>{isAr ? 'انضم كشريك تدريب' : 'Become a Partner'}</span>
-                  <ArrowRight size={16} className="rtl:-scale-x-100" />
-                </Link>
+                <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
+                  <Link
+                    href={`/${lang}/for-providers/apply`}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-7 sm:px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-orange-500/50 focus-visible:outline-none min-h-[48px]"
+                  >
+                    <span>{isAr ? 'انضم كشريك تدريب' : 'Become a Partner'}</span>
+                    <ArrowRight size={16} className="rtl:-scale-x-100" />
+                  </Link>
+                </Magnetic>
 
-                <a
-                  href="#why-partner"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 sm:px-7 rounded-xl bg-white hover:bg-neutral-200 text-[#08090A] font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:outline-none min-h-[48px]"
-                >
-                  <span>{isAr ? 'اعرف المزيد' : 'Learn more'}</span>
-                </a>
+                <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
+                  <a
+                    href="#why-partner"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 sm:px-7 rounded-xl bg-white hover:bg-neutral-200 text-[#08090A] font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:outline-none min-h-[48px]"
+                  >
+                    <span>{isAr ? 'اعرف المزيد' : 'Learn more'}</span>
+                  </a>
+                </Magnetic>
               </div>
             </Reveal>
           </div>

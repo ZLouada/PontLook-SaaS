@@ -10,6 +10,9 @@ import Signal from '@/components/shared/Signal';
 import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
 import BorderBeam from '@/components/shared/BorderBeam';
+import CardTilt3D from '@/components/shared/CardTilt3D';
+import Magnetic from '@/components/shared/Magnetic';
+import BorderGlow from '@/components/shared/BorderGlow';
 import { dur, ease, viewportOnce } from '@/lib/motion';
 
 interface TierData {
@@ -508,75 +511,80 @@ export default function LeadTiers(_props?: {
                     viewport={{ once: true, amount: 0.1 }}
                     transition={{ duration: dur.base, delay: idx * 0.05, ease: ease.out }}
                   >
-                    <Spotlight
-                      radius={340}
-                      className={`relative overflow-hidden bg-[#0F1013] border border-[#26282D] hover:border-orange-500/40 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
-                    >
-                      {idx === 0 && (
-                        <BorderBeam size={260} duration={12} colorFrom="#FF5C00" colorTo="#4D7CFF" />
-                      )}
-                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-center">
-                        {/* Left Details */}
-                        <div className="lg:col-span-7 space-y-3 sm:space-y-4">
-                          <div className="flex items-center gap-2">
-                            <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-semibold bg-white/[0.08] text-white border border-[#26282D]">
-                              {tier.step}
-                            </span>
-                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-medium bg-[#16171B] text-neutral-300 border border-[#26282D]">
-                              <Signal tone="orange" size={16} speed={1 - idx * 0.12} />
-                              <span>{tier.badge}</span>
-                            </span>
+                    <CardTilt3D maxTilt={4} glareOpacity={0.12} className="w-full">
+                      <Spotlight
+                        radius={340}
+                        className={`relative overflow-hidden bg-[#0F1013] border border-[#26282D] hover:border-orange-500/40 text-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
+                      >
+                        <BorderGlow glowColor="rgba(255, 92, 0, 0.4)" size={320} opacity={0.5} />
+                        {idx === 0 && (
+                          <BorderBeam size={260} duration={12} colorFrom="#FF5C00" colorTo="#4D7CFF" />
+                        )}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-center relative z-10">
+                          {/* Left Details */}
+                          <div className="lg:col-span-7 space-y-3 sm:space-y-4">
+                            <div className="flex items-center gap-2">
+                              <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-semibold bg-white/[0.08] text-white border border-[#26282D]">
+                                {tier.step}
+                              </span>
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-medium bg-[#16171B] text-neutral-300 border border-[#26282D]">
+                                <Signal tone="orange" size={16} speed={1 - idx * 0.12} />
+                                <span>{tier.badge}</span>
+                              </span>
+                            </div>
+
+                            <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-white tracking-tight leading-snug font-heading">
+                              {tier.title}
+                            </h3>
+
+                            <p className="text-xs sm:text-sm lg:text-base text-neutral-400 leading-relaxed font-sans">
+                              {tier.description}
+                            </p>
+
+                            {tier.isCtaCard && (
+                              <div className="pt-2">
+                                <Magnetic strength={0.22} activeDistance={35}>
+                                  <Link
+                                    href={`/${lang}/for-providers/apply`}
+                                    className="inline-flex items-center justify-center px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-medium text-sm shadow-lg shadow-orange-500/20 active:scale-95 transition-all"
+                                  >
+                                    <span>{isAr ? 'قدم للانضمام إلى الشراكة' : 'Apply for partnership'}</span>
+                                    <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
+                                  </Link>
+                                </Magnetic>
+                              </div>
+                            )}
                           </div>
 
-                          <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-white tracking-tight leading-snug font-heading">
-                            {tier.title}
-                          </h3>
-
-                          <p className="text-xs sm:text-sm lg:text-base text-neutral-400 leading-relaxed font-sans">
-                            {tier.description}
-                          </p>
-
-                          {tier.isCtaCard && (
-                            <div className="pt-2">
-                              <Link
-                                href={`/${lang}/for-providers/apply`}
-                                className="inline-flex items-center justify-center px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-medium text-sm shadow-lg shadow-orange-500/20 active:scale-95 transition-all"
-                              >
-                                <span>{isAr ? 'قدم للانضمام إلى الشراكة' : 'Apply for partnership'}</span>
-                                <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
-                              </Link>
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Right Preview Card */}
-                        <div className="lg:col-span-5">
-                          <div className="rounded-xl sm:rounded-2xl bg-[#16171B] border border-[#26282D] p-4 sm:p-6 space-y-3 sm:space-y-4 text-white">
-                            <div className="text-[11px] sm:text-xs font-semibold text-neutral-400 tracking-wide uppercase">
-                              {tier.project}
-                            </div>
-
-                            <div>
-                              <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1 sm:mb-1.5">
-                                <span>{isAr ? 'دقة التطابق' : 'Match Accuracy'}</span>
-                                <span className="font-bold text-white tabular-nums">{tier.accuracy}</span>
+                          {/* Right Preview Card */}
+                          <div className="lg:col-span-5">
+                            <div className="rounded-xl sm:rounded-2xl bg-[#16171B] border border-[#26282D] p-4 sm:p-6 space-y-3 sm:space-y-4 text-white">
+                              <div className="text-[11px] sm:text-xs font-semibold text-neutral-400 tracking-wide uppercase">
+                                {tier.project}
                               </div>
-                              <div className="h-1.5 sm:h-2 w-full rounded-full bg-white/10 overflow-hidden">
-                                <div className={`h-full rounded-full ${tier.barColor} ${tier.barWidth}`} />
-                              </div>
-                            </div>
 
-                            <ul className="space-y-1.5 sm:space-y-2 pt-1 text-xs text-neutral-300">
-                              {tier.checklist.map((item, cIdx) => (
-                                <li key={cIdx}>
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
+                              <div>
+                                <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1 sm:mb-1.5">
+                                  <span>{isAr ? 'دقة التطابق' : 'Match Accuracy'}</span>
+                                  <span className="font-bold text-white tabular-nums">{tier.accuracy}</span>
+                                </div>
+                                <div className="h-1.5 sm:h-2 w-full rounded-full bg-white/10 overflow-hidden">
+                                  <div className={`h-full rounded-full ${tier.barColor} ${tier.barWidth}`} />
+                                </div>
+                              </div>
+
+                              <ul className="space-y-1.5 sm:space-y-2 pt-1 text-xs text-neutral-300">
+                                {tier.checklist.map((item, cIdx) => (
+                                  <li key={cIdx}>
+                                    <span>{item}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </Spotlight>
+                      </Spotlight>
+                    </CardTilt3D>
                   </m.div>
                 </div>
               );
@@ -620,23 +628,27 @@ export default function LeadTiers(_props?: {
 
           {/* Top Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 mt-8">
-            <a
-              href="https://blog.pontlook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 font-medium text-sm backdrop-blur-md shadow-sm active:scale-[0.98] transition-all"
-            >
-              <span>{exp?.btn_blog || (isAr ? 'استكشف المدونة والموارد' : 'Explore the Blog & Resources')}</span>
-              <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
-            </a>
+            <Magnetic strength={0.22} activeDistance={35}>
+              <a
+                href="https://blog.pontlook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 font-medium text-sm backdrop-blur-md shadow-sm active:scale-[0.98] transition-all"
+              >
+                <span>{exp?.btn_blog || (isAr ? 'استكشف المدونة والموارد' : 'Explore the Blog & Resources')}</span>
+                <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
+              </a>
+            </Magnetic>
 
-            <Link
-              href={`/${lang}/find-training`}
-              className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 font-medium text-sm backdrop-blur-md shadow-sm active:scale-[0.98] transition-all"
-            >
-              <span>{exp?.btn_match || (isAr ? 'ابدأ الربط للتدريب' : 'Get Matched for Training')}</span>
-              <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
-            </Link>
+            <Magnetic strength={0.22} activeDistance={35}>
+              <Link
+                href={`/${lang}/find-training`}
+                className="w-full sm:w-auto inline-flex items-center justify-center px-7 py-3.5 rounded-2xl bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 font-medium text-sm backdrop-blur-md shadow-sm active:scale-[0.98] transition-all"
+              >
+                <span>{exp?.btn_match || (isAr ? 'ابدأ الربط للتدريب' : 'Get Matched for Training')}</span>
+                <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
+              </Link>
+            </Magnetic>
           </div>
         </div>
 
@@ -672,82 +684,87 @@ export default function LeadTiers(_props?: {
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{ duration: dur.base, delay: idx * 0.05, ease: ease.out }}
                 >
-                  <Spotlight
-                    radius={340}
-                    className={`${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
-                  >
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-                    {/* Left Details */}
-                    <div className="lg:col-span-7 space-y-4">
-                      {/* Layered Rounded Pill Badges */}
-                      <div className="inline-flex items-center p-1 rounded-full border border-[#26282D] bg-[#16171B]/50 shadow-sm gap-1.5 backdrop-blur-md flex-wrap">
-                        <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${theme.pillOuter}`}>
-                          {badgeOption}
-                        </span>
-                        <span className={`px-3 py-0.5 rounded-full text-[11px] font-medium ${theme.pillInner}`}>
-                          {badgePersona}
-                        </span>
-                      </div>
-
-                      <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight leading-snug font-heading">
-                        {title}
-                      </h3>
-
-                      <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-sans">
-                        {subtitle}
-                      </p>
-
-                      <div className="pt-1">
-                        {isExternal ? (
-                          <a
-                            href={href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all`}
-                          >
-                            <span>{cta}</span>
-                            <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
-                          </a>
-                        ) : (
-                          <Link
-                            href={href.startsWith('http') ? href : `/${lang}${href}`}
-                            className={`inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all`}
-                          >
-                            <span>{cta}</span>
-                            <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
-                          </Link>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Right Preview Card */}
-                    <div className="lg:col-span-5">
-                      <div className={`rounded-2xl ${theme.innerCardBg} ${theme.innerCardBorder} border p-4 sm:p-5 space-y-3 shadow-xl`}>
-                        <div className="text-[11px] font-semibold text-neutral-400 tracking-wide uppercase">
-                          {previewHeader}
+                  <CardTilt3D maxTilt={4} glareOpacity={0.12} className="w-full">
+                    <Spotlight
+                      radius={340}
+                      className={`relative overflow-hidden ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
+                    >
+                      <BorderGlow glowColor="rgba(255, 92, 0, 0.4)" size={320} opacity={0.5} />
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center relative z-10">
+                      {/* Left Details */}
+                      <div className="lg:col-span-7 space-y-4">
+                        {/* Layered Rounded Pill Badges */}
+                        <div className="inline-flex items-center p-1 rounded-full border border-[#26282D] bg-[#16171B]/50 shadow-sm gap-1.5 backdrop-blur-md flex-wrap">
+                          <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${theme.pillOuter}`}>
+                            {badgeOption}
+                          </span>
+                          <span className={`px-3 py-0.5 rounded-full text-[11px] font-medium ${theme.pillInner}`}>
+                            {badgePersona}
+                          </span>
                         </div>
 
-                        <div>
-                          <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1">
-                            <span>{metricLabel}</span>
-                            <span className="font-bold text-white tabular-nums">{metricValue}</span>
-                          </div>
-                          <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
-                            <div className={`h-full rounded-full ${theme.meterColor} ${metricWidth}`} />
-                          </div>
-                        </div>
+                        <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight leading-snug font-heading">
+                          {title}
+                        </h3>
 
-                        <ul className="space-y-1.5 pt-1 text-xs text-neutral-200">
-                          {checklist.map((item: string, cIdx: number) => (
-                            <li key={cIdx}>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
+                        <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-sans">
+                          {subtitle}
+                        </p>
+
+                        <div className="pt-1">
+                          <Magnetic strength={0.2} activeDistance={30}>
+                            {isExternal ? (
+                              <a
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all`}
+                              >
+                                <span>{cta}</span>
+                                <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
+                              </a>
+                            ) : (
+                              <Link
+                                href={href.startsWith('http') ? href : `/${lang}${href}`}
+                                className={`inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all`}
+                              >
+                                <span>{cta}</span>
+                                <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
+                              </Link>
+                            )}
+                          </Magnetic>
+                        </div>
+                      </div>
+
+                      {/* Right Preview Card */}
+                      <div className="lg:col-span-5">
+                        <div className={`rounded-2xl ${theme.innerCardBg} ${theme.innerCardBorder} border p-4 sm:p-5 space-y-3 shadow-xl`}>
+                          <div className="text-[11px] font-semibold text-neutral-400 tracking-wide uppercase">
+                            {previewHeader}
+                          </div>
+
+                          <div>
+                            <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1">
+                              <span>{metricLabel}</span>
+                              <span className="font-bold text-white tabular-nums">{metricValue}</span>
+                            </div>
+                            <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+                              <div className={`h-full rounded-full ${theme.meterColor} ${metricWidth}`} />
+                            </div>
+                          </div>
+
+                          <ul className="space-y-1.5 pt-1 text-xs text-neutral-200">
+                            {checklist.map((item: string, cIdx: number) => (
+                              <li key={cIdx}>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Spotlight>
+                  </Spotlight>
+                </CardTilt3D>
               </m.div>
             </div>
           );

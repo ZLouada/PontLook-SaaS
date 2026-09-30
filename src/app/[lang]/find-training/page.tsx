@@ -4,6 +4,11 @@ import Link from 'next/link';
 import Reveal from '@/components/shared/Reveal';
 import TextReveal from '@/components/shared/TextReveal';
 import FindTrainingStepsCards from '@/components/find-training/FindTrainingStepsCards';
+import NeuralGridBackground from '@/components/shared/NeuralGridBackground';
+import Magnetic from '@/components/shared/Magnetic';
+import CounterTicker from '@/components/shared/CounterTicker';
+import CardTilt3D from '@/components/shared/CardTilt3D';
+import BorderGlow from '@/components/shared/BorderGlow';
 import {
   BadgeCheck,
   BadgeDollarSign,
@@ -59,17 +64,17 @@ export async function generateStaticParams() {
 }
 
 const trustMetricsEn = [
-  { value: '120+', label: 'Vetted Providers' },
-  { value: '48 Hours', label: 'Proposal SLA' },
-  { value: '$0 Cost', label: 'For Hiring Organizations' },
-  { value: '100%', label: 'Confidentiality Guaranteed' },
+  { num: 120, prefix: '', suffix: '+', label: 'Vetted Providers' },
+  { num: 48, prefix: '', suffix: ' Hours', label: 'Proposal SLA' },
+  { num: 0, prefix: '$', suffix: ' Cost', label: 'For Hiring Organizations' },
+  { num: 100, prefix: '', suffix: '%', label: 'Confidentiality Guaranteed' },
 ];
 
 const trustMetricsAr = [
-  { value: '+120', label: 'مزود تدريب معتمد' },
-  { value: '48 ساعة', label: 'سرعة استلام العروض' },
-  { value: '0$ تكلفة', label: 'مجاناً للشركات والجهات' },
-  { value: '100%', label: 'سرية تامة ومضمونة' },
+  { num: 120, prefix: '+', suffix: '', label: 'مزود تدريب معتمد' },
+  { num: 48, prefix: '', suffix: ' ساعة', label: 'سرعة استلام العروض' },
+  { num: 0, prefix: '', suffix: '$ تكلفة', label: 'مجاناً للشركات والجهات' },
+  { num: 100, prefix: '', suffix: '%', label: 'سرية تامة ومضمونة' },
 ];
 
 export default async function FindTrainingPage({
@@ -90,6 +95,7 @@ export default async function FindTrainingPage({
         {/* Ambient Depth Glows */}
         <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-white/[0.02] blur-3xl -z-10 rounded-full" />
         <div className="pointer-events-none absolute top-10 start-1/4 w-[400px] h-[400px] bg-white/[0.01] blur-3xl -z-10 rounded-full" />
+        <NeuralGridBackground className="z-0 opacity-40" gridSize={36} interactiveRadius={160} />
 
         {/* Vertically Centered Content */}
         <div className="container-site relative z-10 mx-auto max-w-4xl text-center my-auto -translate-y-3 sm:-translate-y-6 py-2">
@@ -112,31 +118,45 @@ export default async function FindTrainingPage({
             </p>
 
             <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto">
-              <Link
-                href={`/${lang}/find-training/request`}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
-              >
-                <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals'}</span>
-                <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
-              </Link>
+              <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
+                <Link
+                  href={`/${lang}/find-training/request`}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
+                >
+                  <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals'}</span>
+                  <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
+                </Link>
+              </Magnetic>
 
-              <a
-                href="#how-it-works"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-base border border-[#26282D] hover:border-white/20 shadow-xs active:scale-[0.98] transition-all duration-200"
-              >
-                <span>{isAr ? 'كيف تعمل المنصة' : 'How Matchmaking Works'}</span>
-              </a>
+              <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
+                <a
+                  href="#how-it-works"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-base border border-[#26282D] hover:border-white/20 shadow-xs active:scale-[0.98] transition-all duration-200"
+                >
+                  <span>{isAr ? 'كيف تعمل المنصة' : 'How Matchmaking Works'}</span>
+                </a>
+              </Magnetic>
             </div>
 
             <div className="mt-8 sm:mt-10 grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-4 w-full max-w-3xl">
               {trustMetrics.map((m) => (
-                <div
-                  key={m.label}
-                  className="rounded-xl border border-[#26282D] bg-[#0F1013] p-3.5 sm:p-4 text-center shadow-xs"
-                >
-                  <div className="text-xl font-bold text-white sm:text-2xl tabular-nums">{m.value}</div>
-                  <div className="mt-1 text-[11px] font-medium uppercase tracking-wider text-neutral-400">{m.label}</div>
-                </div>
+                <CardTilt3D key={m.label} maxTilt={5} className="h-full">
+                  <div className="relative h-full rounded-xl border border-[#26282D] bg-[#0F1013] p-3.5 sm:p-4 text-center shadow-xs overflow-hidden">
+                    <BorderGlow color="rgba(255, 255, 255, 0.22)" size={140} />
+                    <div className="relative z-10 text-xl font-bold text-white sm:text-2xl tabular-nums">
+                      <CounterTicker
+                        value={m.num}
+                        prefix={m.prefix}
+                        suffix={m.suffix}
+                        duration={1.8}
+                        className="text-white"
+                      />
+                    </div>
+                    <div className="relative z-10 mt-1 text-[11px] font-medium uppercase tracking-wider text-neutral-400">
+                      {m.label}
+                    </div>
+                  </div>
+                </CardTilt3D>
               ))}
             </div>
 
@@ -187,42 +207,51 @@ export default async function FindTrainingPage({
           {/* Bottom Enterprise Request CTA Card */}
           <div className="scroll-mt-24">
             <Reveal className="mx-auto max-w-4xl">
-              <div className="bg-[#0F1013] border border-[#26282D] p-8 sm:p-14 rounded-2xl text-center relative overflow-hidden shadow-sm">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-white/[0.02] blur-3xl pointer-events-none" />
+              <CardTilt3D maxTilt={4}>
+                <div className="bg-[#0F1013] border border-[#26282D] p-8 sm:p-14 rounded-2xl text-center relative overflow-hidden shadow-sm">
+                  <BorderGlow color="rgba(255, 255, 255, 0.2)" size={240} />
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-white/[0.02] blur-3xl pointer-events-none" />
 
-                <span className="text-xs font-bold uppercase tracking-widest text-neutral-300 bg-[#16171B] border border-[#26282D] px-4 py-1.5 rounded-full inline-block mb-5">
-                  {isAr ? 'طلب تدريب مؤسسي' : 'ENTERPRISE MATCHMAKING'}
-                </span>
+                  <div className="relative z-10">
+                    <span className="text-xs font-bold uppercase tracking-widest text-neutral-300 bg-[#16171B] border border-[#26282D] px-4 py-1.5 rounded-full inline-block mb-5">
+                      {isAr ? 'طلب تدريب مؤسسي' : 'ENTERPRISE MATCHMAKING'}
+                    </span>
 
-                <TextReveal
-                  as="h2"
-                  text={isAr ? 'جاهز لتطوير كوادر منشأتك التدريبية؟' : 'Ready to Upskill Your Workforce?'}
-                  className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-4 text-center"
-                />
+                    <TextReveal
+                      as="h2"
+                      text={isAr ? 'جاهز لتطوير كوادر منشأتك التدريبية؟' : 'Ready to Upskill Your Workforce?'}
+                      className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-4 text-center"
+                    />
 
-                <p className="text-base sm:text-lg text-neutral-400 font-normal leading-relaxed max-w-2xl mx-auto mb-8">
-                  {isAr
-                    ? 'اطرح متطلبات تدريب فريقك واستلم عروض أسعار تفصيلية من أفضل معاهد ومزودي التدريب المعتمدين بالخليج خلال 48 ساعة.'
-                    : 'Submit your training requirements in 60 seconds. Our matching concierge will connect you with top tier accredited providers across the GCC.'}
-                </p>
+                    <p className="text-base sm:text-lg text-neutral-400 font-normal leading-relaxed max-w-2xl mx-auto mb-8">
+                      {isAr
+                        ? 'اطرح متطلبات تدريب فريقك واستلم عروض أسعار تفصيلية من أفضل معاهد ومزودي التدريب المعتمدين بالخليج خلال 48 ساعة.'
+                        : 'Submit your training requirements in 60 seconds. Our matching concierge will connect you with top tier accredited providers across the GCC.'}
+                    </p>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <Link
-                    href={`/${lang}/find-training/request`}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
-                  >
-                    <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals'}</span>
-                    <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
-                  </Link>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                      <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
+                        <Link
+                          href={`/${lang}/find-training/request`}
+                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
+                        >
+                          <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals'}</span>
+                          <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
+                        </Link>
+                      </Magnetic>
 
-                  <a
-                    href="#how-it-works"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-base border border-[#26282D] hover:border-white/20 shadow-xs transition-all duration-200"
-                  >
-                    <span>{isAr ? 'استكشف خطوات العمل' : 'Explore How It Works'}</span>
-                  </a>
+                      <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
+                        <a
+                          href="#how-it-works"
+                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-base border border-[#26282D] hover:border-white/20 shadow-xs transition-all duration-200"
+                        >
+                          <span>{isAr ? 'استكشف خطوات العمل' : 'Explore How It Works'}</span>
+                        </a>
+                      </Magnetic>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </CardTilt3D>
             </Reveal>
           </div>
         </div>
