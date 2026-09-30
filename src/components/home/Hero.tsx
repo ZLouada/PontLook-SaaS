@@ -10,7 +10,6 @@ import TextReveal from '@/components/shared/TextReveal';
 import WordRotate from '@/components/shared/WordRotate';
 import NeuralGridBackground from '@/components/shared/NeuralGridBackground';
 import Magnetic from '@/components/shared/Magnetic';
-import LiveEnterpriseStream from '@/components/home/LiveEnterpriseStream';
 import { fadeUp, dur, ease } from '@/lib/motion';
 
 export default function Hero() {
@@ -143,11 +142,6 @@ export default function Hero() {
           </m.div>
 
         </div>
-      </div>
-
-      {/* Real-time GCC Enterprise Procurement Stream Ticker */}
-      <div className="relative z-10 w-full mt-4 sm:mt-6">
-        <LiveEnterpriseStream lang={lang} />
       </div>
 
       {/* gradient transition into the next section */}
