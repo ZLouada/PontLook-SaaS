@@ -11,7 +11,6 @@ import WordRotate from '@/components/shared/WordRotate';
 import NeuralGridBackground from '@/components/shared/NeuralGridBackground';
 import Magnetic from '@/components/shared/Magnetic';
 import LiveEnterpriseStream from '@/components/home/LiveEnterpriseStream';
-import MatchmakingScopeSimulator from '@/components/home/MatchmakingScopeSimulator';
 import { fadeUp, dur, ease } from '@/lib/motion';
 
 export default function Hero() {
@@ -70,7 +69,7 @@ export default function Hero() {
         <NeuralGridBackground className="z-0 opacity-60" gridSize={36} interactiveRadius={180} />
       </div>
 
-      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-6xl">
+      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-5xl">
         <div className="flex flex-col items-center text-center">
           
           {/* Eyebrow badge with glowing Sparkles icon */}
@@ -142,9 +141,6 @@ export default function Hero() {
               </Link>
             </Magnetic>
           </m.div>
-
-          {/* Interactive Live Matchmaking Scope Simulator */}
-          <MatchmakingScopeSimulator lang={lang} />
 
         </div>
       </div>
