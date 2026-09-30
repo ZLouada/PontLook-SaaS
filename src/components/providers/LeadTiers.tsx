@@ -474,7 +474,7 @@ export default function LeadTiers(_props?: {
     return (
       <section
         data-nav-dark="true"
-        className="relative py-16 sm:py-24 lg:py-32 bg-[#08090A] text-white"
+        className="relative py-16 sm:py-24 lg:py-32 bg-black text-white"
       >
         {/* ambient glow */}
         <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-orange-500/[0.02] blur-[180px] pointer-events-none rounded-full" />
@@ -602,7 +602,7 @@ export default function LeadTiers(_props?: {
   return (
     <section
       data-nav-dark="true"
-      className="relative py-16 sm:py-24 lg:py-32 bg-[#08090A] text-white"
+      className="relative py-16 sm:py-24 lg:py-32 bg-black text-white"
     >
       {/* ambient glow */}
       <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-white/[0.015] blur-[180px] pointer-events-none rounded-full" />

@@ -409,7 +409,7 @@ export default function HowItWorks() {
       ref={containerRef}
       id="how-it-works"
       data-nav-dark="true"
-      className="relative bg-[#08090A] text-white pt-8 pb-12 sm:pt-20 sm:pb-16 lg:py-0 lg:min-h-[300vh] scroll-mt-24 sm:scroll-mt-28"
+      className="relative bg-black text-white pt-8 pb-12 sm:pt-20 sm:pb-16 lg:py-0 lg:min-h-[300vh] scroll-mt-24 sm:scroll-mt-28"
     >
       {/* ambient glow */}
       <div className="absolute top-1/4 start-1/4 w-[600px] h-[600px] bg-white/[0.015] blur-[180px] pointer-events-none rounded-full" />

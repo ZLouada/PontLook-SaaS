@@ -94,7 +94,7 @@ export default async function ForProvidersPage({
       />
 
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-[#08090A] pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden bg-black pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8">
         {/* Ambient Depth Glows */}
         <div className="pointer-events-none absolute top-1/4 start-0 w-[550px] h-[450px] bg-orange-500/[0.05] blur-[160px] -z-10 rounded-full" />
         <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-orange-500/[0.02] blur-[160px] -z-10 rounded-full" />
@@ -132,7 +132,7 @@ export default async function ForProvidersPage({
                 <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                   <a
                     href="#why-partner"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 sm:px-7 rounded-xl bg-white hover:bg-neutral-200 text-[#08090A] font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:outline-none min-h-[48px]"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 sm:px-7 rounded-xl bg-white hover:bg-neutral-200 text-black font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:outline-none min-h-[48px]"
                   >
                     <span>{isAr ? 'اعرف المزيد' : 'Learn more'}</span>
                   </a>
@@ -144,7 +144,7 @@ export default async function ForProvidersPage({
       </section>
 
       {/* 2. WHY PARTNER SECTION */}
-      <section id="why-partner" className="bg-[#08090A] py-16 sm:py-24 scroll-mt-16">
+      <section id="why-partner" className="bg-black py-16 sm:py-24 scroll-mt-16">
         <div className="container-site max-w-6xl mx-auto px-4 sm:px-6">
           <ProviderBenefitsCards lang={lang} />
         </div>
@@ -156,7 +156,7 @@ export default async function ForProvidersPage({
       </div>
 
       {/* 4. BOTTOM CTA SECTION */}
-      <section id="apply" className="bg-[#08090A] scroll-mt-24 pb-16 sm:pb-24 pt-4 text-center">
+      <section id="apply" className="bg-black scroll-mt-24 pb-16 sm:pb-24 pt-4 text-center">
         <div className="max-w-3xl mx-auto px-4">
           <Reveal>
             <TextReveal

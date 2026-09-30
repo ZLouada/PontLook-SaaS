@@ -23,14 +23,14 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer data-nav-dark="true" className="relative bg-[#08090A] text-neutral-400 overflow-hidden">
+    <footer data-nav-dark="true" className="relative bg-black text-neutral-400 overflow-hidden">
       {/* 1. HORIZON BRAND LOCKUP (PRE-FOOTER ELEMENT) */}
-      <div className="relative pt-0 pb-16 sm:pb-20 lg:pb-24 overflow-hidden bg-[#08090A]">
+      <div className="relative pt-0 pb-16 sm:pb-20 lg:pb-24 overflow-hidden bg-black">
         {/* Ambient glowing radial backlight */}
         <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[850px] h-[360px] bg-gradient-to-b from-orange-500/[0.04] to-transparent blur-[140px] pointer-events-none rounded-full transform-gpu" />
 
         {/* Top shadow gradient overlay blending into the horizon line */}
-        <div className="absolute top-0 inset-x-0 h-6 sm:h-10 bg-gradient-to-b from-[#08090A] via-[#08090A]/60 to-transparent pointer-events-none z-10" />
+        <div className="absolute top-0 inset-x-0 h-6 sm:h-10 bg-gradient-to-b from-black via-black/60 to-transparent pointer-events-none z-10" />
 
         {/* Horizon Wordmark Lockup (subtle negative margin clipping so it emerges beneath horizon border) */}
         <div className="relative -mt-2 sm:-mt-3 md:-mt-4 lg:-mt-5 overflow-hidden select-none pointer-events-none transform-gpu flex items-center justify-center">
@@ -75,7 +75,7 @@ export default function Footer() {
       </div>
 
       {/* 2. UNIVERSAL 4-COLUMN FOOTER LAYOUT */}
-      <div className="bg-[#08090A] text-neutral-400 pt-16 pb-12 px-6 lg:px-12">
+      <div className="bg-black text-neutral-400 pt-16 pb-12 px-6 lg:px-12">
         <m.div
           variants={staggerContainer(0.08)}
           initial="hidden"

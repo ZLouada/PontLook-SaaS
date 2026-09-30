@@ -79,7 +79,7 @@ export default async function ContactPage({
   };
 
   return (
-    <div className="bg-[#08090A]">
+    <div className="bg-black">
       <section className="container-site grid gap-8 sm:gap-14 pt-24 sm:pt-36 pb-16 sm:pb-24 lg:grid-cols-5">
         <Reveal className="lg:col-span-2">
           <span className="chip gap-2 normal-case tracking-wider">

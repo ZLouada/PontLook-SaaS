@@ -75,7 +75,7 @@ export default async function FindTrainingRequestPage({
   const isAr = lang === 'ar';
 
   return (
-    <div className="min-h-screen bg-[#08090A] pt-24 sm:pt-28 pb-16 relative overflow-hidden">
+    <div className="min-h-screen bg-black pt-24 sm:pt-28 pb-16 relative overflow-hidden">
       {/* Ambient background glows */}
       <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-white/[0.02] blur-3xl -z-10 rounded-full" />
       <div className="pointer-events-none absolute top-10 start-1/4 w-[350px] h-[350px] bg-white/[0.01] blur-3xl -z-10 rounded-full" />

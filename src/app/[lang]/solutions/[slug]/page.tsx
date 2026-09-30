@@ -175,11 +175,11 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="relative overflow-hidden bg-[#08090A]">
+      <div className="relative overflow-hidden bg-black">
         {/* =========================================================================
             1. BREADCRUMBS NAVIGATION
            ========================================================================= */}
-        <div className="border-b border-[#26282D] bg-[#08090A] pt-24 sm:pt-28 pb-3">
+        <div className="border-b border-[#26282D] bg-black pt-24 sm:pt-28 pb-3">
           <div className="container-site px-4 sm:px-6">
             <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-neutral-400">
               <Link href={`/${lang}`} className="hover:text-white transition-colors">
@@ -272,7 +272,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         {/* =========================================================================
             3. GEO ANSWER BOX (AI Search Engine & Entity Authority Synthesizer)
            ========================================================================= */}
-        <section className="py-12 sm:py-16 bg-[#08090A] border-b border-[#26282D]">
+        <section className="py-12 sm:py-16 bg-black border-b border-[#26282D]">
           <div className="container-site px-4 sm:px-6 max-w-4xl mx-auto">
             <Reveal>
               <div className="relative rounded-2xl sm:rounded-3xl border border-[#26282D] bg-[#0F1013] p-6 sm:p-9 shadow-2xl overflow-hidden">
@@ -310,7 +310,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         {/* =========================================================================
             4. KEY GCC MARKET DATA TABLE / METRICS GRID
            ========================================================================= */}
-        <section className="py-14 sm:py-20 bg-[#08090A] border-b border-[#26282D]">
+        <section className="py-14 sm:py-20 bg-black border-b border-[#26282D]">
           <div className="container-site px-4 sm:px-6 max-w-5xl mx-auto">
             <SectionHeading
               eyebrow={isAr ? 'مؤشرات وبيانات السوق' : 'Market Intelligence & Benchmarks'}
@@ -347,7 +347,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         {/* =========================================================================
             5. TAILORED 3-STEP MATCHMAKING WORKFLOW
            ========================================================================= */}
-        <section className="py-14 sm:py-20 bg-[#08090A] border-b border-[#26282D]">
+        <section className="py-14 sm:py-20 bg-black border-b border-[#26282D]">
           <div className="container-site px-4 sm:px-6 max-w-5xl mx-auto">
             <SectionHeading
               eyebrow={isAr ? 'آلية العمل والمطابقة' : 'How It Works'}
@@ -391,7 +391,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         {/* =========================================================================
             6. DEDICATED FAQ SECTION WITH RICH ACCORDION
            ========================================================================= */}
-        <section className="py-14 sm:py-20 bg-[#08090A] border-b border-[#26282D]">
+        <section className="py-14 sm:py-20 bg-black border-b border-[#26282D]">
           <div className="container-site px-4 sm:px-6 max-w-4xl mx-auto">
             <SectionHeading
               eyebrow={isAr ? 'الأسئلة الشائعة' : 'Frequently Asked Questions'}
@@ -417,7 +417,7 @@ export default async function SolutionLandingPage({ params }: PageProps) {
         {/* =========================================================================
             7. FINAL ACTION CALLOUT BANNER
            ========================================================================= */}
-        <section className="py-14 sm:py-20 bg-[#08090A] text-white relative overflow-hidden border-t border-[#26282D]">
+        <section className="py-14 sm:py-20 bg-black text-white relative overflow-hidden border-t border-[#26282D]">
           {/* Subtle Ambient Radial Glow */}
           <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-white/[0.08] blur-[120px] rounded-full" />

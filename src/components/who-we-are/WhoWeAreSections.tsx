@@ -81,7 +81,7 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
   return (
     <section
       id="our-mission"
-      className="relative overflow-hidden bg-[#08090A] pt-16 sm:pt-20 pb-20 sm:pb-28 text-white scroll-mt-24 sm:scroll-mt-28"
+      className="relative overflow-hidden bg-black pt-16 sm:pt-20 pb-20 sm:pb-28 text-white scroll-mt-24 sm:scroll-mt-28"
       aria-labelledby="mission-title"
     >
       <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
@@ -111,7 +111,7 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
             <div className="rounded-3xl border border-[#26282D] hover:border-red-900/40 bg-[#0F1013] overflow-hidden shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_15px_35px_-10px_rgba(0,0,0,0.6)] transition-all duration-300 flex flex-col text-white h-full relative">
               <BorderGlow glowColor="rgba(239, 68, 68, 0.3)" size={280} opacity={0.5} />
               {/* Real Cluttered Desk Photo Header */}
-              <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-[#08090A]">
+              <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-black">
                 <Image
                   src="/images/traditional-cluttered-desk.webp"
                   alt={isAr ? 'بيئة العمل التقليدية المزدحمة' : 'Traditional cluttered and overwhelmed desk'}
@@ -168,7 +168,7 @@ export function MissionSplitComparison({ lang = 'en' }: WhoWeAreProps) {
               <BorderBeam size={260} duration={14} colorFrom="#FF5C00" colorTo="#10B981" />
               <BorderGlow glowColor="rgba(16, 185, 129, 0.35)" size={280} opacity={0.5} />
               {/* Real Clean Architecture Photo Header */}
-              <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-[#08090A]">
+              <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-black">
                 <Image
                   src="/images/pontlook-clean-office.webp"
                   alt={isAr ? 'مكتب عصري ومشرق يجسد دقة بونت لوك' : 'Clean, bright modern executive desk'}
@@ -281,7 +281,7 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
 
   return (
     <section
-      className="relative overflow-hidden bg-[#08090A] py-24 sm:py-32 text-white"
+      className="relative overflow-hidden bg-black py-24 sm:py-32 text-white"
       aria-labelledby="value-model-title"
     >
       <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
@@ -776,7 +776,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
   return (
     <section
       id="training-journey"
-      className="relative overflow-hidden bg-[#08090A] text-white pt-20 sm:pt-28 pb-20 sm:pb-28 scroll-mt-24 sm:scroll-mt-28"
+      className="relative overflow-hidden bg-black text-white pt-20 sm:pt-28 pb-20 sm:pb-28 scroll-mt-24 sm:scroll-mt-28"
       aria-labelledby="journey-title"
     >
       {/* Dynamic Ambient Background Glows */}

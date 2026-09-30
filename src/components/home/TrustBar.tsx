@@ -70,11 +70,11 @@ export default function TrustBar() {
   return (
     <section
       data-nav-dark="true"
-      className="relative overflow-hidden bg-[#08090A] py-6 text-white sm:py-12"
+      className="relative overflow-hidden bg-black py-6 text-white sm:py-12"
     >
       {/* edge fades so items dissolve rather than clip */}
-      <div className="pointer-events-none absolute inset-y-0 start-0 z-20 w-16 bg-gradient-to-r from-[#08090A] via-[#08090A]/80 to-transparent rtl:bg-gradient-to-l sm:w-32" />
-      <div className="pointer-events-none absolute inset-y-0 end-0 z-20 w-16 bg-gradient-to-l from-[#08090A] via-[#08090A]/80 to-transparent rtl:bg-gradient-to-r sm:w-32" />
+      <div className="pointer-events-none absolute inset-y-0 start-0 z-20 w-16 bg-gradient-to-r from-black via-black/80 to-transparent rtl:bg-gradient-to-l sm:w-32" />
+      <div className="pointer-events-none absolute inset-y-0 end-0 z-20 w-16 bg-gradient-to-l from-black via-black/80 to-transparent rtl:bg-gradient-to-r sm:w-32" />
 
       <Marquee items={cards} duration={38} reverse={isAr} gap={24} className="py-2" />
     </section>

@@ -163,7 +163,7 @@ export default async function CountryHubPage({ params }: CountryPageProps) {
         }}
       />
 
-      <div className="bg-[#08090A] min-h-screen text-white pt-24 sm:pt-28 pb-20 overflow-hidden">
+      <div className="bg-black min-h-screen text-white pt-24 sm:pt-28 pb-20 overflow-hidden">
         {/* Ambient Glows */}
         <div className="pointer-events-none absolute top-20 start-0 w-[500px] h-[400px] bg-white/[0.02] blur-[150px] -z-10 rounded-full" />
         <div className="pointer-events-none absolute top-40 end-0 w-[550px] h-[450px] bg-white/[0.01] blur-[160px] -z-10 rounded-full" />

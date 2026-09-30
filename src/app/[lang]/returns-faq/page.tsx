@@ -169,7 +169,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(returnsFaqSchema) }}
       />
-      <section className="bg-[#08090A] pt-36 pb-16 relative overflow-hidden border-b border-[#26282D]">
+      <section className="bg-black pt-36 pb-16 relative overflow-hidden border-b border-[#26282D]">
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6">
           <Reveal>
             <span className="chip mx-auto">{isAr ? 'دعم العملاء والسياسات' : 'Customer Support & Policies'}</span>
@@ -193,7 +193,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
         </div>
       </section>
 
-      <section className="bg-[#08090A] py-12 border-b border-[#26282D]">
+      <section className="bg-black py-12 border-b border-[#26282D]">
         <div className="container-site max-w-5xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {policyHighlights.map((item, index) => {
@@ -216,7 +216,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
         </div>
       </section>
 
-      <section className="bg-[#08090A] py-16">
+      <section className="bg-black py-16">
         <div className="container-site max-w-4xl mx-auto px-6">
           <Reveal>
             <div className="prose prose-invert max-w-none space-y-12 text-neutral-300 leading-relaxed font-sans">

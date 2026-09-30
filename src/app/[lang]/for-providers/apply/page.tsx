@@ -71,7 +71,7 @@ export default async function ProviderApplyPage({
   });
 
   return (
-    <div className="min-h-screen bg-[#08090A] pt-24 sm:pt-28 pb-16 relative overflow-hidden">
+    <div className="min-h-screen bg-black pt-24 sm:pt-28 pb-16 relative overflow-hidden">
       {/* Search Engine & Rich Snippets Structured Data */}
       <script
         type="application/ld+json"

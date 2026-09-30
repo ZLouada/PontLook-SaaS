@@ -116,7 +116,7 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: Loca
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <section className="bg-[#08090A] pt-36 pb-20 relative overflow-hidden">
+      <section className="bg-black pt-36 pb-20 relative overflow-hidden">
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto">
           <Reveal>
             <span className="chip mx-auto">
@@ -137,7 +137,7 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: Loca
         </div>
       </section>
 
-      <section className="bg-[#08090A] py-24 border-t border-[#26282D]" id="faq">
+      <section className="bg-black py-24 border-t border-[#26282D]" id="faq">
         <div className="container-site max-w-3xl mx-auto">
           <FAQAccordion faqs={faqs} />
 

@@ -80,7 +80,7 @@ export default function CityBudgetCalculator({ country, city, lang }: CityBudget
                       selectedCohort === idx ? 'border-white bg-white' : 'border-neutral-600'
                     }`}
                   >
-                    {selectedCohort === idx && <div className="w-1.5 h-1.5 rounded-full bg-[#08090A]" />}
+                    {selectedCohort === idx && <div className="w-1.5 h-1.5 rounded-full bg-black" />}
                   </div>
                   <span className="font-medium">{isAr ? opt.nameAr : opt.nameEn}</span>
                 </div>

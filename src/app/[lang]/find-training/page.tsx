@@ -91,7 +91,7 @@ export default async function FindTrainingPage({
   return (
     <>
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-[#08090A] min-h-[100dvh] flex flex-col justify-between items-center pt-24 sm:pt-28 pb-6 sm:pb-8 px-4 sm:px-6">
+      <div className="relative overflow-hidden bg-black min-h-[100dvh] flex flex-col justify-between items-center pt-24 sm:pt-28 pb-6 sm:pb-8 px-4 sm:px-6">
         {/* Ambient Depth Glows */}
         <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-white/[0.02] blur-3xl -z-10 rounded-full" />
         <div className="pointer-events-none absolute top-10 start-1/4 w-[400px] h-[400px] bg-white/[0.01] blur-3xl -z-10 rounded-full" />
@@ -198,7 +198,7 @@ export default async function FindTrainingPage({
       </div>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="bg-[#08090A] py-16 sm:py-24 border-t border-[#26282D] scroll-mt-16">
+      <section id="how-it-works" className="bg-black py-16 sm:py-24 border-t border-[#26282D] scroll-mt-16">
         <div className="container-site max-w-6xl mx-auto px-4 sm:px-6 space-y-16 sm:space-y-24">
           <div>
             <FindTrainingStepsCards lang={lang} />

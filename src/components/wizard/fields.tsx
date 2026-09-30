@@ -265,7 +265,7 @@ export function StepNavigation({
       )}
 
       {/* Sticky action bar on mobile, standard layout on desktop */}
-      <div className="sticky bottom-0 -mx-4 sm:mx-0 px-4 sm:px-0 py-3 sm:py-0 bg-[#08090A]/95 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border-t border-[#26282D] sm:border-t-0 shadow-[0_-4px_12px_rgba(0,0,0,0.3)] sm:shadow-none pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:pb-0 z-20">
+      <div className="sticky bottom-0 -mx-4 sm:mx-0 px-4 sm:px-0 py-3 sm:py-0 bg-black/95 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border-t border-[#26282D] sm:border-t-0 shadow-[0_-4px_12px_rgba(0,0,0,0.3)] sm:shadow-none pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:pb-0 z-20">
         <div className="flex flex-col-reverse items-center justify-between gap-2.5 sm:gap-3 sm:flex-row">
           {onBack ? (
             <button

@@ -12,7 +12,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#08090A',
+  themeColor: '#000000',
   viewportFit: 'cover',
 };
 
@@ -165,7 +165,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`bg-[#08090A] text-neutral-300 antialiased selection:bg-white/20 selection:text-white ${lang === 'ar' ? 'font-arabic' : ''}`}>
+      <body className={`bg-black text-neutral-300 antialiased selection:bg-white/20 selection:text-white ${lang === 'ar' ? 'font-arabic' : ''}`}>
         <DictionaryProvider dictionary={dictionary}>
           <FramerMotionProvider>
             <GlobalSpotlight />

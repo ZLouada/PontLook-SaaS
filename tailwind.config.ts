@@ -8,9 +8,9 @@ const config: Config = {
         xs: '400px',
       },
       colors: {
-        background: '#08090A',
-        'background-dark': '#08090A',
-        'canvas-dark': '#08090A',
+        background: '#000000',
+        'background-dark': '#000000',
+        'canvas-dark': '#000000',
         'card-base': '#0F1013',
         'card-inner': '#16171B',
         'card-border': '#26282D',
@@ -62,7 +62,7 @@ const config: Config = {
       },
       boxShadow: {
         // Elevation ramp for the dark canvas. Each step adds spread and depth
-        // rather than opacity, so cards stay separable against #08090A.
+        // rather than opacity, so cards stay separable against #000000 (AMOLED canvas).
         e1: '0 1px 2px 0 rgba(0, 0, 0, 0.55)',
         e2: '0 4px 12px -2px rgba(0, 0, 0, 0.6), 0 2px 4px -2px rgba(0, 0, 0, 0.45)',
         e3: '0 12px 28px -6px rgba(0, 0, 0, 0.7), 0 4px 10px -4px rgba(0, 0, 0, 0.5)',

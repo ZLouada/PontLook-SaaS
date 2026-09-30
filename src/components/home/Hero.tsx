@@ -37,7 +37,7 @@ export default function Hero() {
   return (
     <section
       data-nav-dark="true"
-      className="relative overflow-hidden bg-[#08090A] text-white min-h-[calc(100vh-4rem)] sm:min-h-screen flex flex-col justify-center pt-24 pb-12 sm:pt-36 sm:pb-24"
+      className="relative overflow-hidden bg-black text-white min-h-[calc(100vh-4rem)] sm:min-h-screen flex flex-col justify-center pt-24 pb-12 sm:pt-36 sm:pb-24"
     >
       {/* background image */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none" aria-hidden="true">
@@ -55,7 +55,7 @@ export default function Hero() {
         {/* vignette & gradient overlays */}
         <div className="absolute inset-0 bg-black/45" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/35 rtl:bg-gradient-to-l rtl:from-black/85 rtl:via-black/60 rtl:to-black/35" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#08090A] via-black/25 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-black/60" />
 
         {/* grain overlay */}
         <div className="absolute inset-0 grain pointer-events-none" />
@@ -145,7 +145,7 @@ export default function Hero() {
       </div>
 
       {/* gradient transition into the next section */}
-      <div className="absolute inset-x-0 bottom-0 h-16 sm:h-20 bg-gradient-to-b from-transparent to-[#08090A] pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-16 sm:h-20 bg-gradient-to-b from-transparent to-black pointer-events-none" />
     </section>
   );
 }

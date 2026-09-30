@@ -21,6 +21,6 @@ npm run dev
 
 ## Design tokens
 
-- Canvas `#08090A`, Surface `#0F1013` / `#16171B`, Hairline `#26282D`, Accent `#0052FF`
+- Canvas `#000000` (AMOLED), Surface `#0F1013` / `#16171B`, Hairline `#26282D`, Accent `#0052FF`
 - Typography: Inter (Latin) · IBM Plex Sans Arabic (Arabic)
 

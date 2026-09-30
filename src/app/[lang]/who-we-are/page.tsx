@@ -74,7 +74,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
       <WhoWeAreSections lang={lang} />
 
       {/* Bottom CTA / Guarantee Section */}
-      <section data-nav-dark="true" className="bg-[#08090A] py-24 sm:py-32 relative overflow-hidden">
+      <section data-nav-dark="true" className="bg-black py-24 sm:py-32 relative overflow-hidden">
         <div className="container-site max-w-4xl mx-auto px-6 text-center relative z-10">
           <Reveal>
             <CardTilt3D maxTilt={3} glareOpacity={0.10} className="w-full">

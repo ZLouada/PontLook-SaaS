@@ -126,7 +126,7 @@ export default async function ServicesIndexPage({ params }: ServicesIndexProps) 
         }}
       />
 
-      <div className="bg-[#08090A] min-h-screen text-white pt-24 sm:pt-28 pb-20 overflow-hidden">
+      <div className="bg-black min-h-screen text-white pt-24 sm:pt-28 pb-20 overflow-hidden">
         {/* Breadcrumb */}
         <div className="container-site max-w-6xl mx-auto px-4 sm:px-6 mb-8">
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-neutral-400 py-1">
