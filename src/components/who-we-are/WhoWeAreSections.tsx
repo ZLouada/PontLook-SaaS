@@ -310,70 +310,72 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
         </div>
 
         {/* 3 Pricing/Trust Architecture Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 items-stretch pt-4">
           {models.map((card, idx) => (
-            <div
-              key={idx}
-              className={`rounded-3xl p-5 sm:p-8 lg:p-9 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 relative overflow-hidden ${
-                card.isFeatured
-                  ? 'bg-[#0F1013] border border-white/30 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_50px_-10px_rgba(255,92,0,0.15)] text-white'
-                  : 'bg-[#0F1013] border border-[#26282D] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_10px_30px_-10px_rgba(0,0,0,0.6)] hover:border-white/20 text-white'
-              }`}
-            >
+            <div key={idx} className="relative flex flex-col h-full">
               {card.isFeatured && (
-                <BorderBeam size={260} duration={12} colorFrom="#FF5C00" colorTo="#FF9500" />
-              )}
-              {card.isFeatured && (
-                <div className="absolute -top-3.5 start-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-white text-[11px] font-bold uppercase tracking-wider shadow-md z-10">
+                <div className="absolute -top-3.5 start-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-white text-[11px] font-bold uppercase tracking-wider shadow-lg z-20 whitespace-nowrap pointer-events-none">
                   {isAr ? 'النموذج الأكثر فاعلية' : 'CORE REVENUE MODEL'}
                 </div>
               )}
 
-              <div>
-                {/* Eyebrow */}
-                <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-4">
-                  {card.eyebrow}
-                </span>
+              <div
+                className={`rounded-3xl p-5 sm:p-8 lg:p-9 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 relative overflow-hidden h-full ${
+                  card.isFeatured
+                    ? 'bg-[#0F1013] border border-blue-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_50px_-10px_rgba(0,82,255,0.22)] text-white'
+                    : 'bg-[#0F1013] border border-[#26282D] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),0_10px_30px_-10px_rgba(0,0,0,0.6)] hover:border-white/20 text-white'
+                }`}
+              >
+                {card.isFeatured && (
+                  <BorderBeam size={260} duration={12} colorFrom="#0052FF" colorTo="#4D7CFF" />
+                )}
 
-                {/* Price Display */}
-                <div className="mb-6">
-                  <div className={`text-4xl sm:text-5xl font-extrabold font-heading tracking-tight ${card.isFeatured ? 'text-primary' : 'text-white'}`}>
-                    {card.price}
-                  </div>
-                  <div className="text-sm font-medium text-neutral-400 mt-1">
-                    {card.priceSub}
-                  </div>
-                </div>
+                <div>
+                  {/* Eyebrow */}
+                  <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 block mb-4">
+                    {card.eyebrow}
+                  </span>
 
-                {/* Divider */}
-                <div className="h-px bg-[#26282D] my-6" />
-
-                {/* Core Promise */}
-                <p className="text-sm sm:text-base text-neutral-300 leading-relaxed mb-6 font-normal">
-                  {card.promise}
-                </p>
-
-                {/* Checklist */}
-                <div className="space-y-2.5 mb-8">
-                  {card.points.map((point, pIdx) => (
-                    <div key={pIdx} className="text-sm text-neutral-400">
-                      <span>{point}</span>
+                  {/* Price Display */}
+                  <div className="mb-6">
+                    <div className={`text-4xl sm:text-5xl font-extrabold font-heading tracking-tight ${card.isFeatured ? 'text-primary' : 'text-white'}`}>
+                      {card.price}
                     </div>
-                  ))}
-                </div>
-              </div>
+                    <div className="text-sm font-medium text-neutral-400 mt-1">
+                      {card.priceSub}
+                    </div>
+                  </div>
 
-              {/* Tag / Footer Pill */}
-              <div className="pt-6 border-t border-[#26282D]">
-                <span
-                  className={`inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-full ${
-                    card.isFeatured
-                      ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                      : 'bg-[#16171B] text-neutral-300 border border-[#26282D]'
-                  }`}
-                >
-                  {card.tag}
-                </span>
+                  {/* Divider */}
+                  <div className="h-px bg-[#26282D] my-6" />
+
+                  {/* Core Promise */}
+                  <p className="text-sm sm:text-base text-neutral-300 leading-relaxed mb-6 font-normal">
+                    {card.promise}
+                  </p>
+
+                  {/* Checklist */}
+                  <div className="space-y-2.5 mb-8">
+                    {card.points.map((point, pIdx) => (
+                      <div key={pIdx} className="text-sm text-neutral-400">
+                        <span>{point}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tag / Footer Pill */}
+                <div className="pt-6 border-t border-[#26282D]">
+                  <span
+                    className={`inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-full ${
+                      card.isFeatured
+                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                        : 'bg-[#16171B] text-neutral-300 border border-[#26282D]'
+                    }`}
+                  >
+                    {card.tag}
+                  </span>
+                </div>
               </div>
             </div>
           ))}
