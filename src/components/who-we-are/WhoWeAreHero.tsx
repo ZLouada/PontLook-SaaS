@@ -317,10 +317,10 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             onScroll={false}
             text={
               isAr
-                ? 'من نحن: منصة التوفيق والربط الرائدة لتدريب الشركات في المنطقة'
-                : 'Who We Are: The Corporate Training Matchmaking Platform'
+                ? 'منصة مطابقة تدريب الشركات'
+                : 'The Corporate Training Matchmaking Platform'
             }
-            className="text-2xl sm:text-4xl lg:text-[56px] font-semibold text-white leading-[1.15] sm:leading-[1.1] font-heading tracking-tight"
+            className="text-3xl sm:text-5xl lg:text-[60px] font-semibold text-white leading-[1.15] sm:leading-[1.1] font-heading tracking-tight"
           />
           <p className="mt-4 sm:mt-5 text-base sm:text-lg lg:text-xl leading-relaxed text-neutral-400 max-w-2xl sm:max-w-3xl mx-auto font-normal">
             {isAr
@@ -348,8 +348,8 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             <Signal />
             <span>
               {isAr
-                ? 'كيف تضمن PontLook جودة التدريب بدون اشتراك شهري؟'
-                : 'How does PontLook match without retainers?'}
+                ? 'اكتشف الفرق: طريقة بونت لوك مقابل الطريقة التقليدية'
+                : 'Explore the difference: PontLook vs Traditional'}
             </span>
             <ArrowDown
               size={14}

@@ -400,7 +400,7 @@ export default function WhyDifferent() {
   return (
     <section
       data-nav-dark="true"
-      className="relative bg-black text-white py-10 sm:py-16 lg:py-20"
+      className="relative bg-black text-white py-8 sm:py-12 lg:py-16"
     >
       <div className="container-site relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Section Header */}
@@ -409,16 +409,11 @@ export default function WhyDifferent() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-6 sm:mb-12 text-center max-w-3xl mx-auto space-y-2.5 sm:space-y-3"
+          className="mb-5 sm:mb-8 text-center max-w-3xl mx-auto space-y-2 sm:space-y-2.5"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-neutral-300 text-xs font-semibold uppercase tracking-wider font-sans">
-            <span className="h-1.5 w-1.5 rounded-full bg-white/60" />
-            <span>{dict.why_different?.eyebrow || (isAr ? 'تحليلات سوقية قابلة للتنفيذ' : 'ACTIONABLE MARKET INTELLIGENCE')}</span>
-          </div>
-
           <TextReveal
             as="h2"
-            text={dict.why_different?.title || (isAr ? 'حلول حقيقية على مدونتنا. تعاقدات موثقة على منصتنا.' : 'Real Solutions on Our Blog. Verified Connections on Our Platform.')}
+            text={dict.why_different?.title || (isAr ? 'تحول عمليتنا التشخيصية طلبات تدريب الشركات المبهمة إلى خطط تطوير منظمة وقابلة للتنفيذ.' : 'Our diagnostic process turns vague corporate training requests into structured, actionable development roadmaps.')}
             className="h-section"
           />
 
@@ -439,7 +434,7 @@ export default function WhyDifferent() {
           </m.div>
         </m.div>
 
-        {/* cards grid / carousel */}
+        {/* cards grid / carousel - compact card deck */}
         <m.div
           ref={carouselRef}
           onScroll={handleScroll}
@@ -447,19 +442,19 @@ export default function WhyDifferent() {
           initial="hidden"
           whileInView="show"
           viewport={viewportOnce}
-          className="flex lg:grid lg:grid-cols-5 gap-3 sm:gap-4 overflow-x-auto lg:overflow-visible pb-3 sm:pb-4 lg:pb-0 snap-x snap-mandatory scrollbar-none items-stretch px-1 -mx-1"
+          className="flex lg:grid lg:grid-cols-5 gap-3 sm:gap-3.5 overflow-x-auto lg:overflow-visible pb-2 sm:pb-3 lg:pb-0 snap-x snap-mandatory scrollbar-none items-stretch px-1 -mx-1"
         >
           {items.map((it) => {
             const Icon = it.icon;
             const isSelected = activeModalId === it.id;
             const theme = it.theme;
             const glowStyles: Record<string, string> = {
-              brand: 'hover:border-orange-500/35 hover:shadow-[0_0_30px_rgba(255,92,0,0.12)]',
-              emerald: 'hover:border-emerald-500/35 hover:shadow-[0_0_30px_rgba(16,185,129,0.12)]',
-              purple: 'hover:border-purple-500/35 hover:shadow-[0_0_30px_rgba(168,85,247,0.12)]',
-              amber: 'hover:border-amber-500/35 hover:shadow-[0_0_30px_rgba(245,158,11,0.12)]',
-              cyan: 'hover:border-cyan-500/35 hover:shadow-[0_0_30px_rgba(6,182,212,0.12)]',
-              blue: 'hover:border-blue-500/35 hover:shadow-[0_0_30px_rgba(59,130,246,0.12)]',
+              brand: 'hover:border-orange-500/35 hover:shadow-[0_0_24px_rgba(255,92,0,0.12)]',
+              emerald: 'hover:border-emerald-500/35 hover:shadow-[0_0_24px_rgba(16,185,129,0.12)]',
+              purple: 'hover:border-purple-500/35 hover:shadow-[0_0_24px_rgba(168,85,247,0.12)]',
+              amber: 'hover:border-amber-500/35 hover:shadow-[0_0_24px_rgba(245,158,11,0.12)]',
+              cyan: 'hover:border-cyan-500/35 hover:shadow-[0_0_24px_rgba(6,182,212,0.12)]',
+              blue: 'hover:border-blue-500/35 hover:shadow-[0_0_24px_rgba(59,130,246,0.12)]',
               default: 'hover:border-white/20 hover:shadow-e2',
             };
 
@@ -480,49 +475,50 @@ export default function WhyDifferent() {
               <m.div
                 key={it.id}
                 variants={staggerItem}
-                className="relative w-[78vw] sm:w-[290px] lg:w-auto shrink-0 lg:shrink snap-center h-[340px] sm:h-[370px] lg:h-[390px]"
+                className="relative w-[74vw] sm:w-[250px] lg:w-auto shrink-0 lg:shrink snap-center h-[260px] sm:h-[280px] lg:h-[295px]"
                 onClick={() => setActiveModalId(it.id)}
               >
-                <CardTilt3D maxTilt={7} glareOpacity={0.14} className="w-full h-full">
-                  <Spotlight radius={320} className="w-full h-full rounded-2xl">
+                <CardTilt3D maxTilt={6} glareOpacity={0.12} className="w-full h-full">
+                  <Spotlight radius={280} className="w-full h-full rounded-2xl">
                     <m.div
                       whileTap={{ scale: 0.98 }}
-                      className={`surface group relative w-full h-full rounded-2xl p-4 sm:p-5 flex flex-col justify-between cursor-pointer select-none shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_10px_30px_-10px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-300 ${cardGlow}`}
+                      className={`surface group relative w-full h-full rounded-2xl p-3.5 sm:p-4 flex flex-col justify-between cursor-pointer select-none shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-8px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-300 ${cardGlow}`}
                     >
                       {/* Ambient subtle back-glow on hover */}
-                      <div className={`pointer-events-none absolute -top-10 -end-10 w-28 h-28 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${cardAura}`} />
-                    {/* Card Front Top */}
-                    <div className="space-y-2.5">
-                      <div className="flex items-center justify-between">
-                        <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-medium font-sans ${theme.badgeBg}`}>
-                          {it.badge}
-                        </span>
-                        <span className="text-[11px] font-mono text-neutral-400">
-                          {it.index}
-                        </span>
+                      <div className={`pointer-events-none absolute -top-8 -end-8 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${cardAura}`} />
+
+                      {/* Card Front Top */}
+                      <div className="space-y-1.5 sm:space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium font-sans ${theme.badgeBg}`}>
+                            {it.badge}
+                          </span>
+                          <span className="text-[10px] font-mono text-neutral-400">
+                            {it.index}
+                          </span>
+                        </div>
+
+                        <h3 className="text-sm sm:text-base font-semibold text-white tracking-tight leading-snug font-heading group-hover:text-white">
+                          {it.title}
+                        </h3>
+
+                        <p className="text-[11px] sm:text-xs text-neutral-400 font-sans leading-relaxed line-clamp-2">
+                          {it.text}
+                        </p>
                       </div>
 
-                      <h3 className="text-base sm:text-lg font-semibold text-white tracking-tight leading-snug font-heading group-hover:text-white">
-                        {it.title}
-                      </h3>
+                      {/* Card Front Bottom */}
+                      <div className="pt-2 border-t border-[#26282D] flex items-center justify-between">
+                        <IconFrame variant={it.themeVariant} size="xs">
+                          <Icon size={14} strokeWidth={1.75} />
+                        </IconFrame>
 
-                      <p className="text-xs text-neutral-400 font-sans leading-relaxed line-clamp-2">
-                        {it.text}
-                      </p>
-                    </div>
-
-                    {/* Card Front Bottom */}
-                    <div className="pt-2 border-t border-[#26282D] flex items-center justify-between">
-                      <IconFrame variant={it.themeVariant} size="sm">
-                        <Icon size={16} strokeWidth={1.75} />
-                      </IconFrame>
-
-                      <div className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-300 group-hover:text-white transition-colors duration-200">
-                        <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
-                        <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-neutral-400 group-hover:text-white" />
+                        <div className="inline-flex items-center gap-1 text-[11px] font-medium text-neutral-300 group-hover:text-white transition-colors duration-200">
+                          <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
+                          <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-neutral-400 group-hover:text-white" />
+                        </div>
                       </div>
-                    </div>
-                  </m.div>
+                    </m.div>
                   </Spotlight>
                 </CardTilt3D>
               </m.div>

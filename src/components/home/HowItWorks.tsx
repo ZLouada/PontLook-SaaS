@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { ArrowRight } from '@/components/icons';
-import { m, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { ArrowRight, CheckCircle2 } from '@/components/icons';
+import { m, AnimatePresence } from 'framer-motion';
 import Signal from '@/components/shared/Signal';
 import TextReveal from '@/components/shared/TextReveal';
 import BorderBeam from '@/components/shared/BorderBeam';
@@ -20,12 +20,7 @@ export default function HowItWorks() {
   const lang = (params?.lang as string) || 'en';
   const isAr = lang === 'ar';
 
-  const containerRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
-
-  // Lock flag to prevent scroll listener from glitching/overriding manual tab clicks
-  const isManualClickRef = useRef(false);
-  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Touch swipe support for mobile
   const touchStartX = useRef<number | null>(null);
@@ -62,119 +57,20 @@ export default function HowItWorks() {
     }
   };
 
-  // Track scroll progress through the 300vh container on desktop
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    // If a manual button click initiated smooth scrolling, ignore scroll updates to avoid glitching
-    if (isManualClickRef.current) return;
-    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
-
-    if (latest < 0.33) {
-      setActiveStep(0);
-    } else if (latest < 0.66) {
-      setActiveStep(1);
-    } else {
-      setActiveStep(2);
-    }
-  });
-
-  useEffect(() => {
-    if (isManualClickRef.current) return;
-    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
-    const current = scrollYProgress.get();
-    if (current < 0.33) {
-      setActiveStep(0);
-    } else if (current < 0.66) {
-      setActiveStep(1);
-    } else {
-      setActiveStep(2);
-    }
-  }, [scrollYProgress]);
-
-  // Release lock if user scrolls manually with mouse wheel or touch gesture
-  useEffect(() => {
-    const handleUserScroll = () => {
-      if (isManualClickRef.current) {
-        isManualClickRef.current = false;
-        if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
-      }
-    };
-    window.addEventListener('wheel', handleUserScroll, { passive: true });
-    window.addEventListener('touchmove', handleUserScroll, { passive: true });
-    return () => {
-      window.removeEventListener('wheel', handleUserScroll);
-      window.removeEventListener('touchmove', handleUserScroll);
-      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
-    };
-  }, []);
-
-  // Smooth scroll to corresponding step in the 300vh sequence without glitching
-  const handleStepClick = (index: number) => {
-    setActiveStep(index);
-    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
-      return;
-    }
-    if (!containerRef.current) return;
-
-    isManualClickRef.current = true;
-    const rect = containerRef.current.getBoundingClientRect();
-    const containerTop = window.scrollY + rect.top;
-    const containerHeight = containerRef.current.scrollHeight;
-    const viewportHeight = window.innerHeight;
-    const scrollableDistance = containerHeight - viewportHeight;
-
-    const targetProgress = [0.10, 0.50, 0.90][index];
-    const targetY = containerTop + scrollableDistance * targetProgress;
-
-    window.scrollTo({
-      top: targetY,
-      behavior: 'smooth',
-    });
-
-    if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
-    clickTimeoutRef.current = setTimeout(() => {
-      isManualClickRef.current = false;
-    }, 850);
-  };
-
-  const cards = [
-    // Card 1: Step 01 - Amber / Gold Accent
+  const steps = [
+    // Step 01 - Demand Detection
     {
       id: 'step1',
       stepNumber: '01',
       navTitle: isAr ? 'رصد الاحتياج' : 'Demand Detection',
-      shortTitle: isAr ? 'رصد' : 'Demand',
       tag: isAr ? 'الخطوة 01 // رصد الاحتياج المؤسسي' : 'STEP 01 // DEMAND DETECTION',
       tagColor: 'text-amber-400',
       headline: isAr
         ? 'رصد احتياجات التدريب المؤسسي المؤكدة قبل طرحها في السوق'
         : 'Detect verified enterprise training demand before it goes public',
-      actionText: isAr ? 'اكتشف المزيد' : 'Learn more',
-      actionHref: `/${lang}/for-providers`,
-      points: [
-        {
-          title: isAr ? 'استخبارات سوقية مستمرة' : 'Continuous Market Intelligence',
-          desc: isAr
-            ? 'نرصد باستمرار مؤشرات التوظيف، وإعادة الهيكلة، وفجوات الكفاءات عبر الشركات في السعودية والإمارات.'
-            : 'We monitor hiring trends, restructuring mandates, and capability gaps across Saudi Arabia and the UAE.',
-        },
-        {
-          title: isAr ? 'ميزانيات تدريبية معتمدة' : 'Verified Enterprise Budgets',
-          desc: isAr
-            ? 'كل إشارة احتياج ترصدها المنصة تقابلها ميزانية معتمدة مؤكدة مع أصحاب الصلاحية المالية.'
-            : 'Every demand signal has verified allocated budget confirmed with corporate financial decision makers.',
-        },
-        {
-          title: isAr ? 'فرص حقيقية مؤكدة' : 'Validated Requirements',
-          desc: isAr
-            ? 'لا وجود لمناقصات عامة مكررة أو أدلة جامدة، بل منظمات حقيقية مستعدة لبدء التدريب فوراً.'
-            : 'No generic public RFPs or dead directories, only active corporate organizations ready to upskill.',
-        },
-      ],
+      desc: isAr
+        ? 'نرصد باستمرار مؤشرات التوظيف، وإعادة الهيكلة، وفجوات الكفاءات عبر الشركات في السعودية والإمارات بميزانيات معتمدة ومؤكدة.'
+        : 'Continuous market intelligence detecting workforce restructuring and capability gaps with confirmed corporate budgets.',
       canvasBg: 'bg-[#16171B] border-[#26282D]',
       console: (
         <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2 font-sans">
@@ -233,39 +129,19 @@ export default function HowItWorks() {
       ),
     },
 
-    // Card 2: Step 02 - Purple / Violet Accent
+    // Step 02 - Fit Scoring
     {
       id: 'step2',
       stepNumber: '02',
       navTitle: isAr ? 'التأهيل والربط' : 'Fit Scoring',
-      shortTitle: isAr ? 'التأهيل' : 'Scoring',
       tag: isAr ? 'الخطوة 02 // التأهيل والربط المعتمد' : 'STEP 02 // FIT SCORING & QUALIFICATION',
       tagColor: 'text-purple-400',
       headline: isAr
         ? 'تقييم تحليلي وبشري دقيق يطابق المتطلبات الحقيقية مع نخبة الخبراء'
         : 'Deep analyst and human scoring against real enterprise constraints',
-      actionText: isAr ? 'طابق برنامجك الآن' : 'Get matched',
-      actionHref: `/${lang}/find-training`,
-      points: [
-        {
-          title: isAr ? 'مؤشر تطابق 94%' : '94% Match Fit Scoring',
-          desc: isAr
-            ? 'خوارزمية تقييم شاملة تطابق سجل إنجازات المزود، اعتمادات المدربين، ومنهجية التنفيذ.'
-            : 'Proprietary algorithm evaluating provider track record, trainer accreditations, and methodology.',
-        },
-        {
-          title: isAr ? 'توثيق أصحاب القرار' : 'CHRO & Talent Head Validation',
-          desc: isAr
-            ? 'نتحقق شخصياً من الاحتياج مع مدراء التطوير ورؤساء قطاع الموارد البشرية أصحاب القرار النهائي.'
-            : 'We directly confirm needs with Heads of L&D, Chief Human Resource Officers, and VP talent buyers.',
-        },
-        {
-          title: isAr ? 'استيفاء معايير التأهيل 4 من 4' : '4 Point Criteria Fulfillment',
-          desc: isAr
-            ? 'تحقق إلزامي من الجدول الزمني، مستوى المستفيدين، أسلوب التدريب، ومؤشرات قياس الأثر.'
-            : 'Strict validation across timeline, participant level, delivery format, and ROI performance metrics.',
-        },
-      ],
+      desc: isAr
+        ? 'خوارزمية تقييم شاملة تطابق سجل إنجازات المزود، اعتمادات المدربين، ومصادقة رؤساء قطاع الموارد البشرية.'
+        : 'Proprietary algorithm evaluating provider track record, trainer credentials, and direct CHRO qualification.',
       canvasBg: 'bg-[#16171B] border-[#26282D]',
       console: (
         <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2 font-sans">
@@ -320,39 +196,19 @@ export default function HowItWorks() {
       ),
     },
 
-    // Card 3: Step 03 - Teal / Emerald Accent
+    // Step 03 - Direct Engagement
     {
       id: 'step3',
       stepNumber: '03',
-      navTitle: isAr ? 'التقديم والتعاقد' : 'Engagement',
-      shortTitle: isAr ? 'التعاقد' : 'Engagement',
-      tag: isAr ? 'الخطوة 03 // التقديم المباشر والتعاقد' : 'STEP 03 // ENGAGEMENT & SUCCESS',
+      navTitle: isAr ? 'التعاقد المباشر' : 'Direct Engagement',
+      tag: isAr ? 'الخطوة 03 // التقديم المباشر والتعاقد' : 'STEP 03 // DIRECT ENGAGEMENT',
       tagColor: 'text-teal-400',
       headline: isAr
         ? 'تقديم مباشر وتواصل شخصي مع ضمان الدفع مقابل النتائج'
         : 'Direct warm introductions with pay on success guarantees',
-      actionText: isAr ? 'انضم كمزود معتمد' : 'Learn more',
-      actionHref: `/${lang}/for-providers/apply`,
-      points: [
-        {
-          title: isAr ? 'تقديم شخصي واجتماع مباشر' : 'Warm Executive Introduction',
-          desc: isAr
-            ? 'تنسيق مباشر للاجتماعات وجدول الأعمال مع قادة المنشآت المستعدين لمراجعة العروض والبدء.'
-            : 'Direct calendar access and tailored briefing with corporate decision makers ready for proposal review.',
-        },
-        {
-          title: isAr ? 'دفع حصري مقابل الفرصة المؤهلة' : 'Strict Pay on Success Model',
-          desc: isAr
-            ? 'بدون اشتراكات شهرية، وبدون رسوم إدراج. تستثمر فقط عند استلام فرصة مؤهلة ومحققة.'
-            : 'No subscription fees or upfront retainers. You only invest when a real qualified match is delivered.',
-        },
-        {
-          title: isAr ? 'ضمان استبدال خلال 5 أيام' : '5 Day Replacement SLA Guarantee',
-          desc: isAr
-            ? 'إذا لم تتطابق الفرصة مع معايير التأهيل المعتمدة، نستبدلها فوراً وبدون أي تكلفة إضافية.'
-            : 'If an introduction does not meet confirmed qualification criteria, we replace it at our expense.',
-        },
-      ],
+      desc: isAr
+        ? 'تنسيق مباشر للاجتماعات مع قادة المنشآت المستعدين لمراجعة العروض والبدء، مع ضمان استبدال الفرصة خلال 5 أيام.'
+        : 'Direct executive introductions with decision makers ready to review proposals, backed by a 5-day replacement SLA.',
       canvasBg: 'bg-[#16171B] border-[#26282D]',
       console: (
         <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2 font-sans">
@@ -402,171 +258,180 @@ export default function HowItWorks() {
     },
   ];
 
-  const activeCard = cards[activeStep];
+  const currentStep = steps[activeStep] || steps[0];
 
   return (
     <section
-      ref={containerRef}
       id="how-it-works"
       data-nav-dark="true"
-      className="relative bg-black text-white pt-8 pb-12 sm:pt-20 sm:pb-16 lg:py-0 lg:min-h-[300vh] scroll-mt-24 sm:scroll-mt-28"
+      className="relative bg-black text-white py-14 sm:py-20 lg:py-24 scroll-mt-20 overflow-hidden"
     >
-      {/* ambient glow */}
-      <div className="absolute top-1/4 start-1/4 w-[600px] h-[600px] bg-white/[0.015] blur-[180px] pointer-events-none rounded-full" />
-      <div className="absolute bottom-1/4 end-1/4 w-[600px] h-[600px] bg-white/[0.01] blur-[180px] pointer-events-none rounded-full" />
+      {/* Subtle ambient light */}
+      <div className="absolute top-1/4 start-10 w-[500px] h-[500px] bg-white/[0.015] blur-[160px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-1/4 end-10 w-[500px] h-[500px] bg-white/[0.01] blur-[160px] pointer-events-none rounded-full" />
 
-      {/* Viewport Container: Normal Flow on Mobile, Sticky on Desktop */}
-      <div className="relative lg:sticky lg:top-0 lg:h-screen lg:max-h-[100dvh] lg:flex lg:flex-col lg:justify-center pt-0 lg:pt-28 pb-0 lg:pb-6 px-0 sm:px-6 lg:px-8">
-        <div className="container-site relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center my-auto px-4 sm:px-8">
+      <div className="container-site relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Section Header */}
-          <div className="mb-4 sm:mb-5 text-center max-w-3xl mx-auto shrink-0 px-2">
+          {/* LEFT COLUMN: Section Title, Subtitle, Highlights & Dedicated "Join Network" button */}
+          <div className="lg:col-span-5 flex flex-col items-start text-start space-y-5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-semibold uppercase tracking-wider font-sans">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
+              <span>{isAr ? 'آلية العمل خطوة بخطوة' : 'HOW IT WORKS // POSTFLOWS'}</span>
+            </div>
+
             <TextReveal
               as="h2"
-              text={dict.how_it_works?.title || (isAr ? 'نرصد بدقة المنشآت التي تواجه فجوات تدريبية ومهارية حقيقية' : 'We pinpoint organizations facing real skill & training gaps')}
-              className="h-section"
+              text={dict.how_it_works?.title || (isAr ? 'الرحلة من التحدي إلى الحل.' : 'The journey from challenge to solution.')}
+              className="text-2xl sm:text-4xl lg:text-[42px] font-semibold text-white tracking-tight leading-[1.18] font-heading"
             />
 
-            <p className="mt-1.5 text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed">
-              {isAr ? 'تعلم، شخص، وطابق' : 'Learn, Diagnose, and Get Matched'}
+            <p className="text-sm sm:text-base text-neutral-400 font-sans leading-relaxed">
+              {dict.how_it_works?.subtitle ||
+                (isAr
+                  ? 'ربط صناع القرار بشركات تدريب الشركات عبر طلب موثق ومؤكد'
+                  : 'Connecting decision-makers with corporate training firms through verified demand')}
             </p>
+
+            {/* Benefit Checkpoints */}
+            <div className="space-y-2.5 pt-1 w-full text-xs sm:text-sm text-neutral-300 font-sans">
+              <div className="flex items-center gap-2.5">
+                <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
+                <span>{isAr ? 'ميزانيات معتمدة مؤكدة مع الإدارة المالية' : 'Pre-allocated corporate training budgets'}</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
+                <span>{isAr ? 'مواءمة دقيقة مع 2 إلى 3 خبراء معتمدين كحد أقصى' : '2 to 3 curated specialists per mandate (Zero bidding wars)'}</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
+                <span>{isAr ? 'بدون اشتراكات شهرية، الدفع فقط مقابل النتائج' : 'Strict pay-on-success model with 5-day replacement SLA'}</span>
+              </div>
+            </div>
+
+            {/* Requested Prominent Button: "Join network" / subtitle: "for training providers" */}
+            <div className="pt-3 w-full sm:w-auto">
+              <Magnetic strength={0.2} activeDistance={35}>
+                <Link
+                  href={`/${lang}/for-providers/apply`}
+                  className="group inline-flex items-center justify-between gap-4 p-3.5 sm:p-4 rounded-2xl bg-[#16171B] hover:bg-[#1C1E24] border border-white/15 hover:border-white/35 transition-all duration-200 shadow-xl w-full sm:min-w-[280px]"
+                >
+                  <div className="flex flex-col text-start">
+                    <span className="text-sm sm:text-base font-semibold text-white group-hover:text-white transition-colors">
+                      {isAr ? 'انضم إلى الشبكة' : 'Join network'}
+                    </span>
+                    <span className="text-xs text-neutral-400 group-hover:text-neutral-300 transition-colors">
+                      {isAr ? 'لمزودي التدريب' : 'for training providers'}
+                    </span>
+                  </div>
+                  <div className="h-9 w-9 rounded-xl bg-white/[0.08] group-hover:bg-white/[0.16] border border-white/10 flex items-center justify-center text-white transition-colors shrink-0">
+                    <ArrowRight size={16} className="rtl:-scale-x-100 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
+                  </div>
+                </Link>
+              </Magnetic>
+            </div>
           </div>
 
-          {/* step switcher tabs */}
-          <div className="flex items-center justify-start sm:justify-center gap-1.5 sm:gap-2.5 mb-4 sm:mb-5 w-full max-w-lg mx-auto overflow-x-auto scrollbar-none px-4 sm:px-0 py-1">
-            {cards.map((card, idx) => {
-              const isActive = activeStep === idx;
-              return (
-                <Magnetic key={card.id} strength={0.18} activeDistance={25}>
+          {/* RIGHT COLUMN: Steps Tabs on Top + Live Card with Mockup */}
+          <div className="lg:col-span-7 flex flex-col space-y-4">
+            
+            {/* Step Navigation Tabs on Top */}
+            <div className="flex items-center justify-start gap-1.5 sm:gap-2.5 w-full overflow-x-auto scrollbar-none py-1">
+              {steps.map((st, idx) => {
+                const isActive = activeStep === idx;
+                return (
                   <button
-                    onClick={() => handleStepClick(idx)}
-                    className={`group relative shrink-0 sm:flex-1 min-w-[105px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-3 sm:px-3.5 rounded-full border transition-all duration-200 text-xs font-medium active:scale-95 ${
+                    key={st.id}
+                    onClick={() => setActiveStep(idx)}
+                    className={`group relative shrink-0 flex-1 min-w-[110px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-3 sm:px-4 rounded-xl border transition-all duration-200 text-xs font-medium cursor-pointer active:scale-95 ${
                       isActive
-                        ? 'text-white border-white/20'
-                        : 'bg-transparent text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
+                        ? 'text-white border-white/25 bg-white/[0.08]'
+                        : 'bg-[#111215] text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
                     }`}
                   >
-                    {isActive && (
-                      <m.div
-                        layoutId="how-it-works-pill"
-                        className="absolute inset-0 z-0 rounded-full bg-white/[0.08] border border-[#26282D] backdrop-blur-md"
-                        transition={spring.soft}
-                      />
-                    )}
-                    <span className={`relative z-10 text-[11px] font-mono font-bold shrink-0 ${isActive ? card.tagColor : 'text-neutral-500'}`}>
-                      {card.stepNumber}
+                    <span className={`text-[11px] font-mono font-bold shrink-0 ${isActive ? st.tagColor : 'text-neutral-500'}`}>
+                      {st.stepNumber}
                     </span>
-                    <span className="relative z-10 truncate">
-                      <span className="sm:hidden">{card.shortTitle}</span>
-                      <span className="hidden sm:inline">{card.navTitle}</span>
-                    </span>
+                    <span className="truncate font-semibold">{st.navTitle}</span>
                     {isActive && (
-                      <div className="relative z-10 shrink-0">
-                        <Signal size={18} />
+                      <div className="shrink-0 ms-1">
+                        <Signal size={14} />
                       </div>
                     )}
                   </button>
-                </Magnetic>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
 
-          {/* Showcase Card: Touch-Swipeable on Mobile */}
-          <div
-            className="w-full"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            <AnimatePresence mode="wait">
-              <m.div
-                key={activeCard.id}
-                initial={{ opacity: 0, y: 10, scale: 0.99 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.99 }}
-                transition={{ duration: dur.base, ease: ease.out }}
-                className="surface relative rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 lg:p-6 shadow-e3 overflow-hidden hover:border-white/20 transition-colors duration-300"
-              >
-                <BorderBeam size={280} duration={12} colorFrom="#FF5C00" colorTo="#0052FF" />
-                <BorderGlow glowColor="rgba(255, 92, 0, 0.4)" size={320} opacity={0.6} />
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-8 items-center relative z-10">
-                  
-                  {/* Left Column: Category Tag, Title, Action Link, 3 Points with Chevrons */}
-                  <div className="lg:col-span-6 flex flex-col items-start text-start">
-                    {/* Eyebrow Tag with Accent Color */}
-                    <div className={`${activeCard.tagColor} text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-1`}>
-                      {activeCard.tag}
+            {/* Active Step Card */}
+            <div
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              className="w-full"
+            >
+              <AnimatePresence mode="wait">
+                <m.div
+                  key={currentStep.id}
+                  initial={{ opacity: 0, y: 12, scale: 0.99 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -12, scale: 0.99 }}
+                  transition={{ duration: dur.base, ease: ease.out }}
+                  className="relative rounded-2xl sm:rounded-3xl border border-white/15 hover:border-white/25 bg-[#0F1013] p-4 sm:p-6 lg:p-7 shadow-2xl overflow-hidden transition-colors"
+                >
+                  <BorderBeam size={260} duration={12} colorFrom="#FF5C00" colorTo="#0052FF" />
+                  <BorderGlow glowColor="rgba(255, 92, 0, 0.35)" size={280} opacity={0.5} />
+
+                  <div className="space-y-4 relative z-10">
+                    {/* Card Header with Eyebrow and Headline */}
+                    <div className="space-y-1.5 text-start">
+                      <span className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider ${currentStep.tagColor}`}>
+                        {currentStep.tag}
+                      </span>
+                      <h3 className="text-base sm:text-lg lg:text-xl font-heading font-semibold text-white leading-snug">
+                        {currentStep.headline}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed">
+                        {currentStep.desc}
+                      </p>
                     </div>
 
-                    {/* High-Contrast Bold Headline */}
-                    <h3 className="text-base sm:text-xl lg:text-[22px] font-heading font-medium text-white tracking-[-0.025em] leading-snug mb-2">
-                      {activeCard.headline}
-                    </h3>
-
-                    {/* Linear Style Action Link (Learn more ->) */}
-                    <Link
-                      href={activeCard.actionHref}
-                      className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-300 hover:text-white transition-colors duration-200 mb-2.5 group"
-                    >
-                      <span>{activeCard.actionText}</span>
-                      <ArrowRight
-                        size={13}
-                        className="rtl:-scale-x-100 text-neutral-400 group-hover:text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-all"
-                      />
-                    </Link>
-
-                    {/* 3 Points with Chevrons */}
-                    <div className="space-y-1.5 sm:space-y-2 w-full pt-1.5 border-t border-[#26282D]">
-                      {activeCard.points.map((pt) => (
-                        <div key={pt.title} className="space-y-0.5">
-                          <div className="text-xs sm:text-[13px] font-semibold text-neutral-100 font-heading">
-                            {pt.title}
-                          </div>
-                          <p className="text-[11px] sm:text-xs text-neutral-400 leading-snug font-sans">
-                            {pt.desc}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Right Column: Accent Tinted Canvas with Dark Console */}
-                  <div className="lg:col-span-6 w-full">
-                    <CardTilt3D maxTilt={6} glareOpacity={0.14} className="w-full">
-                      <div className={`w-full rounded-xl sm:rounded-2xl ${activeCard.canvasBg} border p-2.5 sm:p-4 shadow-inner relative overflow-hidden flex items-center justify-center`}>
-                        {activeCard.console}
+                    {/* Console Mockup Display */}
+                    <CardTilt3D maxTilt={4} glareOpacity={0.12} className="w-full pt-1">
+                      <div className={`w-full rounded-xl sm:rounded-2xl ${currentStep.canvasBg} border p-2.5 sm:p-3.5 shadow-inner`}>
+                        {currentStep.console}
                       </div>
                     </CardTilt3D>
                   </div>
 
-                </div>
+                  {/* Card Bottom Progress Dots */}
+                  <div className="flex items-center justify-between pt-3 mt-4 border-t border-[#26282D] text-xs text-neutral-400">
+                    <div className="flex items-center gap-1.5">
+                      {steps.map((_, dotIdx) => (
+                        <button
+                          key={dotIdx}
+                          onClick={() => setActiveStep(dotIdx)}
+                          aria-label={`Go to step ${dotIdx + 1}`}
+                          className={`h-1.5 rounded-full transition-all duration-300 ${
+                            activeStep === dotIdx ? 'w-5 bg-white' : 'w-1.5 bg-neutral-700 hover:bg-neutral-500'
+                          }`}
+                        />
+                      ))}
+                    </div>
 
-                {/* Bottom Step Switcher Indicators inside card */}
-                <div className="flex items-center justify-between pt-3 mt-3 border-t border-[#26282D] text-xs text-neutral-400 w-full">
-                  <div className="flex items-center gap-2">
-                    {cards.map((c, dotIdx) => (
-                      <button
-                        key={dotIdx}
-                        onClick={() => handleStepClick(dotIdx)}
-                        aria-label={`Go to step ${dotIdx + 1}`}
-                        className={`h-1.5 rounded-full transition-all duration-300 ${
-                          activeStep === dotIdx ? 'w-6 bg-white' : 'w-2 bg-neutral-700 hover:bg-neutral-500'
-                        }`}
-                      />
-                    ))}
+                    <button
+                      onClick={() => setActiveStep((activeStep + 1) % steps.length)}
+                      className="inline-flex items-center gap-1.5 font-medium text-xs text-neutral-300 hover:text-white transition-colors"
+                    >
+                      <span>{isAr ? 'الخطوة التالية' : 'Next Step'}</span>
+                      <ArrowRight size={12} className="rtl:-scale-x-100" />
+                    </button>
                   </div>
 
-                  <button
-                    onClick={() => handleStepClick((activeStep + 1) % cards.length)}
-                    className="inline-flex items-center gap-1 font-medium text-xs text-neutral-300 hover:text-white transition-colors"
-                  >
-                    <span>{isAr ? 'الخطوة التالية' : 'Next Step'}</span>
-                    <ArrowRight size={12} className="rtl:-scale-x-100" />
-                  </button>
-                </div>
+                </m.div>
+              </AnimatePresence>
+            </div>
 
-              </m.div>
-            </AnimatePresence>
           </div>
 
         </div>
@@ -574,3 +439,4 @@ export default function HowItWorks() {
     </section>
   );
 }
+

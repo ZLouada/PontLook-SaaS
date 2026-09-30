@@ -12,8 +12,8 @@ export const en = {
     switch_lang: "العربية"
   },
   hero: {
-    headline: "Your direct bridge to top corporate training providers.",
-    subtitle: "We identify organizational skill gaps and match decision makers with the training experts equipped to resolve them.",
+    headline: "Your direct bridge to smarter enterprise training and actionable workforce intelligence.",
+    subtitle: "Where GCC enterprises solve workforce challenges and verified training providers meet qualified demand.",
     btn_provider: "I'm a training provider",
     btn_buyer: "I'm looking for training",
     badges: {
@@ -31,8 +31,8 @@ export const en = {
   },
   how_it_works: {
     eyebrow: "Just in three steps",
-    title: "We pinpoint organizations facing real skill and training gaps",
-    subtitle: "OUR APPROACH : How We Connect the Market: Learn, Diagnose, and Get Matched",
+    title: "The journey from challenge to solution.",
+    subtitle: "Connecting decision-makers with corporate training firms through verified demand",
     step1: {
       badge: "Step 01",
       title: "Detect Need",
@@ -51,7 +51,7 @@ export const en = {
   },
   why_different: {
     eyebrow: "ACTIONABLE MARKET INTELLIGENCE",
-    title: "Real Solutions on Our Blog. Verified Connections on Our Platform.",
+    title: "Our diagnostic process turns vague corporate training requests into structured, actionable development roadmaps.",
     subtitle: "We analyze real GCC workplace challenges to deliver free, actionable problem-solving guides on our blog, and directly connect corporate leaders with the verified training providers ready to implement the solution.",
     cards: {
       diagnose: {
