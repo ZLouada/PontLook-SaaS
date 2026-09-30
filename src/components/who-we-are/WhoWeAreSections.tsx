@@ -44,6 +44,8 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
   return (
     <section
       id="our-mission"
+      data-nav-light="true"
+      data-nav-theme="light"
       className="relative bg-white text-neutral-900 py-16 sm:py-24 lg:py-28 transition-colors duration-500 overflow-hidden"
       aria-labelledby="comparison-title"
     >
@@ -426,6 +428,9 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
 
   return (
     <section
+      id="value-model"
+      data-nav-light="true"
+      data-nav-theme="light"
       className="relative bg-white text-neutral-900 py-16 sm:py-20 lg:py-24 border-t border-neutral-200 overflow-hidden"
       aria-labelledby="value-model-title"
     >
@@ -500,7 +505,12 @@ export function EditorialQuoteSection({ lang = 'en' }: WhoWeAreProps) {
   const isAr = lang === 'ar';
 
   return (
-    <section className="relative bg-neutral-50 text-neutral-900 py-16 sm:py-20 lg:py-24 border-t border-neutral-200 overflow-hidden">
+    <section
+      id="editorial-quote"
+      data-nav-light="true"
+      data-nav-theme="light"
+      className="relative bg-neutral-50 text-neutral-900 py-16 sm:py-20 lg:py-24 border-t border-neutral-200 overflow-hidden"
+    >
       <div className="container-site max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
         
         {/* Subtle decorative quotation mark */}
@@ -605,6 +615,8 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
   return (
     <section
       id="training-journey"
+      data-nav-light="true"
+      data-nav-theme="light"
       className="relative bg-white text-neutral-900 py-16 sm:py-24 border-t border-neutral-200 overflow-hidden"
       aria-labelledby="journey-title"
     >
@@ -709,12 +721,12 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
    ========================================================================== */
 export default function WhoWeAreSections({ lang = 'en' }: WhoWeAreProps) {
   return (
-    <>
+    <div data-nav-light="true" data-nav-theme="light">
       <ComparisonToggleSection lang={lang} />
       <ValueModelBilateral lang={lang} />
       <EditorialQuoteSection lang={lang} />
       <TrainingJourneyFlow lang={lang} />
-    </>
+    </div>
   );
 }
 

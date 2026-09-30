@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -22,7 +22,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const [commandOpen, setCommandOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [isDarkSection, setIsDarkSection] = useState(false);
+  const [isLightSection, setIsLightSection] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname() || `/${lang}`;
   const dict = useDictionary();
   const isForProviders = pathname?.includes('/for-providers') || pathname?.endsWith('/providers');
@@ -58,18 +59,48 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
+    let rafId: number | null = null;
+
+    const checkNavTheme = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
       setScrolled((prev) => (prev ? scrollY > 8 : scrollY > 24));
+
+      const navEl = headerRef.current;
+      const navRect = navEl?.getBoundingClientRect();
+      const checkY = navRect ? navRect.top + navRect.height / 2 : 40;
+
+      const lightElements = document.querySelectorAll(
+        '[data-nav-light="true"], [data-nav-theme="light"]'
+      );
+
+      let foundLight = false;
+      for (let i = 0; i < lightElements.length; i++) {
+        const el = lightElements[i];
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= checkY && rect.bottom >= checkY) {
+          foundLight = true;
+          break;
+        }
+      }
+
+      setIsLightSection(foundLight);
     };
 
-    setIsDarkSection(true);
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll, { passive: true });
+    const onScrollOrResize = () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(checkNavTheme);
+    };
+
+    checkNavTheme();
+    const timer = setTimeout(checkNavTheme, 150);
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      clearTimeout(timer);
+      window.removeEventListener('scroll', onScrollOrResize);
+      window.removeEventListener('resize', onScrollOrResize);
     };
   }, [pathname]);
 
@@ -98,13 +129,20 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
     <>
       <ScrollProgress />
       <header
+        ref={headerRef}
         className={`fixed inset-x-0 mx-auto z-50 liquid-glass-morph-header ${
           scrolled
-            ? `top-0 w-full rounded-none px-4 pb-3 pt-[max(1.125rem,calc(env(safe-area-inset-top,0px)+0.75rem))] liquid-glass-mobile-scrolled ${
+            ? `top-0 w-full rounded-none px-4 pb-3 pt-[max(1.125rem,calc(env(safe-area-inset-top,0px)+0.75rem))] ${
+                isLightSection ? 'liquid-glass-mobile-light' : 'liquid-glass-mobile-scrolled'
+              } ${
                 isDesktop
-                  ? 'sm:top-3 sm:w-[90%] sm:max-w-5xl sm:rounded-full sm:py-2.5 sm:px-6 liquid-glass-capsule-dark'
+                  ? isLightSection
+                    ? 'sm:top-3 sm:w-[90%] sm:max-w-5xl sm:rounded-full sm:py-2.5 sm:px-6 liquid-glass-capsule-light'
+                    : 'sm:top-3 sm:w-[90%] sm:max-w-5xl sm:rounded-full sm:py-2.5 sm:px-6 liquid-glass-capsule-dark'
                   : ''
               }`
+            : isLightSection
+            ? 'top-0 w-full max-w-full rounded-none px-4 sm:px-8 lg:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-light'
             : 'top-0 w-full max-w-full rounded-none px-4 sm:px-8 lg:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-dark'
         }`}
       >
@@ -113,19 +151,33 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           className="container-site !px-0 flex items-center justify-between w-full"
           aria-label="Main navigation"
         >
-          {/* Brand Logo */}
+          {/* Brand Logo - Orange on light sections, White on dark/AMOLED sections */}
           <Link
             href={`/${lang}`}
             className="flex items-center gap-2 sm:gap-2.5 transition-transform duration-200 hover:scale-[1.02] active:scale-95"
             aria-label="PontLook home"
           >
-            <div className="relative flex items-center">
+            <div className="relative flex items-center h-7 sm:h-8 w-[125px] sm:w-[140px]">
+              {/* Orange Logo - shown on white/light sections */}
               <Image
                 src="/images/brand/pontlook-logo-orange.png"
                 alt="PontLook Logo"
                 width={140}
                 height={35}
-                className="h-7 sm:h-8 w-auto object-contain transition-opacity duration-200"
+                className={`absolute inset-y-0 start-0 h-7 sm:h-8 w-auto object-contain transition-opacity duration-300 ${
+                  isLightSection ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+                priority
+              />
+              {/* White Logo - shown on dark/AMOLED sections */}
+              <Image
+                src="/images/brand/pontlook-logo-white.png"
+                alt="PontLook Logo"
+                width={140}
+                height={35}
+                className={`absolute inset-y-0 start-0 h-7 sm:h-8 w-auto object-contain transition-opacity duration-300 ${
+                  isLightSection ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                }`}
                 priority
               />
             </div>
@@ -144,7 +196,13 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                     onMouseEnter={() => setHoveredIndex(index)}
                     {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                     className={`relative z-10 block px-3.5 py-1.5 text-xs font-medium transition-colors duration-200 ${
-                      isActive
+                      isLightSection
+                        ? isActive
+                          ? 'text-neutral-950 font-bold'
+                          : isHovered
+                          ? 'text-neutral-950'
+                          : 'text-neutral-700 hover:text-neutral-950'
+                        : isActive
                         ? 'text-white font-semibold'
                         : isHovered
                         ? 'text-white'
@@ -158,7 +216,11 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   {isHovered && (
                     <m.div
                       layoutId="nav-pill"
-                      className="absolute inset-0 z-0 rounded-full bg-white/[0.08] border border-[#26282D] backdrop-blur-md"
+                      className={`absolute inset-0 z-0 rounded-full backdrop-blur-md ${
+                        isLightSection
+                          ? 'bg-black/[0.06] border border-black/10'
+                          : 'bg-white/[0.08] border border-[#26282D]'
+                      }`}
                       transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -170,6 +232,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       className={`absolute bottom-0 inset-x-3 h-0.5 rounded-full ${
                         isForProviders
                           ? 'bg-[#FF5C00] shadow-[0_0_8px_rgba(255,92,0,0.7)]'
+                          : isLightSection
+                          ? 'bg-[#FF5C00] shadow-[0_0_8px_rgba(255,92,0,0.4)]'
                           : 'bg-[#0052FF] shadow-[0_0_8px_rgba(0,82,255,0.7)]'
                       }`}
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
@@ -187,12 +251,22 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               <button
                 type="button"
                 onClick={() => setCommandOpen(true)}
-                className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B] text-neutral-400 hover:text-white hover:border-white/30 active:scale-95 transition-all duration-200"
+                className={`inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 ${
+                  isLightSection
+                    ? 'border border-neutral-300/80 bg-white/70 text-neutral-700 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
+                    : 'border border-[#26282D] bg-[#16171B] text-neutral-400 hover:text-white hover:border-white/30'
+                }`}
                 aria-label={lang === 'ar' ? 'البحث السريع (⌘K)' : 'Quick search (⌘K)'}
               >
-                <Search size={13} className="text-neutral-400" />
+                <Search size={13} className={isLightSection ? 'text-neutral-700' : 'text-neutral-400'} />
                 <span className="hidden md:inline">{lang === 'ar' ? 'بحث...' : 'Search...'}</span>
-                <kbd className="hidden sm:inline-block px-1.5 py-0.2 rounded bg-white/[0.08] text-[10px] font-mono text-neutral-300 border border-white/10">
+                <kbd
+                  className={`hidden sm:inline-block px-1.5 py-0.2 rounded text-[10px] font-mono border ${
+                    isLightSection
+                      ? 'bg-neutral-100 text-neutral-700 border-neutral-300'
+                      : 'bg-white/[0.08] text-neutral-300 border-white/10'
+                  }`}
+                >
                   ⌘K
                 </kbd>
               </button>
@@ -201,10 +275,14 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             <Magnetic strength={0.16} activeDistance={25} className="hidden lg:inline-flex">
               <Link
                 href={switchHref}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30 active:scale-95 transition-all duration-200"
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 ${
+                  isLightSection
+                    ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
+                    : 'border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30'
+                }`}
                 aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
               >
-                <Globe size={13} className="text-neutral-400" />
+                <Globe size={13} className={isLightSection ? 'text-neutral-700' : 'text-neutral-400'} />
                 <span>{lang === 'en' ? 'العربية' : 'English'}</span>
               </Link>
             </Magnetic>
@@ -213,16 +291,24 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             <div className="flex items-center gap-2 lg:hidden">
               <Link
                 href={switchHref}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30 active:scale-95 transition-all duration-200"
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 ${
+                  isLightSection
+                    ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
+                    : 'border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30'
+                }`}
                 aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
               >
-                <Globe size={13} className="text-neutral-400" />
+                <Globe size={13} className={isLightSection ? 'text-neutral-700' : 'text-neutral-400'} />
                 <span className="font-semibold">{lang === 'en' ? 'العربية' : 'EN'}</span>
               </Link>
 
               <button
                 type="button"
-                className="flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full transition-all active:scale-90 text-neutral-300 bg-[#16171B] border border-[#26282D] hover:bg-white/10 hover:text-white"
+                className={`flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full transition-all active:scale-90 ${
+                  isLightSection
+                    ? 'text-neutral-800 bg-white/80 border border-neutral-300/80 hover:bg-white hover:text-black shadow-xs'
+                    : 'text-neutral-300 bg-[#16171B] border border-[#26282D] hover:bg-white/10 hover:text-white'
+                }`}
                 onClick={() => setOpen(true)}
                 aria-expanded={open}
                 aria-label="Open navigation menu"
@@ -272,7 +358,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       >
                         <div className="relative flex items-center">
                           <Image
-                            src="/images/brand/pontlook-logo-orange.png"
+                            src="/images/brand/pontlook-logo-white.png"
                             alt="PontLook Logo"
                             width={140}
                             height={35}
