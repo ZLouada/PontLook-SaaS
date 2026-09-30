@@ -198,14 +198,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               </button>
             </Magnetic>
 
-            {/* Live Network Status Indicator */}
-            <div className="hidden xl:inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B]/90 backdrop-blur-md text-neutral-300">
-              <Signal />
-              <span className="text-[11px] font-medium text-neutral-300">
-                {lang === 'ar' ? 'الشبكة متصلة' : 'Network Active'}
-              </span>
-            </div>
-
             <Magnetic strength={0.16} activeDistance={25} className="hidden lg:inline-flex">
               <Link
                 href={switchHref}
