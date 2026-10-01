@@ -264,7 +264,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       : 'text-white'
                   }`}
                 >
-                  pontlook
+                  PontLook
                 </m.span>
               )}
             </AnimatePresence>
@@ -719,7 +719,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             isForProviders ? 'text-[#FF5C00]' : 'text-white'
                           }`}
                         >
-                          pontlook
+                          PontLook
                         </span>
                       </Link>
                       <button
