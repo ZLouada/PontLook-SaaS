@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Reveal from '@/components/shared/Reveal';
 import TextReveal from '@/components/shared/TextReveal';
 import FindTrainingStepsCards from '@/components/find-training/FindTrainingStepsCards';
+import FindTrainingBentoImpact from '@/components/find-training/FindTrainingBentoImpact';
 import NeuralGridBackground from '@/components/shared/NeuralGridBackground';
 import Magnetic from '@/components/shared/Magnetic';
 import CounterTicker from '@/components/shared/CounterTicker';
@@ -202,6 +203,11 @@ export default async function FindTrainingPage({
         <div className="container-site max-w-6xl mx-auto px-4 sm:px-6 space-y-16 sm:space-y-24">
           <div>
             <FindTrainingStepsCards lang={lang} />
+          </div>
+
+          {/* 3. WHAT HE WOULD EXPECT / BENTO ROI IMPACT */}
+          <div className="border-t border-[#26282D] pt-16 sm:pt-24">
+            <FindTrainingBentoImpact lang={lang} />
           </div>
 
           {/* Bottom Enterprise Request CTA Card */}

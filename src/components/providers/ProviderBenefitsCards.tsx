@@ -31,8 +31,8 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
       index: '01',
       icon: CircleDollarSign,
       badge: isAr ? 'نموذج الدفع بالأداء' : 'Performance-Based',
-      title: isAr ? 'انعدام مخاطر الرسوم الشهرية' : 'Pay Per Lead, Not Per Month',
-      angle: isAr ? 'صفر اشتراكات ثابتة · دفع حصري لكل صانع قرار' : 'Zero Retainers · Pay Per Qualified Buyer',
+      title: isAr ? 'انعدام مخاطر الرسوم الشهرية' : 'Zero Retainer Risk',
+      angle: isAr ? 'صفر اشتراكات ثابتة · دفع حصري لكل مشترٍ مؤهل' : 'Zero Retainers · Pay Per Qualified Buyer',
       body: isAr
         ? 'لا توجد رسوم إدارة أو اشتراكات شهرية ثابتة. الدفع يتم حصراً لكل صانع قرار مؤكد ومؤهل يتم تقديمه لك مع كراسة متطلبات واضحة.'
         : 'No monthly management fees or fixed retainers. You pay strictly per verified decision maker delivered ($50 to $200 per lead).',

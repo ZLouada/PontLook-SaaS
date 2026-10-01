@@ -4,6 +4,7 @@ import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
 import ProviderBenefitsCards from '@/components/providers/ProviderBenefitsCards';
+import ProviderStepsComparison from '@/components/providers/ProviderStepsComparison';
 import Reveal from '@/components/shared/Reveal';
 import TextReveal from '@/components/shared/TextReveal';
 import NeuralGridBackground from '@/components/shared/NeuralGridBackground';
@@ -104,17 +105,24 @@ export default async function ForProvidersPage({
           {/* Left-Aligned Header Block */}
           <div className="max-w-3xl text-start">
             <Reveal>
-              <TextReveal
-                as="h1"
-                onScroll={false}
-                text={isAr ? 'فرص تدريبية للشركات حسب الطلب' : 'Enterprise Training Leads On Demand'}
-                className="text-2xl xs:text-3xl sm:text-5xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.05] font-heading tracking-tight text-start"
-              />
+              <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.05] font-heading tracking-tight text-start">
+                {isAr ? (
+                  <>
+                    فرص تدريبية للشركات{' '}
+                    <span className="text-[#FF5C00]">حسب الطلب.</span>
+                  </>
+                ) : (
+                  <>
+                    Enterprise Training Leads{' '}
+                    <span className="text-[#FF5C00]">On Demand.</span>
+                  </>
+                )}
+              </h1>
 
               <p className="mt-3.5 sm:mt-5 text-sm xs:text-base sm:text-lg text-neutral-300 leading-relaxed max-w-2xl font-normal font-sans text-start">
                 {isAr
                   ? 'تواصل مباشرة مع صناع القرار في كبرى المنشآت والشركات التي تبحث بنشاط عن حلول تدريبية. بدون رسوم شهرية ثابتة، الدفع فقط لكل فرصة مؤكدة ومؤهلة.'
-                  : 'Connect directly with verified corporate decision makers actively seeking training solutions. No retainers, 100% pay per lead.'}
+                  : 'Connect directly with verified corporate decision makers actively seeking training solutions. Zero retainers, 100% pay per lead.'}
               </p>
 
               {/* Hero Action Buttons */}
@@ -143,15 +151,22 @@ export default async function ForProvidersPage({
         </div>
       </section>
 
-      {/* 2. WHY PARTNER SECTION */}
+      {/* 2. WHY PARTNER / DIRECT VALUE PROPOSITION */}
       <section id="why-partner" className="bg-black py-16 sm:py-24 scroll-mt-16">
         <div className="container-site max-w-6xl mx-auto px-4 sm:px-6">
           <ProviderBenefitsCards lang={lang} />
         </div>
       </section>
 
-      {/* 3. OPPORTUNITY TIERS SECTION */}
-      <div id="tiers" className="scroll-mt-24">
+      {/* 3. STEPS / DELIVERY COMPARISON WORKFLOW */}
+      <section id="workflow" className="bg-black py-16 sm:py-24 border-t border-[#202227] scroll-mt-16">
+        <div className="container-site max-w-6xl mx-auto px-4 sm:px-6">
+          <ProviderStepsComparison lang={lang} />
+        </div>
+      </section>
+
+      {/* 4. WHAT HE WOULD EXPECT / OPPORTUNITY TIERS */}
+      <div id="tiers" className="scroll-mt-24 border-t border-[#202227]">
         <LeadTiers mode="providers" dict={dict} lang={lang} />
       </div>
 

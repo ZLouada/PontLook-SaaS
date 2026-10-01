@@ -208,7 +208,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           className="container-site !px-0 flex items-center justify-between w-full"
           aria-label="Main navigation"
         >
-          {/* Brand Logo: Black on white background, White on black background */}
+          {/* Brand Logo: Orange on 'I'm provider', Black on white background, White on black background */}
           <Link
             href={`/${lang}`}
             onClick={() => {
@@ -219,25 +219,36 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             aria-label="PontLook home"
           >
             <div className="relative h-7 w-7 xs:h-8 xs:w-8 shrink-0 flex items-center justify-center">
-              {/* Black Icon - shown on white/light sections */}
+              {/* Orange Icon - shown on 'I'm provider' pages */}
+              <Image
+                src="/images/brand/pontlook-icon-orange.png"
+                alt="PontLook"
+                width={32}
+                height={32}
+                className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ${
+                  isForProviders ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
+                priority
+              />
+              {/* Black Icon - shown on white/light sections when NOT provider */}
               <Image
                 src="/images/brand/pontlook-icon-black.png"
                 alt="PontLook"
                 width={32}
                 height={32}
                 className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ${
-                  isLightSection ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                  !isForProviders && isLightSection ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
                 priority
               />
-              {/* White Icon - shown on dark/AMOLED sections */}
+              {/* White Icon - shown on dark/AMOLED sections when NOT provider */}
               <Image
                 src="/images/brand/pontlook-icon-white.png"
                 alt="PontLook"
                 width={32}
                 height={32}
                 className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ${
-                  isLightSection ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                  !isForProviders && !isLightSection ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
                 priority
               />
@@ -251,8 +262,12 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   animate={{ opacity: 1, width: 'auto', scale: 1 }}
                   exit={{ opacity: 0, width: 0, scale: 0.95 }}
                   transition={{ duration: 0.22, ease: 'easeInOut' }}
-                  className={`font-heading font-extrabold tracking-tight text-xl xs:text-2xl whitespace-nowrap overflow-hidden select-none ${
-                    isLightSection ? 'text-neutral-950' : 'text-white'
+                  className={`font-heading font-extrabold tracking-tight text-xl xs:text-2xl whitespace-nowrap overflow-hidden select-none transition-colors duration-300 ${
+                    isForProviders
+                      ? 'text-[#FF5C00]'
+                      : isLightSection
+                      ? 'text-neutral-950'
+                      : 'text-white'
                   }`}
                 >
                   pontlook
@@ -693,7 +708,11 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       >
                         <div className="relative h-7 w-7 flex items-center justify-center">
                           <Image
-                            src="/images/brand/pontlook-icon-white.png"
+                            src={
+                              isForProviders
+                                ? '/images/brand/pontlook-icon-orange.png'
+                                : '/images/brand/pontlook-icon-white.png'
+                            }
                             alt="PontLook Logo"
                             width={28}
                             height={28}
@@ -701,7 +720,11 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             priority
                           />
                         </div>
-                        <span className="font-heading font-extrabold tracking-tight text-xl text-white">
+                        <span
+                          className={`font-heading font-extrabold tracking-tight text-xl transition-colors duration-200 ${
+                            isForProviders ? 'text-[#FF5C00]' : 'text-white'
+                          }`}
+                        >
                           pontlook
                         </span>
                       </Link>

@@ -30,130 +30,130 @@ interface TierData {
 
 const TIERS_EN: TierData[] = [
   {
-    step: 'Step 1',
+    step: 'Tier 01',
     badge: 'Hot · 95% Match',
-    title: 'High intent enterprise demand with confirmed budget',
-    description: 'Verified decision maker, confirmed budget, starts within 30 days.',
-    project: 'Riyadh Enterprise · Project #01',
-    accuracy: '95%',
-    barColor: 'bg-neutral-950',
+    title: 'Ready to Contract · Immediate 30-Day Window',
+    description: 'Verified CHRO/VP HR, confirmed budget authority, RFP scoped and ready for proposals.',
+    project: 'Riyadh Enterprise · Executive Leadership',
+    accuracy: '95% Accuracy',
+    barColor: 'bg-[#FF5C00]',
     barWidth: 'w-[95%]',
     checklist: [
-      'Verified Decision Maker (CHRO)',
-      'Confirmed Budget (SAR 300k+)',
-      'Immediate 30 Day Window'
-    ]
+      'Verified CHRO / Decision Maker',
+      'Confirmed Budget (SAR 250k+)',
+      'Immediate 30-Day Deployment Window',
+    ],
   },
   {
-    step: 'Step 2',
+    step: 'Tier 02',
     badge: 'Warm · 80% Match',
-    title: 'Confirmed workforce pain; budget & timeline forming',
-    description: 'Confirmed pain and authority; budget or timeline still forming. We stay engaged to pass the lead when ready.',
-    project: 'Dubai Enterprise · Project #02',
-    accuracy: '80%',
-    barColor: 'bg-neutral-800',
+    title: 'Active Requirement · Budget Staged for Q3/Q4',
+    description: 'Validated training challenge and executive sponsor; finalizing cohort schedule and vendor shortlist.',
+    project: 'Dubai Enterprise · AI & Tech Upskilling',
+    accuracy: '80% Accuracy',
+    barColor: 'bg-[#FF5C00]/80',
     barWidth: 'w-[80%]',
     checklist: [
-      'Executive Authority Validated',
-      '500+ Enterprise Workforce',
-      'Budget Staged for Q3'
-    ]
+      'Executive Sponsor Confirmed',
+      '500+ Regional Workforce',
+      'Vendor Evaluation Window Active',
+    ],
   },
   {
-    step: 'Step 3',
+    step: 'Tier 03',
     badge: 'Qualified · 60% Match',
-    title: 'Genuine need verified; earlier in the buying journey',
-    description: 'Genuine need verified; earlier in the buying journey.',
-    project: 'Doha Enterprise · Project #03',
-    accuracy: '60%',
-    barColor: 'bg-neutral-600',
+    title: 'Strategic Need · Early Discovery RFP',
+    description: 'Corporate capability gap identified and approved for preliminary provider scouting.',
+    project: 'Doha Enterprise · Compliance & Risk',
+    accuracy: '60% Accuracy',
+    barColor: 'bg-[#FF5C00]/60',
     barWidth: 'w-[60%]',
     checklist: [
-      'Strategic Training Need Identified',
-      'Banking & Financial Sector',
-      'Early Positioning Window'
-    ]
+      'Strategic Scope Defined',
+      'Banking & Financial Services',
+      'Pre-RFP Engagement Opportunity',
+    ],
   },
   {
-    step: 'Step 4',
-    badge: 'Partnership Model',
-    title: 'Explore the partnership: Predictable enterprise client pipeline',
-    description: 'Every lead is verified before introduction. No monthly retainers, 5-lead proof of concept pilot, and a 5-day replacement guarantee.',
-    project: 'Enterprise Provider Partnership',
-    accuracy: '100% Guaranteed',
-    barColor: 'bg-neutral-950',
+    step: 'SLA Guarantee',
+    badge: '100% Guaranteed',
+    title: 'Zero Retainer Risk · Complete Quality SLA',
+    description: 'Never pay monthly agency retainers. Zero upfront cost. Instant 100% lead replacement if any contact fails qualification.',
+    project: 'PontLook Provider Partnership SLA',
+    accuracy: '100% SLA Guarantee',
+    barColor: 'bg-[#FF5C00]',
     barWidth: 'w-full',
     checklist: [
-      'Pay Per Qualified Lead ($0 Retainer)',
-      'Direct Access to C Suite & HR Directors',
-      'Full Lead Intelligence Report Included'
+      '$0 Monthly Retainer · Pay Per Lead',
+      '100% Instant Replacement SLA',
+      'Keep 100% of Training Delivery Fees',
     ],
-    isCtaCard: true
-  }
+    isCtaCard: true,
+  },
 ];
 
 const TIERS_AR: TierData[] = [
   {
-    step: 'المرحلة 1',
+    step: 'المستوى 01',
     badge: 'فرصة مؤكدة · دقة 95%',
-    title: 'احتياج تدريبي نشط وموثق لدى صانع قرار معتمد',
-    description: 'صانع قرار تنفيذي مؤكد، متطلب تدريبي قائم، استعداد وجاهزية تامة للتواصل والنقاش.',
-    project: 'جهة مصرفية كبرى بالرياض · فرصة #01',
-    accuracy: '95%',
-    barColor: 'bg-neutral-950',
+    title: 'جاهز للتعاقد · نافذة تنفيذ خلال 30 يوماً',
+    description: 'صانع قرار تنفيذي موثق، ميزانية معتمدة ومخصصة، وكراسة متطلبات تدريبية مكتملة وجاهزة لتلقي العروض.',
+    project: 'جهة كبرى بالرياض · القيادة التنفيذية',
+    accuracy: 'دقة 95%',
+    barColor: 'bg-[#FF5C00]',
     barWidth: 'w-[95%]',
     checklist: [
-      'صانع قرار تنفيذي معتمد',
-      'احتياج تدريبي نشط ومحدد',
-      'صلاحية تفاوض وميزانية قائمة'
-    ]
+      'صانع قرار تنفيذي معتمد ومباشر',
+      'ميزانية معتمدة ومخصصة (250+ ألف ر.س)',
+      'نافذة تنفيذ عاجلة خلال 30 يوماً',
+    ],
   },
   {
-    step: 'المرحلة 2',
+    step: 'المستوى 02',
     badge: 'فرصة قيد الإعداد · دقة 80%',
-    title: 'مبادرة تدريب وتطوير مخططة للربع القادم',
-    description: 'مبادرة معتمدة وتحدي مؤسسي واضح؛ قيد إعداد خطة التنفيذ للشهر القادم.',
-    project: 'مجموعة قابضة في دبي · فرصة #02',
-    accuracy: '80%',
-    barColor: 'bg-neutral-800',
+    title: 'احتياج تدريبي مؤكد · ميزانية مخصصة للربع القادم',
+    description: 'تحدي مؤسسي واضح واعتماد من الإدارة العليا؛ يجري إعداد القائمة المختصرة لمزودي التدريب.',
+    project: 'مجموعة كبرى في دبي · التحول الرقمي والذكاء الاصطناعي',
+    accuracy: 'دقة 80%',
+    barColor: 'bg-[#FF5C00]/80',
     barWidth: 'w-[80%]',
     checklist: [
-      'صلاحية القرار معتمدة',
-      'فريق عمل مؤسسي يتجاوز 500 موظف',
-      'ميزانية مخصصة للربع الثالث'
-    ]
+      'راعي تنفيذي معتمد للبرنامج',
+      'كوادر تتجاوز 500 موظف',
+      'تقييم العروض لاختيار المزود الأنسب',
+    ],
   },
   {
-    step: 'المرحلة 3',
+    step: 'المستوى 03',
     badge: 'فرصة مبكرة · دقة 60%',
-    title: 'احتياج تدريبي حقيقي في مرحلة التخطيط الأولي',
-    description: 'احتياج حقيقي تم التحقق منه؛ في مرحلة مبكرة من رحلة الشراء والتعاقد.',
-    project: 'مؤسسة في الدوحة · فرصة #03',
-    accuracy: '60%',
-    barColor: 'bg-neutral-600',
+    title: 'احتياج استراتيجي · استكشاف العروض المبدئية',
+    description: 'تحديد فجوة مهارات معتمدة والبدء في استكشاف كفاءات وبيوت الخبرة التدريبية المتخصصة.',
+    project: 'مؤسسة في الدوحة · الامتثال وإدارة المخاطر',
+    accuracy: 'دقة 60%',
+    barColor: 'bg-[#FF5C00]/60',
     barWidth: 'w-[60%]',
     checklist: [
-      'تحديد احتياج تدريبي استراتيجي',
-      'قطاع البنوك والخدمات المالية',
-      'نافذة تواصل مبكرة وبناء علاقة'
-    ]
+      'تحديد النطاق المبدئي بوضوح',
+      'قطاع مالي ومصرفي مرموق',
+      'فرصة تواصل مبكر وبناء أسبقية',
+    ],
   },
   {
-    step: 'المرحلة 4',
-    badge: 'نموذج الشراكة',
-    title: 'استكشف نموذج الشراكة: تدفق مستمر لفرص الشركات والمؤسسات',
-    description: 'كل فرصة يتم التحقق منها قبل تقديمها. بدون رسوم شهرية ثابتة، تجربة قيادية لـ 5 فرص، وضمان استبدال الفرصة خلال 5 أيام.',
-    project: 'شراكة مزودي التدريب المعتمدين',
-    accuracy: 'ضمان 100%',
-    barColor: 'bg-neutral-950',
+    step: 'ضمان الشراكة',
+    badge: 'ضمان 100%',
+    title: 'صفر مخاطر اشتراكات · ضمان استبدال فوري',
+    description: 'بدون أي اشتراكات شهرية أو رسوم وكالات ثابتة. استبدال فوري 100% لأي فرصة لا تطابق معايير التأهيل المعتمدة.',
+    project: 'اتفاقية مستوى الخدمة لمزودي PontLook',
+    accuracy: 'ضمان 100% معتمد',
+    barColor: 'bg-[#FF5C00]',
     barWidth: 'w-full',
     checklist: [
-      'دفع لكل فرصة مؤهلة ($0 رسوم اشتراك)',
-      'وصول مباشر لصناع القرار ورؤساء الموارد البشرية',
-      'تقرير معلوماتي وتحليلي متكامل لكل فرصة'
+      'صفر اشتراكات شهرية · الدفع لكل فرصة',
+      'ضمان استبدال فوري 100% خلال 48 ساعة',
+      'الاحتفاظ بـ 100% من أتعاب التدريب',
     ],
-    isCtaCard: true
-  }
+    isCtaCard: true,
+  },
 ];
 
 const CARD_CONFIGS = [
@@ -514,21 +514,21 @@ export default function LeadTiers(_props?: {
                     <CardTilt3D maxTilt={4} glareOpacity={0.12} className="w-full">
                       <Spotlight
                         radius={340}
-                        className={`relative overflow-hidden bg-[#0F1013] border border-[#26282D] hover:border-neutral-900 text-white rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-7 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
+                        className={`relative overflow-hidden bg-[#0F1013] border border-[#26282D] hover:border-orange-500/40 text-white rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-7 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
                       >
-                        <BorderGlow glowColor="rgba(0, 0, 0, 0.15)" size={320} opacity={0.5} />
+                        <BorderGlow glowColor="rgba(255, 92, 0, 0.22)" size={320} opacity={0.6} />
                         {idx === 0 && (
-                          <BorderBeam size={260} duration={12} colorFrom="#000000" colorTo="#333333" />
+                          <BorderBeam size={260} duration={10} colorFrom="#FF5C00" colorTo="#FFA066" />
                         )}
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 xs:gap-5 sm:gap-8 items-center relative z-10">
                           {/* Left Details */}
                           <div className="lg:col-span-7 space-y-2.5 xs:space-y-3 sm:space-y-4">
                             <div className="flex items-center gap-1.5 xs:gap-2">
-                              <span className="px-2 xs:px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] xs:text-xs font-semibold bg-white/[0.08] text-white border border-[#26282D]">
+                              <span className="px-2 xs:px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] xs:text-xs font-bold font-mono bg-white/[0.08] text-white border border-[#26282D]">
                                 {tier.step}
                               </span>
-                              <span className="inline-flex items-center gap-1.5 px-2 xs:px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] xs:text-xs font-medium bg-[#16171B] text-neutral-300 border border-[#26282D]">
-                                <Signal tone="neutral" size={14} speed={1 - idx * 0.12} />
+                              <span className="inline-flex items-center gap-1.5 px-2 xs:px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] xs:text-xs font-semibold bg-orange-500/10 text-[#FF5C00] border border-orange-500/30">
+                                <Signal tone="orange" size={14} speed={1 - idx * 0.12} />
                                 <span>{tier.badge}</span>
                               </span>
                             </div>
@@ -546,7 +546,7 @@ export default function LeadTiers(_props?: {
                                 <Magnetic strength={0.22} activeDistance={35}>
                                   <Link
                                     href={`/${lang}/for-providers/apply`}
-                                    className="w-full xs:w-auto inline-flex items-center justify-center px-5 sm:px-6 py-2.5 xs:py-3 sm:py-3.5 rounded-xl bg-neutral-950 hover:bg-black text-white font-medium text-xs xs:text-sm shadow-lg shadow-neutral-900/10 active:scale-95 transition-all"
+                                    className="w-full xs:w-auto inline-flex items-center justify-center px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-xs xs:text-sm shadow-lg shadow-orange-500/25 active:scale-95 transition-all"
                                   >
                                     <span>{isAr ? 'قدم للانضمام إلى الشراكة' : 'Apply for partnership'}</span>
                                     <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
@@ -566,16 +566,17 @@ export default function LeadTiers(_props?: {
                               <div>
                                 <div className="flex justify-between text-[11px] xs:text-xs font-semibold text-neutral-300 mb-1 sm:mb-1.5">
                                   <span>{isAr ? 'دقة التطابق' : 'Match Accuracy'}</span>
-                                  <span className="font-bold text-white tabular-nums">{tier.accuracy}</span>
+                                  <span className="font-bold text-[#FF5C00] tabular-nums">{tier.accuracy}</span>
                                 </div>
                                 <div className="h-1.5 sm:h-2 w-full rounded-full bg-white/10 overflow-hidden">
-                                  <div className={`h-full rounded-full ${tier.barColor} ${tier.barWidth}`} />
+                                  <div className={`h-full rounded-full ${tier.barColor} ${tier.barWidth} transition-all duration-500`} />
                                 </div>
                               </div>
 
                               <ul className="space-y-1 xs:space-y-1.5 sm:space-y-2 pt-1 text-[11px] xs:text-xs text-neutral-300">
                                 {tier.checklist.map((item, cIdx) => (
-                                  <li key={cIdx}>
+                                  <li key={cIdx} className="flex items-center gap-2">
+                                    <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] shrink-0" />
                                     <span>{item}</span>
                                   </li>
                                 ))}
