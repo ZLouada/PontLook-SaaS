@@ -1,18 +1,18 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { ArrowRight, CheckCircle2 } from '@/components/icons';
-import { m, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import Signal from '@/components/shared/Signal';
 import TextReveal from '@/components/shared/TextReveal';
 import BorderBeam from '@/components/shared/BorderBeam';
 import CardTilt3D from '@/components/shared/CardTilt3D';
 import Magnetic from '@/components/shared/Magnetic';
 import BorderGlow from '@/components/shared/BorderGlow';
-import { spring, ease, dur } from '@/lib/motion';
+import { ease, dur } from '@/lib/motion';
 
 export default function HowItWorks() {
   const dict = useDictionary();
@@ -21,6 +21,34 @@ export default function HowItWorks() {
   const isAr = lang === 'ar';
 
   const [activeStep, setActiveStep] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const containerRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 1024);
+    check();
+    window.addEventListener('resize', check, { passive: true });
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  // Re-engineered Garage Shutter Roll-Down (top-to-bottom unroll, zero voids)
+  const shutterPercent = useTransform(scrollYProgress, [0, 0.40], [100, 0]);
+  const shutterClip = useTransform(shutterPercent, (p) => `inset(0% 0% ${p}% 0%)`);
+
+  // Spring Pop-Up Content (starts only after shutter is 80% down, zero cut-off cards)
+  const contentOpacity = useTransform(scrollYProgress, [0.32, 0.50], [0, 1]);
+  const contentScale = useTransform(scrollYProgress, [0.32, 0.52], [0.94, 1]);
+  const contentY = useTransform(scrollYProgress, [0.32, 0.52], [28, 0]);
+
+  // Leading bottom rim line
+  const lipY = useTransform(scrollYProgress, [0, 0.40], ['0%', '100%']);
+  const lipOpacity = useTransform(scrollYProgress, [0.02, 0.08, 0.38, 0.42], [0, 1, 1, 0]);
 
   // Touch swipe support for mobile
   const touchStartX = useRef<number | null>(null);
@@ -64,7 +92,7 @@ export default function HowItWorks() {
       stepNumber: '01',
       navTitle: isAr ? 'رصد الاحتياج' : 'Demand Detection',
       tag: isAr ? 'الخطوة 01 // رصد الاحتياج المؤسسي' : 'STEP 01 // DEMAND DETECTION',
-      tagColor: 'text-amber-400',
+      tagColor: 'text-neutral-400',
       headline: isAr
         ? 'رصد احتياجات التدريب المؤسسي المؤكدة قبل طرحها في السوق'
         : 'Detect verified enterprise training demand before it goes public',
@@ -79,8 +107,8 @@ export default function HowItWorks() {
             <span className="text-neutral-400 text-[11px] font-medium">
               {isAr ? 'رادار الاحتياج المؤسسي' : 'Enterprise Demand Feed'}
             </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-[10px] font-medium">
-              <Signal />
+            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-neutral-200 text-[10px] font-medium">
+              <Signal tone="white" size={12} />
               <span>{isAr ? 'إشارة نشطة' : 'Active Signal'}</span>
             </div>
           </div>
@@ -91,11 +119,11 @@ export default function HowItWorks() {
               <span className="font-semibold text-white">
                 {isAr ? 'الخدمات المالية والمصرفية · الرياض' : 'Banking & FinTech · Riyadh'}
               </span>
-              <span className="font-bold text-emerald-400 tabular-nums">SAR 450,000+</span>
+              <span className="font-bold text-neutral-100 tabular-nums">SAR 450,000+</span>
             </div>
             <div className="flex items-center justify-between text-neutral-400 text-[11px]">
               <span>{isAr ? '1,200+ موظف' : '1,200+ Employees'}</span>
-              <span className="text-amber-400 font-medium">
+              <span className="text-neutral-300 font-medium">
                 {isAr ? 'أولوية عاجلة · القيادة التنفيذية' : 'High Intent · Executive Leadership'}
               </span>
             </div>
@@ -107,13 +135,13 @@ export default function HowItWorks() {
               <span className="font-semibold text-white">
                 {isAr ? 'الطاقة والبنية التحتية · الظهران' : 'Energy & Infrastructure · Dhahran'}
               </span>
-              <span className="font-bold text-blue-400">
+              <span className="font-bold text-neutral-200">
                 {isAr ? 'ميزانية مؤكدة' : 'Confirmed Budget'}
               </span>
             </div>
             <div className="flex items-center justify-between text-neutral-400 text-[11px]">
               <span>{isAr ? 'التحول الرقمي والذكاء الاصطناعي' : 'Digital Transformation & AI'}</span>
-              <span className="text-emerald-400 font-medium">
+              <span className="text-neutral-300 font-medium">
                 {isAr ? 'موعد التنفيذ: الربع الثاني' : 'Deployment: Q2'}
               </span>
             </div>
@@ -128,7 +156,7 @@ export default function HowItWorks() {
       stepNumber: '02',
       navTitle: isAr ? 'التأهيل والربط' : 'Fit Scoring',
       tag: isAr ? 'الخطوة 02 // التأهيل والربط المعتمد' : 'STEP 02 // FIT SCORING & QUALIFICATION',
-      tagColor: 'text-purple-400',
+      tagColor: 'text-neutral-400',
       headline: isAr
         ? 'تقييم تحليلي وبشري دقيق يطابق المتطلبات الحقيقية مع نخبة الخبراء'
         : 'Deep analyst and human scoring against real enterprise constraints',
@@ -143,10 +171,10 @@ export default function HowItWorks() {
             <span className="text-neutral-400 text-[11px] font-medium">
               {isAr ? 'منظومة المطابقة والتأهيل' : 'Match & Qualification'}
             </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-xs font-bold">
-              <Signal />
+            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-white text-xs font-bold">
+              <Signal tone="white" size={12} />
               <span>94%</span>
-              <span className="text-[10px] font-normal">{isAr ? 'تطابق' : 'Match'}</span>
+              <span className="text-[10px] font-normal text-neutral-300">{isAr ? 'تطابق' : 'Match'}</span>
             </div>
           </div>
 
@@ -157,7 +185,7 @@ export default function HowItWorks() {
               <span className="font-bold text-white">4 / 4 Complete</span>
             </div>
             <div className="h-1.5 w-full bg-[#16171B] border border-[#26282D] rounded-full overflow-hidden p-0.5">
-              <div className="h-full bg-gradient-to-r from-purple-500 to-emerald-400 rounded-full w-[94%]" />
+              <div className="h-full bg-white rounded-full w-[94%]" />
             </div>
           </div>
 
@@ -188,7 +216,7 @@ export default function HowItWorks() {
       stepNumber: '03',
       navTitle: isAr ? 'التعاقد المباشر' : 'Direct Engagement',
       tag: isAr ? 'الخطوة 03 // التقديم المباشر والتعاقد' : 'STEP 03 // DIRECT ENGAGEMENT',
-      tagColor: 'text-teal-400',
+      tagColor: 'text-neutral-400',
       headline: isAr
         ? 'تقديم مباشر وتواصل شخصي مع ضمان الدفع مقابل النتائج'
         : 'Direct warm introductions with pay on success guarantees',
@@ -203,8 +231,8 @@ export default function HowItWorks() {
             <span className="text-neutral-400 text-[11px] font-medium">
               {isAr ? 'لوحة التعاقد المباشر' : 'Direct Engagement Console'}
             </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-teal-400 text-[10px] font-medium">
-              <Signal />
+            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-neutral-200 text-[10px] font-medium">
+              <Signal tone="white" size={12} />
               <span>{isAr ? 'تم التقديم' : 'Intro Complete'}</span>
             </div>
           </div>
@@ -213,7 +241,7 @@ export default function HowItWorks() {
           <div className="p-2 sm:p-2.5 rounded-lg bg-[#16171B] border border-[#26282D] space-y-1 text-xs">
             <div className="flex items-center justify-between">
               <span className="text-neutral-400">{isAr ? 'حالة الفرصة' : 'Pipeline Status'}</span>
-              <span className="font-semibold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded text-[10px] border border-emerald-500/30">
+              <span className="font-semibold text-white bg-white/10 px-2 py-0.5 rounded text-[10px] border border-white/20">
                 {isAr ? 'مرحلة تقديم العرض الفني' : 'Proposal Review Stage'}
               </span>
             </div>
@@ -228,7 +256,7 @@ export default function HowItWorks() {
           {/* Contract Terms */}
           <div className="pt-0.5 flex items-center justify-between text-xs text-neutral-400">
             <span>{isAr ? 'بدون عمولات خفية' : 'No hidden fees'}</span>
-            <span className="font-bold text-teal-400">
+            <span className="font-bold text-white">
               {isAr ? 'علاقة تعاقدية مباشرة 100%' : '100% Direct Contract'}
             </span>
           </div>
@@ -242,178 +270,263 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      data-nav-dark="true"
-      className="relative bg-black text-white py-14 sm:py-20 lg:py-24 scroll-mt-20 overflow-hidden"
+      ref={containerRef}
+      data-nav-light="true"
+      data-nav-theme="light"
+      className="relative bg-white lg:bg-black transition-colors duration-500 overflow-visible lg:h-[175vh] py-14 sm:py-20 lg:py-0 border-t border-neutral-200 lg:border-t-0"
+      aria-labelledby="how-it-works-title"
     >
-      {/* Subtle ambient light */}
-      <div className="absolute top-1/4 start-10 w-[500px] h-[500px] bg-white/[0.015] blur-[160px] pointer-events-none rounded-full" />
-      <div className="absolute bottom-1/4 end-10 w-[500px] h-[500px] bg-white/[0.01] blur-[160px] pointer-events-none rounded-full" />
-
-      <div className="container-site relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          
-          {/* LEFT COLUMN: Section Title, Subtitle, Highlights & Dedicated "Join Network" button */}
-          <div className="lg:col-span-5 flex flex-col items-start text-start space-y-5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-semibold uppercase tracking-wider font-sans">
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
-              <span>{isAr ? 'آلية العمل خطوة بخطوة' : 'HOW IT WORKS // POSTFLOWS'}</span>
-            </div>
-
-            <TextReveal
-              as="h2"
-              text={dict.how_it_works?.title || (isAr ? 'الرحلة من التحدي إلى الحل.' : 'The journey from challenge to solution.')}
-              className="text-xl xs:text-2xl sm:text-4xl lg:text-[42px] font-semibold text-white tracking-tight leading-[1.18] font-heading"
-            />
-
-            <p className="text-xs xs:text-sm sm:text-base text-neutral-400 font-sans leading-relaxed">
-              {dict.how_it_works?.subtitle ||
-                (isAr
-                  ? 'ربط صناع القرار بشركات تدريب الشركات عبر طلب موثق ومؤكد'
-                  : 'Connecting decision-makers with corporate training firms through verified demand')}
-            </p>
-
-            {/* Benefit Checkpoints */}
-            <div className="space-y-2.5 pt-1 w-full text-xs sm:text-sm text-neutral-300 font-sans">
-              <div className="flex items-center gap-2.5">
-                <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
-                <span>{isAr ? 'ميزانيات معتمدة مؤكدة مع الإدارة المالية' : 'Pre-allocated corporate training budgets'}</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
-                <span>{isAr ? 'مواءمة دقيقة مع 2 إلى 3 خبراء معتمدين كحد أقصى' : '2 to 3 curated specialists per mandate (Zero bidding wars)'}</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
-                <span>{isAr ? 'بدون اشتراكات شهرية، الدفع فقط مقابل النتائج' : 'Strict pay-on-success model with 5-day replacement SLA'}</span>
-              </div>
-            </div>
-
-            {/* Requested Prominent Button: "Join network" / subtitle: "for training providers" */}
-            <div className="pt-3 w-full sm:w-auto">
-              <Magnetic strength={0.2} activeDistance={35} className="w-full sm:w-auto">
-                <Link
-                  href={`/${lang}/for-providers/apply`}
-                  className="group inline-flex items-center justify-between gap-4 p-3.5 sm:p-4 rounded-2xl bg-[#16171B] hover:bg-[#1C1E24] border border-white/15 hover:border-white/35 transition-all duration-200 shadow-xl w-full sm:min-w-[280px]"
-                >
-                  <div className="flex flex-col text-start">
-                    <span className="text-sm sm:text-base font-semibold text-white group-hover:text-white transition-colors">
-                      {isAr ? 'انضم إلى الشبكة' : 'Join network'}
-                    </span>
-                    <span className="text-xs text-neutral-400 group-hover:text-neutral-300 transition-colors">
-                      {isAr ? 'لمزودي التدريب' : 'for training providers'}
-                    </span>
-                  </div>
-                  <div className="h-9 w-9 rounded-xl bg-white/[0.08] group-hover:bg-white/[0.16] border border-white/10 flex items-center justify-center text-white transition-colors shrink-0">
-                    <ArrowRight size={16} className="rtl:-scale-x-100 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
-                  </div>
-                </Link>
-              </Magnetic>
-            </div>
-          </div>
-
-          {/* RIGHT COLUMN: Steps Tabs on Top + Live Card with Mockup */}
-          <div className="lg:col-span-7 flex flex-col space-y-4">
-            
-            {/* Step Navigation Tabs on Top - 3 cols on all screen sizes */}
-            <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 w-full py-1">
-              {steps.map((st, idx) => {
-                const isActive = activeStep === idx;
-                return (
-                  <button
-                    key={st.id}
-                    onClick={() => setActiveStep(idx)}
-                    className={`group relative flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1 xs:px-1.5 sm:px-4 rounded-xl border transition-all duration-200 text-[9px] xs:text-[10px] sm:text-xs font-medium cursor-pointer active:scale-95 ${
-                      isActive
-                        ? 'text-white border-white/25 bg-white/[0.08]'
-                        : 'bg-[#111215] text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
-                    }`}
-                  >
-                    <span className={`text-[9px] xs:text-[10px] sm:text-[11px] font-mono font-bold shrink-0 ${isActive ? st.tagColor : 'text-neutral-500'}`}>
-                      {st.stepNumber}
-                    </span>
-                    <span className="truncate font-semibold">{st.navTitle}</span>
-                    {isActive && (
-                      <div className="shrink-0 ms-0.5 sm:ms-1 hidden xs:block">
-                        <Signal size={12} />
-                      </div>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Active Step Card */}
-            <div
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-              className="w-full"
-            >
-              <AnimatePresence mode="wait">
-                <m.div
-                  key={currentStep.id}
-                  initial={{ opacity: 0, y: 12, scale: 0.99 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -12, scale: 0.99 }}
-                  transition={{ duration: dur.base, ease: ease.out }}
-                  className="relative rounded-2xl sm:rounded-3xl border border-white/15 hover:border-white/25 bg-[#0F1013] p-3.5 xs:p-4 sm:p-6 lg:p-7 shadow-2xl overflow-hidden transition-colors"
-                >
-                  <BorderBeam size={260} duration={12} colorFrom="#FF5C00" colorTo="#0052FF" />
-                  <BorderGlow glowColor="rgba(255, 92, 0, 0.35)" size={280} opacity={0.5} />
-
-                  <div className="space-y-4 relative z-10">
-                    {/* Card Header with Eyebrow and Headline */}
-                    <div className="space-y-1.5 text-start">
-                      <span className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider ${currentStep.tagColor}`}>
-                        {currentStep.tag}
-                      </span>
-                      <h3 className="text-base sm:text-lg lg:text-xl font-heading font-semibold text-white leading-snug">
-                        {currentStep.headline}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed">
-                        {currentStep.desc}
-                      </p>
-                    </div>
-
-                    {/* Console Mockup Display */}
-                    <CardTilt3D maxTilt={4} glareOpacity={0.12} className="w-full pt-1">
-                      <div className={`w-full rounded-xl sm:rounded-2xl ${currentStep.canvasBg} border p-2.5 sm:p-3.5 shadow-inner`}>
-                        {currentStep.console}
-                      </div>
-                    </CardTilt3D>
-                  </div>
-
-                  {/* Card Bottom Progress Dots */}
-                  <div className="flex items-center justify-between pt-3 mt-4 border-t border-[#26282D] text-xs text-neutral-400">
-                    <div className="flex items-center gap-1.5">
-                      {steps.map((_, dotIdx) => (
-                        <button
-                          key={dotIdx}
-                          onClick={() => setActiveStep(dotIdx)}
-                          aria-label={`Go to step ${dotIdx + 1}`}
-                          className={`h-1.5 rounded-full transition-all duration-300 ${
-                            activeStep === dotIdx ? 'w-5 bg-white' : 'w-1.5 bg-neutral-700 hover:bg-neutral-500'
-                          }`}
-                        />
-                      ))}
-                    </div>
-
-                    <button
-                      onClick={() => setActiveStep((activeStep + 1) % steps.length)}
-                      className="inline-flex items-center gap-1.5 font-medium text-xs text-neutral-300 hover:text-white transition-colors"
-                    >
-                      <span>{isAr ? 'الخطوة التالية' : 'Next Step'}</span>
-                      <ArrowRight size={12} className="rtl:-scale-x-100" />
-                    </button>
-                  </div>
-
-                </m.div>
-              </AnimatePresence>
-            </div>
-
-          </div>
-
+      {/* Viewport Stage: Pinned on desktop during the garage door closure */}
+      <div className="relative lg:sticky lg:top-0 w-full min-h-screen flex flex-col justify-center items-center z-20 pt-2 sm:pt-4 lg:pt-16 xl:pt-20 pb-8 overflow-hidden">
+        
+        {/* Background Underlayer (Desktop only): Dark aesthetic connecting seamlessly with Hero */}
+        <div
+          className="hidden lg:block absolute inset-0 bg-black pointer-events-none"
+          aria-hidden="true"
+        >
+          {/* Subtle dark technical dot grid */}
+          <div
+            className="absolute inset-0 opacity-[0.06]"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.7) 1px, transparent 0)',
+              backgroundSize: '36px 36px',
+            }}
+          />
         </div>
+
+        {/* ================================================================
+            THE WHITE GARAGE SHUTTER CURTAIN (Rolling down over the dark hero)
+            ================================================================ */}
+        <m.div
+          style={
+            prefersReducedMotion || !isDesktop
+              ? { clipPath: 'none' }
+              : { clipPath: shutterClip }
+          }
+          className="w-full lg:absolute lg:inset-0 lg:h-full bg-white text-neutral-900 shadow-2xl flex flex-col justify-center items-center overflow-hidden z-10 pt-4 sm:pt-6 lg:pt-16 xl:pt-20 pb-8"
+        >
+          {/* Architectural horizontal garage door shutter slats */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.70]"
+            style={{
+              backgroundImage: `
+                repeating-linear-gradient(
+                  to bottom,
+                  transparent 0px,
+                  transparent 38px,
+                  rgba(0, 0, 0, 0.025) 38px,
+                  rgba(0, 0, 0, 0.05) 39px,
+                  transparent 40px
+                )
+              `,
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Attio-Style Subtle Grid dots */}
+          <div
+            className="absolute inset-0 opacity-[0.035] pointer-events-none"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 1px 1px, #000 1px, transparent 0)',
+              backgroundSize: '24px 24px',
+            }}
+            aria-hidden="true"
+          />
+
+          {/* ================================================================
+              SPRING POP-UP CONTENT INSIDE THE SHUTTER
+              ================================================================ */}
+          <m.div
+            style={
+              prefersReducedMotion || !isDesktop
+                ? { transform: 'none', opacity: 1 }
+                : {
+                    scale: contentScale,
+                    opacity: contentOpacity,
+                    y: contentY,
+                  }
+            }
+            className="container-site relative z-20 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl w-full flex flex-col justify-center"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              
+              {/* LEFT COLUMN: Section Title, Subtitle, Highlights & Dedicated "Join Network" button */}
+              <div className="lg:col-span-5 flex flex-col items-start text-start space-y-5">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-semibold uppercase tracking-wider font-sans">
+                  <span className="h-1.5 w-1.5 rounded-full bg-neutral-900" />
+                  <span>{isAr ? 'آلية العمل خطوة بخطوة' : 'HOW IT WORKS // POSTFLOWS'}</span>
+                </div>
+
+                <TextReveal
+                  as="h2"
+                  text={dict.how_it_works?.title || (isAr ? 'الرحلة من التحدي إلى الحل.' : 'The journey from challenge to solution.')}
+                  className="text-xl xs:text-2xl sm:text-4xl lg:text-[40px] font-semibold text-neutral-950 tracking-tight leading-[1.18] font-heading"
+                />
+
+                <p className="text-xs xs:text-sm sm:text-base text-neutral-600 font-sans leading-relaxed">
+                  {dict.how_it_works?.subtitle ||
+                    (isAr
+                      ? 'ربط صناع القرار بشركات تدريب الشركات عبر طلب موثق ومؤكد'
+                      : 'Connecting decision-makers with corporate training firms through verified demand')}
+                </p>
+
+                {/* Benefit Checkpoints */}
+                <div className="space-y-2.5 pt-1 w-full text-xs sm:text-sm text-neutral-700 font-sans">
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 size={16} className="text-neutral-950 shrink-0" />
+                    <span>{isAr ? 'ميزانيات معتمدة مؤكدة مع الإدارة المالية' : 'Pre-allocated corporate training budgets'}</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 size={16} className="text-neutral-950 shrink-0" />
+                    <span>{isAr ? 'مواءمة دقيقة مع 2 إلى 3 خبراء معتمدين كحد أقصى' : '2 to 3 curated specialists per mandate (Zero bidding wars)'}</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 size={16} className="text-neutral-950 shrink-0" />
+                    <span>{isAr ? 'بدون اشتراكات شهرية، الدفع فقط مقابل النتائج' : 'Strict pay-on-success model with 5-day replacement SLA'}</span>
+                  </div>
+                </div>
+
+                {/* Requested Prominent Button: "Join network" / subtitle: "for training providers" */}
+                <div className="pt-3 w-full sm:w-auto">
+                  <Magnetic strength={0.2} activeDistance={35} className="w-full sm:w-auto">
+                    <Link
+                      href={`/${lang}/for-providers/apply`}
+                      className="group inline-flex items-center justify-between gap-4 p-3.5 sm:p-4 rounded-2xl bg-neutral-950 hover:bg-black border border-neutral-900 transition-all duration-200 shadow-xl w-full sm:min-w-[280px]"
+                    >
+                      <div className="flex flex-col text-start">
+                        <span className="text-sm sm:text-base font-semibold text-white transition-colors">
+                          {isAr ? 'انضم إلى الشبكة' : 'Join network'}
+                        </span>
+                        <span className="text-xs text-neutral-400 group-hover:text-neutral-300 transition-colors">
+                          {isAr ? 'لمزودي التدريب' : 'for training providers'}
+                        </span>
+                      </div>
+                      <div className="h-9 w-9 rounded-xl bg-white/10 group-hover:bg-white/20 border border-white/15 flex items-center justify-center text-white transition-colors shrink-0">
+                        <ArrowRight size={16} className="rtl:-scale-x-100 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
+                      </div>
+                    </Link>
+                  </Magnetic>
+                </div>
+              </div>
+
+              {/* RIGHT COLUMN: Steps Tabs on Top + Live Card with Mockup */}
+              <div className="lg:col-span-7 flex flex-col space-y-4">
+                
+                {/* Step Navigation Tabs on Top - 3 cols on all screen sizes */}
+                <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 w-full py-1">
+                  {steps.map((st, idx) => {
+                    const isActive = activeStep === idx;
+                    return (
+                      <button
+                        key={st.id}
+                        onClick={() => setActiveStep(idx)}
+                        className={`group relative flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1 xs:px-1.5 sm:px-4 rounded-xl border transition-all duration-200 text-[9px] xs:text-[10px] sm:text-xs font-medium cursor-pointer active:scale-95 ${
+                          isActive
+                            ? 'text-white border-neutral-950 bg-neutral-950 shadow-sm'
+                            : 'bg-neutral-100 text-neutral-600 border-neutral-200 hover:border-neutral-300 hover:text-neutral-900 hover:bg-neutral-200/70'
+                        }`}
+                      >
+                        <span className={`text-[9px] xs:text-[10px] sm:text-[11px] font-mono font-bold shrink-0 ${isActive ? 'text-white' : 'text-neutral-500'}`}>
+                          {st.stepNumber}
+                        </span>
+                        <span className="truncate font-semibold">{st.navTitle}</span>
+                        {isActive && (
+                          <div className="shrink-0 ms-0.5 sm:ms-1 hidden xs:block">
+                            <Signal tone="white" size={12} />
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Active Step Card */}
+                <div
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                  className="w-full"
+                >
+                  <AnimatePresence mode="wait">
+                    <m.div
+                      key={currentStep.id}
+                      initial={{ opacity: 0, y: 12, scale: 0.99 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -12, scale: 0.99 }}
+                      transition={{ duration: dur.base, ease: ease.out }}
+                      className="relative rounded-2xl sm:rounded-3xl border border-neutral-800 bg-[#0F1013] p-3.5 xs:p-4 sm:p-6 lg:p-7 shadow-2xl overflow-hidden transition-colors"
+                    >
+                      <BorderBeam size={260} duration={12} colorFrom="rgba(255,255,255,0.3)" colorTo="rgba(255,255,255,0.05)" />
+                      <BorderGlow glowColor="rgba(255, 255, 255, 0.15)" size={280} opacity={0.4} />
+
+                      <div className="space-y-4 relative z-10">
+                        {/* Card Header with Eyebrow and Headline */}
+                        <div className="space-y-1.5 text-start">
+                          <span className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider ${currentStep.tagColor}`}>
+                            {currentStep.tag}
+                          </span>
+                          <h3 className="text-base sm:text-lg lg:text-xl font-heading font-semibold text-white leading-snug">
+                            {currentStep.headline}
+                          </h3>
+                          <p className="text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed">
+                            {currentStep.desc}
+                          </p>
+                        </div>
+
+                        {/* Console Mockup Display */}
+                        <CardTilt3D maxTilt={4} glareOpacity={0.08} className="w-full pt-1">
+                          <div className={`w-full rounded-xl sm:rounded-2xl ${currentStep.canvasBg} border p-2.5 sm:p-3.5 shadow-inner`}>
+                            {currentStep.console}
+                          </div>
+                        </CardTilt3D>
+                      </div>
+
+                      {/* Card Bottom Progress Dots */}
+                      <div className="flex items-center justify-between pt-3 mt-4 border-t border-[#26282D] text-xs text-neutral-400">
+                        <div className="flex items-center gap-1.5">
+                          {steps.map((_, dotIdx) => (
+                            <button
+                              key={dotIdx}
+                              onClick={() => setActiveStep(dotIdx)}
+                              aria-label={`Go to step ${dotIdx + 1}`}
+                              className={`h-1.5 rounded-full transition-all duration-300 ${
+                                activeStep === dotIdx ? 'w-5 bg-white' : 'w-1.5 bg-neutral-700 hover:bg-neutral-500'
+                              }`}
+                            />
+                          ))}
+                        </div>
+
+                        <button
+                          onClick={() => setActiveStep((activeStep + 1) % steps.length)}
+                          className="inline-flex items-center gap-1.5 font-medium text-xs text-neutral-300 hover:text-white transition-colors"
+                        >
+                          <span>{isAr ? 'الخطوة التالية' : 'Next Step'}</span>
+                          <ArrowRight size={12} className="rtl:-scale-x-100" />
+                        </button>
+                      </div>
+
+                    </m.div>
+                  </AnimatePresence>
+                </div>
+
+              </div>
+
+            </div>
+          </m.div>
+        </m.div>
+
+        {/* Shutter Leading Bottom Rim Line (Desktop only) */}
+        <m.div
+          style={
+            prefersReducedMotion || !isDesktop
+              ? { display: 'none' }
+              : { top: lipY, opacity: lipOpacity }
+          }
+          className="hidden lg:block absolute left-0 right-0 h-[2px] bg-neutral-300 shadow-[0_4px_12px_rgba(0,0,0,0.5)] z-30 pointer-events-none"
+          aria-hidden="true"
+        />
       </div>
     </section>
   );

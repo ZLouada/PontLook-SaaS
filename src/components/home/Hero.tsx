@@ -1,15 +1,14 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { ArrowRight, Sparkles } from '@/components/icons';
+import { ArrowRight } from '@/components/icons';
 import { m } from 'framer-motion';
 import TextReveal from '@/components/shared/TextReveal';
 import WordRotate from '@/components/shared/WordRotate';
-import NeuralGridBackground from '@/components/shared/NeuralGridBackground';
 import Magnetic from '@/components/shared/Magnetic';
+import TrustBar from '@/components/home/TrustBar';
 import { fadeUp, dur, ease } from '@/lib/motion';
 
 export default function Hero() {
@@ -37,67 +36,40 @@ export default function Hero() {
   return (
     <section
       data-nav-dark="true"
-      className="relative overflow-hidden bg-black text-white min-h-[calc(100vh-4rem)] sm:min-h-screen flex flex-col justify-center pt-24 pb-12 sm:pt-36 sm:pb-24"
+      className="relative overflow-hidden bg-black text-white min-h-[calc(100vh-4rem)] sm:min-h-screen flex flex-col justify-between pt-28 pb-4 sm:pt-36 sm:pb-6 select-none"
     >
-      {/* background image */}
+      {/* Background Underlayer: Deep Black with Subtle Monochrome Tech Dots */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none" aria-hidden="true">
-        <div className="absolute inset-0 ken-burns">
-          <Image
-            src="/hero-bridge.png"
-            alt="PontLook Bridge Background"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-        </div>
-
-        {/* vignette & gradient overlays */}
-        <div className="absolute inset-0 bg-black/45" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/35 rtl:bg-gradient-to-l rtl:from-black/85 rtl:via-black/60 rtl:to-black/35" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-black/60" />
-
-        {/* grain overlay */}
-        <div className="absolute inset-0 grain pointer-events-none" />
-
-        {/* ambient glow */}
-        <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-amber-500/[0.03] blur-[160px] rounded-full pointer-events-none" />
-        <div className="absolute top-1/2 end-1/4 w-[500px] h-[500px] bg-orange-500/[0.04] blur-[150px] rounded-full pointer-events-none" />
-
-        {/* interactive neural constellation matrix */}
-        <NeuralGridBackground className="z-0 opacity-60" gridSize={36} interactiveRadius={180} />
+        <div
+          className="absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.7) 1px, transparent 0)',
+            backgroundSize: '36px 36px',
+          }}
+        />
+        {/* Subtle monochrome ambient light (pure black & white glow, no colors) */}
+        <div className="absolute top-1/4 start-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-white/[0.02] blur-[160px] rounded-full pointer-events-none" />
       </div>
 
-      <div className="container-site relative z-10 mx-auto px-3.5 xs:px-4 sm:px-6 lg:px-8 w-full max-w-5xl">
-        <div className="flex flex-col items-start text-start">
+      {/* Main Hero Writing Section */}
+      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-7xl pt-4 sm:pt-8 flex-1 flex flex-col justify-center">
+        <div className="flex flex-col items-start text-start max-w-6xl">
           
-          {/* Eyebrow badge with glowing Sparkles icon */}
-          <m.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: ease.out }}
-            className="mb-4 sm:mb-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B]/90 border border-white/15 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),0_0_20px_rgba(255,255,255,0.04)]"
-          >
-            <Sparkles size={14} className="text-amber-400 animate-pulse" />
-            <span className="text-xs font-medium text-neutral-300">
-              {isAr ? 'منصة التوفيق المؤسسي المعتمدة في الخليج' : 'Verified GCC Corporate Training Matchmaking'}
-            </span>
-          </m.div>
-
-          {/* hero headline */}
+          {/* Hero headline - adjusted across all the screen (medium) */}
           <TextReveal
             as="h1"
             text={dict.hero.headline}
             onScroll={false}
-            className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-semibold text-white tracking-tight leading-[1.15] font-heading max-w-4xl"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[56px] font-medium sm:font-semibold text-white tracking-tight leading-[1.16] font-heading w-full max-w-6xl xl:max-w-7xl"
           />
 
-          {/* hero subtitle */}
-          <p className="mt-4 sm:mt-5 text-sm xs:text-base sm:text-lg md:text-xl text-neutral-400 font-sans leading-relaxed max-w-3xl">
+          {/* Hero subtitle statement - neutral grey */}
+          <p className="mt-4 sm:mt-5 text-sm xs:text-base sm:text-lg md:text-xl text-neutral-400 font-sans leading-relaxed max-w-3xl sm:max-w-4xl">
             {dict.hero.subtitle}
           </p>
 
-          {/* Dynamic rotating words sub-headline */}
+          {/* Dynamic rotating words sub-headline - 100% monochrome */}
           <m.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -105,13 +77,13 @@ export default function Hero() {
             className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2 text-xs sm:text-sm md:text-base text-neutral-400 font-sans"
           >
             <span>{isAr ? 'عروض تدريبية معتمدة في' : 'Enterprise capability solutions in'}</span>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-md">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-md text-neutral-200">
+              <span className="h-1.5 w-1.5 rounded-full bg-neutral-300 animate-pulse" />
               <WordRotate words={capabilityWords} />
             </span>
           </m.div>
 
-          {/* Side CTAs (Linear layout) */}
+          {/* Side CTAs (Linear layout) - 100% monochrome black/white/grey */}
           <m.div
             variants={fadeUp}
             initial="hidden"
@@ -122,7 +94,7 @@ export default function Hero() {
             <Magnetic strength={0.22} activeDistance={40} className="w-full xs:w-auto">
               <Link
                 href={`/${lang}/for-providers`}
-                className="w-full xs:w-auto inline-flex items-center justify-center gap-2.5 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-gradient-to-r from-white/[0.08] to-white/[0.03] hover:from-white/[0.14] hover:to-white/[0.08] text-white font-medium text-sm sm:text-base border border-white/15 hover:border-white/35 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2),0_4px_20px_rgba(0,0,0,0.5)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.3),0_8px_30px_rgba(255,255,255,0.1)] active:scale-[0.98] transition-all duration-200 group sheen"
+                className="w-full xs:w-auto inline-flex items-center justify-center gap-2.5 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-sm sm:text-base shadow-md active:scale-[0.98] transition-all duration-200 group"
               >
                 <span>{isAr ? 'انضم إلى شبكتنا' : 'Join the network'}</span>
                 <ArrowRight
@@ -135,7 +107,7 @@ export default function Hero() {
             <Magnetic strength={0.22} activeDistance={40} className="w-full xs:w-auto">
               <Link
                 href={`/${lang}/who-we-are`}
-                className="w-full xs:w-auto inline-flex items-center justify-center gap-2 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] transition-all duration-200 group"
+                className="w-full xs:w-auto inline-flex items-center justify-center gap-2 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-semibold text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] transition-all duration-200 group"
               >
                 <span>{isAr ? 'من نحن' : 'Who we are'}</span>
                 <ArrowRight
@@ -149,8 +121,10 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* gradient transition into the next section */}
-      <div className="absolute inset-x-0 bottom-0 h-16 sm:h-20 bg-gradient-to-b from-transparent to-black pointer-events-none" />
+      {/* TrustBar Marquee Ribbon integrated at the bottom of the black first section */}
+      <div className="relative z-10 w-full mt-auto pt-6">
+        <TrustBar />
+      </div>
     </section>
   );
 }

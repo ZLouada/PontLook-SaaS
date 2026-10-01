@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import Hero from '@/components/home/Hero';
-import TrustBar from '@/components/home/TrustBar';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 
@@ -57,7 +56,6 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <TrustBar />
       <HowItWorks />
       <WhyDifferent />
       <ProviderTeaser />

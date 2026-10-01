@@ -138,19 +138,19 @@ export default function WhyDifferent() {
         isAr ? 'تجنب هدر الميزانيات في تدريب غير مجدٍ' : 'Eliminate wasted corporate training budget',
       ],
       theme: {
-        accentText: 'text-neutral-200',
+        accentText: 'text-neutral-300',
         badgeBg: 'bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200',
         iconBg: 'bg-transparent text-white border border-white/10 group-hover:border-white/20',
         buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
-        checkColor: 'text-emerald-400',
+        checkColor: 'text-neutral-300',
         flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-white group-hover:border-white/30',
       },
-      themeVariant: 'brand',
+      themeVariant: 'default',
       mockup: (
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
           <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
-              <IconFrame variant="brand" size="xs">
+              <IconFrame variant="default" size="xs">
                 <Target size={14} />
               </IconFrame>
               <div>
@@ -162,13 +162,13 @@ export default function WhyDifferent() {
                 </div>
               </div>
             </div>
-            <Signal />
+            <Signal tone="white" size={12} />
           </div>
           <div className="flex flex-wrap gap-1.5 pt-0.5">
             <span className="px-2 py-0.5 rounded-md bg-white/10 text-neutral-300 text-[10px] font-medium border border-white/20 font-sans">
               {c?.diagnose?.tag1 || (isAr ? '# فجوات القيادة والتقنية' : '# Leadership & Tech Gaps')}
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 text-[10px] font-medium border border-emerald-500/30 font-sans">
+            <span className="px-2 py-0.5 rounded-md bg-white/[0.06] text-neutral-200 text-[10px] font-medium border border-white/15 font-sans">
               {c?.diagnose?.tag2 || (isAr ? 'خارطة طريق معتمدة' : 'Priority Roadmap')}
             </span>
           </div>
@@ -198,19 +198,19 @@ export default function WhyDifferent() {
         isAr ? 'التزام بالمواعيد والميزانية المحددة مسبقاً' : 'Pre confirmed budget and deployment window',
       ],
       theme: {
-        accentText: 'text-emerald-400',
+        accentText: 'text-neutral-300',
         badgeBg: 'bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200',
         iconBg: 'bg-transparent text-white border border-white/10 group-hover:border-white/20',
         buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
-        checkColor: 'text-emerald-400',
-        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-emerald-400 group-hover:border-emerald-500/30',
+        checkColor: 'text-neutral-300',
+        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-white group-hover:border-white/30',
       },
-      themeVariant: 'emerald',
+      themeVariant: 'default',
       mockup: (
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
           <div className="text-xs font-semibold text-white pb-1.5 border-b border-[#26282D] flex items-center justify-between font-sans">
             <span>{c?.match?.mockupHeader || (isAr ? 'قائمة معايير توافق الشريك' : 'Partner Fit Checklist')}</span>
-            <Signal />
+            <Signal tone="white" size={12} />
           </div>
           <div className="space-y-1.5 text-[11px] text-neutral-300 font-sans">
             <div>
@@ -249,27 +249,27 @@ export default function WhyDifferent() {
         isAr ? 'بدون وسطاء أو رسوم اشتراك شهرية' : 'Direct access without monthly retainers',
       ],
       theme: {
-        accentText: 'text-purple-400',
+        accentText: 'text-neutral-300',
         badgeBg: 'bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200',
         iconBg: 'bg-transparent text-white border border-white/10 group-hover:border-white/20',
         buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
-        checkColor: 'text-purple-400',
-        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-purple-400 group-hover:border-purple-500/30',
+        checkColor: 'text-neutral-300',
+        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-white group-hover:border-white/30',
       },
-      themeVariant: 'purple',
+      themeVariant: 'default',
       mockup: (
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <span className="px-2 py-0.5 rounded-md bg-[#0F1013] border border-[#26282D] text-neutral-300 text-[9px] font-medium uppercase font-sans">
               {c?.access?.clientTag || (isAr ? 'جهة مؤسسية · حوكمة ومخاطر' : 'Enterprise Client · GRC')}
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-purple-500/15 text-purple-300 text-[9px] font-medium border border-purple-500/30 shrink-0 font-sans">
+            <span className="px-2 py-0.5 rounded-md bg-white/10 text-neutral-200 text-[9px] font-medium border border-white/20 shrink-0 font-sans">
               {c?.access?.statusBadge || (isAr ? 'صلاحية الميزانية: مؤكدة' : 'Budget Authority: Confirmed')}
             </span>
           </div>
           <div className="flex items-center gap-2.5 pt-0.5">
-            <div className="h-7 w-7 rounded-lg bg-purple-600/20 flex items-center justify-center shrink-0">
-              <Signal />
+            <div className="h-7 w-7 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+              <Signal tone="white" size={12} />
             </div>
             <div className="min-w-0 font-sans">
               <div className="text-[11px] font-semibold text-white truncate">
@@ -304,19 +304,19 @@ export default function WhyDifferent() {
         isAr ? 'دفع حصري لكل فرصة مؤهلة' : 'Strict pay per qualified lead model',
       ],
       theme: {
-        accentText: 'text-amber-400',
+        accentText: 'text-neutral-300',
         badgeBg: 'bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200',
         iconBg: 'bg-transparent text-white border border-white/10 group-hover:border-white/20',
         buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
-        checkColor: 'text-amber-400',
-        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-amber-400 group-hover:border-amber-500/30',
+        checkColor: 'text-neutral-300',
+        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-white group-hover:border-white/30',
       },
-      themeVariant: 'amber',
+      themeVariant: 'default',
       mockup: (
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-1.5">
           <div className="flex items-center justify-between pb-1 border-b border-[#26282D] text-xs font-semibold text-white font-sans">
             <span>{c?.ready?.mockupHeader || (isAr ? 'جاهزية الشراكة | مؤكدة' : 'Partnership Readiness | Confirmed')}</span>
-            <Signal />
+            <Signal tone="white" size={12} />
           </div>
           <div className="space-y-1 text-[10px] sm:text-[11px] font-sans">
             <div className="flex justify-between items-center">
@@ -325,7 +325,7 @@ export default function WhyDifferent() {
             </div>
             <div className="flex justify-between items-center">
               <span className="text-neutral-400">{c?.ready?.budgetLabel || (isAr ? 'الميزانية المعتمدة' : 'Budget')}</span>
-              <span className="font-bold text-amber-400">{c?.ready?.budgetVal || 'Confirmed ($50k to $100k)'}</span>
+              <span className="font-bold text-white">{c?.ready?.budgetVal || 'Confirmed ($50k to $100k)'}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-neutral-400">{c?.ready?.fitLabel || (isAr ? 'التوافق' : 'Mutual Fit')}</span>
@@ -358,26 +358,26 @@ export default function WhyDifferent() {
         isAr ? 'دراسات حالة حول قياس أثر التدريب وعائده' : 'Practical case studies on training ROI',
       ],
       theme: {
-        accentText: 'text-cyan-400',
+        accentText: 'text-neutral-300',
         badgeBg: 'bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200',
         iconBg: 'bg-transparent text-white border border-white/10 group-hover:border-white/20',
         buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
-        checkColor: 'text-cyan-400',
-        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-cyan-400 group-hover:border-cyan-500/30',
+        checkColor: 'text-neutral-300',
+        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-white group-hover:border-white/30',
       },
-      themeVariant: 'cyan',
+      themeVariant: 'default',
       mockup: (
         <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-1.5">
           <div className="flex items-center justify-between pb-1 border-b border-[#26282D] text-xs font-semibold text-white font-sans">
             <span>{c?.hub?.mockupHeader || (isAr ? 'أحدث أدلة ومقالات المنصة' : 'Latest L&D Resources')}</span>
-            <Signal />
+            <Signal tone="white" size={12} />
           </div>
           <div className="space-y-1.5 pt-0.5 font-sans">
             <div className="flex items-center justify-between gap-2 text-[10px] sm:text-[11px]">
               <span className="text-white truncate">
                 {c?.hub?.item1Title || (isAr ? 'تقرير فجوات مهارات سوق العمل الخليجي' : 'GCC Workforce Skill Gaps Report')}
               </span>
-              <span className="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[9px] font-bold shrink-0 border border-cyan-500/30">
+              <span className="px-1.5 py-0.5 rounded bg-white/10 text-neutral-200 text-[9px] font-bold shrink-0 border border-white/20">
                 {c?.hub?.item1Badge || (isAr ? 'دليل جديد' : 'New Guide')}
               </span>
             </div>
@@ -385,7 +385,7 @@ export default function WhyDifferent() {
               <span className="text-white truncate">
                 {c?.hub?.item2Title || (isAr ? 'دليل تشخيص العائد على التدريب المؤسسي' : 'Diagnostic Guide to Corporate Training ROI')}
               </span>
-              <span className="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 text-[9px] font-bold shrink-0 border border-emerald-500/30">
+              <span className="px-1.5 py-0.5 rounded bg-white/10 text-neutral-200 text-[9px] font-bold shrink-0 border border-white/20">
                 {c?.hub?.item2Badge || (isAr ? 'مورد مجاني' : 'Free Resource')}
               </span>
             </div>
@@ -448,28 +448,8 @@ export default function WhyDifferent() {
             const Icon = it.icon;
             const isSelected = activeModalId === it.id;
             const theme = it.theme;
-            const glowStyles: Record<string, string> = {
-              brand: 'hover:border-orange-500/35 hover:shadow-[0_0_24px_rgba(255,92,0,0.12)]',
-              emerald: 'hover:border-emerald-500/35 hover:shadow-[0_0_24px_rgba(16,185,129,0.12)]',
-              purple: 'hover:border-purple-500/35 hover:shadow-[0_0_24px_rgba(168,85,247,0.12)]',
-              amber: 'hover:border-amber-500/35 hover:shadow-[0_0_24px_rgba(245,158,11,0.12)]',
-              cyan: 'hover:border-cyan-500/35 hover:shadow-[0_0_24px_rgba(6,182,212,0.12)]',
-              blue: 'hover:border-blue-500/35 hover:shadow-[0_0_24px_rgba(59,130,246,0.12)]',
-              default: 'hover:border-white/20 hover:shadow-e2',
-            };
-
-            const auraColor: Record<string, string> = {
-              brand: 'bg-orange-500/10',
-              emerald: 'bg-emerald-500/10',
-              purple: 'bg-purple-500/10',
-              amber: 'bg-amber-500/10',
-              cyan: 'bg-cyan-500/10',
-              blue: 'bg-blue-500/10',
-              default: 'bg-white/5',
-            };
-
-            const cardGlow = glowStyles[it.themeVariant || 'default'] || glowStyles.default;
-            const cardAura = auraColor[it.themeVariant || 'default'] || auraColor.default;
+            const cardGlow = 'hover:border-white/30 hover:shadow-[0_0_24px_rgba(255,255,255,0.08)]';
+            const cardAura = 'bg-white/5';
 
             return (
               <m.div

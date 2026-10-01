@@ -36,7 +36,7 @@ const TIERS_EN: TierData[] = [
     description: 'Verified decision maker, confirmed budget, starts within 30 days.',
     project: 'Riyadh Enterprise · Project #01',
     accuracy: '95%',
-    barColor: 'bg-blue-600',
+    barColor: 'bg-white',
     barWidth: 'w-[95%]',
     checklist: [
       'Verified Decision Maker (CHRO)',
@@ -51,7 +51,7 @@ const TIERS_EN: TierData[] = [
     description: 'Confirmed pain and authority; budget or timeline still forming. We stay engaged to pass the lead when ready.',
     project: 'Dubai Enterprise · Project #02',
     accuracy: '80%',
-    barColor: 'bg-amber-500',
+    barColor: 'bg-neutral-300',
     barWidth: 'w-[80%]',
     checklist: [
       'Executive Authority Validated',
@@ -66,7 +66,7 @@ const TIERS_EN: TierData[] = [
     description: 'Genuine need verified; earlier in the buying journey.',
     project: 'Doha Enterprise · Project #03',
     accuracy: '60%',
-    barColor: 'bg-blue-500',
+    barColor: 'bg-neutral-400',
     barWidth: 'w-[60%]',
     checklist: [
       'Strategic Training Need Identified',
@@ -81,7 +81,7 @@ const TIERS_EN: TierData[] = [
     description: 'Every lead is verified before introduction. No monthly retainers, 5-lead proof of concept pilot, and a 5-day replacement guarantee.',
     project: 'Enterprise Provider Partnership',
     accuracy: '100% Guaranteed',
-    barColor: 'bg-[#FF5C00]',
+    barColor: 'bg-white',
     barWidth: 'w-full',
     checklist: [
       'Pay Per Qualified Lead ($0 Retainer)',
@@ -100,7 +100,7 @@ const TIERS_AR: TierData[] = [
     description: 'صانع قرار تنفيذي مؤكد، متطلب تدريبي قائم، استعداد وجاهزية تامة للتواصل والنقاش.',
     project: 'جهة مصرفية كبرى بالرياض · فرصة #01',
     accuracy: '95%',
-    barColor: 'bg-emerald-500',
+    barColor: 'bg-white',
     barWidth: 'w-[95%]',
     checklist: [
       'صانع قرار تنفيذي معتمد',
@@ -115,7 +115,7 @@ const TIERS_AR: TierData[] = [
     description: 'مبادرة معتمدة وتحدي مؤسسي واضح؛ قيد إعداد خطة التنفيذ للشهر القادم.',
     project: 'مجموعة قابضة في دبي · فرصة #02',
     accuracy: '80%',
-    barColor: 'bg-amber-500',
+    barColor: 'bg-neutral-300',
     barWidth: 'w-[80%]',
     checklist: [
       'صلاحية القرار معتمدة',
@@ -130,7 +130,7 @@ const TIERS_AR: TierData[] = [
     description: 'احتياج حقيقي تم التحقق منه؛ في مرحلة مبكرة من رحلة الشراء والتعاقد.',
     project: 'مؤسسة في الدوحة · فرصة #03',
     accuracy: '60%',
-    barColor: 'bg-blue-500',
+    barColor: 'bg-neutral-400',
     barWidth: 'w-[60%]',
     checklist: [
       'تحديد احتياج تدريبي استراتيجي',
@@ -145,7 +145,7 @@ const TIERS_AR: TierData[] = [
     description: 'كل فرصة يتم التحقق منها قبل تقديمها. بدون رسوم شهرية ثابتة، تجربة قيادية لـ 5 فرص، وضمان استبدال الفرصة خلال 5 أيام.',
     project: 'شراكة مزودي التدريب المعتمدين',
     accuracy: 'ضمان 100%',
-    barColor: 'bg-emerald-500',
+    barColor: 'bg-white',
     barWidth: 'w-full',
     checklist: [
       'دفع لكل فرصة مؤهلة ($0 رسوم اشتراك)',
@@ -237,8 +237,8 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
       buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-[#16171B] text-white',
       innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-white/60',
-      checkColor: 'text-[#38BDF8]',
+      meterColor: 'bg-white',
+      checkColor: 'text-neutral-300',
     }
   },
   {
@@ -262,13 +262,13 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     clayTheme: {
       bgClass: 'bg-[#0F1013] text-white',
       borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-emerald-600 text-white',
+      pillOuter: 'bg-white/10 border border-white/15 text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
       buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-[#16171B] text-white',
       innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-emerald-500',
-      checkColor: 'text-emerald-400',
+      meterColor: 'bg-white',
+      checkColor: 'text-neutral-300',
     }
   },
   {
@@ -292,13 +292,13 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     clayTheme: {
       bgClass: 'bg-[#0F1013] text-white',
       borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-purple-600 text-white',
+      pillOuter: 'bg-white/10 border border-white/15 text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
       buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-[#16171B] text-white',
       innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-purple-500',
-      checkColor: 'text-purple-300',
+      meterColor: 'bg-white',
+      checkColor: 'text-neutral-300',
     }
   },
   {
@@ -322,13 +322,13 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     clayTheme: {
       bgClass: 'bg-[#0F1013] text-white',
       borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-[#FF5C00] text-white',
+      pillOuter: 'bg-white/10 border border-white/15 text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
       buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-[#16171B] text-white',
       innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-[#FF5C00]',
-      checkColor: 'text-amber-400',
+      meterColor: 'bg-white',
+      checkColor: 'text-neutral-300',
     }
   },
 ];
@@ -360,8 +360,8 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
       buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-[#16171B] text-white',
       innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-white/60',
-      checkColor: 'text-[#38BDF8]',
+      meterColor: 'bg-white',
+      checkColor: 'text-neutral-300',
     }
   },
   {
@@ -385,13 +385,13 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     clayTheme: {
       bgClass: 'bg-[#0F1013] text-white',
       borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-emerald-600 text-white',
+      pillOuter: 'bg-white/10 border border-white/15 text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
       buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-[#16171B] text-white',
       innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-emerald-500',
-      checkColor: 'text-emerald-400',
+      meterColor: 'bg-white',
+      checkColor: 'text-neutral-300',
     }
   },
   {
@@ -415,13 +415,13 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     clayTheme: {
       bgClass: 'bg-[#0F1013] text-white',
       borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-purple-600 text-white',
+      pillOuter: 'bg-white/10 border border-white/15 text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
       buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-[#16171B] text-white',
       innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-purple-500',
-      checkColor: 'text-purple-300',
+      meterColor: 'bg-white',
+      checkColor: 'text-neutral-300',
     }
   },
   {
@@ -445,13 +445,13 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     clayTheme: {
       bgClass: 'bg-[#0F1013] text-white',
       borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-[#FF5C00] text-white',
+      pillOuter: 'bg-white/10 border border-white/15 text-white',
       pillInner: 'bg-white/10 border-white/15 text-white/90',
       buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
       innerCardBg: 'bg-[#16171B] text-white',
       innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-[#FF5C00]',
-      checkColor: 'text-amber-400',
+      meterColor: 'bg-white',
+      checkColor: 'text-neutral-300',
     }
   },
 ];
@@ -689,7 +689,7 @@ export default function LeadTiers(_props?: {
                       radius={340}
                       className={`relative overflow-hidden ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
                     >
-                      <BorderGlow glowColor="rgba(255, 92, 0, 0.4)" size={320} opacity={0.5} />
+                      <BorderGlow glowColor="rgba(255, 255, 255, 0.15)" size={320} opacity={0.4} />
                       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center relative z-10">
                       {/* Left Details */}
                       <div className="lg:col-span-7 space-y-3 xs:space-y-4">

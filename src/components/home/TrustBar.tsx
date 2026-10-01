@@ -48,7 +48,7 @@ export default function TrustBar() {
         radius={280}
         className="group relative h-full w-full rounded-2xl border border-white/10 bg-[#0F1013]/90 p-4 sm:p-5 backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:bg-[#16171B]/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_4px_16px_rgba(0,0,0,0.4)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_10px_25px_-5px_rgba(0,0,0,0.7)] overflow-hidden"
       >
-        <BorderGlow glowColor="rgba(245, 158, 11, 0.35)" size={220} opacity={0.6} />
+        <BorderGlow glowColor="rgba(255, 255, 255, 0.20)" size={220} opacity={0.6} />
         <div className="relative z-10 min-w-0">
           <div className="mb-1.5 flex items-center justify-between gap-2">
             <span className="block truncate text-xs font-medium tracking-[-0.02em] text-white sm:text-base">
