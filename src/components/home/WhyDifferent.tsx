@@ -562,7 +562,7 @@ export default function WhyDifferent() {
                     stiffness: 380,
                     damping: 28,
                   }}
-                  className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-white/98 backdrop-blur-2xl border border-neutral-200 text-neutral-900 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.18)] my-auto overflow-hidden"
+                  className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-white border border-neutral-200 text-neutral-900 shadow-2xl my-auto overflow-hidden"
                 >
                   {/* Modal Top Bar (Fixed Header) */}
                   <m.div

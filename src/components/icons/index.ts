@@ -8,6 +8,7 @@ export type LucideIcon = React.ForwardRefExoticComponent<IconProps & React.RefAt
 export { ArrowDown } from './ArrowDown';
 export { ArrowLeft } from './ArrowLeft';
 export { ArrowRight } from './ArrowRight';
+export { ArrowUpRight } from './ArrowUpRight';
 export { BadgeCheck } from './BadgeCheck';
 export { BadgeDollarSign } from './BadgeDollarSign';
 export { BookOpen } from './BookOpen';

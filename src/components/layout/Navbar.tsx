@@ -1,11 +1,25 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowRight, ShieldCheck, Globe, Search } from '@/components/icons';
+import {
+  Menu,
+  X,
+  ArrowRight,
+  ArrowUpRight,
+  ShieldCheck,
+  Globe,
+  Search,
+  ChevronDown,
+  Building2,
+  Briefcase,
+  Users,
+  Mail,
+  ExternalLink,
+} from '@/components/icons';
 import { m, AnimatePresence } from 'framer-motion';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { Locale } from '@/i18n';
@@ -15,18 +29,22 @@ import ScrollProgress from '@/components/shared/ScrollProgress';
 import CommandMenu from '@/components/shared/CommandMenu';
 import Magnetic from '@/components/shared/Magnetic';
 
+type DropdownKey = 'solutions' | 'about' | null;
+
 export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<DropdownKey>(null);
   const [commandOpen, setCommandOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isLightSection, setIsLightSection] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const dropdownTimerRef = useRef<NodeJS.Timeout | null>(null);
   const pathname = usePathname() || `/${lang}`;
   const dict = useDictionary();
   const isForProviders = pathname?.includes('/for-providers') || pathname?.endsWith('/providers');
+  const isRtl = lang === 'ar';
 
   const otherLang = lang === 'en' ? 'ar' : 'en';
   const switchHref = (() => {
@@ -45,19 +63,17 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
     return `/${otherLang}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
   })();
 
-  const links = [
-    { href: `/${lang}`, label: dict.nav.home },
-    { href: `/${lang}/who-we-are`, label: dict.nav.who_we_are },
-    { href: `/${lang}/for-providers`, label: dict.nav.for_providers },
-    { href: `/${lang}/find-training`, label: dict.nav.find_training },
-    { href: `/${lang}/contact`, label: dict.nav.contact },
-    { href: 'https://blog.pontlook.com', label: dict.nav.blog, external: true },
-  ];
+  // Close dropdowns on route changes
+  useEffect(() => {
+    setActiveDropdown(null);
+    setOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Window scroll & light section intersection detection
   useEffect(() => {
     let rafId: number | null = null;
 
@@ -104,6 +120,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
     };
   }, [pathname]);
 
+  // Desktop viewport check
   useEffect(() => {
     const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
     checkDesktop();
@@ -111,6 +128,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
     return () => window.removeEventListener('resize', checkDesktop);
   }, []);
 
+  // Lock body scroll when mobile drawer is open
   useEffect(() => {
     if (open) {
       const originalStyle = window.getComputedStyle(document.body).overflow;
@@ -121,7 +139,47 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
     }
   }, [open]);
 
-  const isRtl = lang === 'ar';
+  // Click outside and escape key handling for dropdowns
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setActiveDropdown(null);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveDropdown(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const handleDropdownEnter = useCallback((key: DropdownKey) => {
+    if (dropdownTimerRef.current) clearTimeout(dropdownTimerRef.current);
+    setActiveDropdown(key);
+  }, []);
+
+  const handleDropdownLeave = useCallback(() => {
+    if (dropdownTimerRef.current) clearTimeout(dropdownTimerRef.current);
+    dropdownTimerRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 180);
+  }, []);
+
+  const isSolutionsActive =
+    pathname.includes('/find-training') ||
+    pathname.includes('/for-providers');
+
+  const isAboutActive =
+    pathname.includes('/who-we-are') ||
+    pathname.includes('/contact');
+
   const slideInitial = isRtl ? { x: '-100%' } : { x: '100%' };
   const slideExit = isRtl ? { x: '-100%' } : { x: '100%' };
 
@@ -137,8 +195,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               } ${
                 isDesktop
                   ? isLightSection
-                    ? 'sm:top-3 sm:w-[90%] sm:max-w-5xl sm:rounded-full sm:py-2.5 sm:px-6 liquid-glass-capsule-light'
-                    : 'sm:top-3 sm:w-[90%] sm:max-w-5xl sm:rounded-full sm:py-2.5 sm:px-6 liquid-glass-capsule-dark'
+                    ? 'sm:top-3 sm:w-[92%] sm:max-w-5xl sm:rounded-full sm:py-2.5 sm:px-6 liquid-glass-capsule-light'
+                    : 'sm:top-3 sm:w-[92%] sm:max-w-5xl sm:rounded-full sm:py-2.5 sm:px-6 liquid-glass-capsule-dark'
                   : ''
               }`
             : isLightSection
@@ -147,111 +205,308 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
         }`}
       >
         <nav
-          onMouseLeave={() => setHoveredIndex(null)}
           className="container-site !px-0 flex items-center justify-between w-full"
           aria-label="Main navigation"
         >
-          {/* Brand Logo - Orange on light sections, White on dark/AMOLED sections */}
+          {/* Brand Logo: Icon + "pontlook" when NOT floating, ONLY Icon when floating */}
           <Link
             href={`/${lang}`}
-            className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 transition-transform duration-200 hover:scale-[1.02] active:scale-95 shrink-0"
+            onClick={() => {
+              setActiveDropdown(null);
+              setOpen(false);
+            }}
+            className="flex items-center gap-2 group transition-transform duration-200 hover:scale-[1.02] active:scale-95 shrink-0"
             aria-label="PontLook home"
           >
-            <div className="relative flex items-center h-6 xs:h-7 sm:h-8 w-[108px] xs:w-[125px] sm:w-[140px]">
-              {/* Orange Logo - shown on white/light sections */}
+            <div className="relative h-7 w-7 xs:h-8 xs:w-8 shrink-0 flex items-center justify-center">
+              {/* Orange Icon - shown on white/light sections */}
               <Image
-                src="/images/brand/pontlook-logo-orange.png"
-                alt="PontLook Logo"
-                width={140}
-                height={35}
-                className={`absolute inset-y-0 start-0 h-6 xs:h-7 sm:h-8 w-auto object-contain transition-opacity duration-300 ${
+                src="/images/brand/pontlook-icon-orange.png"
+                alt="PontLook"
+                width={32}
+                height={32}
+                className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ${
                   isLightSection ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
                 priority
               />
-              {/* White Logo - shown on dark/AMOLED sections */}
+              {/* White Icon - shown on dark/AMOLED sections */}
               <Image
-                src="/images/brand/pontlook-logo-white.png"
-                alt="PontLook Logo"
-                width={140}
-                height={35}
-                className={`absolute inset-y-0 start-0 h-6 xs:h-7 sm:h-8 w-auto object-contain transition-opacity duration-300 ${
+                src="/images/brand/pontlook-icon-white.png"
+                alt="PontLook"
+                width={32}
+                height={32}
+                className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ${
                   isLightSection ? 'opacity-0 pointer-events-none' : 'opacity-100'
                 }`}
                 priority
               />
             </div>
+
+            {/* "pontlook" text: displayed only when normal (not floating / !scrolled) */}
+            <AnimatePresence initial={false}>
+              {!scrolled && (
+                <m.span
+                  initial={{ opacity: 0, width: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, width: 'auto', scale: 1 }}
+                  exit={{ opacity: 0, width: 0, scale: 0.95 }}
+                  transition={{ duration: 0.22, ease: 'easeInOut' }}
+                  className={`font-heading font-extrabold tracking-tight text-xl xs:text-2xl whitespace-nowrap overflow-hidden select-none ${
+                    isLightSection ? 'text-neutral-950' : 'text-white'
+                  }`}
+                >
+                  pontlook
+                </m.span>
+              )}
+            </AnimatePresence>
           </Link>
 
-          {/* navigation links */}
-          <ul className="hidden lg:flex items-center gap-1 relative px-2">
-            {links.map((l, index) => {
-              const isActive = pathname === l.href;
-              const isHovered = hoveredIndex === index;
+          {/* Desktop Navigation Links with Solutions & About Dropdowns (No "Home" link) */}
+          <ul className="hidden lg:flex items-center gap-1.5 relative px-2">
+            {/* Solutions Dropdown Menu */}
+            <li
+              className="relative"
+              onMouseEnter={() => handleDropdownEnter('solutions')}
+              onMouseLeave={handleDropdownLeave}
+            >
+              <button
+                type="button"
+                onClick={() =>
+                  setActiveDropdown((prev) => (prev === 'solutions' ? null : 'solutions'))
+                }
+                className={`relative z-10 inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-medium rounded-full transition-colors duration-200 cursor-pointer ${
+                  isLightSection
+                    ? isSolutionsActive || activeDropdown === 'solutions'
+                      ? 'text-neutral-950 font-bold bg-black/[0.05]'
+                      : 'text-neutral-700 hover:text-neutral-950 hover:bg-black/[0.04]'
+                    : isSolutionsActive || activeDropdown === 'solutions'
+                    ? 'text-white font-semibold bg-white/[0.08]'
+                    : 'text-neutral-400 hover:text-white hover:bg-white/[0.04]'
+                }`}
+                aria-expanded={activeDropdown === 'solutions'}
+              >
+                <span>{dict.nav.solutions}</span>
+                <ChevronDown
+                  size={12}
+                  className={`transition-transform duration-200 ${
+                    activeDropdown === 'solutions' ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
 
-              return (
-                <li key={l.href} className="relative">
-                  <Link
-                    href={l.href}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    className={`relative z-10 block px-3.5 py-1.5 text-xs font-medium transition-colors duration-200 ${
+              {/* Solutions Popover Dropdown */}
+              <AnimatePresence>
+                {activeDropdown === 'solutions' && (
+                  <m.div
+                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 6, scale: 0.96 }}
+                    transition={{ duration: 0.18, ease: 'easeOut' }}
+                    className={`absolute top-full mt-2 start-0 w-[310px] rounded-2xl p-2 z-50 shadow-2xl transition-colors ${
                       isLightSection
-                        ? isActive
-                          ? 'text-neutral-950 font-bold'
-                          : isHovered
-                          ? 'text-neutral-950'
-                          : 'text-neutral-700 hover:text-neutral-950'
-                        : isActive
-                        ? 'text-white font-semibold'
-                        : isHovered
-                        ? 'text-white'
-                        : 'text-neutral-400 hover:text-white'
+                        ? 'bg-white/95 backdrop-blur-xl border border-neutral-200 text-neutral-900 shadow-[0_20px_50px_rgba(0,0,0,0.12)]'
+                        : 'bg-[#121316]/95 backdrop-blur-xl border border-[#26282D] text-white shadow-[0_25px_50px_rgba(0,0,0,0.6)]'
                     }`}
                   >
-                    {l.label}
-                  </Link>
+                    <div className="space-y-1">
+                      {/* Looking for training */}
+                      <Link
+                        href={`/${lang}/find-training`}
+                        onClick={() => setActiveDropdown(null)}
+                        className={`group flex items-start gap-3 p-2.5 rounded-xl transition-all duration-200 ${
+                          isLightSection
+                            ? 'hover:bg-neutral-100/80 active:bg-neutral-200/70'
+                            : 'hover:bg-white/[0.06] active:bg-white/[0.1]'
+                        }`}
+                      >
+                        <div className="h-9 w-9 rounded-xl bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                          <Building2 size={16} />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-semibold text-neutral-900 dark:text-white group-hover:text-[#FF5C00] transition-colors">
+                              {dict.nav.enterprise_opt}
+                            </span>
+                            <ArrowRight
+                              size={12}
+                              className="text-neutral-400 group-hover:text-[#FF5C00] transition-all transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100"
+                            />
+                          </div>
+                          <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
+                            {dict.nav.enterprise_opt_desc}
+                          </p>
+                        </div>
+                      </Link>
 
-                  {/* hover pill */}
-                  {isHovered && (
-                    <m.div
-                      layoutId="nav-pill"
-                      className={`absolute inset-0 z-0 rounded-full backdrop-blur-md ${
-                        isLightSection
-                          ? 'bg-black/[0.06] border border-black/10'
-                          : 'bg-white/[0.08] border border-[#26282D]'
-                      }`}
-                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                    />
-                  )}
+                      {/* Training provider */}
+                      <Link
+                        href={`/${lang}/for-providers`}
+                        onClick={() => setActiveDropdown(null)}
+                        className={`group flex items-start gap-3 p-2.5 rounded-xl transition-all duration-200 ${
+                          isLightSection
+                            ? 'hover:bg-neutral-100/80 active:bg-neutral-200/70'
+                            : 'hover:bg-white/[0.06] active:bg-white/[0.1]'
+                        }`}
+                      >
+                        <div className="h-9 w-9 rounded-xl bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                          <Briefcase size={16} />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-semibold text-neutral-900 dark:text-white group-hover:text-[#FF5C00] transition-colors">
+                              {dict.nav.provider_opt}
+                            </span>
+                            <ArrowRight
+                              size={12}
+                              className="text-neutral-400 group-hover:text-[#FF5C00] transition-all transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100"
+                            />
+                          </div>
+                          <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
+                            {dict.nav.provider_opt_desc}
+                          </p>
+                        </div>
+                      </Link>
+                    </div>
+                  </m.div>
+                )}
+              </AnimatePresence>
+            </li>
 
-                  {/* Active indicator dot */}
-                  {isActive && !isHovered && (
-                    <m.div
-                      layoutId="nav-active-indicator"
-                      className={`absolute bottom-0 inset-x-3 h-0.5 rounded-full ${
-                        isForProviders
-                          ? 'bg-[#FF5C00] shadow-[0_0_8px_rgba(255,92,0,0.7)]'
-                          : isLightSection
-                          ? 'bg-[#FF5C00] shadow-[0_0_8px_rgba(255,92,0,0.4)]'
-                          : 'bg-[#0052FF] shadow-[0_0_8px_rgba(0,82,255,0.7)]'
-                      }`}
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </li>
-              );
-            })}
+            {/* About Dropdown Menu */}
+            <li
+              className="relative"
+              onMouseEnter={() => handleDropdownEnter('about')}
+              onMouseLeave={handleDropdownLeave}
+            >
+              <button
+                type="button"
+                onClick={() =>
+                  setActiveDropdown((prev) => (prev === 'about' ? null : 'about'))
+                }
+                className={`relative z-10 inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-medium rounded-full transition-colors duration-200 cursor-pointer ${
+                  isLightSection
+                    ? isAboutActive || activeDropdown === 'about'
+                      ? 'text-neutral-950 font-bold bg-black/[0.05]'
+                      : 'text-neutral-700 hover:text-neutral-950 hover:bg-black/[0.04]'
+                    : isAboutActive || activeDropdown === 'about'
+                    ? 'text-white font-semibold bg-white/[0.08]'
+                    : 'text-neutral-400 hover:text-white hover:bg-white/[0.04]'
+                }`}
+                aria-expanded={activeDropdown === 'about'}
+              >
+                <span>{dict.nav.about}</span>
+                <ChevronDown
+                  size={12}
+                  className={`transition-transform duration-200 ${
+                    activeDropdown === 'about' ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+
+              {/* About Popover Dropdown */}
+              <AnimatePresence>
+                {activeDropdown === 'about' && (
+                  <m.div
+                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 6, scale: 0.96 }}
+                    transition={{ duration: 0.18, ease: 'easeOut' }}
+                    className={`absolute top-full mt-2 start-0 w-[290px] rounded-2xl p-2 z-50 shadow-2xl transition-colors ${
+                      isLightSection
+                        ? 'bg-white/95 backdrop-blur-xl border border-neutral-200 text-neutral-900 shadow-[0_20px_50px_rgba(0,0,0,0.12)]'
+                        : 'bg-[#121316]/95 backdrop-blur-xl border border-[#26282D] text-white shadow-[0_25px_50px_rgba(0,0,0,0.6)]'
+                    }`}
+                  >
+                    <div className="space-y-1">
+                      {/* Who We Are */}
+                      <Link
+                        href={`/${lang}/who-we-are`}
+                        onClick={() => setActiveDropdown(null)}
+                        className={`group flex items-start gap-3 p-2.5 rounded-xl transition-all duration-200 ${
+                          isLightSection
+                            ? 'hover:bg-neutral-100/80 active:bg-neutral-200/70'
+                            : 'hover:bg-white/[0.06] active:bg-white/[0.1]'
+                        }`}
+                      >
+                        <div className="h-9 w-9 rounded-xl bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                          <Users size={16} />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-semibold text-neutral-900 dark:text-white group-hover:text-[#FF5C00] transition-colors">
+                              {dict.nav.who_we_are}
+                            </span>
+                            <ArrowRight
+                              size={12}
+                              className="text-neutral-400 group-hover:text-[#FF5C00] transition-all transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100"
+                            />
+                          </div>
+                          <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
+                            {dict.nav.who_we_are_desc}
+                          </p>
+                        </div>
+                      </Link>
+
+                      {/* Contact */}
+                      <Link
+                        href={`/${lang}/contact`}
+                        onClick={() => setActiveDropdown(null)}
+                        className={`group flex items-start gap-3 p-2.5 rounded-xl transition-all duration-200 ${
+                          isLightSection
+                            ? 'hover:bg-neutral-100/80 active:bg-neutral-200/70'
+                            : 'hover:bg-white/[0.06] active:bg-white/[0.1]'
+                        }`}
+                      >
+                        <div className="h-9 w-9 rounded-xl bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                          <Mail size={16} />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-semibold text-neutral-900 dark:text-white group-hover:text-[#FF5C00] transition-colors">
+                              {dict.nav.contact}
+                            </span>
+                            <ArrowRight
+                              size={12}
+                              className="text-neutral-400 group-hover:text-[#FF5C00] transition-all transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100"
+                            />
+                          </div>
+                          <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
+                            {dict.nav.contact_desc}
+                          </p>
+                        </div>
+                      </Link>
+                    </div>
+                  </m.div>
+                )}
+              </AnimatePresence>
+            </li>
+
+            {/* Blog Link */}
+            <li>
+              <Link
+                href="https://blog.pontlook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`relative z-10 inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-medium rounded-full transition-colors duration-200 ${
+                  isLightSection
+                    ? 'text-neutral-700 hover:text-neutral-950 hover:bg-black/[0.04]'
+                    : 'text-neutral-400 hover:text-white hover:bg-white/[0.04]'
+                }`}
+              >
+                <span>{dict.nav.blog}</span>
+                <ExternalLink size={11} className="opacity-70" />
+              </Link>
+            </li>
           </ul>
 
-          {/* language switcher and actions */}
-          <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-3">
+          {/* Right actions: Search, Language Switcher, and Sleek "Let's talk ↗" CTA */}
+          <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5">
             {/* Quick Command Palette Trigger (Cmd+K) */}
             <Magnetic strength={0.16} activeDistance={25}>
               <button
                 type="button"
                 onClick={() => setCommandOpen(true)}
-                className={`inline-flex items-center gap-1.5 xs:gap-2 px-2 xs:px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 ${
+                className={`inline-flex items-center gap-1.5 xs:gap-2 px-2 xs:px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 cursor-pointer ${
                   isLightSection
                     ? 'border border-neutral-300/80 bg-white/70 text-neutral-700 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
                     : 'border border-[#26282D] bg-[#16171B] text-neutral-400 hover:text-white hover:border-white/30'
@@ -272,6 +527,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               </button>
             </Magnetic>
 
+            {/* Language Switcher */}
             <Magnetic strength={0.16} activeDistance={25} className="hidden lg:inline-flex">
               <Link
                 href={switchHref}
@@ -284,6 +540,17 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               >
                 <Globe size={13} className={isLightSection ? 'text-neutral-700' : 'text-neutral-400'} />
                 <span>{lang === 'en' ? 'العربية' : 'English'}</span>
+              </Link>
+            </Magnetic>
+
+            {/* Sleek "Let's talk ↗" CTA Button (inspired by media_1790888120750) */}
+            <Magnetic strength={0.18} activeDistance={30} className="hidden sm:inline-flex">
+              <Link
+                href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
+                className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold bg-[#FF5C00] hover:bg-[#FF7224] text-white shadow-xs hover:shadow-md hover:shadow-orange-500/20 active:scale-95 transition-all"
+              >
+                <span>{dict.nav.lets_talk}</span>
+                <ArrowUpRight size={13} className="rtl:-scale-x-100" />
               </Link>
             </Magnetic>
 
@@ -320,7 +587,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
         </nav>
       </header>
 
-      {/* Mobile Slide-Over Drawer Sheet rendered via Portal directly into document.body */}
+      {/* Mobile Slide-Over Drawer Sheet rendered via Portal */}
       {mounted &&
         createPortal(
           <AnimatePresence>
@@ -337,43 +604,46 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   aria-hidden="true"
                 />
 
-                {/* Slide-over Drawer Sheet spanning full 100dvh */}
+                {/* Slide-over Drawer Sheet */}
                 <m.div
                   initial={slideInitial}
                   animate={{ x: 0 }}
                   exit={slideExit}
                   transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                  className="fixed inset-y-0 end-0 z-[9999] flex h-full h-[100dvh] w-[85vw] max-w-[340px] flex-col justify-between border-s border-[#26282D] bg-[#0F1013] px-5 sm:px-6 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+1rem))] pb-[max(1.5rem,calc(env(safe-area-inset-bottom,0px)+1rem))] shadow-2xl overflow-y-auto"
+                  className="fixed inset-y-0 end-0 z-[9999] flex h-full h-[100dvh] w-[86vw] max-w-[360px] flex-col justify-between border-s border-[#26282D] bg-[#0F1013] px-5 sm:px-6 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+1rem))] pb-[max(1.5rem,calc(env(safe-area-inset-bottom,0px)+1rem))] shadow-2xl overflow-y-auto"
                   role="document"
                   aria-label="Mobile navigation"
                 >
                   <div>
-                    {/* Drawer Header */}
-                    <div className="flex items-center justify-between pb-5 border-b border-[#26282D]">
+                    {/* Drawer Header: Logo icon + "pontlook" redirects home and closes drawer */}
+                    <div className="flex items-center justify-between pb-4 border-b border-[#26282D]">
                       <Link
                         href={`/${lang}`}
                         onClick={() => setOpen(false)}
-                        className="flex items-center gap-2.5"
+                        className="flex items-center gap-2"
                         aria-label="PontLook home"
                       >
-                        <div className="relative flex items-center">
+                        <div className="relative h-7 w-7 flex items-center justify-center">
                           <Image
-                            src="/images/brand/pontlook-logo-white.png"
+                            src="/images/brand/pontlook-icon-white.png"
                             alt="PontLook Logo"
-                            width={140}
-                            height={35}
+                            width={28}
+                            height={28}
                             className="h-7 w-auto object-contain"
                             priority
                           />
                         </div>
+                        <span className="font-heading font-extrabold tracking-tight text-xl text-white">
+                          pontlook
+                        </span>
                       </Link>
                       <button
                         type="button"
                         onClick={() => setOpen(false)}
-                        className="flex h-10 w-10 min-h-[40px] min-w-[40px] items-center justify-center rounded-xl bg-[#16171B] hover:bg-white/10 text-neutral-300 hover:text-white transition-colors active:scale-90 border border-[#26282D]"
+                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#16171B] hover:bg-white/10 text-neutral-300 hover:text-white transition-colors active:scale-90 border border-[#26282D]"
                         aria-label="Close menu"
                       >
-                        <X size={20} />
+                        <X size={18} />
                       </button>
                     </div>
 
@@ -385,33 +655,94 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       </span>
                     </div>
 
-                    {/* Navigation Links List */}
-                    <ul className="mt-6 flex flex-col gap-1.5">
-                      {links.map((l) => {
-                        const isActive = pathname === l.href;
-                        return (
-                          <li key={l.href}>
-                            <Link
-                              href={l.href}
-                              onClick={() => setOpen(false)}
-                              {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                              className={`flex min-h-[48px] items-center justify-between px-4 py-3 rounded-2xl text-base font-medium tracking-wide transition-all active:scale-[0.98] ${
-                                isActive
-                                  ? 'text-white bg-[#16171B] border border-[#26282D]'
-                                  : 'text-neutral-400 hover:bg-white/[0.04] hover:text-white'
-                              }`}
-                            >
-                              <span>{l.label}</span>
-                              {isActive && (
-                                <span className="text-[11px] font-medium text-white bg-[#26282D] px-2 py-0.5 rounded-md">
-                                  {lang === 'ar' ? 'الحالي' : 'Active'}
-                                </span>
-                              )}
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
+                    {/* Grouped Mobile Navigation */}
+                    <div className="mt-5 space-y-4">
+                      {/* Solutions Section */}
+                      <div>
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
+                          {dict.nav.solutions}
+                        </span>
+                        <div className="space-y-1.5">
+                          <Link
+                            href={`/${lang}/find-training`}
+                            onClick={() => setOpen(false)}
+                            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-neutral-200 hover:text-white hover:bg-white/[0.04] transition-all"
+                          >
+                            <div className="h-8 w-8 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center shrink-0">
+                              <Building2 size={16} />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="text-xs font-semibold text-white">{dict.nav.enterprise_opt}</div>
+                              <div className="text-[10px] text-neutral-400 truncate">{dict.nav.enterprise_opt_desc}</div>
+                            </div>
+                          </Link>
+
+                          <Link
+                            href={`/${lang}/for-providers`}
+                            onClick={() => setOpen(false)}
+                            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-neutral-200 hover:text-white hover:bg-white/[0.04] transition-all"
+                          >
+                            <div className="h-8 w-8 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center shrink-0">
+                              <Briefcase size={16} />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="text-xs font-semibold text-white">{dict.nav.provider_opt}</div>
+                              <div className="text-[10px] text-neutral-400 truncate">{dict.nav.provider_opt_desc}</div>
+                            </div>
+                          </Link>
+                        </div>
+                      </div>
+
+                      {/* About Section */}
+                      <div>
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
+                          {dict.nav.about}
+                        </span>
+                        <div className="space-y-1.5">
+                          <Link
+                            href={`/${lang}/who-we-are`}
+                            onClick={() => setOpen(false)}
+                            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-neutral-200 hover:text-white hover:bg-white/[0.04] transition-all"
+                          >
+                            <div className="h-8 w-8 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center shrink-0">
+                              <Users size={16} />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="text-xs font-semibold text-white">{dict.nav.who_we_are}</div>
+                              <div className="text-[10px] text-neutral-400 truncate">{dict.nav.who_we_are_desc}</div>
+                            </div>
+                          </Link>
+
+                          <Link
+                            href={`/${lang}/contact`}
+                            onClick={() => setOpen(false)}
+                            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-neutral-200 hover:text-white hover:bg-white/[0.04] transition-all"
+                          >
+                            <div className="h-8 w-8 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center shrink-0">
+                              <Mail size={16} />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="text-xs font-semibold text-white">{dict.nav.contact}</div>
+                              <div className="text-[10px] text-neutral-400 truncate">{dict.nav.contact_desc}</div>
+                            </div>
+                          </Link>
+                        </div>
+                      </div>
+
+                      {/* Blog */}
+                      <div>
+                        <Link
+                          href="https://blog.pontlook.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setOpen(false)}
+                          className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-xs font-medium text-neutral-300 hover:text-white hover:bg-white/[0.04] transition-all"
+                        >
+                          <span>{dict.nav.blog}</span>
+                          <ExternalLink size={13} className="text-neutral-400" />
+                        </Link>
+                      </div>
+                    </div>
 
                     {/* Regional Directory Shortcuts */}
                     <div className="mt-5 pt-4 border-t border-[#26282D]">
@@ -456,41 +787,26 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   </div>
 
                   {/* Drawer Footer Actions */}
-                  <div className="mt-8 pt-6 border-t border-[#26282D] space-y-4 pb-8">
-                    {isForProviders ? (
-                      <Link
-                        href={`/${lang}/for-providers/apply`}
-                        onClick={() => setOpen(false)}
-                        className="inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm w-full shadow-lg shadow-orange-500/25 active:scale-95 transition-all min-h-[48px]"
-                      >
-                        <ShieldCheck size={18} />
-                        <span>{lang === 'ar' ? 'انضم كشريك تدريب' : 'Apply as Provider'}</span>
-                        <ArrowRight size={17} className="rtl:-scale-x-100" />
-                      </Link>
-                    ) : (
-                      <Button
-                        href={`/${lang}/find-training`}
-                        onClick={() => setOpen(false)}
-                        variant="primary"
-                        size="md"
-                        className="w-full justify-center min-h-[48px]"
-                        leftIcon={<ShieldCheck size={18} />}
-                        rightIcon={<ArrowRight size={17} className="rtl:-scale-x-100" />}
-                      >
-                        {dict.nav.get_matched}
-                      </Button>
-                    )}
+                  <div className="mt-6 pt-5 border-t border-[#26282D] space-y-3 pb-6">
+                    <Link
+                      href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
+                      onClick={() => setOpen(false)}
+                      className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-xs xs:text-sm w-full shadow-lg shadow-orange-500/25 active:scale-95 transition-all min-h-[44px]"
+                    >
+                      <span>{dict.nav.lets_talk}</span>
+                      <ArrowUpRight size={16} className="rtl:-scale-x-100" />
+                    </Link>
 
-                    <div className="flex items-center justify-between pt-2 px-1">
+                    <div className="flex items-center justify-between pt-1 px-1">
                       <span className="text-xs font-medium text-neutral-400">
                         {lang === 'ar' ? 'اللغة / Language:' : 'Language / اللغة:'}
                       </span>
                       <Link
                         href={switchHref}
                         onClick={() => setOpen(false)}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-medium text-xs text-neutral-300 bg-[#16171B] hover:bg-white/[0.08] hover:text-white border border-[#26282D] transition-all active:scale-95 min-h-[40px]"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-medium text-xs text-neutral-300 bg-[#16171B] hover:bg-white/[0.08] hover:text-white border border-[#26282D] transition-all active:scale-95 min-h-[36px]"
                       >
-                        <Globe size={14} className="text-neutral-400" />
+                        <Globe size={13} className="text-neutral-400" />
                         <span>{lang === 'en' ? 'العربية' : 'English'}</span>
                       </Link>
                     </div>
