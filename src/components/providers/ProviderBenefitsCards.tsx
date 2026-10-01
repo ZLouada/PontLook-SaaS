@@ -254,9 +254,9 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
         </div>
       </div>
 
-      {/* Premium Clean 3-Card Grid */}
+      {/* Premium Clean 3-Card Grid (Horizontal flow on mobile, 3-col on desktop) */}
       <div className="relative">
-        <div className="relative grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="relative flex md:grid gap-4 sm:gap-6 md:grid-cols-3 overflow-x-auto md:overflow-visible pb-4 md:pb-0 scrollbar-none snap-x snap-mandatory px-4 -mx-4 sm:px-0 sm:mx-0">
           {benefits.map((b, i) => {
             const tone = ACCENTS[b.frameVariant] ?? ACCENTS.brand;
 
@@ -273,11 +273,11 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                   damping: 22,
                 }}
                 whileHover={reduce ? undefined : { y: -6 }}
-                className="group relative h-full flex flex-col"
+                className="group relative h-full flex flex-col w-[85vw] sm:w-[65vw] md:w-auto shrink-0 snap-center"
               >
                 <Spotlight
                   radius={360}
-                  className="relative z-10 flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#202227] hover:border-white/20 bg-[#0C0D11] p-6 sm:p-7 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_32px_-12px_rgba(0,0,0,0.8)] transition-all duration-300"
+                  className="relative z-10 flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#202227] hover:border-white/20 bg-[#0C0D11] p-5 sm:p-7 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_32px_-12px_rgba(0,0,0,0.8)] transition-all duration-300"
                 >
                   {/* Ambient subtle glow on hover */}
                   <div
@@ -343,6 +343,16 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
               </m.div>
             );
           })}
+        </div>
+
+        {/* Mobile Horizontal Flow Indicator */}
+        <div className="flex md:hidden items-center justify-center gap-1.5 pt-3" aria-hidden="true">
+          {benefits.map((b) => (
+            <span
+              key={b.id}
+              className="h-1 w-5 rounded-full bg-white/20"
+            />
+          ))}
         </div>
       </div>
 

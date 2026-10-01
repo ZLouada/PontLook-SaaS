@@ -76,16 +76,9 @@ export default function HowItWorks() {
         <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2 font-sans">
           {/* Console Window Header */}
           <div className="flex items-center justify-between pb-2 border-b border-[#26282D] text-xs">
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-white/20" />
-                <span className="h-2 w-2 rounded-full bg-white/20" />
-                <span className="h-2 w-2 rounded-full bg-white/20" />
-              </div>
-              <span className="text-neutral-400 text-[11px] font-medium ms-2">
-                {isAr ? 'رادار الاحتياج المؤسسي' : 'Enterprise Demand Feed'}
-              </span>
-            </div>
+            <span className="text-neutral-400 text-[11px] font-medium">
+              {isAr ? 'رادار الاحتياج المؤسسي' : 'Enterprise Demand Feed'}
+            </span>
             <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-[10px] font-medium">
               <Signal />
               <span>{isAr ? 'إشارة نشطة' : 'Active Signal'}</span>
@@ -147,16 +140,9 @@ export default function HowItWorks() {
         <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2 font-sans">
           {/* Console Window Header */}
           <div className="flex items-center justify-between pb-2 border-b border-[#26282D] text-xs">
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-white/20" />
-                <span className="h-2 w-2 rounded-full bg-white/20" />
-                <span className="h-2 w-2 rounded-full bg-white/20" />
-              </div>
-              <span className="text-neutral-400 text-[11px] font-medium ms-2">
-                {isAr ? 'منظومة المطابقة والتأهيل' : 'Match & Qualification'}
-              </span>
-            </div>
+            <span className="text-neutral-400 text-[11px] font-medium">
+              {isAr ? 'منظومة المطابقة والتأهيل' : 'Match & Qualification'}
+            </span>
             <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-emerald-400 text-xs font-bold">
               <Signal />
               <span>94%</span>
@@ -214,16 +200,9 @@ export default function HowItWorks() {
         <div className="w-full bg-[#0F1013] rounded-xl border border-[#26282D] p-3 sm:p-4 shadow-2xl space-y-2 font-sans">
           {/* Console Window Header */}
           <div className="flex items-center justify-between pb-2 border-b border-[#26282D] text-xs">
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-white/20" />
-                <span className="h-2 w-2 rounded-full bg-white/20" />
-                <span className="h-2 w-2 rounded-full bg-white/20" />
-              </div>
-              <span className="text-neutral-400 text-[11px] font-medium ms-2">
-                {isAr ? 'لوحة التعاقد المباشر' : 'Direct Engagement Console'}
-              </span>
-            </div>
+            <span className="text-neutral-400 text-[11px] font-medium">
+              {isAr ? 'لوحة التعاقد المباشر' : 'Direct Engagement Console'}
+            </span>
             <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#16171B] border border-[#26282D] text-teal-400 text-[10px] font-medium">
               <Signal />
               <span>{isAr ? 'تم التقديم' : 'Intro Complete'}</span>
@@ -335,27 +314,27 @@ export default function HowItWorks() {
           {/* RIGHT COLUMN: Steps Tabs on Top + Live Card with Mockup */}
           <div className="lg:col-span-7 flex flex-col space-y-4">
             
-            {/* Step Navigation Tabs on Top */}
-            <div className="flex items-center justify-start gap-1.5 sm:gap-2.5 w-full overflow-x-auto scrollbar-none py-1">
+            {/* Step Navigation Tabs on Top - 3 cols on all screen sizes */}
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 w-full py-1">
               {steps.map((st, idx) => {
                 const isActive = activeStep === idx;
                 return (
                   <button
                     key={st.id}
                     onClick={() => setActiveStep(idx)}
-                    className={`group relative shrink-0 flex-1 min-w-[110px] sm:min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-3 sm:px-4 rounded-xl border transition-all duration-200 text-xs font-medium cursor-pointer active:scale-95 ${
+                    className={`group relative flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-4 rounded-xl border transition-all duration-200 text-[10px] sm:text-xs font-medium cursor-pointer active:scale-95 ${
                       isActive
                         ? 'text-white border-white/25 bg-white/[0.08]'
                         : 'bg-[#111215] text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
                     }`}
                   >
-                    <span className={`text-[11px] font-mono font-bold shrink-0 ${isActive ? st.tagColor : 'text-neutral-500'}`}>
+                    <span className={`text-[10px] sm:text-[11px] font-mono font-bold shrink-0 ${isActive ? st.tagColor : 'text-neutral-500'}`}>
                       {st.stepNumber}
                     </span>
                     <span className="truncate font-semibold">{st.navTitle}</span>
                     {isActive && (
-                      <div className="shrink-0 ms-1">
-                        <Signal size={14} />
+                      <div className="shrink-0 ms-0.5 sm:ms-1 hidden xs:block">
+                        <Signal size={12} />
                       </div>
                     )}
                   </button>

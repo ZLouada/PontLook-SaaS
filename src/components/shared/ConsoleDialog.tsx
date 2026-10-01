@@ -267,13 +267,7 @@ export default function ConsoleDialog({
 
             {/* Title bar */}
             <div className="relative z-10 flex shrink-0 items-center gap-3 border-b border-[#26282D] bg-black/80 px-3.5 py-3 sm:px-5">
-              <div className="flex items-center gap-1.5" aria-hidden="true">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
-              </div>
-
-              <span className="ms-1 font-mono text-[11px] tabular-nums text-neutral-500">
+              <span className="font-mono text-[11px] tabular-nums text-neutral-500">
                 {active.index}
                 <span className="mx-1 text-neutral-600">/</span>
                 {String(records.length).padStart(2, '0')}

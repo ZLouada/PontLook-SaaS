@@ -343,7 +343,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
         <div className="relative z-10 mb-2 sm:mb-4">
           <button
             onClick={scrollToMission}
-            className="inline-flex items-center gap-3 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#111215]/80 hover:bg-[#16171B] border border-[#26282D] hover:border-neutral-600 text-xs sm:text-sm text-neutral-300 hover:text-white shadow-2xl backdrop-blur-xl transition-all active:scale-95 group"
+            className="inline-flex items-center gap-2 sm:gap-3 px-3.5 sm:px-6 py-2 sm:py-3 rounded-full bg-[#111215]/80 hover:bg-[#16171B] border border-[#26282D] hover:border-neutral-600 text-[11px] sm:text-sm text-neutral-300 hover:text-white shadow-2xl backdrop-blur-xl transition-all active:scale-95 group max-w-[92vw]"
           >
             <Signal />
             <span>
