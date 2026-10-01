@@ -208,7 +208,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           className="container-site !px-0 flex items-center justify-between w-full"
           aria-label="Main navigation"
         >
-          {/* Brand Logo: Icon + "pontlook" when NOT floating, ONLY Icon when floating */}
+          {/* Brand Logo: Black on white background, White on black background */}
           <Link
             href={`/${lang}`}
             onClick={() => {
@@ -219,9 +219,9 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             aria-label="PontLook home"
           >
             <div className="relative h-7 w-7 xs:h-8 xs:w-8 shrink-0 flex items-center justify-center">
-              {/* Orange Icon - shown on white/light sections */}
+              {/* Black Icon - shown on white/light sections */}
               <Image
-                src="/images/brand/pontlook-icon-orange.png"
+                src="/images/brand/pontlook-icon-black.png"
                 alt="PontLook"
                 width={32}
                 height={32}
@@ -319,17 +319,33 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             : 'hover:bg-white/[0.06] active:bg-white/[0.1]'
                         }`}
                       >
-                        <div className="h-9 w-9 rounded-xl bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <div
+                          className={`h-9 w-9 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-105 transition-all ${
+                            isLightSection
+                              ? 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:bg-neutral-950 group-hover:text-white group-hover:border-neutral-950'
+                              : 'bg-white/10 text-white border border-white/20 group-hover:bg-white group-hover:text-black group-hover:border-white'
+                          }`}
+                        >
                           <Building2 size={16} />
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-neutral-900 dark:text-white group-hover:text-[#FF5C00] transition-colors">
+                            <span
+                              className={`text-xs font-semibold transition-colors ${
+                                isLightSection
+                                  ? 'text-neutral-900 group-hover:text-black'
+                                  : 'text-white group-hover:text-white'
+                              }`}
+                            >
                               {dict.nav.enterprise_opt}
                             </span>
                             <ArrowRight
                               size={12}
-                              className="text-neutral-400 group-hover:text-[#FF5C00] transition-all transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100"
+                              className={`transition-all transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100 ${
+                                isLightSection
+                                  ? 'text-neutral-400 group-hover:text-black'
+                                  : 'text-neutral-400 group-hover:text-white'
+                              }`}
                             />
                           </div>
                           <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
@@ -348,17 +364,33 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             : 'hover:bg-white/[0.06] active:bg-white/[0.1]'
                         }`}
                       >
-                        <div className="h-9 w-9 rounded-xl bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <div
+                          className={`h-9 w-9 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-105 transition-all ${
+                            isLightSection
+                              ? 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:bg-neutral-950 group-hover:text-white group-hover:border-neutral-950'
+                              : 'bg-white/10 text-white border border-white/20 group-hover:bg-white group-hover:text-black group-hover:border-white'
+                          }`}
+                        >
                           <Briefcase size={16} />
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-neutral-900 dark:text-white group-hover:text-[#FF5C00] transition-colors">
+                            <span
+                              className={`text-xs font-semibold transition-colors ${
+                                isLightSection
+                                  ? 'text-neutral-900 group-hover:text-black'
+                                  : 'text-white group-hover:text-white'
+                              }`}
+                            >
                               {dict.nav.provider_opt}
                             </span>
                             <ArrowRight
                               size={12}
-                              className="text-neutral-400 group-hover:text-[#FF5C00] transition-all transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100"
+                              className={`transition-all transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100 ${
+                                isLightSection
+                                  ? 'text-neutral-400 group-hover:text-black'
+                                  : 'text-neutral-400 group-hover:text-white'
+                              }`}
                             />
                           </div>
                           <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
@@ -428,17 +460,33 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             : 'hover:bg-white/[0.06] active:bg-white/[0.1]'
                         }`}
                       >
-                        <div className="h-9 w-9 rounded-xl bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <div
+                          className={`h-9 w-9 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-105 transition-all ${
+                            isLightSection
+                              ? 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:bg-neutral-950 group-hover:text-white group-hover:border-neutral-950'
+                              : 'bg-white/10 text-white border border-white/20 group-hover:bg-white group-hover:text-black group-hover:border-white'
+                          }`}
+                        >
                           <Users size={16} />
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-neutral-900 dark:text-white group-hover:text-[#FF5C00] transition-colors">
+                            <span
+                              className={`text-xs font-semibold transition-colors ${
+                                isLightSection
+                                  ? 'text-neutral-900 group-hover:text-black'
+                                  : 'text-white group-hover:text-white'
+                              }`}
+                            >
                               {dict.nav.who_we_are}
                             </span>
                             <ArrowRight
                               size={12}
-                              className="text-neutral-400 group-hover:text-[#FF5C00] transition-all transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100"
+                              className={`transition-all transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100 ${
+                                isLightSection
+                                  ? 'text-neutral-400 group-hover:text-black'
+                                  : 'text-neutral-400 group-hover:text-white'
+                              }`}
                             />
                           </div>
                           <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
@@ -457,17 +505,33 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             : 'hover:bg-white/[0.06] active:bg-white/[0.1]'
                         }`}
                       >
-                        <div className="h-9 w-9 rounded-xl bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <div
+                          className={`h-9 w-9 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-105 transition-all ${
+                            isLightSection
+                              ? 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:bg-neutral-950 group-hover:text-white group-hover:border-neutral-950'
+                              : 'bg-white/10 text-white border border-white/20 group-hover:bg-white group-hover:text-black group-hover:border-white'
+                          }`}
+                        >
                           <Mail size={16} />
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-neutral-900 dark:text-white group-hover:text-[#FF5C00] transition-colors">
+                            <span
+                              className={`text-xs font-semibold transition-colors ${
+                                isLightSection
+                                  ? 'text-neutral-900 group-hover:text-black'
+                                  : 'text-white group-hover:text-white'
+                              }`}
+                            >
                               {dict.nav.contact}
                             </span>
                             <ArrowRight
                               size={12}
-                              className="text-neutral-400 group-hover:text-[#FF5C00] transition-all transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100"
+                              className={`transition-all transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100 ${
+                                isLightSection
+                                  ? 'text-neutral-400 group-hover:text-black'
+                                  : 'text-neutral-400 group-hover:text-white'
+                              }`}
                             />
                           </div>
                           <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
@@ -543,11 +607,15 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               </Link>
             </Magnetic>
 
-            {/* Sleek "Let's talk ↗" CTA Button (inspired by media_1790888120750) */}
+            {/* Sleek CTA Button: Black when background is white, White when background is black */}
             <Magnetic strength={0.18} activeDistance={30} className="hidden sm:inline-flex">
               <Link
                 href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
-                className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold bg-[#FF5C00] hover:bg-[#FF7224] text-white shadow-xs hover:shadow-md hover:shadow-orange-500/20 active:scale-95 transition-all"
+                className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold active:scale-95 transition-all ${
+                  isLightSection
+                    ? 'bg-neutral-950 hover:bg-black text-white shadow-xs hover:shadow-md hover:shadow-black/20'
+                    : 'bg-white hover:bg-neutral-200 text-black shadow-xs hover:shadow-md hover:shadow-white/20'
+                }`}
               >
                 <span>{dict.nav.lets_talk}</span>
                 <ArrowUpRight size={13} className="rtl:-scale-x-100" />
@@ -604,7 +672,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   aria-hidden="true"
                 />
 
-                {/* Slide-over Drawer Sheet */}
+                {/* Slide-over Drawer Sheet (Black Background -> Content in White) */}
                 <m.div
                   initial={slideInitial}
                   animate={{ x: 0 }}
@@ -655,7 +723,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       </span>
                     </div>
 
-                    {/* Grouped Mobile Navigation */}
+                    {/* Grouped Mobile Navigation (White content on dark drawer) */}
                     <div className="mt-5 space-y-4">
                       {/* Solutions Section */}
                       <div>
@@ -668,7 +736,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             onClick={() => setOpen(false)}
                             className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-neutral-200 hover:text-white hover:bg-white/[0.04] transition-all"
                           >
-                            <div className="h-8 w-8 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center shrink-0">
+                            <div className="h-8 w-8 rounded-lg bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
                               <Building2 size={16} />
                             </div>
                             <div className="min-w-0 flex-1">
@@ -682,7 +750,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             onClick={() => setOpen(false)}
                             className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-neutral-200 hover:text-white hover:bg-white/[0.04] transition-all"
                           >
-                            <div className="h-8 w-8 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center shrink-0">
+                            <div className="h-8 w-8 rounded-lg bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
                               <Briefcase size={16} />
                             </div>
                             <div className="min-w-0 flex-1">
@@ -704,7 +772,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             onClick={() => setOpen(false)}
                             className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-neutral-200 hover:text-white hover:bg-white/[0.04] transition-all"
                           >
-                            <div className="h-8 w-8 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center shrink-0">
+                            <div className="h-8 w-8 rounded-lg bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
                               <Users size={16} />
                             </div>
                             <div className="min-w-0 flex-1">
@@ -718,7 +786,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             onClick={() => setOpen(false)}
                             className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-neutral-200 hover:text-white hover:bg-white/[0.04] transition-all"
                           >
-                            <div className="h-8 w-8 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center shrink-0">
+                            <div className="h-8 w-8 rounded-lg bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
                               <Mail size={16} />
                             </div>
                             <div className="min-w-0 flex-1">
@@ -786,12 +854,12 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                     </div>
                   </div>
 
-                  {/* Drawer Footer Actions */}
+                  {/* Drawer Footer Actions (White Button on Dark Background) */}
                   <div className="mt-6 pt-5 border-t border-[#26282D] space-y-3 pb-6">
                     <Link
                       href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
                       onClick={() => setOpen(false)}
-                      className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-xs xs:text-sm w-full shadow-lg shadow-orange-500/25 active:scale-95 transition-all min-h-[44px]"
+                      className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-white hover:bg-neutral-200 text-black font-semibold text-xs xs:text-sm w-full shadow-lg active:scale-95 transition-all min-h-[44px]"
                     >
                       <span>{dict.nav.lets_talk}</span>
                       <ArrowUpRight size={16} className="rtl:-scale-x-100" />

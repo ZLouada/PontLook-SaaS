@@ -36,7 +36,7 @@ const TIERS_EN: TierData[] = [
     description: 'Verified decision maker, confirmed budget, starts within 30 days.',
     project: 'Riyadh Enterprise · Project #01',
     accuracy: '95%',
-    barColor: 'bg-[#FF5C00]',
+    barColor: 'bg-neutral-950',
     barWidth: 'w-[95%]',
     checklist: [
       'Verified Decision Maker (CHRO)',
@@ -51,7 +51,7 @@ const TIERS_EN: TierData[] = [
     description: 'Confirmed pain and authority; budget or timeline still forming. We stay engaged to pass the lead when ready.',
     project: 'Dubai Enterprise · Project #02',
     accuracy: '80%',
-    barColor: 'bg-orange-500/80',
+    barColor: 'bg-neutral-800',
     barWidth: 'w-[80%]',
     checklist: [
       'Executive Authority Validated',
@@ -66,7 +66,7 @@ const TIERS_EN: TierData[] = [
     description: 'Genuine need verified; earlier in the buying journey.',
     project: 'Doha Enterprise · Project #03',
     accuracy: '60%',
-    barColor: 'bg-orange-500/60',
+    barColor: 'bg-neutral-600',
     barWidth: 'w-[60%]',
     checklist: [
       'Strategic Training Need Identified',
@@ -81,7 +81,7 @@ const TIERS_EN: TierData[] = [
     description: 'Every lead is verified before introduction. No monthly retainers, 5-lead proof of concept pilot, and a 5-day replacement guarantee.',
     project: 'Enterprise Provider Partnership',
     accuracy: '100% Guaranteed',
-    barColor: 'bg-[#FF5C00]',
+    barColor: 'bg-neutral-950',
     barWidth: 'w-full',
     checklist: [
       'Pay Per Qualified Lead ($0 Retainer)',
@@ -100,7 +100,7 @@ const TIERS_AR: TierData[] = [
     description: 'صانع قرار تنفيذي مؤكد، متطلب تدريبي قائم، استعداد وجاهزية تامة للتواصل والنقاش.',
     project: 'جهة مصرفية كبرى بالرياض · فرصة #01',
     accuracy: '95%',
-    barColor: 'bg-[#FF5C00]',
+    barColor: 'bg-neutral-950',
     barWidth: 'w-[95%]',
     checklist: [
       'صانع قرار تنفيذي معتمد',
@@ -115,7 +115,7 @@ const TIERS_AR: TierData[] = [
     description: 'مبادرة معتمدة وتحدي مؤسسي واضح؛ قيد إعداد خطة التنفيذ للشهر القادم.',
     project: 'مجموعة قابضة في دبي · فرصة #02',
     accuracy: '80%',
-    barColor: 'bg-orange-500/80',
+    barColor: 'bg-neutral-800',
     barWidth: 'w-[80%]',
     checklist: [
       'صلاحية القرار معتمدة',
@@ -130,7 +130,7 @@ const TIERS_AR: TierData[] = [
     description: 'احتياج حقيقي تم التحقق منه؛ في مرحلة مبكرة من رحلة الشراء والتعاقد.',
     project: 'مؤسسة في الدوحة · فرصة #03',
     accuracy: '60%',
-    barColor: 'bg-orange-500/60',
+    barColor: 'bg-neutral-600',
     barWidth: 'w-[60%]',
     checklist: [
       'تحديد احتياج تدريبي استراتيجي',
@@ -145,7 +145,7 @@ const TIERS_AR: TierData[] = [
     description: 'كل فرصة يتم التحقق منها قبل تقديمها. بدون رسوم شهرية ثابتة، تجربة قيادية لـ 5 فرص، وضمان استبدال الفرصة خلال 5 أيام.',
     project: 'شراكة مزودي التدريب المعتمدين',
     accuracy: 'ضمان 100%',
-    barColor: 'bg-[#FF5C00]',
+    barColor: 'bg-neutral-950',
     barWidth: 'w-full',
     checklist: [
       'دفع لكل فرصة مؤهلة ($0 رسوم اشتراك)',
@@ -231,14 +231,14 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     isExternal: false,
     clayTheme: {
       bgClass: 'bg-white text-neutral-900',
-      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
-      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      borderClass: 'border-neutral-200/90 hover:border-neutral-900',
+      pillOuter: 'bg-neutral-100 border border-neutral-200 text-neutral-950',
       pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
-      buttonClass: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-neutral-950 hover:bg-black text-white shadow-md shadow-neutral-900/10 active:scale-[0.98]',
       innerCardBg: 'bg-neutral-50 text-neutral-900',
       innerCardBorder: 'border-neutral-200',
-      meterColor: 'bg-[#FF5C00]',
-      checkColor: 'text-[#FF5C00]',
+      meterColor: 'bg-neutral-950',
+      checkColor: 'text-neutral-950',
     }
   },
   {
@@ -261,14 +261,14 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     isExternal: false,
     clayTheme: {
       bgClass: 'bg-white text-neutral-900',
-      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
-      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      borderClass: 'border-neutral-200/90 hover:border-neutral-900',
+      pillOuter: 'bg-neutral-100 border border-neutral-200 text-neutral-950',
       pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
-      buttonClass: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-neutral-950 hover:bg-black text-white shadow-md shadow-neutral-900/10 active:scale-[0.98]',
       innerCardBg: 'bg-neutral-50 text-neutral-900',
       innerCardBorder: 'border-neutral-200',
-      meterColor: 'bg-[#FF5C00]',
-      checkColor: 'text-[#FF5C00]',
+      meterColor: 'bg-neutral-950',
+      checkColor: 'text-neutral-950',
     }
   },
   {
@@ -291,14 +291,14 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     isExternal: true,
     clayTheme: {
       bgClass: 'bg-white text-neutral-900',
-      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
-      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      borderClass: 'border-neutral-200/90 hover:border-neutral-900',
+      pillOuter: 'bg-neutral-100 border border-neutral-200 text-neutral-950',
       pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
-      buttonClass: 'bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-300 hover:border-orange-500/40 active:scale-[0.98]',
+      buttonClass: 'bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-300 hover:border-neutral-900 active:scale-[0.98]',
       innerCardBg: 'bg-neutral-50 text-neutral-900',
       innerCardBorder: 'border-neutral-200',
-      meterColor: 'bg-[#FF5C00]',
-      checkColor: 'text-[#FF5C00]',
+      meterColor: 'bg-neutral-950',
+      checkColor: 'text-neutral-950',
     }
   },
   {
@@ -321,14 +321,14 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     isExternal: false,
     clayTheme: {
       bgClass: 'bg-white text-neutral-900',
-      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
-      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      borderClass: 'border-neutral-200/90 hover:border-neutral-900',
+      pillOuter: 'bg-neutral-100 border border-neutral-200 text-neutral-950',
       pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
-      buttonClass: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-neutral-950 hover:bg-black text-white shadow-md shadow-neutral-900/10 active:scale-[0.98]',
       innerCardBg: 'bg-neutral-50 text-neutral-900',
       innerCardBorder: 'border-neutral-200',
-      meterColor: 'bg-[#FF5C00]',
-      checkColor: 'text-[#FF5C00]',
+      meterColor: 'bg-neutral-950',
+      checkColor: 'text-neutral-950',
     }
   },
 ];
@@ -354,14 +354,14 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     isExternal: false,
     clayTheme: {
       bgClass: 'bg-white text-neutral-900',
-      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
-      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      borderClass: 'border-neutral-200/90 hover:border-neutral-900',
+      pillOuter: 'bg-neutral-100 border border-neutral-200 text-neutral-950',
       pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
-      buttonClass: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-neutral-950 hover:bg-black text-white shadow-md shadow-neutral-900/10 active:scale-[0.98]',
       innerCardBg: 'bg-neutral-50 text-neutral-900',
       innerCardBorder: 'border-neutral-200',
-      meterColor: 'bg-[#FF5C00]',
-      checkColor: 'text-[#FF5C00]',
+      meterColor: 'bg-neutral-950',
+      checkColor: 'text-neutral-950',
     }
   },
   {
@@ -384,14 +384,14 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     isExternal: false,
     clayTheme: {
       bgClass: 'bg-white text-neutral-900',
-      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
-      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      borderClass: 'border-neutral-200/90 hover:border-neutral-900',
+      pillOuter: 'bg-neutral-100 border border-neutral-200 text-neutral-950',
       pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
-      buttonClass: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-neutral-950 hover:bg-black text-white shadow-md shadow-neutral-900/10 active:scale-[0.98]',
       innerCardBg: 'bg-neutral-50 text-neutral-900',
       innerCardBorder: 'border-neutral-200',
-      meterColor: 'bg-[#FF5C00]',
-      checkColor: 'text-[#FF5C00]',
+      meterColor: 'bg-neutral-950',
+      checkColor: 'text-neutral-950',
     }
   },
   {
@@ -414,14 +414,14 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     isExternal: true,
     clayTheme: {
       bgClass: 'bg-white text-neutral-900',
-      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
-      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      borderClass: 'border-neutral-200/90 hover:border-neutral-900',
+      pillOuter: 'bg-neutral-100 border border-neutral-200 text-neutral-950',
       pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
-      buttonClass: 'bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-300 hover:border-orange-500/40 active:scale-[0.98]',
+      buttonClass: 'bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-300 hover:border-neutral-900 active:scale-[0.98]',
       innerCardBg: 'bg-neutral-50 text-neutral-900',
       innerCardBorder: 'border-neutral-200',
-      meterColor: 'bg-[#FF5C00]',
-      checkColor: 'text-[#FF5C00]',
+      meterColor: 'bg-neutral-950',
+      checkColor: 'text-neutral-950',
     }
   },
   {
@@ -444,14 +444,14 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     isExternal: false,
     clayTheme: {
       bgClass: 'bg-white text-neutral-900',
-      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
-      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      borderClass: 'border-neutral-200/90 hover:border-neutral-900',
+      pillOuter: 'bg-neutral-100 border border-neutral-200 text-neutral-950',
       pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
-      buttonClass: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20 active:scale-[0.98]',
+      buttonClass: 'bg-neutral-950 hover:bg-black text-white shadow-md shadow-neutral-900/10 active:scale-[0.98]',
       innerCardBg: 'bg-neutral-50 text-neutral-900',
       innerCardBorder: 'border-neutral-200',
-      meterColor: 'bg-[#FF5C00]',
-      checkColor: 'text-[#FF5C00]',
+      meterColor: 'bg-neutral-950',
+      checkColor: 'text-neutral-950',
     }
   },
 ];
@@ -477,12 +477,12 @@ export default function LeadTiers(_props?: {
         className="relative py-16 sm:py-24 lg:py-32 bg-black text-white"
       >
         {/* ambient glow */}
-        <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-orange-500/[0.02] blur-[180px] pointer-events-none rounded-full" />
+        <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-white/[0.02] blur-[180px] pointer-events-none rounded-full" />
 
         <div className="container-site relative z-10 px-3.5 xs:px-4 sm:px-8 lg:px-12">
           <div className="text-center max-w-2xl mx-auto mb-10 xs:mb-12 sm:mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-4">
-              <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
               <span>{isAr ? 'مستويات التأهيل والمطابقة' : 'QUALIFICATION TIERS'}</span>
             </div>
             <TextReveal
@@ -514,11 +514,11 @@ export default function LeadTiers(_props?: {
                     <CardTilt3D maxTilt={4} glareOpacity={0.12} className="w-full">
                       <Spotlight
                         radius={340}
-                        className={`relative overflow-hidden bg-[#0F1013] border border-[#26282D] hover:border-orange-500/40 text-white rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-7 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
+                        className={`relative overflow-hidden bg-[#0F1013] border border-[#26282D] hover:border-neutral-900 text-white rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-7 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
                       >
-                        <BorderGlow glowColor="rgba(255, 92, 0, 0.4)" size={320} opacity={0.5} />
+                        <BorderGlow glowColor="rgba(0, 0, 0, 0.15)" size={320} opacity={0.5} />
                         {idx === 0 && (
-                          <BorderBeam size={260} duration={12} colorFrom="#FF5C00" colorTo="#FF7A2F" />
+                          <BorderBeam size={260} duration={12} colorFrom="#000000" colorTo="#333333" />
                         )}
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 xs:gap-5 sm:gap-8 items-center relative z-10">
                           {/* Left Details */}
@@ -528,7 +528,7 @@ export default function LeadTiers(_props?: {
                                 {tier.step}
                               </span>
                               <span className="inline-flex items-center gap-1.5 px-2 xs:px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] xs:text-xs font-medium bg-[#16171B] text-neutral-300 border border-[#26282D]">
-                                <Signal tone="orange" size={14} speed={1 - idx * 0.12} />
+                                <Signal tone="neutral" size={14} speed={1 - idx * 0.12} />
                                 <span>{tier.badge}</span>
                               </span>
                             </div>
@@ -546,7 +546,7 @@ export default function LeadTiers(_props?: {
                                 <Magnetic strength={0.22} activeDistance={35}>
                                   <Link
                                     href={`/${lang}/for-providers/apply`}
-                                    className="w-full xs:w-auto inline-flex items-center justify-center px-5 sm:px-6 py-2.5 xs:py-3 sm:py-3.5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-medium text-xs xs:text-sm shadow-lg shadow-orange-500/20 active:scale-95 transition-all"
+                                    className="w-full xs:w-auto inline-flex items-center justify-center px-5 sm:px-6 py-2.5 xs:py-3 sm:py-3.5 rounded-xl bg-neutral-950 hover:bg-black text-white font-medium text-xs xs:text-sm shadow-lg shadow-neutral-900/10 active:scale-95 transition-all"
                                   >
                                     <span>{isAr ? 'قدم للانضمام إلى الشراكة' : 'Apply for partnership'}</span>
                                     <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
@@ -606,13 +606,13 @@ export default function LeadTiers(_props?: {
       className="relative py-16 sm:py-24 lg:py-32 bg-white text-neutral-900 border-t border-neutral-200"
     >
       {/* ambient glow */}
-      <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-orange-500/[0.03] blur-[180px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-neutral-900/[0.02] blur-[180px] pointer-events-none rounded-full" />
 
       <div className="container-site relative z-10 px-3.5 xs:px-4 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 xs:mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[#FF5C00] text-xs font-semibold uppercase tracking-wider mb-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-950 text-xs font-semibold uppercase tracking-wider mb-4">
+            <span className="h-1.5 w-1.5 rounded-full bg-neutral-950" />
             <span>{isAr ? 'خيارات الشراكة والتعاون' : 'COLLABORATION PATHWAYS'}</span>
           </div>
 
@@ -645,7 +645,7 @@ export default function LeadTiers(_props?: {
             <Magnetic strength={0.22} activeDistance={35}>
               <Link
                 href={`/${lang}/find-training`}
-                className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-[#FF5C00] hover:bg-[#FF7A2F] text-white font-medium text-xs xs:text-sm shadow-lg shadow-orange-500/20 active:scale-[0.98] transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-neutral-950 hover:bg-black text-white font-medium text-xs xs:text-sm shadow-lg shadow-neutral-900/10 active:scale-[0.98] transition-all"
               >
                 <span>{exp?.btn_match || (isAr ? 'ابدأ الربط للتدريب' : 'Get Matched for Training')}</span>
                 <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
@@ -758,7 +758,7 @@ export default function LeadTiers(_props?: {
                           <ul className="space-y-1.5 pt-1 text-xs text-neutral-700">
                             {checklist.map((item: string, cIdx: number) => (
                               <li key={cIdx} className="flex items-start gap-1.5">
-                                <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] mt-1 shrink-0" />
+                                <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 mt-1 shrink-0" />
                                 <span>{item}</span>
                               </li>
                             ))}

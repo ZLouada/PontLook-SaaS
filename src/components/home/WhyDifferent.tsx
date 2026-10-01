@@ -138,19 +138,19 @@ export default function WhyDifferent() {
         isAr ? 'تجنب هدر الميزانيات في تدريب غير مجدٍ' : 'Eliminate wasted corporate training budget',
       ],
       theme: {
-        accentText: 'text-[#FF5C00]',
-        badgeBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:bg-orange-500/15',
-        iconBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:border-orange-500/40',
-        buttonBg: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20',
-        checkColor: 'text-[#FF5C00]',
-        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-orange-500/30',
+        accentText: 'text-neutral-950',
+        badgeBg: 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:bg-neutral-200',
+        iconBg: 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:border-neutral-950',
+        buttonBg: 'bg-neutral-950 hover:bg-black text-white shadow-md shadow-neutral-900/10',
+        checkColor: 'text-neutral-950',
+        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-neutral-900',
       },
-      themeVariant: 'brand',
+      themeVariant: 'dark',
       mockup: (
         <div className="bg-neutral-50 rounded-xl border border-neutral-200/90 w-full p-3 flex flex-col gap-2">
           <div className="flex items-center justify-between pb-1.5 border-b border-neutral-200">
             <div className="flex items-center gap-2">
-              <IconFrame variant="brand" size="xs">
+              <IconFrame variant="dark" size="xs">
                 <Target size={14} />
               </IconFrame>
               <div>
@@ -162,13 +162,13 @@ export default function WhyDifferent() {
                 </div>
               </div>
             </div>
-            <Signal tone="orange" size={12} />
+            <Signal tone="neutral" size={12} />
           </div>
           <div className="flex flex-wrap gap-1.5 pt-0.5">
             <span className="px-2 py-0.5 rounded-md bg-white text-neutral-700 text-[10px] font-medium border border-neutral-200 font-sans shadow-xs">
               {c?.diagnose?.tag1 || (isAr ? '# فجوات القيادة والتقنية' : '# Leadership & Tech Gaps')}
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-orange-500/10 text-[#FF5C00] text-[10px] font-medium border border-orange-500/20 font-sans">
+            <span className="px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-950 text-[10px] font-medium border border-neutral-200 font-sans">
               {c?.diagnose?.tag2 || (isAr ? 'خارطة طريق معتمدة' : 'Priority Roadmap')}
             </span>
           </div>
@@ -198,31 +198,31 @@ export default function WhyDifferent() {
         isAr ? 'التزام بالمواعيد والميزانية المحددة مسبقاً' : 'Pre confirmed budget and deployment window',
       ],
       theme: {
-        accentText: 'text-[#FF5C00]',
-        badgeBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:bg-orange-500/15',
-        iconBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:border-orange-500/40',
-        buttonBg: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20',
-        checkColor: 'text-[#FF5C00]',
-        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-orange-500/30',
+        accentText: 'text-neutral-950',
+        badgeBg: 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:bg-neutral-200',
+        iconBg: 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:border-neutral-950',
+        buttonBg: 'bg-neutral-950 hover:bg-black text-white shadow-md shadow-neutral-900/10',
+        checkColor: 'text-neutral-950',
+        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-neutral-900',
       },
-      themeVariant: 'brand',
+      themeVariant: 'dark',
       mockup: (
         <div className="bg-neutral-50 rounded-xl border border-neutral-200/90 w-full p-3 flex flex-col gap-2">
           <div className="text-xs font-semibold text-neutral-900 pb-1.5 border-b border-neutral-200 flex items-center justify-between font-sans">
             <span>{c?.match?.mockupHeader || (isAr ? 'قائمة معايير توافق الشريك' : 'Partner Fit Checklist')}</span>
-            <Signal tone="orange" size={12} />
+            <Signal tone="neutral" size={12} />
           </div>
           <div className="space-y-1.5 text-[11px] text-neutral-600 font-sans">
             <div className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] shrink-0" />
+              <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 shrink-0" />
               <span>{c?.match?.check1 || (isAr ? 'متخصص في مجال عمل منشأتك' : 'Specialized in your industry')}</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] shrink-0" />
+              <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 shrink-0" />
               <span>{c?.match?.check2 || (isAr ? 'سجل تدريبي موثق في المنطقة' : 'Verified delivery track record')}</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] shrink-0" />
+              <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 shrink-0" />
               <span>{c?.match?.check3 || (isAr ? 'متوافق مع جدولك وميزانيتك' : 'Aligned with your timeline & budget')}</span>
             </div>
           </div>
@@ -252,27 +252,27 @@ export default function WhyDifferent() {
         isAr ? 'بدون وسطاء أو رسوم اشتراك شهرية' : 'Direct access without monthly retainers',
       ],
       theme: {
-        accentText: 'text-[#FF5C00]',
-        badgeBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:bg-orange-500/15',
-        iconBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:border-orange-500/40',
-        buttonBg: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20',
-        checkColor: 'text-[#FF5C00]',
-        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-orange-500/30',
+        accentText: 'text-neutral-950',
+        badgeBg: 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:bg-neutral-200',
+        iconBg: 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:border-neutral-950',
+        buttonBg: 'bg-neutral-950 hover:bg-black text-white shadow-md shadow-neutral-900/10',
+        checkColor: 'text-neutral-950',
+        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-neutral-900',
       },
-      themeVariant: 'brand',
+      themeVariant: 'dark',
       mockup: (
         <div className="bg-neutral-50 rounded-xl border border-neutral-200/90 w-full p-3 flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <span className="px-2 py-0.5 rounded-md bg-white border border-neutral-200 text-neutral-700 text-[9px] font-medium uppercase font-sans shadow-xs">
               {c?.access?.clientTag || (isAr ? 'جهة مؤسسية · حوكمة ومخاطر' : 'Enterprise Client · GRC')}
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-orange-500/10 text-[#FF5C00] text-[9px] font-medium border border-orange-500/20 shrink-0 font-sans">
+            <span className="px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-950 text-[9px] font-medium border border-neutral-200 shrink-0 font-sans">
               {c?.access?.statusBadge || (isAr ? 'صلاحية الميزانية: مؤكدة' : 'Budget Authority: Confirmed')}
             </span>
           </div>
           <div className="flex items-center gap-2.5 pt-0.5">
-            <div className="h-7 w-7 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0">
-              <Signal tone="orange" size={12} />
+            <div className="h-7 w-7 rounded-lg bg-neutral-100 border border-neutral-200 flex items-center justify-center shrink-0">
+              <Signal tone="neutral" size={12} />
             </div>
             <div className="min-w-0 font-sans">
               <div className="text-[11px] font-semibold text-neutral-900 truncate">
@@ -307,19 +307,19 @@ export default function WhyDifferent() {
         isAr ? 'دفع حصري لكل فرصة مؤهلة' : 'Strict pay per qualified lead model',
       ],
       theme: {
-        accentText: 'text-[#FF5C00]',
-        badgeBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:bg-orange-500/15',
-        iconBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:border-orange-500/40',
-        buttonBg: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20',
-        checkColor: 'text-[#FF5C00]',
-        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-orange-500/30',
+        accentText: 'text-neutral-950',
+        badgeBg: 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:bg-neutral-200',
+        iconBg: 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:border-neutral-950',
+        buttonBg: 'bg-neutral-950 hover:bg-black text-white shadow-md shadow-neutral-900/10',
+        checkColor: 'text-neutral-950',
+        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-neutral-900',
       },
-      themeVariant: 'brand',
+      themeVariant: 'dark',
       mockup: (
         <div className="bg-neutral-50 rounded-xl border border-neutral-200/90 w-full p-3 flex flex-col gap-1.5">
           <div className="flex items-center justify-between pb-1 border-b border-neutral-200 text-xs font-semibold text-neutral-900 font-sans">
             <span>{c?.ready?.mockupHeader || (isAr ? 'جاهزية الشراكة | مؤكدة' : 'Partnership Readiness | Confirmed')}</span>
-            <Signal tone="orange" size={12} />
+            <Signal tone="neutral" size={12} />
           </div>
           <div className="space-y-1 text-[10px] sm:text-[11px] font-sans">
             <div className="flex justify-between items-center">
@@ -328,7 +328,7 @@ export default function WhyDifferent() {
             </div>
             <div className="flex justify-between items-center">
               <span className="text-neutral-500">{c?.ready?.budgetLabel || (isAr ? 'الميزانية المعتمدة' : 'Budget')}</span>
-              <span className="font-bold text-[#FF5C00]">{c?.ready?.budgetVal || 'Confirmed ($50k to $100k)'}</span>
+              <span className="font-bold text-neutral-950">{c?.ready?.budgetVal || 'Confirmed ($50k to $100k)'}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-neutral-500">{c?.ready?.fitLabel || (isAr ? 'التوافق' : 'Mutual Fit')}</span>
@@ -361,26 +361,26 @@ export default function WhyDifferent() {
         isAr ? 'دراسات حالة حول قياس أثر التدريب وعائده' : 'Practical case studies on training ROI',
       ],
       theme: {
-        accentText: 'text-[#FF5C00]',
-        badgeBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:bg-orange-500/15',
-        iconBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:border-orange-500/40',
-        buttonBg: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20',
-        checkColor: 'text-[#FF5C00]',
-        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-orange-500/30',
+        accentText: 'text-neutral-950',
+        badgeBg: 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:bg-neutral-200',
+        iconBg: 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:border-neutral-950',
+        buttonBg: 'bg-neutral-950 hover:bg-black text-white shadow-md shadow-neutral-900/10',
+        checkColor: 'text-neutral-950',
+        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-neutral-900',
       },
-      themeVariant: 'brand',
+      themeVariant: 'dark',
       mockup: (
         <div className="bg-neutral-50 rounded-xl border border-neutral-200/90 w-full p-3 flex flex-col gap-1.5">
           <div className="flex items-center justify-between pb-1 border-b border-neutral-200 text-xs font-semibold text-neutral-900 font-sans">
             <span>{c?.hub?.mockupHeader || (isAr ? 'أحدث أدلة ومقالات المنصة' : 'Latest L&D Resources')}</span>
-            <Signal tone="orange" size={12} />
+            <Signal tone="neutral" size={12} />
           </div>
           <div className="space-y-1.5 pt-0.5 font-sans">
             <div className="flex items-center justify-between gap-2 text-[10px] sm:text-[11px]">
               <span className="text-neutral-900 truncate">
                 {c?.hub?.item1Title || (isAr ? 'تقرير فجوات مهارات سوق العمل الخليجي' : 'GCC Workforce Skill Gaps Report')}
               </span>
-              <span className="px-1.5 py-0.5 rounded bg-orange-500/10 text-[#FF5C00] text-[9px] font-bold shrink-0 border border-orange-500/20">
+              <span className="px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-950 text-[9px] font-bold shrink-0 border border-neutral-200">
                 {c?.hub?.item1Badge || (isAr ? 'دليل جديد' : 'New Guide')}
               </span>
             </div>
@@ -388,7 +388,7 @@ export default function WhyDifferent() {
               <span className="text-neutral-900 truncate">
                 {c?.hub?.item2Title || (isAr ? 'دليل تشخيص العائد على التدريب المؤسسي' : 'Diagnostic Guide to Corporate Training ROI')}
               </span>
-              <span className="px-1.5 py-0.5 rounded bg-orange-500/10 text-[#FF5C00] text-[9px] font-bold shrink-0 border border-orange-500/20">
+              <span className="px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-950 text-[9px] font-bold shrink-0 border border-neutral-200">
                 {c?.hub?.item2Badge || (isAr ? 'مورد مجاني' : 'Free Resource')}
               </span>
             </div>
@@ -451,7 +451,7 @@ export default function WhyDifferent() {
           {items.map((it) => {
             const Icon = it.icon;
             const theme = it.theme;
-            const cardGlow = 'hover:border-orange-500/40 hover:shadow-[0_12px_32px_-8px_rgba(255,92,0,0.12)]';
+            const cardGlow = 'hover:border-neutral-900/60 hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.12)]';
 
             return (
               <m.div
@@ -467,7 +467,7 @@ export default function WhyDifferent() {
                       className={`group relative w-full h-full rounded-2xl bg-white border border-neutral-200/90 p-3.5 sm:p-4 lg:p-3 xl:p-4 flex flex-col justify-between cursor-pointer select-none shadow-[0_8px_24px_-8px_rgba(0,0,0,0.06)] overflow-hidden transition-all duration-300 ${cardGlow}`}
                     >
                       {/* Ambient subtle back-glow on hover */}
-                      <div className="pointer-events-none absolute -top-8 -end-8 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-orange-500/10" />
+                      <div className="pointer-events-none absolute -top-8 -end-8 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-neutral-900/5" />
 
                       {/* Card Front Top */}
                       <div className="space-y-1.5 sm:space-y-2">
@@ -480,7 +480,7 @@ export default function WhyDifferent() {
                           </span>
                         </div>
 
-                        <h3 className="text-xs xs:text-sm sm:text-base lg:text-xs xl:text-sm font-semibold text-neutral-950 tracking-tight leading-snug font-heading group-hover:text-[#FF5C00] transition-colors">
+                        <h3 className="text-xs xs:text-sm sm:text-base lg:text-xs xl:text-sm font-semibold text-neutral-950 tracking-tight leading-snug font-heading group-hover:text-neutral-950 transition-colors">
                           {it.title}
                         </h3>
 
@@ -495,9 +495,9 @@ export default function WhyDifferent() {
                           <Icon size={14} strokeWidth={1.75} />
                         </IconFrame>
 
-                        <div className="inline-flex items-center gap-1 text-[11px] font-medium text-neutral-600 group-hover:text-[#FF5C00] transition-colors duration-200">
+                        <div className="inline-flex items-center gap-1 text-[11px] font-medium text-neutral-600 group-hover:text-neutral-950 transition-colors duration-200">
                           <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
-                          <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-neutral-400 group-hover:text-[#FF5C00]" />
+                          <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-neutral-400 group-hover:text-neutral-950" />
                         </div>
                       </div>
                     </m.div>
@@ -516,7 +516,7 @@ export default function WhyDifferent() {
               type="button"
               onClick={() => scrollToCard(idx)}
               className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                activeCardIndex === idx ? 'w-5 bg-[#FF5C00]' : 'w-1.5 bg-neutral-300 hover:bg-neutral-400'
+                activeCardIndex === idx ? 'w-5 bg-neutral-950' : 'w-1.5 bg-neutral-300 hover:bg-neutral-400'
               }`}
               aria-label={`Go to slide ${idx + 1}`}
             />
@@ -632,7 +632,7 @@ export default function WhyDifferent() {
                               transition={{ delay: 0.24 + pIdx * 0.06, type: 'spring', stiffness: 320, damping: 22 }}
                               className="leading-snug flex items-start gap-1.5"
                             >
-                              <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] mt-1 shrink-0" />
+                              <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 mt-1 shrink-0" />
                               <span>{point}</span>
                             </m.li>
                           ))}

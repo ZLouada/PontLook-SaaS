@@ -91,7 +91,7 @@ export default function HowItWorks() {
       stepNumber: '01',
       navTitle: isAr ? 'رصد الاحتياج' : 'Demand Detection',
       tag: isAr ? 'الخطوة 01 // رصد الاحتياج المؤسسي' : 'STEP 01 // DEMAND DETECTION',
-      tagColor: 'text-[#FF5C00]',
+      tagColor: 'text-neutral-950',
       headline: isAr
         ? 'رصد احتياجات التدريب المؤسسي المؤكدة قبل طرحها في السوق'
         : 'Detect verified enterprise training demand before it goes public',
@@ -106,8 +106,8 @@ export default function HowItWorks() {
             <span className="text-neutral-700 text-[11px] font-medium">
               {isAr ? 'رادار الاحتياج المؤسسي' : 'Enterprise Demand Feed'}
             </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-[#FF5C00] text-[10px] font-semibold">
-              <Signal tone="orange" size={12} />
+            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-950 text-[10px] font-semibold">
+              <Signal tone="neutral" size={12} />
               <span>{isAr ? 'إشارة نشطة' : 'Active Signal'}</span>
             </div>
           </div>
@@ -118,7 +118,7 @@ export default function HowItWorks() {
               <span className="font-semibold text-neutral-950">
                 {isAr ? 'الخدمات المالية والمصرفية · الرياض' : 'Banking & FinTech · Riyadh'}
               </span>
-              <span className="font-bold text-[#FF5C00] tabular-nums">SAR 450,000+</span>
+              <span className="font-bold text-neutral-950 tabular-nums">SAR 450,000+</span>
             </div>
             <div className="flex items-center justify-between text-neutral-500 text-[11px]">
               <span>{isAr ? '1,200+ موظف' : '1,200+ Employees'}</span>
@@ -155,7 +155,7 @@ export default function HowItWorks() {
       stepNumber: '02',
       navTitle: isAr ? 'التأهيل والربط' : 'Fit Scoring',
       tag: isAr ? 'الخطوة 02 // التأهيل والربط المعتمد' : 'STEP 02 // FIT SCORING & QUALIFICATION',
-      tagColor: 'text-[#FF5C00]',
+      tagColor: 'text-neutral-950',
       headline: isAr
         ? 'تقييم تحليلي وبشري دقيق يطابق المتطلبات الحقيقية مع نخبة الخبراء'
         : 'Deep analyst and human scoring against real enterprise constraints',
@@ -170,8 +170,8 @@ export default function HowItWorks() {
             <span className="text-neutral-700 text-[11px] font-medium">
               {isAr ? 'منظومة المطابقة والتأهيل' : 'Match & Qualification'}
             </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-[#FF5C00] text-xs font-bold">
-              <Signal tone="orange" size={12} />
+            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-950 text-xs font-bold">
+              <Signal tone="neutral" size={12} />
               <span>94%</span>
               <span className="text-[10px] font-normal text-neutral-600">{isAr ? 'تطابق' : 'Match'}</span>
             </div>
@@ -184,7 +184,7 @@ export default function HowItWorks() {
               <span className="font-bold text-neutral-950">4 / 4 Complete</span>
             </div>
             <div className="h-1.5 w-full bg-neutral-200 border border-neutral-300/60 rounded-full overflow-hidden p-0.5">
-              <div className="h-full bg-[#FF5C00] rounded-full w-[94%]" />
+              <div className="h-full bg-neutral-950 rounded-full w-[94%]" />
             </div>
           </div>
 
@@ -215,7 +215,7 @@ export default function HowItWorks() {
       stepNumber: '03',
       navTitle: isAr ? 'التعاقد المباشر' : 'Direct Engagement',
       tag: isAr ? 'الخطوة 03 // التقديم المباشر والتعاقد' : 'STEP 03 // DIRECT ENGAGEMENT',
-      tagColor: 'text-[#FF5C00]',
+      tagColor: 'text-neutral-950',
       headline: isAr
         ? 'تقديم مباشر وتواصل شخصي مع ضمان الدفع مقابل النتائج'
         : 'Direct warm introductions with pay on success guarantees',
@@ -230,8 +230,8 @@ export default function HowItWorks() {
             <span className="text-neutral-700 text-[11px] font-medium">
               {isAr ? 'لوحة التعاقد المباشر' : 'Direct Engagement Console'}
             </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-[#FF5C00] text-[10px] font-semibold">
-              <Signal tone="orange" size={12} />
+            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-950 text-[10px] font-semibold">
+              <Signal tone="neutral" size={12} />
               <span>{isAr ? 'تم التقديم' : 'Intro Complete'}</span>
             </div>
           </div>
@@ -240,7 +240,7 @@ export default function HowItWorks() {
           <div className="p-2.5 sm:p-3 rounded-lg bg-neutral-50/90 border border-neutral-200/70 space-y-1.5 text-xs shadow-xs">
             <div className="flex items-center justify-between">
               <span className="text-neutral-500">{isAr ? 'حالة الفرصة' : 'Pipeline Status'}</span>
-              <span className="font-semibold text-[#FF5C00] bg-orange-500/10 px-2 py-0.5 rounded text-[10px] border border-orange-500/20">
+              <span className="font-semibold text-neutral-950 bg-neutral-100 px-2 py-0.5 rounded text-[10px] border border-neutral-200">
                 {isAr ? 'مرحلة تقديم العرض الفني' : 'Proposal Review Stage'}
               </span>
             </div>
@@ -255,7 +255,7 @@ export default function HowItWorks() {
           {/* Contract Terms */}
           <div className="pt-0.5 flex items-center justify-between text-xs text-neutral-500">
             <span>{isAr ? 'بدون عمولات خفية' : 'No hidden fees'}</span>
-            <span className="font-bold text-[#FF5C00]">
+            <span className="font-bold text-neutral-950">
               {isAr ? 'علاقة تعاقدية مباشرة 100%' : '100% Direct Contract'}
             </span>
           </div>
@@ -289,8 +289,8 @@ export default function HowItWorks() {
           aria-hidden="true"
         />
 
-        {/* Ambient subtle warm orange backlight glow on the white showroom floor */}
-        <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-orange-500/[0.03] blur-[150px] pointer-events-none rounded-full" />
+        {/* Ambient subtle backlight glow on the white showroom floor */}
+        <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-neutral-900/[0.02] blur-[150px] pointer-events-none rounded-full" />
 
         {/* ================================================================
             THE SPRING POP-UP WHITE CONTENT
@@ -313,7 +313,7 @@ export default function HowItWorks() {
             {/* LEFT COLUMN: Section Title, Subtitle, Highlights & White "Join Network" Window */}
             <div className="lg:col-span-5 flex flex-col items-start text-start space-y-5">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-semibold uppercase tracking-wider font-sans">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] animate-pulse" />
+                <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 animate-pulse" />
                 <span>{isAr ? 'آلية العمل خطوة بخطوة' : 'HOW IT WORKS // POSTFLOWS'}</span>
               </div>
 
@@ -333,15 +333,15 @@ export default function HowItWorks() {
               {/* Benefit Checkpoints */}
               <div className="space-y-2.5 pt-1 w-full text-xs sm:text-sm text-neutral-700 font-sans">
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[#FF5C00] shrink-0" />
+                  <CheckCircle2 size={16} className="text-neutral-950 shrink-0" />
                   <span>{isAr ? 'ميزانيات معتمدة مؤكدة مع الإدارة المالية' : 'Pre-allocated corporate training budgets'}</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[#FF5C00] shrink-0" />
+                  <CheckCircle2 size={16} className="text-neutral-950 shrink-0" />
                   <span>{isAr ? 'مواءمة دقيقة مع 2 إلى 3 خبراء معتمدين كحد أقصى' : '2 to 3 curated specialists per mandate (Zero bidding wars)'}</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[#FF5C00] shrink-0" />
+                  <CheckCircle2 size={16} className="text-neutral-950 shrink-0" />
                   <span>{isAr ? 'بدون اشتراكات شهرية، الدفع فقط مقابل النتائج' : 'Strict pay-on-success model with 5-day replacement SLA'}</span>
                 </div>
               </div>
@@ -361,7 +361,7 @@ export default function HowItWorks() {
                         {isAr ? 'لمزودي التدريب' : 'for training providers'}
                       </span>
                     </div>
-                    <div className="h-9 w-9 rounded-xl bg-[#FF5C00] hover:bg-[#FF7A2F] text-white flex items-center justify-center transition-colors shrink-0 shadow-sm shadow-orange-500/25">
+                    <div className="h-9 w-9 rounded-xl bg-neutral-950 hover:bg-black text-white flex items-center justify-center transition-colors shrink-0 shadow-sm shadow-neutral-900/10">
                       <ArrowRight size={16} className="rtl:-scale-x-100 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
                     </div>
                   </Link>
@@ -386,13 +386,13 @@ export default function HowItWorks() {
                           : 'bg-white text-neutral-600 border-neutral-200 hover:border-neutral-300 hover:text-neutral-950 hover:bg-neutral-50'
                       }`}
                     >
-                      <span className={`text-[9px] xs:text-[10px] sm:text-[11px] font-mono font-bold shrink-0 ${isActive ? 'text-[#FF5C00]' : 'text-neutral-400'}`}>
+                      <span className={`text-[9px] xs:text-[10px] sm:text-[11px] font-mono font-bold shrink-0 ${isActive ? 'text-neutral-950' : 'text-neutral-400'}`}>
                         {st.stepNumber}
                       </span>
                       <span className="truncate font-semibold">{st.navTitle}</span>
                       {isActive && (
                         <div className="shrink-0 ms-0.5 sm:ms-1 hidden xs:block">
-                          <Signal tone="orange" size={12} />
+                          <Signal tone="neutral" size={12} />
                         </div>
                       )}
                     </button>
@@ -449,7 +449,7 @@ export default function HowItWorks() {
                             onClick={() => setActiveStep(dotIdx)}
                             aria-label={`Go to step ${dotIdx + 1}`}
                             className={`h-1.5 rounded-full transition-all duration-300 ${
-                              activeStep === dotIdx ? 'w-5 bg-[#FF5C00]' : 'w-1.5 bg-neutral-300 hover:bg-neutral-400'
+                              activeStep === dotIdx ? 'w-5 bg-neutral-950' : 'w-1.5 bg-neutral-300 hover:bg-neutral-400'
                             }`}
                           />
                         ))}
@@ -457,7 +457,7 @@ export default function HowItWorks() {
 
                       <button
                         onClick={() => setActiveStep((activeStep + 1) % steps.length)}
-                        className="inline-flex items-center gap-1.5 font-medium text-xs text-neutral-600 hover:text-[#FF5C00] transition-colors"
+                        className="inline-flex items-center gap-1.5 font-medium text-xs text-neutral-600 hover:text-neutral-950 transition-colors"
                       >
                         <span>{isAr ? 'الخطوة التالية' : 'Next Step'}</span>
                         <ArrowRight size={12} className="rtl:-scale-x-100" />

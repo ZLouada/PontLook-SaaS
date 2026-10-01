@@ -4,6 +4,7 @@ import React from 'react';
 
 export type IconFrameVariant =
   | 'default'
+  | 'dark'
   | 'brand'
   | 'amber'
   | 'purple'
@@ -38,6 +39,12 @@ const VARIANT_STYLES: Record<
     border: 'border-white/10 group-hover:border-white/25',
     text: 'text-white',
     glowBg: 'bg-white/10',
+  },
+  dark: {
+    bg: 'bg-neutral-100',
+    border: 'border-neutral-200 group-hover:border-neutral-950',
+    text: 'text-neutral-950',
+    glowBg: 'bg-neutral-900/10',
   },
   brand: {
     bg: 'bg-gradient-to-b from-[#FF5C00]/15 to-transparent',
