@@ -138,37 +138,37 @@ export default function WhyDifferent() {
         isAr ? 'تجنب هدر الميزانيات في تدريب غير مجدٍ' : 'Eliminate wasted corporate training budget',
       ],
       theme: {
-        accentText: 'text-neutral-300',
-        badgeBg: 'bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200',
-        iconBg: 'bg-transparent text-white border border-white/10 group-hover:border-white/20',
-        buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
-        checkColor: 'text-neutral-300',
-        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-white group-hover:border-white/30',
+        accentText: 'text-[#FF5C00]',
+        badgeBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:bg-orange-500/15',
+        iconBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:border-orange-500/40',
+        buttonBg: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20',
+        checkColor: 'text-[#FF5C00]',
+        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-orange-500/30',
       },
-      themeVariant: 'default',
+      themeVariant: 'brand',
       mockup: (
-        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
-          <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
+        <div className="bg-neutral-50 rounded-xl border border-neutral-200/90 w-full p-3 flex flex-col gap-2">
+          <div className="flex items-center justify-between pb-1.5 border-b border-neutral-200">
             <div className="flex items-center gap-2">
-              <IconFrame variant="default" size="xs">
+              <IconFrame variant="brand" size="xs">
                 <Target size={14} />
               </IconFrame>
               <div>
-                <div className="text-xs font-semibold text-white font-sans">
+                <div className="text-xs font-semibold text-neutral-900 font-sans">
                   {c?.diagnose?.mockupHeader || (isAr ? 'تقييم فجوات الكفاءات' : 'Skill Gap Assessment')}
                 </div>
-                <div className="text-[10px] text-neutral-400 font-sans">
+                <div className="text-[10px] text-neutral-500 font-sans">
                   {c?.diagnose?.mockupSubheader || (isAr ? 'مستوى الإدارات المؤسسية' : 'Enterprise Department Level')}
                 </div>
               </div>
             </div>
-            <Signal tone="white" size={12} />
+            <Signal tone="orange" size={12} />
           </div>
           <div className="flex flex-wrap gap-1.5 pt-0.5">
-            <span className="px-2 py-0.5 rounded-md bg-white/10 text-neutral-300 text-[10px] font-medium border border-white/20 font-sans">
+            <span className="px-2 py-0.5 rounded-md bg-white text-neutral-700 text-[10px] font-medium border border-neutral-200 font-sans shadow-xs">
               {c?.diagnose?.tag1 || (isAr ? '# فجوات القيادة والتقنية' : '# Leadership & Tech Gaps')}
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-white/[0.06] text-neutral-200 text-[10px] font-medium border border-white/15 font-sans">
+            <span className="px-2 py-0.5 rounded-md bg-orange-500/10 text-[#FF5C00] text-[10px] font-medium border border-orange-500/20 font-sans">
               {c?.diagnose?.tag2 || (isAr ? 'خارطة طريق معتمدة' : 'Priority Roadmap')}
             </span>
           </div>
@@ -198,28 +198,31 @@ export default function WhyDifferent() {
         isAr ? 'التزام بالمواعيد والميزانية المحددة مسبقاً' : 'Pre confirmed budget and deployment window',
       ],
       theme: {
-        accentText: 'text-neutral-300',
-        badgeBg: 'bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200',
-        iconBg: 'bg-transparent text-white border border-white/10 group-hover:border-white/20',
-        buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
-        checkColor: 'text-neutral-300',
-        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-white group-hover:border-white/30',
+        accentText: 'text-[#FF5C00]',
+        badgeBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:bg-orange-500/15',
+        iconBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:border-orange-500/40',
+        buttonBg: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20',
+        checkColor: 'text-[#FF5C00]',
+        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-orange-500/30',
       },
-      themeVariant: 'default',
+      themeVariant: 'brand',
       mockup: (
-        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
-          <div className="text-xs font-semibold text-white pb-1.5 border-b border-[#26282D] flex items-center justify-between font-sans">
+        <div className="bg-neutral-50 rounded-xl border border-neutral-200/90 w-full p-3 flex flex-col gap-2">
+          <div className="text-xs font-semibold text-neutral-900 pb-1.5 border-b border-neutral-200 flex items-center justify-between font-sans">
             <span>{c?.match?.mockupHeader || (isAr ? 'قائمة معايير توافق الشريك' : 'Partner Fit Checklist')}</span>
-            <Signal tone="white" size={12} />
+            <Signal tone="orange" size={12} />
           </div>
-          <div className="space-y-1.5 text-[11px] text-neutral-300 font-sans">
-            <div>
+          <div className="space-y-1.5 text-[11px] text-neutral-600 font-sans">
+            <div className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] shrink-0" />
               <span>{c?.match?.check1 || (isAr ? 'متخصص في مجال عمل منشأتك' : 'Specialized in your industry')}</span>
             </div>
-            <div>
+            <div className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] shrink-0" />
               <span>{c?.match?.check2 || (isAr ? 'سجل تدريبي موثق في المنطقة' : 'Verified delivery track record')}</span>
             </div>
-            <div>
+            <div className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] shrink-0" />
               <span>{c?.match?.check3 || (isAr ? 'متوافق مع جدولك وميزانيتك' : 'Aligned with your timeline & budget')}</span>
             </div>
           </div>
@@ -249,33 +252,33 @@ export default function WhyDifferent() {
         isAr ? 'بدون وسطاء أو رسوم اشتراك شهرية' : 'Direct access without monthly retainers',
       ],
       theme: {
-        accentText: 'text-neutral-300',
-        badgeBg: 'bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200',
-        iconBg: 'bg-transparent text-white border border-white/10 group-hover:border-white/20',
-        buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
-        checkColor: 'text-neutral-300',
-        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-white group-hover:border-white/30',
+        accentText: 'text-[#FF5C00]',
+        badgeBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:bg-orange-500/15',
+        iconBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:border-orange-500/40',
+        buttonBg: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20',
+        checkColor: 'text-[#FF5C00]',
+        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-orange-500/30',
       },
-      themeVariant: 'default',
+      themeVariant: 'brand',
       mockup: (
-        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-2">
+        <div className="bg-neutral-50 rounded-xl border border-neutral-200/90 w-full p-3 flex flex-col gap-2">
           <div className="flex items-center justify-between">
-            <span className="px-2 py-0.5 rounded-md bg-[#0F1013] border border-[#26282D] text-neutral-300 text-[9px] font-medium uppercase font-sans">
+            <span className="px-2 py-0.5 rounded-md bg-white border border-neutral-200 text-neutral-700 text-[9px] font-medium uppercase font-sans shadow-xs">
               {c?.access?.clientTag || (isAr ? 'جهة مؤسسية · حوكمة ومخاطر' : 'Enterprise Client · GRC')}
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-white/10 text-neutral-200 text-[9px] font-medium border border-white/20 shrink-0 font-sans">
+            <span className="px-2 py-0.5 rounded-md bg-orange-500/10 text-[#FF5C00] text-[9px] font-medium border border-orange-500/20 shrink-0 font-sans">
               {c?.access?.statusBadge || (isAr ? 'صلاحية الميزانية: مؤكدة' : 'Budget Authority: Confirmed')}
             </span>
           </div>
           <div className="flex items-center gap-2.5 pt-0.5">
-            <div className="h-7 w-7 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
-              <Signal tone="white" size={12} />
+            <div className="h-7 w-7 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0">
+              <Signal tone="orange" size={12} />
             </div>
             <div className="min-w-0 font-sans">
-              <div className="text-[11px] font-semibold text-white truncate">
+              <div className="text-[11px] font-semibold text-neutral-900 truncate">
                 {c?.access?.role || (isAr ? 'رئيس قطاع الموارد البشرية (CHRO)' : 'Chief Human Resources Officer (CHRO)')}
               </div>
-              <div className="text-[9px] text-neutral-400 truncate">{isAr ? 'تعاقد مباشر ومؤكد' : 'Verified Direct Engagement'}</div>
+              <div className="text-[9px] text-neutral-500 truncate">{isAr ? 'تعاقد مباشر ومؤكد' : 'Verified Direct Engagement'}</div>
             </div>
           </div>
         </div>
@@ -304,32 +307,32 @@ export default function WhyDifferent() {
         isAr ? 'دفع حصري لكل فرصة مؤهلة' : 'Strict pay per qualified lead model',
       ],
       theme: {
-        accentText: 'text-neutral-300',
-        badgeBg: 'bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200',
-        iconBg: 'bg-transparent text-white border border-white/10 group-hover:border-white/20',
-        buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
-        checkColor: 'text-neutral-300',
-        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-white group-hover:border-white/30',
+        accentText: 'text-[#FF5C00]',
+        badgeBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:bg-orange-500/15',
+        iconBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:border-orange-500/40',
+        buttonBg: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20',
+        checkColor: 'text-[#FF5C00]',
+        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-orange-500/30',
       },
-      themeVariant: 'default',
+      themeVariant: 'brand',
       mockup: (
-        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-1.5">
-          <div className="flex items-center justify-between pb-1 border-b border-[#26282D] text-xs font-semibold text-white font-sans">
+        <div className="bg-neutral-50 rounded-xl border border-neutral-200/90 w-full p-3 flex flex-col gap-1.5">
+          <div className="flex items-center justify-between pb-1 border-b border-neutral-200 text-xs font-semibold text-neutral-900 font-sans">
             <span>{c?.ready?.mockupHeader || (isAr ? 'جاهزية الشراكة | مؤكدة' : 'Partnership Readiness | Confirmed')}</span>
-            <Signal tone="white" size={12} />
+            <Signal tone="orange" size={12} />
           </div>
           <div className="space-y-1 text-[10px] sm:text-[11px] font-sans">
             <div className="flex justify-between items-center">
-              <span className="text-neutral-400">{c?.ready?.needLabel || (isAr ? 'الاحتياج التدريبي' : 'Client Need')}</span>
-              <span className="font-semibold text-white">{c?.ready?.needVal || (isAr ? 'برنامج القيادة التنفيذية' : 'Leadership Track')}</span>
+              <span className="text-neutral-500">{c?.ready?.needLabel || (isAr ? 'الاحتياج التدريبي' : 'Client Need')}</span>
+              <span className="font-semibold text-neutral-900">{c?.ready?.needVal || (isAr ? 'برنامج القيادة التنفيذية' : 'Leadership Track')}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-neutral-400">{c?.ready?.budgetLabel || (isAr ? 'الميزانية المعتمدة' : 'Budget')}</span>
-              <span className="font-bold text-white">{c?.ready?.budgetVal || 'Confirmed ($50k to $100k)'}</span>
+              <span className="text-neutral-500">{c?.ready?.budgetLabel || (isAr ? 'الميزانية المعتمدة' : 'Budget')}</span>
+              <span className="font-bold text-[#FF5C00]">{c?.ready?.budgetVal || 'Confirmed ($50k to $100k)'}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-neutral-400">{c?.ready?.fitLabel || (isAr ? 'التوافق' : 'Mutual Fit')}</span>
-              <span className="text-neutral-300">{c?.ready?.fitVal || (isAr ? 'توافق كامل' : '100% Verified')}</span>
+              <span className="text-neutral-500">{c?.ready?.fitLabel || (isAr ? 'التوافق' : 'Mutual Fit')}</span>
+              <span className="text-neutral-700">{c?.ready?.fitVal || (isAr ? 'توافق كامل' : '100% Verified')}</span>
             </div>
           </div>
         </div>
@@ -358,34 +361,34 @@ export default function WhyDifferent() {
         isAr ? 'دراسات حالة حول قياس أثر التدريب وعائده' : 'Practical case studies on training ROI',
       ],
       theme: {
-        accentText: 'text-neutral-300',
-        badgeBg: 'bg-transparent text-neutral-400 border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200',
-        iconBg: 'bg-transparent text-white border border-white/10 group-hover:border-white/20',
-        buttonBg: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm',
-        checkColor: 'text-neutral-300',
-        flipHintBg: 'bg-white/[0.04] text-neutral-300 border border-white/[0.08] group-hover:text-white group-hover:border-white/30',
+        accentText: 'text-[#FF5C00]',
+        badgeBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:bg-orange-500/15',
+        iconBg: 'bg-orange-500/10 text-[#FF5C00] border border-orange-500/20 group-hover:border-orange-500/40',
+        buttonBg: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20',
+        checkColor: 'text-[#FF5C00]',
+        flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-orange-500/30',
       },
-      themeVariant: 'default',
+      themeVariant: 'brand',
       mockup: (
-        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-3 flex flex-col gap-1.5">
-          <div className="flex items-center justify-between pb-1 border-b border-[#26282D] text-xs font-semibold text-white font-sans">
+        <div className="bg-neutral-50 rounded-xl border border-neutral-200/90 w-full p-3 flex flex-col gap-1.5">
+          <div className="flex items-center justify-between pb-1 border-b border-neutral-200 text-xs font-semibold text-neutral-900 font-sans">
             <span>{c?.hub?.mockupHeader || (isAr ? 'أحدث أدلة ومقالات المنصة' : 'Latest L&D Resources')}</span>
-            <Signal tone="white" size={12} />
+            <Signal tone="orange" size={12} />
           </div>
           <div className="space-y-1.5 pt-0.5 font-sans">
             <div className="flex items-center justify-between gap-2 text-[10px] sm:text-[11px]">
-              <span className="text-white truncate">
+              <span className="text-neutral-900 truncate">
                 {c?.hub?.item1Title || (isAr ? 'تقرير فجوات مهارات سوق العمل الخليجي' : 'GCC Workforce Skill Gaps Report')}
               </span>
-              <span className="px-1.5 py-0.5 rounded bg-white/10 text-neutral-200 text-[9px] font-bold shrink-0 border border-white/20">
+              <span className="px-1.5 py-0.5 rounded bg-orange-500/10 text-[#FF5C00] text-[9px] font-bold shrink-0 border border-orange-500/20">
                 {c?.hub?.item1Badge || (isAr ? 'دليل جديد' : 'New Guide')}
               </span>
             </div>
             <div className="flex items-center justify-between gap-2 text-[10px] sm:text-[11px]">
-              <span className="text-white truncate">
+              <span className="text-neutral-900 truncate">
                 {c?.hub?.item2Title || (isAr ? 'دليل تشخيص العائد على التدريب المؤسسي' : 'Diagnostic Guide to Corporate Training ROI')}
               </span>
-              <span className="px-1.5 py-0.5 rounded bg-white/10 text-neutral-200 text-[9px] font-bold shrink-0 border border-white/20">
+              <span className="px-1.5 py-0.5 rounded bg-orange-500/10 text-[#FF5C00] text-[9px] font-bold shrink-0 border border-orange-500/20">
                 {c?.hub?.item2Badge || (isAr ? 'مورد مجاني' : 'Free Resource')}
               </span>
             </div>
@@ -399,8 +402,9 @@ export default function WhyDifferent() {
 
   return (
     <section
-      data-nav-dark="true"
-      className="relative bg-black text-white py-8 sm:py-12 lg:py-16"
+      data-nav-light="true"
+      data-nav-theme="light"
+      className="relative bg-white text-neutral-900 py-8 sm:py-12 lg:py-16 border-t border-neutral-200"
     >
       <div className="container-site relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Section Header */}
@@ -414,10 +418,10 @@ export default function WhyDifferent() {
           <TextReveal
             as="h2"
             text={dict.why_different?.title || (isAr ? 'تحول عمليتنا التشخيصية طلبات تدريب الشركات المبهمة إلى خطط تطوير منظمة وقابلة للتنفيذ.' : 'Our diagnostic process turns vague corporate training requests into structured, actionable development roadmaps.')}
-            className="h-section"
+            className="h-section text-neutral-950"
           />
 
-          <p className="text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xs sm:text-sm text-neutral-600 font-sans leading-relaxed max-w-2xl mx-auto">
             {dict.why_different?.subtitle ||
               (isAr
                 ? 'نحلل التحديات المؤسسية الحقيقية لنقدم أدلة مجانية قابلة للتطبيق، ونربط قادة التدريب مباشرة بمزودي البرامج المعتمدين والمؤهلين لتنفيذ الحل.'
@@ -428,7 +432,7 @@ export default function WhyDifferent() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.4 }}
-            className="pt-1 flex items-center justify-center gap-1.5 text-[11px] text-neutral-400 font-sans"
+            className="pt-1 flex items-center justify-center gap-1.5 text-[11px] text-neutral-500 font-sans"
           >
             <span>{isAr ? 'اسحب لعرض جميع البطاقات · انقر لفتح النافذة' : 'Swipe to view cards · Tap any card to open window'}</span>
           </m.div>
@@ -446,10 +450,8 @@ export default function WhyDifferent() {
         >
           {items.map((it) => {
             const Icon = it.icon;
-            const isSelected = activeModalId === it.id;
             const theme = it.theme;
-            const cardGlow = 'hover:border-white/30 hover:shadow-[0_0_24px_rgba(255,255,255,0.08)]';
-            const cardAura = 'bg-white/5';
+            const cardGlow = 'hover:border-orange-500/40 hover:shadow-[0_12px_32px_-8px_rgba(255,92,0,0.12)]';
 
             return (
               <m.div
@@ -458,14 +460,14 @@ export default function WhyDifferent() {
                 className="relative w-[74vw] sm:w-[250px] lg:w-auto shrink-0 lg:shrink snap-center h-[260px] sm:h-[280px] lg:h-[305px] xl:h-[295px]"
                 onClick={() => setActiveModalId(it.id)}
               >
-                <CardTilt3D maxTilt={6} glareOpacity={0.12} className="w-full h-full">
+                <CardTilt3D maxTilt={6} glareOpacity={0.06} className="w-full h-full">
                   <Spotlight radius={280} className="w-full h-full rounded-2xl">
                     <m.div
                       whileTap={{ scale: 0.98 }}
-                      className={`surface group relative w-full h-full rounded-2xl p-3.5 sm:p-4 lg:p-3 xl:p-4 flex flex-col justify-between cursor-pointer select-none shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-8px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-300 ${cardGlow}`}
+                      className={`group relative w-full h-full rounded-2xl bg-white border border-neutral-200/90 p-3.5 sm:p-4 lg:p-3 xl:p-4 flex flex-col justify-between cursor-pointer select-none shadow-[0_8px_24px_-8px_rgba(0,0,0,0.06)] overflow-hidden transition-all duration-300 ${cardGlow}`}
                     >
                       {/* Ambient subtle back-glow on hover */}
-                      <div className={`pointer-events-none absolute -top-8 -end-8 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${cardAura}`} />
+                      <div className="pointer-events-none absolute -top-8 -end-8 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-orange-500/10" />
 
                       {/* Card Front Top */}
                       <div className="space-y-1.5 sm:space-y-2">
@@ -478,24 +480,24 @@ export default function WhyDifferent() {
                           </span>
                         </div>
 
-                        <h3 className="text-xs xs:text-sm sm:text-base lg:text-xs xl:text-sm font-semibold text-white tracking-tight leading-snug font-heading group-hover:text-white">
+                        <h3 className="text-xs xs:text-sm sm:text-base lg:text-xs xl:text-sm font-semibold text-neutral-950 tracking-tight leading-snug font-heading group-hover:text-[#FF5C00] transition-colors">
                           {it.title}
                         </h3>
 
-                        <p className="text-[11px] sm:text-xs text-neutral-400 font-sans leading-relaxed line-clamp-2">
+                        <p className="text-[11px] sm:text-xs text-neutral-600 font-sans leading-relaxed line-clamp-2">
                           {it.text}
                         </p>
                       </div>
 
                       {/* Card Front Bottom */}
-                      <div className="pt-2 border-t border-[#26282D] flex items-center justify-between">
+                      <div className="pt-2 border-t border-neutral-200 flex items-center justify-between">
                         <IconFrame variant={it.themeVariant} size="xs">
                           <Icon size={14} strokeWidth={1.75} />
                         </IconFrame>
 
-                        <div className="inline-flex items-center gap-1 text-[11px] font-medium text-neutral-300 group-hover:text-white transition-colors duration-200">
+                        <div className="inline-flex items-center gap-1 text-[11px] font-medium text-neutral-600 group-hover:text-[#FF5C00] transition-colors duration-200">
                           <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
-                          <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-neutral-400 group-hover:text-white" />
+                          <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-neutral-400 group-hover:text-[#FF5C00]" />
                         </div>
                       </div>
                     </m.div>
@@ -514,7 +516,7 @@ export default function WhyDifferent() {
               type="button"
               onClick={() => scrollToCard(idx)}
               className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                activeCardIndex === idx ? 'w-5 bg-white' : 'w-1.5 bg-white/20 hover:bg-white/40'
+                activeCardIndex === idx ? 'w-5 bg-[#FF5C00]' : 'w-1.5 bg-neutral-300 hover:bg-neutral-400'
               }`}
               aria-label={`Go to slide ${idx + 1}`}
             />
@@ -535,161 +537,162 @@ export default function WhyDifferent() {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
                   onClick={() => setActiveModalId(null)}
-                  className="fixed inset-0 bg-black/85 backdrop-blur-sm cursor-pointer"
+                  className="fixed inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"
                 />
 
                 {/* modal content */}
                 <m.div
-              initial={{
-                opacity: 0,
-                scale: 0.95,
-                y: 16,
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                y: 0,
-              }}
-              exit={{
-                opacity: 0,
-                scale: 0.95,
-                y: 12,
-              }}
-              transition={{
-                type: 'spring',
-                stiffness: 380,
-                damping: 28,
-              }}
-              className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013]/98 backdrop-blur-2xl border border-white/15 text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_25px_60px_-15px_rgba(0,0,0,0.95)] my-auto overflow-hidden"
-            >
-              {/* Modal Top Bar (Fixed Header) */}
-              <m.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1, duration: 0.25 }}
-                className="flex items-center justify-between p-4 sm:p-5 border-b border-[#26282D] gap-3 shrink-0"
-              >
-                <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
-                  <IconFrame variant={activeCard.themeVariant} size="sm">
-                    <activeCard.icon size={15} />
-                  </IconFrame>
-                  <span className={`px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold font-sans ${activeCard.theme.badgeBg}`}>
-                    {activeCard.badge}
-                  </span>
-                  {activeCard.angle && (
-                    <span className={`text-[11px] sm:text-xs font-medium font-sans ${activeCard.theme.accentText}`}>
-                      {activeCard.angle}
-                    </span>
-                  )}
-                </div>
-
-                <m.button
-                  type="button"
-                  whileHover={{ rotate: 90, scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => setActiveModalId(null)}
-                  aria-label={isAr ? 'إغلاق النافذة' : 'Close window'}
-                  className="h-8 w-8 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center transition-colors shrink-0 cursor-pointer"
+                  initial={{
+                    opacity: 0,
+                    scale: 0.95,
+                    y: 16,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    scale: 0.95,
+                    y: 12,
+                  }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 380,
+                    damping: 28,
+                  }}
+                  className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-white/98 backdrop-blur-2xl border border-neutral-200 text-neutral-900 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.18)] my-auto overflow-hidden"
                 >
-                  <X size={15} />
-                </m.button>
-              </m.div>
-
-              {/* Modal Scrollable Body: Content smoothly scrolls on phone screens */}
-              <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3.5 sm:space-y-4 overscroll-contain">
-                <m.div
-                  initial={{ opacity: 0, x: isAr ? 15 : -15 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.15, duration: 0.3 }}
-                >
-                  <h3 className="text-base sm:text-xl font-semibold text-white tracking-tight leading-snug font-heading">
-                    {activeCard.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed mt-1.5">
-                    {activeCard.text}
-                  </p>
-                </m.div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 items-stretch">
-                  {/* Strategic Advantages Checklist with Cascading Bullet Animation */}
+                  {/* Modal Top Bar (Fixed Header) */}
                   <m.div
-                    initial={{ opacity: 0, scale: 0.96, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.3 }}
-                    className="rounded-xl p-3 sm:p-3.5 bg-[#16171B] border border-[#26282D] flex flex-col justify-between space-y-2"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1, duration: 0.25 }}
+                    className="flex items-center justify-between p-4 sm:p-5 border-b border-neutral-200 gap-3 shrink-0"
                   >
-                    <div className="text-[11px] font-semibold text-neutral-300 uppercase tracking-wider font-sans">
-                      {isAr ? 'أهم المميزات والقيمة المقدمة' : 'Key Strategic Advantages'}
+                    <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
+                      <IconFrame variant={activeCard.themeVariant} size="sm">
+                        <activeCard.icon size={15} />
+                      </IconFrame>
+                      <span className={`px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold font-sans ${activeCard.theme.badgeBg}`}>
+                        {activeCard.badge}
+                      </span>
+                      {activeCard.angle && (
+                        <span className={`text-[11px] sm:text-xs font-medium font-sans ${activeCard.theme.accentText}`}>
+                          {activeCard.angle}
+                        </span>
+                      )}
                     </div>
-                    <ul className="space-y-1.5 sm:space-y-2 text-xs text-neutral-200 font-sans">
-                      {activeCard.takeaways.map((point, pIdx) => (
-                        <m.li
-                          key={pIdx}
-                          initial={{ opacity: 0, x: isAr ? 12 : -12 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.24 + pIdx * 0.06, type: 'spring', stiffness: 320, damping: 22 }}
-                          className="leading-snug"
-                        >
-                          {point}
-                        </m.li>
-                      ))}
-                    </ul>
-                  </m.div>
 
-                  {/* Mockup Proof Widget with Smooth Slide-In */}
-                  <m.div
-                    initial={{ opacity: 0, x: isAr ? -15 : 15, scale: 0.96 }}
-                    animate={{ opacity: 1, x: 0, scale: 1 }}
-                    transition={{ delay: 0.22, duration: 0.35 }}
-                    className="flex items-center"
-                  >
-                    {activeCard.mockup}
-                  </m.div>
-                </div>
-              </div>
-
-              {/* Modal Fixed Footer: Close Hint & CTA Button (Full width on phone) */}
-              <m.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.28, duration: 0.3 }}
-                className="p-3.5 sm:p-5 border-t border-[#26282D] bg-[#0F1013] shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3"
-              >
-                <span className="text-[11px] text-neutral-400 font-sans hidden sm:inline">
-                  {isAr ? 'انقر في المساحة الفارغة أو Esc للإغلاق' : 'Click outside or press Esc to close'}
-                </span>
-
-                {activeCard.isExternal ? (
-                  <m.a
-                    href={activeCard.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                    className={`w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${activeCard.theme.buttonBg} font-medium text-xs sm:text-sm active:scale-[0.98] transition-all font-sans`}
-                  >
-                    <span>{activeCard.cta}</span>
-                    <ExternalLink size={14} className="ms-1.5" />
-                  </m.a>
-                ) : (
-                  <m.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                    className="w-full sm:w-auto"
-                  >
-                    <Link
-                      href={activeCard.href}
-                      className={`w-full inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${activeCard.theme.buttonBg} font-medium text-xs sm:text-sm active:scale-[0.98] transition-all font-sans`}
+                    <m.button
+                      type="button"
+                      whileHover={{ rotate: 90, scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => setActiveModalId(null)}
+                      aria-label={isAr ? 'إغلاق النافذة' : 'Close window'}
+                      className="h-8 w-8 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-600 hover:text-neutral-950 flex items-center justify-center transition-colors shrink-0 cursor-pointer"
                     >
-                      <span>{activeCard.cta}</span>
-                      <ArrowRight size={14} className="ms-1.5 rtl:-scale-x-100" />
-                    </Link>
+                      <X size={15} />
+                    </m.button>
                   </m.div>
-                )}
-              </m.div>
-            </m.div>
+
+                  {/* Modal Scrollable Body: Content smoothly scrolls on phone screens */}
+                  <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3.5 sm:space-y-4 overscroll-contain">
+                    <m.div
+                      initial={{ opacity: 0, x: isAr ? 15 : -15 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.15, duration: 0.3 }}
+                    >
+                      <h3 className="text-base sm:text-xl font-semibold text-neutral-950 tracking-tight leading-snug font-heading">
+                        {activeCard.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-neutral-600 font-sans leading-relaxed mt-1.5">
+                        {activeCard.text}
+                      </p>
+                    </m.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 items-stretch">
+                      {/* Strategic Advantages Checklist with Cascading Bullet Animation */}
+                      <m.div
+                        initial={{ opacity: 0, scale: 0.96, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{ delay: 0.2, duration: 0.3 }}
+                        className="rounded-xl p-3 sm:p-3.5 bg-neutral-50 border border-neutral-200 flex flex-col justify-between space-y-2"
+                      >
+                        <div className="text-[11px] font-semibold text-neutral-900 uppercase tracking-wider font-sans">
+                          {isAr ? 'أهم المميزات والقيمة المقدمة' : 'Key Strategic Advantages'}
+                        </div>
+                        <ul className="space-y-1.5 sm:space-y-2 text-xs text-neutral-700 font-sans">
+                          {activeCard.takeaways.map((point, pIdx) => (
+                            <m.li
+                              key={pIdx}
+                              initial={{ opacity: 0, x: isAr ? 12 : -12 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.24 + pIdx * 0.06, type: 'spring', stiffness: 320, damping: 22 }}
+                              className="leading-snug flex items-start gap-1.5"
+                            >
+                              <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] mt-1 shrink-0" />
+                              <span>{point}</span>
+                            </m.li>
+                          ))}
+                        </ul>
+                      </m.div>
+
+                      {/* Mockup Proof Widget with Smooth Slide-In */}
+                      <m.div
+                        initial={{ opacity: 0, x: isAr ? -15 : 15, scale: 0.96 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        transition={{ delay: 0.22, duration: 0.35 }}
+                        className="flex items-center"
+                      >
+                        {activeCard.mockup}
+                      </m.div>
+                    </div>
+                  </div>
+
+                  {/* Modal Fixed Footer: Close Hint & CTA Button (Full width on phone) */}
+                  <m.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.28, duration: 0.3 }}
+                    className="p-3.5 sm:p-5 border-t border-neutral-200 bg-neutral-50 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3"
+                  >
+                    <span className="text-[11px] text-neutral-500 font-sans hidden sm:inline">
+                      {isAr ? 'انقر في المساحة الفارغة أو Esc للإغلاق' : 'Click outside or press Esc to close'}
+                    </span>
+
+                    {activeCard.isExternal ? (
+                      <m.a
+                        href={activeCard.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                        className={`w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${activeCard.theme.buttonBg} font-medium text-xs sm:text-sm active:scale-[0.98] transition-all font-sans`}
+                      >
+                        <span>{activeCard.cta}</span>
+                        <ExternalLink size={14} className="ms-1.5" />
+                      </m.a>
+                    ) : (
+                      <m.div
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                        className="w-full sm:w-auto"
+                      >
+                        <Link
+                          href={activeCard.href}
+                          className={`w-full inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${activeCard.theme.buttonBg} font-medium text-xs sm:text-sm active:scale-[0.98] transition-all font-sans`}
+                        >
+                          <span>{activeCard.cta}</span>
+                          <ArrowRight size={14} className="ms-1.5 rtl:-scale-x-100" />
+                        </Link>
+                      </m.div>
+                    )}
+                  </m.div>
+                </m.div>
               </div>
             )}
           </AnimatePresence>,

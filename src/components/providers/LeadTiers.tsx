@@ -36,7 +36,7 @@ const TIERS_EN: TierData[] = [
     description: 'Verified decision maker, confirmed budget, starts within 30 days.',
     project: 'Riyadh Enterprise · Project #01',
     accuracy: '95%',
-    barColor: 'bg-white',
+    barColor: 'bg-[#FF5C00]',
     barWidth: 'w-[95%]',
     checklist: [
       'Verified Decision Maker (CHRO)',
@@ -51,7 +51,7 @@ const TIERS_EN: TierData[] = [
     description: 'Confirmed pain and authority; budget or timeline still forming. We stay engaged to pass the lead when ready.',
     project: 'Dubai Enterprise · Project #02',
     accuracy: '80%',
-    barColor: 'bg-neutral-300',
+    barColor: 'bg-orange-500/80',
     barWidth: 'w-[80%]',
     checklist: [
       'Executive Authority Validated',
@@ -66,7 +66,7 @@ const TIERS_EN: TierData[] = [
     description: 'Genuine need verified; earlier in the buying journey.',
     project: 'Doha Enterprise · Project #03',
     accuracy: '60%',
-    barColor: 'bg-neutral-400',
+    barColor: 'bg-orange-500/60',
     barWidth: 'w-[60%]',
     checklist: [
       'Strategic Training Need Identified',
@@ -81,7 +81,7 @@ const TIERS_EN: TierData[] = [
     description: 'Every lead is verified before introduction. No monthly retainers, 5-lead proof of concept pilot, and a 5-day replacement guarantee.',
     project: 'Enterprise Provider Partnership',
     accuracy: '100% Guaranteed',
-    barColor: 'bg-white',
+    barColor: 'bg-[#FF5C00]',
     barWidth: 'w-full',
     checklist: [
       'Pay Per Qualified Lead ($0 Retainer)',
@@ -100,7 +100,7 @@ const TIERS_AR: TierData[] = [
     description: 'صانع قرار تنفيذي مؤكد، متطلب تدريبي قائم، استعداد وجاهزية تامة للتواصل والنقاش.',
     project: 'جهة مصرفية كبرى بالرياض · فرصة #01',
     accuracy: '95%',
-    barColor: 'bg-white',
+    barColor: 'bg-[#FF5C00]',
     barWidth: 'w-[95%]',
     checklist: [
       'صانع قرار تنفيذي معتمد',
@@ -115,7 +115,7 @@ const TIERS_AR: TierData[] = [
     description: 'مبادرة معتمدة وتحدي مؤسسي واضح؛ قيد إعداد خطة التنفيذ للشهر القادم.',
     project: 'مجموعة قابضة في دبي · فرصة #02',
     accuracy: '80%',
-    barColor: 'bg-neutral-300',
+    barColor: 'bg-orange-500/80',
     barWidth: 'w-[80%]',
     checklist: [
       'صلاحية القرار معتمدة',
@@ -130,7 +130,7 @@ const TIERS_AR: TierData[] = [
     description: 'احتياج حقيقي تم التحقق منه؛ في مرحلة مبكرة من رحلة الشراء والتعاقد.',
     project: 'مؤسسة في الدوحة · فرصة #03',
     accuracy: '60%',
-    barColor: 'bg-neutral-400',
+    barColor: 'bg-orange-500/60',
     barWidth: 'w-[60%]',
     checklist: [
       'تحديد احتياج تدريبي استراتيجي',
@@ -145,7 +145,7 @@ const TIERS_AR: TierData[] = [
     description: 'كل فرصة يتم التحقق منها قبل تقديمها. بدون رسوم شهرية ثابتة، تجربة قيادية لـ 5 فرص، وضمان استبدال الفرصة خلال 5 أيام.',
     project: 'شراكة مزودي التدريب المعتمدين',
     accuracy: 'ضمان 100%',
-    barColor: 'bg-white',
+    barColor: 'bg-[#FF5C00]',
     barWidth: 'w-full',
     checklist: [
       'دفع لكل فرصة مؤهلة ($0 رسوم اشتراك)',
@@ -161,25 +161,25 @@ const CARD_CONFIGS = [
     zIndexClass: 'z-10',
     topClass: 'top-20 sm:top-24 lg:top-24',
     spacingClass: 'mb-6 sm:mb-8 lg:mb-20',
-    shadowClass: 'shadow-xl lg:shadow-2xl lg:shadow-[0_-12px_36px_rgba(0,0,0,0.85)]'
+    shadowClass: 'shadow-[0_12px_36px_-10px_rgba(0,0,0,0.08)]'
   },
   {
     zIndexClass: 'z-20',
     topClass: 'top-24 sm:top-28 lg:top-28',
     spacingClass: 'mb-6 sm:mb-8 lg:mb-20',
-    shadowClass: 'shadow-xl lg:shadow-2xl lg:shadow-[0_-16px_42px_rgba(0,0,0,0.9)]'
+    shadowClass: 'shadow-[0_16px_42px_-10px_rgba(0,0,0,0.10)]'
   },
   {
     zIndexClass: 'z-30',
     topClass: 'top-28 sm:top-32 lg:top-32',
     spacingClass: 'mb-6 sm:mb-8 lg:mb-20',
-    shadowClass: 'shadow-xl lg:shadow-2xl lg:shadow-[0_-20px_48px_rgba(0,0,0,0.95)]'
+    shadowClass: 'shadow-[0_20px_48px_-10px_rgba(0,0,0,0.12)]'
   },
   {
     zIndexClass: 'z-40',
     topClass: 'top-32 sm:top-36 lg:top-36',
     spacingClass: 'mb-0',
-    shadowClass: 'shadow-xl lg:shadow-2xl lg:shadow-[0_-24px_54px_rgba(0,0,0,0.98)]'
+    shadowClass: 'shadow-[0_24px_54px_-10px_rgba(0,0,0,0.14)]'
   }
 ];
 
@@ -230,15 +230,15 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     href: '/for-providers',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#0F1013] text-white',
-      borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-white/10 border border-white/15 text-white',
-      pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
-      innerCardBg: 'bg-[#16171B] text-white',
-      innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-white',
-      checkColor: 'text-neutral-300',
+      bgClass: 'bg-white text-neutral-900',
+      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
+      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
+      buttonClass: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20 active:scale-[0.98]',
+      innerCardBg: 'bg-neutral-50 text-neutral-900',
+      innerCardBorder: 'border-neutral-200',
+      meterColor: 'bg-[#FF5C00]',
+      checkColor: 'text-[#FF5C00]',
     }
   },
   {
@@ -260,15 +260,15 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     href: '/find-training',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#0F1013] text-white',
-      borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-white/10 border border-white/15 text-white',
-      pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
-      innerCardBg: 'bg-[#16171B] text-white',
-      innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-white',
-      checkColor: 'text-neutral-300',
+      bgClass: 'bg-white text-neutral-900',
+      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
+      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
+      buttonClass: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20 active:scale-[0.98]',
+      innerCardBg: 'bg-neutral-50 text-neutral-900',
+      innerCardBorder: 'border-neutral-200',
+      meterColor: 'bg-[#FF5C00]',
+      checkColor: 'text-[#FF5C00]',
     }
   },
   {
@@ -290,15 +290,15 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     href: 'https://blog.pontlook.com',
     isExternal: true,
     clayTheme: {
-      bgClass: 'bg-[#0F1013] text-white',
-      borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-white/10 border border-white/15 text-white',
-      pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
-      innerCardBg: 'bg-[#16171B] text-white',
-      innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-white',
-      checkColor: 'text-neutral-300',
+      bgClass: 'bg-white text-neutral-900',
+      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
+      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
+      buttonClass: 'bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-300 hover:border-orange-500/40 active:scale-[0.98]',
+      innerCardBg: 'bg-neutral-50 text-neutral-900',
+      innerCardBorder: 'border-neutral-200',
+      meterColor: 'bg-[#FF5C00]',
+      checkColor: 'text-[#FF5C00]',
     }
   },
   {
@@ -320,15 +320,15 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
     href: '/contact',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#0F1013] text-white',
-      borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-white/10 border border-white/15 text-white',
-      pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
-      innerCardBg: 'bg-[#16171B] text-white',
-      innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-white',
-      checkColor: 'text-neutral-300',
+      bgClass: 'bg-white text-neutral-900',
+      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
+      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
+      buttonClass: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20 active:scale-[0.98]',
+      innerCardBg: 'bg-neutral-50 text-neutral-900',
+      innerCardBorder: 'border-neutral-200',
+      meterColor: 'bg-[#FF5C00]',
+      checkColor: 'text-[#FF5C00]',
     }
   },
 ];
@@ -353,15 +353,15 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     href: '/for-providers',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#0F1013] text-white',
-      borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-white/10 border border-white/15 text-white',
-      pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
-      innerCardBg: 'bg-[#16171B] text-white',
-      innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-white',
-      checkColor: 'text-neutral-300',
+      bgClass: 'bg-white text-neutral-900',
+      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
+      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
+      buttonClass: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20 active:scale-[0.98]',
+      innerCardBg: 'bg-neutral-50 text-neutral-900',
+      innerCardBorder: 'border-neutral-200',
+      meterColor: 'bg-[#FF5C00]',
+      checkColor: 'text-[#FF5C00]',
     }
   },
   {
@@ -383,15 +383,15 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     href: '/find-training',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#0F1013] text-white',
-      borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-white/10 border border-white/15 text-white',
-      pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
-      innerCardBg: 'bg-[#16171B] text-white',
-      innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-white',
-      checkColor: 'text-neutral-300',
+      bgClass: 'bg-white text-neutral-900',
+      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
+      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
+      buttonClass: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20 active:scale-[0.98]',
+      innerCardBg: 'bg-neutral-50 text-neutral-900',
+      innerCardBorder: 'border-neutral-200',
+      meterColor: 'bg-[#FF5C00]',
+      checkColor: 'text-[#FF5C00]',
     }
   },
   {
@@ -413,15 +413,15 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     href: 'https://blog.pontlook.com',
     isExternal: true,
     clayTheme: {
-      bgClass: 'bg-[#0F1013] text-white',
-      borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-white/10 border border-white/15 text-white',
-      pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
-      innerCardBg: 'bg-[#16171B] text-white',
-      innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-white',
-      checkColor: 'text-neutral-300',
+      bgClass: 'bg-white text-neutral-900',
+      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
+      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
+      buttonClass: 'bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-300 hover:border-orange-500/40 active:scale-[0.98]',
+      innerCardBg: 'bg-neutral-50 text-neutral-900',
+      innerCardBorder: 'border-neutral-200',
+      meterColor: 'bg-[#FF5C00]',
+      checkColor: 'text-[#FF5C00]',
     }
   },
   {
@@ -443,15 +443,15 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
     href: '/contact',
     isExternal: false,
     clayTheme: {
-      bgClass: 'bg-[#0F1013] text-white',
-      borderClass: 'border-[#26282D] hover:border-white/20',
-      pillOuter: 'bg-white/10 border border-white/15 text-white',
-      pillInner: 'bg-white/10 border-white/15 text-white/90',
-      buttonClass: 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-sm active:scale-[0.98]',
-      innerCardBg: 'bg-[#16171B] text-white',
-      innerCardBorder: 'border-[#26282D]',
-      meterColor: 'bg-white',
-      checkColor: 'text-neutral-300',
+      bgClass: 'bg-white text-neutral-900',
+      borderClass: 'border-neutral-200/90 hover:border-orange-500/40',
+      pillOuter: 'bg-orange-500/10 border border-orange-500/20 text-[#FF5C00]',
+      pillInner: 'bg-neutral-100 border border-neutral-200 text-neutral-800',
+      buttonClass: 'bg-[#FF5C00] hover:bg-[#FF7A2F] text-white shadow-md shadow-orange-500/20 active:scale-[0.98]',
+      innerCardBg: 'bg-neutral-50 text-neutral-900',
+      innerCardBorder: 'border-neutral-200',
+      meterColor: 'bg-[#FF5C00]',
+      checkColor: 'text-[#FF5C00]',
     }
   },
 ];
@@ -518,7 +518,7 @@ export default function LeadTiers(_props?: {
                       >
                         <BorderGlow glowColor="rgba(255, 92, 0, 0.4)" size={320} opacity={0.5} />
                         {idx === 0 && (
-                          <BorderBeam size={260} duration={12} colorFrom="#FF5C00" colorTo="#4D7CFF" />
+                          <BorderBeam size={260} duration={12} colorFrom="#FF5C00" colorTo="#FF7A2F" />
                         )}
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 xs:gap-5 sm:gap-8 items-center relative z-10">
                           {/* Left Details */}
@@ -601,25 +601,27 @@ export default function LeadTiers(_props?: {
 
   return (
     <section
-      data-nav-dark="true"
-      className="relative py-16 sm:py-24 lg:py-32 bg-black text-white"
+      data-nav-light="true"
+      data-nav-theme="light"
+      className="relative py-16 sm:py-24 lg:py-32 bg-white text-neutral-900 border-t border-neutral-200"
     >
       {/* ambient glow */}
-      <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-white/[0.015] blur-[180px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-orange-500/[0.03] blur-[180px] pointer-events-none rounded-full" />
 
       <div className="container-site relative z-10 px-3.5 xs:px-4 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 xs:mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[#FF5C00] text-xs font-semibold uppercase tracking-wider mb-4">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00]" />
             <span>{isAr ? 'خيارات الشراكة والتعاون' : 'COLLABORATION PATHWAYS'}</span>
           </div>
 
           <TextReveal
             as="h2"
             text={exp?.title || (isAr ? 'ابدأ برؤى وأبحاث مدروسة. اعقد شراكات تثمر أثراً حقيقياً.' : 'Start with Our Insights. Partner for Real Impact.')}
-            className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-[-0.03em] leading-tight font-heading"
+            className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-neutral-950 tracking-[-0.03em] leading-tight font-heading"
           />
-          <p className="mt-3 xs:mt-4 text-sm xs:text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-sans">
+          <p className="mt-3 xs:mt-4 text-sm xs:text-base sm:text-lg text-neutral-600 leading-relaxed max-w-2xl mx-auto font-sans">
             {exp?.subtitle ||
               (isAr
                 ? 'لا نكتفي بربط احتياجات الشركات مع خبراء التدريب المعتمدين على أرض الواقع. استكشف مدونتنا للاطلاع على أطر عمل وأدلة مجانية، وعندما تكون جاهزاً، نوصلك مباشرة بالشريك الأنسب.'
@@ -633,7 +635,7 @@ export default function LeadTiers(_props?: {
                 href="https://blog.pontlook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 font-medium text-xs xs:text-sm backdrop-blur-md shadow-sm active:scale-[0.98] transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-300 font-medium text-xs xs:text-sm shadow-xs active:scale-[0.98] transition-all"
               >
                 <span>{exp?.btn_blog || (isAr ? 'استكشف المدونة والموارد' : 'Explore the Blog & Resources')}</span>
                 <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
@@ -643,7 +645,7 @@ export default function LeadTiers(_props?: {
             <Magnetic strength={0.22} activeDistance={35}>
               <Link
                 href={`/${lang}/find-training`}
-                className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 font-medium text-xs xs:text-sm backdrop-blur-md shadow-sm active:scale-[0.98] transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-[#FF5C00] hover:bg-[#FF7A2F] text-white font-medium text-xs xs:text-sm shadow-lg shadow-orange-500/20 active:scale-[0.98] transition-all"
               >
                 <span>{exp?.btn_match || (isAr ? 'ابدأ الربط للتدريب' : 'Get Matched for Training')}</span>
                 <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
@@ -684,17 +686,17 @@ export default function LeadTiers(_props?: {
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{ duration: dur.base, delay: idx * 0.05, ease: ease.out }}
                 >
-                  <CardTilt3D maxTilt={4} glareOpacity={0.12} className="w-full">
+                  <CardTilt3D maxTilt={4} glareOpacity={0.06} className="w-full">
                     <Spotlight
                       radius={340}
-                      className={`relative overflow-hidden ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
+                      className={`relative overflow-hidden ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300`}
                     >
-                      <BorderGlow glowColor="rgba(255, 255, 255, 0.15)" size={320} opacity={0.4} />
+                      <BorderGlow glowColor="rgba(255, 92, 0, 0.15)" size={320} opacity={0.35} />
                       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center relative z-10">
                       {/* Left Details */}
                       <div className="lg:col-span-7 space-y-3 xs:space-y-4">
                         {/* Layered Rounded Pill Badges */}
-                        <div className="inline-flex items-center p-1 rounded-full border border-[#26282D] bg-[#16171B]/50 shadow-sm gap-1.5 backdrop-blur-md flex-wrap">
+                        <div className="inline-flex items-center p-1 rounded-full border border-neutral-200 bg-neutral-50 shadow-xs gap-1.5 flex-wrap">
                           <span className={`px-2.5 py-0.5 rounded-full text-[10px] xs:text-[11px] font-semibold ${theme.pillOuter}`}>
                             {badgeOption}
                           </span>
@@ -703,11 +705,11 @@ export default function LeadTiers(_props?: {
                           </span>
                         </div>
 
-                        <h3 className="text-lg xs:text-xl sm:text-2xl font-semibold text-white tracking-tight leading-snug font-heading">
+                        <h3 className="text-lg xs:text-xl sm:text-2xl font-semibold text-neutral-950 tracking-tight leading-snug font-heading">
                           {title}
                         </h3>
 
-                        <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-sans">
+                        <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-sans">
                           {subtitle}
                         </p>
 
@@ -738,24 +740,25 @@ export default function LeadTiers(_props?: {
 
                       {/* Right Preview Card */}
                       <div className="lg:col-span-5">
-                        <div className={`rounded-xl sm:rounded-2xl ${theme.innerCardBg} ${theme.innerCardBorder} border p-3 xs:p-4 sm:p-5 space-y-2.5 xs:space-y-3 shadow-xl`}>
-                          <div className="text-[10px] xs:text-[11px] font-semibold text-neutral-400 tracking-wide uppercase">
+                        <div className={`rounded-xl sm:rounded-2xl ${theme.innerCardBg} ${theme.innerCardBorder} border p-3 xs:p-4 sm:p-5 space-y-2.5 xs:space-y-3 shadow-md`}>
+                          <div className="text-[10px] xs:text-[11px] font-semibold text-neutral-500 tracking-wide uppercase">
                             {previewHeader}
                           </div>
 
                           <div>
-                            <div className="flex justify-between text-xs font-semibold text-neutral-300 mb-1">
+                            <div className="flex justify-between text-xs font-semibold text-neutral-600 mb-1">
                               <span>{metricLabel}</span>
-                              <span className="font-bold text-white tabular-nums">{metricValue}</span>
+                              <span className="font-bold text-neutral-950 tabular-nums">{metricValue}</span>
                             </div>
-                            <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+                            <div className="h-1.5 w-full rounded-full bg-neutral-200 overflow-hidden">
                               <div className={`h-full rounded-full ${theme.meterColor} ${metricWidth}`} />
                             </div>
                           </div>
 
-                          <ul className="space-y-1.5 pt-1 text-xs text-neutral-200">
+                          <ul className="space-y-1.5 pt-1 text-xs text-neutral-700">
                             {checklist.map((item: string, cIdx: number) => (
-                              <li key={cIdx}>
+                              <li key={cIdx} className="flex items-start gap-1.5">
+                                <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] mt-1 shrink-0" />
                                 <span>{item}</span>
                               </li>
                             ))}
