@@ -4,7 +4,6 @@ import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
 import ProviderBenefitsCards from '@/components/providers/ProviderBenefitsCards';
-import ProviderStepsComparison from '@/components/providers/ProviderStepsComparison';
 import Reveal from '@/components/shared/Reveal';
 import TextReveal from '@/components/shared/TextReveal';
 import NeuralGridBackground from '@/components/shared/NeuralGridBackground';
@@ -158,14 +157,7 @@ export default async function ForProvidersPage({
         </div>
       </section>
 
-      {/* 3. STEPS / DELIVERY COMPARISON WORKFLOW */}
-      <section id="workflow" className="bg-black py-16 sm:py-24 border-t border-[#202227] scroll-mt-16">
-        <div className="container-site max-w-6xl mx-auto px-4 sm:px-6">
-          <ProviderStepsComparison lang={lang} />
-        </div>
-      </section>
-
-      {/* 4. WHAT HE WOULD EXPECT / OPPORTUNITY TIERS */}
+      {/* 3. WHAT HE WOULD EXPECT / OPPORTUNITY TIERS */}
       <div id="tiers" className="scroll-mt-24 border-t border-[#202227]">
         <LeadTiers mode="providers" dict={dict} lang={lang} />
       </div>
