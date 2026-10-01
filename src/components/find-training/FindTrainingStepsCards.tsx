@@ -1,81 +1,86 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import Link from 'next/link';
-import { m, AnimatePresence } from 'framer-motion';
+import React, { useCallback, useRef, useState } from 'react';
+import {
+  m,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from 'framer-motion';
 import {
   SlidersHorizontal,
   BadgeCheck,
   Scale,
   ArrowRight,
-  X,
   CheckCircle2,
-  Building2,
-  Calendar,
-  Sparkles,
 } from '@/components/icons';
 import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
 import IconFrame from '@/components/shared/IconFrame';
-import CardTilt3D from '@/components/shared/CardTilt3D';
+import ConsoleDialog, { type ConsoleRecord } from '@/components/shared/ConsoleDialog';
+import { ease, viewportOnce } from '@/lib/motion';
 
 interface FindTrainingStepsCardsProps {
   lang: string;
 }
 
-interface StepItem {
-  id: string;
-  step: string;
-  icon: React.ElementType;
-  frameVariant: 'blue' | 'emerald' | 'brand';
-  badge: string;
-  title: string;
-  angle: string;
-  desc: string;
-  takeaways: string[];
-  mockup: React.ReactNode;
-}
+/** Per-step tint for the pipeline node, bracket corners and hover wash. */
+const TONES: Record<string, { dot: string; text: string; wash: string; bracket: string }> = {
+  blue: {
+    dot: 'bg-blue-400',
+    text: 'text-blue-300',
+    wash: 'from-blue-500/[0.07]',
+    bracket: 'border-blue-400/70',
+  },
+  emerald: {
+    dot: 'bg-emerald-400',
+    text: 'text-emerald-300',
+    wash: 'from-emerald-500/[0.07]',
+    bracket: 'border-emerald-400/70',
+  },
+  brand: {
+    dot: 'bg-[#FF5C00]',
+    text: 'text-orange-300',
+    wash: 'from-orange-500/[0.07]',
+    bracket: 'border-[#FF5C00]/70',
+  },
+};
 
 export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsProps) {
   const isAr = lang === 'ar';
-  const [activeModalId, setActiveModalId] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const reduce = useReducedMotion();
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [origin, setOrigin] = useState<{ x: number; y: number } | null>(null);
 
-  useEffect(() => {
-    setMounted(true);
+  // The spine fills as the pipeline scrolls through the viewport; each node
+  // reads its own slice of this one value.
+  const pipelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: pipelineRef,
+    offset: ['start 78%', 'end 62%'],
+  });
+  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.4 });
+
+  const open = useCallback((id: string, el: HTMLElement | null) => {
+    if (el) {
+      const r = el.getBoundingClientRect();
+      setOrigin({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+    }
+    setActiveId(id);
   }, []);
 
-  // Lock body scroll and listen for Escape key when pop-up window is open
-  useEffect(() => {
-    if (!activeModalId) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setActiveModalId(null);
-      }
-    };
-
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = originalOverflow;
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [activeModalId]);
-
-  const steps: StepItem[] = [
+  const steps: ConsoleRecord[] = [
     {
       id: 'step-specify',
-      step: '01',
+      index: '01',
       icon: SlidersHorizontal,
       frameVariant: 'blue',
       badge: isAr ? 'استيعاب دقيق' : 'Rapid Scoping',
       title: isAr ? 'حدد المتطلبات والاحتياج' : 'Specify Training Needs',
       angle: isAr ? 'استبيان تفاعلي خلال 60 ثانية بدون تعقيدات' : '60-Second Interactive Intake',
-      desc: isAr
+      body: isAr
         ? 'حدد المهارات المستهدفة، أسلوب التدريب (حضوري أو افتراضي)، المدينة، وحجم الفريق في نموذج تفاعلي ومباشر.'
         : 'Define your targeted skills, delivery mode, city, and cohort size in our 60 second interactive questionnaire. No tedious RFP drafting.',
       takeaways: [
@@ -84,7 +89,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         isAr ? 'حصر أهداف البرنامج ومواءمتها مع متطلبات التوطين والتحول الرقمي' : 'Targeted alignment with Saudization, Emiratization, or tech upskilling KPIs',
       ],
       mockup: (
-        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
+        <div className="bg-black rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
           <div className="flex items-center justify-between pb-2 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
               <div className="h-7 w-7 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">
@@ -123,13 +128,13 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
     },
     {
       id: 'step-matching',
-      step: '02',
+      index: '02',
       icon: BadgeCheck,
       frameVariant: 'emerald',
       badge: isAr ? 'فحص واعتماد الخبراء' : 'Dual-Screening Vetting',
       title: isAr ? 'المطابقة والتحقق من المدربين' : 'Matching & Faculty Vetting',
       angle: isAr ? 'فرز أكثر من 120 مزود معتمد لضمان نخبة الميسرين' : 'Screening 120+ Accredited GCC Entities',
-      desc: isAr
+      body: isAr
         ? 'يفحص فريقنا المختص أكثر من 120 مزود تدريب معتمد لاختيار أفضل المدربين أصحاب السجلات والإنجازات الموثوقة.'
         : 'Our matching desk screens 120+ accredited providers to select facilitators with verified enterprise outcomes and verified credentials.',
       takeaways: [
@@ -138,7 +143,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         isAr ? 'سرية تامة لبيانات مسؤولي الموارد البشرية ومنع أي اتصالات تسويقية مزعجة' : 'Zero cold spam or unsolicited vendor outreach; total decision maker privacy',
       ],
       mockup: (
-        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
+        <div className="bg-black rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
           <div className="flex items-center justify-between pb-2 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
               <div className="h-7 w-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
@@ -183,13 +188,13 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
     },
     {
       id: 'step-compare',
-      step: '03',
+      index: '03',
       icon: Scale,
       frameVariant: 'brand',
       badge: isAr ? 'مقارنة شفافة' : 'Proposal Comparison',
       title: isAr ? 'استلم وقارن العروض' : 'Compare Itemized Proposals',
       angle: isAr ? '2 إلى 3 عروض مفصلة خلال 48 ساعة وبدون أي التزام' : '2 to 3 Proposals in 48h · Zero Obligation',
-      desc: isAr
+      body: isAr
         ? 'استلم من 2 إلى 3 عروض مفصلة خلال 48 ساعة متضمنة خطط البرامج والتكاليف الشفافة، وبدون أي التزام بالشراء.'
         : 'Receive 2 to 3 tailored proposals within 48 hours with custom syllabi, transparent pricing, and zero purchase obligation.',
       takeaways: [
@@ -198,7 +203,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         isAr ? 'خدمة مجانية 100% للمنشآت الباحثة عن تدريب' : '100% free matchmaking service for enterprise buyers with no hidden fees',
       ],
       mockup: (
-        <div className="bg-[#16171B] rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
+        <div className="bg-black rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
           <div className="flex items-center justify-between pb-2 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
               <div className="h-7 w-7 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center font-bold">
@@ -235,15 +240,19 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
     },
   ];
 
-  const activeStepItem = steps.find((s) => s.id === activeModalId);
-
   return (
     <div className="w-full">
       {/* Animated Section Header */}
-      <div className="mb-10 sm:mb-12 text-center max-w-3xl mx-auto">
-        <span className="chip mx-auto mb-3">
+      <div className="mb-10 sm:mb-14 text-center max-w-3xl mx-auto">
+        <m.span
+          initial={{ opacity: 0, y: -8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.5, ease: ease.out }}
+          className="chip mx-auto mb-3"
+        >
           {isAr ? 'خطوات بسيطة وسريعة' : 'How It Works'}
-        </span>
+        </m.span>
         <TextReveal
           as="h2"
           text={isAr ? '3 خطوات للحصول على أفضل عروض التدريب' : '3 Simple Steps to Proven Training Solutions'}
@@ -256,233 +265,197 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         </p>
       </div>
 
-      {/* 3 Interactive Step Spotlight Cards */}
-      <div className="grid gap-6 md:grid-cols-3">
-        {steps.map((st) => (
-          <CardTilt3D key={st.id} maxTilt={6} glareOpacity={0.14} className="h-full">
-            <Spotlight
-              radius={280}
-              className="rounded-2xl bg-[#0F1013] border border-[#26282D] p-7 sm:p-8 text-start flex flex-col justify-between hover:border-white/30 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_10px_30px_-10px_rgba(0,0,0,0.6)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_50px_-15px_rgba(0,0,0,0.9)] transition-all duration-300 group cursor-pointer relative overflow-hidden h-full"
-            >
-              {/* Ambient hover aura */}
-              <div
-                className={`absolute -top-16 -end-16 w-36 h-36 rounded-full blur-3xl pointer-events-none transition-opacity duration-500 opacity-20 group-hover:opacity-70 ${
-                  st.frameVariant === 'blue'
-                    ? 'bg-blue-500/30'
-                    : st.frameVariant === 'emerald'
-                    ? 'bg-emerald-500/30'
-                    : 'bg-orange-500/30'
-                }`}
-              />
+      {/* Pipeline: a spine that fills with scroll, nodes igniting as it passes. */}
+      <div ref={pipelineRef} className="relative ps-9 sm:ps-14">
+        <div className="pointer-events-none absolute inset-y-2 start-[14px] w-px sm:start-[22px]" aria-hidden="true">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#26282D] to-transparent" />
+          <m.div
+            style={{ scaleY: reduce ? 1 : progress, transformOrigin: 'top' }}
+            className="absolute inset-0 bg-gradient-to-b from-white/80 via-blue-400/80 to-[#FF5C00]/80"
+          />
+        </div>
 
-              <div
-                onClick={() => setActiveModalId(st.id)}
-                className="flex-1 flex flex-col justify-between focus:outline-none relative z-10"
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setActiveModalId(st.id);
-                  }
-                }}
-                aria-label={`${st.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect step details'}`}
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <IconFrame variant={st.frameVariant} size="md">
-                      <st.icon size={20} strokeWidth={1.8} />
-                    </IconFrame>
-                    <span className="text-2xl font-mono font-bold text-neutral-500 group-hover:text-white transition-colors tracking-wider">
-                      {st.step}
-                    </span>
-                  </div>
-
-                  <div className="mb-2">
-                    <span className="text-[11px] font-semibold text-neutral-400 bg-white/[0.04] px-2.5 py-0.5 rounded-full border border-white/10 group-hover:border-white/20 group-hover:text-neutral-200 transition-colors">
-                      {st.badge}
-                    </span>
-                  </div>
-
-                  <h3 className="text-lg font-semibold text-white font-heading group-hover:text-neutral-100 transition-colors">
-                    {st.title}
-                  </h3>
-
-                  <p className="mt-2 text-sm leading-relaxed text-neutral-400 font-sans font-normal line-clamp-3">
-                    {st.desc}
-                  </p>
-                </div>
-
-                {/* Bottom Trigger Hint */}
-                <div className="mt-6 pt-4 border-t border-[#26282D] flex items-center justify-between text-xs font-medium text-neutral-400 group-hover:text-white transition-colors">
-                  <span className="inline-flex items-center gap-1.5 text-[11px] text-neutral-400 group-hover:text-white font-sans">
-                    <span>{isAr ? 'عرض تفاصيل الخطوة ومخرجاتها' : 'Inspect details & deliverables'}</span>
-                  </span>
-                  <span className="w-6 h-6 rounded-full bg-white/[0.04] group-hover:bg-white/15 flex items-center justify-center text-neutral-400 group-hover:text-white transition-all">
-                    <ArrowRight size={13} className="rtl:-scale-x-100 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
-                  </span>
-                </div>
-              </div>
-            </Spotlight>
-          </CardTilt3D>
-        ))}
+        <div className="flex flex-col gap-5 sm:gap-7">
+          {steps.map((st, i) => (
+            <PipelineRow
+              key={st.id}
+              record={st}
+              i={i}
+              total={steps.length}
+              progress={progress}
+              isAr={isAr}
+              reduce={!!reduce}
+              onOpen={open}
+            />
+          ))}
+        </div>
       </div>
 
-      {/* Detail Pop-up Modal */}
-      {mounted &&
-        createPortal(
-          <AnimatePresence>
-            {activeStepItem && (
-              <div
-                className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="step-modal-title"
-              >
-                {/* Backdrop */}
-                <m.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  onClick={() => setActiveModalId(null)}
-                  className="fixed inset-0 bg-black/85 backdrop-blur-sm cursor-pointer"
-                />
-
-                {/* Modal Container */}
-                <m.div
-                  initial={{ opacity: 0, scale: 0.95, y: 16 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: 12 }}
-                  transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-                  className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-[#0F1013]/98 backdrop-blur-2xl border border-white/15 text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_25px_60px_-15px_rgba(0,0,0,0.95)] my-auto overflow-hidden"
-                >
-                  {/* Fixed Header */}
-                  <m.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1, duration: 0.25 }}
-                    className="flex items-center justify-between p-4 sm:p-5 border-b border-[#26282D] gap-3 shrink-0"
-                  >
-                    <div className="flex items-center gap-2.5 flex-wrap">
-                      <IconFrame variant={activeStepItem.frameVariant} size="sm">
-                        <activeStepItem.icon size={15} />
-                      </IconFrame>
-                      <span className="px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold font-sans bg-white/10 text-white border border-white/20">
-                        {activeStepItem.badge}
-                      </span>
-                      <span className="text-[11px] sm:text-xs font-medium font-sans text-neutral-400">
-                        {activeStepItem.angle}
-                      </span>
-                    </div>
-
-                    <m.button
-                      type="button"
-                      whileHover={{ rotate: 90, scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => setActiveModalId(null)}
-                      aria-label={isAr ? 'إغلاق النافذة' : 'Close modal'}
-                      className="h-8 w-8 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center transition-colors shrink-0 cursor-pointer"
-                    >
-                      <X size={15} />
-                    </m.button>
-                  </m.div>
-
-                  {/* Scrollable Body */}
-                  <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 overscroll-contain">
-                    <m.div
-                      initial={{ opacity: 0, x: isAr ? 15 : -15 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.15, duration: 0.3 }}
-                    >
-                      <h3
-                        id="step-modal-title"
-                        className="text-base sm:text-xl font-semibold text-white tracking-tight leading-snug font-heading"
-                      >
-                        {activeStepItem.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed mt-1.5">
-                        {activeStepItem.desc}
-                      </p>
-                    </m.div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 items-stretch">
-                      {/* Strategic Advantages Checklist */}
-                      <m.div
-                        initial={{ opacity: 0, scale: 0.96, y: 10 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        transition={{ delay: 0.2, duration: 0.3 }}
-                        className="rounded-xl p-3.5 sm:p-4 bg-[#16171B] border border-[#26282D] flex flex-col justify-between space-y-2.5"
-                      >
-                        <div className="text-[11px] font-semibold text-neutral-300 uppercase tracking-wider font-sans">
-                          {isAr ? 'أهم الضمانات والمخرجات' : 'Key Advantages & Output'}
-                        </div>
-                        <ul className="space-y-2 text-xs text-neutral-200 font-sans">
-                          {activeStepItem.takeaways.map((point, pIdx) => (
-                            <m.li
-                              key={pIdx}
-                              initial={{ opacity: 0, x: isAr ? 12 : -12 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{
-                                delay: 0.24 + pIdx * 0.06,
-                                type: 'spring',
-                                stiffness: 320,
-                                damping: 22,
-                              }}
-                              className="flex items-start gap-2 leading-relaxed"
-                            >
-                              <BadgeCheck size={14} className="text-blue-400 shrink-0 mt-0.5" />
-                              <span>{point}</span>
-                            </m.li>
-                          ))}
-                        </ul>
-                      </m.div>
-
-                      {/* Mockup Proof Widget */}
-                      <m.div
-                        initial={{ opacity: 0, x: isAr ? -15 : 15, scale: 0.96 }}
-                        animate={{ opacity: 1, x: 0, scale: 1 }}
-                        transition={{ delay: 0.22, duration: 0.35 }}
-                        className="flex items-center"
-                      >
-                        {activeStepItem.mockup}
-                      </m.div>
-                    </div>
-                  </div>
-
-                  {/* Fixed Footer */}
-                  <m.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.28, duration: 0.3 }}
-                    className="p-3.5 sm:p-5 border-t border-[#26282D] bg-[#0F1013] shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-                  >
-                    <span className="text-[11px] text-neutral-400 font-sans hidden sm:inline">
-                      {isAr ? 'انقر في المساحة الفارغة أو زر Esc للإغلاق' : 'Click outside or press Esc to close'}
-                    </span>
-
-                    <m.div
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                      className="w-full sm:w-auto"
-                    >
-                      <Link
-                        href={`/${lang}/find-training/request`}
-                        onClick={() => setActiveModalId(null)}
-                        className="w-full inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-white text-black hover:bg-neutral-200 font-semibold text-xs sm:text-sm active:scale-[0.98] transition-all font-sans shadow-md"
-                      >
-                        <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals'}</span>
-                        <ArrowRight size={14} className="ms-1.5 rtl:-scale-x-100" />
-                      </Link>
-                    </m.div>
-                  </m.div>
-                </m.div>
-              </div>
-            )}
-          </AnimatePresence>,
-          document.body
-        )}
+      <ConsoleDialog
+        records={steps}
+        activeId={activeId}
+        origin={origin}
+        onClose={() => setActiveId(null)}
+        onSelect={setActiveId}
+        isAr={isAr}
+        accent="neutral"
+        copy={{
+          takeawaysTitle: isAr ? 'أهم الضمانات والمخرجات' : 'Key Advantages & Output',
+          hint: isAr ? 'انقر في المساحة الفارغة أو زر Esc للإغلاق' : 'Click outside or press Esc to close',
+          closeLabel: isAr ? 'إغلاق النافذة' : 'Close modal',
+          ctaLabel: isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals',
+          ctaHref: `/${lang}/find-training/request`,
+        }}
+      />
     </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
+interface PipelineRowProps {
+  record: ConsoleRecord;
+  i: number;
+  total: number;
+  progress: MotionValue<number>;
+  isAr: boolean;
+  reduce: boolean;
+  onOpen: (id: string, el: HTMLElement | null) => void;
+}
+
+/**
+ * One stage of the pipeline. Lives in its own component so each row can derive
+ * its own slice of the shared scroll progress with hooks.
+ */
+function PipelineRow({ record, i, total, progress, isAr, reduce, onOpen }: PipelineRowProps) {
+  const rowRef = useRef<HTMLDivElement>(null);
+  const tone = TONES[record.frameVariant] ?? TONES.blue;
+
+  // The node ignites just before the spine fill reaches it.
+  const at = (i + 0.4) / total;
+  const lit = useTransform(progress, [at - 0.12, at], [0, 1]);
+  const litOpacity = reduce ? 1 : lit;
+
+  return (
+    <m.div
+      ref={rowRef}
+      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={viewportOnce}
+      transition={{ duration: 0.65, ease: ease.out, delay: i * 0.06 }}
+      className="group relative"
+    >
+      {/* Node on the spine. Dim ring always; core + halo arrive with scroll. */}
+      <span
+        className="pointer-events-none absolute top-8 -start-[27px] z-20 h-2.5 w-2.5 sm:-start-[39px]"
+        aria-hidden="true"
+      >
+        <span className="absolute inset-0 rounded-full border border-[#26282D] bg-black" />
+        <m.span style={{ opacity: litOpacity }} className={`absolute inset-[2px] rounded-full ${tone.dot}`} />
+        <m.span
+          style={{ opacity: litOpacity }}
+          className={`node-halo absolute inset-0 rounded-full ${tone.dot}`}
+        />
+      </span>
+
+      <Spotlight
+        radius={520}
+        className={`relative overflow-hidden rounded-2xl border border-[#26282D] bg-[#0B0C0E] text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] transition-colors duration-500 group-hover:border-white/25`}
+      >
+        {/* Tinted wash that sweeps in from the spine side on hover. */}
+        <div
+          className={`pointer-events-none absolute inset-0 bg-gradient-to-r ${tone.wash} to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 rtl:bg-gradient-to-l`}
+          aria-hidden="true"
+        />
+
+        <div className="relative grid items-center gap-5 p-5 sm:gap-8 sm:p-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+          {/* Text column */}
+          <div className="min-w-0">
+            <div className="mb-3 flex items-center gap-3">
+              <span className="font-mono text-3xl font-bold leading-none text-white/15 transition-colors duration-500 group-hover:text-white/40 sm:text-4xl">
+                {record.index}
+              </span>
+              <span className="h-8 w-px bg-[#26282D]" aria-hidden="true" />
+              <IconFrame variant={record.frameVariant} size="sm">
+                <record.icon size={15} strokeWidth={1.8} />
+              </IconFrame>
+              <span className="truncate rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] font-semibold text-neutral-400 transition-colors group-hover:border-white/20 group-hover:text-neutral-200">
+                {record.badge}
+              </span>
+            </div>
+
+            <h3 className="relative inline-block font-heading text-lg font-semibold text-white sm:text-xl">
+              {record.title}
+              {/* Hairline that draws itself under the title on hover. */}
+              <span
+                className={`absolute -bottom-1 start-0 h-px w-full origin-left scale-x-0 bg-current transition-transform duration-500 ease-out group-hover:scale-x-100 rtl:origin-right ${tone.text}`}
+                aria-hidden="true"
+              />
+            </h3>
+
+            <p className="mt-2.5 font-sans text-sm font-normal leading-relaxed text-neutral-400">
+              {record.body}
+            </p>
+
+            <div className="mt-5 inline-flex items-center gap-2 font-sans text-[11px] font-medium text-neutral-400 transition-colors group-hover:text-white">
+              <span>{isAr ? 'عرض تفاصيل الخطوة ومخرجاتها' : 'Inspect details & deliverables'}</span>
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.05] transition-all group-hover:bg-white group-hover:text-black">
+                <ArrowRight
+                  size={13}
+                  className="transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
+                />
+              </span>
+            </div>
+          </div>
+
+          {/* Drawer: the proof widget tilts open like a tray being pulled out. */}
+          <div
+            className="relative hidden lg:block"
+            style={{ perspective: reduce ? undefined : 1100 }}
+            aria-hidden="true"
+          >
+            <m.div
+              initial={reduce ? { opacity: 0 } : { opacity: 0, rotateX: -16, y: 26, scale: 0.96 }}
+              whileInView={{ opacity: 1, rotateX: 0, y: 0, scale: 1 }}
+              viewport={viewportOnce}
+              transition={{ delay: 0.18 + i * 0.06, type: 'spring', stiffness: 130, damping: 20 }}
+              className="relative transform-gpu rounded-xl transition-transform duration-500 will-change-transform group-hover:-translate-y-1"
+              style={{ transformOrigin: 'top center' }}
+            >
+              {/* Bracket corners frame the readout like a measuring crop. */}
+              {[
+                'top-[-5px] start-[-5px] border-t border-s',
+                'top-[-5px] end-[-5px] border-t border-e',
+                'bottom-[-5px] start-[-5px] border-b border-s',
+                'bottom-[-5px] end-[-5px] border-b border-e',
+              ].map((pos) => (
+                <span
+                  key={pos}
+                  className={`pointer-events-none absolute h-3 w-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${tone.bracket} ${pos}`}
+                />
+              ))}
+
+              <div className="relative overflow-hidden rounded-xl">
+                {record.mockup}
+                {/* Refresh sweep over the readout. */}
+                <span
+                  className="console-scan pointer-events-none absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-transparent via-white/[0.055] to-transparent"
+                  style={{ '--scan-duration': `${6 + i * 1.2}s` } as React.CSSProperties}
+                />
+              </div>
+            </m.div>
+          </div>
+        </div>
+
+        {/* Stretched hit area — keeps the row one target without nesting
+            interactive elements inside the readout. */}
+        <button
+          type="button"
+          onClick={() => onOpen(record.id, rowRef.current)}
+          aria-label={`${record.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect step details'}`}
+          className="absolute inset-0 z-30 cursor-pointer rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/60"
+        />
+      </Spotlight>
+    </m.div>
   );
 }

@@ -40,370 +40,483 @@ interface WhoWeAreProps {
 export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
   const isAr = lang === 'ar';
   const [mode, setMode] = useState<'pontlook' | 'traditional'>('pontlook');
+  const [isDesktop, setIsDesktop] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 1024);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  // Garage Shutter Roll-down: curtain descends from top (-100% to 0%) as you scroll down across the boundary
+  const shutterY = useTransform(scrollYProgress, [0, 0.50], ['-100%', '0%']);
+
+  // Spring Content Pop-up: content springs into view as the shutter approaches closure
+  const contentScale = useTransform(scrollYProgress, [0.24, 0.55], [0.90, 1]);
+  const contentOpacity = useTransform(scrollYProgress, [0.20, 0.45], [0, 1]);
+  const contentY = useTransform(scrollYProgress, [0.24, 0.55], [45, 0]);
+
+  // Shutter bottom rail shadow and visibility
+  const railOpacity = useTransform(scrollYProgress, [0.01, 0.08, 0.50, 0.60], [0, 1, 1, 0.25]);
 
   return (
     <section
       id="our-mission"
+      ref={containerRef}
       data-nav-light="true"
       data-nav-theme="light"
-      className="relative bg-white text-neutral-900 py-16 sm:py-24 lg:py-28 transition-colors duration-500 overflow-hidden"
+      className="relative bg-black transition-colors duration-500 overflow-visible lg:h-[220vh]"
       aria-labelledby="comparison-title"
     >
-      {/* Subtle background grid pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 1px 1px, #000 1px, transparent 0)',
-          backgroundSize: '32px 32px',
-        }}
-      />
-
-      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        {/* Toggle Switch Header */}
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-4">
-          
-          {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-600 text-xs font-semibold uppercase tracking-wider font-sans">
-            <span className="h-1.5 w-1.5 rounded-full bg-neutral-900" />
-            <span>{isAr ? 'المقارنة المباشرة' : 'THE COMPARISON ENGINE'}</span>
-          </div>
-
-          <h2
-            id="comparison-title"
-            className="text-2xl sm:text-4xl lg:text-[42px] font-semibold text-neutral-900 font-heading tracking-tight leading-[1.18]"
-          >
-            {isAr
-              ? 'كيف تعيد PontLook تعريف تدريب الشركات؟'
-              : 'How PontLook Redefines Corporate Training'}
-          </h2>
-
-          <p className="text-sm sm:text-base text-neutral-600 font-sans leading-relaxed max-w-2xl">
-            {isAr
-              ? 'اختر الطريقة للاطلاع على الفارق بين البحث التقليدي المرهق ومنظومة بونت لوك المؤكدة والمترابطة.'
-              : 'Toggle between the two approaches to see the shift from traditional procurement friction to verified direct matching.'}
-          </p>
-
-          {/* Interactive Mode Toggle Pill (Ecomflow Inspired) */}
-          <div className="pt-2 flex items-center p-1 rounded-full bg-neutral-100 border border-neutral-300 shadow-inner">
-            <button
-              type="button"
-              onClick={() => setMode('pontlook')}
-              className={`relative px-5 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
-                mode === 'pontlook'
-                  ? 'text-white shadow-md'
-                  : 'text-neutral-600 hover:text-neutral-900'
-              }`}
-            >
-              {mode === 'pontlook' && (
-                <m.div
-                  layoutId="comparison-active-pill"
-                  className="absolute inset-0 rounded-full bg-[#FF5C00] shadow-md shadow-orange-500/25"
-                  transition={spring.soft}
-                />
-              )}
-              <span className="relative z-10 flex items-center gap-2">
-                <Sparkles size={14} className={mode === 'pontlook' ? 'text-white' : 'text-neutral-500'} />
-                <span>{isAr ? 'طريقة بونت لوك' : 'The PontLook Way'}</span>
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setMode('traditional')}
-              className={`relative px-5 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
-                mode === 'traditional'
-                  ? 'text-white shadow-md'
-                  : 'text-neutral-600 hover:text-neutral-900'
-              }`}
-            >
-              {mode === 'traditional' && (
-                <m.div
-                  layoutId="comparison-active-pill"
-                  className="absolute inset-0 rounded-full bg-red-600 shadow-md shadow-red-500/25"
-                  transition={spring.soft}
-                />
-              )}
-              <span className="relative z-10 flex items-center gap-2">
-                <XCircle size={14} className={mode === 'traditional' ? 'text-white' : 'text-neutral-500'} />
-                <span>{isAr ? 'الطريقة التقليدية' : 'The Traditional Way'}</span>
-              </span>
-            </button>
-          </div>
-
+      {/* Viewport Stage: Pinned on desktop during the garage door closure */}
+      <div className="lg:sticky lg:top-0 min-h-screen w-full overflow-hidden flex flex-col justify-center items-center relative z-20">
+        
+        {/* Background Underlayer: Dark aesthetic connecting seamlessly with WhoWeAreHero */}
+        <div
+          className="absolute inset-0 bg-black pointer-events-none"
+          aria-hidden="true"
+        >
+          {/* Subtle dark technical dot grid */}
+          <div
+            className="absolute inset-0 opacity-[0.06]"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.7) 1px, transparent 0)',
+              backgroundSize: '36px 36px',
+            }}
+          />
+          {/* Faint blue ambient glow matching hero */}
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-blue-500/[0.04] rounded-full blur-[120px]" />
         </div>
 
-        {/* Content Box with White Pop-up Window Animation */}
-        <AnimatePresence mode="wait">
-          {mode === 'pontlook' ? (
-            <m.div
-              key="pontlook"
-              initial={{ opacity: 0, scale: 0.94, y: 22 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.94, y: -22 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 320 }}
-              className="rounded-3xl border border-neutral-200/90 bg-white p-6 sm:p-10 lg:p-12 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.08),0_10px_25px_-5px_rgba(0,0,0,0.04)] relative overflow-hidden text-neutral-900"
-            >
-              {/* Pop-up Window Header Bar */}
-              <div className="flex items-center justify-between pb-4 mb-6 border-b border-neutral-100 text-xs font-mono text-neutral-500">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-                </div>
-                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-semibold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>{isAr ? 'منظومة بونت لوك المباشرة • نشطة' : 'PONTLOOK DIRECT PROTOCOL • ACTIVE'}</span>
-                </div>
-                <span className="text-[11px] text-neutral-400 hidden sm:inline font-mono">GCC MATCH ENGINE</span>
+        {/* ================================================================
+            THE GARAGE SHUTTER CURTAIN (Rolling down over the dark hero)
+            ================================================================ */}
+        <m.div
+          style={
+            prefersReducedMotion || !isDesktop
+              ? { transform: 'none' }
+              : { y: shutterY }
+          }
+          className="lg:absolute lg:inset-0 w-full min-h-screen lg:h-full bg-white text-neutral-900 shadow-2xl flex flex-col justify-center items-center overflow-hidden z-10 py-12 lg:py-0"
+        >
+          {/* Architectural horizontal garage door shutter slats */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.80]"
+            style={{
+              backgroundImage: `
+                repeating-linear-gradient(
+                  to bottom,
+                  transparent 0px,
+                  transparent 38px,
+                  rgba(0, 0, 0, 0.03) 38px,
+                  rgba(0, 0, 0, 0.055) 39px,
+                  transparent 40px
+                )
+              `,
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Attio-Style Subtle Grid dots */}
+          <div
+            className="absolute inset-0 opacity-[0.035] pointer-events-none"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 1px 1px, #000 1px, transparent 0)',
+              backgroundSize: '24px 24px',
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Garage Shutter Leading Bottom Rail (The "Closing Door" Lip & Handle) */}
+          <m.div
+            style={
+              prefersReducedMotion || !isDesktop
+                ? { display: 'none' }
+                : { opacity: railOpacity }
+            }
+            className="absolute bottom-0 inset-x-0 h-6 bg-gradient-to-b from-neutral-200 via-neutral-100 to-neutral-300 border-t border-neutral-300 border-b-2 border-neutral-400 shadow-[0_25px_40px_rgba(0,0,0,0.5)] flex items-center justify-center z-30 pointer-events-none"
+            aria-hidden="true"
+          >
+            <div className="flex items-center gap-2 px-3.5 py-0.5 rounded-full bg-neutral-200/90 border border-neutral-400/60 shadow-inner">
+              <span className="w-1.5 h-1.5 rounded-full bg-neutral-500" />
+              <span className="text-[9px] font-mono tracking-widest text-neutral-600 uppercase font-semibold">
+                {isAr ? 'منظومة بونت لوك المعتمدة' : 'PONTLOOK • CURATED SYSTEM'}
+              </span>
+              <span className="w-1.5 h-1.5 rounded-full bg-neutral-500" />
+            </div>
+          </m.div>
+
+          {/* ================================================================
+              SPRING POP-UP CONTENT INSIDE THE SHUTTER
+              ================================================================ */}
+          <m.div
+            style={
+              prefersReducedMotion || !isDesktop
+                ? { transform: 'none', opacity: 1 }
+                : {
+                    scale: contentScale,
+                    opacity: contentOpacity,
+                    y: contentY,
+                  }
+            }
+            className="container-site relative z-20 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-4 sm:py-6 lg:py-8 flex flex-col justify-center my-auto w-full"
+          >
+            {/* Toggle Switch Header */}
+            <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-2.5">
+              
+              {/* Eyebrow */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-600 text-xs font-semibold uppercase tracking-wider font-sans">
+                <span className="h-1.5 w-1.5 rounded-full bg-neutral-900" />
+                <span>{isAr ? 'المقارنة المباشرة' : 'THE COMPARISON ENGINE'}</span>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                
-                {/* Left Column: Copy & Actions */}
-                <div className="lg:col-span-5 flex flex-col items-start text-start space-y-4">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold uppercase tracking-wider">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>{isAr ? 'من التشتت إلى الترابط' : 'FROM SCATTERED TO CONNECTED'}</span>
+              <h2
+                id="comparison-title"
+                className="text-2xl sm:text-3xl lg:text-[38px] font-semibold text-neutral-900 font-heading tracking-tight leading-[1.18]"
+              >
+                {isAr
+                  ? 'كيف تعيد PontLook تعريف تدريب الشركات؟'
+                  : 'How PontLook Redefines Corporate Training'}
+              </h2>
+
+              <p className="text-xs sm:text-sm text-neutral-600 font-sans leading-relaxed max-w-2xl">
+                {isAr
+                  ? 'اختر الطريقة للاطلاع على الفارق بين البحث التقليدي المرهق ومنظومة بونت لوك المؤكدة والمترابطة.'
+                  : 'Toggle between the two approaches to see the shift from traditional procurement friction to verified direct matching.'}
+              </p>
+
+              {/* Interactive Mode Toggle Pill (Ecomflow Inspired) */}
+              <div className="pt-1 flex items-center p-1 rounded-full bg-neutral-100 border border-neutral-300 shadow-inner">
+                <button
+                  type="button"
+                  onClick={() => setMode('pontlook')}
+                  className={`relative px-4 sm:px-5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                    mode === 'pontlook'
+                      ? 'text-white shadow-md'
+                      : 'text-neutral-600 hover:text-neutral-900'
+                  }`}
+                >
+                  {mode === 'pontlook' && (
+                    <m.div
+                      layoutId="comparison-active-pill"
+                      className="absolute inset-0 rounded-full bg-[#FF5C00] shadow-md shadow-orange-500/25"
+                      transition={spring.soft}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center gap-1.5">
+                    <Sparkles size={14} className={mode === 'pontlook' ? 'text-white' : 'text-neutral-500'} />
+                    <span>{isAr ? 'طريقة بونت لوك' : 'The PontLook Way'}</span>
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setMode('traditional')}
+                  className={`relative px-4 sm:px-5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                    mode === 'traditional'
+                      ? 'text-white shadow-md'
+                      : 'text-neutral-600 hover:text-neutral-900'
+                  }`}
+                >
+                  {mode === 'traditional' && (
+                    <m.div
+                      layoutId="comparison-active-pill"
+                      className="absolute inset-0 rounded-full bg-red-600 shadow-md shadow-red-500/25"
+                      transition={spring.soft}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center gap-1.5">
+                    <XCircle size={14} className={mode === 'traditional' ? 'text-white' : 'text-neutral-500'} />
+                    <span>{isAr ? 'الطريقة التقليدية' : 'The Traditional Way'}</span>
+                  </span>
+                </button>
+              </div>
+
+            </div>
+
+            {/* Content Box with White Pop-up Window Animation */}
+            <AnimatePresence mode="wait">
+              {mode === 'pontlook' ? (
+                <m.div
+                  key="pontlook"
+                  initial={{ opacity: 0, scale: 0.94, y: 18 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.94, y: -18 }}
+                  transition={{ type: 'spring', damping: 25, stiffness: 320 }}
+                  className="rounded-3xl border border-neutral-200/90 bg-white p-5 sm:p-7 lg:p-8 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.08),0_10px_25px_-5px_rgba(0,0,0,0.04)] relative overflow-hidden text-neutral-900"
+                >
+                  {/* Pop-up Window Header Bar */}
+                  <div className="flex items-center justify-between pb-3 mb-5 border-b border-neutral-100 text-xs font-mono text-neutral-500">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-semibold">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <span>{isAr ? 'منظومة بونت لوك المباشرة • نشطة' : 'PONTLOOK DIRECT PROTOCOL • ACTIVE'}</span>
+                    </div>
+                    <span className="text-[11px] text-neutral-400 hidden sm:inline font-mono">GCC MATCH ENGINE</span>
                   </div>
 
-                  <h3 className="text-2xl sm:text-3xl lg:text-[34px] font-heading font-semibold text-neutral-950 leading-tight">
-                    {isAr
-                      ? 'منظومة متكاملة تعمل بتناغم تام.'
-                      : 'Everything working beautifully together.'}
-                  </h3>
-
-                  <p className="text-sm sm:text-base text-neutral-600 font-sans leading-relaxed">
-                    {isAr
-                      ? 'نشخص فجوة المهارات الدقيقة ونربط المنشأة بـ 2 إلى 3 خبراء معتمدين كحد أقصى مع ميزانيات مؤكدة. وداعاً للرسائل الباردة والمناقصات العشوائية.'
-                      : 'We diagnose the team’s exact skill gap and connect with 2 to 3 pre-vetted specialists with confirmed corporate budgets. No cold outreach, no bloated directories.'}
-                  </p>
-
-                  <div className="pt-2 w-full sm:w-auto">
-                    <Magnetic strength={0.2} activeDistance={30}>
-                      <Link
-                        href={`/${lang}/find-training`}
-                        className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#FF5C00] hover:bg-[#FF7A2F] text-white font-medium text-xs sm:text-sm shadow-lg shadow-orange-500/20 transition-all active:scale-95"
-                      >
-                        <span>{isAr ? 'ابدأ المطابقة الآن' : 'Find your match'}</span>
-                        <ArrowRight size={14} className="rtl:-scale-x-100" />
-                      </Link>
-                    </Magnetic>
-                  </div>
-                </div>
-
-                {/* Right Column: Visual Connected Architecture Diagram */}
-                <div className="lg:col-span-7">
-                  <div className="rounded-2xl border border-neutral-200/80 bg-neutral-50/70 p-5 sm:p-7 shadow-xs space-y-6 font-sans">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
                     
-                    {/* Visual Connected Nodes Schema */}
-                    <div className="relative py-4 px-2">
-                      <div className="grid grid-cols-3 gap-2 sm:gap-4 items-center text-center relative z-10">
+                    {/* Left Column: Copy & Actions */}
+                    <div className="lg:col-span-5 flex flex-col items-start text-start space-y-3">
+                      <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold uppercase tracking-wider">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        <span>{isAr ? 'من التشتت إلى الترابط' : 'FROM SCATTERED TO CONNECTED'}</span>
+                      </div>
+
+                      <h3 className="text-xl sm:text-2xl lg:text-[28px] font-heading font-semibold text-neutral-950 leading-tight">
+                        {isAr
+                          ? 'منظومة متكاملة تعمل بتناغم تام.'
+                          : 'Everything working beautifully together.'}
+                      </h3>
+
+                      <p className="text-xs sm:text-sm text-neutral-600 font-sans leading-relaxed">
+                        {isAr
+                          ? 'نشخص فجوة المهارات الدقيقة ونربط المنشأة بـ 2 إلى 3 خبراء معتمدين كحد أقصى مع ميزانيات مؤكدة. وداعاً للرسائل الباردة والمناقصات العشوائية.'
+                          : 'We diagnose the team’s exact skill gap and connect with 2 to 3 pre-vetted specialists with confirmed corporate budgets. No cold outreach, no bloated directories.'}
+                      </p>
+
+                      <div className="pt-1 w-full sm:w-auto">
+                        <Magnetic strength={0.2} activeDistance={30}>
+                          <Link
+                            href={`/${lang}/find-training`}
+                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#FF5C00] hover:bg-[#FF7A2F] text-white font-medium text-xs sm:text-sm shadow-lg shadow-orange-500/20 transition-all active:scale-95"
+                          >
+                            <span>{isAr ? 'ابدأ المطابقة الآن' : 'Find your match'}</span>
+                            <ArrowRight size={14} className="rtl:-scale-x-100" />
+                          </Link>
+                        </Magnetic>
+                      </div>
+                    </div>
+
+                    {/* Right Column: Visual Connected Architecture Diagram */}
+                    <div className="lg:col-span-7">
+                      <div className="rounded-2xl border border-neutral-200/80 bg-neutral-50/70 p-4 sm:p-5 shadow-xs space-y-4 font-sans">
                         
-                        {/* Node 1: Enterprise Buyer */}
-                        <div className="p-3 sm:p-4 rounded-xl border border-emerald-200 bg-white shadow-xs flex flex-col items-center space-y-1">
-                          <Building2 size={20} className="text-emerald-600" />
-                          <span className="text-xs font-bold text-neutral-900">
-                            {isAr ? 'طلب مؤكد' : 'Enterprise Need'}
-                          </span>
-                          <span className="text-[10px] text-emerald-700 font-medium">
-                            {isAr ? 'ميزانية معتمدة' : 'Verified Budget'}
-                          </span>
+                        {/* Visual Connected Nodes Schema */}
+                        <div className="relative py-3 px-2">
+                          <div className="grid grid-cols-3 gap-2 sm:gap-4 items-center text-center relative z-10">
+                            
+                            {/* Node 1: Enterprise Buyer */}
+                            <div className="p-2.5 sm:p-3 rounded-xl border border-emerald-200 bg-white shadow-xs flex flex-col items-center space-y-1">
+                              <Building2 size={18} className="text-emerald-600" />
+                              <span className="text-xs font-bold text-neutral-900">
+                                {isAr ? 'طلب مؤكد' : 'Enterprise Need'}
+                              </span>
+                              <span className="text-[10px] text-emerald-700 font-medium">
+                                {isAr ? 'ميزانية معتمدة' : 'Verified Budget'}
+                              </span>
+                            </div>
+
+                            {/* Central Hub: PontLook Core Matching Engine */}
+                            <div className="p-3 sm:p-3.5 rounded-2xl border-2 border-[#FF5C00] bg-white text-neutral-950 flex flex-col items-center space-y-1 shadow-[0_4px_20px_rgba(255,92,0,0.15)] ring-1 ring-orange-500/20">
+                              <Signal size={20} className="text-[#FF5C00]" />
+                              <span className="text-xs font-bold text-neutral-950">
+                                {isAr ? 'محرك بونت لوك' : 'PontLook Engine'}
+                              </span>
+                              <span className="text-[10px] text-[#FF5C00] font-semibold">
+                                {isAr ? 'تشخيص ومطابقة' : 'Fit & SLA'}
+                              </span>
+                            </div>
+
+                            {/* Node 3: Vetted Specialist Providers */}
+                            <div className="p-2.5 sm:p-3 rounded-xl border border-blue-200 bg-white shadow-xs flex flex-col items-center space-y-1">
+                              <BadgeCheck size={18} className="text-blue-600" />
+                              <span className="text-xs font-bold text-neutral-900">
+                                {isAr ? '2-3 خبراء معتمدون' : '2-3 Providers'}
+                              </span>
+                              <span className="text-[10px] text-blue-700 font-medium">
+                                {isAr ? 'جاهزية التنفيذ' : 'Ready to Deliver'}
+                              </span>
+                            </div>
+
+                          </div>
+
+                          {/* Connected Luminous Line under nodes */}
+                          <div className="absolute top-1/2 start-8 end-8 h-0.5 bg-gradient-to-r from-emerald-500 via-amber-500 to-blue-500 -translate-y-1/2 pointer-events-none shadow-[0_0_8px_rgba(245,158,11,0.3)]" />
                         </div>
 
-                        {/* Central Hub: PontLook Core Matching Engine */}
-                        <div className="p-3.5 sm:p-4 rounded-2xl border-2 border-[#FF5C00] bg-white text-neutral-950 flex flex-col items-center space-y-1 shadow-[0_4px_20px_rgba(255,92,0,0.15)] ring-1 ring-orange-500/20">
-                          <Signal size={22} className="text-[#FF5C00]" />
-                          <span className="text-xs font-bold text-neutral-950">
-                            {isAr ? 'محرك بونت لوك' : 'PontLook Engine'}
-                          </span>
-                          <span className="text-[10px] text-[#FF5C00] font-semibold">
-                            {isAr ? 'تشخيص ومطابقة' : 'Fit & SLA'}
-                          </span>
-                        </div>
+                        {/* 3 Summary Points */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2.5 border-t border-neutral-200/80 text-xs">
+                          <div className="flex items-start gap-2">
+                            <CheckCircle2 size={15} className="text-emerald-600 shrink-0 mt-0.5" />
+                            <div>
+                              <span className="font-bold text-neutral-900 block text-[11px] sm:text-xs">{isAr ? 'طلب مؤسسي موثق' : 'Verified Demand'}</span>
+                              <span className="text-[10px] text-neutral-500">{isAr ? 'ميزانية معتمدة ومؤكدة' : 'Confirmed budget & intent'}</span>
+                            </div>
+                          </div>
 
-                        {/* Node 3: Vetted Specialist Providers */}
-                        <div className="p-3 sm:p-4 rounded-xl border border-blue-200 bg-white shadow-xs flex flex-col items-center space-y-1">
-                          <BadgeCheck size={20} className="text-blue-600" />
-                          <span className="text-xs font-bold text-neutral-900">
-                            {isAr ? '2-3 خبراء معتمدون' : '2-3 Providers'}
-                          </span>
-                          <span className="text-[10px] text-blue-700 font-medium">
-                            {isAr ? 'جاهزية التنفيذ' : 'Ready to Deliver'}
-                          </span>
+                          <div className="flex items-start gap-2">
+                            <CheckCircle2 size={15} className="text-emerald-600 shrink-0 mt-0.5" />
+                            <div>
+                              <span className="font-bold text-neutral-900 block text-[11px] sm:text-xs">{isAr ? 'تقديم مباشر وفوري' : 'Direct Introduction'}</span>
+                              <span className="text-[10px] text-neutral-500">{isAr ? 'اجتماع مع صناع القرار' : 'CHRO calendar access'}</span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-start gap-2">
+                            <CheckCircle2 size={15} className="text-emerald-600 shrink-0 mt-0.5" />
+                            <div>
+                              <span className="font-bold text-neutral-900 block text-[11px] sm:text-xs">{isAr ? 'صفر احتكاك مالي' : 'Zero Risk SLA'}</span>
+                              <span className="text-[10px] text-neutral-500">{isAr ? 'دفع مقابل النتائج فقط' : '5-day replacement SLA'}</span>
+                            </div>
+                          </div>
                         </div>
 
                       </div>
-
-                      {/* Connected Luminous Line under nodes */}
-                      <div className="absolute top-1/2 start-8 end-8 h-0.5 bg-gradient-to-r from-emerald-500 via-amber-500 to-blue-500 -translate-y-1/2 pointer-events-none shadow-[0_0_8px_rgba(245,158,11,0.3)]" />
                     </div>
 
-                    {/* 3 Summary Points */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-neutral-200/80 text-xs">
-                      <div className="flex items-start gap-2">
-                        <CheckCircle2 size={16} className="text-emerald-600 shrink-0 mt-0.5" />
-                        <div>
-                          <span className="font-bold text-neutral-900 block">{isAr ? 'طلب مؤسسي موثق' : 'Verified Demand'}</span>
-                          <span className="text-[11px] text-neutral-500">{isAr ? 'ميزانية معتمدة ومؤكدة' : 'Confirmed budget & intent'}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-start gap-2">
-                        <CheckCircle2 size={16} className="text-emerald-600 shrink-0 mt-0.5" />
-                        <div>
-                          <span className="font-bold text-neutral-900 block">{isAr ? 'تقديم مباشر وفوري' : 'Direct Introduction'}</span>
-                          <span className="text-[11px] text-neutral-500">{isAr ? 'اجتماع مع صناع القرار' : 'CHRO calendar access'}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-start gap-2">
-                        <CheckCircle2 size={16} className="text-emerald-600 shrink-0 mt-0.5" />
-                        <div>
-                          <span className="font-bold text-neutral-900 block">{isAr ? 'صفر احتكاك مالي' : 'Zero Risk SLA'}</span>
-                          <span className="text-[11px] text-neutral-500">{isAr ? 'دفع مقابل النتائج فقط' : '5-day replacement SLA'}</span>
-                        </div>
-                      </div>
+                  </div>
+                </m.div>
+              ) : (
+                <m.div
+                  key="traditional"
+                  initial={{ opacity: 0, scale: 0.94, y: 18 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.94, y: -18 }}
+                  transition={{ type: 'spring', damping: 25, stiffness: 320 }}
+                  className="rounded-3xl border border-red-200/80 bg-red-50/30 p-5 sm:p-7 lg:p-8 shadow-[0_20px_50px_-15px_rgba(239,68,68,0.08)] relative overflow-hidden text-neutral-900"
+                >
+                  {/* Window Header Bar (Red Warning Mode) */}
+                  <div className="flex items-center justify-between pb-3 mb-5 border-b border-red-100 text-xs font-mono text-neutral-500">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-neutral-300" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-neutral-300" />
                     </div>
-
-                  </div>
-                </div>
-
-              </div>
-            </m.div>
-          ) : (
-            <m.div
-              key="traditional"
-              initial={{ opacity: 0, scale: 0.94, y: 22 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.94, y: -22 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 320 }}
-              className="rounded-3xl border border-red-200/80 bg-red-50/30 p-6 sm:p-10 lg:p-12 shadow-[0_20px_50px_-15px_rgba(239,68,68,0.08)] relative overflow-hidden text-neutral-900"
-            >
-              {/* Window Header Bar (Red Warning Mode) */}
-              <div className="flex items-center justify-between pb-4 mb-6 border-b border-red-100 text-xs font-mono text-neutral-500">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-neutral-300" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-neutral-300" />
-                </div>
-                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 border border-red-200 text-red-800 text-[11px] font-semibold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping" />
-                  <span>{isAr ? 'النموذج التقليدي • احتكاك عالي' : 'TRADITIONAL PROCUREMENT • HIGH FRICTION'}</span>
-                </div>
-                <span className="text-[11px] text-red-600/80 hidden sm:inline font-mono">STATUS: HIGH WASTE</span>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                
-                {/* Left Column: Negative State Copy */}
-                <div className="lg:col-span-5 flex flex-col items-start text-start space-y-4">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 border border-red-200 text-red-800 text-[11px] font-bold uppercase tracking-wider">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                    <span>{isAr ? 'تشتت وإرهاق إداري' : 'FRAGMENTED & OPAQUE'}</span>
+                    <div className="flex items-center gap-2 px-3 py-0.5 rounded-full bg-red-100 border border-red-200 text-red-800 text-[11px] font-semibold">
+                      <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping" />
+                      <span>{isAr ? 'النموذج التقليدي • احتكاك عالي' : 'TRADITIONAL PROCUREMENT • HIGH FRICTION'}</span>
+                    </div>
+                    <span className="text-[11px] text-red-600/80 hidden sm:inline font-mono">STATUS: HIGH WASTE</span>
                   </div>
 
-                  <h3 className="text-2xl sm:text-3xl lg:text-[34px] font-heading font-semibold text-neutral-950 leading-tight">
-                    {isAr
-                      ? 'تشتت، غموض، وإرهاق إداري.'
-                      : 'Fragmented, opaque, and overwhelmed.'}
-                  </h3>
-
-                  <p className="text-sm sm:text-base text-neutral-600 font-sans leading-relaxed">
-                    {isAr
-                      ? 'تغرق فرق الموارد البشرية في كتالوجات غير مجدية، بينما يرسل مزودو التدريب مئات الرسائل الباردة بدون ردود أو بميزانيات وهمية.'
-                      : 'Weeks lost sifting through generic course catalogs, bombarded by cold sales emails, or hosting exploratory discovery calls with leads who lack approved budget.'}
-                  </p>
-
-                  <div className="pt-2 w-full sm:w-auto">
-                    <button
-                      type="button"
-                      onClick={() => setMode('pontlook')}
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#FF5C00] hover:bg-[#FF7A2F] text-white font-semibold text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all active:scale-95 cursor-pointer"
-                    >
-                      <span>{isAr ? 'شاهد حل بونت لوك لهذا ←' : 'See how PontLook fixes this →'}</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Right Column: Broken/Disconnected Visual Diagram */}
-                <div className="lg:col-span-7">
-                  <div className="rounded-2xl border border-red-200/70 bg-white p-5 sm:p-7 shadow-xs space-y-6 font-sans">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
                     
-                    <div className="relative py-4 px-2">
-                      <div className="grid grid-cols-3 gap-2 sm:gap-4 items-center text-center relative z-10">
-                        
-                        <div className="p-3 sm:p-4 rounded-xl border border-red-200 bg-red-50/50 flex flex-col items-center space-y-1">
-                          <Users size={20} className="text-red-500" />
-                          <span className="text-xs font-bold text-neutral-900">
-                            {isAr ? 'موارد بشرية مرهقة' : 'Overwhelmed HR'}
-                          </span>
-                          <span className="text-[10px] text-red-600 font-medium">
-                            {isAr ? '100+ عرض مكرر' : 'Generic PDFs'}
-                          </span>
-                        </div>
-
-                        {/* Broken Center Gap */}
-                        <div className="p-3.5 sm:p-4 rounded-2xl border border-dashed border-red-300 bg-red-50/70 text-neutral-900 flex flex-col items-center space-y-1">
-                          <XCircle size={22} className="text-red-500" />
-                          <span className="text-xs font-bold text-red-700">
-                            {isAr ? 'انفصال تام' : 'Broken Bridge'}
-                          </span>
-                          <span className="text-[10px] text-neutral-500 font-medium">
-                            {isAr ? 'أسابيع ضائعة' : '4-8 Weeks Lost'}
-                          </span>
-                        </div>
-
-                        <div className="p-3 sm:p-4 rounded-xl border border-red-200 bg-red-50/50 flex flex-col items-center space-y-1">
-                          <Handshake size={20} className="text-red-500" />
-                          <span className="text-xs font-bold text-neutral-900">
-                            {isAr ? 'مزود تدريب محبط' : 'Struggling Firm'}
-                          </span>
-                          <span className="text-[10px] text-red-600 font-medium">
-                            {isAr ? 'رسائل باردة مهدرة' : 'Cold Spam Outreach'}
-                          </span>
-                        </div>
-
+                    {/* Left Column: Negative State Copy */}
+                    <div className="lg:col-span-5 flex flex-col items-start text-start space-y-3">
+                      <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-red-100 border border-red-200 text-red-800 text-[11px] font-bold uppercase tracking-wider">
+                        <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                        <span>{isAr ? 'تشتت وإرهاق إداري' : 'FRAGMENTED & OPAQUE'}</span>
                       </div>
 
-                      {/* Broken Red Line */}
-                      <div className="absolute top-1/2 start-8 end-8 h-0.5 border-t-2 border-dashed border-red-300 -translate-y-1/2 pointer-events-none" />
+                      <h3 className="text-xl sm:text-2xl lg:text-[28px] font-heading font-semibold text-neutral-950 leading-tight">
+                        {isAr
+                          ? 'تشتت، غموض، وإرهاق إداري.'
+                          : 'Fragmented, opaque, and overwhelmed.'}
+                      </h3>
+
+                      <p className="text-xs sm:text-sm text-neutral-600 font-sans leading-relaxed">
+                        {isAr
+                          ? 'تغرق فرق الموارد البشرية في كتالوجات غير مجدية، بينما يرسل مزودو التدريب مئات الرسائل الباردة بدون ردود أو بميزانيات وهمية.'
+                          : 'Weeks lost sifting through generic course catalogs, bombarded by cold sales emails, or hosting exploratory discovery calls with leads who lack approved budget.'}
+                      </p>
+
+                      <div className="pt-1 w-full sm:w-auto">
+                        <button
+                          type="button"
+                          onClick={() => setMode('pontlook')}
+                          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#FF5C00] hover:bg-[#FF7A2F] text-white font-semibold text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all active:scale-95 cursor-pointer"
+                        >
+                          <span>{isAr ? 'شاهد حل بونت لوك لهذا ←' : 'See how PontLook fixes this →'}</span>
+                        </button>
+                      </div>
                     </div>
 
-                    {/* 3 Friction Points */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-red-100 text-xs">
-                      <div className="flex items-start gap-2">
-                        <XCircle size={16} className="text-red-500 shrink-0 mt-0.5" />
-                        <div>
-                          <span className="font-bold text-neutral-900 block">{isAr ? 'تأخير في الاختيار' : 'Weeks Lost'}</span>
-                          <span className="text-[11px] text-neutral-500">{isAr ? 'شهور من المفاوضات' : 'Lengthy vendor searches'}</span>
-                        </div>
-                      </div>
+                    {/* Right Column: Broken/Disconnected Visual Diagram */}
+                    <div className="lg:col-span-7">
+                      <div className="rounded-2xl border border-red-200/70 bg-white p-4 sm:p-5 shadow-xs space-y-4 font-sans">
+                        
+                        <div className="relative py-3 px-2">
+                          <div className="grid grid-cols-3 gap-2 sm:gap-4 items-center text-center relative z-10">
+                            
+                            <div className="p-2.5 sm:p-3 rounded-xl border border-red-200 bg-red-50/50 flex flex-col items-center space-y-1">
+                              <Users size={18} className="text-red-500" />
+                              <span className="text-xs font-bold text-neutral-900">
+                                {isAr ? 'موارد بشرية مرهقة' : 'Overwhelmed HR'}
+                              </span>
+                              <span className="text-[10px] text-red-600 font-medium">
+                                {isAr ? '100+ عرض مكرر' : 'Generic PDFs'}
+                              </span>
+                            </div>
 
-                      <div className="flex items-start gap-2">
-                        <XCircle size={16} className="text-red-500 shrink-0 mt-0.5" />
-                        <div>
-                          <span className="font-bold text-neutral-900 block">{isAr ? 'فرص غير موثوقة' : 'Dead End Leads'}</span>
-                          <span className="text-[11px] text-neutral-500">{isAr ? 'غياب الميزانية والقرار' : 'No confirmed purchasing budget'}</span>
-                        </div>
-                      </div>
+                            {/* Broken Center Gap */}
+                            <div className="p-3 sm:p-3.5 rounded-2xl border border-dashed border-red-300 bg-red-50/70 text-neutral-900 flex flex-col items-center space-y-1">
+                              <XCircle size={20} className="text-red-500" />
+                              <span className="text-xs font-bold text-red-700">
+                                {isAr ? 'انفصال تام' : 'Broken Bridge'}
+                              </span>
+                              <span className="text-[10px] text-neutral-500 font-medium">
+                                {isAr ? 'أسابيع ضائعة' : '4-8 Weeks Lost'}
+                              </span>
+                            </div>
 
-                      <div className="flex items-start gap-2">
-                        <XCircle size={16} className="text-red-500 shrink-0 mt-0.5" />
-                        <div>
-                          <span className="font-bold text-neutral-900 block">{isAr ? 'تدريب معلب وجاهز' : 'Off-the-Shelf Fits'}</span>
-                          <span className="text-[11px] text-neutral-500">{isAr ? 'عدم سد فجوة الكفاءة' : 'Fails to deliver actual ROI'}</span>
+                            <div className="p-2.5 sm:p-3 rounded-xl border border-red-200 bg-red-50/50 flex flex-col items-center space-y-1">
+                              <Handshake size={18} className="text-red-500" />
+                              <span className="text-xs font-bold text-neutral-900">
+                                {isAr ? 'مزود تدريب محبط' : 'Struggling Firm'}
+                              </span>
+                              <span className="text-[10px] text-red-600 font-medium">
+                                {isAr ? 'رسائل باردة مهدرة' : 'Cold Spam Outreach'}
+                              </span>
+                            </div>
+
+                          </div>
+
+                          {/* Broken Red Line */}
+                          <div className="absolute top-1/2 start-8 end-8 h-0.5 border-t-2 border-dashed border-red-300 -translate-y-1/2 pointer-events-none" />
                         </div>
+
+                        {/* 3 Friction Points */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2.5 border-t border-red-100 text-xs">
+                          <div className="flex items-start gap-2">
+                            <XCircle size={15} className="text-red-500 shrink-0 mt-0.5" />
+                            <div>
+                              <span className="font-bold text-neutral-900 block text-[11px] sm:text-xs">{isAr ? 'تأخير في الاختيار' : 'Weeks Lost'}</span>
+                              <span className="text-[10px] text-neutral-500">{isAr ? 'شهور من المفاوضات' : 'Lengthy vendor searches'}</span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-start gap-2">
+                            <XCircle size={15} className="text-red-500 shrink-0 mt-0.5" />
+                            <div>
+                              <span className="font-bold text-neutral-900 block text-[11px] sm:text-xs">{isAr ? 'فرص غير موثوقة' : 'Dead End Leads'}</span>
+                              <span className="text-[10px] text-neutral-500">{isAr ? 'غياب الميزانية والقرار' : 'No confirmed purchasing budget'}</span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-start gap-2">
+                            <XCircle size={15} className="text-red-500 shrink-0 mt-0.5" />
+                            <div>
+                              <span className="font-bold text-neutral-900 block text-[11px] sm:text-xs">{isAr ? 'تدريب معلب وجاهز' : 'Off-the-Shelf Fits'}</span>
+                              <span className="text-[10px] text-neutral-500">{isAr ? 'عدم سد فجوة الكفاءة' : 'Fails to deliver actual ROI'}</span>
+                            </div>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
 
                   </div>
-                </div>
-
-              </div>
-            </m.div>
-          )}
-        </AnimatePresence>
+                </m.div>
+              )}
+            </AnimatePresence>
+          </m.div>
+        </m.div>
       </div>
     </section>
   );
@@ -536,134 +649,7 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
   );
 }
 
-/* ==========================================================================
-   SECTION: ATTIO-STYLE EDITORIAL SCROLL QUOTE (WORD-BY-WORD ILLUMINATION)
-   ========================================================================== */
-export function EditorialQuoteSection({ lang = 'en' }: WhoWeAreProps) {
-  const isAr = lang === 'ar';
-  const targetRef = useRef<HTMLDivElement | null>(null);
-  const prefersReducedMotion = useReducedMotion();
 
-  const quoteText = isAr
-    ? '«استبدلت بونت لوك أسابيع من التواصل العشوائي وأدلة المناقصات غير المجدية بطلب مؤسسي مؤكد يصل مباشرة إلى فريق قيادتنا.»'
-    : '“PontLook replaced weeks of speculative cold outreach and dead RFP directories with verified enterprise demand delivered directly to our leadership team.”';
-
-  const words = quoteText.split(' ');
-  const [activeWordIndex, setActiveWordIndex] = useState(-1);
-
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ['start start', 'end end'],
-  });
-
-  // Transform scroll progress to word index
-  const progress = useTransform(scrollYProgress, [0.10, 0.80], [0, 1], { clamp: true });
-
-  useMotionValueEvent(progress, 'change', (latest) => {
-    if (prefersReducedMotion) {
-      setActiveWordIndex(words.length);
-    } else {
-      setActiveWordIndex(Math.floor(latest * words.length) - 1);
-    }
-  });
-
-  // Fade in attribution towards the end of the scroll
-  const attributionOpacity = useTransform(scrollYProgress, [0.60, 0.85], [0, 1]);
-  const attributionY = useTransform(scrollYProgress, [0.60, 0.85], [15, 0]);
-
-  return (
-    <section
-      id="editorial-quote"
-      data-nav-light="true"
-      data-nav-theme="light"
-      className="relative z-0 md:-mt-[100dvh] flex flex-col bg-white text-neutral-900 overflow-hidden"
-    >
-      <div ref={targetRef} className="h-[220vh] sm:h-[250vh] relative">
-        <div className="sticky top-0 flex h-screen flex-col justify-center items-center overflow-hidden px-4 sm:px-6 lg:px-8">
-          
-          {/* Attio-Style Dot Grid Background */}
-          <svg
-            width="100%"
-            height="100%"
-            className="absolute inset-0 pointer-events-none opacity-30 text-neutral-400"
-            aria-hidden="true"
-          >
-            <defs>
-              <pattern id="attio-quote-dots" width="24" height="24" patternUnits="userSpaceOnUse">
-                <circle cx="2" cy="2" r="1" fill="currentColor" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#attio-quote-dots)" />
-          </svg>
-
-          {/* Vignette gradients top & bottom */}
-          <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none" />
-          <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
-
-          <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center">
-            
-            {/* Top Status Pill */}
-            <div className="mb-6 sm:mb-8 inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-semibold uppercase tracking-wider font-mono shadow-xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>{isAr ? 'شهادة موثقة • دول مجلس التعاون' : 'VERIFIED ENTERPRISE MANDATE • GCC'}</span>
-            </div>
-
-            {/* Quotation Mark Accent */}
-            <div className="text-amber-500/35 text-5xl sm:text-6xl font-serif select-none leading-none mb-3 sm:mb-4">
-              “
-            </div>
-
-            {/* The Main Quote with Word-by-Word Scroll Reveal */}
-            <p
-              className={`text-2xl sm:text-4xl lg:text-[46px] font-heading font-medium tracking-tight leading-[1.3] text-center max-w-4xl select-none ${
-                isAr ? 'font-sans' : ''
-              }`}
-              dir={isAr ? 'rtl' : 'ltr'}
-            >
-              {words.map((word, idx) => (
-                <span
-                  key={idx}
-                  className={`transition-colors duration-300 ease-out inline-block ${
-                    idx <= activeWordIndex || prefersReducedMotion
-                      ? 'text-neutral-950 font-semibold'
-                      : 'text-neutral-300'
-                  }`}
-                >
-                  {word}&nbsp;
-                </span>
-              ))}
-            </p>
-
-            {/* Attribution Container (smoothly appears as quote finishes) */}
-            <m.div
-              style={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: attributionOpacity, y: attributionY }}
-              className="mt-8 sm:mt-12 flex flex-col items-center justify-center space-y-1 font-sans"
-            >
-              <div className="text-base sm:text-lg font-semibold text-neutral-950">
-                {isAr ? 'مسؤول التدريب والتطوير المؤسسي' : 'Head of Corporate Learning & Talent'}
-              </div>
-              <div className="text-xs sm:text-sm text-neutral-500 font-normal">
-                {isAr
-                  ? 'مجموعة مصرفية وصناعية كبرى · الرياض & دبي'
-                  : 'GCC Enterprise Financial Group · Riyadh & Dubai'}
-              </div>
-            </m.div>
-
-          </div>
-
-          {/* Bottom subtle scroll hint */}
-          <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-[11px] font-mono text-neutral-400 pointer-events-none">
-            <span className="tracking-wider uppercase text-[10px]">
-              {isAr ? 'مرر للأسفل للمتابعة' : 'Scroll to explore'}
-            </span>
-            <div className="w-1 h-3 rounded-full bg-neutral-300 animate-bounce" />
-          </div>
-
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ==========================================================================
    SECTION 4: THE END TO END TRAINING JOURNEY (UNIFIED TIMELINE)
@@ -853,7 +839,6 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
 export default function WhoWeAreSections({ lang = 'en' }: WhoWeAreProps) {
   return (
     <div data-nav-light="true" data-nav-theme="light">
-      <EditorialQuoteSection lang={lang} />
       <ComparisonToggleSection lang={lang} />
       <ValueModelBilateral lang={lang} />
       <TrainingJourneyFlow lang={lang} />
