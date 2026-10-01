@@ -66,29 +66,33 @@ export default function FindTrainingBentoImpact({ lang }: FindTrainingBentoImpac
         </p>
       </div>
 
-      {/* Single Unified Window Container (Black, White, and Grey) */}
-      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/10 bg-gradient-to-b from-[#131418] to-[#0A0B0D] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),inset_0_1px_0_0_rgba(255,255,255,0.08)]">
-        {/* Window Title Bar */}
-        <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3.5 border-b border-white/[0.08] bg-black/40 text-xs font-mono">
-          {/* Window Control Dots (Silver / Monochrome) */}
-          <div className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-            <span className="ms-2 text-neutral-400 hidden sm:inline text-[11px]">
-              {isAr ? 'منظومة المطابقة والقياس المؤسسي' : 'enterprise_matching_matrix.sys'}
+      {/* Clean Modern Web Showcase Card (Monochrome: Black, White, and Grey) */}
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-[#0C0D11] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),inset_0_1px_0_0_rgba(255,255,255,0.06)]">
+        {/* Subtle Ambient Radial Lighting */}
+        <div className="pointer-events-none absolute -top-40 end-1/4 h-80 w-96 rounded-full bg-white/[0.02] blur-3xl" />
+
+        {/* Showcase Top Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3 px-5 sm:px-8 py-4 border-b border-white/[0.08] bg-white/[0.02]">
+          <div className="flex items-center gap-2.5">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/15 text-white text-xs font-semibold">
+              <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.6)]" />
+              <span className="font-mono tracking-wider uppercase text-[11px]">
+                {isAr ? 'منظومة المطابقة المؤسسية المباشرة' : 'Direct Enterprise Concierge Engine'}
+              </span>
+            </span>
+            <span className="hidden sm:inline text-neutral-400 text-xs font-sans">
+              {isAr ? 'توفيق مخصص ودقيق بين التحدي وبيوت الخبرة المعتمدة' : 'Precision matchmaking between corporate needs & vetted providers'}
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/20 text-white text-[11px] font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-white" />
-              <span>{isAr ? 'مجاني 100% للشركات' : '100% FREE FOR ENTERPRISES'}</span>
+          <div className="flex items-center gap-3 text-xs font-mono">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] border border-white/15 text-white text-[11px] font-semibold">
+              <span>{isAr ? 'مجاني 100% للشركات' : '100% Free For Enterprises'}</span>
             </span>
           </div>
         </div>
 
-        {/* 2-Panel Split inside the Single Window */}
+        {/* 2-Panel Split inside the Showcase */}
         <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
           {/* Left Panel: Direct Concierge Pipeline */}
           <div className="lg:col-span-6 p-5 sm:p-7 lg:p-9 flex flex-col justify-between">
@@ -248,10 +252,10 @@ export default function FindTrainingBentoImpact({ lang }: FindTrainingBentoImpac
           </div>
         </div>
 
-        {/* Window Footer Bar */}
-        <div className="px-5 sm:px-8 py-3 bg-black/60 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-neutral-400">
+        {/* Showcase Trust Bar */}
+        <div className="px-5 sm:px-8 py-4 bg-black/40 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-neutral-400">
           <div className="flex items-center gap-2">
-            <CheckCircle2 size={14} className="text-white" />
+            <CheckCircle2 size={15} className="text-white shrink-0" />
             <span className="text-neutral-300">
               {isAr ? 'عروض أسعار تفصيلية ومقارنة واضحة بدون أي التزام' : 'Itemized vendor proposals with guaranteed pricing transparency'}
             </span>

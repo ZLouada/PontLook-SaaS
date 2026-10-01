@@ -116,30 +116,38 @@ export default function ProviderStepsComparison({ lang }: ProviderStepsCompariso
         </p>
       </div>
 
-      {/* Single Unified Window Container */}
-      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/10 bg-gradient-to-b from-[#131418] to-[#0A0B0D] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),inset_0_1px_0_0_rgba(255,255,255,0.08)]">
-        {/* Window Title Bar */}
-        <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3.5 border-b border-white/[0.08] bg-black/40 text-xs font-mono">
-          {/* Window Control Dots */}
-          <div className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-            <span className="ms-2 text-neutral-400 hidden sm:inline text-[11px]">
-              {isAr ? 'بروتوكول تدفق العقود والفرص المباشرة' : 'gcc_enterprise_deal_pipeline.exe'}
+      {/* Clean Modern Web Showcase Card */}
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-[#0C0D11] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),inset_0_1px_0_0_rgba(255,255,255,0.06)]">
+        {/* Subtle Ambient Radial Lighting */}
+        <div className="pointer-events-none absolute -top-40 start-1/4 h-80 w-96 rounded-full bg-orange-500/[0.04] blur-3xl" />
+
+        {/* Showcase Top Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3 px-5 sm:px-8 py-4 border-b border-white/[0.08] bg-white/[0.02]">
+          <div className="flex items-center gap-2.5">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/30 text-[#FF5C00] text-xs font-semibold">
+              <span className="w-2 h-2 rounded-full bg-[#FF5C00] shadow-[0_0_8px_#FF5C00]" />
+              <span className="font-mono tracking-wider uppercase text-[11px]">
+                {isAr ? 'مسار الصفقات المؤسسية' : 'Enterprise Deal Velocity'}
+              </span>
+            </span>
+            <span className="hidden sm:inline text-neutral-400 text-xs font-sans">
+              {isAr ? 'مقارنة مباشرة لسرعة إغلاق العقود' : 'Direct comparison of closing speed & qualified demand'}
             </span>
           </div>
 
-          {/* Status Badge */}
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-500/10 border border-[#FF5C00]/40 text-[#FF5C00] text-[11px] font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00] animate-pulse" />
-              <span>{isAr ? 'عقود مؤكدة • نشط' : 'CONFIRMED DEMAND'}</span>
+          <div className="flex items-center gap-3 text-xs font-mono">
+            <span className="text-neutral-400 flex items-center gap-1.5">
+              <span className="text-white font-semibold">5–8 {isAr ? 'أيام' : 'Days'}</span>
+              <span className="text-neutral-600">vs</span>
+              <span className="text-neutral-400">45–90 {isAr ? 'يوماً' : 'Days'}</span>
+            </span>
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-semibold">
+              {isAr ? 'تسريع 8 أضعاف' : '8x Faster'}
             </span>
           </div>
         </div>
 
-        {/* 2-Panel Split inside the Single Window */}
+        {/* 2-Panel Split inside the Showcase */}
         <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
           {/* Left Panel: With PontLook (5-8 Days) */}
           <div className="lg:col-span-7 p-5 sm:p-7 lg:p-9 flex flex-col justify-between">
@@ -280,16 +288,16 @@ export default function ProviderStepsComparison({ lang }: ProviderStepsCompariso
           </div>
         </div>
 
-        {/* Window Footer Bar */}
-        <div className="px-5 sm:px-8 py-3 bg-black/60 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-neutral-400">
+        {/* Showcase Trust Bar */}
+        <div className="px-5 sm:px-8 py-4 bg-black/40 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-neutral-400">
           <div className="flex items-center gap-2">
-            <CheckCircle2 size={14} className="text-[#FF5C00]" />
+            <CheckCircle2 size={15} className="text-[#FF5C00] shrink-0" />
             <span className="text-neutral-300">
-              {isAr ? 'تأهيل كامل للميزانيات وصلاحيات الشراء قبل التقديم' : 'Pre-qualified enterprise budget and direct procurement authority'}
+              {isAr ? 'تأهيل مسبق للميزانية وصلاحيات الشراء قبل التقديم' : 'Pre-qualified enterprise budgets & direct procurement authority'}
             </span>
           </div>
           <span className="font-mono text-[#FF5C00] font-semibold text-[11px] sm:text-xs">
-            {isAr ? 'الوصول المباشر لصانع القرار' : 'Direct Executive Access'}
+            {isAr ? 'الوصول المباشر لصانع القرار' : 'Direct Decision-Maker Access'}
           </span>
         </div>
       </div>
