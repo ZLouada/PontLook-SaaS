@@ -22,7 +22,7 @@ import {
   Building2,
   Users,
 } from '@/components/icons';
-import { m, AnimatePresence, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import Signal from '@/components/shared/Signal';
 import TextReveal from '@/components/shared/TextReveal';
 import CardTilt3D from '@/components/shared/CardTilt3D';
@@ -40,119 +40,27 @@ interface WhoWeAreProps {
 export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
   const isAr = lang === 'ar';
   const [mode, setMode] = useState<'pontlook' | 'traditional'>('pontlook');
-  const [isDesktop, setIsDesktop] = useState(false);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const prefersReducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    const check = () => setIsDesktop(window.innerWidth >= 1024);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  // Garage Shutter Roll-down: curtain descends from top (-100% to 0%) as you scroll down across the boundary
-  const shutterY = useTransform(scrollYProgress, [0, 0.50], ['-100%', '0%']);
-
-  // Spring Content Pop-up: content springs into view as the shutter approaches closure
-  const contentScale = useTransform(scrollYProgress, [0.24, 0.55], [0.90, 1]);
-  const contentOpacity = useTransform(scrollYProgress, [0.20, 0.45], [0, 1]);
-  const contentY = useTransform(scrollYProgress, [0.24, 0.55], [45, 0]);
-
-
 
   return (
     <section
       id="our-mission"
-      ref={containerRef}
       data-nav-light="true"
       data-nav-theme="light"
-      className="relative bg-black transition-colors duration-500 overflow-visible lg:h-[220vh]"
+      className="relative bg-white text-neutral-900 py-16 sm:py-24 lg:py-28 border-t border-neutral-200 overflow-hidden"
       aria-labelledby="comparison-title"
     >
-      {/* Viewport Stage: Pinned on desktop during the garage door closure */}
-      <div className="lg:sticky lg:top-0 min-h-screen w-full overflow-hidden flex flex-col justify-center items-center relative z-20">
-        
-        {/* Background Underlayer: Dark aesthetic connecting seamlessly with WhoWeAreHero */}
-        <div
-          className="absolute inset-0 bg-black pointer-events-none"
-          aria-hidden="true"
-        >
-          {/* Subtle dark technical dot grid */}
-          <div
-            className="absolute inset-0 opacity-[0.06]"
-            style={{
-              backgroundImage:
-                'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.7) 1px, transparent 0)',
-              backgroundSize: '36px 36px',
-            }}
-          />
-          {/* Faint blue ambient glow matching hero */}
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-blue-500/[0.04] rounded-full blur-[120px]" />
-        </div>
+      {/* Attio-Style Subtle Grid dots */}
+      <div
+        className="absolute inset-0 opacity-[0.035] pointer-events-none"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at 1px 1px, #000 1px, transparent 0)',
+          backgroundSize: '24px 24px',
+        }}
+        aria-hidden="true"
+      />
 
-        {/* ================================================================
-            THE GARAGE SHUTTER CURTAIN (Rolling down over the dark hero)
-            ================================================================ */}
-        <m.div
-          style={
-            prefersReducedMotion || !isDesktop
-              ? { transform: 'none' }
-              : { y: shutterY }
-          }
-          className="lg:absolute lg:inset-0 w-full min-h-screen lg:h-full bg-white text-neutral-900 shadow-2xl flex flex-col justify-center items-center overflow-hidden z-10 py-12 lg:py-0"
-        >
-          {/* Architectural horizontal garage door shutter slats */}
-          <div
-            className="absolute inset-0 pointer-events-none opacity-[0.80]"
-            style={{
-              backgroundImage: `
-                repeating-linear-gradient(
-                  to bottom,
-                  transparent 0px,
-                  transparent 38px,
-                  rgba(0, 0, 0, 0.03) 38px,
-                  rgba(0, 0, 0, 0.055) 39px,
-                  transparent 40px
-                )
-              `,
-            }}
-            aria-hidden="true"
-          />
-
-          {/* Attio-Style Subtle Grid dots */}
-          <div
-            className="absolute inset-0 opacity-[0.035] pointer-events-none"
-            style={{
-              backgroundImage:
-                'radial-gradient(circle at 1px 1px, #000 1px, transparent 0)',
-              backgroundSize: '24px 24px',
-            }}
-            aria-hidden="true"
-          />
-
-
-
-          {/* ================================================================
-              SPRING POP-UP CONTENT INSIDE THE SHUTTER
-              ================================================================ */}
-          <m.div
-            style={
-              prefersReducedMotion || !isDesktop
-                ? { transform: 'none', opacity: 1 }
-                : {
-                    scale: contentScale,
-                    opacity: contentOpacity,
-                    y: contentY,
-                  }
-            }
-            className="container-site relative z-20 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-4 sm:py-6 lg:py-8 flex flex-col justify-center my-auto w-full"
-          >
+      <div className="container-site relative z-10 mx-auto px-3.5 xs:px-4 sm:px-6 lg:px-8 max-w-7xl">
             {/* Toggle Switch Header */}
             <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-2.5">
               
@@ -487,8 +395,6 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                 </m.div>
               )}
             </AnimatePresence>
-          </m.div>
-        </m.div>
       </div>
     </section>
   );
