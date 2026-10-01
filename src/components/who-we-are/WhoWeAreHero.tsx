@@ -288,7 +288,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
     <section
       data-nav-dark="true"
       ref={containerRef}
-      className="bg-black text-white min-h-[100dvh] flex flex-col justify-between pt-24 sm:pt-32 lg:pt-36 pb-8 relative overflow-hidden select-none"
+      className="bg-black text-white min-h-[100dvh] flex flex-col justify-between pt-24 sm:pt-32 lg:pt-36 pb-8 relative z-10 overflow-hidden select-none shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
     >
       {/* TOP CONTENT (Headline & Subtitle Only) */}
       <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-4 sm:px-6 mb-6 sm:mb-10">

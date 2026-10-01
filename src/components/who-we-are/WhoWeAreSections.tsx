@@ -22,7 +22,7 @@ import {
   Building2,
   Users,
 } from '@/components/icons';
-import { m, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import Signal from '@/components/shared/Signal';
 import TextReveal from '@/components/shared/TextReveal';
 import CardTilt3D from '@/components/shared/CardTilt3D';
@@ -537,64 +537,129 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
 }
 
 /* ==========================================================================
-   SECTION 3: ATTIO-INSPIRED EDITORIAL QUOTE (WHITE POP-UP BANNER)
+   SECTION: ATTIO-STYLE EDITORIAL SCROLL QUOTE (WORD-BY-WORD ILLUMINATION)
    ========================================================================== */
 export function EditorialQuoteSection({ lang = 'en' }: WhoWeAreProps) {
   const isAr = lang === 'ar';
+  const targetRef = useRef<HTMLDivElement | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  const quoteText = isAr
+    ? '«استبدلت بونت لوك أسابيع من التواصل العشوائي وأدلة المناقصات غير المجدية بطلب مؤسسي مؤكد يصل مباشرة إلى فريق قيادتنا.»'
+    : '“PontLook replaced weeks of speculative cold outreach and dead RFP directories with verified enterprise demand delivered directly to our leadership team.”';
+
+  const words = quoteText.split(' ');
+  const [activeWordIndex, setActiveWordIndex] = useState(-1);
+
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ['start start', 'end end'],
+  });
+
+  // Transform scroll progress to word index
+  const progress = useTransform(scrollYProgress, [0.10, 0.80], [0, 1], { clamp: true });
+
+  useMotionValueEvent(progress, 'change', (latest) => {
+    if (prefersReducedMotion) {
+      setActiveWordIndex(words.length);
+    } else {
+      setActiveWordIndex(Math.floor(latest * words.length) - 1);
+    }
+  });
+
+  // Fade in attribution towards the end of the scroll
+  const attributionOpacity = useTransform(scrollYProgress, [0.60, 0.85], [0, 1]);
+  const attributionY = useTransform(scrollYProgress, [0.60, 0.85], [15, 0]);
 
   return (
     <section
       id="editorial-quote"
       data-nav-light="true"
       data-nav-theme="light"
-      className="relative bg-neutral-50 text-neutral-900 py-16 sm:py-24 border-t border-neutral-200 overflow-hidden"
+      className="relative z-0 md:-mt-[100dvh] flex flex-col bg-white text-neutral-900 overflow-hidden"
     >
-      <div className="container-site max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <m.div
-          initial={{ opacity: 0, scale: 0.94, y: 28 }}
-          whileInView={{ opacity: 1, scale: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ type: 'spring', damping: 25, stiffness: 280 }}
-          className="relative rounded-3xl border border-neutral-200/90 bg-white p-8 sm:p-12 lg:p-14 shadow-[0_25px_65px_-12px_rgba(0,0,0,0.08),0_10px_25px_-5px_rgba(0,0,0,0.04)] text-center text-neutral-900 overflow-hidden space-y-6 group"
-        >
-          {/* Subtle pop-up window bar at top */}
-          <div className="flex items-center justify-between pb-4 border-b border-neutral-100 text-xs font-mono text-neutral-400">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+      <div ref={targetRef} className="h-[220vh] sm:h-[250vh] relative">
+        <div className="sticky top-0 flex h-screen flex-col justify-center items-center overflow-hidden px-4 sm:px-6 lg:px-8">
+          
+          {/* Attio-Style Dot Grid Background */}
+          <svg
+            width="100%"
+            height="100%"
+            className="absolute inset-0 pointer-events-none opacity-30 text-neutral-400"
+            aria-hidden="true"
+          >
+            <defs>
+              <pattern id="attio-quote-dots" width="24" height="24" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1" fill="currentColor" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#attio-quote-dots)" />
+          </svg>
+
+          {/* Vignette gradients top & bottom */}
+          <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
+
+          <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center">
+            
+            {/* Top Status Pill */}
+            <div className="mb-6 sm:mb-8 inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-semibold uppercase tracking-wider font-mono shadow-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>{isAr ? 'شهادة موثقة • دول مجلس التعاون' : 'VERIFIED ENTERPRISE MANDATE • GCC'}</span>
             </div>
-            <span className="text-[11px] uppercase tracking-wider text-neutral-500 font-mono">
-              {isAr ? 'شهادة موثقة • دول مجلس التعاون' : 'VERIFIED ENTERPRISE MANDATE • GCC'}
+
+            {/* Quotation Mark Accent */}
+            <div className="text-amber-500/35 text-5xl sm:text-6xl font-serif select-none leading-none mb-3 sm:mb-4">
+              “
+            </div>
+
+            {/* The Main Quote with Word-by-Word Scroll Reveal */}
+            <p
+              className={`text-2xl sm:text-4xl lg:text-[46px] font-heading font-medium tracking-tight leading-[1.3] text-center max-w-4xl select-none ${
+                isAr ? 'font-sans' : ''
+              }`}
+              dir={isAr ? 'rtl' : 'ltr'}
+            >
+              {words.map((word, idx) => (
+                <span
+                  key={idx}
+                  className={`transition-colors duration-300 ease-out inline-block ${
+                    idx <= activeWordIndex || prefersReducedMotion
+                      ? 'text-neutral-950 font-semibold'
+                      : 'text-neutral-300'
+                  }`}
+                >
+                  {word}&nbsp;
+                </span>
+              ))}
+            </p>
+
+            {/* Attribution Container (smoothly appears as quote finishes) */}
+            <m.div
+              style={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: attributionOpacity, y: attributionY }}
+              className="mt-8 sm:mt-12 flex flex-col items-center justify-center space-y-1 font-sans"
+            >
+              <div className="text-base sm:text-lg font-semibold text-neutral-950">
+                {isAr ? 'مسؤول التدريب والتطوير المؤسسي' : 'Head of Corporate Learning & Talent'}
+              </div>
+              <div className="text-xs sm:text-sm text-neutral-500 font-normal">
+                {isAr
+                  ? 'مجموعة مصرفية وصناعية كبرى · الرياض & دبي'
+                  : 'GCC Enterprise Financial Group · Riyadh & Dubai'}
+              </div>
+            </m.div>
+
+          </div>
+
+          {/* Bottom subtle scroll hint */}
+          <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-[11px] font-mono text-neutral-400 pointer-events-none">
+            <span className="tracking-wider uppercase text-[10px]">
+              {isAr ? 'مرر للأسفل للمتابعة' : 'Scroll to explore'}
             </span>
-            <span className="w-6" />
+            <div className="w-1 h-3 rounded-full bg-neutral-300 animate-bounce" />
           </div>
 
-          <BorderGlow glowColor="rgba(255, 92, 0, 0.15)" size={350} opacity={0.4} />
-          <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/[0.03] rounded-full blur-3xl pointer-events-none" />
-
-          {/* Quotation Mark */}
-          <div className="text-amber-500/30 text-5xl sm:text-6xl font-serif select-none leading-none mx-auto">
-            “
-          </div>
-
-          {/* The Quote Headline */}
-          <blockquote className="text-xl sm:text-2xl lg:text-[28px] font-heading font-medium text-neutral-950 leading-[1.38] tracking-tight max-w-3xl mx-auto">
-            {isAr
-              ? '«استبدلت بونت لوك أسابيع من التواصل العشوائي وأدلة المناقصات غير المجدية بطلب مؤسسي مؤكد يصل مباشرة إلى فريق قيادتنا.»'
-              : '“PontLook replaced weeks of speculative cold outreach and dead RFP directories with verified enterprise demand delivered directly to our leadership team.”'}
-          </blockquote>
-
-          {/* Author / Entity Attribution */}
-          <div className="pt-2 flex flex-col items-center justify-center space-y-1 font-sans">
-            <div className="text-sm font-semibold text-neutral-900">
-              {isAr ? 'مسؤول التدريب والتطوير المؤسسي' : 'Head of Corporate Learning & Talent'}
-            </div>
-            <div className="text-xs text-neutral-500">
-              {isAr ? 'مجموعة مصرفية وصناعية كبرى · الرياض & دبي' : 'GCC Enterprise Financial Group · Riyadh & Dubai'}
-            </div>
-          </div>
-        </m.div>
+        </div>
       </div>
     </section>
   );
@@ -788,9 +853,9 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
 export default function WhoWeAreSections({ lang = 'en' }: WhoWeAreProps) {
   return (
     <div data-nav-light="true" data-nav-theme="light">
+      <EditorialQuoteSection lang={lang} />
       <ComparisonToggleSection lang={lang} />
       <ValueModelBilateral lang={lang} />
-      <EditorialQuoteSection lang={lang} />
       <TrainingJourneyFlow lang={lang} />
     </div>
   );
