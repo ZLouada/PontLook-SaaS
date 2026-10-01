@@ -26,6 +26,7 @@ export const Cpu = forwardRef<SVGSVGElement, IconProps>((
       height={size}
       fill={fill}
       stroke="none"
+      {...(strokeWidth ? { strokeWidth } : {})}
       className={className}
       style={style}
       aria-hidden="true"

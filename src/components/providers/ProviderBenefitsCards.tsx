@@ -42,14 +42,14 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
         isAr ? 'تكلفة استحواذ عملاء محسوبة بدقة وقابلة للتوسع وفق طاقتك الاستيعابية' : 'Predictable CAC scaling directly aligned with your delivery bandwidth',
       ],
       mockup: (
-        <div className="bg-black rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
-          <div className="flex items-center justify-between pb-2 border-b border-[#26282D]">
+        <div className="bg-black rounded-xl border border-[#26282D] w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans">
+          <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
-              <div className="h-7 w-7 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center font-bold">
-                <CircleDollarSign size={15} />
+              <div className="h-6 w-6 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center font-bold">
+                <CircleDollarSign size={14} />
               </div>
               <div>
-                <div className="text-xs font-semibold text-white">
+                <div className="text-xs font-semibold text-white leading-tight">
                   {isAr ? 'مقارنة اقتصاديات الاستحواذ' : 'Acquisition Unit Economics'}
                 </div>
                 <div className="text-[10px] text-neutral-400">
@@ -63,21 +63,21 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
           </div>
 
           <div className="grid grid-cols-2 gap-2 text-xs">
-            <div className="p-2.5 rounded-lg bg-[#0F1013] border border-[#26282D]">
-              <div className="text-[10px] text-neutral-500 uppercase">{isAr ? 'الاشتراك الشهري التقليدي' : 'Traditional Retainer'}</div>
-              <div className="text-sm font-semibold text-neutral-400 line-through mt-0.5">$3,500 / {isAr ? 'شهر' : 'mo'}</div>
-              <div className="text-[10px] text-red-400 mt-1">{isAr ? 'نتائج غير مضمونة' : 'Zero output guarantee'}</div>
+            <div className="p-2 rounded-lg bg-[#0F1013] border border-[#26282D]">
+              <div className="text-[9px] text-neutral-500 uppercase font-semibold">{isAr ? 'الاشتراك الشهري التقليدي' : 'Traditional Retainer'}</div>
+              <div className="text-xs sm:text-sm font-semibold text-neutral-400 line-through mt-0.5">$3,500 / {isAr ? 'شهر' : 'mo'}</div>
+              <div className="text-[9px] text-red-400 mt-0.5">{isAr ? 'نتائج غير مضمونة' : 'Zero output guarantee'}</div>
             </div>
-            <div className="p-2.5 rounded-lg bg-orange-500/5 border border-orange-500/30">
-              <div className="text-[10px] text-orange-400 uppercase font-semibold">{isAr ? 'نموذج PontLook' : 'PontLook Model'}</div>
-              <div className="text-sm font-bold text-white mt-0.5">$0 {isAr ? 'اشتراك' : 'Retainer'}</div>
-              <div className="text-[10px] text-emerald-400 mt-1 font-medium">{isAr ? 'دفع فقط عند استلام الفرصة' : 'Pay strictly per lead'}</div>
+            <div className="p-2 rounded-lg bg-orange-500/5 border border-orange-500/30">
+              <div className="text-[9px] text-orange-400 uppercase font-semibold">{isAr ? 'نموذج PontLook' : 'PontLook Model'}</div>
+              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">$0 {isAr ? 'اشتراك' : 'Retainer'}</div>
+              <div className="text-[9px] text-emerald-400 mt-0.5 font-medium">{isAr ? 'دفع فقط عند استلام الفرصة' : 'Pay strictly per lead'}</div>
             </div>
           </div>
 
-          <div className="text-[11px] text-neutral-400 flex items-center gap-1.5 pt-1">
-            <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
-            <span>{isAr ? 'اتفاقية مستوى الخدمة: استبدال أي فرصة غير مطابقة خلال 48 ساعة' : 'SLA: Instant replacement for any disputed lead within 48h'}</span>
+          <div className="text-[10px] text-neutral-400 flex items-center gap-1.5 pt-0.5">
+            <CheckCircle2 size={12} className="text-emerald-400 shrink-0" />
+            <span className="truncate">{isAr ? 'اتفاقية مستوى الخدمة: استبدال أي فرصة غير مطابقة خلال 48 ساعة' : 'SLA: Instant replacement for any disputed lead within 48h'}</span>
           </div>
         </div>
       ),
@@ -98,14 +98,14 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
         isAr ? 'تجنب المكالمات الاستكشافية غير المجدية مع جهات غير جادة' : 'Zero wasted discovery meetings with unbudgeted prospects',
       ],
       mockup: (
-        <div className="bg-black rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
-          <div className="flex items-center justify-between pb-2 border-b border-[#26282D]">
+        <div className="bg-black rounded-xl border border-[#26282D] w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans">
+          <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
-              <div className="h-7 w-7 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center font-bold">
-                <Target size={15} />
+              <div className="h-6 w-6 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center font-bold">
+                <Target size={14} />
               </div>
               <div>
-                <div className="text-xs font-semibold text-white">
+                <div className="text-xs font-semibold text-white leading-tight">
                   {isAr ? 'بطاقة تأهيل الفرصة المؤسسية' : 'Enterprise Lead Dossier'}
                 </div>
                 <div className="text-[10px] text-neutral-400">
@@ -118,18 +118,18 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
             </span>
           </div>
 
-          <div className="space-y-1.5 text-[11px]">
-            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+          <div className="space-y-1.5 text-[10px] sm:text-[11px]">
+            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
               <span className="text-neutral-400">{isAr ? 'صانع القرار المستهدف:' : 'Decision Maker:'}</span>
-              <span className="text-white font-medium">{isAr ? 'نائب رئيس الموارد البشرية (الرياض)' : 'VP of Human Resources (Riyadh)'}</span>
+              <span className="text-white font-medium">{isAr ? 'نائب رئيس الموارد البشرية' : 'VP of HR (Riyadh)'}</span>
             </div>
-            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
               <span className="text-neutral-400">{isAr ? 'المجال التدريبي:' : 'Training Domain:'}</span>
-              <span className="text-orange-400 font-medium">{isAr ? 'برنامج تطوير القيادات التنفيذية' : 'Executive Leadership Acceleration'}</span>
+              <span className="text-orange-400 font-medium">{isAr ? 'تطوير القيادات التنفيذية' : 'Executive Leadership'}</span>
             </div>
-            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
               <span className="text-neutral-400">{isAr ? 'حجم الفوج والميزانية:' : 'Cohort & Budget:'}</span>
-              <span className="text-emerald-400 font-medium">35 {isAr ? 'متدرب' : 'execs'} · SAR 120,000+</span>
+              <span className="text-emerald-400 font-medium">35 {isAr ? 'متدرب' : 'execs'} · SAR 120k+</span>
             </div>
           </div>
         </div>
@@ -151,14 +151,14 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
         isAr ? 'التركيز 100% على تقديم المحتوى عالي القيمة بدلاً من البحث البارد' : 'Focus 100% on delivery excellence while PontLook fuels business dev',
       ],
       mockup: (
-        <div className="bg-black rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
-          <div className="flex items-center justify-between pb-2 border-b border-[#26282D]">
+        <div className="bg-black rounded-xl border border-[#26282D] w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans">
+          <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
-              <div className="h-7 w-7 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center font-bold">
-                <TrendingUp size={15} />
+              <div className="h-6 w-6 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center font-bold">
+                <TrendingUp size={14} />
               </div>
               <div>
-                <div className="text-xs font-semibold text-white">
+                <div className="text-xs font-semibold text-white leading-tight">
                   {isAr ? 'جدول توزيع الفرص الفصلي' : 'Quarterly Opportunity Schedule'}
                 </div>
                 <div className="text-[10px] text-neutral-400">
@@ -171,21 +171,21 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
             </span>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 text-center text-xs">
-            <div className="p-2 rounded bg-[#0F1013] border border-[#26282D]">
-              <div className="text-[10px] text-neutral-400 font-mono">Q1 (Jan-Mar)</div>
-              <div className="text-sm font-bold text-white mt-0.5">14 {isAr ? 'فرصة' : 'Leads'}</div>
-              <div className="text-[9px] text-orange-400">{isAr ? 'تأهيل القيادات' : 'Leadership'}</div>
+          <div className="grid grid-cols-3 gap-1.5 text-center text-xs">
+            <div className="p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <div className="text-[9px] text-neutral-400 font-mono">Q1 (Jan-Mar)</div>
+              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">14 {isAr ? 'فرصة' : 'Leads'}</div>
+              <div className="text-[9px] text-orange-400">{isAr ? 'القيادات' : 'Leadership'}</div>
             </div>
-            <div className="p-2 rounded bg-[#0F1013] border border-[#26282D]">
-              <div className="text-[10px] text-neutral-400 font-mono">Q2 (Apr-Jun)</div>
-              <div className="text-sm font-bold text-white mt-0.5">19 {isAr ? 'فرصة' : 'Leads'}</div>
-              <div className="text-[9px] text-blue-400">{isAr ? 'التحول الرقمي' : 'Digital Ops'}</div>
+            <div className="p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
+              <div className="text-[9px] text-neutral-400 font-mono">Q2 (Apr-Jun)</div>
+              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">19 {isAr ? 'فرصة' : 'Leads'}</div>
+              <div className="text-[9px] text-blue-400">{isAr ? 'التحول' : 'Digital Ops'}</div>
             </div>
-            <div className="p-2 rounded bg-orange-500/5 border border-orange-500/30">
-              <div className="text-[10px] text-orange-400 font-mono font-semibold">Q3-Q4</div>
-              <div className="text-sm font-bold text-white mt-0.5">25+ {isAr ? 'فرصة' : 'Leads'}</div>
-              <div className="text-[9px] text-emerald-400">{isAr ? 'برامج التوطين' : 'Localization'}</div>
+            <div className="p-1.5 sm:p-2 rounded bg-orange-500/5 border border-orange-500/30">
+              <div className="text-[9px] text-orange-400 font-mono font-semibold">Q3-Q4</div>
+              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">25+ {isAr ? 'فرصة' : 'Leads'}</div>
+              <div className="text-[9px] text-emerald-400">{isAr ? 'التوطين' : 'Localization'}</div>
             </div>
           </div>
         </div>

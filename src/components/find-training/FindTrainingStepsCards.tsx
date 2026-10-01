@@ -42,14 +42,14 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         isAr ? 'حصر أهداف البرنامج ومواءمتها مع متطلبات التوطين والتحول الرقمي' : 'Targeted alignment with Saudization, Emiratization, or tech upskilling KPIs',
       ],
       mockup: (
-        <div className="bg-black rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
-          <div className="flex items-center justify-between pb-2 border-b border-[#26282D]">
+        <div className="bg-black rounded-xl border border-[#26282D] w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans">
+          <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
-              <div className="h-7 w-7 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">
+              <div className="h-6 w-6 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">
                 <SlidersHorizontal size={14} />
               </div>
               <div>
-                <div className="text-xs font-semibold text-white">
+                <div className="text-xs font-semibold text-white leading-tight">
                   {isAr ? 'ملف كراسة التدريب المؤسسي' : 'Enterprise RFP Intake Brief'}
                 </div>
                 <div className="text-[10px] text-neutral-400">
@@ -62,16 +62,16 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
             </span>
           </div>
 
-          <div className="space-y-1.5 text-[11px]">
-            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+          <div className="space-y-1.5 text-[10px] sm:text-[11px]">
+            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
               <span className="text-neutral-400">{isAr ? 'المجال المستهدف:' : 'Domain:'}</span>
               <span className="text-white font-medium">{isAr ? 'القيادة التنفيذية وإدارة التغيير' : 'Executive Leadership & Change'}</span>
             </div>
-            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
               <span className="text-neutral-400">{isAr ? 'الموقع والفوج:' : 'Location & Cohort:'}</span>
               <span className="text-orange-400 font-medium">{isAr ? 'حضوري بالرياض · 25 متدرب' : 'Onsite Riyadh · 25 Executives'}</span>
             </div>
-            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
               <span className="text-neutral-400">{isAr ? 'الجدول الزمني المستهدف:' : 'Target Timeline:'}</span>
               <span className="text-emerald-400 font-medium">{isAr ? 'خلال الربع القادم' : 'Upcoming Quarter Start'}</span>
             </div>
@@ -95,14 +95,14 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         isAr ? 'سرية تامة لبيانات مسؤولي الموارد البشرية ومنع أي اتصالات تسويقية مزعجة' : 'Zero cold spam or unsolicited vendor outreach; total decision maker privacy',
       ],
       mockup: (
-        <div className="bg-black rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
-          <div className="flex items-center justify-between pb-2 border-b border-[#26282D]">
+        <div className="bg-black rounded-xl border border-[#26282D] w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans">
+          <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
-              <div className="h-7 w-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
+              <div className="h-6 w-6 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
                 <BadgeCheck size={14} />
               </div>
               <div>
-                <div className="text-xs font-semibold text-white">
+                <div className="text-xs font-semibold text-white leading-tight">
                   {isAr ? 'معايير فحص واعتماد المزود' : 'Provider Vetting Scorecard'}
                 </div>
                 <div className="text-[10px] text-neutral-400">
@@ -115,20 +115,20 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
             </span>
           </div>
 
-          <div className="space-y-1.5 text-[11px]">
-            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+          <div className="space-y-1.5 text-[10px] sm:text-[11px]">
+            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
               <span className="text-neutral-300">{isAr ? 'اعتماد المنشأة والترخيص المهني:' : 'Accredited Corporate Entity:'}</span>
               <span className="text-emerald-400 font-semibold flex items-center gap-1">
                 <CheckCircle2 size={12} /> {isAr ? 'مرخص' : 'Verified'}
               </span>
             </div>
-            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
               <span className="text-neutral-300">{isAr ? 'خبرة المدرب التنفيذي:' : 'Facilitator Seniority:'}</span>
               <span className="text-emerald-400 font-semibold flex items-center gap-1">
                 <CheckCircle2 size={12} /> 10+ {isAr ? 'سنوات بالخليج' : 'Yrs GCC'}
               </span>
             </div>
-            <div className="flex items-center justify-between p-2 rounded bg-[#0F1013] border border-[#26282D]">
+            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
               <span className="text-neutral-300">{isAr ? 'معدل رضا المتدربين السابق:' : 'Historical Satisfaction:'}</span>
               <span className="text-emerald-400 font-semibold flex items-center gap-1">
                 <CheckCircle2 size={12} /> 4.9 / 5.0
@@ -154,14 +154,14 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         isAr ? 'خدمة مجانية 100% للمنشآت الباحثة عن تدريب' : '100% free matchmaking service for enterprise buyers with no hidden fees',
       ],
       mockup: (
-        <div className="bg-black rounded-xl border border-[#26282D] w-full p-4 flex flex-col gap-3 font-sans">
-          <div className="flex items-center justify-between pb-2 border-b border-[#26282D]">
+        <div className="bg-black rounded-xl border border-[#26282D] w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans">
+          <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
-              <div className="h-7 w-7 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center font-bold">
+              <div className="h-6 w-6 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center font-bold">
                 <Scale size={14} />
               </div>
               <div>
-                <div className="text-xs font-semibold text-white">
+                <div className="text-xs font-semibold text-white leading-tight">
                   {isAr ? 'جدول مقارنة العروض المتطابقة' : 'Comparative Proposal Matrix'}
                 </div>
                 <div className="text-[10px] text-neutral-400">
@@ -175,15 +175,15 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
           </div>
 
           <div className="grid grid-cols-2 gap-2 text-xs">
-            <div className="p-2.5 rounded-lg bg-[#0F1013] border border-[#26282D]">
-              <div className="text-[10px] text-neutral-400 uppercase font-semibold">{isAr ? 'العرض أ' : 'Proposal Alpha'}</div>
-              <div className="text-xs font-bold text-white mt-1">{isAr ? 'ورش مكثفة حضوري' : 'Intensive Onsite'}</div>
-              <div className="text-[10px] text-emerald-400 mt-0.5">{isAr ? 'مطابقة تامة للميزانية' : 'Target Budget Match'}</div>
+            <div className="p-2 rounded-lg bg-[#0F1013] border border-[#26282D]">
+              <div className="text-[9px] text-neutral-400 uppercase font-semibold">{isAr ? 'العرض أ' : 'Proposal Alpha'}</div>
+              <div className="text-xs font-bold text-white mt-0.5">{isAr ? 'ورش مكثفة حضوري' : 'Intensive Onsite'}</div>
+              <div className="text-[9px] text-emerald-400 mt-0.5">{isAr ? 'مطابقة تامة للميزانية' : 'Target Budget Match'}</div>
             </div>
-            <div className="p-2.5 rounded-lg bg-[#0F1013] border border-[#26282D]">
-              <div className="text-[10px] text-neutral-400 uppercase font-semibold">{isAr ? 'العرض ب' : 'Proposal Beta'}</div>
-              <div className="text-xs font-bold text-white mt-1">{isAr ? 'تدريب هجين + مشاريع' : 'Blended + Projects'}</div>
-              <div className="text-[10px] text-blue-400 mt-0.5">{isAr ? 'تأهيل كفاءات ممتد' : 'Extended Follow-up'}</div>
+            <div className="p-2 rounded-lg bg-[#0F1013] border border-[#26282D]">
+              <div className="text-[9px] text-neutral-400 uppercase font-semibold">{isAr ? 'العرض ب' : 'Proposal Beta'}</div>
+              <div className="text-xs font-bold text-white mt-0.5">{isAr ? 'تدريب هجين + مشاريع' : 'Blended + Projects'}</div>
+              <div className="text-[9px] text-blue-400 mt-0.5">{isAr ? 'تأهيل كفاءات ممتد' : 'Extended Follow-up'}</div>
             </div>
           </div>
         </div>
