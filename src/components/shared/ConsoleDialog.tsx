@@ -255,11 +255,9 @@ export default function ConsoleDialog({
             animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, x: travel.x * 0.45, y: travel.y * 0.45 }}
             transition={{ type: 'spring', stiffness: 250, damping: 26, mass: 0.9 }}
-            className="relative z-10 my-auto flex max-h-[94dvh] xs:max-h-[92dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-white/15 bg-black/95 text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14),0_40px_90px_-20px_rgba(0,0,0,0.95)] outline-none backdrop-blur-2xl sm:rounded-[26px]"
+            className="relative z-10 my-auto flex max-h-[94dvh] xs:max-h-[92dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-[#26282D] bg-[#0A0B0E] text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.10),0_40px_90px_-20px_rgba(0,0,0,0.95)] outline-none focus:outline-none focus:ring-0 focus-visible:outline-none ring-0 backdrop-blur-2xl sm:rounded-[26px]"
           >
-            {/* Drifting graph paper + accent aura, pinned to the window frame so
-                they stay put while the body scrolls. */}
-            <div className="console-grid pointer-events-none absolute inset-0 overflow-hidden opacity-70" aria-hidden="true" />
+            {/* Ambient accent aura */}
             <div
               className={`pointer-events-none absolute -top-24 ${isAr ? '-left-24' : '-right-24'} h-64 w-64 rounded-full blur-[90px] ${tone.aura}`}
               aria-hidden="true"
@@ -408,17 +406,9 @@ export default function ConsoleDialog({
                       <div
                         onPointerMove={onPointerMove}
                         onPointerLeave={resetTilt}
-                        className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-[#26282D] bg-black p-2.5 xs:p-3 sm:p-4"
+                        className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-[#26282D] bg-[#0F1013] p-2.5 xs:p-3 sm:p-4 shadow-xl"
                         style={{ perspective: 900 }}
                       >
-                        <div
-                          className="console-scan pointer-events-none absolute inset-x-0 top-0 h-10"
-                          style={{
-                            background: `linear-gradient(to bottom, transparent, ${tone.rule}, transparent)`,
-                            opacity: 0.16,
-                          }}
-                          aria-hidden="true"
-                        />
                         <m.div style={reduce ? undefined : { x: tiltX, y: tiltY }} className="relative">
                           {active.mockup}
                         </m.div>

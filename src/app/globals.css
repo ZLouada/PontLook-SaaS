@@ -41,12 +41,9 @@
     .text-shimmer::before,
     .conic-rim,
     .rail-pulse,
-    .console-scan,
-    .console-grid::before,
     .node-halo {
       animation: none !important;
     }
-    .console-scan,
     .node-halo {
       opacity: 0 !important;
     }
@@ -482,36 +479,6 @@
 /* Flow reads right-to-left on the Arabic layout. */
 [dir='rtl'] .rail-pulse {
   animation-direction: reverse;
-}
-
-/* Slow sweep across a preview pane, like a readout refreshing. */
-@keyframes console-scan {
-  0%   { transform: translateY(-120%); opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { transform: translateY(1100%); opacity: 0; }
-}
-.console-scan {
-  animation: console-scan var(--scan-duration, 6.5s) linear infinite;
-  will-change: transform;
-}
-
-/* Drifting graph paper behind the dialog body. */
-.console-grid::before {
-  content: '';
-  position: absolute;
-  inset: -48px;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
-  animation: console-drift 12s linear infinite;
-  will-change: transform;
-}
-@keyframes console-drift {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-48px, -48px, 0); }
 }
 
 /* Breathing halo on an active pipeline node. */
