@@ -272,11 +272,11 @@ export default function HowItWorks() {
       ref={containerRef}
       data-nav-light="true"
       data-nav-theme="light"
-      className="relative bg-white transition-colors duration-500 overflow-visible lg:h-[185vh] py-14 sm:py-20 lg:py-0 border-t border-neutral-200 lg:border-t-0"
+      className="relative bg-white transition-colors duration-500 overflow-visible h-[175vh] sm:h-[185vh] py-0 border-t border-neutral-200 lg:border-t-0"
       aria-labelledby="how-it-works-title"
     >
-      {/* Viewport Stage: Pinned on desktop during the garage door opening */}
-      <div className="relative lg:sticky lg:top-0 w-full min-h-screen flex flex-col justify-center items-center z-20 pt-2 sm:pt-4 lg:pt-16 xl:pt-20 pb-8 overflow-hidden bg-white">
+      {/* Viewport Stage: Pinned during the garage door opening */}
+      <div className="sticky top-0 w-full min-h-[100dvh] h-[100dvh] flex flex-col justify-center items-center z-20 pt-2 sm:pt-4 lg:pt-16 xl:pt-20 pb-8 overflow-hidden bg-white">
         
         {/* Attio-Style Subtle Grid dots on the white floor */}
         <div
@@ -298,7 +298,7 @@ export default function HowItWorks() {
             ================================================================ */}
         <m.div
           style={
-            prefersReducedMotion || !isDesktop
+            prefersReducedMotion
               ? { transform: 'none', opacity: 1 }
               : {
                   scale: contentScale,
@@ -479,11 +479,11 @@ export default function HowItWorks() {
             ================================================================ */}
         <m.div
           style={
-            prefersReducedMotion || !isDesktop
+            prefersReducedMotion
               ? { display: 'none' }
               : { clipPath: shutterClip }
           }
-          className="hidden lg:flex w-full absolute inset-0 h-full bg-black text-white shadow-2xl flex-col justify-start items-center overflow-hidden z-30 pointer-events-none select-none"
+          className="flex w-full absolute inset-0 h-full bg-black text-white shadow-2xl flex-col justify-start items-center overflow-hidden z-30 pointer-events-none select-none"
           aria-hidden="true"
         >
           {/* Subtle dark technical dot grid */}
@@ -514,14 +514,14 @@ export default function HowItWorks() {
           />
         </m.div>
 
-        {/* Shutter Leading Bottom Metallic Rim Line lifting up as door opens (Desktop only) */}
+        {/* Shutter Leading Bottom Metallic Rim Line lifting up as door opens */}
         <m.div
           style={
-            prefersReducedMotion || !isDesktop
+            prefersReducedMotion
               ? { display: 'none' }
               : { top: lipY, opacity: lipOpacity }
           }
-          className="hidden lg:block absolute left-0 right-0 h-[2px] bg-neutral-300 shadow-[0_4px_16px_rgba(0,0,0,0.6)] z-40 pointer-events-none"
+          className="block absolute left-0 right-0 h-[2px] bg-neutral-300 shadow-[0_4px_16px_rgba(0,0,0,0.6)] z-40 pointer-events-none"
           aria-hidden="true"
         />
 

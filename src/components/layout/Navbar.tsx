@@ -190,14 +190,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
         ref={headerRef}
         className={`fixed inset-x-0 mx-auto z-50 liquid-glass-morph-header ${
           scrolled
-            ? `top-0 w-full rounded-none px-3.5 xs:px-4 pb-3 pt-[max(1.125rem,calc(env(safe-area-inset-top,0px)+0.75rem))] ${
-                isLightSection ? 'liquid-glass-mobile-light' : 'liquid-glass-mobile-scrolled'
-              } ${
-                isDesktop
-                  ? isLightSection
-                    ? 'sm:top-3 sm:w-[92%] sm:max-w-5xl sm:rounded-full sm:py-2.5 sm:px-6 liquid-glass-capsule-light'
-                    : 'sm:top-3 sm:w-[92%] sm:max-w-5xl sm:rounded-full sm:py-2.5 sm:px-6 liquid-glass-capsule-dark'
-                  : ''
+            ? `top-2 xs:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full py-2 sm:py-2.5 px-3.5 xs:px-4 sm:px-6 ${
+                isLightSection ? 'liquid-glass-capsule-light' : 'liquid-glass-capsule-dark'
               }`
             : isLightSection
             ? 'top-0 w-full max-w-full rounded-none px-3.5 xs:px-4 sm:px-8 lg:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-light'
@@ -670,12 +664,12 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
         </nav>
       </header>
 
-      {/* Mobile Slide-Over Drawer Sheet rendered via Portal */}
+      {/* Mobile Floating Island Menu Panel rendered via Portal */}
       {mounted &&
         createPortal(
           <AnimatePresence>
             {open && (
-              <div className="fixed inset-0 z-[9999] lg:hidden" aria-modal="true" role="dialog">
+              <div className="fixed inset-0 z-[9999] lg:hidden flex items-start justify-center p-3 xs:p-4 pt-3 xs:pt-4" aria-modal="true" role="dialog">
                 {/* Full-screen frosted glass backdrop */}
                 <m.div
                   initial={{ opacity: 0 }}
@@ -683,23 +677,23 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
                   onClick={() => setOpen(false)}
-                  className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9998]"
+                  className="fixed inset-0 bg-black/80 backdrop-blur-md z-[9998]"
                   aria-hidden="true"
                 />
 
-                {/* Slide-over Drawer Sheet (Black Background -> Content in White) */}
+                {/* Floating Island Menu Panel */}
                 <m.div
-                  initial={slideInitial}
-                  animate={{ x: 0 }}
-                  exit={slideExit}
-                  transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                  className="fixed inset-y-0 end-0 z-[9999] flex h-full h-[100dvh] w-[86vw] max-w-[360px] flex-col justify-between border-s border-[#26282D] bg-[#0F1013] px-5 sm:px-6 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+1rem))] pb-[max(1.5rem,calc(env(safe-area-inset-bottom,0px)+1rem))] shadow-2xl overflow-y-auto"
+                  initial={{ opacity: 0, scale: 0.95, y: -16 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -16 }}
+                  transition={{ type: 'spring', damping: 28, stiffness: 350 }}
+                  className="relative z-[9999] w-full max-w-md max-h-[calc(100dvh-2rem)] flex flex-col justify-between rounded-3xl border border-white/15 bg-[#0C0D11]/95 backdrop-blur-2xl px-5 sm:px-6 py-5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] overflow-y-auto"
                   role="document"
                   aria-label="Mobile navigation"
                 >
                   <div>
-                    {/* Drawer Header: Logo icon + "pontlook" redirects home and closes drawer */}
-                    <div className="flex items-center justify-between pb-4 border-b border-[#26282D]">
+                    {/* Floating Panel Header: Logo + "pontlook" redirects home and closes menu */}
+                    <div className="flex items-center justify-between pb-3.5 border-b border-white/10">
                       <Link
                         href={`/${lang}`}
                         onClick={() => setOpen(false)}
@@ -731,35 +725,35 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       <button
                         type="button"
                         onClick={() => setOpen(false)}
-                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#16171B] hover:bg-white/10 text-neutral-300 hover:text-white transition-colors active:scale-90 border border-[#26282D]"
+                        className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white transition-colors active:scale-90 border border-white/15"
                         aria-label="Close menu"
                       >
-                        <X size={18} />
+                        <X size={16} />
                       </button>
                     </div>
 
-                    {/* Live Network Status in Mobile Drawer */}
-                    <div className="mt-4 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border border-[#26282D] bg-[#16171B] text-neutral-300 w-fit">
+                    {/* Live Network Status in Mobile Panel */}
+                    <div className="mt-3.5 flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-white/10 bg-white/[0.04] text-neutral-300 w-fit">
                       <Signal />
                       <span className="text-[11px] text-neutral-300">
                         {lang === 'ar' ? 'المطابقة المباشرة نشطة' : 'Live Matchmaking Active'}
                       </span>
                     </div>
 
-                    {/* Grouped Mobile Navigation (White content on dark drawer) */}
-                    <div className="mt-5 space-y-4">
+                    {/* Grouped Mobile Navigation */}
+                    <div className="mt-4 space-y-3.5">
                       {/* Solutions Section */}
                       <div>
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-1.5 px-1">
                           {dict.nav.solutions}
                         </span>
                         <div className="space-y-1.5">
                           <Link
                             href={`/${lang}/find-training`}
                             onClick={() => setOpen(false)}
-                            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-neutral-200 hover:text-white hover:bg-white/[0.04] transition-all"
+                            className="flex items-center gap-3 px-3 py-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.99]"
                           >
-                            <div className="h-8 w-8 rounded-lg bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                            <div className="h-8 w-8 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
                               <Building2 size={16} />
                             </div>
                             <div className="min-w-0 flex-1">
@@ -771,9 +765,9 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                           <Link
                             href={`/${lang}/for-providers`}
                             onClick={() => setOpen(false)}
-                            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-neutral-200 hover:text-white hover:bg-white/[0.04] transition-all"
+                            className="flex items-center gap-3 px-3 py-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.99]"
                           >
-                            <div className="h-8 w-8 rounded-lg bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                            <div className="h-8 w-8 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
                               <Briefcase size={16} />
                             </div>
                             <div className="min-w-0 flex-1">
@@ -786,16 +780,16 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
                       {/* About Section */}
                       <div>
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-1.5 px-1">
                           {dict.nav.about}
                         </span>
                         <div className="space-y-1.5">
                           <Link
                             href={`/${lang}/who-we-are`}
                             onClick={() => setOpen(false)}
-                            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-neutral-200 hover:text-white hover:bg-white/[0.04] transition-all"
+                            className="flex items-center gap-3 px-3 py-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.99]"
                           >
-                            <div className="h-8 w-8 rounded-lg bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                            <div className="h-8 w-8 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
                               <Users size={16} />
                             </div>
                             <div className="min-w-0 flex-1">
@@ -807,9 +801,9 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                           <Link
                             href={`/${lang}/contact`}
                             onClick={() => setOpen(false)}
-                            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-neutral-200 hover:text-white hover:bg-white/[0.04] transition-all"
+                            className="flex items-center gap-3 px-3 py-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.99]"
                           >
-                            <div className="h-8 w-8 rounded-lg bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                            <div className="h-8 w-8 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
                               <Mail size={16} />
                             </div>
                             <div className="min-w-0 flex-1">
@@ -827,62 +821,21 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() => setOpen(false)}
-                          className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#16171B] border border-[#26282D] text-xs font-medium text-neutral-300 hover:text-white hover:bg-white/[0.04] transition-all"
+                          className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs font-medium text-neutral-300 hover:text-white transition-all active:scale-[0.99]"
                         >
                           <span>{dict.nav.blog}</span>
                           <ExternalLink size={13} className="text-neutral-400" />
                         </Link>
                       </div>
                     </div>
-
-                    {/* Regional Directory Shortcuts */}
-                    <div className="mt-5 pt-4 border-t border-[#26282D]">
-                      <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
-                        {lang === 'ar' ? 'المراكز الإقليمية · الخليج' : 'Regional Hubs · GCC'}
-                      </span>
-                      <div className="grid grid-cols-2 gap-2">
-                        <Link
-                          href={`/${lang}/sa`}
-                          onClick={() => setOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-neutral-300 bg-[#16171B] hover:text-white hover:bg-white/[0.04] border border-[#26282D] transition-colors min-h-[40px]"
-                        >
-                          <span className="text-sm">🇸🇦</span>
-                          <span className="truncate">{lang === 'ar' ? 'السعودية' : 'Saudi Arabia'}</span>
-                        </Link>
-                        <Link
-                          href={`/${lang}/ae`}
-                          onClick={() => setOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-neutral-300 bg-[#16171B] hover:text-white hover:bg-white/[0.04] border border-[#26282D] transition-colors min-h-[40px]"
-                        >
-                          <span className="text-sm">🇦🇪</span>
-                          <span className="truncate">{lang === 'ar' ? 'الإمارات' : 'UAE'}</span>
-                        </Link>
-                        <Link
-                          href={`/${lang}/qa`}
-                          onClick={() => setOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-neutral-300 bg-[#16171B] hover:text-white hover:bg-white/[0.04] border border-[#26282D] transition-colors min-h-[40px]"
-                        >
-                          <span className="text-sm">🇶🇦</span>
-                          <span className="truncate">{lang === 'ar' ? 'قطر' : 'Qatar'}</span>
-                        </Link>
-                        <Link
-                          href={`/${lang}/kw`}
-                          onClick={() => setOpen(false)}
-                          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-neutral-300 bg-[#16171B] hover:text-white hover:bg-white/[0.04] border border-[#26282D] transition-colors min-h-[40px]"
-                        >
-                          <span className="text-sm">🇰🇼</span>
-                          <span className="truncate">{lang === 'ar' ? 'الكويت' : 'Kuwait'}</span>
-                        </Link>
-                      </div>
-                    </div>
                   </div>
 
-                  {/* Drawer Footer Actions (White Button on Dark Background) */}
-                  <div className="mt-6 pt-5 border-t border-[#26282D] space-y-3 pb-6">
+                  {/* Floating Menu Footer Actions */}
+                  <div className="mt-5 pt-4 border-t border-white/10 space-y-2.5">
                     <Link
                       href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
                       onClick={() => setOpen(false)}
-                      className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-white hover:bg-neutral-200 text-black font-semibold text-xs xs:text-sm w-full shadow-lg active:scale-95 transition-all min-h-[44px]"
+                      className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs xs:text-sm w-full shadow-lg active:scale-95 transition-all min-h-[44px]"
                     >
                       <span>{dict.nav.lets_talk}</span>
                       <ArrowUpRight size={16} className="rtl:-scale-x-100" />
@@ -895,7 +848,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       <Link
                         href={switchHref}
                         onClick={() => setOpen(false)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-medium text-xs text-neutral-300 bg-[#16171B] hover:bg-white/[0.08] hover:text-white border border-[#26282D] transition-all active:scale-95 min-h-[36px]"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium text-xs text-neutral-300 bg-white/[0.05] hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95 min-h-[32px]"
                       >
                         <Globe size={13} className="text-neutral-400" />
                         <span>{lang === 'en' ? 'العربية' : 'English'}</span>

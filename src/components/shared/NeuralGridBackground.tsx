@@ -171,8 +171,26 @@ export default function NeuralGridBackground({
       isHovering = false;
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const rect = container.getBoundingClientRect();
+        targetMouseX = touch.clientX - rect.left;
+        targetMouseY = touch.clientY - rect.top;
+        isHovering = true;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      isHovering = false;
+    };
+
     container.addEventListener('mousemove', handleMouseMove, { passive: true });
     container.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+    container.addEventListener('touchstart', handleTouchMove, { passive: true });
+    container.addEventListener('touchmove', handleTouchMove, { passive: true });
+    container.addEventListener('touchend', handleTouchEnd, { passive: true });
+    container.addEventListener('touchcancel', handleTouchEnd, { passive: true });
     window.addEventListener('resize', handleResize, { passive: true });
 
     handleResize();
@@ -188,6 +206,10 @@ export default function NeuralGridBackground({
       observer.disconnect();
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('touchstart', handleTouchMove);
+      container.removeEventListener('touchmove', handleTouchMove);
+      container.removeEventListener('touchend', handleTouchEnd);
+      container.removeEventListener('touchcancel', handleTouchEnd);
       window.removeEventListener('resize', handleResize);
     };
   }, [gridSize, interactiveRadius, baseDotColor, activeColor]);
