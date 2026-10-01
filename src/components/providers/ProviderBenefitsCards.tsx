@@ -254,80 +254,34 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
         </div>
       </div>
 
-      {/* Circuit: a hairline rail threads the three nodes, with a signal running
-          along it. Only the gutters show, so it reads as wiring behind the panels. */}
-      <div className="relative" style={{ perspective: reduce ? undefined : 1400 }}>
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 hidden md:block"
-          aria-hidden="true"
-        >
-          <div className="relative h-px w-full bg-gradient-to-r from-transparent via-[#26282D] to-transparent">
-            <div className="rail-pulse absolute inset-0" style={{ '--rail-duration': '7s' } as React.CSSProperties} />
-          </div>
-        </div>
-        <div
-          className="pointer-events-none absolute inset-y-0 start-[13px] w-px md:hidden"
-          aria-hidden="true"
-        >
-          <div className="h-full w-px bg-gradient-to-b from-transparent via-[#26282D] to-transparent" />
-        </div>
-
-        <div className="relative grid grid-cols-1 gap-5 ps-7 md:grid-cols-3 md:gap-6 md:ps-0">
+      {/* Premium Clean 3-Card Grid */}
+      <div className="relative">
+        <div className="relative grid grid-cols-1 gap-6 md:grid-cols-3">
           {benefits.map((b, i) => {
             const tone = ACCENTS[b.frameVariant] ?? ACCENTS.brand;
-            // The deck fans out of a centre stack on entry.
-            const from = i === 0 ? 70 : i === 2 ? -70 : 0;
 
             return (
               <m.div
                 key={b.id}
-                initial={reduce ? { opacity: 0 } : { opacity: 0, x: from, y: 56, rotateY: from * 0.12, scale: 0.92 }}
-                whileInView={{ opacity: 1, x: 0, y: 0, rotateY: 0, scale: 1 }}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={viewportOnce}
                 transition={{
                   delay: i * 0.1,
                   type: 'spring',
-                  stiffness: 150,
-                  damping: 20,
-                  mass: 0.9,
+                  stiffness: 160,
+                  damping: 22,
                 }}
-                whileHover={reduce ? undefined : { y: -8 }}
-                className="group relative h-full transform-gpu will-change-transform"
+                whileHover={reduce ? undefined : { y: -6 }}
+                className="group relative h-full flex flex-col"
               >
-                {/* Node where the card meets the rail — in the gutter lane on
-                    mobile, on the card's top edge once the row goes horizontal. */}
-                <span
-                  className="pointer-events-none absolute top-8 -start-[19px] z-20 h-2 w-2 -translate-y-1/2 rounded-full ring-4 ring-black md:top-0 md:start-6"
-                  aria-hidden="true"
-                >
-                  <span className={`absolute inset-0 rounded-full ${tone.dot}`} />
-                  <span className={`node-halo absolute inset-0 rounded-full ${tone.dot}`} style={{ '--halo-duration': `${2.6 + i * 0.4}s` } as React.CSSProperties} />
-                </span>
-
-                {/* Rim laser — a rotating cone masked down to a 1px border. */}
-                <span
-                  className="pointer-events-none absolute -inset-px z-0 rounded-[18px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  aria-hidden="true"
-                >
-                  <span className="absolute inset-0 overflow-hidden rounded-[18px]">
-                    <span
-                      className="conic-rim absolute start-1/2 top-1/2 h-[240%] w-[240%]"
-                      style={{
-                        background: `conic-gradient(from 0deg, transparent 0%, ${tone.rim} 10%, transparent 24%, transparent 100%)`,
-                        '--rim-duration': `${4 + i * 0.5}s`,
-                      } as React.CSSProperties}
-                    />
-                  </span>
-                  <span className="absolute inset-px rounded-[17px] bg-[#0B0C0E]" />
-                </span>
-
                 <Spotlight
-                  radius={320}
-                  className={`relative z-10 flex h-full flex-col overflow-hidden rounded-[17px] border border-[#26282D] bg-gradient-to-b from-[#101114] to-[#0B0C0E] text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07),0_12px_34px_-14px_rgba(0,0,0,0.75)] transition-shadow duration-500 ${tone.glow}`}
+                  radius={360}
+                  className="relative z-10 flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#202227] hover:border-white/20 bg-[#0C0D11] p-6 sm:p-7 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_32px_-12px_rgba(0,0,0,0.8)] transition-all duration-300"
                 >
-                  {/* Ambient corner aura */}
+                  {/* Ambient subtle glow on hover */}
                   <div
-                    className={`pointer-events-none absolute -top-20 -end-16 h-40 w-40 rounded-full blur-3xl transition-opacity duration-500 ${tone.aura} opacity-25 group-hover:opacity-90`}
+                    className={`pointer-events-none absolute -top-16 -end-16 h-36 w-36 rounded-full blur-3xl transition-opacity duration-500 ${tone.aura} opacity-0 group-hover:opacity-100`}
                     aria-hidden="true"
                   />
 
@@ -335,69 +289,54 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                     type="button"
                     onClick={(e) => open(b.id, e.currentTarget.closest('.group'))}
                     aria-label={`${b.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect breakdown'}`}
-                    className="relative z-10 flex h-full cursor-pointer flex-col text-start outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500/60"
+                    className="relative z-10 flex h-full cursor-pointer flex-col text-start outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500/60 w-full"
                   >
-                    <div className="relative p-6 pb-0 sm:p-7 sm:pb-0">
-                      {/* Oversized ghost ordinal, lit by hover. */}
-                      <span
-                        className="pointer-events-none absolute -top-3 end-4 select-none font-mono text-[76px] font-bold leading-none text-white/[0.035] transition-all duration-500 group-hover:text-white/[0.08] sm:text-[88px]"
-                        aria-hidden="true"
-                      >
-                        {b.index}
-                      </span>
-
-                      <div className="relative mb-5 flex items-center justify-between gap-3">
-                        <div className="flex min-w-0 items-center gap-2.5">
-                          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#FF5C00]/30 bg-orange-500/10 font-mono text-xs font-bold text-[#FF5C00] transition-transform duration-300 group-hover:scale-110">
-                            {b.index}
-                          </span>
-                          <span className="truncate rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] font-semibold text-neutral-400 transition-colors group-hover:border-orange-500/30 group-hover:text-orange-300">
-                            {b.badge}
-                          </span>
-                        </div>
-                        <IconFrame variant={b.frameVariant} size="sm">
-                          <b.icon size={15} />
-                        </IconFrame>
+                    {/* Top Row: Index Badge & Icon */}
+                    <div className="flex items-center justify-between gap-3 mb-5">
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#FF5C00]/30 bg-orange-500/10 font-mono text-xs font-bold text-[#FF5C00]">
+                          {b.index}
+                        </span>
+                        <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] font-semibold text-neutral-300">
+                          {b.badge}
+                        </span>
                       </div>
-
-                      <h3 className="relative font-heading text-base font-semibold text-white transition-colors group-hover:text-orange-400 sm:text-lg">
-                        {b.title}
-                      </h3>
-
-                      <p className="relative mt-2.5 line-clamp-3 font-sans text-xs font-normal leading-relaxed text-neutral-400 sm:text-sm">
-                        {b.body}
-                      </p>
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-300 group-hover:border-orange-500/40 group-hover:text-[#FF5C00] transition-colors">
+                        <b.icon size={17} />
+                      </div>
                     </div>
 
-                    {/* Live peek at the proof widget, cropped behind a fade. The
-                        real thing opens full size in the window. */}
-                    <div className="relative mt-5 h-[116px] shrink-0 overflow-hidden" aria-hidden="true">
-                      <div className="absolute inset-x-5 top-0 sm:inset-x-6">
-                        <div
-                          className="origin-top-left scale-[0.72] opacity-45 transition-all duration-500 group-hover:scale-[0.78] group-hover:opacity-100 rtl:origin-top-right"
-                          style={{ width: '138.9%' }}
-                        >
-                          {b.mockup}
+                    {/* Headline */}
+                    <h3 className="font-heading text-lg sm:text-xl font-semibold text-white group-hover:text-orange-400 transition-colors leading-tight">
+                      {b.title}
+                    </h3>
+
+                    {/* Body */}
+                    <p className="mt-2.5 font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed font-normal">
+                      {b.body}
+                    </p>
+
+                    {/* Deliverables Takeaways List */}
+                    <div className="mt-6 pt-5 border-t border-white/[0.06] space-y-2.5">
+                      {b.takeaways.map((point, pIdx) => (
+                        <div key={pIdx} className="flex items-start gap-2.5 text-xs text-neutral-300 font-sans">
+                          <CheckCircle2 size={14} className="text-[#FF5C00] shrink-0 mt-0.5" />
+                          <span className="leading-snug text-neutral-300">{point}</span>
                         </div>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C0E] via-[#0B0C0E]/80 to-transparent" />
+                      ))}
                     </div>
 
-                    {/* Status strip — fills with the accent on hover. */}
-                    <div className="relative mt-auto flex items-center justify-between gap-2 overflow-hidden border-t border-[#26282D] px-6 py-3.5 sm:px-7">
-                      <span
-                        className={`absolute inset-0 origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100 rtl:origin-right ${tone.aura}`}
-                        aria-hidden="true"
-                      />
-                      <span className="relative truncate font-sans text-[11px] font-medium text-orange-400/90 transition-colors group-hover:text-white">
-                        {isAr ? 'عرض التفاصيل والضمانات' : 'Inspect breakdown & SLAs'}
-                      </span>
-                      <span className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/[0.06] text-neutral-400 transition-all group-hover:bg-[#FF5C00] group-hover:text-white">
-                        <ArrowRight
-                          size={13}
-                          className="transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
-                        />
-                      </span>
+                    {/* Action Strip */}
+                    <div className="mt-auto pt-6">
+                      <div className="pt-4 border-t border-white/[0.04] flex items-center justify-between text-xs font-medium text-neutral-400 group-hover:text-orange-400 transition-colors">
+                        <span>{isAr ? 'عرض التفاصيل والضمانات' : 'Inspect breakdown & SLAs'}</span>
+                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.05] group-hover:bg-[#FF5C00] group-hover:text-white transition-all">
+                          <ArrowRight
+                            size={12}
+                            className="transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
+                          />
+                        </span>
+                      </div>
                     </div>
                   </button>
                 </Spotlight>

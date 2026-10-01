@@ -1,14 +1,7 @@
 'use client';
 
-import React, { useCallback, useRef, useState } from 'react';
-import {
-  m,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-  type MotionValue,
-} from 'framer-motion';
+import React, { useCallback, useState } from 'react';
+import { m, useReducedMotion } from 'framer-motion';
 import {
   SlidersHorizontal,
   BadgeCheck,
@@ -18,7 +11,6 @@ import {
 } from '@/components/icons';
 import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
-import IconFrame from '@/components/shared/IconFrame';
 import ConsoleDialog, { type ConsoleRecord } from '@/components/shared/ConsoleDialog';
 import { ease, viewportOnce } from '@/lib/motion';
 
@@ -26,25 +18,56 @@ interface FindTrainingStepsCardsProps {
   lang: string;
 }
 
-/** Per-step tint for the pipeline node, bracket corners and hover wash. */
-const TONES: Record<string, { dot: string; text: string; wash: string; bracket: string }> = {
+const ACCENTS: Record<
+  string,
+  {
+    border: string;
+    aura: string;
+    badge: string;
+    text: string;
+    iconBorder: string;
+    iconText: string;
+    indexBorder: string;
+    indexBg: string;
+    indexText: string;
+    checkText: string;
+  }
+> = {
   blue: {
-    dot: 'bg-blue-400',
-    text: 'text-blue-300',
-    wash: 'from-blue-500/[0.07]',
-    bracket: 'border-blue-400/70',
+    border: 'border-blue-500/30',
+    aura: 'bg-blue-500/10',
+    badge: 'border-blue-500/30 bg-blue-500/10 text-blue-400',
+    text: 'group-hover:text-blue-400',
+    iconBorder: 'group-hover:border-blue-500/40',
+    iconText: 'group-hover:text-blue-400',
+    indexBorder: 'border-blue-500/30',
+    indexBg: 'bg-blue-500/10',
+    indexText: 'text-blue-400',
+    checkText: 'text-blue-400',
   },
   emerald: {
-    dot: 'bg-emerald-400',
-    text: 'text-emerald-300',
-    wash: 'from-emerald-500/[0.07]',
-    bracket: 'border-emerald-400/70',
+    border: 'border-emerald-500/30',
+    aura: 'bg-emerald-500/10',
+    badge: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400',
+    text: 'group-hover:text-emerald-400',
+    iconBorder: 'group-hover:border-emerald-500/40',
+    iconText: 'group-hover:text-emerald-400',
+    indexBorder: 'border-emerald-500/30',
+    indexBg: 'bg-emerald-500/10',
+    indexText: 'text-emerald-400',
+    checkText: 'text-emerald-400',
   },
   brand: {
-    dot: 'bg-[#FF5C00]',
-    text: 'text-orange-300',
-    wash: 'from-orange-500/[0.07]',
-    bracket: 'border-[#FF5C00]/70',
+    border: 'border-orange-500/30',
+    aura: 'bg-orange-500/10',
+    badge: 'border-orange-500/30 bg-orange-500/10 text-orange-400',
+    text: 'group-hover:text-orange-400',
+    iconBorder: 'group-hover:border-orange-500/40',
+    iconText: 'group-hover:text-[#FF5C00]',
+    indexBorder: 'border-[#FF5C00]/30',
+    indexBg: 'bg-orange-500/10',
+    indexText: 'text-[#FF5C00]',
+    checkText: 'text-[#FF5C00]',
   },
 };
 
@@ -53,15 +76,6 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
   const reduce = useReducedMotion();
   const [activeId, setActiveId] = useState<string | null>(null);
   const [origin, setOrigin] = useState<{ x: number; y: number } | null>(null);
-
-  // The spine fills as the pipeline scrolls through the viewport; each node
-  // reads its own slice of this one value.
-  const pipelineRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: pipelineRef,
-    offset: ['start 78%', 'end 62%'],
-  });
-  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.4 });
 
   const open = useCallback((id: string, el: HTMLElement | null) => {
     if (el) {
@@ -265,29 +279,101 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         </p>
       </div>
 
-      {/* Pipeline: a spine that fills with scroll, nodes igniting as it passes. */}
-      <div ref={pipelineRef} className="relative ps-9 sm:ps-14">
-        <div className="pointer-events-none absolute inset-y-2 start-[14px] w-px sm:start-[22px]" aria-hidden="true">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#26282D] to-transparent" />
-          <m.div
-            style={{ scaleY: reduce ? 1 : progress, transformOrigin: 'top' }}
-            className="absolute inset-0 bg-gradient-to-b from-white/80 via-blue-400/80 to-[#FF5C00]/80"
-          />
-        </div>
+      {/* Premium Clean 3-Card Grid */}
+      <div className="relative">
+        <div className="relative grid grid-cols-1 gap-6 md:grid-cols-3">
+          {steps.map((st, i) => {
+            const tone = ACCENTS[st.frameVariant] ?? ACCENTS.brand;
 
-        <div className="flex flex-col gap-5 sm:gap-7">
-          {steps.map((st, i) => (
-            <PipelineRow
-              key={st.id}
-              record={st}
-              i={i}
-              total={steps.length}
-              progress={progress}
-              isAr={isAr}
-              reduce={!!reduce}
-              onOpen={open}
-            />
-          ))}
+            return (
+              <m.div
+                key={st.id}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={viewportOnce}
+                transition={{
+                  delay: i * 0.1,
+                  type: 'spring',
+                  stiffness: 160,
+                  damping: 22,
+                }}
+                whileHover={reduce ? undefined : { y: -6 }}
+                className="group relative h-full flex flex-col"
+              >
+                <Spotlight
+                  radius={360}
+                  className="relative z-10 flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#202227] hover:border-white/20 bg-[#0C0D11] p-6 sm:p-7 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_32px_-12px_rgba(0,0,0,0.8)] transition-all duration-300"
+                >
+                  {/* Ambient subtle glow on hover */}
+                  <div
+                    className={`pointer-events-none absolute -top-16 -end-16 h-36 w-36 rounded-full blur-3xl transition-opacity duration-500 ${tone.aura} opacity-0 group-hover:opacity-100`}
+                    aria-hidden="true"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={(e) => open(st.id, e.currentTarget.closest('.group'))}
+                    aria-label={`${st.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect step details'}`}
+                    className="relative z-10 flex h-full cursor-pointer flex-col text-start outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500/60 w-full"
+                  >
+                    {/* Top Row: Index Badge & Icon */}
+                    <div className="flex items-center justify-between gap-3 mb-5">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border ${tone.indexBorder} ${tone.indexBg} font-mono text-xs font-bold ${tone.indexText}`}
+                        >
+                          {st.index}
+                        </span>
+                        <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] font-semibold text-neutral-300">
+                          {st.badge}
+                        </span>
+                      </div>
+                      <div
+                        className={`flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-300 ${tone.iconBorder} ${tone.iconText} transition-colors`}
+                      >
+                        <st.icon size={17} />
+                      </div>
+                    </div>
+
+                    {/* Headline */}
+                    <h3
+                      className={`font-heading text-lg sm:text-xl font-semibold text-white ${tone.text} transition-colors leading-tight`}
+                    >
+                      {st.title}
+                    </h3>
+
+                    {/* Body */}
+                    <p className="mt-2.5 font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed font-normal">
+                      {st.body}
+                    </p>
+
+                    {/* Deliverables Takeaways List */}
+                    <div className="mt-6 pt-5 border-t border-white/[0.06] space-y-2.5">
+                      {st.takeaways.map((point, pIdx) => (
+                        <div key={pIdx} className="flex items-start gap-2.5 text-xs text-neutral-300 font-sans">
+                          <CheckCircle2 size={14} className={`${tone.checkText} shrink-0 mt-0.5`} />
+                          <span className="leading-snug text-neutral-300">{point}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Action Strip */}
+                    <div className="mt-auto pt-6">
+                      <div className="pt-4 border-t border-white/[0.04] flex items-center justify-between text-xs font-medium text-neutral-400 group-hover:text-white transition-colors">
+                        <span>{isAr ? 'عرض التفاصيل والضمانات' : 'Inspect details & rubric'}</span>
+                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.05] group-hover:bg-white group-hover:text-black transition-all">
+                          <ArrowRight
+                            size={12}
+                            className="transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
+                          />
+                        </span>
+                      </div>
+                    </div>
+                  </button>
+                </Spotlight>
+              </m.div>
+            );
+          })}
         </div>
       </div>
 
@@ -308,154 +394,5 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         }}
       />
     </div>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-
-interface PipelineRowProps {
-  record: ConsoleRecord;
-  i: number;
-  total: number;
-  progress: MotionValue<number>;
-  isAr: boolean;
-  reduce: boolean;
-  onOpen: (id: string, el: HTMLElement | null) => void;
-}
-
-/**
- * One stage of the pipeline. Lives in its own component so each row can derive
- * its own slice of the shared scroll progress with hooks.
- */
-function PipelineRow({ record, i, total, progress, isAr, reduce, onOpen }: PipelineRowProps) {
-  const rowRef = useRef<HTMLDivElement>(null);
-  const tone = TONES[record.frameVariant] ?? TONES.blue;
-
-  // The node ignites just before the spine fill reaches it.
-  const at = (i + 0.4) / total;
-  const lit = useTransform(progress, [at - 0.12, at], [0, 1]);
-  const litOpacity = reduce ? 1 : lit;
-
-  return (
-    <m.div
-      ref={rowRef}
-      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={viewportOnce}
-      transition={{ duration: 0.65, ease: ease.out, delay: i * 0.06 }}
-      className="group relative"
-    >
-      {/* Node on the spine. Dim ring always; core + halo arrive with scroll. */}
-      <span
-        className="pointer-events-none absolute top-8 -start-[27px] z-20 h-2.5 w-2.5 sm:-start-[39px]"
-        aria-hidden="true"
-      >
-        <span className="absolute inset-0 rounded-full border border-[#26282D] bg-black" />
-        <m.span style={{ opacity: litOpacity }} className={`absolute inset-[2px] rounded-full ${tone.dot}`} />
-        <m.span
-          style={{ opacity: litOpacity }}
-          className={`node-halo absolute inset-0 rounded-full ${tone.dot}`}
-        />
-      </span>
-
-      <Spotlight
-        radius={520}
-        className={`relative overflow-hidden rounded-2xl border border-[#26282D] bg-[#0B0C0E] text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] transition-colors duration-500 group-hover:border-white/25`}
-      >
-        {/* Tinted wash that sweeps in from the spine side on hover. */}
-        <div
-          className={`pointer-events-none absolute inset-0 bg-gradient-to-r ${tone.wash} to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 rtl:bg-gradient-to-l`}
-          aria-hidden="true"
-        />
-
-        <div className="relative grid items-center gap-5 p-5 sm:gap-8 sm:p-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-          {/* Text column */}
-          <div className="min-w-0">
-            <div className="mb-3 flex items-center gap-3">
-              <span className="font-mono text-3xl font-bold leading-none text-white/15 transition-colors duration-500 group-hover:text-white/40 sm:text-4xl">
-                {record.index}
-              </span>
-              <span className="h-8 w-px bg-[#26282D]" aria-hidden="true" />
-              <IconFrame variant={record.frameVariant} size="sm">
-                <record.icon size={15} strokeWidth={1.8} />
-              </IconFrame>
-              <span className="truncate rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] font-semibold text-neutral-400 transition-colors group-hover:border-white/20 group-hover:text-neutral-200">
-                {record.badge}
-              </span>
-            </div>
-
-            <h3 className="relative inline-block font-heading text-lg font-semibold text-white sm:text-xl">
-              {record.title}
-              {/* Hairline that draws itself under the title on hover. */}
-              <span
-                className={`absolute -bottom-1 start-0 h-px w-full origin-left scale-x-0 bg-current transition-transform duration-500 ease-out group-hover:scale-x-100 rtl:origin-right ${tone.text}`}
-                aria-hidden="true"
-              />
-            </h3>
-
-            <p className="mt-2.5 font-sans text-sm font-normal leading-relaxed text-neutral-400">
-              {record.body}
-            </p>
-
-            <div className="mt-5 inline-flex items-center gap-2 font-sans text-[11px] font-medium text-neutral-400 transition-colors group-hover:text-white">
-              <span>{isAr ? 'عرض تفاصيل الخطوة ومخرجاتها' : 'Inspect details & deliverables'}</span>
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.05] transition-all group-hover:bg-white group-hover:text-black">
-                <ArrowRight
-                  size={13}
-                  className="transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
-                />
-              </span>
-            </div>
-          </div>
-
-          {/* Drawer: the proof widget tilts open like a tray being pulled out. */}
-          <div
-            className="relative hidden lg:block"
-            style={{ perspective: reduce ? undefined : 1100 }}
-            aria-hidden="true"
-          >
-            <m.div
-              initial={reduce ? { opacity: 0 } : { opacity: 0, rotateX: -16, y: 26, scale: 0.96 }}
-              whileInView={{ opacity: 1, rotateX: 0, y: 0, scale: 1 }}
-              viewport={viewportOnce}
-              transition={{ delay: 0.18 + i * 0.06, type: 'spring', stiffness: 130, damping: 20 }}
-              className="relative transform-gpu rounded-xl transition-transform duration-500 will-change-transform group-hover:-translate-y-1"
-              style={{ transformOrigin: 'top center' }}
-            >
-              {/* Bracket corners frame the readout like a measuring crop. */}
-              {[
-                'top-[-5px] start-[-5px] border-t border-s',
-                'top-[-5px] end-[-5px] border-t border-e',
-                'bottom-[-5px] start-[-5px] border-b border-s',
-                'bottom-[-5px] end-[-5px] border-b border-e',
-              ].map((pos) => (
-                <span
-                  key={pos}
-                  className={`pointer-events-none absolute h-3 w-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${tone.bracket} ${pos}`}
-                />
-              ))}
-
-              <div className="relative overflow-hidden rounded-xl">
-                {record.mockup}
-                {/* Refresh sweep over the readout. */}
-                <span
-                  className="console-scan pointer-events-none absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-transparent via-white/[0.055] to-transparent"
-                  style={{ '--scan-duration': `${6 + i * 1.2}s` } as React.CSSProperties}
-                />
-              </div>
-            </m.div>
-          </div>
-        </div>
-
-        {/* Stretched hit area — keeps the row one target without nesting
-            interactive elements inside the readout. */}
-        <button
-          type="button"
-          onClick={() => onOpen(record.id, rowRef.current)}
-          aria-label={`${record.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect step details'}`}
-          className="absolute inset-0 z-30 cursor-pointer rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/60"
-        />
-      </Spotlight>
-    </m.div>
   );
 }
