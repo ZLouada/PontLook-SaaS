@@ -22,7 +22,7 @@ import {
   Building2,
   Users,
 } from '@/components/icons';
-import { m, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import Signal from '@/components/shared/Signal';
 import TextReveal from '@/components/shared/TextReveal';
 import CardTilt3D from '@/components/shared/CardTilt3D';
@@ -40,27 +40,120 @@ interface WhoWeAreProps {
 export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
   const isAr = lang === 'ar';
   const [mode, setMode] = useState<'pontlook' | 'traditional'>('pontlook');
+  const [isDesktop, setIsDesktop] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 1024);
+    check();
+    window.addEventListener('resize', check, { passive: true });
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  // Re-engineered Garage Shutter Roll-Down (top-to-bottom unroll, zero voids)
+  const shutterPercent = useTransform(scrollYProgress, [0, 0.40], [100, 0]);
+  const shutterClip = useTransform(shutterPercent, (p) => `inset(0% 0% ${p}% 0%)`);
+
+  // Spring Pop-Up Content (starts only after shutter is 80% down, zero cut-off cards)
+  const contentOpacity = useTransform(scrollYProgress, [0.32, 0.50], [0, 1]);
+  const contentScale = useTransform(scrollYProgress, [0.32, 0.52], [0.94, 1]);
+  const contentY = useTransform(scrollYProgress, [0.32, 0.52], [28, 0]);
+
+  // Leading bottom rim line
+  const lipY = useTransform(scrollYProgress, [0, 0.40], ['0%', '100%']);
+  const lipOpacity = useTransform(scrollYProgress, [0.02, 0.08, 0.38, 0.42], [0, 1, 1, 0]);
 
   return (
     <section
       id="our-mission"
+      ref={containerRef}
       data-nav-light="true"
       data-nav-theme="light"
-      className="relative bg-white text-neutral-900 py-16 sm:py-24 lg:py-28 border-t border-neutral-200 overflow-hidden"
+      className="relative bg-white lg:bg-black transition-colors duration-500 overflow-visible lg:h-[175vh] py-14 sm:py-20 lg:py-0 border-t border-neutral-200 lg:border-t-0"
       aria-labelledby="comparison-title"
     >
-      {/* Attio-Style Subtle Grid dots */}
-      <div
-        className="absolute inset-0 opacity-[0.035] pointer-events-none"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 1px 1px, #000 1px, transparent 0)',
-          backgroundSize: '24px 24px',
-        }}
-        aria-hidden="true"
-      />
+      {/* Viewport Stage: Pinned on desktop during the garage door closure */}
+      <div className="relative lg:sticky lg:top-0 w-full min-h-screen flex flex-col justify-start items-center z-20 pt-2 sm:pt-4 lg:pt-24 xl:pt-28 pb-8 overflow-hidden">
+        
+        {/* Background Underlayer (Desktop only): Dark aesthetic connecting seamlessly with WhoWeAreHero */}
+        <div
+          className="hidden lg:block absolute inset-0 bg-black pointer-events-none"
+          aria-hidden="true"
+        >
+          {/* Subtle dark technical dot grid */}
+          <div
+            className="absolute inset-0 opacity-[0.06]"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.7) 1px, transparent 0)',
+              backgroundSize: '36px 36px',
+            }}
+          />
+          {/* Faint blue ambient glow matching hero */}
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-blue-500/[0.04] rounded-full blur-[120px]" />
+        </div>
 
-      <div className="container-site relative z-10 mx-auto px-3.5 xs:px-4 sm:px-6 lg:px-8 max-w-7xl">
+        {/* ================================================================
+            THE GARAGE SHUTTER CURTAIN (Rolling down over the dark hero)
+            ================================================================ */}
+        <m.div
+          style={
+            prefersReducedMotion || !isDesktop
+              ? { clipPath: 'none' }
+              : { clipPath: shutterClip }
+          }
+          className="w-full lg:absolute lg:inset-0 lg:h-full bg-white text-neutral-900 shadow-2xl flex flex-col justify-start items-center overflow-hidden z-10 pt-2 sm:pt-4 lg:pt-24 xl:pt-28 pb-8"
+        >
+          {/* Architectural horizontal garage door shutter slats */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.70]"
+            style={{
+              backgroundImage: `
+                repeating-linear-gradient(
+                  to bottom,
+                  transparent 0px,
+                  transparent 38px,
+                  rgba(0, 0, 0, 0.025) 38px,
+                  rgba(0, 0, 0, 0.05) 39px,
+                  transparent 40px
+                )
+              `,
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Attio-Style Subtle Grid dots */}
+          <div
+            className="absolute inset-0 opacity-[0.035] pointer-events-none"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 1px 1px, #000 1px, transparent 0)',
+              backgroundSize: '24px 24px',
+            }}
+            aria-hidden="true"
+          />
+
+          {/* ================================================================
+              SPRING POP-UP CONTENT INSIDE THE SHUTTER
+              ================================================================ */}
+          <m.div
+            style={
+              prefersReducedMotion || !isDesktop
+                ? { transform: 'none', opacity: 1 }
+                : {
+                    scale: contentScale,
+                    opacity: contentOpacity,
+                    y: contentY,
+                  }
+            }
+            className="container-site relative z-20 mx-auto px-3.5 xs:px-4 sm:px-6 lg:px-8 max-w-7xl w-full flex flex-col justify-start"
+          >
             {/* Toggle Switch Header */}
             <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-2.5">
               
@@ -395,6 +488,19 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                 </m.div>
               )}
             </AnimatePresence>
+          </m.div>
+        </m.div>
+
+        {/* Shutter Leading Bottom Rim Line (Desktop only) */}
+        <m.div
+          style={
+            prefersReducedMotion || !isDesktop
+              ? { display: 'none' }
+              : { top: lipY, opacity: lipOpacity }
+          }
+          className="hidden lg:block absolute left-0 right-0 h-[2px] bg-neutral-300 shadow-[0_4px_12px_rgba(0,0,0,0.5)] z-30 pointer-events-none"
+          aria-hidden="true"
+        />
       </div>
     </section>
   );
