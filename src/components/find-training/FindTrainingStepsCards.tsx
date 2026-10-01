@@ -270,9 +270,9 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         <TextReveal
           as="h2"
           text={isAr ? '3 خطوات للحصول على أفضل عروض التدريب' : '3 Simple Steps to Proven Training Solutions'}
-          className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white font-heading tracking-tight"
+          className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-semibold text-white font-heading tracking-tight"
         />
-        <p className="mt-3 text-sm sm:text-base text-neutral-400 font-sans max-w-2xl mx-auto">
+        <p className="mt-3 text-xs xs:text-sm sm:text-base text-neutral-400 font-sans max-w-2xl mx-auto">
           {isAr
             ? 'عملية توفيق دقيقة وسريعة توفر عليك أسابيع من البحث والتقييم اليدوي. انقر على أي خطوة لاستعراض تفاصيلها.'
             : 'A streamlined matchmaking process saving weeks of vendor searching. Click any step to inspect the vetting rubric.'}
@@ -281,7 +281,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
 
       {/* Premium Clean 3-Card Grid (Horizontal flow on mobile, 3-col on desktop) */}
       <div className="relative">
-        <div className="relative flex md:grid gap-4 sm:gap-6 md:grid-cols-3 overflow-x-auto md:overflow-visible pb-4 md:pb-0 scrollbar-none snap-x snap-mandatory px-4 -mx-4 sm:px-0 sm:mx-0">
+        <div className="relative flex md:grid gap-3.5 xs:gap-4 sm:gap-6 md:grid-cols-3 overflow-x-auto md:overflow-visible pb-4 md:pb-0 scrollbar-none snap-x snap-mandatory px-3 -mx-3 xs:px-4 xs:-mx-4 sm:px-0 sm:mx-0">
           {steps.map((st, i) => {
             const tone = ACCENTS[st.frameVariant] ?? ACCENTS.brand;
 
@@ -298,11 +298,11 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                   damping: 22,
                 }}
                 whileHover={reduce ? undefined : { y: -6 }}
-                className="group relative h-full flex flex-col w-[85vw] sm:w-[65vw] md:w-auto shrink-0 snap-center"
+                className="group relative h-full flex flex-col w-[88vw] xs:w-[82vw] sm:w-[65vw] md:w-auto shrink-0 snap-center"
               >
                 <Spotlight
                   radius={360}
-                  className="relative z-10 flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#202227] hover:border-white/20 bg-[#0C0D11] p-5 sm:p-7 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_32px_-12px_rgba(0,0,0,0.8)] transition-all duration-300"
+                  className="relative z-10 flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#202227] hover:border-white/20 bg-[#0C0D11] p-4 xs:p-5 sm:p-7 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_32px_-12px_rgba(0,0,0,0.8)] transition-all duration-300"
                 >
                   {/* Ambient subtle glow on hover */}
                   <div

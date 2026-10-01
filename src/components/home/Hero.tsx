@@ -68,7 +68,7 @@ export default function Hero() {
         <NeuralGridBackground className="z-0 opacity-60" gridSize={36} interactiveRadius={180} />
       </div>
 
-      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-5xl">
+      <div className="container-site relative z-10 mx-auto px-3.5 xs:px-4 sm:px-6 lg:px-8 w-full max-w-5xl">
         <div className="flex flex-col items-start text-start">
           
           {/* Eyebrow badge with glowing Sparkles icon */}
@@ -89,11 +89,11 @@ export default function Hero() {
             as="h1"
             text={dict.hero.headline}
             onScroll={false}
-            className="text-3xl sm:text-5xl md:text-6xl font-semibold text-white tracking-tight leading-[1.15] font-heading max-w-4xl"
+            className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-semibold text-white tracking-tight leading-[1.15] font-heading max-w-4xl"
           />
 
           {/* hero subtitle */}
-          <p className="mt-4 sm:mt-5 text-base sm:text-lg md:text-xl text-neutral-400 font-sans leading-relaxed max-w-3xl">
+          <p className="mt-4 sm:mt-5 text-sm xs:text-base sm:text-lg md:text-xl text-neutral-400 font-sans leading-relaxed max-w-3xl">
             {dict.hero.subtitle}
           </p>
 
@@ -117,12 +117,12 @@ export default function Hero() {
             initial="hidden"
             animate="show"
             transition={{ delay: 0.35, duration: dur.slow, ease: ease.out }}
-            className="mt-6 sm:mt-10 flex flex-wrap items-center gap-3 sm:gap-4 w-full"
+            className="mt-6 sm:mt-10 flex flex-col xs:flex-row flex-wrap items-stretch xs:items-center gap-3 sm:gap-4 w-full"
           >
-            <Magnetic strength={0.22} activeDistance={40}>
+            <Magnetic strength={0.22} activeDistance={40} className="w-full xs:w-auto">
               <Link
                 href={`/${lang}/for-providers`}
-                className="inline-flex items-center justify-center gap-2.5 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-gradient-to-r from-white/[0.08] to-white/[0.03] hover:from-white/[0.14] hover:to-white/[0.08] text-white font-medium text-sm sm:text-base border border-white/15 hover:border-white/35 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2),0_4px_20px_rgba(0,0,0,0.5)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.3),0_8px_30px_rgba(255,255,255,0.1)] active:scale-[0.98] transition-all duration-200 group sheen"
+                className="w-full xs:w-auto inline-flex items-center justify-center gap-2.5 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-gradient-to-r from-white/[0.08] to-white/[0.03] hover:from-white/[0.14] hover:to-white/[0.08] text-white font-medium text-sm sm:text-base border border-white/15 hover:border-white/35 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2),0_4px_20px_rgba(0,0,0,0.5)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.3),0_8px_30px_rgba(255,255,255,0.1)] active:scale-[0.98] transition-all duration-200 group sheen"
               >
                 <span>{isAr ? 'انضم إلى شبكتنا' : 'Join the network'}</span>
                 <ArrowRight
@@ -132,10 +132,10 @@ export default function Hero() {
               </Link>
             </Magnetic>
 
-            <Magnetic strength={0.22} activeDistance={40}>
+            <Magnetic strength={0.22} activeDistance={40} className="w-full xs:w-auto">
               <Link
                 href={`/${lang}/who-we-are`}
-                className="inline-flex items-center justify-center gap-2 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] transition-all duration-200 group"
+                className="w-full xs:w-auto inline-flex items-center justify-center gap-2 py-3 sm:py-3.5 px-6 sm:px-7 rounded-full bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-medium text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] transition-all duration-200 group"
               >
                 <span>{isAr ? 'من نحن' : 'Who we are'}</span>
                 <ArrowRight

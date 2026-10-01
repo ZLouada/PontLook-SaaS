@@ -262,10 +262,10 @@ export default function HowItWorks() {
             <TextReveal
               as="h2"
               text={dict.how_it_works?.title || (isAr ? 'الرحلة من التحدي إلى الحل.' : 'The journey from challenge to solution.')}
-              className="text-2xl sm:text-4xl lg:text-[42px] font-semibold text-white tracking-tight leading-[1.18] font-heading"
+              className="text-xl xs:text-2xl sm:text-4xl lg:text-[42px] font-semibold text-white tracking-tight leading-[1.18] font-heading"
             />
 
-            <p className="text-sm sm:text-base text-neutral-400 font-sans leading-relaxed">
+            <p className="text-xs xs:text-sm sm:text-base text-neutral-400 font-sans leading-relaxed">
               {dict.how_it_works?.subtitle ||
                 (isAr
                   ? 'ربط صناع القرار بشركات تدريب الشركات عبر طلب موثق ومؤكد'
@@ -290,7 +290,7 @@ export default function HowItWorks() {
 
             {/* Requested Prominent Button: "Join network" / subtitle: "for training providers" */}
             <div className="pt-3 w-full sm:w-auto">
-              <Magnetic strength={0.2} activeDistance={35}>
+              <Magnetic strength={0.2} activeDistance={35} className="w-full sm:w-auto">
                 <Link
                   href={`/${lang}/for-providers/apply`}
                   className="group inline-flex items-center justify-between gap-4 p-3.5 sm:p-4 rounded-2xl bg-[#16171B] hover:bg-[#1C1E24] border border-white/15 hover:border-white/35 transition-all duration-200 shadow-xl w-full sm:min-w-[280px]"
@@ -322,13 +322,13 @@ export default function HowItWorks() {
                   <button
                     key={st.id}
                     onClick={() => setActiveStep(idx)}
-                    className={`group relative flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1.5 sm:px-4 rounded-xl border transition-all duration-200 text-[10px] sm:text-xs font-medium cursor-pointer active:scale-95 ${
+                    className={`group relative flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1 xs:px-1.5 sm:px-4 rounded-xl border transition-all duration-200 text-[9px] xs:text-[10px] sm:text-xs font-medium cursor-pointer active:scale-95 ${
                       isActive
                         ? 'text-white border-white/25 bg-white/[0.08]'
                         : 'bg-[#111215] text-neutral-400 border-white/10 hover:border-white/20 hover:text-neutral-200'
                     }`}
                   >
-                    <span className={`text-[10px] sm:text-[11px] font-mono font-bold shrink-0 ${isActive ? st.tagColor : 'text-neutral-500'}`}>
+                    <span className={`text-[9px] xs:text-[10px] sm:text-[11px] font-mono font-bold shrink-0 ${isActive ? st.tagColor : 'text-neutral-500'}`}>
                       {st.stepNumber}
                     </span>
                     <span className="truncate font-semibold">{st.navTitle}</span>
@@ -356,7 +356,7 @@ export default function HowItWorks() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -12, scale: 0.99 }}
                   transition={{ duration: dur.base, ease: ease.out }}
-                  className="relative rounded-2xl sm:rounded-3xl border border-white/15 hover:border-white/25 bg-[#0F1013] p-4 sm:p-6 lg:p-7 shadow-2xl overflow-hidden transition-colors"
+                  className="relative rounded-2xl sm:rounded-3xl border border-white/15 hover:border-white/25 bg-[#0F1013] p-3.5 xs:p-4 sm:p-6 lg:p-7 shadow-2xl overflow-hidden transition-colors"
                 >
                   <BorderBeam size={260} duration={12} colorFrom="#FF5C00" colorTo="#0052FF" />
                   <BorderGlow glowColor="rgba(255, 92, 0, 0.35)" size={280} opacity={0.5} />

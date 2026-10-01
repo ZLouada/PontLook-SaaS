@@ -475,14 +475,14 @@ export default function WhyDifferent() {
               <m.div
                 key={it.id}
                 variants={staggerItem}
-                className="relative w-[74vw] sm:w-[250px] lg:w-auto shrink-0 lg:shrink snap-center h-[260px] sm:h-[280px] lg:h-[295px]"
+                className="relative w-[74vw] sm:w-[250px] lg:w-auto shrink-0 lg:shrink snap-center h-[260px] sm:h-[280px] lg:h-[305px] xl:h-[295px]"
                 onClick={() => setActiveModalId(it.id)}
               >
                 <CardTilt3D maxTilt={6} glareOpacity={0.12} className="w-full h-full">
                   <Spotlight radius={280} className="w-full h-full rounded-2xl">
                     <m.div
                       whileTap={{ scale: 0.98 }}
-                      className={`surface group relative w-full h-full rounded-2xl p-3.5 sm:p-4 flex flex-col justify-between cursor-pointer select-none shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-8px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-300 ${cardGlow}`}
+                      className={`surface group relative w-full h-full rounded-2xl p-3.5 sm:p-4 lg:p-3 xl:p-4 flex flex-col justify-between cursor-pointer select-none shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-8px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-300 ${cardGlow}`}
                     >
                       {/* Ambient subtle back-glow on hover */}
                       <div className={`pointer-events-none absolute -top-8 -end-8 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${cardAura}`} />
@@ -498,7 +498,7 @@ export default function WhyDifferent() {
                           </span>
                         </div>
 
-                        <h3 className="text-sm sm:text-base font-semibold text-white tracking-tight leading-snug font-heading group-hover:text-white">
+                        <h3 className="text-xs xs:text-sm sm:text-base lg:text-xs xl:text-sm font-semibold text-white tracking-tight leading-snug font-heading group-hover:text-white">
                           {it.title}
                         </h3>
 
@@ -547,7 +547,7 @@ export default function WhyDifferent() {
         createPortal(
           <AnimatePresence>
             {activeCard && (
-              <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true">
+              <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 xs:p-3 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true">
                 {/* backdrop */}
                 <m.div
                   initial={{ opacity: 0 }}

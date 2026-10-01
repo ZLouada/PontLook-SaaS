@@ -244,9 +244,9 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
           <TextReveal
             as="h2"
             text={isAr ? 'كيف تعمل الشراكة ومزايا الانضمام' : 'How the Partnership Works & Key Advantages'}
-            className="font-heading text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-4xl"
+            className="font-heading text-xl xs:text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-4xl"
           />
-          <p className="mt-2.5 max-w-2xl font-sans text-sm text-neutral-400 sm:text-base">
+          <p className="mt-2.5 max-w-2xl font-sans text-xs xs:text-sm text-neutral-400 sm:text-base">
             {isAr
               ? 'انقر على أي ميزة لاستعراض التفاصيل، آلية العمل، ونموذج التعاقد المباشر'
               : 'Click on any advantage to inspect full unit economics, qualification criteria, and SLA guarantees.'}
@@ -256,7 +256,7 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
 
       {/* Premium Clean 3-Card Grid (Horizontal flow on mobile, 3-col on desktop) */}
       <div className="relative">
-        <div className="relative flex md:grid gap-4 sm:gap-6 md:grid-cols-3 overflow-x-auto md:overflow-visible pb-4 md:pb-0 scrollbar-none snap-x snap-mandatory px-4 -mx-4 sm:px-0 sm:mx-0">
+        <div className="relative flex md:grid gap-3.5 xs:gap-4 sm:gap-6 md:grid-cols-3 overflow-x-auto md:overflow-visible pb-4 md:pb-0 scrollbar-none snap-x snap-mandatory px-3 -mx-3 xs:px-4 xs:-mx-4 sm:px-0 sm:mx-0">
           {benefits.map((b, i) => {
             const tone = ACCENTS[b.frameVariant] ?? ACCENTS.brand;
 
@@ -273,11 +273,11 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                   damping: 22,
                 }}
                 whileHover={reduce ? undefined : { y: -6 }}
-                className="group relative h-full flex flex-col w-[85vw] sm:w-[65vw] md:w-auto shrink-0 snap-center"
+                className="group relative h-full flex flex-col w-[88vw] xs:w-[82vw] sm:w-[65vw] md:w-auto shrink-0 snap-center"
               >
                 <Spotlight
                   radius={360}
-                  className="relative z-10 flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#202227] hover:border-white/20 bg-[#0C0D11] p-5 sm:p-7 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_32px_-12px_rgba(0,0,0,0.8)] transition-all duration-300"
+                  className="relative z-10 flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#202227] hover:border-white/20 bg-[#0C0D11] p-4 xs:p-5 sm:p-7 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_32px_-12px_rgba(0,0,0,0.8)] transition-all duration-300"
                 >
                   {/* Ambient subtle glow on hover */}
                   <div

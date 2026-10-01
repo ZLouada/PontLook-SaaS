@@ -425,7 +425,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
   }
 
   return (
-    <div className="max-w-3xl mx-auto py-8 sm:py-12 px-4 sm:px-6">
+    <div className="max-w-3xl mx-auto py-6 xs:py-8 sm:py-12 px-3.5 xs:px-4 sm:px-6">
       {/* Top Bar Navigation */}
       <div className="flex items-center justify-between gap-4 mb-6 sm:mb-8">
         <Link
@@ -451,20 +451,20 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
       </div>
 
       {/* Main Card Container */}
-      <div className="bg-[#0F1013] border border-[#26282D] rounded-2xl p-6 sm:p-10 relative overflow-hidden shadow-xl">
+      <div className="bg-[#0F1013] border border-[#26282D] rounded-2xl p-4 xs:p-6 sm:p-10 relative overflow-hidden shadow-xl">
         <div className="pointer-events-none absolute top-0 end-0 w-80 h-32 bg-white/[0.02] blur-3xl" />
 
         {/* Step 1: Organization & Identity */}
         {step === 1 && (
           <div>
             <div className="mb-6 sm:mb-8">
-              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-xs text-neutral-300 font-semibold uppercase tracking-wider mb-3">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-[11px] xs:text-xs text-neutral-300 font-semibold uppercase tracking-wider mb-3">
                 {isAr ? 'الخطوة 1 · معلومات المنشأة' : 'Step 1 · Basic Information'}
               </span>
-              <h1 className="text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight">
+              <h1 className="text-xl xs:text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight">
                 {isAr ? 'معلومات عن مؤسستكم التدريبية' : 'Tell us about your training organization'}
               </h1>
-              <p className="mt-2 text-sm text-neutral-400 leading-relaxed">
+              <p className="mt-2 text-xs xs:text-sm text-neutral-400 leading-relaxed">
                 {isAr
                   ? 'نتعاون مع المعاهد التدريبية المعتمدة ومراكز التدريب المتخصصة لتزويدهم بعملاء مؤسسيين مؤهلين.'
                   : 'We partner with accredited boutique academies and enterprise training institutions across the GCC.'}
@@ -858,7 +858,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
 
         {/* Actions Bar: Sticky on mobile for effortless one-thumb completion */}
         <div className="mt-8 pt-6 border-t border-[#26282D]">
-          <div className="sticky bottom-0 -mx-5 sm:mx-0 px-5 sm:px-0 py-3 sm:py-0 bg-[#0F1013]/95 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border-t border-[#26282D] sm:border-t-0 shadow-[0_-4px_12px_rgba(0,0,0,0.4)] sm:shadow-none pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:pb-0 z-20">
+          <div className="sticky bottom-0 -mx-4 xs:-mx-6 sm:mx-0 px-4 xs:px-6 sm:px-0 py-3 sm:py-0 bg-[#0F1013]/95 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border-t border-[#26282D] sm:border-t-0 shadow-[0_-4px_12px_rgba(0,0,0,0.4)] sm:shadow-none pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:pb-0 z-20">
             <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
               {step > 1 ? (
                 <button

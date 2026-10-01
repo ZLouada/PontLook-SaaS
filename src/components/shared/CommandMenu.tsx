@@ -330,7 +330,7 @@ export default function CommandMenu({ open, onOpenChange, lang = 'en' }: Command
   return createPortal(
     <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-[10000] flex items-start justify-center pt-16 sm:pt-28 px-4" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-[10000] flex items-start justify-center pt-8 sm:pt-24 px-3 sm:px-4" role="dialog" aria-modal="true">
           {/* Backdrop */}
           <m.div
             initial={{ opacity: 0 }}
@@ -348,10 +348,10 @@ export default function CommandMenu({ open, onOpenChange, lang = 'en' }: Command
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -10 }}
             transition={{ type: 'spring', damping: 28, stiffness: 350 }}
-            className="relative w-full max-w-2xl rounded-2xl sm:rounded-3xl border border-[#26282D] bg-[#0F1013] shadow-2xl shadow-black/80 overflow-hidden z-10 flex flex-col max-h-[80vh]"
+            className="relative w-full max-w-2xl rounded-2xl sm:rounded-3xl border border-[#26282D] bg-[#0F1013] shadow-2xl shadow-black/80 overflow-hidden z-10 flex flex-col max-h-[85dvh]"
           >
             {/* Top Search Input Bar */}
-            <div className="flex items-center gap-3 px-4 sm:px-6 py-4 border-b border-[#26282D] bg-[#16171B]/50">
+            <div className="flex items-center gap-2.5 xs:gap-3 px-3.5 sm:px-6 py-3 sm:py-4 border-b border-[#26282D] bg-[#16171B]/50">
               <Search size={18} className="text-neutral-400 shrink-0" />
               <input
                 ref={inputRef}
@@ -359,7 +359,7 @@ export default function CommandMenu({ open, onOpenChange, lang = 'en' }: Command
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={isAr ? 'ابحث عن بلد، تخصص تدريبي، أو إجراء...' : 'Type to search countries, verticals, or actions...'}
-                className="w-full bg-transparent text-sm sm:text-base text-white placeholder-neutral-500 focus:outline-none"
+                className="w-full bg-transparent text-xs xs:text-sm sm:text-base text-white placeholder-neutral-500 focus:outline-none"
               />
               {query && (
                 <button

@@ -28,13 +28,13 @@ export default function CityBudgetCalculator({ country, city, lang }: CityBudget
   const estimatedMax = Math.round(baseRate * currentMultiplier * 1.35);
 
   return (
-    <div className="rounded-3xl bg-[#0F1013] border border-[#26282D] p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-[#26282D]">
+    <div className="rounded-2xl sm:rounded-3xl bg-[#0F1013] border border-[#26282D] p-4 xs:p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 pb-6 border-b border-[#26282D]">
         <div>
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-xs font-mono text-neutral-300 mb-3">
             <span>{isAr ? 'حاسبة الميزانية المؤسسية التقديرية' : 'Corporate Budget Estimator'}</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-semibold text-white font-heading">
+          <h3 className="text-lg xs:text-xl sm:text-2xl font-semibold text-white font-heading">
             {isAr
               ? `تقدير استثمار التدريب في ${city.nameAr}`
               : `Training Investment Benchmark for ${city.nameEn}`}
@@ -101,11 +101,11 @@ export default function CityBudgetCalculator({ country, city, lang }: CityBudget
         </div>
 
         {/* Estimation Output Card */}
-        <div className="lg:col-span-5 bg-[#16171B] border border-[#26282D] rounded-2xl p-6 text-center space-y-4">
+        <div className="lg:col-span-5 bg-[#16171B] border border-[#26282D] rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center space-y-3.5 xs:space-y-4">
           <span className="text-xs font-semibold text-neutral-400 uppercase tracking-wider block">
             {isAr ? 'متوسط نطاق الميزانية المقترح' : 'Benchmark Investment Range'}
           </span>
-          <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-heading tracking-tight">
+          <div className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-heading tracking-tight">
             {country.currencySymbol} {estimatedMin.toLocaleString()} – {estimatedMax.toLocaleString()}
           </div>
           <p className="text-xs text-neutral-400 leading-relaxed">

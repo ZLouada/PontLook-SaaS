@@ -132,7 +132,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
         ref={headerRef}
         className={`fixed inset-x-0 mx-auto z-50 liquid-glass-morph-header ${
           scrolled
-            ? `top-0 w-full rounded-none px-4 pb-3 pt-[max(1.125rem,calc(env(safe-area-inset-top,0px)+0.75rem))] ${
+            ? `top-0 w-full rounded-none px-3.5 xs:px-4 pb-3 pt-[max(1.125rem,calc(env(safe-area-inset-top,0px)+0.75rem))] ${
                 isLightSection ? 'liquid-glass-mobile-light' : 'liquid-glass-mobile-scrolled'
               } ${
                 isDesktop
@@ -142,8 +142,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   : ''
               }`
             : isLightSection
-            ? 'top-0 w-full max-w-full rounded-none px-4 sm:px-8 lg:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-light'
-            : 'top-0 w-full max-w-full rounded-none px-4 sm:px-8 lg:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-dark'
+            ? 'top-0 w-full max-w-full rounded-none px-3.5 xs:px-4 sm:px-8 lg:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-light'
+            : 'top-0 w-full max-w-full rounded-none px-3.5 xs:px-4 sm:px-8 lg:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-dark'
         }`}
       >
         <nav
@@ -154,17 +154,17 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           {/* Brand Logo - Orange on light sections, White on dark/AMOLED sections */}
           <Link
             href={`/${lang}`}
-            className="flex items-center gap-2 sm:gap-2.5 transition-transform duration-200 hover:scale-[1.02] active:scale-95"
+            className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 transition-transform duration-200 hover:scale-[1.02] active:scale-95 shrink-0"
             aria-label="PontLook home"
           >
-            <div className="relative flex items-center h-7 sm:h-8 w-[125px] sm:w-[140px]">
+            <div className="relative flex items-center h-6 xs:h-7 sm:h-8 w-[108px] xs:w-[125px] sm:w-[140px]">
               {/* Orange Logo - shown on white/light sections */}
               <Image
                 src="/images/brand/pontlook-logo-orange.png"
                 alt="PontLook Logo"
                 width={140}
                 height={35}
-                className={`absolute inset-y-0 start-0 h-7 sm:h-8 w-auto object-contain transition-opacity duration-300 ${
+                className={`absolute inset-y-0 start-0 h-6 xs:h-7 sm:h-8 w-auto object-contain transition-opacity duration-300 ${
                   isLightSection ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
                 priority
@@ -175,7 +175,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 alt="PontLook Logo"
                 width={140}
                 height={35}
-                className={`absolute inset-y-0 start-0 h-7 sm:h-8 w-auto object-contain transition-opacity duration-300 ${
+                className={`absolute inset-y-0 start-0 h-6 xs:h-7 sm:h-8 w-auto object-contain transition-opacity duration-300 ${
                   isLightSection ? 'opacity-0 pointer-events-none' : 'opacity-100'
                 }`}
                 priority
@@ -245,13 +245,13 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           </ul>
 
           {/* language switcher and actions */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-3">
             {/* Quick Command Palette Trigger (Cmd+K) */}
             <Magnetic strength={0.16} activeDistance={25}>
               <button
                 type="button"
                 onClick={() => setCommandOpen(true)}
-                className={`inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 ${
+                className={`inline-flex items-center gap-1.5 xs:gap-2 px-2 xs:px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 ${
                   isLightSection
                     ? 'border border-neutral-300/80 bg-white/70 text-neutral-700 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
                     : 'border border-[#26282D] bg-[#16171B] text-neutral-400 hover:text-white hover:border-white/30'
@@ -288,10 +288,10 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             </Magnetic>
 
             {/* Mobile Controls */}
-            <div className="flex items-center gap-2 lg:hidden">
+            <div className="flex items-center gap-1.5 xs:gap-2 lg:hidden">
               <Link
                 href={switchHref}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 ${
+                className={`inline-flex items-center gap-1 xs:gap-1.5 px-2 xs:px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 ${
                   isLightSection
                     ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
                     : 'border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30'
@@ -299,12 +299,12 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
               >
                 <Globe size={13} className={isLightSection ? 'text-neutral-700' : 'text-neutral-400'} />
-                <span className="font-semibold">{lang === 'en' ? 'العربية' : 'EN'}</span>
+                <span className="font-semibold text-[11px] xs:text-xs">{lang === 'en' ? 'العربية' : 'EN'}</span>
               </Link>
 
               <button
                 type="button"
-                className={`flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full transition-all active:scale-90 ${
+                className={`flex h-8 w-8 xs:h-9 xs:w-9 min-h-[32px] min-w-[32px] xs:min-h-[36px] xs:min-w-[36px] items-center justify-center rounded-full transition-all active:scale-90 ${
                   isLightSection
                     ? 'text-neutral-800 bg-white/80 border border-neutral-300/80 hover:bg-white hover:text-black shadow-xs'
                     : 'text-neutral-300 bg-[#16171B] border border-[#26282D] hover:bg-white/10 hover:text-white'
@@ -313,7 +313,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 aria-expanded={open}
                 aria-label="Open navigation menu"
               >
-                <Menu size={18} />
+                <Menu size={16} />
               </button>
             </div>
           </div>

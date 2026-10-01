@@ -91,7 +91,7 @@ export default async function FindTrainingPage({
   return (
     <>
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-black min-h-[100dvh] flex flex-col justify-between items-center pt-24 sm:pt-28 pb-6 sm:pb-8 px-4 sm:px-6">
+      <div className="relative overflow-hidden bg-black min-h-[100dvh] flex flex-col justify-between items-center pt-20 xs:pt-24 sm:pt-28 pb-6 sm:pb-8 px-3.5 xs:px-4 sm:px-6">
         {/* Ambient Depth Glows */}
         <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-white/[0.02] blur-3xl -z-10 rounded-full" />
         <div className="pointer-events-none absolute top-10 start-1/4 w-[400px] h-[400px] bg-white/[0.01] blur-3xl -z-10 rounded-full" />
@@ -108,20 +108,20 @@ export default async function FindTrainingPage({
                   ? 'احصل على 3 عروض تدريبية مخصصة لتطوير كوادر منشأتك'
                   : 'Get 3 Curated Training Proposals for Your Workforce'
               }
-              className="text-4xl sm:text-6xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.08] font-heading tracking-tight"
+              className="text-2xl xs:text-3xl sm:text-5xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.08] font-heading tracking-tight"
             />
 
-            <p className="mt-4 sm:mt-5 text-base sm:text-xl text-neutral-400 leading-relaxed max-w-2xl mx-auto font-normal">
+            <p className="mt-3.5 sm:mt-5 text-sm xs:text-base sm:text-xl text-neutral-400 leading-relaxed max-w-2xl mx-auto font-normal">
               {isAr
                 ? 'لا داعي للبحث اليدوي بين مئات الكتالوجات العامة. حدد متطلباتك التدريبية في 60 ثانية، وسنصلك بأفضل مزودي التدريب المعتمدين وفق متطلباتك الدقيقة وبدون أي التزام.'
                 : 'Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds, and we will introduce you only to proven training providers matched to your exact domain and regional context.'}
             </p>
 
-            <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto">
+            <div className="mt-6 xs:mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
               <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                 <Link
                   href={`/${lang}/find-training/request`}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 xs:py-3.5 sm:py-4 px-6 sm:px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-xs xs:text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
                 >
                   <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals'}</span>
                   <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />

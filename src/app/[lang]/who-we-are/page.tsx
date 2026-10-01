@@ -74,25 +74,25 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
       <WhoWeAreSections lang={lang} />
 
       {/* Bottom CTA / Guarantee Section */}
-      <section data-nav-dark="true" className="bg-black py-24 sm:py-32 relative overflow-hidden">
-        <div className="container-site max-w-4xl mx-auto px-6 text-center relative z-10">
+      <section data-nav-dark="true" className="bg-black py-16 sm:py-24 lg:py-32 relative overflow-hidden">
+        <div className="container-site max-w-4xl mx-auto px-3.5 xs:px-4 sm:px-6 text-center relative z-10">
           <Reveal>
             <CardTilt3D maxTilt={3} glareOpacity={0.10} className="w-full">
-              <div className="bg-[#0F1013] border border-[#26282D] hover:border-white/30 p-10 md:p-16 rounded-3xl shadow-2xl text-white relative overflow-hidden transition-colors duration-300">
+              <div className="bg-[#0F1013] border border-[#26282D] hover:border-white/30 p-5 xs:p-7 sm:p-10 md:p-16 rounded-2xl sm:rounded-3xl shadow-2xl text-white relative overflow-hidden transition-colors duration-300">
                 <BorderGlow glowColor="rgba(59, 130, 246, 0.35)" size={380} opacity={0.5} />
                 <div className="absolute top-0 right-0 w-60 h-60 bg-blue-500/[0.04] rounded-full blur-3xl pointer-events-none" />
                 
-                <span className="relative z-10 text-xs font-bold uppercase tracking-widest text-neutral-300 bg-white/[0.04] border border-[#26282D] px-4 py-1.5 rounded-full inline-block mb-6">
+                <span className="relative z-10 text-[11px] xs:text-xs font-bold uppercase tracking-widest text-neutral-300 bg-white/[0.04] border border-[#26282D] px-3.5 xs:px-4 py-1.5 rounded-full inline-block mb-4 xs:mb-6">
                   {isAr ? 'ضماننا' : 'OUR GUARANTEE'}
                 </span>
                 
                 <TextReveal
                   as="h2"
                   text={isAr ? 'وعدنا لك' : 'Our Promise'}
-                  className="relative z-10 text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-6 text-center"
+                  className="relative z-10 text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-4 xs:mb-6 text-center"
                 />
                 
-                <p className="relative z-10 text-lg md:text-xl text-neutral-300 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
+                <p className="relative z-10 text-sm xs:text-base sm:text-lg md:text-xl text-neutral-300 font-normal leading-relaxed max-w-2xl mx-auto mb-6 xs:mb-8 sm:mb-10">
                   {isAr ? (
                     <>
                       نسلمك صناع قرار موثوقين مع احتياج تدريبي مؤسسي مؤكد...{' '}
@@ -106,21 +106,21 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                   )}
                 </p>
 
-                <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
                   <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                     <Link 
                       href={`/${lang}/for-providers`} 
-                      className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-medium text-white bg-white/[0.05] hover:bg-white/[0.10] border border-[#26282D] hover:border-white/30 backdrop-blur-md rounded-xl shadow-xs transition-all active:scale-[0.98]"
+                      className="inline-flex items-center justify-center w-full sm:w-auto px-5 xs:px-8 py-3 xs:py-4 text-xs xs:text-sm sm:text-base font-medium text-white bg-white/[0.05] hover:bg-white/[0.10] border border-[#26282D] hover:border-white/30 backdrop-blur-md rounded-xl shadow-xs transition-all active:scale-[0.98]"
                     >
                       <span>{isAr ? 'ابدأ باستقبال الفرص المؤهلة' : 'Start Receiving Qualified Leads'}</span>
-                      <ArrowRight size={18} className="ms-2 rtl:-scale-x-100" />
+                      <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
                     </Link>
                   </Magnetic>
                   
                   <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                     <Link 
                       href={`/${lang}/contact`} 
-                      className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-base font-medium text-neutral-300 hover:text-white bg-transparent hover:bg-white/[0.05] rounded-xl border border-[#26282D] hover:border-white/30 shadow-xs transition-all active:scale-[0.98]"
+                      className="inline-flex items-center justify-center w-full sm:w-auto px-5 xs:px-8 py-3 xs:py-4 text-xs xs:text-sm sm:text-base font-medium text-neutral-300 hover:text-white bg-transparent hover:bg-white/[0.05] rounded-xl border border-[#26282D] hover:border-white/30 shadow-xs transition-all active:scale-[0.98]"
                     >
                       <span>{isAr ? 'احجز جلسة استكشافية' : 'Book a Discovery Call'}</span>
                     </Link>

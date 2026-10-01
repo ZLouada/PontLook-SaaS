@@ -229,7 +229,7 @@ export default function ConsoleDialog({
     <AnimatePresence>
       {active && (
         <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto p-3 sm:p-6"
+          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto p-2 xs:p-3 sm:p-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="console-dialog-title"
@@ -255,7 +255,7 @@ export default function ConsoleDialog({
             animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, x: travel.x * 0.45, y: travel.y * 0.45 }}
             transition={{ type: 'spring', stiffness: 250, damping: 26, mass: 0.9 }}
-            className="relative z-10 my-auto flex max-h-[92dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-white/15 bg-black/95 text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14),0_40px_90px_-20px_rgba(0,0,0,0.95)] outline-none backdrop-blur-2xl sm:rounded-[26px]"
+            className="relative z-10 my-auto flex max-h-[94dvh] xs:max-h-[92dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-white/15 bg-black/95 text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14),0_40px_90px_-20px_rgba(0,0,0,0.95)] outline-none backdrop-blur-2xl sm:rounded-[26px]"
           >
             {/* Drifting graph paper + accent aura, pinned to the window frame so
                 they stay put while the body scrolls. */}
@@ -266,7 +266,7 @@ export default function ConsoleDialog({
             />
 
             {/* Title bar */}
-            <div className="relative z-10 flex shrink-0 items-center gap-3 border-b border-[#26282D] bg-black/80 px-3.5 py-3 sm:px-5">
+            <div className="relative z-10 flex shrink-0 items-center gap-2.5 xs:gap-3 border-b border-[#26282D] bg-black/80 px-3 xs:px-3.5 py-2.5 xs:py-3 sm:px-5">
               <span className="font-mono text-[11px] tabular-nums text-neutral-500">
                 {active.index}
                 <span className="mx-1 text-neutral-600">/</span>
@@ -337,7 +337,7 @@ export default function ConsoleDialog({
               </div>
 
               {/* Record body */}
-              <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 sm:p-7">
+              <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3.5 xs:p-4 sm:p-7">
                 <AnimatePresence mode="wait" initial={false}>
                   <m.div
                     key={active.id}
@@ -345,12 +345,12 @@ export default function ConsoleDialog({
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: isAr ? slide : -slide }}
                     transition={{ duration: 0.28, ease: ease.out }}
-                    className="space-y-5"
+                    className="space-y-4 xs:space-y-5"
                   >
                     <div>
-                      <div className="flex flex-wrap items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-1.5 xs:gap-2">
                         <span
-                          className={`rounded-full border px-2.5 py-0.5 font-sans text-[11px] font-semibold ${
+                          className={`rounded-full border px-2.5 py-0.5 font-sans text-[10px] xs:text-[11px] font-semibold ${
                             accent === 'brand'
                               ? 'border-orange-500/25 bg-orange-500/10 text-orange-400'
                               : 'border-white/20 bg-white/10 text-white'
@@ -358,32 +358,32 @@ export default function ConsoleDialog({
                         >
                           {active.badge}
                         </span>
-                        <span className="font-sans text-[11px] font-medium text-neutral-500 sm:hidden">
+                        <span className="font-sans text-[10px] xs:text-[11px] font-medium text-neutral-500 sm:hidden">
                           {active.angle}
                         </span>
                       </div>
 
                       <h3
                         id="console-dialog-title"
-                        className="mt-3 font-heading text-xl font-semibold leading-tight tracking-tight text-white sm:text-3xl"
+                        className="mt-2.5 xs:mt-3 font-heading text-lg xs:text-xl font-semibold leading-tight tracking-tight text-white sm:text-3xl"
                       >
                         {active.title}
                       </h3>
 
-                      <p className="mt-2.5 max-w-2xl font-sans text-sm leading-relaxed text-neutral-300 sm:text-base">
+                      <p className="mt-2 xs:mt-2.5 max-w-2xl font-sans text-xs xs:text-sm leading-relaxed text-neutral-300 sm:text-base">
                         {active.body}
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+                    <div className="grid grid-cols-1 items-start gap-3 xs:gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
                       {/* Guarantees — each line draws itself in. */}
-                      <div className="rounded-2xl border border-[#26282D] bg-black p-4">
-                        <div className="flex items-center gap-2 font-sans text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
+                      <div className="rounded-xl sm:rounded-2xl border border-[#26282D] bg-black p-3 xs:p-4">
+                        <div className="flex items-center gap-2 font-sans text-[10px] xs:text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
                           <span className={`h-3 w-0.5 rounded-full ${tone.line}`} aria-hidden="true" />
                           {copy.takeawaysTitle}
                         </div>
 
-                        <ul className="mt-3.5 space-y-2.5 font-sans text-xs leading-relaxed text-neutral-200 sm:text-[13px]">
+                        <ul className="mt-2.5 xs:mt-3.5 space-y-2 xs:space-y-2.5 font-sans text-[11px] xs:text-xs leading-relaxed text-neutral-200 sm:text-[13px]">
                           {active.takeaways.map((point, i) => (
                             <m.li
                               key={point}
@@ -395,7 +395,7 @@ export default function ConsoleDialog({
                                 stiffness: 320,
                                 damping: 24,
                               }}
-                              className="flex items-start gap-2.5 border-s border-[#26282D] ps-3"
+                              className="flex items-start gap-2.5 border-s border-[#26282D] ps-2.5 xs:ps-3"
                             >
                               <BadgeCheck size={14} className={`mt-0.5 shrink-0 ${tone.check}`} />
                               <span>{point}</span>
@@ -408,7 +408,7 @@ export default function ConsoleDialog({
                       <div
                         onPointerMove={onPointerMove}
                         onPointerLeave={resetTilt}
-                        className="relative overflow-hidden rounded-2xl border border-[#26282D] bg-black p-3 sm:p-4"
+                        className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-[#26282D] bg-black p-2.5 xs:p-3 sm:p-4"
                         style={{ perspective: 900 }}
                       >
                         <div
@@ -430,7 +430,7 @@ export default function ConsoleDialog({
             </div>
 
             {/* Footer: step controls on the left, commitment on the right. */}
-            <div className="relative z-10 flex shrink-0 flex-col gap-3 border-t border-[#26282D] bg-black/90 px-3.5 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-4">
+            <div className="relative z-10 flex shrink-0 flex-col gap-2.5 xs:gap-3 border-t border-[#26282D] bg-black/90 px-3 xs:px-3.5 py-2.5 xs:py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-4">
               <div className="flex items-center gap-2">
                 {records.length > 1 && (
                   <>
@@ -438,17 +438,17 @@ export default function ConsoleDialog({
                       type="button"
                       onClick={() => go(-1)}
                       aria-label={records[(activeIndex - 1 + records.length) % records.length].title}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#26282D] bg-white/[0.04] text-neutral-400 transition-all hover:border-white/25 hover:text-white active:scale-95"
+                      className="flex h-7 w-7 xs:h-8 xs:w-8 items-center justify-center rounded-lg border border-[#26282D] bg-white/[0.04] text-neutral-400 transition-all hover:border-white/25 hover:text-white active:scale-95"
                     >
-                      <ChevronRight size={15} className="rotate-180 rtl:rotate-0" />
+                      <ChevronRight size={14} className="rotate-180 rtl:rotate-0" />
                     </button>
                     <button
                       type="button"
                       onClick={() => go(1)}
                       aria-label={records[(activeIndex + 1) % records.length].title}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#26282D] bg-white/[0.04] text-neutral-400 transition-all hover:border-white/25 hover:text-white active:scale-95"
+                      className="flex h-7 w-7 xs:h-8 xs:w-8 items-center justify-center rounded-lg border border-[#26282D] bg-white/[0.04] text-neutral-400 transition-all hover:border-white/25 hover:text-white active:scale-95"
                     >
-                      <ChevronRight size={15} className="rtl:rotate-180" />
+                      <ChevronRight size={14} className="rtl:rotate-180" />
                     </button>
                   </>
                 )}
@@ -466,7 +466,7 @@ export default function ConsoleDialog({
                 <Link
                   href={copy.ctaHref}
                   onClick={onClose}
-                  className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-5 py-2.5 font-sans text-xs font-semibold transition-colors sm:text-sm ${tone.cta}`}
+                  className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-4 xs:px-5 py-2 xs:py-2.5 font-sans text-xs font-semibold transition-colors sm:text-sm ${tone.cta}`}
                 >
                   <span>{copy.ctaLabel}</span>
                   <ArrowRight size={14} className="rtl:-scale-x-100" />

@@ -291,12 +291,12 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
       className="bg-black text-white min-h-[100dvh] flex flex-col justify-between pt-24 sm:pt-32 lg:pt-36 pb-8 relative z-10 overflow-hidden select-none shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
     >
       {/* TOP CONTENT (Headline & Subtitle Only) */}
-      <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-4 sm:px-6 mb-6 sm:mb-10">
+      <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-3.5 xs:px-4 sm:px-6 mb-6 sm:mb-10">
         <Reveal className="flex flex-col items-center">
           {/* Top Architectural Status Pill */}
-          <div className="mb-5 sm:mb-6 inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#16171B]/85 border border-[#26282D] hover:border-white/30 backdrop-blur-xl shadow-xl transition-all duration-300">
+          <div className="mb-5 sm:mb-6 inline-flex items-center gap-2 xs:gap-2.5 px-3 xs:px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#16171B]/85 border border-[#26282D] hover:border-white/30 backdrop-blur-xl shadow-xl transition-all duration-300 max-w-[94vw]">
             <Signal />
-            <span className="text-xs sm:text-sm font-medium">
+            <span className="text-[11px] xs:text-xs sm:text-sm font-medium truncate">
               <span
                 className="text-shimmer"
                 data-text={
@@ -320,9 +320,9 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
                 ? 'منصة مطابقة تدريب الشركات'
                 : 'The Corporate Training Matchmaking Platform'
             }
-            className="text-3xl sm:text-5xl lg:text-[60px] font-semibold text-white leading-[1.15] sm:leading-[1.1] font-heading tracking-tight"
+            className="text-2xl xs:text-3xl sm:text-5xl lg:text-[60px] font-semibold text-white leading-[1.15] sm:leading-[1.1] font-heading tracking-tight"
           />
-          <p className="mt-4 sm:mt-5 text-base sm:text-lg lg:text-xl leading-relaxed text-neutral-400 max-w-2xl sm:max-w-3xl mx-auto font-normal">
+          <p className="mt-4 sm:mt-5 text-sm xs:text-base sm:text-lg lg:text-xl leading-relaxed text-neutral-400 max-w-2xl sm:max-w-3xl mx-auto font-normal">
             {isAr
               ? 'نربط شركات ومزودي التدريب بصناع القرار في كبرى المؤسسات الذين لديهم احتياجات وتحديات حقيقية يسعون لحلها.'
               : 'We connect corporate training companies with enterprise decision makers who already have a real workforce challenge to solve.'}
@@ -343,7 +343,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
         <div className="relative z-10 mb-2 sm:mb-4">
           <button
             onClick={scrollToMission}
-            className="inline-flex items-center gap-2 sm:gap-3 px-3.5 sm:px-6 py-2 sm:py-3 rounded-full bg-[#111215]/80 hover:bg-[#16171B] border border-[#26282D] hover:border-neutral-600 text-[11px] sm:text-sm text-neutral-300 hover:text-white shadow-2xl backdrop-blur-xl transition-all active:scale-95 group max-w-[92vw]"
+            className="inline-flex items-center gap-2 sm:gap-3 px-3 xs:px-3.5 sm:px-6 py-2 sm:py-3 rounded-full bg-[#111215]/80 hover:bg-[#16171B] border border-[#26282D] hover:border-neutral-600 text-[11px] sm:text-sm text-neutral-300 hover:text-white shadow-2xl backdrop-blur-xl transition-all active:scale-95 group max-w-[92vw]"
           >
             <Signal />
             <span>

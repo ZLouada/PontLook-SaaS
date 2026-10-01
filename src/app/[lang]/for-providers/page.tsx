@@ -94,7 +94,7 @@ export default async function ForProvidersPage({
       />
 
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-black pt-28 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden bg-black pt-24 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-3.5 xs:px-4 sm:px-6 lg:px-8">
         {/* Ambient Depth Glows */}
         <div className="pointer-events-none absolute top-1/4 start-0 w-[550px] h-[450px] bg-orange-500/[0.05] blur-[160px] -z-10 rounded-full" />
         <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-orange-500/[0.02] blur-[160px] -z-10 rounded-full" />
@@ -108,21 +108,21 @@ export default async function ForProvidersPage({
                 as="h1"
                 onScroll={false}
                 text={isAr ? 'فرص تدريبية للشركات حسب الطلب' : 'Enterprise Training Leads On Demand'}
-                className="text-3xl sm:text-5xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.05] font-heading tracking-tight text-start"
+                className="text-2xl xs:text-3xl sm:text-5xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.05] font-heading tracking-tight text-start"
               />
 
-              <p className="mt-4 sm:mt-5 text-base sm:text-lg text-neutral-300 leading-relaxed max-w-2xl font-normal font-sans text-start">
+              <p className="mt-3.5 sm:mt-5 text-sm xs:text-base sm:text-lg text-neutral-300 leading-relaxed max-w-2xl font-normal font-sans text-start">
                 {isAr
                   ? 'تواصل مباشرة مع صناع القرار في كبرى المنشآت والشركات التي تبحث بنشاط عن حلول تدريبية. بدون رسوم شهرية ثابتة، الدفع فقط لكل فرصة مؤكدة ومؤهلة.'
                   : 'Connect directly with verified corporate decision makers actively seeking training solutions. No retainers, 100% pay per lead.'}
               </p>
 
               {/* Hero Action Buttons */}
-              <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5 w-full sm:w-auto">
+              <div className="mt-6 xs:mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5 w-full sm:w-auto">
                 <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                   <Link
                     href={`/${lang}/for-providers/apply`}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-7 sm:px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-orange-500/50 focus-visible:outline-none min-h-[48px]"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 xs:py-3.5 px-6 sm:px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-xs xs:text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-orange-500/50 focus-visible:outline-none min-h-[48px]"
                   >
                     <span>{isAr ? 'انضم كشريك تدريب' : 'Become a Partner'}</span>
                     <ArrowRight size={16} className="rtl:-scale-x-100" />

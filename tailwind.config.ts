@@ -5,7 +5,7 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        xs: '400px',
+        xs: '375px',
       },
       colors: {
         background: '#000000',

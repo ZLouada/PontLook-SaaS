@@ -105,7 +105,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="card !p-5 sm:!p-10" noValidate>
+    <form onSubmit={handleSubmit(onSubmit)} className="card !p-4 xs:!p-5 sm:!p-10" noValidate>
       {/* Invisible spam honeypot */}
       <input type="text" {...register('_gotcha')} style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 

@@ -117,26 +117,26 @@
 
 @layer components {
   .container-site {
-    @apply mx-auto w-full max-w-[1240px] px-4 sm:px-8 lg:px-12;
+    @apply mx-auto w-full max-w-[1240px] 2xl:max-w-[1360px] px-3.5 xs:px-4 sm:px-8 lg:px-12;
   }
 
   /* --- Vertical rhythm ---------------------------------------------------- */
   .section {
-    @apply py-20 sm:py-28 lg:py-32;
+    @apply py-14 xs:py-16 sm:py-28 lg:py-32;
   }
   .section-tight {
-    @apply py-14 sm:py-20;
+    @apply py-10 xs:py-12 sm:py-20;
   }
 
   /* --- Type scale --------------------------------------------------------- */
   .display {
     @apply font-heading font-medium text-white tracking-[-0.035em]
-           text-3xl sm:text-5xl md:text-6xl lg:text-[64px] xl:text-[72px]
+           text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[64px] xl:text-[72px] 2xl:text-[80px]
            leading-[1.12] sm:leading-[1.06];
   }
   .h-section {
     @apply font-heading font-semibold text-white tracking-[-0.03em]
-           text-2xl sm:text-3xl lg:text-[40px] leading-[1.15];
+           text-xl xs:text-2xl sm:text-3xl lg:text-[40px] leading-[1.15];
   }
   .h-card {
     @apply font-heading font-semibold text-white tracking-[-0.02em]

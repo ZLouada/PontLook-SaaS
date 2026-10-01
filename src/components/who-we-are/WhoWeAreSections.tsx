@@ -178,11 +178,11 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
               </p>
 
               {/* Interactive Mode Toggle Pill (Ecomflow Inspired) */}
-              <div className="pt-1 flex items-center p-1 rounded-full bg-neutral-100 border border-neutral-300 shadow-inner">
+              <div className="pt-1 flex items-center p-1 rounded-full bg-neutral-100 border border-neutral-300 shadow-inner max-w-full">
                 <button
                   type="button"
                   onClick={() => setMode('pontlook')}
-                  className={`relative px-4 sm:px-5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                  className={`relative px-2.5 xs:px-4 sm:px-5 py-1.5 rounded-full text-[11px] xs:text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
                     mode === 'pontlook'
                       ? 'text-white shadow-md'
                       : 'text-neutral-600 hover:text-neutral-900'
@@ -204,7 +204,7 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                 <button
                   type="button"
                   onClick={() => setMode('traditional')}
-                  className={`relative px-4 sm:px-5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                  className={`relative px-2.5 xs:px-4 sm:px-5 py-1.5 rounded-full text-[11px] xs:text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
                     mode === 'traditional'
                       ? 'text-white shadow-md'
                       : 'text-neutral-600 hover:text-neutral-900'
@@ -235,27 +235,27 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.94, y: -18 }}
                   transition={{ type: 'spring', damping: 25, stiffness: 320 }}
-                  className="rounded-3xl border border-neutral-200/90 bg-white p-5 sm:p-7 lg:p-8 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.08),0_10px_25px_-5px_rgba(0,0,0,0.04)] relative overflow-hidden text-neutral-900"
+                  className="rounded-2xl sm:rounded-3xl border border-neutral-200/90 bg-white p-3.5 xs:p-5 sm:p-7 lg:p-8 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.08),0_10px_25px_-5px_rgba(0,0,0,0.04)] relative overflow-hidden text-neutral-900"
                 >
                   {/* Pop-up Window Header Bar */}
-                  <div className="flex items-center justify-between pb-3 mb-5 border-b border-neutral-100 text-xs font-mono text-neutral-500">
-                    <div className="flex items-center gap-2 px-3 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-semibold">
+                  <div className="flex items-center justify-between pb-3 mb-4 sm:mb-5 border-b border-neutral-100 text-xs font-mono text-neutral-500">
+                    <div className="flex items-center gap-2 px-2.5 xs:px-3 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] xs:text-[11px] font-semibold">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                       <span>{isAr ? 'منظومة بونت لوك المباشرة • نشطة' : 'PONTLOOK DIRECT PROTOCOL • ACTIVE'}</span>
                     </div>
                     <span className="text-[11px] text-neutral-400 hidden sm:inline font-mono">GCC MATCH ENGINE</span>
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 items-center">
                     
                     {/* Left Column: Copy & Actions */}
                     <div className="lg:col-span-5 flex flex-col items-start text-start space-y-3">
-                      <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold uppercase tracking-wider">
+                      <div className="inline-flex items-center gap-1.5 px-2.5 xs:px-3 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] xs:text-[11px] font-bold uppercase tracking-wider">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                         <span>{isAr ? 'من التشتت إلى الترابط' : 'FROM SCATTERED TO CONNECTED'}</span>
                       </div>
 
-                      <h3 className="text-xl sm:text-2xl lg:text-[28px] font-heading font-semibold text-neutral-950 leading-tight">
+                      <h3 className="text-lg xs:text-xl sm:text-2xl lg:text-[28px] font-heading font-semibold text-neutral-950 leading-tight">
                         {isAr
                           ? 'منظومة متكاملة تعمل بتناغم تام.'
                           : 'Everything working beautifully together.'}
@@ -268,10 +268,10 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                       </p>
 
                       <div className="pt-1 w-full sm:w-auto">
-                        <Magnetic strength={0.2} activeDistance={30}>
+                        <Magnetic strength={0.2} activeDistance={30} className="w-full sm:w-auto">
                           <Link
                             href={`/${lang}/find-training`}
-                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#FF5C00] hover:bg-[#FF7A2F] text-white font-medium text-xs sm:text-sm shadow-lg shadow-orange-500/20 transition-all active:scale-95"
+                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#FF5C00] hover:bg-[#FF7A2F] text-white font-medium text-xs sm:text-sm shadow-lg shadow-orange-500/20 transition-all active:scale-95"
                           >
                             <span>{isAr ? 'ابدأ المطابقة الآن' : 'Find your match'}</span>
                             <ArrowRight size={14} className="rtl:-scale-x-100" />
@@ -282,41 +282,41 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
 
                     {/* Right Column: Visual Connected Architecture Diagram */}
                     <div className="lg:col-span-7">
-                      <div className="rounded-2xl border border-neutral-200/80 bg-neutral-50/70 p-3 sm:p-5 shadow-xs space-y-3 sm:space-y-4 font-sans">
+                      <div className="rounded-xl sm:rounded-2xl border border-neutral-200/80 bg-neutral-50/70 p-2 xs:p-3 sm:p-5 shadow-xs space-y-2.5 sm:space-y-4 font-sans">
                         
                         {/* Visual Connected Nodes Schema */}
-                        <div className="relative py-2 sm:py-3 px-1 sm:px-2">
-                          <div className="grid grid-cols-3 gap-1.5 sm:gap-4 items-center text-center relative z-10">
+                        <div className="relative py-2 sm:py-3 px-0.5 sm:px-2">
+                          <div className="grid grid-cols-3 gap-1 xs:gap-1.5 sm:gap-4 items-center text-center relative z-10">
                             
                             {/* Node 1: Enterprise Buyer */}
-                            <div className="p-1.5 sm:p-3 rounded-lg sm:rounded-xl border border-emerald-200 bg-white shadow-xs flex flex-col items-center space-y-0.5 sm:space-y-1">
-                              <Building2 className="text-emerald-600 w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
-                              <span className="text-[10px] sm:text-xs font-bold text-neutral-900 leading-tight">
+                            <div className="p-1 xs:p-1.5 sm:p-3 rounded-lg sm:rounded-xl border border-emerald-200 bg-white shadow-xs flex flex-col items-center space-y-0.5 sm:space-y-1">
+                              <Building2 className="text-emerald-600 w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-[18px] sm:h-[18px]" />
+                              <span className="text-[9px] xs:text-[10px] sm:text-xs font-bold text-neutral-900 leading-tight">
                                 {isAr ? 'طلب مؤكد' : 'Enterprise Need'}
                               </span>
-                              <span className="text-[8px] sm:text-[10px] text-emerald-700 font-medium leading-tight">
+                              <span className="text-[7.5px] xs:text-[8px] sm:text-[10px] text-emerald-700 font-medium leading-tight">
                                 {isAr ? 'ميزانية معتمدة' : 'Verified Budget'}
                               </span>
                             </div>
 
                             {/* Central Hub: PontLook Core Matching Engine */}
-                            <div className="p-2 sm:p-3.5 rounded-xl sm:rounded-2xl border-2 border-[#FF5C00] bg-white text-neutral-950 flex flex-col items-center space-y-0.5 sm:space-y-1 shadow-[0_4px_20px_rgba(255,92,0,0.15)] ring-1 ring-orange-500/20">
-                              <Signal className="text-[#FF5C00]" size={16} />
-                              <span className="text-[10px] sm:text-xs font-bold text-neutral-950 leading-tight">
+                            <div className="p-1.5 xs:p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border-2 border-[#FF5C00] bg-white text-neutral-950 flex flex-col items-center space-y-0.5 sm:space-y-1 shadow-[0_4px_20px_rgba(255,92,0,0.15)] ring-1 ring-orange-500/20">
+                              <Signal className="text-[#FF5C00]" size={14} />
+                              <span className="text-[9px] xs:text-[10px] sm:text-xs font-bold text-neutral-950 leading-tight">
                                 {isAr ? 'محرك بونت لوك' : 'PontLook Engine'}
                               </span>
-                              <span className="text-[8px] sm:text-[10px] text-[#FF5C00] font-semibold leading-tight">
+                              <span className="text-[7.5px] xs:text-[8px] sm:text-[10px] text-[#FF5C00] font-semibold leading-tight">
                                 {isAr ? 'تشخيص ومطابقة' : 'Fit & SLA'}
                               </span>
                             </div>
 
                             {/* Node 3: Vetted Specialist Providers */}
                             <div className="p-1.5 sm:p-3 rounded-lg sm:rounded-xl border border-blue-200 bg-white shadow-xs flex flex-col items-center space-y-0.5 sm:space-y-1">
-                              <BadgeCheck className="text-blue-600 w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
-                              <span className="text-[10px] sm:text-xs font-bold text-neutral-900 leading-tight">
+                              <BadgeCheck className="text-blue-600 w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-[18px] sm:h-[18px]" />
+                              <span className="text-[9px] xs:text-[10px] sm:text-xs font-bold text-neutral-900 leading-tight">
                                 {isAr ? '2-3 خبراء معتمدون' : '2-3 Providers'}
                               </span>
-                              <span className="text-[8px] sm:text-[10px] text-blue-700 font-medium leading-tight">
+                              <span className="text-[7.5px] xs:text-[8px] sm:text-[10px] text-blue-700 font-medium leading-tight">
                                 {isAr ? 'جاهزية التنفيذ' : 'Ready to Deliver'}
                               </span>
                             </div>
@@ -328,28 +328,28 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                         </div>
 
                         {/* 3 Summary Points */}
-                        <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 pt-2 sm:pt-2.5 border-t border-neutral-200/80 text-xs">
+                        <div className="grid grid-cols-3 gap-1 xs:gap-1.5 sm:gap-2.5 pt-2 sm:pt-2.5 border-t border-neutral-200/80 text-xs">
                           <div className="flex flex-col sm:flex-row items-start gap-1 sm:gap-2">
-                            <CheckCircle2 size={13} className="text-emerald-600 shrink-0 mt-0.5" />
+                            <CheckCircle2 size={12} className="text-emerald-600 shrink-0 mt-0.5" />
                             <div>
-                              <span className="font-bold text-neutral-900 block text-[9px] sm:text-xs leading-tight">{isAr ? 'طلب مؤسسي موثق' : 'Verified Demand'}</span>
-                              <span className="text-[8px] sm:text-[10px] text-neutral-500 block leading-tight">{isAr ? 'ميزانية معتمدة ومؤكدة' : 'Confirmed budget & intent'}</span>
+                              <span className="font-bold text-neutral-900 block text-[8px] xs:text-[9px] sm:text-xs leading-tight">{isAr ? 'طلب مؤسسي موثق' : 'Verified Demand'}</span>
+                              <span className="text-[7.5px] xs:text-[8px] sm:text-[10px] text-neutral-500 block leading-tight">{isAr ? 'ميزانية معتمدة ومؤكدة' : 'Confirmed budget & intent'}</span>
                             </div>
                           </div>
 
                           <div className="flex flex-col sm:flex-row items-start gap-1 sm:gap-2">
-                            <CheckCircle2 size={13} className="text-emerald-600 shrink-0 mt-0.5" />
+                            <CheckCircle2 size={12} className="text-emerald-600 shrink-0 mt-0.5" />
                             <div>
-                              <span className="font-bold text-neutral-900 block text-[9px] sm:text-xs leading-tight">{isAr ? 'تقديم مباشر وفوري' : 'Direct Introduction'}</span>
-                              <span className="text-[8px] sm:text-[10px] text-neutral-500 block leading-tight">{isAr ? 'اجتماع مع صناع القرار' : 'CHRO calendar access'}</span>
+                              <span className="font-bold text-neutral-900 block text-[8px] xs:text-[9px] sm:text-xs leading-tight">{isAr ? 'تقديم مباشر وفوري' : 'Direct Introduction'}</span>
+                              <span className="text-[7.5px] xs:text-[8px] sm:text-[10px] text-neutral-500 block leading-tight">{isAr ? 'اجتماع مع صناع القرار' : 'CHRO calendar access'}</span>
                             </div>
                           </div>
 
                           <div className="flex flex-col sm:flex-row items-start gap-1 sm:gap-2">
-                            <CheckCircle2 size={13} className="text-emerald-600 shrink-0 mt-0.5" />
+                            <CheckCircle2 size={12} className="text-emerald-600 shrink-0 mt-0.5" />
                             <div>
-                              <span className="font-bold text-neutral-900 block text-[9px] sm:text-xs leading-tight">{isAr ? 'صفر احتكاك مالي' : 'Zero Risk SLA'}</span>
-                              <span className="text-[8px] sm:text-[10px] text-neutral-500 block leading-tight">{isAr ? 'دفع مقابل النتائج فقط' : '5-day replacement SLA'}</span>
+                              <span className="font-bold text-neutral-900 block text-[8px] xs:text-[9px] sm:text-xs leading-tight">{isAr ? 'صفر احتكاك مالي' : 'Zero Risk SLA'}</span>
+                              <span className="text-[7.5px] xs:text-[8px] sm:text-[10px] text-neutral-500 block leading-tight">{isAr ? 'دفع مقابل النتائج فقط' : '5-day replacement SLA'}</span>
                             </div>
                           </div>
                         </div>
@@ -366,27 +366,27 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.94, y: -18 }}
                   transition={{ type: 'spring', damping: 25, stiffness: 320 }}
-                  className="rounded-3xl border border-red-200/80 bg-red-50/30 p-5 sm:p-7 lg:p-8 shadow-[0_20px_50px_-15px_rgba(239,68,68,0.08)] relative overflow-hidden text-neutral-900"
+                  className="rounded-2xl sm:rounded-3xl border border-red-200/80 bg-red-50/30 p-3.5 xs:p-5 sm:p-7 lg:p-8 shadow-[0_20px_50px_-15px_rgba(239,68,68,0.08)] relative overflow-hidden text-neutral-900"
                 >
                   {/* Window Header Bar (Red Warning Mode) */}
-                  <div className="flex items-center justify-between pb-3 mb-5 border-b border-red-100 text-xs font-mono text-neutral-500">
-                    <div className="flex items-center gap-2 px-3 py-0.5 rounded-full bg-red-100 border border-red-200 text-red-800 text-[11px] font-semibold">
+                  <div className="flex items-center justify-between pb-3 mb-4 sm:mb-5 border-b border-red-100 text-xs font-mono text-neutral-500">
+                    <div className="flex items-center gap-2 px-2.5 xs:px-3 py-0.5 rounded-full bg-red-100 border border-red-200 text-red-800 text-[10px] xs:text-[11px] font-semibold">
                       <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping" />
                       <span>{isAr ? 'النموذج التقليدي • احتكاك عالي' : 'TRADITIONAL PROCUREMENT • HIGH FRICTION'}</span>
                     </div>
                     <span className="text-[11px] text-red-600/80 hidden sm:inline font-mono">STATUS: HIGH WASTE</span>
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 items-center">
                     
                     {/* Left Column: Negative State Copy */}
                     <div className="lg:col-span-5 flex flex-col items-start text-start space-y-3">
-                      <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-red-100 border border-red-200 text-red-800 text-[11px] font-bold uppercase tracking-wider">
+                      <div className="inline-flex items-center gap-1.5 px-2.5 xs:px-3 py-0.5 rounded-full bg-red-100 border border-red-200 text-red-800 text-[10px] xs:text-[11px] font-bold uppercase tracking-wider">
                         <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
                         <span>{isAr ? 'تشتت وإرهاق إداري' : 'FRAGMENTED & OPAQUE'}</span>
                       </div>
 
-                      <h3 className="text-xl sm:text-2xl lg:text-[28px] font-heading font-semibold text-neutral-950 leading-tight">
+                      <h3 className="text-lg xs:text-xl sm:text-2xl lg:text-[28px] font-heading font-semibold text-neutral-950 leading-tight">
                         {isAr
                           ? 'تشتت، غموض، وإرهاق إداري.'
                           : 'Fragmented, opaque, and overwhelmed.'}
@@ -402,7 +402,7 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                         <button
                           type="button"
                           onClick={() => setMode('pontlook')}
-                          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#FF5C00] hover:bg-[#FF7A2F] text-white font-semibold text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all active:scale-95 cursor-pointer"
+                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#FF5C00] hover:bg-[#FF7A2F] text-white font-semibold text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all active:scale-95 cursor-pointer"
                         >
                           <span>{isAr ? 'شاهد حل بونت لوك لهذا ←' : 'See how PontLook fixes this →'}</span>
                         </button>
@@ -411,38 +411,38 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
 
                     {/* Right Column: Broken/Disconnected Visual Diagram */}
                     <div className="lg:col-span-7">
-                      <div className="rounded-2xl border border-red-200/70 bg-white p-3 sm:p-5 shadow-xs space-y-3 sm:space-y-4 font-sans">
+                      <div className="rounded-xl sm:rounded-2xl border border-red-200/70 bg-white p-2 xs:p-3 sm:p-5 shadow-xs space-y-2.5 sm:space-y-4 font-sans">
                         
-                        <div className="relative py-2 sm:py-3 px-1 sm:px-2">
-                          <div className="grid grid-cols-3 gap-1.5 sm:gap-4 items-center text-center relative z-10">
+                        <div className="relative py-2 sm:py-3 px-0.5 sm:px-2">
+                          <div className="grid grid-cols-3 gap-1 xs:gap-1.5 sm:gap-4 items-center text-center relative z-10">
                             
-                            <div className="p-1.5 sm:p-3 rounded-lg sm:rounded-xl border border-red-200 bg-red-50/50 flex flex-col items-center space-y-0.5 sm:space-y-1">
-                              <Users className="text-red-500 w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
-                              <span className="text-[10px] sm:text-xs font-bold text-neutral-900 leading-tight">
+                            <div className="p-1 xs:p-1.5 sm:p-3 rounded-lg sm:rounded-xl border border-red-200 bg-red-50/50 flex flex-col items-center space-y-0.5 sm:space-y-1">
+                              <Users className="text-red-500 w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-[18px] sm:h-[18px]" />
+                              <span className="text-[9px] xs:text-[10px] sm:text-xs font-bold text-neutral-900 leading-tight">
                                 {isAr ? 'موارد بشرية مرهقة' : 'Overwhelmed HR'}
                               </span>
-                              <span className="text-[8px] sm:text-[10px] text-red-600 font-medium leading-tight">
+                              <span className="text-[7.5px] xs:text-[8px] sm:text-[10px] text-red-600 font-medium leading-tight">
                                 {isAr ? '100+ عرض مكرر' : 'Generic PDFs'}
                               </span>
                             </div>
 
                             {/* Broken Center Gap */}
-                            <div className="p-2 sm:p-3.5 rounded-xl sm:rounded-2xl border border-dashed border-red-300 bg-red-50/70 text-neutral-900 flex flex-col items-center space-y-0.5 sm:space-y-1">
-                              <XCircle className="text-red-500 w-4 h-4 sm:w-5 sm:h-5" />
-                              <span className="text-[10px] sm:text-xs font-bold text-red-700 leading-tight">
+                            <div className="p-1.5 xs:p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-dashed border-red-300 bg-red-50/70 text-neutral-900 flex flex-col items-center space-y-0.5 sm:space-y-1">
+                              <XCircle className="text-red-500 w-3.5 h-3.5 xs:w-4 xs:h-4 sm:w-5 sm:h-5" />
+                              <span className="text-[9px] xs:text-[10px] sm:text-xs font-bold text-red-700 leading-tight">
                                 {isAr ? 'انفصال تام' : 'Broken Bridge'}
                               </span>
-                              <span className="text-[8px] sm:text-[10px] text-neutral-500 font-medium leading-tight">
+                              <span className="text-[7.5px] xs:text-[8px] sm:text-[10px] text-neutral-500 font-medium leading-tight">
                                 {isAr ? 'أسابيع ضائعة' : '4-8 Weeks Lost'}
                               </span>
                             </div>
 
                             <div className="p-1.5 sm:p-3 rounded-lg sm:rounded-xl border border-red-200 bg-red-50/50 flex flex-col items-center space-y-0.5 sm:space-y-1">
-                              <Handshake className="text-red-500 w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
-                              <span className="text-[10px] sm:text-xs font-bold text-neutral-900 leading-tight">
+                              <Handshake className="text-red-500 w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-[18px] sm:h-[18px]" />
+                              <span className="text-[9px] xs:text-[10px] sm:text-xs font-bold text-neutral-900 leading-tight">
                                 {isAr ? 'مزود تدريب محبط' : 'Struggling Firm'}
                               </span>
-                              <span className="text-[8px] sm:text-[10px] text-red-600 font-medium leading-tight">
+                              <span className="text-[7.5px] xs:text-[8px] sm:text-[10px] text-red-600 font-medium leading-tight">
                                 {isAr ? 'رسائل باردة مهدرة' : 'Cold Spam Outreach'}
                               </span>
                             </div>
@@ -454,28 +454,28 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                         </div>
 
                         {/* 3 Friction Points */}
-                        <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 pt-2 sm:pt-2.5 border-t border-red-100 text-xs">
+                        <div className="grid grid-cols-3 gap-1 xs:gap-1.5 sm:gap-2.5 pt-2 sm:pt-2.5 border-t border-red-100 text-xs">
                           <div className="flex flex-col sm:flex-row items-start gap-1 sm:gap-2">
-                            <XCircle size={13} className="text-red-500 shrink-0 mt-0.5" />
+                            <XCircle size={12} className="text-red-500 shrink-0 mt-0.5" />
                             <div>
-                              <span className="font-bold text-neutral-900 block text-[9px] sm:text-xs leading-tight">{isAr ? 'تأخير في الاختيار' : 'Weeks Lost'}</span>
-                              <span className="text-[8px] sm:text-[10px] text-neutral-500 block leading-tight">{isAr ? 'شهور من المفاوضات' : 'Lengthy vendor searches'}</span>
+                              <span className="font-bold text-neutral-900 block text-[8px] xs:text-[9px] sm:text-xs leading-tight">{isAr ? 'تأخير في الاختيار' : 'Weeks Lost'}</span>
+                              <span className="text-[7.5px] xs:text-[8px] sm:text-[10px] text-neutral-500 block leading-tight">{isAr ? 'شهور من المفاوضات' : 'Lengthy vendor searches'}</span>
                             </div>
                           </div>
 
                           <div className="flex flex-col sm:flex-row items-start gap-1 sm:gap-2">
-                            <XCircle size={13} className="text-red-500 shrink-0 mt-0.5" />
+                            <XCircle size={12} className="text-red-500 shrink-0 mt-0.5" />
                             <div>
-                              <span className="font-bold text-neutral-900 block text-[9px] sm:text-xs leading-tight">{isAr ? 'فرص غير موثوقة' : 'Dead End Leads'}</span>
-                              <span className="text-[8px] sm:text-[10px] text-neutral-500 block leading-tight">{isAr ? 'غياب الميزانية والقرار' : 'No confirmed purchasing budget'}</span>
+                              <span className="font-bold text-neutral-900 block text-[8px] xs:text-[9px] sm:text-xs leading-tight">{isAr ? 'فرص غير موثوقة' : 'Dead End Leads'}</span>
+                              <span className="text-[7.5px] xs:text-[8px] sm:text-[10px] text-neutral-500 block leading-tight">{isAr ? 'غياب الميزانية والقرار' : 'No confirmed purchasing budget'}</span>
                             </div>
                           </div>
 
                           <div className="flex flex-col sm:flex-row items-start gap-1 sm:gap-2">
-                            <XCircle size={13} className="text-red-500 shrink-0 mt-0.5" />
+                            <XCircle size={12} className="text-red-500 shrink-0 mt-0.5" />
                             <div>
-                              <span className="font-bold text-neutral-900 block text-[9px] sm:text-xs leading-tight">{isAr ? 'تدريب معلب وجاهز' : 'Off-the-Shelf Fits'}</span>
-                              <span className="text-[8px] sm:text-[10px] text-neutral-500 block leading-tight">{isAr ? 'عدم سد فجوة الكفاءة' : 'Fails to deliver actual ROI'}</span>
+                              <span className="font-bold text-neutral-900 block text-[8px] xs:text-[9px] sm:text-xs leading-tight">{isAr ? 'تدريب معلب وجاهز' : 'Off-the-Shelf Fits'}</span>
+                              <span className="text-[7.5px] xs:text-[8px] sm:text-[10px] text-neutral-500 block leading-tight">{isAr ? 'عدم سد فجوة الكفاءة' : 'Fails to deliver actual ROI'}</span>
                             </div>
                           </div>
                         </div>
@@ -544,28 +544,28 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
       id="value-model"
       data-nav-light="true"
       data-nav-theme="light"
-      className="relative bg-white text-neutral-900 py-16 sm:py-20 lg:py-24 border-t border-neutral-200 overflow-hidden"
+      className="relative bg-white text-neutral-900 py-12 xs:py-16 sm:py-20 lg:py-24 border-t border-neutral-200 overflow-hidden"
       aria-labelledby="value-model-title"
     >
-      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div className="container-site relative z-10 mx-auto px-3.5 xs:px-4 sm:px-6 lg:px-8 max-w-7xl">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-600 text-xs font-semibold uppercase tracking-wider font-sans">
-            <ShieldCheck size={14} className="text-blue-600" />
+        <div className="text-center max-w-3xl mx-auto mb-8 xs:mb-12 sm:mb-16 space-y-2 xs:space-y-3">
+          <div className="inline-flex items-center gap-1.5 xs:gap-2 px-2.5 xs:px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-600 text-[10px] xs:text-xs font-semibold uppercase tracking-wider font-sans">
+            <ShieldCheck size={14} className="text-blue-600 shrink-0" />
             <span>{isAr ? 'هيكلية النموذج التجاري' : 'BILATERAL VALUE ARCHITECTURE'}</span>
           </div>
 
           <h2
             id="value-model-title"
-            className="text-2xl sm:text-4xl lg:text-[42px] font-semibold text-neutral-950 font-heading tracking-tight leading-[1.18]"
+            className="text-xl xs:text-2xl sm:text-4xl lg:text-[42px] font-semibold text-neutral-950 font-heading tracking-tight leading-[1.18]"
           >
             {isAr
               ? 'مواءمة ثنائية متكافئة. بدون أي رسوم اشتراك.'
               : 'Bilateral Alignment. Zero Platform Friction.'}
           </h2>
 
-          <p className="text-sm sm:text-base text-neutral-600 font-sans leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xs xs:text-sm sm:text-base text-neutral-600 font-sans leading-relaxed max-w-2xl mx-auto">
             {isAr
               ? 'نموذج صُمم لتكافؤ المصالح: مجاني للمؤسسات والشركات، ومبني على النتائج لمزودي التدريب.'
               : 'A bilateral model engineered for alignment: free for corporate buyers, success-based for accredited training providers.'}
@@ -573,7 +573,7 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
         </div>
 
         {/* 4 Technical Architecture Specs (White Pop-up Cards in 2-col mobile / 4-col desktop) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5 items-stretch">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 xs:gap-2.5 sm:gap-5 items-stretch">
           {specs.map((item, idx) => (
             <m.div
               key={idx}
@@ -582,30 +582,30 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
               viewport={{ once: true, margin: '-40px' }}
               transition={{ type: 'spring', damping: 22, stiffness: 300, delay: idx * 0.08 }}
               whileHover={{ y: -6, scale: 1.02 }}
-              className="rounded-xl sm:rounded-2xl border border-neutral-200/90 hover:border-neutral-400 bg-white p-3.5 sm:p-6 flex flex-col justify-between shadow-[0_10px_30px_-5px_rgba(0,0,0,0.06),0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-8px_rgba(0,0,0,0.12)] text-neutral-900 transition-all duration-300 group relative overflow-hidden"
+              className="rounded-xl sm:rounded-2xl border border-neutral-200/90 hover:border-neutral-400 bg-white p-2.5 xs:p-3.5 sm:p-6 flex flex-col justify-between shadow-[0_10px_30px_-5px_rgba(0,0,0,0.06),0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-8px_rgba(0,0,0,0.12)] text-neutral-900 transition-all duration-300 group relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-neutral-100/60 rounded-full blur-2xl pointer-events-none group-hover:bg-blue-50/80 transition-colors" />
               
-              <div className="space-y-2 sm:space-y-3 font-sans relative z-10">
+              <div className="space-y-1.5 xs:space-y-2 sm:space-y-3 font-sans relative z-10">
                 <div className="flex items-center justify-between gap-1 flex-wrap">
-                  <span className="text-[9px] sm:text-[10px] font-mono font-bold text-neutral-500 uppercase tracking-widest">
+                  <span className="text-[8px] xs:text-[9px] sm:text-[10px] font-mono font-bold text-neutral-500 uppercase tracking-widest">
                     {item.code}
                   </span>
-                  <span className={`px-2 sm:px-2.5 py-0.5 rounded-full text-[8px] sm:text-[10px] font-semibold border ${item.accent}`}>
+                  <span className={`px-1.5 xs:px-2 sm:px-2.5 py-0.5 rounded-full text-[7.5px] xs:text-[8px] sm:text-[10px] font-semibold border ${item.accent}`}>
                     {item.badge}
                   </span>
                 </div>
 
-                <h3 className="text-xs sm:text-base font-heading font-semibold text-neutral-950 leading-snug group-hover:text-black transition-colors">
+                <h3 className="text-[11px] xs:text-xs sm:text-base font-heading font-semibold text-neutral-950 leading-snug group-hover:text-black transition-colors">
                   {item.title}
                 </h3>
 
-                <p className="text-[10px] sm:text-xs text-neutral-600 font-sans leading-relaxed line-clamp-3 sm:line-clamp-none">
+                <p className="text-[9px] xs:text-[10px] sm:text-xs text-neutral-600 font-sans leading-relaxed line-clamp-3 sm:line-clamp-none">
                   {item.desc}
                 </p>
               </div>
 
-              <div className="pt-3 sm:pt-4 mt-3 sm:mt-4 border-t border-neutral-100 flex items-center justify-between text-[9px] sm:text-[11px] text-neutral-500 font-mono relative z-10">
+              <div className="pt-2 xs:pt-3 sm:pt-4 mt-2 xs:mt-3 sm:mt-4 border-t border-neutral-100 flex items-center justify-between text-[8px] xs:text-[9px] sm:text-[11px] text-neutral-500 font-mono relative z-10">
                 <span className="flex items-center gap-1 sm:gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   <span className="truncate">PROTOCOL</span>
@@ -700,28 +700,28 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
       id="training-journey"
       data-nav-light="true"
       data-nav-theme="light"
-      className="relative bg-white text-neutral-900 py-16 sm:py-24 border-t border-neutral-200 overflow-hidden"
+      className="relative bg-white text-neutral-900 py-12 xs:py-16 sm:py-24 border-t border-neutral-200 overflow-hidden"
       aria-labelledby="journey-title"
     >
-      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+      <div className="container-site relative z-10 mx-auto px-3.5 xs:px-4 sm:px-6 lg:px-8 max-w-6xl">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-600 text-xs font-semibold uppercase tracking-wider font-sans">
-            <Workflow size={14} className="text-neutral-900" />
+        <div className="text-center max-w-3xl mx-auto mb-8 xs:mb-10 sm:mb-12 space-y-2 xs:space-y-3">
+          <div className="inline-flex items-center gap-1.5 xs:gap-2 px-2.5 xs:px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-600 text-[10px] xs:text-xs font-semibold uppercase tracking-wider font-sans">
+            <Workflow size={14} className="text-neutral-900 shrink-0" />
             <span>{isAr ? 'المراحل التشغيلية الأربع' : '4-STAGE OPERATIONAL ROADMAP'}</span>
           </div>
 
           <h2
             id="journey-title"
-            className="text-2xl sm:text-4xl font-semibold text-neutral-950 font-heading tracking-tight leading-tight"
+            className="text-xl xs:text-2xl sm:text-4xl font-semibold text-neutral-950 font-heading tracking-tight leading-tight"
           >
             {isAr
               ? 'رحلة التدريب من التشخيص حتى قياس الأثر'
               : 'The End to End Training Journey'}
           </h2>
 
-          <p className="text-sm sm:text-base text-neutral-600 font-sans leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xs xs:text-sm sm:text-base text-neutral-600 font-sans leading-relaxed max-w-2xl mx-auto">
             {isAr
               ? 'جسر شفاف وسلس يربط الاحتياج التدريبي المشخص بالحلول العملية ذات العائد الاستثماري القابل للقياس.'
               : 'A seamless, transparent bridge from diagnosed skill deficit to measurable business impact.'}
@@ -737,13 +737,13 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
                 key={st.num}
                 type="button"
                 onClick={() => setActiveStep(idx)}
-                className={`group relative shrink-0 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-2.5 px-1 sm:px-4 rounded-lg sm:rounded-xl border text-[10px] sm:text-xs font-semibold cursor-pointer transition-all active:scale-95 ${
+                className={`group relative shrink-0 flex items-center justify-center gap-1 sm:gap-2 py-1.5 xs:py-2 sm:py-2.5 px-0.5 xs:px-1 sm:px-4 rounded-lg sm:rounded-xl border text-[9px] xs:text-[10px] sm:text-xs font-semibold cursor-pointer transition-all active:scale-95 ${
                   isActive
                     ? 'bg-[#FF5C00] text-white border-[#FF5C00] shadow-md shadow-orange-500/25'
                     : 'bg-white text-neutral-700 border-neutral-300 hover:border-neutral-500 hover:text-neutral-950'
                 }`}
               >
-                <span className={`font-mono text-[9px] sm:text-[11px] ${isActive ? 'text-white/90' : 'text-neutral-400'}`}>
+                <span className={`font-mono text-[8px] xs:text-[9px] sm:text-[11px] ${isActive ? 'text-white/90' : 'text-neutral-400'}`}>
                   {st.num}
                 </span>
                 <span className="truncate">{st.navTitle}</span>
@@ -760,36 +760,36 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.94, y: -20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 320 }}
-            className="rounded-2xl sm:rounded-3xl border border-neutral-200/90 bg-white p-4 sm:p-10 shadow-[0_25px_65px_-12px_rgba(0,0,0,0.08),0_10px_25px_-5px_rgba(0,0,0,0.04)] text-neutral-900 space-y-4 sm:space-y-6 relative overflow-hidden"
+            className="rounded-2xl sm:rounded-3xl border border-neutral-200/90 bg-white p-3.5 xs:p-4 sm:p-10 shadow-[0_25px_65px_-12px_rgba(0,0,0,0.08),0_10px_25px_-5px_rgba(0,0,0,0.04)] text-neutral-900 space-y-3 xs:space-y-4 sm:space-y-6 relative overflow-hidden"
           >
             {/* Top Modal Window Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-neutral-100 text-xs font-mono text-neutral-500">
-              <span className="text-[11px] font-mono text-neutral-800 font-bold uppercase tracking-wider">
+            <div className="flex items-center justify-between pb-2.5 xs:pb-3 border-b border-neutral-100 text-xs font-mono text-neutral-500">
+              <span className="text-[9.5px] xs:text-[11px] font-mono text-neutral-800 font-bold uppercase tracking-wider truncate">
                 STAGE {currentStep.num} • {isAr ? 'المرحلة التشغيلية' : 'OPERATIONAL PROTOCOL'}
               </span>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+              <span className="px-2 xs:px-2.5 py-0.5 rounded-full text-[9px] xs:text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 shrink-0">
                 {currentStep.tag}
               </span>
             </div>
 
-            <div className="space-y-1.5 sm:space-y-2">
-              <h3 className="text-base sm:text-2xl font-heading font-semibold text-neutral-950 leading-tight">
+            <div className="space-y-1 xs:space-y-1.5 sm:space-y-2">
+              <h3 className="text-sm xs:text-base sm:text-2xl font-heading font-semibold text-neutral-950 leading-tight">
                 {currentStep.title}
               </h3>
-              <p className="text-xs sm:text-sm text-neutral-600 font-sans leading-relaxed">
+              <p className="text-[11px] xs:text-xs sm:text-sm text-neutral-600 font-sans leading-relaxed">
                 {currentStep.desc}
               </p>
             </div>
 
             {/* 3 Deliverables side-by-side on both mobile and desktop */}
-            <div className="grid grid-cols-3 gap-1.5 sm:gap-3 pt-2 text-xs font-sans">
+            <div className="grid grid-cols-3 gap-1 xs:gap-1.5 sm:gap-3 pt-2 text-xs font-sans">
               {currentStep.points.map((pt, pIdx) => (
-                <div key={pIdx} className="p-2 sm:p-4 rounded-lg sm:rounded-xl bg-neutral-50/80 border border-neutral-200/80 hover:border-neutral-300 transition-colors space-y-1">
-                  <div className="flex items-center gap-1 sm:gap-2 text-neutral-900 font-bold text-[10px] sm:text-xs">
-                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                <div key={pIdx} className="p-1.5 xs:p-2 sm:p-4 rounded-lg sm:rounded-xl bg-neutral-50/80 border border-neutral-200/80 hover:border-neutral-300 transition-colors space-y-0.5 xs:space-y-1">
+                  <div className="flex items-center gap-1 sm:gap-2 text-neutral-900 font-bold text-[9px] xs:text-[10px] sm:text-xs">
+                    <CheckCircle2 size={12} className="text-emerald-600 shrink-0" />
                     <span className="truncate">{isAr ? `معيار ${pIdx + 1}` : `Deliverable ${pIdx + 1}`}</span>
                   </div>
-                  <p className="text-[9px] sm:text-[11px] text-neutral-600 leading-snug line-clamp-3 sm:line-clamp-none">{pt}</p>
+                  <p className="text-[8px] xs:text-[9px] sm:text-[11px] text-neutral-600 leading-snug line-clamp-3 sm:line-clamp-none">{pt}</p>
                 </div>
               ))}
             </div>
