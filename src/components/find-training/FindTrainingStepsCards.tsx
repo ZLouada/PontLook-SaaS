@@ -69,7 +69,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
             </div>
             <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
               <span className="text-neutral-400">{isAr ? 'الموقع والفوج:' : 'Location & Cohort:'}</span>
-              <span className="text-orange-400 font-medium">{isAr ? 'حضوري بالرياض · 25 متدرب' : 'Onsite Riyadh · 25 Executives'}</span>
+              <span className="text-neutral-200 font-medium">{isAr ? 'حضوري بالرياض · 25 متدرب' : 'Onsite Riyadh · 25 Executives'}</span>
             </div>
             <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
               <span className="text-neutral-400">{isAr ? 'الجدول الزمني المستهدف:' : 'Target Timeline:'}</span>
@@ -157,7 +157,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         <div className="bg-black rounded-xl border border-[#26282D] w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans">
           <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
             <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded-lg bg-orange-500/10 text-[#FF5C00] flex items-center justify-center font-bold">
+              <div className="h-6 w-6 rounded-lg bg-white/10 text-white flex items-center justify-center font-bold">
                 <Scale size={14} />
               </div>
               <div>
@@ -196,7 +196,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
       {/* Animated Section Header */}
       <div className="mb-8 sm:mb-12 text-center max-w-3xl mx-auto space-y-3">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-mono font-medium">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-white" />
           <span>{isAr ? 'منظومة التوفيق والمطابقة' : 'HOW MATCHMAKING WORKS'}</span>
         </div>
 
@@ -239,25 +239,25 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                   type="button"
                   onClick={() => setActiveId(st.id)}
                   aria-label={`${st.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect breakdown'}`}
-                  className="relative z-10 flex h-full cursor-pointer flex-col text-start outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500/60 w-full"
+                  className="relative z-10 flex h-full cursor-pointer flex-col text-start outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/40 w-full"
                 >
                   {/* Top Row: Index Badge & Icon */}
                   <div className="flex items-center justify-between gap-3 mb-5">
                     <div className="flex items-center gap-2">
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#FF5C00]/30 bg-orange-500/10 font-mono text-xs font-bold text-[#FF5C00]">
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/20 bg-white/10 font-mono text-xs font-bold text-white">
                         {st.index}
                       </span>
                       <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] font-semibold text-neutral-300">
                         {st.badge}
                       </span>
                     </div>
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-300 group-hover:border-orange-500/40 group-hover:text-[#FF5C00] transition-colors">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-300 group-hover:border-white/30 group-hover:text-white transition-colors">
                       <st.icon size={17} />
                     </div>
                   </div>
 
                   {/* Headline */}
-                  <h3 className="font-heading text-lg sm:text-xl font-semibold text-white group-hover:text-orange-400 transition-colors leading-tight">
+                  <h3 className="font-heading text-lg sm:text-xl font-semibold text-white group-hover:text-neutral-200 transition-colors leading-tight">
                     {st.title}
                   </h3>
 
@@ -270,7 +270,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                   <div className="mt-6 pt-5 border-t border-white/[0.06] space-y-2.5">
                     {st.takeaways.map((point, pIdx) => (
                       <div key={pIdx} className="flex items-start gap-2.5 text-xs text-neutral-300 font-sans">
-                        <CheckCircle2 size={14} className="text-[#FF5C00] shrink-0 mt-0.5" />
+                        <CheckCircle2 size={14} className="text-white shrink-0 mt-0.5" />
                         <span className="leading-snug text-neutral-300">{point}</span>
                       </div>
                     ))}
@@ -278,9 +278,9 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
 
                   {/* Action Strip */}
                   <div className="mt-auto pt-6">
-                    <div className="pt-4 border-t border-white/[0.04] flex items-center justify-between text-xs font-medium text-neutral-400 group-hover:text-orange-400 transition-colors">
+                    <div className="pt-4 border-t border-white/[0.04] flex items-center justify-between text-xs font-medium text-neutral-400 group-hover:text-white transition-colors">
                       <span>{isAr ? 'عرض التفاصيل والضمانات' : 'Inspect breakdown & SLAs'}</span>
-                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.05] group-hover:bg-[#FF5C00] group-hover:text-white transition-all">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.05] group-hover:bg-white group-hover:text-black transition-all">
                         <ArrowRight
                           size={12}
                           className="transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"

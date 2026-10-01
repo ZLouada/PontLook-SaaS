@@ -192,7 +192,7 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                   {mode === 'pontlook' && (
                     <m.div
                       layoutId="comparison-active-pill"
-                      className="absolute inset-0 rounded-full bg-[#FF5C00] shadow-md shadow-orange-500/25"
+                      className="absolute inset-0 rounded-full bg-neutral-900 shadow-md shadow-neutral-900/25"
                       transition={spring.soft}
                     />
                   )}
@@ -272,7 +272,7 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                         <Magnetic strength={0.2} activeDistance={30} className="w-full sm:w-auto">
                           <Link
                             href={`/${lang}/find-training`}
-                            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-[#FF5C00] hover:bg-[#FF7A2F] text-white font-medium text-xs shadow-md shadow-orange-500/20 transition-all active:scale-95"
+                            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white font-medium text-xs shadow-md shadow-neutral-950/20 transition-all active:scale-95"
                           >
                             <span>{isAr ? 'ابدأ المطابقة الآن' : 'Find your match'}</span>
                             <ArrowRight size={13} className="rtl:-scale-x-100" />
@@ -301,12 +301,12 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                             </div>
 
                             {/* Central Hub: PontLook Core Matching Engine */}
-                            <div className="p-2 sm:p-3 rounded-xl border-2 border-[#FF5C00] bg-white text-neutral-950 flex flex-col items-center space-y-0.5 shadow-[0_4px_20px_rgba(255,92,0,0.15)] ring-1 ring-orange-500/20">
-                              <Signal className="text-[#FF5C00] w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                            <div className="p-2 sm:p-3 rounded-xl border-2 border-neutral-950 bg-white text-neutral-950 flex flex-col items-center space-y-0.5 shadow-sm ring-1 ring-neutral-900/10">
+                              <Signal className="text-neutral-950 w-3.5 h-3.5 sm:w-4 sm:h-4" />
                               <span className="text-[10px] sm:text-xs font-bold text-neutral-950 leading-tight">
                                 {isAr ? 'محرك بونت لوك' : 'PontLook Engine'}
                               </span>
-                              <span className="text-[8px] sm:text-[9.5px] text-[#FF5C00] font-semibold leading-tight">
+                              <span className="text-[8px] sm:text-[9.5px] text-neutral-700 font-semibold leading-tight">
                                 {isAr ? 'تشخيص ومطابقة' : 'Fit & SLA'}
                               </span>
                             </div>
@@ -325,7 +325,7 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                           </div>
 
                           {/* Connected Luminous Line under nodes */}
-                          <div className="absolute top-1/2 start-6 end-6 sm:start-8 sm:end-8 h-0.5 bg-gradient-to-r from-emerald-500 via-amber-500 to-blue-500 -translate-y-1/2 pointer-events-none shadow-[0_0_8px_rgba(245,158,11,0.3)]" />
+                          <div className="absolute top-1/2 start-6 end-6 sm:start-8 sm:end-8 h-0.5 bg-gradient-to-r from-neutral-300 via-neutral-500 to-neutral-300 -translate-y-1/2 pointer-events-none" />
                         </div>
 
                         {/* 3 Summary Points */}
@@ -403,7 +403,7 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                         <button
                           type="button"
                           onClick={() => setMode('pontlook')}
-                          className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-[#FF5C00] hover:bg-[#FF7A2F] text-white font-semibold text-xs shadow-md shadow-orange-500/20 transition-all active:scale-95 cursor-pointer"
+                          className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white font-semibold text-xs shadow-md shadow-neutral-950/20 transition-all active:scale-95 cursor-pointer"
                         >
                           <span>{isAr ? 'شاهد حل بونت لوك لهذا ←' : 'See how PontLook fixes this →'}</span>
                         </button>
@@ -751,7 +751,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
                 onClick={() => setActiveStep(idx)}
                 className={`group relative shrink-0 flex items-center justify-center gap-1 sm:gap-2 py-1.5 xs:py-2 sm:py-2.5 px-0.5 xs:px-1 sm:px-4 rounded-lg sm:rounded-xl border text-[9px] xs:text-[10px] sm:text-xs font-semibold cursor-pointer transition-all active:scale-95 ${
                   isActive
-                    ? 'bg-[#FF5C00] text-white border-[#FF5C00] shadow-md shadow-orange-500/25'
+                    ? 'bg-neutral-950 text-white border-neutral-950 shadow-md shadow-neutral-900/20'
                     : 'bg-white text-neutral-700 border-neutral-300 hover:border-neutral-500 hover:text-neutral-950'
                 }`}
               >

@@ -1,11 +1,8 @@
 'use client';
 
 import React from 'react';
-import { m, useReducedMotion } from 'framer-motion';
 import {
-  TrendingUp,
   Sparkles,
-  ArrowRight,
   ShieldCheck,
   CheckCircle2,
   Cpu,
@@ -13,11 +10,7 @@ import {
   GraduationCap,
   Layers,
 } from '@/components/icons';
-import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
-import CardTilt3D from '@/components/shared/CardTilt3D';
-import BorderGlow from '@/components/shared/BorderGlow';
-import { viewportOnce } from '@/lib/motion';
 
 interface FindTrainingBentoImpactProps {
   lang: string;
@@ -25,7 +18,6 @@ interface FindTrainingBentoImpactProps {
 
 export default function FindTrainingBentoImpact({ lang }: FindTrainingBentoImpactProps) {
   const isAr = lang === 'ar';
-  const reduce = useReducedMotion();
 
   const pipelineStages = [
     {
@@ -50,10 +42,10 @@ export default function FindTrainingBentoImpact({ lang }: FindTrainingBentoImpac
 
   return (
     <div className="w-full">
-      {/* Section Header */}
+      {/* Section Header (Pure Monochrome) */}
       <div className="mb-10 sm:mb-16 text-center max-w-3xl mx-auto space-y-3">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-mono font-medium">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-white" />
           <span>{isAr ? 'القيمة والأثر الميداني' : 'MEASURABLE OUTCOMES'}</span>
         </div>
 
@@ -74,198 +66,199 @@ export default function FindTrainingBentoImpact({ lang }: FindTrainingBentoImpac
         </p>
       </div>
 
-      {/* Bento Grid (2 Cards) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
-        {/* Left Card: AT THE SOURCE */}
-        <div className="lg:col-span-6">
-          <CardTilt3D maxTilt={3} className="h-full">
-            <Spotlight
-              radius={380}
-              className="relative h-full overflow-hidden rounded-2xl sm:rounded-3xl border border-[#26282D] hover:border-white/20 bg-gradient-to-b from-[#111216] to-[#0A0B0E] p-6 sm:p-8 lg:p-10 flex flex-col justify-between shadow-2xl transition-all duration-300"
-            >
-              <BorderGlow glowColor="rgba(255, 92, 0, 0.2)" size={260} opacity={0.5} />
+      {/* Single Unified Window Container (Black, White, and Grey) */}
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/10 bg-gradient-to-b from-[#131418] to-[#0A0B0D] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),inset_0_1px_0_0_rgba(255,255,255,0.08)]">
+        {/* Window Title Bar */}
+        <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3.5 border-b border-white/[0.08] bg-black/40 text-xs font-mono">
+          {/* Window Control Dots (Silver / Monochrome) */}
+          <div className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+            <span className="ms-2 text-neutral-400 hidden sm:inline text-[11px]">
+              {isAr ? 'منظومة المطابقة والقياس المؤسسي' : 'enterprise_matching_matrix.sys'}
+            </span>
+          </div>
 
-              <div>
-                {/* Header Tag */}
-                <div className="flex items-center justify-between gap-3 mb-6 pb-4 border-b border-white/[0.08]">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-mono font-semibold uppercase tracking-wider">
-                    <Layers size={13} className="text-[#FF5C00]" />
-                    <span>{isAr ? 'من المنبع' : 'AT THE SOURCE'}</span>
-                  </span>
-                  <span className="text-[11px] font-mono text-neutral-400">
-                    {isAr ? 'توفيق ذكي ومباشر' : 'Direct Concierge Pipeline'}
-                  </span>
-                </div>
-
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-3 font-heading leading-snug">
-                  {isAr
-                    ? 'ربط مباشر من التحدي إلى التنفيذ المعتمد'
-                    : 'The Right Training Partner. Without the Guesswork.'}
-                </h3>
-                <p className="text-xs sm:text-sm text-neutral-400 mb-8 font-sans leading-relaxed">
-                  {isAr
-                    ? 'بدلاً من البحث في آلاف الدورات الجاهزة، نحدد جوهر التحدي ونطابقه مع المزود الأكثر كفاءة في منطقتك.'
-                    : 'Skip the endless catalog browsing. We map your specific performance gaps directly to providers with verified regional track records.'}
-                </p>
-
-                {/* Pipeline Flow Diagram */}
-                <div className="relative space-y-4 my-6">
-                  {pipelineStages.map((stage, idx) => {
-                    const IconComponent = stage.icon;
-                    return (
-                      <div key={stage.label} className="relative">
-                        <div className="flex items-center gap-3.5 p-3.5 sm:p-4 rounded-xl bg-[#16171B]/90 border border-[#26282D] hover:border-[#FF5C00]/40 transition-colors">
-                          <div className="h-10 w-10 rounded-xl bg-orange-500/10 border border-[#FF5C00]/30 text-[#FF5C00] flex items-center justify-center shrink-0">
-                            <IconComponent size={18} />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center justify-between gap-2">
-                              <h4 className="text-xs sm:text-sm font-semibold text-white">
-                                {stage.label}
-                              </h4>
-                              <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-white/[0.04] text-neutral-400 border border-white/5">
-                                {stage.tag}
-                              </span>
-                            </div>
-                            <p className="text-[11px] sm:text-xs text-neutral-400 truncate mt-0.5">
-                              {stage.desc}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Connector Arrow between nodes */}
-                        {idx < pipelineStages.length - 1 && (
-                          <div className="flex justify-center my-1.5">
-                            <div className="w-[1.5px] h-3 bg-gradient-to-b from-[#FF5C00] to-orange-500/30" />
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Bottom Value Note */}
-              <div className="mt-8 pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs text-neutral-400">
-                <span className="flex items-center gap-1.5 text-neutral-300">
-                  <ShieldCheck size={14} className="text-[#FF5C00]" />
-                  <span>{isAr ? 'اعتماد واختيار مخصص 100%' : '100% Curated & Vetted'}</span>
-                </span>
-                <span className="font-mono text-neutral-400">
-                  {isAr ? 'صفر تكلفة للمؤسسات' : '$0 Procurement Cost'}
-                </span>
-              </div>
-            </Spotlight>
-          </CardTilt3D>
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/20 text-white text-[11px] font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+              <span>{isAr ? 'مجاني 100% للشركات' : '100% FREE FOR ENTERPRISES'}</span>
+            </span>
+          </div>
         </div>
 
-        {/* Right Card: THE COMPOUND EFFECT */}
-        <div className="lg:col-span-6">
-          <CardTilt3D maxTilt={3} className="h-full">
-            <Spotlight
-              radius={380}
-              className="relative h-full overflow-hidden rounded-2xl sm:rounded-3xl border border-orange-500/30 bg-gradient-to-b from-[#131419] to-[#0A0B0E] p-6 sm:p-8 lg:p-10 flex flex-col justify-between shadow-[0_20px_50px_rgba(255,92,0,0.06),inset_0_1px_0_0_rgba(255,255,255,0.12)] transition-all duration-300"
-            >
-              <BorderGlow glowColor="rgba(255, 92, 0, 0.25)" size={260} opacity={0.6} />
+        {/* 2-Panel Split inside the Single Window */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+          {/* Left Panel: Direct Concierge Pipeline */}
+          <div className="lg:col-span-6 p-5 sm:p-7 lg:p-9 flex flex-col justify-between">
+            <div>
+              {/* Header Tag */}
+              <div className="flex items-center justify-between gap-3 mb-5 pb-3 border-b border-white/[0.06]">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-white text-xs font-mono font-semibold uppercase tracking-wider">
+                  <Layers size={13} className="text-white" />
+                  <span>{isAr ? 'من المنبع' : 'AT THE SOURCE'}</span>
+                </span>
+                <span className="text-[11px] font-mono text-neutral-400">
+                  {isAr ? 'توفيق ذكي ومباشر' : 'Direct Concierge Pipeline'}
+                </span>
+              </div>
 
-              <div>
-                {/* Header Tag */}
-                <div className="flex items-center justify-between gap-3 mb-6 pb-4 border-b border-white/[0.08]">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-[#FF5C00]/40 text-[#FF5C00] text-xs font-mono font-bold uppercase tracking-wider">
-                    <Sparkles size={13} className="text-[#FF5C00]" />
-                    <span>{isAr ? 'الأثر التراكمي' : 'THE COMPOUND EFFECT'}</span>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 font-heading leading-snug">
+                {isAr
+                  ? 'ربط مباشر من التحدي إلى التنفيذ المعتمد'
+                  : 'The Right Training Partner. Without the Guesswork.'}
+              </h3>
+              <p className="text-xs sm:text-sm text-neutral-400 mb-6 font-sans leading-relaxed">
+                {isAr
+                  ? 'بدلاً من البحث في آلاف الدورات الجاهزة، نحدد جوهر التحدي ونطابقه مع المزود الأكثر كفاءة في منطقتك.'
+                  : 'Skip the endless catalog browsing. We map your specific performance gaps directly to providers with verified regional track records.'}
+              </p>
+
+              {/* Pipeline Flow Diagram (Straight Lines, Not Wavy) */}
+              <div className="relative space-y-3.5 my-4">
+                {pipelineStages.map((stage, idx) => {
+                  const IconComponent = stage.icon;
+                  return (
+                    <div key={stage.label} className="relative">
+                      <div className="flex items-center gap-3.5 p-3 sm:p-3.5 rounded-xl bg-[#16171B]/90 border border-white/10 hover:border-white/25 transition-colors">
+                        <div className="h-9 w-9 rounded-xl bg-white/[0.06] border border-white/15 text-white flex items-center justify-center shrink-0">
+                          <IconComponent size={16} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-2">
+                            <h4 className="text-xs sm:text-sm font-semibold text-white">
+                              {stage.label}
+                            </h4>
+                            <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-white/[0.04] text-neutral-300 border border-white/10">
+                              {stage.tag}
+                            </span>
+                          </div>
+                          <p className="text-[11px] sm:text-xs text-neutral-400 truncate mt-0.5">
+                            {stage.desc}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Straight Connector Line (Not Wavy) */}
+                      {idx < pipelineStages.length - 1 && (
+                        <div className="flex justify-center my-1">
+                          <div className="w-[1.5px] h-2.5 bg-white/20" />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Bottom Value Note */}
+            <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs text-neutral-400">
+              <span className="flex items-center gap-1.5 text-neutral-300">
+                <ShieldCheck size={14} className="text-white" />
+                <span>{isAr ? 'اعتماد واختيار مخصص 100%' : '100% Curated & Vetted'}</span>
+              </span>
+              <span className="font-mono text-neutral-400">
+                {isAr ? 'صفر تكلفة للمؤسسات' : '$0 Procurement Cost'}
+              </span>
+            </div>
+          </div>
+
+          {/* Right Panel: Measured Enterprise ROI */}
+          <div className="lg:col-span-6 p-5 sm:p-7 lg:p-9 bg-black/35 border-t lg:border-t-0 lg:border-s border-white/[0.08] flex flex-col justify-between">
+            <div>
+              {/* Header Tag */}
+              <div className="flex items-center justify-between gap-3 mb-5 pb-3 border-b border-white/[0.06]">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs font-mono font-bold uppercase tracking-wider">
+                  <Sparkles size={13} className="text-white" />
+                  <span>{isAr ? 'الأثر التراكمي' : 'THE COMPOUND EFFECT'}</span>
+                </span>
+                <span className="text-[11px] font-mono text-neutral-300 font-semibold">
+                  {isAr ? 'عائد استثماري مثبت' : 'Measured Enterprise ROI'}
+                </span>
+              </div>
+
+              {/* Massive 3.5x Stat (Pure White) */}
+              <div className="flex items-baseline gap-3 mb-2">
+                <span className="text-5xl sm:text-6xl lg:text-7xl font-extrabold font-heading text-white tracking-tight leading-none">
+                  3.5x
+                </span>
+                <span className="text-base sm:text-lg font-bold text-neutral-200 font-heading">
+                  {isAr ? 'مضاعفة استبقاء المهارات' : 'Skill Retention Multiplier'}
+                </span>
+              </div>
+
+              <p className="text-xs sm:text-sm text-neutral-300 mb-6 font-sans leading-relaxed">
+                {isAr
+                  ? 'البرامج التدريبية المصممة خصيصاً لسياق الشركة وفريق العمل تحقق أثراً تدريبياً يفوق بـ 3.5 أضعاف الاشتراكات العامة في مكتبات الدورات المسجلة.'
+                  : 'Tailored executive and workforce cohorts matched to your specific workflow deliver 3.5x higher skill retention compared to generic off-the-shelf course libraries.'}
+              </p>
+
+              {/* Straight Linear Metric Comparison (Clean & Not Wavy) */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#0F1013] border border-white/10 space-y-4">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-white font-semibold">
+                    {isAr ? 'مقارنة استبقاء المهارات بعد التدريب' : 'Skill Retention & Execution Metric'}
                   </span>
-                  <span className="text-[11px] font-mono text-emerald-400 font-semibold">
-                    {isAr ? 'عائد استثماري مثبت' : 'Measured Enterprise ROI'}
-                  </span>
+                  <span className="text-[10px] font-mono text-neutral-400">12 Months Track</span>
                 </div>
 
-                {/* Massive 3.5x Stat */}
-                <div className="flex items-baseline gap-3 mb-2">
-                  <span className="text-5xl sm:text-6xl lg:text-7xl font-extrabold font-heading text-white tracking-tight leading-none bg-gradient-to-r from-white via-white to-orange-200 bg-clip-text">
-                    3.5x
-                  </span>
-                  <span className="text-base sm:text-lg font-bold text-[#FF5C00] font-heading">
-                    {isAr ? 'مضاعفة استبقاء المهارات' : 'Skill Retention Multiplier'}
-                  </span>
-                </div>
-
-                <p className="text-xs sm:text-sm text-neutral-300 mb-6 font-sans leading-relaxed">
-                  {isAr
-                    ? 'البرامج التدريبية المصممة خصيصاً لسياق الشركة وفريق العمل تحقق أثراً تدريبياً يفوق بـ 3.5 أضعاف الاشتراكات العامة في مكتبات الدورات المسجلة.'
-                    : 'Tailored executive and workforce cohorts matched to your specific workflow deliver 3.5x higher skill retention compared to generic off-the-shelf course libraries.'}
-                </p>
-
-                {/* Trajectory Growth Graph */}
-                <div className="p-4 sm:p-5 rounded-2xl bg-[#0F1013] border border-[#26282D] space-y-3">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-neutral-300 font-semibold">
-                      {isAr ? 'مقارنة استبقاء المهارات بعد التدريب' : 'Skill Retention & Execution Curve'}
-                    </span>
-                    <span className="text-[10px] font-mono text-neutral-400">12 Months Track</span>
+                <div className="space-y-3.5 pt-1">
+                  {/* Item 1: PontLook Cohorts */}
+                  <div>
+                    <div className="flex items-center justify-between text-xs mb-1.5">
+                      <span className="font-semibold text-white flex items-center gap-2">
+                        <span className="h-2 w-2 rounded-full bg-white shadow-xs" />
+                        <span>{isAr ? 'برامج PontLook المخصصة' : 'PontLook Cohorts'}</span>
+                      </span>
+                      <span className="font-mono text-xs font-bold text-white">3.5x (88%)</span>
+                    </div>
+                    <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
+                      <div className="h-full bg-white rounded-full w-[88%] shadow-[0_0_10px_rgba(255,255,255,0.4)]" />
+                    </div>
                   </div>
 
-                  {/* SVG Chart Graphic */}
-                  <div className="relative h-28 w-full pt-2">
-                    <svg
-                      viewBox="0 0 320 80"
-                      className="w-full h-full overflow-visible"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      {/* Grid Lines */}
-                      <line x1="0" y1="20" x2="320" y2="20" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
-                      <line x1="0" y1="50" x2="320" y2="50" stroke="rgba(255,255,255,0.06)" strokeDasharray="3 3" />
-
-                      {/* Generic Course Flat/Declining Curve (Dashed gray) */}
-                      <path
-                        d="M 10 50 Q 80 52, 160 62 T 310 70"
-                        stroke="#666666"
-                        strokeWidth="2"
-                        strokeDasharray="4 4"
-                      />
-
-                      {/* PontLook Cohort Exponential Curve (Solid Orange Glowing) */}
-                      <path
-                        d="M 10 70 Q 100 65, 180 30 T 310 12"
-                        stroke="#FF5C00"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                      />
-
-                      {/* End point dot */}
-                      <circle cx="310" cy="12" r="4" fill="#FF5C00" className="animate-pulse" />
-                    </svg>
-
-                    {/* Chart Legend */}
-                    <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-neutral-400 pt-2 border-t border-white/[0.05]">
-                      <div className="flex items-center gap-1.5">
-                        <span className="h-2 w-2 rounded-full bg-[#FF5C00]" />
-                        <span className="text-white font-medium">
-                          {isAr ? 'برامج PontLook المخصصة' : 'PontLook Cohorts (3.5x)'}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
+                  {/* Item 2: Generic Catalog Courses */}
+                  <div>
+                    <div className="flex items-center justify-between text-xs mb-1.5">
+                      <span className="text-neutral-400 flex items-center gap-2">
                         <span className="h-2 w-2 rounded-full bg-neutral-600" />
                         <span>{isAr ? 'مكتبات الدورات العامة' : 'Generic Catalog Courses'}</span>
-                      </div>
+                      </span>
+                      <span className="font-mono text-xs text-neutral-400">1.0x (24%)</span>
+                    </div>
+                    <div className="h-2 w-full rounded-full bg-white/5 overflow-hidden">
+                      <div className="h-full bg-neutral-600 rounded-full w-[24%]" />
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* Bottom Micro-summary */}
-              <div className="mt-8 pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs text-neutral-300">
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 size={14} className="text-[#FF5C00]" />
-                  <span>{isAr ? 'عائد ملموس على الاستثمار' : 'Validated Capability ROI'}</span>
-                </span>
-                <span className="font-mono text-[#FF5C00] font-semibold text-[11px] sm:text-xs">
-                  {isAr ? 'استجابة خلال 48 ساعة' : '48h Concierge Turnaround'}
-                </span>
-              </div>
-            </Spotlight>
-          </CardTilt3D>
+            {/* Bottom Micro-summary */}
+            <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs text-neutral-300">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 size={14} className="text-white" />
+                <span>{isAr ? 'عائد ملموس على الاستثمار' : 'Validated Capability ROI'}</span>
+              </span>
+              <span className="font-mono text-neutral-300 font-semibold text-[11px] sm:text-xs">
+                {isAr ? 'استجابة خلال 48 ساعة' : '48h Concierge Turnaround'}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Window Footer Bar */}
+        <div className="px-5 sm:px-8 py-3 bg-black/60 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-neutral-400">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 size={14} className="text-white" />
+            <span className="text-neutral-300">
+              {isAr ? 'عروض أسعار تفصيلية ومقارنة واضحة بدون أي التزام' : 'Itemized vendor proposals with guaranteed pricing transparency'}
+            </span>
+          </div>
+          <span className="font-mono text-white font-semibold text-[11px] sm:text-xs">
+            {isAr ? 'صفر تكلفة للمؤسسات' : '$0 Procurement Cost'}
+          </span>
         </div>
       </div>
     </div>
