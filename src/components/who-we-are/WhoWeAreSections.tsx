@@ -98,12 +98,12 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
               {mode === 'pontlook' && (
                 <m.div
                   layoutId="comparison-active-pill"
-                  className="absolute inset-0 rounded-full bg-neutral-950"
+                  className="absolute inset-0 rounded-full bg-[#FF5C00] shadow-md shadow-orange-500/25"
                   transition={spring.soft}
                 />
               )}
               <span className="relative z-10 flex items-center gap-2">
-                <Sparkles size={14} className={mode === 'pontlook' ? 'text-amber-400' : 'text-neutral-500'} />
+                <Sparkles size={14} className={mode === 'pontlook' ? 'text-white' : 'text-neutral-500'} />
                 <span>{isAr ? 'طريقة بونت لوك' : 'The PontLook Way'}</span>
               </span>
             </button>
@@ -120,12 +120,12 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
               {mode === 'traditional' && (
                 <m.div
                   layoutId="comparison-active-pill"
-                  className="absolute inset-0 rounded-full bg-neutral-800"
+                  className="absolute inset-0 rounded-full bg-red-600 shadow-md shadow-red-500/25"
                   transition={spring.soft}
                 />
               )}
               <span className="relative z-10 flex items-center gap-2">
-                <XCircle size={14} className={mode === 'traditional' ? 'text-red-400' : 'text-neutral-500'} />
+                <XCircle size={14} className={mode === 'traditional' ? 'text-white' : 'text-neutral-500'} />
                 <span>{isAr ? 'الطريقة التقليدية' : 'The Traditional Way'}</span>
               </span>
             </button>
@@ -212,12 +212,12 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                         </div>
 
                         {/* Central Hub: PontLook Core Matching Engine */}
-                        <div className="p-3.5 sm:p-4 rounded-2xl border-2 border-[#FF5C00] bg-neutral-950 text-white flex flex-col items-center space-y-1 shadow-[0_0_25px_rgba(255,92,0,0.25)]">
-                          <Signal size={22} className="text-amber-400" />
-                          <span className="text-xs font-bold text-white">
+                        <div className="p-3.5 sm:p-4 rounded-2xl border-2 border-[#FF5C00] bg-white text-neutral-950 flex flex-col items-center space-y-1 shadow-[0_4px_20px_rgba(255,92,0,0.15)] ring-1 ring-orange-500/20">
+                          <Signal size={22} className="text-[#FF5C00]" />
+                          <span className="text-xs font-bold text-neutral-950">
                             {isAr ? 'محرك بونت لوك' : 'PontLook Engine'}
                           </span>
-                          <span className="text-[10px] text-amber-300 font-medium">
+                          <span className="text-[10px] text-[#FF5C00] font-semibold">
                             {isAr ? 'تشخيص ومطابقة' : 'Fit & SLA'}
                           </span>
                         </div>
@@ -319,7 +319,7 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
                     <button
                       type="button"
                       onClick={() => setMode('pontlook')}
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white font-semibold text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#FF5C00] hover:bg-[#FF7A2F] text-white font-semibold text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all active:scale-95 cursor-pointer"
                     >
                       <span>{isAr ? 'شاهد حل بونت لوك لهذا ←' : 'See how PontLook fixes this →'}</span>
                     </button>
@@ -716,11 +716,11 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
                 onClick={() => setActiveStep(idx)}
                 className={`group relative shrink-0 sm:flex-1 min-w-[120px] sm:min-w-0 flex items-center justify-center gap-2 py-2.5 px-3 sm:px-4 rounded-xl border text-xs font-semibold cursor-pointer transition-all active:scale-95 ${
                   isActive
-                    ? 'bg-neutral-950 text-white border-neutral-950 shadow-md shadow-black/20'
+                    ? 'bg-[#FF5C00] text-white border-[#FF5C00] shadow-md shadow-orange-500/25'
                     : 'bg-white text-neutral-700 border-neutral-300 hover:border-neutral-500 hover:text-neutral-950'
                 }`}
               >
-                <span className={`font-mono text-[11px] ${isActive ? 'text-amber-400' : 'text-neutral-400'}`}>
+                <span className={`font-mono text-[11px] ${isActive ? 'text-white/90' : 'text-neutral-400'}`}>
                   {st.num}
                 </span>
                 <span className="truncate">{st.navTitle}</span>
