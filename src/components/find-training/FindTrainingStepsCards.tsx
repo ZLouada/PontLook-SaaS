@@ -2,31 +2,19 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import {
   SlidersHorizontal,
   BadgeCheck,
   Scale,
   ArrowRight,
   ShieldCheck,
-  ChevronRight,
   CheckCircle2,
 } from '@/components/icons';
+import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
-import { ease } from '@/lib/motion';
-
-interface StepRecord {
-  id: string;
-  index: string;
-  icon: React.ElementType;
-  frameVariant?: string;
-  badge: string;
-  title: string;
-  angle: string;
-  body: string;
-  takeaways: string[];
-  mockup: React.ReactNode;
-}
+import ConsoleDialog, { type ConsoleRecord } from '@/components/shared/ConsoleDialog';
+import { ease, viewportOnce } from '@/lib/motion';
 
 interface FindTrainingStepsCardsProps {
   lang: string;
@@ -35,14 +23,13 @@ interface FindTrainingStepsCardsProps {
 export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsProps) {
   const isAr = lang === 'ar';
   const reduce = useReducedMotion();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
-  const steps: StepRecord[] = [
+  const steps: ConsoleRecord[] = [
     {
       id: 'step-specify',
       index: '01',
       icon: SlidersHorizontal,
-      frameVariant: 'blue',
       badge: isAr ? 'استيعاب دقيق' : 'Rapid Scoping',
       title: isAr ? 'حدد المتطلبات والاحتياج' : 'Specify Training Needs',
       angle: isAr ? 'استبيان تفاعلي خلال 60 ثانية بدون تعقيدات' : '60-Second Interactive Intake',
@@ -96,7 +83,6 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
       id: 'step-matching',
       index: '02',
       icon: BadgeCheck,
-      frameVariant: 'emerald',
       badge: isAr ? 'فحص واعتماد الخبراء' : 'Dual-Screening Vetting',
       title: isAr ? 'المطابقة والتحقق من المدربين' : 'Matching & Faculty Vetting',
       angle: isAr ? 'فرز أكثر من 120 مزود معتمد لضمان نخبة الميسرين' : 'Screening 120+ Accredited GCC Entities',
@@ -156,7 +142,6 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
       id: 'step-compare',
       index: '03',
       icon: Scale,
-      frameVariant: 'brand',
       badge: isAr ? 'مقارنة شفافة' : 'Proposal Comparison',
       title: isAr ? 'استلم وقارن العروض' : 'Compare Itemized Proposals',
       angle: isAr ? '2 إلى 3 عروض مفصلة خلال 48 ساعة وبدون أي التزام' : '2 to 3 Proposals in 48h · Zero Obligation',
@@ -206,8 +191,6 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
     },
   ];
 
-  const currentStep = steps[activeStep] || steps[0];
-
   return (
     <div className="w-full">
       {/* Animated Section Header */}
@@ -225,136 +208,116 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
 
         <p className="text-xs xs:text-sm sm:text-base text-neutral-400 font-sans max-w-2xl mx-auto leading-relaxed">
           {isAr
-            ? 'عملية توفيق دقيقة وسريعة توفر عليك أسابيع من البحث والتقييم اليدوي. تصفح الخطوات لاستكشاف معايير التدقيق والضمانات.'
-            : 'A streamlined matchmaking process saving weeks of vendor searching. Navigate the steps to inspect the vetting rubric.'}
+            ? 'عملية توفيق دقيقة وسريعة توفر عليك أسابيع من البحث والتقييم اليدوي. انقر على أي خطوة لاستعراض تفاصيلها والضمانات المعتمدة.'
+            : 'A streamlined matchmaking process saving weeks of vendor searching. Click any step to inspect the vetting rubric and deliverables.'}
         </p>
       </div>
 
-      {/* Premium Master Interactive Console */}
-      <div className="rounded-2xl sm:rounded-3xl border border-[#26282D] bg-[#0A0B0E] p-4 xs:p-6 sm:p-8 lg:p-10 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.85)] relative overflow-hidden text-white">
-        {/* Subtle Ambient Depth (No Grid Lines, No Scanner) */}
-        <div className="pointer-events-none absolute -top-24 right-0 w-80 h-80 bg-blue-500/[0.04] rounded-full blur-[100px]" aria-hidden="true" />
-        <div className="pointer-events-none absolute bottom-0 left-0 w-80 h-80 bg-orange-500/[0.02] rounded-full blur-[100px]" aria-hidden="true" />
-
-        {/* Step Selector Tabs Bar */}
-        <div className="flex items-center gap-1.5 xs:gap-2 p-1.5 rounded-2xl bg-[#121318] border border-[#26282D] mb-6 sm:mb-8 overflow-x-auto scrollbar-none">
-          {steps.map((st, i) => {
-            const isActive = activeStep === i;
-            return (
-              <button
-                key={st.id}
-                type="button"
-                onClick={() => setActiveStep(i)}
-                className={`relative flex items-center gap-2 xs:gap-2.5 px-3 xs:px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer shrink-0 ${
-                  isActive ? 'text-white' : 'text-neutral-400 hover:text-white hover:bg-white/[0.03]'
-                }`}
+      {/* Modern 3-Card Grid (Horizontal flow on mobile, 3-col on desktop) */}
+      <div className="relative">
+        <div className="relative flex md:grid gap-3.5 xs:gap-4 sm:gap-6 md:grid-cols-3 overflow-x-auto md:overflow-visible pb-4 md:pb-0 scrollbar-none snap-x snap-mandatory px-3 -mx-3 xs:px-4 xs:-mx-4 sm:px-0 sm:mx-0">
+          {steps.map((st, i) => (
+            <m.div
+              key={st.id}
+              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={viewportOnce}
+              transition={{
+                delay: i * 0.1,
+                type: 'spring',
+                stiffness: 160,
+                damping: 22,
+              }}
+              whileHover={reduce ? undefined : { y: -6 }}
+              className="group relative h-full flex flex-col w-[88vw] xs:w-[82vw] sm:w-[65vw] md:w-auto shrink-0 snap-center"
+            >
+              <Spotlight
+                radius={360}
+                className="relative z-10 flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#202227] hover:border-white/20 bg-[#0C0D11] p-4 xs:p-5 sm:p-7 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_32px_-12px_rgba(0,0,0,0.8)] transition-all duration-300"
               >
-                {isActive && (
-                  <m.div
-                    layoutId="active-find-step-tab"
-                    className="absolute inset-0 rounded-xl bg-white/[0.10] border border-white/20 shadow-sm"
-                    transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-                  />
-                )}
-                <span className={`relative z-10 flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md font-mono text-[10px] sm:text-xs font-bold ${
-                  isActive ? 'bg-[#FF5C00] text-white' : 'bg-white/[0.05] text-neutral-400 border border-white/10'
-                }`}>
-                  {st.index}
-                </span>
-                <span className="relative z-10 font-sans tracking-tight">{st.badge}</span>
-              </button>
-            );
-          })}
+                <button
+                  type="button"
+                  onClick={() => setActiveId(st.id)}
+                  aria-label={`${st.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect breakdown'}`}
+                  className="relative z-10 flex h-full cursor-pointer flex-col text-start outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500/60 w-full"
+                >
+                  {/* Top Row: Index Badge & Icon */}
+                  <div className="flex items-center justify-between gap-3 mb-5">
+                    <div className="flex items-center gap-2">
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#FF5C00]/30 bg-orange-500/10 font-mono text-xs font-bold text-[#FF5C00]">
+                        {st.index}
+                      </span>
+                      <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] font-semibold text-neutral-300">
+                        {st.badge}
+                      </span>
+                    </div>
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-300 group-hover:border-orange-500/40 group-hover:text-[#FF5C00] transition-colors">
+                      <st.icon size={17} />
+                    </div>
+                  </div>
+
+                  {/* Headline */}
+                  <h3 className="font-heading text-lg sm:text-xl font-semibold text-white group-hover:text-orange-400 transition-colors leading-tight">
+                    {st.title}
+                  </h3>
+
+                  {/* Body */}
+                  <p className="mt-2.5 font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed font-normal">
+                    {st.body}
+                  </p>
+
+                  {/* Deliverables Takeaways List */}
+                  <div className="mt-6 pt-5 border-t border-white/[0.06] space-y-2.5">
+                    {st.takeaways.map((point, pIdx) => (
+                      <div key={pIdx} className="flex items-start gap-2.5 text-xs text-neutral-300 font-sans">
+                        <CheckCircle2 size={14} className="text-[#FF5C00] shrink-0 mt-0.5" />
+                        <span className="leading-snug text-neutral-300">{point}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Action Strip */}
+                  <div className="mt-auto pt-6">
+                    <div className="pt-4 border-t border-white/[0.04] flex items-center justify-between text-xs font-medium text-neutral-400 group-hover:text-orange-400 transition-colors">
+                      <span>{isAr ? 'عرض التفاصيل والضمانات' : 'Inspect breakdown & SLAs'}</span>
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.05] group-hover:bg-[#FF5C00] group-hover:text-white transition-all">
+                        <ArrowRight
+                          size={12}
+                          className="transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
+                        />
+                      </span>
+                    </div>
+                  </div>
+                </button>
+              </Spotlight>
+            </m.div>
+          ))}
         </div>
 
-        {/* Active Step Content Stage */}
-        <AnimatePresence mode="wait">
-          <m.div
-            key={currentStep.id}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.22, ease: ease.out }}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start relative z-10"
-          >
-            {/* Left Column: Details & Key Advantages */}
-            <div className="lg:col-span-7 space-y-5 sm:space-y-6">
-              <div>
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-white/[0.04] border border-[#26282D] text-neutral-300 mb-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  <span>{currentStep.angle}</span>
-                </span>
-
-                <h3 className="text-xl xs:text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight leading-tight">
-                  {currentStep.title}
-                </h3>
-
-                <p className="mt-2.5 text-xs xs:text-sm sm:text-base text-neutral-400 leading-relaxed font-sans max-w-xl">
-                  {currentStep.body}
-                </p>
-              </div>
-
-              {/* Key Advantages / Output list */}
-              <div className="pt-3 border-t border-[#26282D] space-y-3">
-                <div className="text-[11px] font-mono uppercase tracking-wider text-neutral-500 font-semibold">
-                  {isAr ? 'المزايا والمخرجات الأساسية' : 'KEY ADVANTAGES & OUTPUT'}
-                </div>
-
-                <div className="space-y-2">
-                  {currentStep.takeaways.map((point: string, idx: number) => (
-                    <div key={idx} className="flex items-start gap-2.5 p-2.5 rounded-xl bg-white/[0.02] border border-[#26282D] text-xs sm:text-sm text-neutral-300">
-                      <ShieldCheck size={16} className="text-emerald-400 mt-0.5 shrink-0" />
-                      <span className="leading-snug">{point}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Sleek Mockup Dossier (Without Scanner) */}
-            <div className="lg:col-span-5 w-full">
-              <div className="rounded-2xl border border-[#26282D] bg-[#0F1013] p-3 sm:p-4 shadow-xl">
-                {currentStep.mockup}
-              </div>
-            </div>
-          </m.div>
-        </AnimatePresence>
-
-        {/* Bottom Navigation & CTA Bar */}
-        <div className="mt-8 pt-6 border-t border-[#26282D] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 relative z-10">
-          <div className="flex items-center justify-between sm:justify-start gap-3">
-            <button
-              type="button"
-              onClick={() => setActiveStep((prev) => (prev === 0 ? steps.length - 1 : prev - 1))}
-              aria-label={isAr ? 'الخطوة السابقة' : 'Previous step'}
-              className="h-9 w-9 rounded-xl border border-[#26282D] bg-white/[0.04] hover:bg-white/[0.10] text-neutral-300 hover:text-white flex items-center justify-center transition-all cursor-pointer"
-            >
-              <ChevronRight size={16} className={isAr ? '' : 'rotate-180'} />
-            </button>
-
-            <span className="font-mono text-xs text-neutral-400 px-2 tabular-nums">
-              {currentStep.index} / {String(steps.length).padStart(2, '0')}
-            </span>
-
-            <button
-              type="button"
-              onClick={() => setActiveStep((prev) => (prev === steps.length - 1 ? 0 : prev + 1))}
-              aria-label={isAr ? 'الخطوة التالية' : 'Next step'}
-              className="h-9 w-9 rounded-xl border border-[#26282D] bg-white/[0.04] hover:bg-white/[0.10] text-neutral-300 hover:text-white flex items-center justify-center transition-all cursor-pointer"
-            >
-              <ChevronRight size={16} className={isAr ? 'rotate-180' : ''} />
-            </button>
-          </div>
-
-          <Link
-            href={`/${lang}/find-training/request`}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 px-6 sm:px-8 rounded-xl bg-white hover:bg-neutral-200 text-black font-semibold text-xs sm:text-sm shadow-md active:scale-95 transition-all font-sans"
-          >
-            <span>{isAr ? 'ابدأ طلب عروض التدريب' : 'Request Training Proposals'}</span>
-            <ArrowRight size={15} className="rtl:-scale-x-100" />
-          </Link>
+        {/* Mobile Horizontal Flow Indicator */}
+        <div className="flex md:hidden items-center justify-center gap-1.5 pt-3" aria-hidden="true">
+          {steps.map((st) => (
+            <span key={st.id} className="h-1 w-5 rounded-full bg-white/20" />
+          ))}
         </div>
       </div>
+
+      {/* Redesigned Clean & Modern Window Pop-up */}
+      <ConsoleDialog
+        records={steps}
+        activeId={activeId}
+        onClose={() => setActiveId(null)}
+        onSelect={setActiveId}
+        isAr={isAr}
+        accent="brand"
+        copy={{
+          takeawaysTitle: isAr ? 'المزايا والمخرجات الأساسية' : 'KEY ADVANTAGES & OUTPUT',
+          hint: isAr ? 'انقر خارج النافذة أو زر Esc للإغلاق' : 'Click outside or press Esc to close',
+          closeLabel: isAr ? 'إغلاق النافذة' : 'Close window',
+          ctaLabel: isAr ? 'ابدأ طلب عروض التدريب' : 'Request Training Proposals',
+          ctaHref: `/${lang}/find-training/request`,
+        }}
+      />
     </div>
   );
 }
