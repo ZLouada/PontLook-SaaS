@@ -64,8 +64,7 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
   const contentOpacity = useTransform(scrollYProgress, [0.20, 0.45], [0, 1]);
   const contentY = useTransform(scrollYProgress, [0.24, 0.55], [45, 0]);
 
-  // Shutter bottom rail shadow and visibility
-  const railOpacity = useTransform(scrollYProgress, [0.01, 0.08, 0.50, 0.60], [0, 1, 1, 0.25]);
+
 
   return (
     <section
@@ -137,24 +136,7 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
             aria-hidden="true"
           />
 
-          {/* Garage Shutter Leading Bottom Rail (The "Closing Door" Lip & Handle) */}
-          <m.div
-            style={
-              prefersReducedMotion || !isDesktop
-                ? { display: 'none' }
-                : { opacity: railOpacity }
-            }
-            className="absolute bottom-0 inset-x-0 h-6 bg-gradient-to-b from-neutral-200 via-neutral-100 to-neutral-300 border-t border-neutral-300 border-b-2 border-neutral-400 shadow-[0_25px_40px_rgba(0,0,0,0.5)] flex items-center justify-center z-30 pointer-events-none"
-            aria-hidden="true"
-          >
-            <div className="flex items-center gap-2 px-3.5 py-0.5 rounded-full bg-neutral-200/90 border border-neutral-400/60 shadow-inner">
-              <span className="w-1.5 h-1.5 rounded-full bg-neutral-500" />
-              <span className="text-[9px] font-mono tracking-widest text-neutral-600 uppercase font-semibold">
-                {isAr ? 'منظومة بونت لوك المعتمدة' : 'PONTLOOK • CURATED SYSTEM'}
-              </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-neutral-500" />
-            </div>
-          </m.div>
+
 
           {/* ================================================================
               SPRING POP-UP CONTENT INSIDE THE SHUTTER
