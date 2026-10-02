@@ -28,8 +28,14 @@ export default function NeuralGridBackground({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Check prefers-reduced-motion
+    // Check prefers-reduced-motion or mobile/touch device
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isTouchOrMobile =
+      typeof window !== 'undefined' &&
+      ('ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        window.innerWidth < 1024 ||
+        prefersReducedMotion);
 
     let animationFrameId: number;
     let width = 0;
@@ -43,6 +49,18 @@ export default function NeuralGridBackground({
     let mouseX = -9999;
     let mouseY = -9999;
     let isHovering = false;
+
+    const drawStatic = () => {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = baseDotColor;
+      for (let x = gridSize / 2; x < width; x += gridSize) {
+        for (let y = gridSize / 2; y < height; y += gridSize) {
+          ctx.beginPath();
+          ctx.arc(x, y, 1, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    };
 
     const handleResize = () => {
       if (!container || !canvas) return;
@@ -58,21 +76,7 @@ export default function NeuralGridBackground({
 
       ctx.scale(dpr, dpr);
 
-      if (prefersReducedMotion) {
-        drawStatic();
-      }
-    };
-
-    const drawStatic = () => {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = baseDotColor;
-      for (let x = gridSize / 2; x < width; x += gridSize) {
-        for (let y = gridSize / 2; y < height; y += gridSize) {
-          ctx.beginPath();
-          ctx.arc(x, y, 1, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
+      drawStatic();
     };
 
     const render = () => {
@@ -146,7 +150,16 @@ export default function NeuralGridBackground({
       animationFrameId = requestAnimationFrame(render);
     };
 
-    // Intersection Observer to halt canvas loop when scrolled off-viewport
+    // On mobile / touch screens, draw static grid once and exit early without RAF or touch listeners
+    if (isTouchOrMobile) {
+      handleResize();
+      window.addEventListener('resize', handleResize, { passive: true });
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+
+    // Intersection Observer to halt canvas loop when scrolled off-viewport (Desktop only)
     const observer = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry.isIntersecting;
@@ -159,7 +172,7 @@ export default function NeuralGridBackground({
     );
     observer.observe(container);
 
-    // Mouse listener on parent container
+    // Mouse listener on parent container (Desktop only)
     const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
       targetMouseX = e.clientX - rect.left;
@@ -171,45 +184,18 @@ export default function NeuralGridBackground({
       isHovering = false;
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        const rect = container.getBoundingClientRect();
-        targetMouseX = touch.clientX - rect.left;
-        targetMouseY = touch.clientY - rect.top;
-        isHovering = true;
-      }
-    };
-
-    const handleTouchEnd = () => {
-      isHovering = false;
-    };
-
     container.addEventListener('mousemove', handleMouseMove, { passive: true });
     container.addEventListener('mouseleave', handleMouseLeave, { passive: true });
-    container.addEventListener('touchstart', handleTouchMove, { passive: true });
-    container.addEventListener('touchmove', handleTouchMove, { passive: true });
-    container.addEventListener('touchend', handleTouchEnd, { passive: true });
-    container.addEventListener('touchcancel', handleTouchEnd, { passive: true });
     window.addEventListener('resize', handleResize, { passive: true });
 
     handleResize();
-
-    if (!prefersReducedMotion) {
-      animationFrameId = requestAnimationFrame(render);
-    } else {
-      drawStatic();
-    }
+    animationFrameId = requestAnimationFrame(render);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       observer.disconnect();
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
-      container.removeEventListener('touchstart', handleTouchMove);
-      container.removeEventListener('touchmove', handleTouchMove);
-      container.removeEventListener('touchend', handleTouchEnd);
-      container.removeEventListener('touchcancel', handleTouchEnd);
       window.removeEventListener('resize', handleResize);
     };
   }, [gridSize, interactiveRadius, baseDotColor, activeColor]);

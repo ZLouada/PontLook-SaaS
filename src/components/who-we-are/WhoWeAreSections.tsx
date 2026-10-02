@@ -75,15 +75,15 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
       ref={containerRef}
       data-nav-light="true"
       data-nav-theme="light"
-      className="relative bg-black transition-colors duration-500 overflow-visible h-[200vh] sm:h-[220vh] py-0 border-t border-neutral-200 lg:border-t-0"
+      className="relative bg-black transition-colors duration-500 overflow-visible lg:h-[200vh] lg:sm:h-[220vh] h-auto py-12 xs:py-16 sm:py-20 lg:py-0 border-t border-neutral-200 lg:border-t-0"
       aria-labelledby="comparison-title"
     >
-      {/* Viewport Stage: Pinned during the garage door closure */}
-      <div className="sticky top-0 w-full min-h-[100dvh] h-[100dvh] flex flex-col justify-center items-center z-20 overflow-hidden">
+      {/* Viewport Stage: Pinned during the garage door closure on desktop; natural layout on mobile */}
+      <div className="relative lg:sticky top-0 w-full min-h-0 lg:min-h-[100dvh] h-auto lg:h-[100dvh] flex flex-col justify-center items-center z-20 overflow-visible lg:overflow-hidden bg-white lg:bg-transparent">
         
-        {/* Background Underlayer: Dark aesthetic connecting seamlessly with WhoWeAreHero */}
+        {/* Background Underlayer: Dark aesthetic connecting seamlessly with WhoWeAreHero (Desktop only) */}
         <div
-          className="block absolute inset-0 bg-black pointer-events-none"
+          className="hidden lg:block absolute inset-0 bg-black pointer-events-none"
           aria-hidden="true"
         >
           {/* Subtle dark technical dot grid */}
@@ -100,15 +100,15 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
         </div>
 
         {/* ================================================================
-            THE GARAGE SHUTTER CURTAIN (Rolling down over the dark hero)
+            THE GARAGE SHUTTER CURTAIN (Rolling down over the dark hero on desktop)
             ================================================================ */}
         <m.div
           style={
-            prefersReducedMotion
+            prefersReducedMotion || !isDesktop
               ? { clipPath: 'none' }
               : { clipPath: shutterClip }
           }
-          className="w-full absolute inset-0 h-full bg-white text-neutral-900 shadow-2xl flex flex-col justify-center items-center overflow-hidden z-10 pt-16 sm:pt-20 lg:pt-20 pb-3 sm:pb-4"
+          className="w-full relative lg:absolute inset-0 h-auto lg:h-full bg-white text-neutral-900 shadow-2xl flex flex-col justify-center items-center overflow-visible lg:overflow-hidden z-10 pt-4 sm:pt-6 lg:pt-20 pb-3 sm:pb-4"
         >
           {/* Architectural horizontal garage door shutter slats */}
           <div
@@ -144,7 +144,7 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
               ================================================================ */}
           <m.div
             style={
-              prefersReducedMotion
+              prefersReducedMotion || !isDesktop
                 ? { transform: 'none', opacity: 1 }
                 : {
                     scale: contentScale,
@@ -491,14 +491,14 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
           </m.div>
         </m.div>
 
-        {/* Shutter Leading Bottom Rim Line */}
+        {/* Shutter Leading Bottom Rim Line (Desktop only) */}
         <m.div
           style={
-            prefersReducedMotion
+            prefersReducedMotion || !isDesktop
               ? { display: 'none' }
               : { top: lipY, opacity: lipOpacity }
           }
-          className="block absolute left-0 right-0 h-[2px] bg-neutral-300 shadow-[0_4px_12px_rgba(0,0,0,0.5)] z-30 pointer-events-none"
+          className="hidden lg:block absolute left-0 right-0 h-[2px] bg-neutral-300 shadow-[0_4px_12px_rgba(0,0,0,0.5)] z-30 pointer-events-none"
           aria-hidden="true"
         />
       </div>

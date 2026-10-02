@@ -13,6 +13,8 @@ import {
 } from '@/components/icons';
 import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
+import Press from '@/components/shared/Press';
+import Rail from '@/components/shared/Rail';
 import ConsoleDialog, { type ConsoleRecord } from '@/components/shared/ConsoleDialog';
 import { ease, viewportOnce } from '@/lib/motion';
 
@@ -205,10 +207,10 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
         <TextReveal
           as="h2"
           text={isAr ? 'كيف تعمل الشراكة ومزايا الانضمام' : 'How the Partnership Works & Key Advantages'}
-          className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-tight"
+          className="text-[1.75rem] xs:text-[2rem] sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-tight"
         />
 
-        <p className="text-xs xs:text-sm sm:text-base text-neutral-400 font-sans max-w-2xl mx-auto leading-relaxed">
+        <p className="text-sm sm:text-base text-neutral-400 font-sans max-w-2xl mx-auto leading-relaxed">
           {isAr
             ? 'نموذج دفع حصري لكل فرصة مؤهلة بدون اشتراكات شهرية، مع ضمانات استبدال صارمة وتدفق مستمر للطلبات المؤسسية.'
             : 'Performance-based growth with zero retainers. Explore our unit economics, buyer qualification rubric, and pipeline consistency.'}
@@ -216,93 +218,98 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
       </div>
 
       {/* Modern 3-Card Grid (Horizontal flow on mobile, 3-col on desktop) */}
-      <div className="relative">
-        <div className="relative flex md:grid gap-3.5 xs:gap-4 sm:gap-6 md:grid-cols-3 overflow-x-auto md:overflow-visible pb-4 md:pb-0 scrollbar-none snap-x snap-mandatory px-3 -mx-3 xs:px-4 xs:-mx-4 sm:px-0 sm:mx-0">
-          {benefits.map((b, i) => (
-            <m.div
-              key={b.id}
-              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={viewportOnce}
-              transition={{
-                delay: i * 0.1,
-                type: 'spring',
-                stiffness: 160,
-                damping: 22,
-              }}
-              whileHover={reduce ? undefined : { y: -6 }}
-              className="group relative h-full flex flex-col w-[88vw] xs:w-[82vw] sm:w-[65vw] md:w-auto shrink-0 snap-center"
-            >
-              <Spotlight
-                radius={360}
-                className="relative z-10 flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#202227] hover:border-white/20 bg-[#0C0D11] p-4 xs:p-5 sm:p-7 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_32px_-12px_rgba(0,0,0,0.8)] transition-all duration-300"
-              >
-                <button
-                  type="button"
-                  onClick={() => setActiveId(b.id)}
-                  aria-label={`${b.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect breakdown'}`}
-                  className="relative z-10 flex h-full cursor-pointer flex-col text-start outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500/60 w-full"
+      <Rail
+        className="gap-3.5 pb-4 px-3 -mx-3 xs:gap-4 xs:px-4 xs:-mx-4 sm:gap-6 sm:px-0 sm:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:pb-0"
+        dots
+        dotTone="light"
+        dotsHiddenAt="md:hidden"
+        ariaLabel={isAr ? 'مزايا الشراكة' : 'Partnership advantages'}
+        dotLabel={(i) =>
+          isAr ? `الانتقال إلى الميزة ${i + 1}` : `Go to advantage ${i + 1}`
+        }
+      >
+        {benefits.map((b, i) => (
+          <m.div
+            key={b.id}
+            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOnce}
+            transition={{
+              delay: i * 0.1,
+              type: 'spring',
+              stiffness: 160,
+              damping: 22,
+            }}
+            whileHover={reduce ? undefined : { y: -6 }}
+            className="group relative h-full flex flex-col w-[88vw] xs:w-[82vw] sm:w-[65vw] md:w-auto shrink-0 snap-center"
+          >
+            {/* Rail's swipe depth lands here, clear of the reveal transform above. */}
+            <div data-rail-depth className="flex h-full w-full flex-col transform-gpu">
+              <Press className="flex h-full w-full flex-col" strength={0.5} vibrate>
+                <Spotlight
+                  radius={360}
+                  className="relative z-10 flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#202227] hover:border-white/20 bg-[#0C0D11] p-4 xs:p-5 sm:p-7 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_32px_-12px_rgba(0,0,0,0.8)] transition-all duration-300"
                 >
-                  {/* Top Row: Index Badge & Icon */}
-                  <div className="flex items-center justify-between gap-3 mb-5">
-                    <div className="flex items-center gap-2">
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#FF5C00]/30 bg-orange-500/10 font-mono text-xs font-bold text-[#FF5C00]">
-                        {b.index}
-                      </span>
-                      <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] font-semibold text-neutral-300">
-                        {b.badge}
-                      </span>
-                    </div>
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-300 group-hover:border-orange-500/40 group-hover:text-[#FF5C00] transition-colors">
-                      <b.icon size={17} />
-                    </div>
-                  </div>
-
-                  {/* Headline */}
-                  <h3 className="font-heading text-lg sm:text-xl font-semibold text-white group-hover:text-orange-400 transition-colors leading-tight">
-                    {b.title}
-                  </h3>
-
-                  {/* Body */}
-                  <p className="mt-2.5 font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed font-normal">
-                    {b.body}
-                  </p>
-
-                  {/* Deliverables Takeaways List */}
-                  <div className="mt-6 pt-5 border-t border-white/[0.06] space-y-2.5">
-                    {b.takeaways.map((point, pIdx) => (
-                      <div key={pIdx} className="flex items-start gap-2.5 text-xs text-neutral-300 font-sans">
-                        <CheckCircle2 size={14} className="text-[#FF5C00] shrink-0 mt-0.5" />
-                        <span className="leading-snug text-neutral-300">{point}</span>
+                  <button
+                    type="button"
+                    onClick={() => setActiveId(b.id)}
+                    aria-label={`${b.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect breakdown'}`}
+                    className="relative z-10 flex h-full cursor-pointer flex-col text-start outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange-500/60 w-full"
+                  >
+                    {/* Top Row: Index Badge & Icon */}
+                    <div className="flex items-center justify-between gap-3 mb-5">
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#FF5C00]/30 bg-orange-500/10 font-mono text-xs font-bold text-[#FF5C00]">
+                          {b.index}
+                        </span>
+                        <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] font-semibold text-neutral-300">
+                          {b.badge}
+                        </span>
                       </div>
-                    ))}
-                  </div>
-
-                  {/* Action Strip */}
-                  <div className="mt-auto pt-6">
-                    <div className="pt-4 border-t border-white/[0.04] flex items-center justify-between text-xs font-medium text-neutral-400 group-hover:text-orange-400 transition-colors">
-                      <span>{isAr ? 'عرض التفاصيل والضمانات' : 'Inspect breakdown & SLAs'}</span>
-                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.05] group-hover:bg-[#FF5C00] group-hover:text-white transition-all">
-                        <ArrowRight
-                          size={12}
-                          className="transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
-                        />
-                      </span>
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-300 group-hover:border-orange-500/40 group-hover:text-[#FF5C00] transition-colors">
+                        <b.icon size={17} />
+                      </div>
                     </div>
-                  </div>
-                </button>
-              </Spotlight>
-            </m.div>
-          ))}
-        </div>
 
-        {/* Mobile Horizontal Flow Indicator */}
-        <div className="flex md:hidden items-center justify-center gap-1.5 pt-3" aria-hidden="true">
-          {benefits.map((b) => (
-            <span key={b.id} className="h-1 w-5 rounded-full bg-white/20" />
-          ))}
-        </div>
-      </div>
+                    {/* Headline */}
+                    <h3 className="font-heading text-lg sm:text-xl font-semibold text-white group-hover:text-orange-400 transition-colors leading-tight">
+                      {b.title}
+                    </h3>
+
+                    {/* Body */}
+                    <p className="mt-2.5 font-sans text-sm text-neutral-400 leading-relaxed font-normal">
+                      {b.body}
+                    </p>
+
+                    {/* Deliverables Takeaways List */}
+                    <div className="mt-6 pt-5 border-t border-white/[0.06] space-y-2.5">
+                      {b.takeaways.map((point, pIdx) => (
+                        <div key={pIdx} className="flex items-start gap-2.5 text-[0.8125rem] sm:text-sm text-neutral-300 font-sans">
+                          <CheckCircle2 size={14} className="text-[#FF5C00] shrink-0 mt-0.5" />
+                          <span className="leading-snug text-neutral-300">{point}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Action Strip */}
+                    <div className="mt-auto pt-6">
+                      <div className="pt-4 border-t border-white/[0.04] flex items-center justify-between text-[0.8125rem] sm:text-sm font-medium text-neutral-400 group-hover:text-orange-400 transition-colors">
+                        <span>{isAr ? 'عرض التفاصيل والضمانات' : 'Inspect breakdown & SLAs'}</span>
+                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.05] group-hover:bg-[#FF5C00] group-hover:text-white transition-all">
+                          <ArrowRight
+                            size={12}
+                            className="transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
+                          />
+                        </span>
+                      </div>
+                    </div>
+                  </button>
+                </Spotlight>
+              </Press>
+            </div>
+          </m.div>
+        ))}
+      </Rail>
 
       {/* Redesigned Clean & Modern Window Pop-up */}
       <ConsoleDialog

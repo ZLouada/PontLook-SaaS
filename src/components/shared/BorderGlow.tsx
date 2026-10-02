@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 
 export interface BorderGlowProps {
   className?: string;
@@ -21,11 +21,16 @@ export default function BorderGlow({
 }: BorderGlowProps) {
   const activeColor = color || glowColor;
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
   const [pos, setPos] = useState<{ x: number; y: number; visible: boolean }>({
     x: 0,
     y: 0,
     visible: false,
   });
+
+  useEffect(() => {
+    setIsDesktop(window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+  }, []);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -43,6 +48,9 @@ export default function BorderGlow({
   const handleMouseLeave = useCallback(() => {
     setPos((prev) => ({ ...prev, visible: false }));
   }, []);
+
+  // On touch/mobile devices, render nothing — the glow is invisible anyway
+  if (!isDesktop) return null;
 
   return (
     <div

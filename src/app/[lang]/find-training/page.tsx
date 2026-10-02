@@ -91,14 +91,14 @@ export default async function FindTrainingPage({
   return (
     <>
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-black min-h-[100dvh] flex flex-col justify-between items-center pt-20 xs:pt-24 sm:pt-28 pb-6 sm:pb-8 px-3.5 xs:px-4 sm:px-6">
+      <div className="relative overflow-hidden bg-black min-h-0 sm:min-h-[100dvh] flex flex-col justify-center items-center pt-24 xs:pt-28 sm:pt-32 pb-12 sm:pb-16 px-3.5 xs:px-4 sm:px-6">
         {/* Ambient Depth Glows */}
         <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-white/[0.02] blur-3xl -z-10 rounded-full" />
         <div className="pointer-events-none absolute top-10 start-1/4 w-[400px] h-[400px] bg-white/[0.01] blur-3xl -z-10 rounded-full" />
         <NeuralGridBackground className="z-0 opacity-40" gridSize={36} interactiveRadius={160} />
 
         {/* Vertically Centered Content */}
-        <div className="container-site relative z-10 mx-auto max-w-4xl text-center my-auto -translate-y-3 sm:-translate-y-6 py-2">
+        <div className="container-site relative z-10 mx-auto max-w-4xl text-center py-2 sm:py-6">
           <Reveal className="flex flex-col items-center">
             <TextReveal
               as="h1"
@@ -138,29 +138,30 @@ export default async function FindTrainingPage({
               </Magnetic>
             </div>
 
-            <div className="mt-8 sm:mt-10 grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-4 w-full max-w-3xl">
+            <div className="mt-8 sm:mt-10 grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3.5 w-full max-w-3xl">
               {trustMetrics.map((m) => (
-                <CardTilt3D key={m.label} maxTilt={5} className="h-full">
-                  <div className="relative h-full rounded-xl border border-[#26282D] bg-[#0F1013] p-3.5 sm:p-4 text-center shadow-xs overflow-hidden">
-                    <BorderGlow color="rgba(255, 255, 255, 0.22)" size={140} />
-                    <div className="relative z-10 text-xl font-bold text-white sm:text-2xl tabular-nums">
-                      <CounterTicker
-                        value={m.num}
-                        prefix={m.prefix}
-                        suffix={m.suffix}
-                        duration={1.8}
-                        className="text-white"
-                      />
-                    </div>
-                    <div className="relative z-10 mt-1 text-[11px] font-medium uppercase tracking-wider text-neutral-400">
-                      {m.label}
-                    </div>
+                <div
+                  key={m.label}
+                  className="relative rounded-xl border border-[#26282D] bg-[#0F1013] p-3 sm:p-4 text-center shadow-xs overflow-hidden"
+                >
+                  <BorderGlow color="rgba(255, 255, 255, 0.18)" size={120} />
+                  <div className="relative z-10 text-xl font-bold text-white sm:text-2xl tabular-nums">
+                    <CounterTicker
+                      value={m.num}
+                      prefix={m.prefix}
+                      suffix={m.suffix}
+                      duration={1.8}
+                      className="text-white"
+                    />
                   </div>
-                </CardTilt3D>
+                  <div className="relative z-10 mt-1 text-[10px] xs:text-[11px] font-medium uppercase tracking-wider text-neutral-400">
+                    {m.label}
+                  </div>
+                </div>
               ))}
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-xs sm:text-sm text-neutral-400">
+            <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-2 xs:gap-3 sm:gap-4 text-xs sm:text-sm text-neutral-400">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">
                 <BadgeDollarSign size={15} className="text-white shrink-0" />
                 <span className="font-medium text-neutral-300">
@@ -182,14 +183,14 @@ export default async function FindTrainingPage({
           </Reveal>
         </div>
 
-        {/* Bottom Bouncing Scroll Prompt */}
-        <div className="relative z-10 pb-3 sm:pb-4 flex flex-col items-center">
+        {/* Bottom Bouncing Scroll Prompt (Desktop only) */}
+        <div className="hidden sm:flex relative z-10 pb-3 sm:pb-4 flex-col items-center">
           <a
             href="#how-it-works"
             className="group flex flex-col items-center text-neutral-500 hover:text-white transition-colors text-xs font-medium"
             aria-label={isAr ? 'انتقل إلى الأسفل' : 'Scroll down'}
           >
-            <span className="mb-1 hidden sm:inline tracking-wider uppercase text-[11px] font-semibold">
+            <span className="mb-1 tracking-wider uppercase text-[11px] font-semibold">
               {isAr ? 'اكتشف المزيد' : 'Discover More'}
             </span>
             <ChevronDown size={18} className="animate-bounce text-neutral-500 group-hover:text-white" />

@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useRef, useState, useCallback, useEffect } from 'react';
-import { m, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useRef, useState, useCallback } from 'react';
+import { m, useMotionValue, useSpring, useTransform, useReducedMotion } from 'framer-motion';
+import { useFinePointer, useCoarsePointer } from '@/lib/useDevice';
 
 export interface CardTilt3DProps {
   children: React.ReactNode;
@@ -15,6 +16,17 @@ export interface CardTilt3DProps {
   onClick?: () => void;
 }
 
+/** Keep a stray touch at the very edge of the card from over-rotating it. */
+const clamp = (n: number) => Math.max(-0.5, Math.min(0.5, n));
+
+/**
+ * Perspective tilt.
+ *
+ * A mouse tracks the pointer continuously; a finger can't, so touch gets the
+ * other half of the same idea — the card leans towards wherever it was pressed
+ * and settles back on release. Without it a phone saw a flat div, which is why
+ * these decks read as pictures of cards rather than cards.
+ */
 export default function CardTilt3D({
   children,
   className = '',
@@ -28,14 +40,17 @@ export default function CardTilt3D({
 }: CardTilt3DProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-
-  useEffect(() => {
-    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
-  }, []);
+  const [isPressed, setIsPressed] = useState(false);
+  const isDesktopPointer = useFinePointer();
+  const isTouch = useCoarsePointer();
+  const reduce = useReducedMotion();
 
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
+  // Scale is driven through a motion value like the tilt rather than by passing a
+  // changing number to `useSpring` — a number source is only read once, so the
+  // hover and press scales never actually moved.
+  const rawScale = useMotionValue(1);
 
   const springConfig = { stiffness: 320, damping: 24, mass: 0.5 };
   const smoothX = useSpring(rawX, springConfig);
@@ -43,14 +58,14 @@ export default function CardTilt3D({
 
   const rotateX = useTransform(smoothY, [-0.5, 0.5], [maxTilt, -maxTilt]);
   const rotateY = useTransform(smoothX, [-0.5, 0.5], [-maxTilt, maxTilt]);
-  const cardScale = useSpring(isHovered && !disabled && !isTouchDevice ? scale : 1, springConfig);
+  const cardScale = useSpring(rawScale, springConfig);
 
   const glareX = useTransform(smoothX, [-0.5, 0.5], ['0%', '100%']);
   const glareY = useTransform(smoothY, [-0.5, 0.5], ['0%', '100%']);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (disabled || isTouchDevice || !cardRef.current) return;
+      if (disabled || !isDesktopPointer || !cardRef.current) return;
       const rect = cardRef.current.getBoundingClientRect();
       if (rect.width === 0 || rect.height === 0) return;
 
@@ -60,21 +75,48 @@ export default function CardTilt3D({
       rawX.set(normX);
       rawY.set(normY);
     },
-    [disabled, isTouchDevice, rawX, rawY]
+    [disabled, isDesktopPointer, rawX, rawY]
   );
 
   const handleMouseEnter = useCallback(() => {
-    if (disabled || isTouchDevice) return;
+    if (disabled || !isDesktopPointer) return;
     setIsHovered(true);
-  }, [disabled, isTouchDevice]);
+    rawScale.set(scale);
+  }, [disabled, isDesktopPointer, rawScale, scale]);
 
   const handleMouseLeave = useCallback(() => {
     setIsHovered(false);
     rawX.set(0);
     rawY.set(0);
-  }, [rawX, rawY]);
+    rawScale.set(1);
+  }, [rawX, rawY, rawScale]);
 
-  if (disabled || isTouchDevice) {
+  const handleTouchStart = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (e.pointerType === 'mouse' || !cardRef.current) return;
+      const rect = cardRef.current.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+
+      // Softer than the mouse range: the finger sits on top of the card, so a
+      // full-strength lean just hides the content under the hand.
+      rawX.set(clamp(((e.clientX - rect.left) / rect.width - 0.5) * 0.7));
+      rawY.set(clamp(((e.clientY - rect.top) / rect.height - 0.5) * 0.7));
+      rawScale.set(0.985);
+      setIsPressed(true);
+    },
+    [rawX, rawY, rawScale]
+  );
+
+  const handleTouchEnd = useCallback(() => {
+    setIsPressed(false);
+    rawX.set(0);
+    rawY.set(0);
+    rawScale.set(1);
+  }, [rawX, rawY, rawScale]);
+
+  // Both pointer hooks read false until mount, so the first paint is the plain
+  // card on every device — nothing tilts on the wrong one.
+  if (disabled || reduce || (!isDesktopPointer && !isTouch)) {
     return (
       <div className={`relative ${className}`} onClick={onClick}>
         {children}
@@ -90,21 +132,30 @@ export default function CardTilt3D({
     >
       <m.div
         ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseMove={isDesktopPointer ? handleMouseMove : undefined}
+        onMouseEnter={isDesktopPointer ? handleMouseEnter : undefined}
+        onMouseLeave={isDesktopPointer ? handleMouseLeave : undefined}
+        // A swipe that starts on the card fires pointercancel once the browser
+        // takes the gesture for scrolling, which releases the tilt for us.
+        onPointerDown={isDesktopPointer ? undefined : handleTouchStart}
+        onPointerUp={isDesktopPointer ? undefined : handleTouchEnd}
+        onPointerCancel={isDesktopPointer ? undefined : handleTouchEnd}
         style={{
           rotateX,
           rotateY,
           scale: cardScale,
           transformStyle: 'preserve-3d',
+          // On a phone, hinting a permanent layer on every card costs memory for
+          // a transform that only runs during a press.
+          willChange: isDesktopPointer || isPressed ? 'transform' : 'auto',
         }}
-        className="relative w-full h-full transform-gpu will-change-transform"
+        className="relative w-full h-full transform-gpu"
       >
         {children}
 
-        {/* Dynamic Holographic Specular Glare Layer */}
-        {glare && (
+        {/* Dynamic Holographic Specular Glare Layer — a specular highlight needs
+            a light source that tracks a pointer, so it stays on the mouse. */}
+        {glare && isDesktopPointer && (
           <m.div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 rounded-[inherit] overflow-hidden z-20 transition-opacity duration-300"

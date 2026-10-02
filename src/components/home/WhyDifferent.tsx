@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import {
   Target,
@@ -20,7 +20,10 @@ import Signal from '@/components/shared/Signal';
 import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
 import CardTilt3D from '@/components/shared/CardTilt3D';
+import Press from '@/components/shared/Press';
+import Rail from '@/components/shared/Rail';
 import IconFrame, { type IconFrameVariant } from '@/components/shared/IconFrame';
+import { useFinePointer } from '@/lib/useDevice';
 import { staggerContainer, staggerItem, viewportOnce } from '@/lib/motion';
 
 interface CardTheme {
@@ -57,43 +60,12 @@ export default function WhyDifferent() {
   const c = dict.why_different?.cards;
 
   const [activeModalId, setActiveModalId] = useState<string | null>(null);
-  const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const isDesktopPointer = useFinePointer();
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  useEffect(() => {
-    if (activeModalId) {
-      const originalStyle = window.getComputedStyle(document.body).overflow;
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.body.style.overflow = originalStyle;
-      };
-    }
-  }, [activeModalId]);
-
-  const handleScroll = () => {
-    if (!carouselRef.current) return;
-    const el = carouselRef.current;
-    const scrollLeft = Math.abs(el.scrollLeft);
-    const cardWidth = el.scrollWidth / items.length;
-    const newIndex = Math.round(scrollLeft / cardWidth);
-    setActiveCardIndex(Math.min(Math.max(newIndex, 0), items.length - 1));
-  };
-
-  const scrollToCard = (idx: number) => {
-    if (!carouselRef.current) return;
-    const el = carouselRef.current;
-    const cardWidth = el.scrollWidth / items.length;
-    el.scrollTo({
-      left: isAr ? -(idx * cardWidth) : idx * cardWidth,
-      behavior: 'smooth',
-    });
-    setActiveCardIndex(idx);
-  };
 
   // Lock body scroll and listen for Escape key when pop-up window is open
   useEffect(() => {
@@ -404,7 +376,7 @@ export default function WhyDifferent() {
     <section
       data-nav-light="true"
       data-nav-theme="light"
-      className="relative bg-white text-neutral-900 py-8 sm:py-12 lg:py-16 border-t border-neutral-200"
+      className="relative bg-white text-neutral-900 py-12 xs:py-14 sm:py-16 lg:py-20 border-t border-neutral-200"
     >
       <div className="container-site relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Section Header */}
@@ -421,7 +393,7 @@ export default function WhyDifferent() {
             className="h-section text-neutral-950"
           />
 
-          <p className="text-xs sm:text-sm text-neutral-600 font-sans leading-relaxed max-w-2xl mx-auto">
+          <p className="text-sm text-neutral-600 font-sans leading-relaxed max-w-2xl mx-auto">
             {dict.why_different?.subtitle ||
               (isAr
                 ? 'نحلل التحديات المؤسسية الحقيقية لنقدم أدلة مجانية قابلة للتطبيق، ونربط قادة التدريب مباشرة بمزودي البرامج المعتمدين والمؤهلين لتنفيذ الحل.'
@@ -439,14 +411,20 @@ export default function WhyDifferent() {
         </m.div>
 
         {/* cards grid / carousel - compact card deck */}
-        <m.div
-          ref={carouselRef}
-          onScroll={handleScroll}
-          variants={staggerContainer(0.08)}
-          initial="hidden"
-          whileInView="show"
-          viewport={viewportOnce}
-          className="flex lg:grid lg:grid-cols-5 gap-3 sm:gap-3.5 overflow-x-auto lg:overflow-visible pb-2 sm:pb-3 lg:pb-0 snap-x snap-mandatory scrollbar-none items-stretch px-1 -mx-1"
+        <Rail
+          className="items-stretch gap-3 px-1 -mx-1 pb-2 sm:gap-3.5 sm:pb-3 lg:grid lg:grid-cols-5 lg:overflow-visible lg:pb-0"
+          reveal={{
+            variants: staggerContainer(0.08),
+            initial: 'hidden',
+            whileInView: 'show',
+            viewport: viewportOnce,
+          }}
+          dots
+          dotTone="dark"
+          ariaLabel={isAr ? 'بطاقات ما يميزنا' : 'What makes us different'}
+          dotLabel={(i) =>
+            isAr ? `الانتقال إلى البطاقة ${i + 1}` : `Go to card ${i + 1}`
+          }
         >
           {items.map((it) => {
             const Icon = it.icon;
@@ -457,71 +435,100 @@ export default function WhyDifferent() {
               <m.div
                 key={it.id}
                 variants={staggerItem}
-                className="relative w-[74vw] sm:w-[250px] lg:w-auto shrink-0 lg:shrink snap-center h-[260px] sm:h-[280px] lg:h-[305px] xl:h-[295px]"
+                className="relative w-[78vw] sm:w-[250px] lg:w-auto shrink-0 lg:shrink snap-center h-[272px] sm:h-[280px] lg:h-[305px] xl:h-[295px]"
                 onClick={() => setActiveModalId(it.id)}
               >
-                <CardTilt3D maxTilt={6} glareOpacity={0.06} className="w-full h-full">
-                  <Spotlight radius={280} className="w-full h-full rounded-2xl">
-                    <m.div
-                      whileTap={{ scale: 0.98 }}
-                      className={`group relative w-full h-full rounded-2xl bg-white border border-neutral-200/90 p-3.5 sm:p-4 lg:p-3 xl:p-4 flex flex-col justify-between cursor-pointer select-none shadow-[0_8px_24px_-8px_rgba(0,0,0,0.06)] overflow-hidden transition-all duration-300 ${cardGlow}`}
-                    >
-                      {/* Ambient subtle back-glow on hover */}
-                      <div className="pointer-events-none absolute -top-8 -end-8 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-neutral-900/5" />
+                {/* Rail writes its distance-from-centre depth here, clear of the
+                    stagger transform above and the press transform below. */}
+                <div data-rail-depth className="h-full w-full transform-gpu">
+                  {isDesktopPointer ? (
+                    <CardTilt3D maxTilt={6} glareOpacity={0.06} className="w-full h-full">
+                      <Spotlight radius={280} className="w-full h-full rounded-2xl">
+                        <m.div
+                          whileTap={{ scale: 0.98 }}
+                          className={`group relative w-full h-full rounded-2xl bg-white border border-neutral-200/90 p-3.5 sm:p-4 lg:p-3 xl:p-4 flex flex-col justify-between cursor-pointer select-none shadow-[0_8px_24px_-8px_rgba(0,0,0,0.06)] overflow-hidden transition-all duration-300 ${cardGlow}`}
+                        >
+                          {/* Ambient subtle back-glow on hover */}
+                          <div className="pointer-events-none absolute -top-8 -end-8 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-neutral-900/5" />
 
-                      {/* Card Front Top */}
-                      <div className="space-y-1.5 sm:space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium font-sans ${theme.badgeBg}`}>
-                            {it.badge}
-                          </span>
-                          <span className="text-[10px] font-mono text-neutral-400">
-                            {it.index}
-                          </span>
+                          {/* Card Front Top */}
+                          <div className="space-y-1.5 sm:space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className={`px-2 py-0.5 rounded-full text-[11px] font-medium font-sans ${theme.badgeBg}`}>
+                                {it.badge}
+                              </span>
+                              <span className="text-[11px] font-mono text-neutral-400">
+                                {it.index}
+                              </span>
+                            </div>
+
+                            <h3 className="text-[0.9375rem] sm:text-base lg:text-xs xl:text-sm font-semibold text-neutral-950 tracking-tight leading-snug font-heading group-hover:text-neutral-950 transition-colors">
+                              {it.title}
+                            </h3>
+
+                            <p className="text-[0.8125rem] sm:text-xs text-neutral-600 font-sans leading-relaxed line-clamp-2">
+                              {it.text}
+                            </p>
+                          </div>
+
+                          {/* Card Front Bottom */}
+                          <div className="pt-2 border-t border-neutral-200 flex items-center justify-between">
+                            <IconFrame variant={it.themeVariant} size="xs">
+                              <Icon size={14} strokeWidth={1.75} />
+                            </IconFrame>
+
+                            <div className="inline-flex items-center gap-1 text-xs font-medium text-neutral-600 group-hover:text-neutral-950 transition-colors duration-200">
+                              <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
+                              <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-neutral-400 group-hover:text-neutral-950" />
+                            </div>
+                          </div>
+                        </m.div>
+                      </Spotlight>
+                    </CardTilt3D>
+                  ) : (
+                    /* Touch: no tilt, no spotlight — the swipe drives depth and the
+                       press spring answers the finger. */
+                    <Press className="h-full w-full" strength={0.65} vibrate>
+                      <div className="group relative w-full h-full rounded-2xl bg-white border border-neutral-200/90 p-4 flex flex-col justify-between cursor-pointer select-none shadow-[0_8px_24px_-8px_rgba(0,0,0,0.06)] overflow-hidden">
+                        {/* Card Front Top */}
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className={`px-2 py-0.5 rounded-full text-[11px] font-medium font-sans ${theme.badgeBg}`}>
+                              {it.badge}
+                            </span>
+                            <span className="text-[11px] font-mono text-neutral-400">
+                              {it.index}
+                            </span>
+                          </div>
+
+                          <h3 className="text-[0.9375rem] sm:text-base font-semibold text-neutral-950 tracking-tight leading-snug font-heading">
+                            {it.title}
+                          </h3>
+
+                          <p className="text-[0.8125rem] text-neutral-600 font-sans leading-relaxed line-clamp-3">
+                            {it.text}
+                          </p>
                         </div>
 
-                        <h3 className="text-xs xs:text-sm sm:text-base lg:text-xs xl:text-sm font-semibold text-neutral-950 tracking-tight leading-snug font-heading group-hover:text-neutral-950 transition-colors">
-                          {it.title}
-                        </h3>
+                        {/* Card Front Bottom */}
+                        <div className="pt-2 border-t border-neutral-200 flex items-center justify-between">
+                          <IconFrame variant={it.themeVariant} size="xs">
+                            <Icon size={14} strokeWidth={1.75} />
+                          </IconFrame>
 
-                        <p className="text-[11px] sm:text-xs text-neutral-600 font-sans leading-relaxed line-clamp-2">
-                          {it.text}
-                        </p>
-                      </div>
-
-                      {/* Card Front Bottom */}
-                      <div className="pt-2 border-t border-neutral-200 flex items-center justify-between">
-                        <IconFrame variant={it.themeVariant} size="xs">
-                          <Icon size={14} strokeWidth={1.75} />
-                        </IconFrame>
-
-                        <div className="inline-flex items-center gap-1 text-[11px] font-medium text-neutral-600 group-hover:text-neutral-950 transition-colors duration-200">
-                          <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
-                          <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-neutral-400 group-hover:text-neutral-950" />
+                          <div className="inline-flex items-center gap-1 text-xs font-medium text-neutral-600">
+                            <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
+                            <ArrowRight size={12} className="rtl:-scale-x-100 text-neutral-400" />
+                          </div>
                         </div>
                       </div>
-                    </m.div>
-                  </Spotlight>
-                </CardTilt3D>
+                    </Press>
+                  )}
+                </div>
               </m.div>
             );
           })}
-        </m.div>
-
-        {/* Mobile Swipe Pagination Dots Indicator (5 Cards) */}
-        <div className="flex lg:hidden justify-center items-center gap-2 pt-3">
-          {items.map((it, idx) => (
-            <button
-              key={it.id}
-              type="button"
-              onClick={() => scrollToCard(idx)}
-              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                activeCardIndex === idx ? 'w-5 bg-neutral-950' : 'w-1.5 bg-neutral-300 hover:bg-neutral-400'
-              }`}
-              aria-label={`Go to slide ${idx + 1}`}
-            />
-          ))}
-        </div>
+        </Rail>
       </div>
 
       {/* modal, portalled to body */}
@@ -558,9 +565,8 @@ export default function WhyDifferent() {
                     y: 12,
                   }}
                   transition={{
-                    type: 'spring',
-                    stiffness: 380,
-                    damping: 28,
+                    duration: 0.25,
+                    ease: [0.22, 1, 0.36, 1],
                   }}
                   className="relative z-10 w-full max-w-2xl sm:max-w-3xl max-h-[85dvh] sm:max-h-[88vh] flex flex-col rounded-2xl sm:rounded-3xl bg-white border border-neutral-200 text-neutral-900 shadow-2xl my-auto overflow-hidden"
                 >
@@ -591,9 +597,9 @@ export default function WhyDifferent() {
                       whileTap={{ scale: 0.9 }}
                       onClick={() => setActiveModalId(null)}
                       aria-label={isAr ? 'إغلاق النافذة' : 'Close window'}
-                      className="h-8 w-8 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-600 hover:text-neutral-950 flex items-center justify-center transition-colors shrink-0 cursor-pointer"
+                      className="tap-target h-10 w-10 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-600 hover:text-neutral-950 flex items-center justify-center transition-colors shrink-0 cursor-pointer"
                     >
-                      <X size={15} />
+                      <X size={17} />
                     </m.button>
                   </m.div>
 
@@ -604,10 +610,10 @@ export default function WhyDifferent() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.15, duration: 0.3 }}
                     >
-                      <h3 className="text-base sm:text-xl font-semibold text-neutral-950 tracking-tight leading-snug font-heading">
+                      <h3 className="text-lg sm:text-xl font-semibold text-neutral-950 tracking-tight leading-snug font-heading">
                         {activeCard.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-neutral-600 font-sans leading-relaxed mt-1.5">
+                      <p className="text-sm text-neutral-600 font-sans leading-relaxed mt-1.5">
                         {activeCard.text}
                       </p>
                     </m.div>
@@ -623,7 +629,7 @@ export default function WhyDifferent() {
                         <div className="text-[11px] font-semibold text-neutral-900 uppercase tracking-wider font-sans">
                           {isAr ? 'أهم المميزات والقيمة المقدمة' : 'Key Strategic Advantages'}
                         </div>
-                        <ul className="space-y-1.5 sm:space-y-2 text-xs text-neutral-700 font-sans">
+                        <ul className="space-y-2 text-[0.8125rem] sm:text-sm text-neutral-700 font-sans">
                           {activeCard.takeaways.map((point, pIdx) => (
                             <m.li
                               key={pIdx}
@@ -670,7 +676,7 @@ export default function WhyDifferent() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                        className={`w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${activeCard.theme.buttonBg} font-medium text-xs sm:text-sm active:scale-[0.98] transition-all font-sans`}
+                        className={`w-full sm:w-auto inline-flex items-center justify-center min-h-[46px] px-5 py-3 rounded-xl ${activeCard.theme.buttonBg} font-medium text-sm transition-colors font-sans`}
                       >
                         <span>{activeCard.cta}</span>
                         <ExternalLink size={14} className="ms-1.5" />
@@ -684,7 +690,7 @@ export default function WhyDifferent() {
                       >
                         <Link
                           href={activeCard.href}
-                          className={`w-full inline-flex items-center justify-center px-5 py-2.5 rounded-xl ${activeCard.theme.buttonBg} font-medium text-xs sm:text-sm active:scale-[0.98] transition-all font-sans`}
+                          className={`w-full inline-flex items-center justify-center min-h-[46px] px-5 py-3 rounded-xl ${activeCard.theme.buttonBg} font-medium text-sm transition-colors font-sans`}
                         >
                           <span>{activeCard.cta}</span>
                           <ArrowRight size={14} className="ms-1.5 rtl:-scale-x-100" />

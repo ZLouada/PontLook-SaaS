@@ -17,7 +17,12 @@ export default function WordRotate({
   gradientClassName = 'bg-gradient-to-r from-amber-300 via-orange-400 to-amber-200 bg-clip-text text-transparent',
 }: WordRotateProps) {
   const [index, setIndex] = useState(0);
+  const [isCoarse, setIsCoarse] = useState(false);
   const reduce = useReducedMotion();
+
+  useEffect(() => {
+    setIsCoarse(window.matchMedia('(pointer: coarse)').matches);
+  }, []);
 
   useEffect(() => {
     if (words.length <= 1 || reduce) return;
@@ -47,9 +52,9 @@ export default function WordRotate({
       <AnimatePresence mode="wait" initial={false}>
         <m.span
           key={words[index]}
-          initial={{ opacity: 0, y: '80%', filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: '0%', filter: 'blur(0px)' }}
-          exit={{ opacity: 0, y: '-80%', filter: 'blur(4px)' }}
+          initial={{ opacity: 0, y: '80%', ...(isCoarse ? {} : { filter: 'blur(4px)' }) }}
+          animate={{ opacity: 1, y: '0%', ...(isCoarse ? {} : { filter: 'blur(0px)' }) }}
+          exit={{ opacity: 0, y: '-80%', ...(isCoarse ? {} : { filter: 'blur(4px)' }) }}
           transition={{
             duration: 0.45,
             ease: [0.22, 1, 0.36, 1],

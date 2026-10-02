@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect, useState } from 'react';
 import { m, useMotionValue, useSpring } from 'framer-motion';
 
 export interface MagneticProps {
@@ -11,6 +11,12 @@ export interface MagneticProps {
   disabled?: boolean;
 }
 
+/**
+ * Wraps an element with a magnetic hover attraction effect.
+ * On touch/coarse-pointer devices, renders a plain div with zero springs —
+ * the springs were still computing in the background even when the early
+ * return path was taken, because hooks can't be conditional.
+ */
 export default function Magnetic({
   children,
   className = '',
@@ -18,12 +24,42 @@ export default function Magnetic({
   activeDistance = 60,
   disabled = false,
 }: MagneticProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isDesktopPointer, setIsDesktopPointer] = useState(false);
 
   useEffect(() => {
-    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    setIsDesktopPointer(
+      window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    );
   }, []);
+
+  if (disabled || !isDesktopPointer) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <MagneticDesktop
+      className={className}
+      strength={strength}
+      activeDistance={activeDistance}
+    >
+      {children}
+    </MagneticDesktop>
+  );
+}
+
+/** Inner component that only mounts on desktop — springs only exist here. */
+function MagneticDesktop({
+  children,
+  className,
+  strength,
+  activeDistance,
+}: {
+  children: React.ReactNode;
+  className: string;
+  strength: number;
+  activeDistance: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
 
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
@@ -34,7 +70,7 @@ export default function Magnetic({
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (disabled || isTouchDevice || !ref.current) return;
+      if (!ref.current) return;
       const rect = ref.current.getBoundingClientRect();
 
       const centerX = rect.left + rect.width / 2;
@@ -52,17 +88,13 @@ export default function Magnetic({
         rawY.set(0);
       }
     },
-    [disabled, isTouchDevice, strength, activeDistance, rawX, rawY]
+    [strength, activeDistance, rawX, rawY]
   );
 
   const handleMouseLeave = useCallback(() => {
     rawX.set(0);
     rawY.set(0);
   }, [rawX, rawY]);
-
-  if (disabled || isTouchDevice) {
-    return <div className={className}>{children}</div>;
-  }
 
   return (
     <m.div

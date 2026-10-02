@@ -24,6 +24,8 @@
     -webkit-tap-highlight-color: transparent;
     max-width: 100%;
     overflow-x: clip;
+    /* The header floats over the page, so an anchor jump has to stop short of it. */
+    scroll-padding-top: 5.5rem;
   }
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -52,6 +54,33 @@
     }
     .ken-burns {
       transform: scale(1.05);
+    }
+  }
+  /* ── Touch device tuning ──────────────────────────────────────────────
+     Looping indicators used to be switched off wholesale here, which is most of
+     why the phone read as dead next to the desktop. Pulses, pings and signal
+     rings animate only `opacity` and `transform`, so the compositor runs them
+     without repainting — they are close to free, and they are the only motion a
+     static phone screen has. Keep them, and spend the budget on containment and
+     on cheapening the handful of loops that genuinely cost something. */
+  @media (pointer: coarse) {
+    /* Keep each repeating indicator's paint inside its own box. */
+    .signal,
+    .animate-ping,
+    .animate-pulse {
+      contain: layout style paint;
+    }
+    /* Long translating tracks are the one expensive loop on a phone. Slow it
+       rather than stopping it: still clearly moving, fewer frames composited. */
+    .marquee-track {
+      animation-duration: calc(var(--marquee-duration, 32s) * 1.35);
+    }
+    .ken-burns {
+      animation-duration: 42s;
+    }
+    /* A :hover sweep fires on tap on touch and then stays stuck mid-sweep. */
+    .sheen:hover::after {
+      animation: none;
     }
   }
   button, a {
@@ -118,22 +147,30 @@
   }
 
   /* --- Vertical rhythm ---------------------------------------------------- */
+  /* Two stacked sections meet as double padding, so on a phone this is also the
+     size of the black gap between them — tightened from 56px to 48px so the
+     rhythm reads as a seam rather than a dead zone. */
   .section {
-    @apply py-14 xs:py-16 sm:py-28 lg:py-32;
+    @apply py-12 xs:py-14 sm:py-28 lg:py-32;
   }
   .section-tight {
-    @apply py-10 xs:py-12 sm:py-20;
+    @apply py-9 xs:py-11 sm:py-20;
   }
 
   /* --- Type scale --------------------------------------------------------- */
+  /* Mobile sizes are set as explicit rem rather than clamp(): Tailwind inlines
+     `sm:`/`lg:` variants as nested @media at the @apply position, so a plain
+     font-size declaration after it would win at every width and flatten the
+     desktop end of the ladder. */
   .display {
     @apply font-heading font-medium text-white tracking-[-0.035em]
-           text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[64px] xl:text-[72px] 2xl:text-[80px]
-           leading-[1.12] sm:leading-[1.06];
+           text-[1.75rem] xs:text-[2.125rem] sm:text-5xl md:text-6xl lg:text-[64px] xl:text-[72px] 2xl:text-[80px]
+           leading-[1.1] sm:leading-[1.06];
   }
   .h-section {
     @apply font-heading font-semibold text-white tracking-[-0.03em]
-           text-xl xs:text-2xl sm:text-3xl lg:text-[40px] leading-[1.15];
+           text-[1.5rem] xs:text-[1.75rem] sm:text-3xl lg:text-[40px]
+           leading-[1.18] sm:leading-[1.15];
   }
   .h-card {
     @apply font-heading font-semibold text-white tracking-[-0.02em]
@@ -141,6 +178,21 @@
   }
   .lead {
     @apply text-base sm:text-lg text-neutral-400 leading-relaxed;
+  }
+
+  /* --- Mobile rails ------------------------------------------------------- */
+  /* Scroller behind src/components/shared/Rail.tsx. `overscroll-behavior-x` is
+     the important one: without it a swipe that runs off the end of the deck is
+     handed to the browser as a back-navigation gesture. */
+  .rail {
+    @apply flex snap-x snap-mandatory overflow-x-auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .rail::-webkit-scrollbar {
+    display: none;
   }
 
   /* --- Surfaces ----------------------------------------------------------- */
@@ -195,6 +247,43 @@
   }
   .scrollbar-none::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Grows a small control's tappable box to the 44px guideline without changing
+     how it looks. Needs a positioned, non-clipping element — do not put it on
+     anything that already owns its ::after (.sheen, .spotlight). */
+  .tap-target {
+    position: relative;
+  }
+  .tap-target::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
+  }
+
+  /* Home-indicator clearance on iOS. */
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .mb-safe {
+    margin-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* `svh` is the small viewport — the height with mobile browser chrome shown.
+     Unlike `vh` it does not change as that chrome collapses on scroll, so a
+     full-height hero sized this way stops shifting under the user. */
+  .h-dynamic-screen {
+    height: 100svh;
+  }
+  .min-h-dynamic-screen {
+    min-height: 100svh;
   }
 }
 
@@ -257,13 +346,13 @@
 }
 
 .liquid-glass-capsule-light {
-  background: rgba(255, 255, 255, 0.18) !important;
-  backdrop-filter: blur(20px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(24px) saturate(180%) contrast(102%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) contrast(102%) !important;
   border: 1px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.06),
-              0 2px 8px -2px rgba(0, 0, 0, 0.03),
-              inset 0 1px 1px 0 rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.08),
+              0 2px 8px -2px rgba(0, 0, 0, 0.04),
+              inset 0 1px 1px 0 rgba(255, 255, 255, 0.9) !important;
 }
 
 /* ==========================================================================

@@ -10,6 +10,7 @@ import IconFrame from '@/components/shared/IconFrame';
 import BorderBeam from '@/components/shared/BorderBeam';
 import CardTilt3D from '@/components/shared/CardTilt3D';
 import Magnetic from '@/components/shared/Magnetic';
+import Press from '@/components/shared/Press';
 import { staggerContainer, staggerItem, viewportOnce } from '@/lib/motion';
 
 export default function Footer() {
@@ -35,8 +36,10 @@ export default function Footer() {
         {/* Horizon Wordmark Lockup (subtle negative margin clipping so it emerges beneath horizon border) */}
         <div className="relative -mt-2 sm:-mt-3 md:-mt-4 lg:-mt-5 overflow-hidden select-none pointer-events-none transform-gpu flex items-center justify-center">
           <div className="flex items-center justify-center px-4">
-            {/* Giant Metallic Gradient Wordmark */}
-            <span className="text-4xl xs:text-5xl sm:text-8xl md:text-9xl lg:text-[10.5rem] font-bold tracking-[-0.03em] text-transparent bg-clip-text bg-gradient-to-b from-white/90 via-white/30 to-white/0 leading-none font-sans">
+            {/* Giant Metallic Gradient Wordmark — it has to span the horizon on a
+                phone too, so the mobile sizes are set to fill 375px rather than
+                shrinking to a caption. */}
+            <span className="text-[3.5rem] xs:text-[4.25rem] sm:text-8xl md:text-9xl lg:text-[10.5rem] font-bold tracking-[-0.03em] text-transparent bg-clip-text bg-gradient-to-b from-white/90 via-white/30 to-white/0 leading-none font-sans">
               PontLook
             </span>
           </div>
@@ -51,23 +54,25 @@ export default function Footer() {
               <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
 
               <div className="relative z-10 space-y-2.5 sm:space-y-3 max-w-xl">
-                <h3 className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-semibold text-white tracking-tight font-heading">
+                <h3 className="text-xl xs:text-[1.375rem] sm:text-2xl lg:text-3xl font-semibold text-white tracking-tight font-heading">
                   {dict.final_cta?.card_title || 'Ready to discuss your training objectives?'}
                 </h3>
-                <p className="text-xs xs:text-sm sm:text-base text-neutral-400 font-normal leading-relaxed font-sans">
+                <p className="text-sm sm:text-base text-neutral-400 font-normal leading-relaxed font-sans">
                   {dict.final_cta?.card_subtitle ||
                     'Connect directly with our enterprise advisory team to explore verified provider matching or discuss partnership opportunities across the region.'}
                 </p>
               </div>
 
               <Magnetic strength={0.25} activeDistance={45} className="w-full sm:w-auto">
-                <Link
-                  href={`/${lang}/contact`}
-                  className="relative z-10 inline-flex items-center justify-center gap-2.5 bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10 hover:border-white/30 font-medium px-5 xs:px-8 py-3 sm:py-3.5 rounded-xl text-xs xs:text-sm sm:text-base min-h-[46px] xs:min-h-[48px] backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(255,255,255,0.08)] hover:scale-[1.02] active:scale-[0.98] transition-all group w-full sm:w-auto"
-                >
-                  <span>{dict.final_cta?.btn_call || (lang === 'ar' ? 'احجز استشارة' : 'Book a consultation')}</span>
-                  <ArrowRight size={17} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
-                </Link>
+                <Press className="w-full sm:w-auto" strength={0.4} vibrate>
+                  <Link
+                    href={`/${lang}/contact`}
+                    className="relative z-10 inline-flex items-center justify-center gap-2.5 bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10 hover:border-white/30 font-medium px-5 xs:px-8 py-3 sm:py-3.5 rounded-xl text-sm sm:text-base min-h-[48px] backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(255,255,255,0.08)] hover:scale-[1.02] active:scale-[0.98] transition-all group w-full sm:w-auto"
+                  >
+                    <span>{dict.final_cta?.btn_call || (lang === 'ar' ? 'احجز استشارة' : 'Book a consultation')}</span>
+                    <ArrowRight size={17} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                  </Link>
+                </Press>
               </Magnetic>
             </div>
           </CardTilt3D>
@@ -85,11 +90,11 @@ export default function Footer() {
         >
           {/* Column 1: Mission & Registered Entity */}
           <m.div variants={staggerItem} className="space-y-4">
-            <p className="text-xs sm:text-sm leading-relaxed text-neutral-400 font-normal">
+            <p className="text-[0.8125rem] sm:text-sm leading-relaxed text-neutral-400 font-normal">
               {dict.footer?.about ||
                 'We identify enterprise organizations experiencing verified workforce challenges and connect them with the right corporate training providers. Qualified opportunities only, no retainers, no cold outreach.'}
             </p>
-            <div className="pt-2 flex items-start gap-2.5 text-xs text-neutral-300 font-medium leading-snug">
+            <div className="pt-2 flex items-start gap-2.5 text-[0.8125rem] text-neutral-300 font-medium leading-snug">
               <IconFrame variant="blue" size="xs">
                 <MapPin size={13} />
               </IconFrame>
@@ -100,29 +105,31 @@ export default function Footer() {
           {/* Column 2: Platform */}
           <m.nav variants={staggerItem} aria-label="Footer: platform" className="space-y-3 sm:space-y-4">
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-neutral-200">PLATFORM</p>
+            {/* Rows are a full 44px tall rather than text-height with padding, so
+                adjacent links never need overlapping hit areas to be tappable. */}
             <ul className="space-y-1 text-sm font-medium text-neutral-400">
               <li>
-                <Link href={`/${lang}/who-we-are`} className="hover:text-white transition-colors py-1.5 inline-block">
+                <Link href={`/${lang}/who-we-are`} className="inline-flex min-h-[44px] items-center hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
                   {dict.nav?.who_we_are || 'Who we are'}
                 </Link>
               </li>
               <li>
-                <Link href={`/${lang}/for-providers`} className="hover:text-white transition-colors py-1.5 inline-block">
+                <Link href={`/${lang}/for-providers`} className="inline-flex min-h-[44px] items-center hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
                   {dict.nav?.for_providers || "I'm a training provider"}
                 </Link>
               </li>
               <li>
-                <Link href={`/${lang}/find-training`} className="hover:text-white transition-colors py-1.5 inline-block">
+                <Link href={`/${lang}/find-training`} className="inline-flex min-h-[44px] items-center hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
                   {dict.nav?.find_training || "I'm looking for training"}
                 </Link>
               </li>
               <li>
-                <Link href={`/${lang}/faq`} className="hover:text-white transition-colors py-1.5 inline-block">
+                <Link href={`/${lang}/faq`} className="inline-flex min-h-[44px] items-center hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
                   {dict.nav?.faq || 'FAQ'}
                 </Link>
               </li>
               <li>
-                <a href="https://blog.pontlook.com/" className="hover:text-white transition-colors py-1.5 inline-flex items-center gap-1" target="_blank" rel="noopener noreferrer">
+                <a href="https://blog.pontlook.com/" className="inline-flex min-h-[44px] items-center gap-1 hover:text-white transition-colors sm:min-h-0 sm:py-1.5" target="_blank" rel="noopener noreferrer">
                   {dict.nav?.blog || 'Blog'}
                 </a>
               </li>
@@ -136,21 +143,21 @@ export default function Footer() {
             </p>
             <ul className="space-y-1 text-sm font-medium text-neutral-400">
               <li>
-                <Link href={`/${lang}/privacy-policy`} className="hover:text-white transition-colors py-1.5 inline-block">
+                <Link href={`/${lang}/privacy-policy`} className="inline-flex min-h-[44px] items-center hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
                   {dict.footer?.privacy_policy || 'Privacy Policy'}
                 </Link>
               </li>
               <li>
-                <Link href={`/${lang}/terms-of-service`} className="hover:text-white transition-colors py-1.5 inline-block">
+                <Link href={`/${lang}/terms-of-service`} className="inline-flex min-h-[44px] items-center hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
                   {dict.footer?.terms_of_service || 'Terms of Service'}
                 </Link>
               </li>
               <li>
-                <Link href={`/${lang}/returns-faq`} className="hover:text-white transition-colors py-1.5 inline-block">
+                <Link href={`/${lang}/returns-faq`} className="inline-flex min-h-[44px] items-center hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
                   {dict.footer?.returns_faq || 'Returns & FAQ'}
                 </Link>
               </li>
-              <li className="pt-2 text-xs text-neutral-400 font-medium">
+              <li className="pt-2 text-[0.8125rem] text-neutral-400 font-medium">
                 Firstnestcare, LLC · Delaware DE
               </li>
             </ul>
@@ -161,7 +168,7 @@ export default function Footer() {
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-neutral-200">GET IN TOUCH</p>
             <ul className="space-y-2 text-sm font-medium text-neutral-400">
               <li>
-                <a href="mailto:contact@pontlook.com" className="flex items-center gap-2.5 hover:text-white transition-colors py-1 inline-flex group">
+                <a href="mailto:contact@pontlook.com" className="group inline-flex min-h-[44px] items-center gap-2.5 hover:text-white transition-colors sm:min-h-0 sm:py-1">
                   <IconFrame variant="brand" size="xs">
                     <Mail size={13} />
                   </IconFrame>
@@ -169,14 +176,14 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://www.linkedin.com/company/pontlook" className="flex items-center gap-2.5 hover:text-white transition-colors py-1 inline-flex group" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/company/pontlook" className="group inline-flex min-h-[44px] items-center gap-2.5 hover:text-white transition-colors sm:min-h-0 sm:py-1" target="_blank" rel="noopener noreferrer">
                   <IconFrame variant="brand" size="xs">
                     <Linkedin size={13} />
                   </IconFrame>
                   <span>LinkedIn</span>
                 </a>
               </li>
-              <li className="pt-2 text-xs text-neutral-400">
+              <li className="pt-2 text-[0.8125rem] text-neutral-400">
                 {lang === 'ar' ? 'الرياض · دبي · نيوارك ديلاوير' : 'Riyadh · Dubai · Newark DE'}
               </li>
             </ul>
@@ -184,7 +191,7 @@ export default function Footer() {
         </m.div>
 
         {/* Bottom Copyright Line */}
-        <div className="container-site border-t border-[#26282D] mt-12 pt-8 mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-neutral-400 text-center sm:text-start">
+        <div className="container-site border-t border-[#26282D] mt-12 pt-8 pb-safe mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-[0.8125rem] font-medium text-neutral-400 text-center sm:text-start">
           <p>
             &copy; {year} PontLook, operating under Firstnestcare, LLC. All rights reserved.
           </p>

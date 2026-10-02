@@ -205,7 +205,7 @@ export default function AudioFeedback({ lang = 'en' }: AudioFeedbackProps) {
   if (!mounted) return null;
 
   return (
-    <div className="fixed bottom-5 end-5 z-40 select-none">
+    <div className="hidden sm:block fixed bottom-5 end-5 z-40 select-none">
       <m.button
         type="button"
         onClick={toggleSound}

@@ -28,6 +28,7 @@ import Signal from '@/components/shared/Signal';
 import ScrollProgress from '@/components/shared/ScrollProgress';
 import CommandMenu from '@/components/shared/CommandMenu';
 import Magnetic from '@/components/shared/Magnetic';
+import { staggerContainer, staggerItemMobile } from '@/lib/motion';
 
 type DropdownKey = 'solutions' | 'about' | null;
 
@@ -635,7 +636,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             <div className="flex items-center gap-1.5 xs:gap-2 lg:hidden">
               <Link
                 href={switchHref}
-                className={`inline-flex items-center gap-1 xs:gap-1.5 px-2 xs:px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 ${
+                className={`tap-target inline-flex items-center gap-1 xs:gap-1.5 px-2.5 xs:px-3 py-2 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 ${
                   isLightSection
                     ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
                     : 'border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30'
@@ -646,9 +647,11 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 <span className="font-semibold text-[11px] xs:text-xs">{lang === 'en' ? 'العربية' : 'EN'}</span>
               </Link>
 
+              {/* `tap-target` grows the tappable box to 44px without growing the
+                  capsule the control sits inside. */}
               <button
                 type="button"
-                className={`flex h-8 w-8 xs:h-9 xs:w-9 min-h-[32px] min-w-[32px] xs:min-h-[36px] xs:min-w-[36px] items-center justify-center rounded-full transition-all active:scale-90 ${
+                className={`tap-target flex h-9 w-9 xs:h-10 xs:w-10 items-center justify-center rounded-full transition-all active:scale-90 ${
                   isLightSection
                     ? 'text-neutral-800 bg-white/80 border border-neutral-300/80 hover:bg-white hover:text-black shadow-xs'
                     : 'text-neutral-300 bg-[#16171B] border border-[#26282D] hover:bg-white/10 hover:text-white'
@@ -657,7 +660,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 aria-expanded={open}
                 aria-label="Open navigation menu"
               >
-                <Menu size={16} />
+                <Menu size={18} />
               </button>
             </div>
           </div>
@@ -687,11 +690,17 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: -16 }}
                   transition={{ type: 'spring', damping: 28, stiffness: 350 }}
-                  className="relative z-[9999] w-full max-w-md max-h-[calc(100dvh-2rem)] flex flex-col justify-between rounded-3xl border border-white/15 bg-[#0C0D11]/95 backdrop-blur-2xl px-5 sm:px-6 py-5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] overflow-y-auto"
+                  className="relative z-[9999] w-full max-w-md max-h-[calc(100dvh-2rem)] flex flex-col justify-between rounded-3xl border border-white/15 bg-[#0C0D11]/95 backdrop-blur-2xl px-5 sm:px-6 py-5 pb-safe shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] overflow-y-auto overscroll-contain"
                   role="document"
                   aria-label="Mobile navigation"
                 >
-                  <div>
+                  {/* Rows cascade in behind the panel so the menu arrives as a
+                      sequence rather than one flat block. */}
+                  <m.div
+                    variants={staggerContainer(0.045, 0.12)}
+                    initial="hidden"
+                    animate="show"
+                  >
                     {/* Floating Panel Header: Logo + "pontlook" redirects home and closes menu */}
                     <div className="flex items-center justify-between pb-3.5 border-b border-white/10">
                       <Link
@@ -725,117 +734,128 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       <button
                         type="button"
                         onClick={() => setOpen(false)}
-                        className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white transition-colors active:scale-90 border border-white/15"
+                        className="tap-target flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white transition-colors active:scale-90 border border-white/15"
                         aria-label="Close menu"
                       >
-                        <X size={16} />
+                        <X size={17} />
                       </button>
                     </div>
 
                     {/* Live Network Status in Mobile Panel */}
-                    <div className="mt-3.5 flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border border-white/10 bg-white/[0.04] text-neutral-300 w-fit">
+                    <m.div
+                      variants={staggerItemMobile}
+                      className="mt-3.5 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border border-white/10 bg-white/[0.04] text-neutral-300 w-fit"
+                    >
                       <Signal />
-                      <span className="text-[11px] text-neutral-300">
+                      <span className="text-xs text-neutral-300">
                         {lang === 'ar' ? 'المطابقة المباشرة نشطة' : 'Live Matchmaking Active'}
                       </span>
-                    </div>
+                    </m.div>
 
                     {/* Grouped Mobile Navigation */}
                     <div className="mt-4 space-y-3.5">
                       {/* Solutions Section */}
                       <div>
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-1.5 px-1">
+                        <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
                           {dict.nav.solutions}
                         </span>
                         <div className="space-y-1.5">
-                          <Link
-                            href={`/${lang}/find-training`}
-                            onClick={() => setOpen(false)}
-                            className="flex items-center gap-3 px-3 py-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.99]"
-                          >
-                            <div className="h-8 w-8 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
-                              <Building2 size={16} />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <div className="text-xs font-semibold text-white">{dict.nav.enterprise_opt}</div>
-                              <div className="text-[10px] text-neutral-400 truncate">{dict.nav.enterprise_opt_desc}</div>
-                            </div>
-                          </Link>
+                          <m.div variants={staggerItemMobile}>
+                            <Link
+                              href={`/${lang}/find-training`}
+                              onClick={() => setOpen(false)}
+                              className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
+                            >
+                              <div className="h-9 w-9 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                                <Building2 size={17} />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className="text-sm font-semibold text-white">{dict.nav.enterprise_opt}</div>
+                                <div className="text-[11px] text-neutral-400 truncate">{dict.nav.enterprise_opt_desc}</div>
+                              </div>
+                            </Link>
+                          </m.div>
 
-                          <Link
-                            href={`/${lang}/for-providers`}
-                            onClick={() => setOpen(false)}
-                            className="flex items-center gap-3 px-3 py-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.99]"
-                          >
-                            <div className="h-8 w-8 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
-                              <Briefcase size={16} />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <div className="text-xs font-semibold text-white">{dict.nav.provider_opt}</div>
-                              <div className="text-[10px] text-neutral-400 truncate">{dict.nav.provider_opt_desc}</div>
-                            </div>
-                          </Link>
+                          <m.div variants={staggerItemMobile}>
+                            <Link
+                              href={`/${lang}/for-providers`}
+                              onClick={() => setOpen(false)}
+                              className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
+                            >
+                              <div className="h-9 w-9 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                                <Briefcase size={17} />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className="text-sm font-semibold text-white">{dict.nav.provider_opt}</div>
+                                <div className="text-[11px] text-neutral-400 truncate">{dict.nav.provider_opt_desc}</div>
+                              </div>
+                            </Link>
+                          </m.div>
                         </div>
                       </div>
 
                       {/* About Section */}
                       <div>
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block mb-1.5 px-1">
+                        <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
                           {dict.nav.about}
                         </span>
                         <div className="space-y-1.5">
-                          <Link
-                            href={`/${lang}/who-we-are`}
-                            onClick={() => setOpen(false)}
-                            className="flex items-center gap-3 px-3 py-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.99]"
-                          >
-                            <div className="h-8 w-8 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
-                              <Users size={16} />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <div className="text-xs font-semibold text-white">{dict.nav.who_we_are}</div>
-                              <div className="text-[10px] text-neutral-400 truncate">{dict.nav.who_we_are_desc}</div>
-                            </div>
-                          </Link>
+                          <m.div variants={staggerItemMobile}>
+                            <Link
+                              href={`/${lang}/who-we-are`}
+                              onClick={() => setOpen(false)}
+                              className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
+                            >
+                              <div className="h-9 w-9 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                                <Users size={17} />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className="text-sm font-semibold text-white">{dict.nav.who_we_are}</div>
+                                <div className="text-[11px] text-neutral-400 truncate">{dict.nav.who_we_are_desc}</div>
+                              </div>
+                            </Link>
+                          </m.div>
 
-                          <Link
-                            href={`/${lang}/contact`}
-                            onClick={() => setOpen(false)}
-                            className="flex items-center gap-3 px-3 py-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.99]"
-                          >
-                            <div className="h-8 w-8 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
-                              <Mail size={16} />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <div className="text-xs font-semibold text-white">{dict.nav.contact}</div>
-                              <div className="text-[10px] text-neutral-400 truncate">{dict.nav.contact_desc}</div>
-                            </div>
-                          </Link>
+                          <m.div variants={staggerItemMobile}>
+                            <Link
+                              href={`/${lang}/contact`}
+                              onClick={() => setOpen(false)}
+                              className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
+                            >
+                              <div className="h-9 w-9 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                                <Mail size={17} />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className="text-sm font-semibold text-white">{dict.nav.contact}</div>
+                                <div className="text-[11px] text-neutral-400 truncate">{dict.nav.contact_desc}</div>
+                              </div>
+                            </Link>
+                          </m.div>
                         </div>
                       </div>
 
                       {/* Blog */}
-                      <div>
+                      <m.div variants={staggerItemMobile}>
                         <Link
                           href="https://blog.pontlook.com"
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() => setOpen(false)}
-                          className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-xs font-medium text-neutral-300 hover:text-white transition-all active:scale-[0.99]"
+                          className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-sm font-medium text-neutral-300 hover:text-white transition-all active:scale-[0.98]"
                         >
                           <span>{dict.nav.blog}</span>
-                          <ExternalLink size={13} className="text-neutral-400" />
+                          <ExternalLink size={14} className="text-neutral-400" />
                         </Link>
-                      </div>
+                      </m.div>
                     </div>
-                  </div>
+                  </m.div>
 
                   {/* Floating Menu Footer Actions */}
                   <div className="mt-5 pt-4 border-t border-white/10 space-y-2.5">
                     <Link
                       href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
                       onClick={() => setOpen(false)}
-                      className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs xs:text-sm w-full shadow-lg active:scale-95 transition-all min-h-[44px]"
+                      className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-sm w-full shadow-lg active:scale-95 transition-all min-h-[46px]"
                     >
                       <span>{dict.nav.lets_talk}</span>
                       <ArrowUpRight size={16} className="rtl:-scale-x-100" />
@@ -848,7 +868,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       <Link
                         href={switchHref}
                         onClick={() => setOpen(false)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium text-xs text-neutral-300 bg-white/[0.05] hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95 min-h-[32px]"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full font-medium text-xs text-neutral-300 bg-white/[0.05] hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95 min-h-[40px]"
                       >
                         <Globe size={13} className="text-neutral-400" />
                         <span>{lang === 'en' ? 'العربية' : 'English'}</span>

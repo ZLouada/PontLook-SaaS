@@ -26,14 +26,29 @@ export const spring = {
   soft: { type: 'spring', stiffness: 260, damping: 30, mass: 0.9 },
   /** Small indicators that should feel immediate. */
   snappy: { type: 'spring', stiffness: 380, damping: 30 },
+  /** Finger-down response. Stiff enough to land inside a tap. */
+  press: { type: 'spring', stiffness: 520, damping: 32, mass: 0.45 },
 } satisfies Record<string, Transition>;
 
 /** Shared viewport config so reveals trigger at a consistent scroll depth. */
 export const viewportOnce = { once: true, margin: '-60px' } as const;
 
+/**
+ * A phone shows roughly a third of what a desktop does at once, so a reveal
+ * timed for a wide viewport is often still mid-flight when the element is
+ * already centred. This fires earlier and lands sooner.
+ */
+export const viewportOnceMobile = { once: true, margin: '-12% 0px -8% 0px' } as const;
+
 export const fadeUp: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: dur.slow, ease: ease.out } },
+};
+
+/** Shorter travel and a quicker settle — 20px of rise reads as lag on a phone. */
+export const fadeUpMobile: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: dur.base, ease: ease.out } },
 };
 
 export const fadeIn: Variants = {
@@ -60,6 +75,12 @@ export const staggerContainer = (stagger = 0.07, delayChildren = 0): Variants =>
 export const staggerItem: Variants = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: dur.slow, ease: ease.out } },
+};
+
+/** Touch-tier `staggerItem`: less travel, faster settle. */
+export const staggerItemMobile: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0, transition: { duration: dur.base, ease: ease.out } },
 };
 
 /** Word-by-word masked rise, used by TextReveal. */
