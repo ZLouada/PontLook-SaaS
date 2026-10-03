@@ -227,6 +227,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 height={32}
                 className="h-full w-full object-contain"
                 priority
+                unoptimized
               />
             </div>
 
@@ -673,6 +674,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             height={28}
                             className="h-7 w-auto object-contain"
                             loading="lazy"
+                            unoptimized
                           />
                         </div>
                         <span

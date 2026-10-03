@@ -19,12 +19,14 @@ const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-arabic',
+  preload: false,
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-mono',
+  preload: false,
 });
 
 export const viewport: Viewport = {

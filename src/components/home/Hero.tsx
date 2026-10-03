@@ -123,12 +123,9 @@ export default function Hero() {
           <div className="lg:col-span-7 flex flex-col items-start text-start">
             
             {/* Hero headline */}
-            <TextReveal
-              as="h1"
-              text={dict.hero.headline}
-              onScroll={false}
-              className="text-[1.875rem] xs:text-[2.125rem] sm:text-4xl md:text-5xl lg:text-[46px] xl:text-[52px] font-medium sm:font-semibold text-white tracking-tight leading-[1.14] sm:leading-[1.16] font-heading w-full"
-            />
+            <h1 className="text-[1.875rem] xs:text-[2.125rem] sm:text-4xl md:text-5xl lg:text-[46px] xl:text-[52px] font-medium sm:font-semibold text-white tracking-tight leading-[1.14] sm:leading-[1.16] font-heading w-full">
+              {dict.hero.headline}
+            </h1>
 
             {/* Hero subtitle statement */}
             <p className="mt-4 sm:mt-5 text-base sm:text-lg md:text-xl text-neutral-400 font-sans leading-relaxed max-w-2xl">
