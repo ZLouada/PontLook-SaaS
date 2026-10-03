@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
-import LeadTiers from '@/components/providers/LeadTiers';
 import ProviderBenefitsCards from '@/components/providers/ProviderBenefitsCards';
 import ProviderConnectionFlow from '@/components/providers/ProviderConnectionFlow';
 import Reveal from '@/components/shared/Reveal';
@@ -157,12 +156,7 @@ export default async function ForProvidersPage({
         </div>
       </section>
 
-      {/* 3. WHAT HE WOULD EXPECT / OPPORTUNITY TIERS */}
-      <div id="tiers" className="scroll-mt-24 border-t border-[#202227]">
-        <LeadTiers mode="providers" dict={dict} lang={lang} />
-      </div>
-
-      {/* 4. THE CONNECTION BRIDGE & ACTION ENGINE */}
+      {/* 3. THE CONNECTION BRIDGE & ACTION ENGINE */}
       <ProviderConnectionFlow lang={lang} />
     </>
   );

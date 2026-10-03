@@ -239,10 +239,10 @@ export default function ProviderConnectionFlow({ lang }: ProviderConnectionFlowP
 
               <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                 <a
-                  href="#tiers"
+                  href="#why-partner"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-medium text-white/90 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/25 transition-all text-sm min-h-[48px] active:scale-95"
                 >
-                  <span>{isAr ? 'استعرض الاحتياجات التدريبية' : 'View GCC Mandates'}</span>
+                  <span>{isAr ? 'مزايا ونموذج الشراكة' : 'Partnership Model & SLAs'}</span>
                 </a>
               </Magnetic>
             </div>
