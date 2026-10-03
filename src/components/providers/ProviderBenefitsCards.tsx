@@ -250,7 +250,7 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
   return (
     <div className="w-full">
       {/* Animated Section Header */}
-      <div className="mb-6 sm:mb-8 text-center max-w-3xl mx-auto space-y-2.5">
+      <div className="mb-6 sm:mb-8 text-center max-w-4xl mx-auto space-y-2.5">
         <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-mono font-medium">
           <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00]" />
           <span>{isAr ? 'مزايا ونموذج الشراكة' : 'PARTNERSHIP ADVANTAGES'}</span>
@@ -274,9 +274,9 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
       {/* ============================================================== */}
       <div ref={containerRef} className="hidden lg:block relative min-h-[200vh]">
         <div className="sticky top-20 xl:top-24 w-full">
-          <div className="grid grid-cols-12 gap-6 xl:gap-10 items-center">
+          <div className="grid grid-cols-12 gap-6 xl:gap-10 2xl:gap-12 items-center">
             {/* Left Column: Attio-style Navigation Titles in Orange (Minimized) */}
-            <div className="col-span-5 xl:col-span-4 flex flex-col space-y-3.5">
+            <div className="col-span-4 xl:col-span-4 2xl:col-span-3 flex flex-col space-y-4">
               {benefits.map((b, idx) => {
                 const isActive = activeStep === idx;
                 return (
@@ -284,7 +284,7 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                     key={b.id}
                     type="button"
                     onClick={() => handleStepClick(idx)}
-                    className="group relative flex items-start gap-3 text-start w-full py-1.5 transition-all duration-300 outline-none cursor-pointer"
+                    className="group relative flex items-start gap-3 text-start w-full py-2 transition-all duration-300 outline-none cursor-pointer"
                     aria-current={isActive ? 'step' : undefined}
                   >
                     {/* Vertical Indicator Bar: Proportional height */}
@@ -330,9 +330,9 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
               })}
             </div>
 
-            {/* Right Column: Attio-style Black & White Content Panel (Calibrated scale) */}
-            <div className="col-span-7 xl:col-span-8">
-              <div className="relative rounded-2xl border border-white/10 bg-[#0B0C10] p-5 sm:p-6 lg:p-7 shadow-[0_16px_40px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.08)] overflow-hidden flex flex-col justify-between">
+            {/* Right Column: Attio-style Black & White Content Panel (Full screen scale) */}
+            <div className="col-span-8 xl:col-span-8 2xl:col-span-9">
+              <div className="relative rounded-2xl border border-white/10 bg-[#0B0C10] p-6 sm:p-8 lg:p-9 xl:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.08)] overflow-hidden flex flex-col justify-between">
                 {/* Subtle Monochrome Tech Dots underlayer */}
                 <div
                   className="absolute inset-0 opacity-[0.06] pointer-events-none"

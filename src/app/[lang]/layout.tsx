@@ -6,7 +6,6 @@ import { getDictionary, Locale } from '@/i18n';
 import { DictionaryProvider } from '@/components/providers/DictionaryProvider';
 import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
 import GlobalSpotlight from '@/components/shared/GlobalSpotlight';
-import AudioFeedback from '@/components/shared/AudioFeedback';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -172,7 +171,6 @@ export default async function RootLayout({
             <Navbar lang={lang} />
             <main className="min-h-screen">{children}</main>
             <Footer />
-            <AudioFeedback lang={lang} />
           </FramerMotionProvider>
         </DictionaryProvider>
       </body>

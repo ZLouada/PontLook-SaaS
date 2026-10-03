@@ -150,8 +150,8 @@ export default async function ForProvidersPage({
       </section>
 
       {/* 2. WHY PARTNER / DIRECT VALUE PROPOSITION */}
-      <section id="why-partner" className="bg-black py-10 sm:py-14 scroll-mt-16">
-        <div className="container-site max-w-6xl mx-auto px-4 sm:px-6">
+      <section id="why-partner" className="bg-black py-10 sm:py-16 scroll-mt-16 w-full overflow-hidden">
+        <div className="w-full max-w-[96vw] xl:max-w-[94vw] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <ProviderBenefitsCards lang={lang} />
         </div>
       </section>
