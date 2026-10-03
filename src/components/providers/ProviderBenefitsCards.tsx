@@ -38,47 +38,47 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
         ? 'لا توجد رسوم إدارة أو اشتراكات شهرية ثابتة. الدفع يتم حصراً لكل صانع قرار مؤكد ومؤهل يتم تقديمه لك مع كراسة متطلبات واضحة.'
         : 'No monthly management fees or fixed retainers. You pay strictly per verified decision maker delivered ($50 to $200 per lead).',
       takeaways: [
-        isAr ? 'انعدام الالتزامات التعاقدية الطويلة أو رسوم الوكالات التقليدية' : 'No binding annual contracts or recurring agency retainer fees',
-        isAr ? 'ضمان استبدال فوري 100% لأي فرصة لا تطابق شروط التأهيل المعتمدة' : '100% instant lead replacement SLA for non-qualifying contacts',
-        isAr ? 'تكلفة استحواذ عملاء محسوبة بدقة وقابلة للتوسع وفق طاقتك الاستيعابية' : 'Predictable CAC scaling directly aligned with your delivery bandwidth',
+        isAr ? 'انعدام الالتزامات التعاقدية أو رسوم الوكالات' : 'No binding contracts or retainer fees',
+        isAr ? 'ضمان استبدال فوري 100% لأي فرصة غير مطابقة' : '100% instant lead replacement SLA',
+        isAr ? 'تكلفة استحواذ عملاء محسوبة وقابلة للتوسع' : 'Predictable CAC aligned with capacity',
       ],
       mockup: (
-        <div className="bg-black/90 rounded-2xl border border-white/10 w-full p-4 sm:p-5 flex flex-col gap-3 font-sans shadow-lg">
-          <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
-            <div className="flex items-center gap-2.5">
-              <div className="h-7 w-7 rounded-lg bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
-                <CircleDollarSign size={15} />
+        <div className="bg-black/90 rounded-xl border border-white/10 w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans shadow-md">
+          <div className="flex items-center justify-between pb-2 border-b border-white/10">
+            <div className="flex items-center gap-2">
+              <div className="h-6 w-6 rounded-md bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
+                <CircleDollarSign size={13} />
               </div>
               <div>
-                <div className="text-xs sm:text-sm font-semibold text-white leading-tight">
+                <div className="text-xs font-semibold text-white leading-tight">
                   {isAr ? 'مقارنة اقتصاديات الاستحواذ' : 'Acquisition Unit Economics'}
                 </div>
-                <div className="text-[10px] sm:text-[11px] text-neutral-400">
+                <div className="text-[10px] text-neutral-400">
                   {isAr ? 'الرسوم الشهرية مقابل PontLook' : 'Traditional Retainer vs PontLook'}
                 </div>
               </div>
             </div>
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold bg-white/10 text-white border border-white/20">
-              {isAr ? 'عائد استثماري مضمون' : 'Guaranteed ROI'}
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white border border-white/20">
+              {isAr ? 'عائد مضمون' : 'Guaranteed ROI'}
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2.5 text-xs">
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
-              <div className="text-[10px] text-neutral-400 uppercase font-mono font-medium">{isAr ? 'الاشتراك الشهري التقليدي' : 'Traditional Retainer'}</div>
-              <div className="text-sm sm:text-base font-semibold text-neutral-400 line-through mt-1">$3,500 / {isAr ? 'شهر' : 'mo'}</div>
-              <div className="text-[10px] text-neutral-400 mt-1">{isAr ? 'نتائج غير مضمونة' : 'Zero output guarantee'}</div>
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="p-2 sm:p-2.5 rounded-lg bg-white/[0.03] border border-white/10">
+              <div className="text-[9px] text-neutral-400 uppercase font-mono font-medium">{isAr ? 'الاشتراك الشهري التقليدي' : 'Traditional Retainer'}</div>
+              <div className="text-xs sm:text-sm font-semibold text-neutral-400 line-through mt-0.5">$3,500 / {isAr ? 'شهر' : 'mo'}</div>
+              <div className="text-[9px] text-neutral-400 mt-0.5">{isAr ? 'نتائج غير مضمونة' : 'Zero output guarantee'}</div>
             </div>
-            <div className="p-3 rounded-xl bg-white/[0.08] border border-white/20">
-              <div className="text-[10px] text-white uppercase font-mono font-semibold">{isAr ? 'نموذج PontLook' : 'PontLook Model'}</div>
-              <div className="text-sm sm:text-base font-bold text-white mt-1">$0 {isAr ? 'اشتراك' : 'Retainer'}</div>
-              <div className="text-[10px] text-white mt-1 font-medium">{isAr ? 'دفع فقط عند استلام الفرصة' : 'Pay strictly per lead'}</div>
+            <div className="p-2 sm:p-2.5 rounded-lg bg-white/[0.08] border border-white/20">
+              <div className="text-[9px] text-white uppercase font-mono font-semibold">{isAr ? 'نموذج PontLook' : 'PontLook Model'}</div>
+              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">$0 {isAr ? 'اشتراك' : 'Retainer'}</div>
+              <div className="text-[9px] text-white mt-0.5 font-medium">{isAr ? 'دفع فقط عند استلام الفرصة' : 'Pay strictly per lead'}</div>
             </div>
           </div>
 
-          <div className="text-[11px] text-neutral-300 flex items-center gap-2 pt-1 border-t border-white/[0.06]">
-            <CheckCircle2 size={13} className="text-white shrink-0" />
-            <span className="truncate">{isAr ? 'اتفاقية مستوى الخدمة: استبدال أي فرصة غير مطابقة خلال 48 ساعة' : 'SLA: Instant replacement for any disputed lead within 48h'}</span>
+          <div className="text-[10px] text-neutral-300 flex items-center gap-1.5 pt-1 border-t border-white/[0.06]">
+            <CheckCircle2 size={12} className="text-white shrink-0" />
+            <span className="truncate">{isAr ? 'استبدال أي فرصة غير مطابقة خلال 48 ساعة' : 'SLA: Instant replacement for any disputed lead within 48h'}</span>
           </div>
         </div>
       ),
@@ -94,43 +94,43 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
         ? 'كل فرصة تدريبية تتضمن احتياجاً مؤسسياً مؤكداً، وصلاحية قرار واضحة، ومتطلبات متوافقة مع أهداف التوطين أو التحول الرقمي أو القيادة.'
         : 'Every lead has confirmed corporate training needs, authority, and explicit problem definitions tied to Saudization, Emiratization, or digital upskilling.',
       takeaways: [
-        isAr ? 'التواصل المباشر مع رؤساء الموارد البشرية ومدراء التدريب والتطوير' : 'Direct engagement with CHROs, VP HR, and Heads of L&D',
-        isAr ? 'معرفة مسبقة بحجم المجموعات، المدينة المستهدفة، والميزانية المخصصة' : 'Pre-scoped cohort sizes, delivery city, and approved budget range',
-        isAr ? 'تجنب المكالمات الاستكشافية غير المجدية مع جهات غير جادة' : 'Zero wasted discovery meetings with unbudgeted prospects',
+        isAr ? 'تواصل مباشر مع رؤساء الموارد والتدريب' : 'Direct engagement with CHROs & VP HR',
+        isAr ? 'معرفة مسبقة بحجم المجموعات والميزانية' : 'Pre-scoped cohort sizes & budget range',
+        isAr ? 'تجنب المكالمات الاستكشافية غير المجدية' : 'Zero wasted meetings with unbudgeted leads',
       ],
       mockup: (
-        <div className="bg-black/90 rounded-2xl border border-white/10 w-full p-4 sm:p-5 flex flex-col gap-3 font-sans shadow-lg">
-          <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
-            <div className="flex items-center gap-2.5">
-              <div className="h-7 w-7 rounded-lg bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
-                <Target size={15} />
+        <div className="bg-black/90 rounded-xl border border-white/10 w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans shadow-md">
+          <div className="flex items-center justify-between pb-2 border-b border-white/10">
+            <div className="flex items-center gap-2">
+              <div className="h-6 w-6 rounded-md bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
+                <Target size={13} />
               </div>
               <div>
-                <div className="text-xs sm:text-sm font-semibold text-white leading-tight">
+                <div className="text-xs font-semibold text-white leading-tight">
                   {isAr ? 'بطاقة تأهيل الفرصة المؤسسية' : 'Enterprise Lead Dossier'}
                 </div>
-                <div className="text-[10px] sm:text-[11px] text-neutral-400">
+                <div className="text-[10px] text-neutral-400">
                   {isAr ? 'عينة من بيانات الفرصة المسلمة' : 'Sample Verified Lead Specification'}
                 </div>
               </div>
             </div>
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold bg-white/10 text-white border border-white/20">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white border border-white/20">
               {isAr ? 'مؤهل تنفيذي' : 'Tier-A Qualified'}
             </span>
           </div>
 
-          <div className="space-y-2 text-xs">
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
-              <span className="text-neutral-400">{isAr ? 'صانع القرار المستهدف:' : 'Decision Maker:'}</span>
-              <span className="text-white font-medium">{isAr ? 'نائب رئيس الموارد البشرية' : 'VP of HR (Riyadh)'}</span>
+          <div className="space-y-1.5 text-xs">
+            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/10">
+              <span className="text-neutral-400 text-[11px]">{isAr ? 'صانع القرار المستهدف:' : 'Decision Maker:'}</span>
+              <span className="text-white font-medium text-xs">{isAr ? 'نائب رئيس الموارد البشرية' : 'VP of HR (Riyadh)'}</span>
             </div>
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
-              <span className="text-neutral-400">{isAr ? 'المجال التدريبي:' : 'Training Domain:'}</span>
-              <span className="text-white font-medium">{isAr ? 'تطوير القيادات التنفيذية' : 'Executive Leadership'}</span>
+            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/10">
+              <span className="text-neutral-400 text-[11px]">{isAr ? 'المجال التدريبي:' : 'Training Domain:'}</span>
+              <span className="text-white font-medium text-xs">{isAr ? 'تطوير القيادات التنفيذية' : 'Executive Leadership'}</span>
             </div>
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.08] border border-white/20">
-              <span className="text-neutral-300">{isAr ? 'حجم الفوج والميزانية:' : 'Cohort & Budget:'}</span>
-              <span className="text-white font-semibold">35 {isAr ? 'متدرب' : 'execs'} · SAR 120k+</span>
+            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.08] border border-white/20">
+              <span className="text-neutral-300 text-[11px]">{isAr ? 'حجم الفوج والميزانية:' : 'Cohort & Budget:'}</span>
+              <span className="text-white font-semibold text-xs">35 {isAr ? 'متدرب' : 'execs'} · SAR 120k+</span>
             </div>
           </div>
         </div>
@@ -147,46 +147,46 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
         ? 'حافظ على استمرارية ونمو أعمالك على مدار العام، وتجاوز فترات الركود الموسمي عبر استقبال طلبات مؤكدة وجاهزة للتعاقد.'
         : 'Keep your business development active and predictable throughout the year, even during delivery seasons.',
       takeaways: [
-        isAr ? 'توجيه آلي للطلبات المتوافقة مع تخصص وخبرة مدربيك' : 'Algorithmic routing matching your exact facilitator credentials',
-        isAr ? 'تغطية واسعة لكبرى المراكز التجارية: الرياض، جدة، دبي، وأبوظبي' : 'Active coverage across Riyadh, Jeddah, Dubai, and Abu Dhabi',
-        isAr ? 'التركيز 100% على تقديم المحتوى عالي القيمة بدلاً من البحث البارد' : 'Focus 100% on delivery excellence while PontLook fuels business dev',
+        isAr ? 'توجيه آلي للطلبات المتوافقة مع تخصصك' : 'Algorithmic routing matching credentials',
+        isAr ? 'تغطية واسعة: الرياض، جدة، دبي، أبوظبي' : 'Active coverage across Riyadh, Dubai, etc.',
+        isAr ? 'التركيز 100% على التميز في التدريب' : 'Focus 100% on delivery excellence',
       ],
       mockup: (
-        <div className="bg-black/90 rounded-2xl border border-white/10 w-full p-4 sm:p-5 flex flex-col gap-3 font-sans shadow-lg">
-          <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
-            <div className="flex items-center gap-2.5">
-              <div className="h-7 w-7 rounded-lg bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
-                <TrendingUp size={15} />
+        <div className="bg-black/90 rounded-xl border border-white/10 w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans shadow-md">
+          <div className="flex items-center justify-between pb-2 border-b border-white/10">
+            <div className="flex items-center gap-2">
+              <div className="h-6 w-6 rounded-md bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
+                <TrendingUp size={13} />
               </div>
               <div>
-                <div className="text-xs sm:text-sm font-semibold text-white leading-tight">
+                <div className="text-xs font-semibold text-white leading-tight">
                   {isAr ? 'جدول توزيع الفرص الفصلي' : 'Quarterly Opportunity Schedule'}
                 </div>
-                <div className="text-[10px] sm:text-[11px] text-neutral-400">
+                <div className="text-[10px] text-neutral-400">
                   {isAr ? 'توزيع تدفق الطلبات عبر الفصول' : 'Active Intake Distribution'}
                 </div>
               </div>
             </div>
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold bg-white/10 text-white border border-white/20">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white border border-white/20">
               {isAr ? 'طلب نشط' : 'Active Demand'}
             </span>
           </div>
 
           <div className="grid grid-cols-3 gap-2 text-center text-xs">
-            <div className="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
-              <div className="text-[10px] text-neutral-400 font-mono">Q1 (Jan-Mar)</div>
-              <div className="text-xs sm:text-sm font-bold text-white mt-1">14 {isAr ? 'فرصة' : 'Leads'}</div>
-              <div className="text-[10px] text-neutral-400">{isAr ? 'القيادات' : 'Leadership'}</div>
+            <div className="p-1.5 sm:p-2 rounded-lg bg-white/[0.03] border border-white/10">
+              <div className="text-[9px] text-neutral-400 font-mono">Q1 (Jan-Mar)</div>
+              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">14 {isAr ? 'فرصة' : 'Leads'}</div>
+              <div className="text-[9px] text-neutral-400">{isAr ? 'القيادات' : 'Leadership'}</div>
             </div>
-            <div className="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
-              <div className="text-[10px] text-neutral-400 font-mono">Q2 (Apr-Jun)</div>
-              <div className="text-xs sm:text-sm font-bold text-white mt-1">19 {isAr ? 'فرصة' : 'Leads'}</div>
-              <div className="text-[10px] text-neutral-400">{isAr ? 'التحول' : 'Digital Ops'}</div>
+            <div className="p-1.5 sm:p-2 rounded-lg bg-white/[0.03] border border-white/10">
+              <div className="text-[9px] text-neutral-400 font-mono">Q2 (Apr-Jun)</div>
+              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">19 {isAr ? 'فرصة' : 'Leads'}</div>
+              <div className="text-[9px] text-neutral-400">{isAr ? 'التحول' : 'Digital Ops'}</div>
             </div>
-            <div className="p-2 sm:p-2.5 rounded-xl bg-white/[0.08] border border-white/20">
-              <div className="text-[10px] text-white font-mono font-semibold">Q3-Q4</div>
-              <div className="text-xs sm:text-sm font-bold text-white mt-1">25+ {isAr ? 'فرصة' : 'Leads'}</div>
-              <div className="text-[10px] text-neutral-300">{isAr ? 'التوطين' : 'Localization'}</div>
+            <div className="p-1.5 sm:p-2 rounded-lg bg-white/[0.08] border border-white/20">
+              <div className="text-[9px] text-white font-mono font-semibold">Q3-Q4</div>
+              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">25+ {isAr ? 'فرصة' : 'Leads'}</div>
+              <div className="text-[9px] text-neutral-300">{isAr ? 'التوطين' : 'Localization'}</div>
             </div>
           </div>
         </div>
@@ -241,8 +241,8 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
   return (
     <div className="w-full">
       {/* Animated Section Header */}
-      <div className="mb-10 sm:mb-16 text-center max-w-3xl mx-auto space-y-3.5">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-mono font-medium">
+      <div className="mb-6 sm:mb-8 text-center max-w-3xl mx-auto space-y-2.5">
+        <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-mono font-medium">
           <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00]" />
           <span>{isAr ? 'مزايا ونموذج الشراكة' : 'PARTNERSHIP ADVANTAGES'}</span>
         </div>
@@ -250,10 +250,10 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
         <TextReveal
           as="h2"
           text={isAr ? 'كيف تعمل الشراكة ومزايا الانضمام' : 'How the Partnership Works & Key Advantages'}
-          className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-tight"
+          className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-semibold text-white font-heading tracking-tight leading-tight"
         />
 
-        <p className="text-sm sm:text-base text-neutral-400 font-sans max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm text-neutral-400 font-sans max-w-xl mx-auto leading-relaxed">
           {isAr
             ? 'نموذج دفع حصري لكل فرصة مؤهلة بدون اشتراكات شهرية، مع ضمانات استبدال صارمة وتدفق مستمر للطلبات المؤسسية.'
             : 'Performance-based growth with zero retainers. Explore our unit economics, buyer qualification rubric, and pipeline consistency.'}
@@ -263,11 +263,11 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
       {/* ============================================================== */}
       {/* DESKTOP ATTIO-STYLE STICKY SCROLL SECTION                     */}
       {/* ============================================================== */}
-      <div ref={containerRef} className="hidden lg:block relative min-h-[240vh]">
-        <div className="sticky top-28 xl:top-32 w-full">
-          <div className="grid grid-cols-12 gap-8 xl:gap-14 items-center">
-            {/* Left Column: Attio-style Navigation Titles in Orange */}
-            <div className="col-span-5 xl:col-span-4 flex flex-col space-y-5">
+      <div ref={containerRef} className="hidden lg:block relative min-h-[200vh]">
+        <div className="sticky top-20 xl:top-24 w-full">
+          <div className="grid grid-cols-12 gap-6 xl:gap-10 items-center">
+            {/* Left Column: Attio-style Navigation Titles in Orange (Minimized) */}
+            <div className="col-span-5 xl:col-span-4 flex flex-col space-y-3.5">
               {benefits.map((b, idx) => {
                 const isActive = activeStep === idx;
                 return (
@@ -275,41 +275,41 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                     key={b.id}
                     type="button"
                     onClick={() => handleStepClick(idx)}
-                    className="group relative flex items-start gap-3.5 text-start w-full py-2.5 transition-all duration-300 outline-none cursor-pointer"
+                    className="group relative flex items-start gap-3 text-start w-full py-1.5 transition-all duration-300 outline-none cursor-pointer"
                     aria-current={isActive ? 'step' : undefined}
                   >
-                    {/* Vertical Indicator Bar: Orange when active */}
+                    {/* Vertical Indicator Bar: Proportional height */}
                     <div
                       className={`w-1 rounded-full transition-all duration-300 shrink-0 ${
                         isActive
-                          ? 'h-14 sm:h-16 bg-[#FF5C00]'
-                          : 'h-8 sm:h-10 bg-white/10 group-hover:bg-white/20'
+                          ? 'h-10 sm:h-12 bg-[#FF5C00]'
+                          : 'h-6 sm:h-7 bg-white/10 group-hover:bg-white/20'
                       }`}
                     />
 
                     <div className="min-w-0">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1.5">
                         <span
-                          className={`font-mono text-xs transition-colors duration-300 ${
+                          className={`font-mono text-[11px] transition-colors duration-300 ${
                             isActive ? 'text-[#FF5C00] font-bold' : 'text-neutral-500'
                           }`}
                         >
                           {b.index}
                         </span>
                         <span
-                          className={`text-[11px] font-mono tracking-wider uppercase transition-colors duration-300 ${
-                            isActive ? 'text-[#FF5C00]/90 font-semibold' : 'text-neutral-500'
+                          className={`text-[10px] font-mono tracking-wider uppercase transition-colors duration-300 ${
+                            isActive ? 'text-[#FF5C00]/90 font-medium' : 'text-neutral-500'
                           }`}
                         >
                           {b.badge}
                         </span>
                       </div>
 
-                      {/* Main Title: Vibrant Orange when active, muted when inactive */}
+                      {/* Main Title: Minimized scale, elegant font size */}
                       <div
-                        className={`font-heading text-xl sm:text-2xl lg:text-[26px] font-semibold tracking-tight transition-colors duration-300 mt-1 leading-snug ${
+                        className={`font-heading text-base sm:text-lg lg:text-xl font-medium tracking-tight transition-colors duration-300 mt-0.5 leading-snug ${
                           isActive
-                            ? 'text-[#FF5C00]'
+                            ? 'text-[#FF5C00] font-semibold'
                             : 'text-neutral-500 group-hover:text-neutral-300'
                         }`}
                       >
@@ -321,9 +321,9 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
               })}
             </div>
 
-            {/* Right Column: Attio-style Black & White Content Panel */}
+            {/* Right Column: Attio-style Black & White Content Panel (Calibrated scale) */}
             <div className="col-span-7 xl:col-span-8">
-              <div className="relative rounded-3xl border border-white/10 bg-[#0B0C10] p-7 xl:p-9 shadow-[0_20px_50px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.08)] overflow-hidden min-h-[500px] flex flex-col justify-between">
+              <div className="relative rounded-2xl border border-white/10 bg-[#0B0C10] p-5 sm:p-6 lg:p-7 shadow-[0_16px_40px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.08)] overflow-hidden flex flex-col justify-between">
                 {/* Subtle Monochrome Tech Dots underlayer */}
                 <div
                   className="absolute inset-0 opacity-[0.06] pointer-events-none"
@@ -337,39 +337,39 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                 <AnimatePresence mode="wait">
                   <m.div
                     key={currentBenefit.id}
-                    initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14 }}
+                    initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={reduce ? { opacity: 0 } : { opacity: 0, y: -14 }}
-                    transition={{ duration: 0.28, ease: ease.out }}
-                    className="relative z-10 flex flex-col justify-between h-full space-y-6"
+                    exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10 }}
+                    transition={{ duration: 0.24, ease: ease.out }}
+                    className="relative z-10 flex flex-col justify-between h-full space-y-4"
                   >
                     {/* Top Content Area: Monochrome Header & Angle */}
                     <div>
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/15 text-neutral-300 text-xs font-mono font-medium">
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/15 text-neutral-300 text-[11px] font-mono font-medium">
                         <span>{currentBenefit.badge}</span>
                       </div>
 
-                      <h3 className="font-heading text-2xl xl:text-3xl font-semibold text-white tracking-tight leading-tight mt-3">
+                      <h3 className="font-heading text-lg sm:text-xl lg:text-2xl font-semibold text-white tracking-tight leading-tight mt-2">
                         {currentBenefit.angle}
                       </h3>
 
-                      <p className="mt-2 text-sm xl:text-base text-neutral-400 font-sans leading-relaxed max-w-2xl font-normal">
+                      <p className="mt-1 text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed max-w-xl font-normal">
                         {currentBenefit.body}
                       </p>
                     </div>
 
                     {/* Middle: Takeaways in crisp Black & White */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-white/[0.08]">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-3 border-t border-white/[0.08]">
                       {currentBenefit.takeaways.map((point, pIdx) => (
-                        <div key={pIdx} className="flex items-start gap-2.5 text-xs xl:text-[13px] text-neutral-300 font-sans">
-                          <CheckCircle2 size={15} className="text-white shrink-0 mt-0.5" />
+                        <div key={pIdx} className="flex items-start gap-2 text-xs text-neutral-300 font-sans">
+                          <CheckCircle2 size={13} className="text-white shrink-0 mt-0.5" />
                           <span className="leading-snug text-neutral-300">{point}</span>
                         </div>
                       ))}
                     </div>
 
                     {/* Bottom: Mockup Widget in pure Black & White */}
-                    <div className="pt-2">
+                    <div>
                       {currentBenefit.mockup}
                     </div>
 
@@ -378,13 +378,13 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                       <button
                         type="button"
                         onClick={() => setActiveModalId(currentBenefit.id)}
-                        className="inline-flex items-center gap-2 text-xs font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer"
                       >
                         <span>{isAr ? 'عرض المواصفات والضمانات الكاملة' : 'Inspect full specifications & SLAs'}</span>
-                        <ArrowRight size={13} className="rtl:-scale-x-100" />
+                        <ArrowRight size={12} className="rtl:-scale-x-100" />
                       </button>
 
-                      <span className="text-[11px] font-mono text-neutral-500">
+                      <span className="text-[10px] font-mono text-neutral-500">
                         {currentBenefit.index} / 03
                       </span>
                     </div>
@@ -399,9 +399,9 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
       {/* ============================================================== */}
       {/* MOBILE / TABLET VIEW (Segmented Tab Bar + Card View)           */}
       {/* ============================================================== */}
-      <div className="lg:hidden space-y-6">
+      <div className="lg:hidden space-y-4">
         {/* Mobile Tab Control with Orange active indicator */}
-        <div className="flex items-center justify-between gap-1 p-1 bg-white/[0.04] border border-white/10 rounded-2xl">
+        <div className="flex items-center justify-between gap-1 p-1 bg-white/[0.04] border border-white/10 rounded-xl">
           {benefits.map((b, idx) => {
             const isActive = activeStep === idx;
             return (
@@ -409,49 +409,49 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                 key={b.id}
                 type="button"
                 onClick={() => setActiveStep(idx)}
-                className={`flex-1 py-2 px-2 rounded-xl text-center transition-all duration-200 outline-none text-xs font-medium ${
+                className={`flex-1 py-1.5 px-2 rounded-lg text-center transition-all duration-200 outline-none text-xs font-medium ${
                   isActive
                     ? 'bg-black text-[#FF5C00] font-semibold border border-[#FF5C00]/30 shadow-sm'
                     : 'text-neutral-400 hover:text-neutral-200'
                 }`}
               >
-                <span className="font-mono text-[10px] block opacity-80">{b.index}</span>
-                <span className="truncate block mt-0.5">{b.title}</span>
+                <span className="font-mono text-[9px] block opacity-80">{b.index}</span>
+                <span className="truncate block mt-0.5 text-[11px]">{b.title}</span>
               </button>
             );
           })}
         </div>
 
         {/* Mobile Black & White Card */}
-        <div className="relative rounded-2xl border border-white/10 bg-[#0B0C10] p-5 shadow-xl overflow-hidden space-y-5">
+        <div className="relative rounded-xl border border-white/10 bg-[#0B0C10] p-4 shadow-xl overflow-hidden space-y-3.5">
           <AnimatePresence mode="wait">
             <m.div
               key={currentBenefit.id}
-              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
+              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10 }}
-              transition={{ duration: 0.22, ease: ease.out }}
-              className="space-y-4"
+              exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
+              transition={{ duration: 0.2, ease: ease.out }}
+              className="space-y-3"
             >
               <div>
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/15 text-neutral-300 text-[11px] font-mono font-medium">
+                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/15 text-neutral-300 text-[10px] font-mono font-medium">
                   <span>{currentBenefit.badge}</span>
                 </div>
 
-                <h3 className="font-heading text-lg font-semibold text-white tracking-tight mt-2.5 leading-snug">
+                <h3 className="font-heading text-base font-semibold text-white tracking-tight mt-2 leading-snug">
                   {currentBenefit.angle}
                 </h3>
 
-                <p className="mt-1.5 text-xs text-neutral-400 font-sans leading-relaxed">
+                <p className="mt-1 text-xs text-neutral-400 font-sans leading-relaxed">
                   {currentBenefit.body}
                 </p>
               </div>
 
               {/* Takeaways list */}
-              <div className="space-y-2 pt-3 border-t border-white/[0.08]">
+              <div className="space-y-1.5 pt-2.5 border-t border-white/[0.08]">
                 {currentBenefit.takeaways.map((point, pIdx) => (
                   <div key={pIdx} className="flex items-start gap-2 text-xs text-neutral-300 font-sans">
-                    <CheckCircle2 size={13} className="text-white shrink-0 mt-0.5" />
+                    <CheckCircle2 size={12} className="text-white shrink-0 mt-0.5" />
                     <span className="leading-snug">{point}</span>
                   </div>
                 ))}
@@ -470,7 +470,7 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                   className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-400 hover:text-white transition-colors"
                 >
                   <span>{isAr ? 'عرض المواصفات والضمانات' : 'Inspect breakdown & SLAs'}</span>
-                  <ArrowRight size={12} className="rtl:-scale-x-100" />
+                  <ArrowRight size={11} className="rtl:-scale-x-100" />
                 </button>
                 <span className="text-[10px] font-mono text-neutral-500">
                   {currentBenefit.index} / 03
