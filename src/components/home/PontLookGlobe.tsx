@@ -28,7 +28,7 @@ const GLOBAL_HUBS: HubLocation[] = [
 
 // Simplified fast landmass checker for Earth continents
 function isLand(lat: number, lon: number): boolean {
-  // Arabia / GCC - high fidelity
+  // Arabia & GCC (High fidelity)
   if (lat >= 12 && lat <= 33 && lon >= 34 && lon <= 61) {
     if (lat < 27 && lon < 40 && lat > 14 && lon < 43) return false; // Red Sea
     return true;
@@ -72,7 +72,7 @@ function isLand(lat: number, lon: number): boolean {
   if (lat >= -44 && lat <= -10 && lon >= 113 && lon <= 154) {
     return true;
   }
-  // Japan / UK / Scandinavia islands
+  // Japan / UK
   if (lat >= 30 && lat <= 46 && lon >= 129 && lon <= 146) return true; // Japan
   if (lat >= 50 && lat <= 60 && lon >= -11 && lon <= 2) return true; // UK
   return false;
@@ -83,6 +83,7 @@ interface Point3D {
   y: number;
   z: number;
   isGCC?: boolean;
+  isOcean?: boolean;
 }
 
 export default function PontLookGlobe({ className = '' }: { className?: string }) {
@@ -95,18 +96,16 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
   });
   const [isInteracting, setIsInteracting] = useState(false);
 
-  // Rotation angles (degrees/radians)
+  // Rotation angles: subtle pitch (side view) + axial side roll + rotating yaw
   const rotationRef = useRef({
-    phi: 0.35, // Axial tilt ~20 deg
-    theta: 1.1, // Initial yaw centering Arabia/Middle East towards viewer
-    targetTheta: 1.1,
-    targetPhi: 0.35,
-    velTheta: 0.0035, // continuous slow rotation
+    phi: 0.16, // Side 3D pitch (~9 degrees elevated above equator)
+    tilt: 0.38, // Earth's natural axial side tilt (~22 degrees)
+    theta: 0.85, // Yaw centering Arabia/GCC toward viewer initially
+    velTheta: 0.0035, // Slow, continuous auto-rotation
     velPhi: 0,
     isDragging: false,
     lastMouseX: 0,
     lastMouseY: 0,
-    lastDragTime: 0,
   });
 
   useEffect(() => {
@@ -120,41 +119,9 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
     let animId: number;
     let width = 0;
     let height = 0;
-    let radius = 170;
+    let radius = 175;
     let dpr = 1;
     let isVisible = true;
-
-    // Generate globe surface points once
-    const dots: Point3D[] = [];
-    const step = 3.6; // resolution
-
-    for (let lat = -80; lat <= 80; lat += step) {
-      const phi = ((90 - lat) * Math.PI) / 180;
-      const cosPhi = Math.cos(phi);
-      const sinPhi = Math.sin(phi);
-
-      // Higher density around equator and Arabia
-      const lonStep = Math.max(step / sinPhi, step * 0.8);
-      for (let lon = -180; lon <= 180; lon += lonStep) {
-        const land = isLand(lat, lon);
-        const inGCC = lat >= 16 && lat <= 32 && lon >= 38 && lon <= 58;
-
-        // Keep land dots or occasional faint sphere grid dots
-        if (land || inGCC || (Math.abs(lat % 20) < 1 && Math.abs(lon % 30) < 1)) {
-          const theta = ((lon + 180) * Math.PI) / 180;
-          const x = -sinPhi * Math.cos(theta);
-          const y = cosPhi;
-          const z = sinPhi * Math.sin(theta);
-
-          dots.push({
-            x,
-            y,
-            z,
-            isGCC: inGCC,
-          });
-        }
-      }
-    }
 
     // Convert lat/lon to 3D unit coordinates
     const toUnitCoord = (lat: number, lon: number): [number, number, number] => {
@@ -166,6 +133,32 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
         Math.sin(phi) * Math.sin(theta),
       ];
     };
+
+    // Generate uniform Fibonacci sphere distribution for seamless 3D surface
+    const dots: Point3D[] = [];
+    const totalSamples = 3200;
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+
+    for (let i = 0; i < totalSamples; i++) {
+      const y = 1 - (i / (totalSamples - 1)) * 2; // -1 to +1
+      const radAtY = Math.sqrt(Math.max(0, 1 - y * y));
+      const thetaAngle = goldenAngle * i;
+      const x = Math.cos(thetaAngle) * radAtY;
+      const z = Math.sin(thetaAngle) * radAtY;
+
+      const lat = Math.asin(y) * (180 / Math.PI);
+      const lon = Math.atan2(x, z) * (180 / Math.PI);
+
+      const land = isLand(lat, lon);
+      const inGCC = lat >= 14 && lat <= 32 && lon >= 36 && lon <= 60;
+
+      if (land || inGCC) {
+        dots.push({ x, y, z, isGCC: inGCC, isOcean: false });
+      } else if (i % 6 === 0) {
+        // Faint ocean dots for subtle spherical volume definition
+        dots.push({ x, y, z, isGCC: false, isOcean: true });
+      }
+    }
 
     const gccUnit = toUnitCoord(GCC_HUB.lat, GCC_HUB.lon);
     const hubUnits = GLOBAL_HUBS.map((h) => ({
@@ -182,14 +175,13 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
 
       for (let i = 0; i <= numSamples; i++) {
         const t = i / numSamples;
-        // Spherical linear interpolation + vertical arc altitude
         const lx = x1 + (x2 - x1) * t;
         const ly = y1 + (y2 - y1) * t;
         const lz = z1 + (z2 - z1) * t;
         const mag = Math.sqrt(lx * lx + ly * ly + lz * lz) || 1;
 
-        // Parabolic arc height peaking at middle
-        const altitude = 1.0 + Math.sin(t * Math.PI) * 0.22;
+        // Elevated curved arc in 3D
+        const altitude = 1.0 + Math.sin(t * Math.PI) * 0.24;
         points.push([(lx / mag) * altitude, (ly / mag) * altitude, (lz / mag) * altitude]);
       }
       return points;
@@ -208,8 +200,8 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
       canvas.style.height = `${height}px`;
       ctx.scale(dpr, dpr);
 
-      // Adaptive globe radius
-      radius = Math.min(width, height) * 0.42;
+      // Adaptive globe radius based on container
+      radius = Math.min(width, height) * 0.40;
     };
 
     resize();
@@ -224,7 +216,6 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
     );
     io.observe(container);
 
-    // Main animation loop
     let pulseTime = 0;
 
     const render = () => {
@@ -250,53 +241,55 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
       const cx = width / 2;
       const cy = height / 2;
 
+      // Rotation trigonometry
       const cosTheta = Math.cos(rot.theta);
       const sinTheta = Math.sin(rot.theta);
-      const cosPhi = Math.cos(rot.phi);
+      const cosPhi = Math.cos(rot.phi); // Side pitch
       const sinPhi = Math.sin(rot.phi);
+      const cosTilt = Math.cos(rot.tilt); // Side axial tilt
+      const sinTilt = Math.sin(rot.tilt);
 
-      // 3D projection function
+      // Camera distance for authentic 3D perspective projection
+      const cameraDistance = 3.2;
+
       const project = (
         ux: number,
         uy: number,
         uz: number,
         scale: number = radius
-      ): { x: number; y: number; z: number; front: boolean } => {
-        // Rotate around Y (theta)
+      ): { x: number; y: number; z: number; front: boolean; persp: number } => {
+        // 1. Rotate around Y (Yaw / continuous rotation)
         const rx1 = ux * cosTheta + uz * sinTheta;
         const ry1 = uy;
         const rz1 = -ux * sinTheta + uz * cosTheta;
 
-        // Rotate around X (axial tilt phi)
+        // 2. Rotate around X (Pitch / side angle view)
         const rx2 = rx1;
         const ry2 = ry1 * cosPhi - rz1 * sinPhi;
         const rz2 = ry1 * sinPhi + rz1 * cosPhi;
 
+        // 3. Rotate around Z (Axial side tilt)
+        const rx3 = rx2 * cosTilt - ry2 * sinTilt;
+        const ry3 = rx2 * sinTilt + ry2 * cosTilt;
+        const rz3 = rz2;
+
+        // Perspective divide
+        const persp = cameraDistance / (cameraDistance - rz3);
+
         return {
-          x: cx + rx2 * scale,
-          y: cy + ry2 * scale,
-          z: rz2,
-          front: rz2 > -0.05,
+          x: cx + rx3 * scale * persp,
+          y: cy + ry3 * scale * persp,
+          z: rz3,
+          front: rz3 > -0.1,
+          persp,
         };
       };
 
-      // 1. Atmosphere halo glow around the globe perimeter
-      const glowGrad = ctx.createRadialGradient(cx, cy, radius * 0.75, cx, cy, radius * 1.35);
-      glowGrad.addColorStop(0, 'rgba(255, 92, 0, 0.0)');
-      glowGrad.addColorStop(0.7, 'rgba(255, 92, 0, 0.08)');
-      glowGrad.addColorStop(0.88, 'rgba(255, 92, 0, 0.16)');
-      glowGrad.addColorStop(0.98, 'rgba(255, 140, 40, 0.22)');
-      glowGrad.addColorStop(1, 'rgba(255, 92, 0, 0)');
-      ctx.fillStyle = glowGrad;
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius * 1.35, 0, Math.PI * 2);
-      ctx.fill();
-
-      // 2. Globe dark back-sphere with subtle rim highlight
+      // 1. Subtle, clean dark globe sphere background (NO orange hole / halo!)
       const sphereGrad = ctx.createRadialGradient(
-        cx - radius * 0.35,
-        cy - radius * 0.35,
-        radius * 0.2,
+        cx - radius * 0.25,
+        cy - radius * 0.25,
+        radius * 0.1,
         cx,
         cy,
         radius
@@ -309,53 +302,63 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
       ctx.arc(cx, cy, radius, 0, Math.PI * 2);
       ctx.fill();
 
-      // Outer rim ring
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+      // Delicate outer boundary ring
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.arc(cx, cy, radius, 0, Math.PI * 2);
       ctx.stroke();
 
-      // 3. Render Globe Surface Dots
+      // 2. Render 3D Surface Dots
       for (let i = 0; i < dots.length; i++) {
         const dot = dots[i];
         const p = project(dot.x, dot.y, dot.z, radius);
 
         if (!p.front) {
-          // Translucent back hemisphere dots
-          const backAlpha = 0.06 + Math.max(0, p.z + 1) * 0.05;
-          ctx.fillStyle = `rgba(255, 255, 255, ${backAlpha})`;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 0.8, 0, Math.PI * 2);
-          ctx.fill();
+          // Subtle translucent backside dots for genuine 3D glass sphere depth
+          if (!dot.isOcean && p.z > -0.7) {
+            const backAlpha = 0.04 + Math.max(0, p.z + 0.7) * 0.04;
+            ctx.fillStyle = `rgba(255, 255, 255, ${backAlpha})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 0.75 * p.persp, 0, Math.PI * 2);
+            ctx.fill();
+          }
           continue;
         }
 
-        // Front hemisphere dots
-        const depth = (p.z + 0.1) / 1.1; // 0 to 1
-        const size = dot.isGCC ? 2.2 + depth * 1.0 : 1.0 + depth * 1.2;
+        // Depth perspective (0 front edge to 1 closest to viewer)
+        const depth = Math.max(0, Math.min(1, (p.z + 0.1) / 1.1));
 
         if (dot.isGCC) {
-          // GCC Saudi / UAE dots glow PontLook Orange
-          const alpha = 0.65 + depth * 0.35;
+          // Highlighted PontLook GCC dots (Saudi Arabia / UAE)
+          const size = (2.2 + depth * 0.8) * p.persp;
+          const alpha = 0.75 + depth * 0.25;
           ctx.fillStyle = `rgba(255, 92, 0, ${alpha})`;
-          ctx.shadowColor = 'rgba(255, 92, 0, 0.6)';
+          ctx.shadowColor = 'rgba(255, 92, 0, 0.75)';
           ctx.shadowBlur = 6;
           ctx.beginPath();
           ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
           ctx.fill();
           ctx.shadowBlur = 0;
+        } else if (dot.isOcean) {
+          // Faint oceanic depth grid dots
+          const alpha = 0.08 + depth * 0.12;
+          ctx.fillStyle = `rgba(180, 200, 230, ${alpha})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 0.85 * p.persp, 0, Math.PI * 2);
+          ctx.fill();
         } else {
-          // General world landmass dots
-          const alpha = 0.25 + depth * 0.65;
-          ctx.fillStyle = `rgba(235, 240, 248, ${alpha})`;
+          // Crisp continent dots
+          const size = (1.1 + depth * 1.1) * p.persp;
+          const alpha = 0.28 + depth * 0.72;
+          ctx.fillStyle = `rgba(240, 244, 250, ${alpha})`;
           ctx.beginPath();
           ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
           ctx.fill();
         }
       }
 
-      // 4. Render 3D Arcs between GCC and Global Hubs
+      // 3. Render 3D Connecting Arcs
       for (let a = 0; a < arcs.length; a++) {
         const arc = arcs[a];
         ctx.beginPath();
@@ -375,14 +378,14 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
         }
 
         if (firstDrawn) {
-          ctx.strokeStyle = 'rgba(255, 120, 30, 0.28)';
-          ctx.lineWidth = 1.2;
+          ctx.strokeStyle = 'rgba(255, 110, 20, 0.32)';
+          ctx.lineWidth = 1.25;
           ctx.setLineDash([4, 4]);
           ctx.stroke();
           ctx.setLineDash([]);
 
-          // Moving photon pulse traveling along arc
-          const pulseT = (pulseTime * 0.6 + a * 0.14) % 1;
+          // Animated light packet traveling along the arc
+          const pulseT = (pulseTime * 0.65 + a * 0.14) % 1;
           const sampleIdx = Math.floor(pulseT * (arc.length - 1));
           const nextIdx = Math.min(sampleIdx + 1, arc.length - 1);
           const subT = pulseT * (arc.length - 1) - sampleIdx;
@@ -399,39 +402,37 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
             ctx.shadowColor = '#FF5C00';
             ctx.shadowBlur = 10;
             ctx.beginPath();
-            ctx.arc(pulseP.x, pulseP.y, 2.4, 0, Math.PI * 2);
+            ctx.arc(pulseP.x, pulseP.y, 2.5 * pulseP.persp, 0, Math.PI * 2);
             ctx.fill();
             ctx.shadowBlur = 0;
           }
         }
       }
 
-      // 5. Render Global Hub Nodes
+      // 4. Render Global Hub Nodes
       for (let h = 0; h < hubUnits.length; h++) {
         const hub = hubUnits[h];
         const p = project(hub.unit[0], hub.unit[1], hub.unit[2], radius);
         if (p.front) {
-          // Node dot
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
           ctx.beginPath();
-          ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, 2.4 * p.persp, 0, Math.PI * 2);
           ctx.fill();
 
-          // Subtle ring
           ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
           ctx.lineWidth = 1;
           ctx.beginPath();
-          ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, 5 * p.persp, 0, Math.PI * 2);
           ctx.stroke();
         }
       }
 
-      // 6. Highlight Main GCC / PontLook Beacon
+      // 5. Highlight Main GCC / PontLook Beacon
       const gccProj = project(gccUnit[0], gccUnit[1], gccUnit[2], radius);
       if (gccProj.front) {
         // Radar pulse ring 1
-        const r1 = 8 + ((pulseTime * 22) % 24);
-        const a1 = Math.max(0, 1 - r1 / 32) * 0.7;
+        const r1 = (8 + ((pulseTime * 22) % 24)) * gccProj.persp;
+        const a1 = Math.max(0, 1 - r1 / (32 * gccProj.persp)) * 0.75;
         ctx.strokeStyle = `rgba(255, 92, 0, ${a1})`;
         ctx.lineWidth = 1.5;
         ctx.beginPath();
@@ -439,8 +440,8 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
         ctx.stroke();
 
         // Radar pulse ring 2
-        const r2 = 8 + (((pulseTime * 22) + 12) % 24);
-        const a2 = Math.max(0, 1 - r2 / 32) * 0.7;
+        const r2 = (8 + (((pulseTime * 22) + 12) % 24)) * gccProj.persp;
+        const a2 = Math.max(0, 1 - r2 / (32 * gccProj.persp)) * 0.75;
         ctx.strokeStyle = `rgba(255, 140, 40, ${a2})`;
         ctx.lineWidth = 1.2;
         ctx.beginPath();
@@ -452,16 +453,16 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
         ctx.shadowColor = '#FF5C00';
         ctx.shadowBlur = 16;
         ctx.beginPath();
-        ctx.arc(gccProj.x, gccProj.y, 4.5, 0, Math.PI * 2);
+        ctx.arc(gccProj.x, gccProj.y, 4.2 * gccProj.persp, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = '#FF5C00';
         ctx.beginPath();
-        ctx.arc(gccProj.x, gccProj.y, 2.5, 0, Math.PI * 2);
+        ctx.arc(gccProj.x, gccProj.y, 2.4 * gccProj.persp, 0, Math.PI * 2);
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // Store screen position for DOM badge
+        // Position floating DOM badge
         setGccScreenPos({
           x: gccProj.x,
           y: gccProj.y,
@@ -490,7 +491,6 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
     rot.isDragging = true;
     rot.lastMouseX = e.clientX;
     rot.lastMouseY = e.clientY;
-    rot.lastDragTime = performance.now();
     rot.velTheta = 0;
     setIsInteracting(true);
   }, []);
@@ -504,11 +504,11 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
     rot.lastMouseX = e.clientX;
     rot.lastMouseY = e.clientY;
 
-    rot.theta += dx * 0.006;
-    rot.phi = Math.max(-1.1, Math.min(1.1, rot.phi - dy * 0.006));
+    rot.theta += dx * 0.005;
+    rot.phi = Math.max(-0.6, Math.min(0.6, rot.phi - dy * 0.004));
 
-    // Save instant velocity for inertia
-    rot.velTheta = dx * 0.004;
+    // Save instant velocity for smooth inertia
+    rot.velTheta = dx * 0.0035;
   }, []);
 
   const onPointerUp = useCallback((e: React.PointerEvent) => {
@@ -525,7 +525,7 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
   return (
     <div
       ref={containerRef}
-      className={`relative w-full aspect-square max-w-[500px] lg:max-w-[560px] mx-auto select-none touch-none cursor-grab active:cursor-grabbing ${className}`}
+      className={`relative w-full aspect-square max-w-[480px] lg:max-w-[540px] mx-auto select-none touch-none cursor-grab active:cursor-grabbing ${className}`}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
