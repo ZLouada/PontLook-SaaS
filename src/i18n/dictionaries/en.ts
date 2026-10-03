@@ -25,7 +25,7 @@ export const en = {
   hero: {
     eyebrow: "B2B TRAINING MATCHMAKING · GCC",
     headline: "Find Vetted Corporate Trainers. Without the Search, Spam, or Guesswork.",
-    subtitle: "We match GCC companies facing workforce challenges directly with verified training specialists—100% free for organizations.",
+    subtitle: "We match GCC companies facing workforce challenges directly with verified training specialists, 100% free for organizations.",
     btn_provider: "Join as a Training Provider",
     btn_buyer: "Find a Training Partner",
     badges: {
