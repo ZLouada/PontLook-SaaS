@@ -208,7 +208,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
   /* Scroll-spy tracking for desktop Attio-style pinning */
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start start', 'end end'],
+    offset: ['start 112px', 'end end'],
   });
 
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
