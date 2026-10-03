@@ -54,7 +54,7 @@ export default function Hero() {
     <section
       ref={sectionRef}
       data-nav-dark="true"
-      className="relative overflow-hidden bg-black text-white min-h-[calc(100svh-4rem)] sm:min-h-[100svh] flex flex-col justify-center pt-28 pb-16 sm:pt-36 sm:pb-24 select-none"
+      className="relative overflow-hidden bg-black text-white min-h-[calc(100svh-4rem)] sm:min-h-[100svh] flex flex-col justify-center pt-16 pb-12 sm:pt-24 sm:pb-16 select-none"
     >
       {/* Background Underlayer: Deep Black with Subtle Monochrome Tech Dots */}
       <m.div
@@ -116,7 +116,7 @@ export default function Hero() {
       </m.div>
 
       {/* Main Hero Writing Section */}
-      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-7xl pt-4 sm:pt-8 flex-1 flex flex-col justify-center">
+      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-7xl pt-0 sm:pt-2 flex-1 flex flex-col justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
           {/* Left Column: Headline, Subtitle, Capability words, CTAs */}

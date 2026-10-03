@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { REAL_LAND_DOTS } from './globeData';
 
 interface HubLocation {
   name: string;
@@ -26,66 +27,6 @@ const GLOBAL_HUBS: HubLocation[] = [
   { name: 'New York', lat: 40.7128, lon: -74.006 },
 ];
 
-// Simplified fast landmass checker for Earth continents
-function isLand(lat: number, lon: number): boolean {
-  // Arabia & GCC (High fidelity)
-  if (lat >= 12 && lat <= 33 && lon >= 34 && lon <= 61) {
-    if (lat < 27 && lon < 40 && lat > 14 && lon < 43) return false; // Red Sea
-    return true;
-  }
-  // North Africa & Levant
-  if (lat >= 12 && lat <= 37 && lon >= -17 && lon <= 55) {
-    return true;
-  }
-  // Sub-Saharan Africa
-  if (lat >= -35 && lat < 12 && lon >= 8 && lon <= 52) {
-    if (lat < -10 && lon < 12) return false;
-    return true;
-  }
-  if (lat >= 4 && lat <= 12 && lon >= -18 && lon <= 8) {
-    return true; // West Africa
-  }
-  // Europe
-  if (lat >= 36 && lat <= 71 && lon >= -10 && lon <= 45) {
-    if (lat >= 36 && lat <= 42 && lon >= 0 && lon <= 20 && lat < 40) return false; // Med sea
-    return true;
-  }
-  // Asia
-  if (lat >= 8 && lat <= 75 && lon >= 45 && lon <= 145) {
-    if (lat < 24 && lon > 56 && lon < 70) return false; // Arabian sea
-    if (lat < 22 && lon > 80 && lon < 93) return false; // Bay of Bengal
-    return true;
-  }
-  // North America
-  if (lat >= 15 && lat <= 72 && lon >= -168 && lon <= -52) {
-    if (lat < 25 && lon > -80) return false; // Caribbean
-    if (lat > 55 && lon > -75 && lon < -60) return false; // Hudson Bay
-    return true;
-  }
-  // South America
-  if (lat >= -56 && lat <= 13 && lon >= -82 && lon <= -34) {
-    if (lat < -20 && lon > -40) return false;
-    if (lat < -40 && lon > -60) return false;
-    return true;
-  }
-  // Australia & New Zealand
-  if (lat >= -44 && lat <= -10 && lon >= 113 && lon <= 154) {
-    return true;
-  }
-  // Japan / UK
-  if (lat >= 30 && lat <= 46 && lon >= 129 && lon <= 146) return true; // Japan
-  if (lat >= 50 && lat <= 60 && lon >= -11 && lon <= 2) return true; // UK
-  return false;
-}
-
-interface Point3D {
-  x: number;
-  y: number;
-  z: number;
-  isGCC?: boolean;
-  isOcean?: boolean;
-}
-
 export default function PontLookGlobe({ className = '' }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -94,15 +35,13 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
     y: 0,
     visible: false,
   });
-  const [isInteracting, setIsInteracting] = useState(false);
 
-  // Rotation angles: subtle pitch (side view) + axial side roll + rotating yaw
+  // Rotation angles: side 3D pitch + natural axial tilt + rotating yaw
   const rotationRef = useRef({
     phi: 0.16, // Side 3D pitch (~9 degrees elevated above equator)
     tilt: 0.38, // Earth's natural axial side tilt (~22 degrees)
-    theta: 0.85, // Yaw centering Arabia/GCC toward viewer initially
-    velTheta: 0.0035, // Slow, continuous auto-rotation
-    velPhi: 0,
+    theta: -0.85, // Yaw centering Arabia/GCC toward viewer initially
+    velTheta: 0.003, // Slow, continuous auto-rotation
     isDragging: false,
     lastMouseX: 0,
     lastMouseY: 0,
@@ -123,42 +62,17 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
     let dpr = 1;
     let isVisible = true;
 
-    // Convert lat/lon to 3D unit coordinates
+    // Convert lat/lon to standard 3D unit coordinates: [x, y, z]
+    // x = cos(lat) * sin(lon), y = sin(lat), z = cos(lat) * cos(lon)
     const toUnitCoord = (lat: number, lon: number): [number, number, number] => {
-      const phi = ((90 - lat) * Math.PI) / 180;
-      const theta = ((lon + 180) * Math.PI) / 180;
+      const radLat = (lat * Math.PI) / 180;
+      const radLon = (lon * Math.PI) / 180;
       return [
-        -Math.sin(phi) * Math.cos(theta),
-        Math.cos(phi),
-        Math.sin(phi) * Math.sin(theta),
+        Math.cos(radLat) * Math.sin(radLon),
+        Math.sin(radLat),
+        Math.cos(radLat) * Math.cos(radLon),
       ];
     };
-
-    // Generate uniform Fibonacci sphere distribution for seamless 3D surface
-    const dots: Point3D[] = [];
-    const totalSamples = 3200;
-    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
-
-    for (let i = 0; i < totalSamples; i++) {
-      const y = 1 - (i / (totalSamples - 1)) * 2; // -1 to +1
-      const radAtY = Math.sqrt(Math.max(0, 1 - y * y));
-      const thetaAngle = goldenAngle * i;
-      const x = Math.cos(thetaAngle) * radAtY;
-      const z = Math.sin(thetaAngle) * radAtY;
-
-      const lat = Math.asin(y) * (180 / Math.PI);
-      const lon = Math.atan2(x, z) * (180 / Math.PI);
-
-      const land = isLand(lat, lon);
-      const inGCC = lat >= 14 && lat <= 32 && lon >= 36 && lon <= 60;
-
-      if (land || inGCC) {
-        dots.push({ x, y, z, isGCC: inGCC, isOcean: false });
-      } else if (i % 6 === 0) {
-        // Faint ocean dots for subtle spherical volume definition
-        dots.push({ x, y, z, isGCC: false, isOcean: true });
-      }
-    }
 
     const gccUnit = toUnitCoord(GCC_HUB.lat, GCC_HUB.lon);
     const hubUnits = GLOBAL_HUBS.map((h) => ({
@@ -181,7 +95,7 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
         const mag = Math.sqrt(lx * lx + ly * ly + lz * lz) || 1;
 
         // Elevated curved arc in 3D
-        const altitude = 1.0 + Math.sin(t * Math.PI) * 0.24;
+        const altitude = 1.0 + Math.sin(t * Math.PI) * 0.22;
         points.push([(lx / mag) * altitude, (ly / mag) * altitude, (lz / mag) * altitude]);
       }
       return points;
@@ -200,8 +114,8 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
       canvas.style.height = `${height}px`;
       ctx.scale(dpr, dpr);
 
-      // Adaptive globe radius based on container
-      radius = Math.min(width, height) * 0.40;
+      // Adaptive globe radius
+      radius = Math.min(width, height) * 0.41;
     };
 
     resize();
@@ -231,8 +145,8 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
       if (!rot.isDragging) {
         rot.theta += rot.velTheta;
         rot.velTheta *= 0.985;
-        if (Math.abs(rot.velTheta) < 0.0035) {
-          rot.velTheta = 0.0035;
+        if (Math.abs(rot.velTheta) < 0.003) {
+          rot.velTheta = 0.003;
         }
       }
 
@@ -278,14 +192,14 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
 
         return {
           x: cx + rx3 * scale * persp,
-          y: cy + ry3 * scale * persp,
+          y: cy - ry3 * scale * persp, // Canvas Y goes down
           z: rz3,
           front: rz3 > -0.1,
           persp,
         };
       };
 
-      // 1. Subtle, clean dark globe sphere background (NO orange hole / halo!)
+      // 1. Subtle, clean dark globe sphere background (NO orange halo / hole)
       const sphereGrad = ctx.createRadialGradient(
         cx - radius * 0.25,
         cy - radius * 0.25,
@@ -294,7 +208,7 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
         cy,
         radius
       );
-      sphereGrad.addColorStop(0, '#101216');
+      sphereGrad.addColorStop(0, '#111317');
       sphereGrad.addColorStop(0.7, '#07080a');
       sphereGrad.addColorStop(1, '#020304');
       ctx.fillStyle = sphereGrad;
@@ -309,15 +223,15 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
       ctx.arc(cx, cy, radius, 0, Math.PI * 2);
       ctx.stroke();
 
-      // 2. Render 3D Surface Dots
-      for (let i = 0; i < dots.length; i++) {
-        const dot = dots[i];
-        const p = project(dot.x, dot.y, dot.z, radius);
+      // 2. Render Real Continent Dots from REAL_LAND_DOTS
+      for (let i = 0; i < REAL_LAND_DOTS.length; i++) {
+        const dot = REAL_LAND_DOTS[i];
+        const p = project(dot[0], dot[1], dot[2], radius);
 
         if (!p.front) {
-          // Subtle translucent backside dots for genuine 3D glass sphere depth
-          if (!dot.isOcean && p.z > -0.7) {
-            const backAlpha = 0.04 + Math.max(0, p.z + 0.7) * 0.04;
+          // Translucent backside dots for 3D depth
+          if (p.z > -0.65) {
+            const backAlpha = 0.04 + Math.max(0, p.z + 0.65) * 0.05;
             ctx.fillStyle = `rgba(255, 255, 255, ${backAlpha})`;
             ctx.beginPath();
             ctx.arc(p.x, p.y, 0.75 * p.persp, 0, Math.PI * 2);
@@ -328,10 +242,11 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
 
         // Depth perspective (0 front edge to 1 closest to viewer)
         const depth = Math.max(0, Math.min(1, (p.z + 0.1) / 1.1));
+        const isGCC = dot[3] === 1;
 
-        if (dot.isGCC) {
+        if (isGCC) {
           // Highlighted PontLook GCC dots (Saudi Arabia / UAE)
-          const size = (2.2 + depth * 0.8) * p.persp;
+          const size = (2.2 + depth * 0.9) * p.persp;
           const alpha = 0.75 + depth * 0.25;
           ctx.fillStyle = `rgba(255, 92, 0, ${alpha})`;
           ctx.shadowColor = 'rgba(255, 92, 0, 0.75)';
@@ -340,16 +255,9 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
           ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
           ctx.fill();
           ctx.shadowBlur = 0;
-        } else if (dot.isOcean) {
-          // Faint oceanic depth grid dots
-          const alpha = 0.08 + depth * 0.12;
-          ctx.fillStyle = `rgba(180, 200, 230, ${alpha})`;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 0.85 * p.persp, 0, Math.PI * 2);
-          ctx.fill();
         } else {
-          // Crisp continent dots
-          const size = (1.1 + depth * 1.1) * p.persp;
+          // Real continent landmass dots
+          const size = (1.15 + depth * 1.05) * p.persp;
           const alpha = 0.28 + depth * 0.72;
           ctx.fillStyle = `rgba(240, 244, 250, ${alpha})`;
           ctx.beginPath();
@@ -378,7 +286,7 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
         }
 
         if (firstDrawn) {
-          ctx.strokeStyle = 'rgba(255, 110, 20, 0.32)';
+          ctx.strokeStyle = 'rgba(255, 110, 20, 0.3)';
           ctx.lineWidth = 1.25;
           ctx.setLineDash([4, 4]);
           ctx.stroke();
@@ -492,7 +400,6 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
     rot.lastMouseX = e.clientX;
     rot.lastMouseY = e.clientY;
     rot.velTheta = 0;
-    setIsInteracting(true);
   }, []);
 
   const onPointerMove = useCallback((e: React.PointerEvent) => {
@@ -505,10 +412,10 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
     rot.lastMouseY = e.clientY;
 
     rot.theta += dx * 0.005;
-    rot.phi = Math.max(-0.6, Math.min(0.6, rot.phi - dy * 0.004));
+    rot.phi = Math.max(-0.55, Math.min(0.55, rot.phi - dy * 0.004));
 
     // Save instant velocity for smooth inertia
-    rot.velTheta = dx * 0.0035;
+    rot.velTheta = dx * 0.003;
   }, []);
 
   const onPointerUp = useCallback((e: React.PointerEvent) => {
@@ -519,13 +426,12 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
     }
     const rot = rotationRef.current;
     rot.isDragging = false;
-    setIsInteracting(false);
   }, []);
 
   return (
     <div
       ref={containerRef}
-      className={`relative w-full aspect-square max-w-[480px] lg:max-w-[540px] mx-auto select-none touch-none cursor-grab active:cursor-grabbing ${className}`}
+      className={`relative w-full aspect-square max-w-[460px] lg:max-w-[520px] mx-auto select-none touch-none cursor-grab active:cursor-grabbing ${className}`}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -559,17 +465,6 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
           </div>
         </div>
       )}
-
-      {/* Tech Overlay: Bottom indicator badge */}
-      <div className="absolute bottom-1 inset-x-2 flex items-center justify-between pointer-events-none text-[10px] font-mono text-neutral-400">
-        <div className="flex items-center gap-1.5 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] animate-pulse" />
-          <span>GCC HUB · RIYADH &amp; DUBAI</span>
-        </div>
-        <span className="hidden sm:inline-block text-neutral-400 bg-black/50 px-2 py-0.5 rounded-full border border-white/5">
-          {isInteracting ? 'Rotating' : 'Drag to rotate'}
-        </span>
-      </div>
     </div>
   );
 }
