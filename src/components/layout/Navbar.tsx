@@ -559,8 +559,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             <li>
               <Link
                 href="https://blog.pontlook.com"
-                target="_blank"
-                rel="noopener noreferrer"
                 className={`relative z-10 inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-medium rounded-full transition-colors duration-200 ${
                   isLightSection
                     ? 'text-neutral-700 hover:text-neutral-950 hover:bg-black/[0.04]'
@@ -568,7 +566,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 }`}
               >
                 <span>{dict.nav.blog}</span>
-                <ExternalLink size={11} className="opacity-70" />
               </Link>
             </li>
           </ul>
@@ -838,13 +835,11 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       <m.div variants={staggerItemMobile}>
                         <Link
                           href="https://blog.pontlook.com"
-                          target="_blank"
-                          rel="noopener noreferrer"
                           onClick={() => setOpen(false)}
                           className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-sm font-medium text-neutral-300 hover:text-white transition-all active:scale-[0.98]"
                         >
                           <span>{dict.nav.blog}</span>
-                          <ExternalLink size={14} className="text-neutral-400" />
+                          <ArrowRight size={14} className="text-neutral-400 rtl:-scale-x-100" />
                         </Link>
                       </m.div>
                     </div>

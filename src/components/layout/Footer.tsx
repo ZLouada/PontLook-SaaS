@@ -129,7 +129,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="https://blog.pontlook.com/" className="inline-flex min-h-[44px] items-center gap-1 hover:text-white transition-colors sm:min-h-0 sm:py-1.5" target="_blank" rel="noopener noreferrer">
+                <a href="https://blog.pontlook.com/" className="inline-flex min-h-[44px] items-center gap-1 hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
                   {dict.nav?.blog || 'Blog'}
                 </a>
               </li>

@@ -94,16 +94,16 @@ export default function WhyDifferent() {
       id: 'diagnose',
       index: '01',
       icon: Target,
-      badge: isAr ? 'التشخيص المهاري' : 'Skill Diagnosis',
-      title: c?.diagnose?.title || (isAr ? 'تشخيص دقيق لفجوات الكفاءات والمهارات' : 'Diagnose Your Skill Gaps'),
-      angle: isAr ? 'تحويل الاحتياجات العامة إلى أولويات تدريبية واضحة' : 'Actionable Workforce Gap Analysis',
+      badge: isAr ? 'تشخيص' : 'DIAGNOSE',
+      title: c?.diagnose?.title || (isAr ? 'شخّص فجواتك المهارية بدقة' : 'Pinpoint Your Exact Skill Gaps'),
+      angle: isAr ? 'تشخيص السبب الجذري قبل إنفاق الميزانية' : 'Root Cause Skill Diagnosis',
       visualMetaphor: isAr ? 'بيئة مؤسسية تشخيصية لتحليل الفجوات' : 'Corporate environment & meeting spaces representing capability gaps',
       text:
         c?.diagnose?.text ||
         (isAr
-          ? 'نساعدك على تحديد الفجوات الحقيقية في الكفاءات عبر مختلف فرق العمل في منشأتك، وتحويل الطلبات غير الدقيقة إلى خطط تطوير واضحة ومجدية.'
-          : 'We help you identify hidden capability gaps and workforce challenges across your teams, turning vague training requests into clear, actionable development priorities.'),
-      cta: c?.diagnose?.cta || (isAr ? 'استكشف أدلة ومقالات التعلم والتطوير' : 'Explore our L&D guides & blog'),
+          ? 'متردد بين التدريب الإداري، أو التقني، أو تطوير ثقافة العمل؟ نساعدك على تشخيص السبب الجذري قبل إنفاق الميزانية.'
+          : 'Unsure whether you need management training, technical upskilling, or cultural alignment? We help you diagnose the root cause before spending budget.'),
+      cta: c?.diagnose?.cta || (isAr ? 'اقرأ أدلة التشخيص المهاري' : 'Read our diagnosis guides'),
       href: 'https://blog.pontlook.com',
       isExternal: false,
       takeaways: [
@@ -150,21 +150,21 @@ export default function WhyDifferent() {
       ),
     },
 
-    // Card 2: Matched Directly with the Right Training Partner (BadgeCheck icon)
+    // Card 2: Handpicked Training Specialists (BadgeCheck icon)
     {
       id: 'match',
       index: '02',
       icon: BadgeCheck,
-      badge: isAr ? 'المطابقة المباشرة' : 'Direct Matching',
-      title: c?.match?.title || (isAr ? 'ربط مباشر مع الشريك التدريبي الأنسب' : 'Matched Directly with the Right Training Partner'),
-      angle: isAr ? 'بدون عروض تسويقية مزعجة' : 'No Cold Sales Pitches',
+      badge: isAr ? 'مطابقة' : 'MATCH',
+      title: c?.match?.title || (isAr ? 'خبراء تدريب تم اختيارهم بعناية' : 'Handpicked Training Specialists'),
+      angle: isAr ? 'بدون بحث طويل أو عروض بيع مزعجة' : 'Zero Cold Sales Pitches',
       visualMetaphor: isAr ? 'مسارات تقاطع وجسور تربط بين طرفين' : 'Bridges & intersecting pathways linking enterprise to provider',
       text:
         c?.match?.text ||
         (isAr
-          ? 'بدون بحث طويل أو عروض بيع عشوائية. نربط متطلباتك الدقيقة مع جهات تدريبية معتمدة ومثبتة النتائج قادرة على تقديم برامج عالية الأثر.'
-          : 'No endless searching or cold sales pitches. We match your specific requirements directly with vetted corporate training firms proven to deliver measurable results.'),
-      cta: c?.match?.cta || (isAr ? 'احصل على مطابقة تدريبية' : 'Get matched for training'),
+          ? 'تجاوز البحث العشوائي وعروض المبيعات المزعجة. نطابقك مع جهات تدريب معتمدة تمتلك سجلاً حافلاً بالنتائج المثبتة في قطاعك.'
+          : 'Skip Google searches and cold sales pitches. We match you with pre-vetted corporate training firms with proven track records in your industry.'),
+      cta: c?.match?.cta || (isAr ? 'اعثر على شريك تدريب' : 'Find a training partner'),
       href: `/${lang}/find-training`,
       isExternal: false,
       takeaways: [
@@ -205,21 +205,21 @@ export default function WhyDifferent() {
       ),
     },
 
-    // Card 3: Direct Access to Verified Decision Makers (Building2 icon)
+    // Card 3: Direct Access to Budget Owners (Building2 icon)
     {
       id: 'access',
       index: '03',
       icon: Building2,
-      badge: isAr ? 'وصول تنفيذي' : 'Executive Access',
-      title: c?.access?.title || (isAr ? 'وصول مباشر لصناع القرار المعتمدين' : 'Direct Access to Verified Decision Makers'),
+      badge: isAr ? 'تواصل' : 'CONNECT',
+      title: c?.access?.title || (isAr ? 'وصول مباشر لأصحاب الميزانيات' : 'Direct Access to Budget Owners'),
       angle: c?.access?.angle || (isAr ? 'تحدث مباشرة مع أصحاب الميزانيات وصلاحيات التعاقد' : 'Skip the Gatekeepers. Talk Directly to the Budget Owners.'),
       visualMetaphor: isAr ? 'أروقة تنفيذية راقية وإطلالات على مدن الأعمال' : 'Executive corporate corridors & high-level cityscapes',
       text:
         c?.access?.text ||
         (isAr
-          ? 'لا مزيد من إهدار الوقت في التواصل غير المجدي. نصلك مباشرة برؤساء الموارد البشرية ومدراء المواهب والتنفيذيين الذين يملكون سلطة شراء واحتياجات تدريب حقيقية.'
-          : 'Stop wasting time with dead end outreach. We connect you directly with CHROs, VPs of Talent, and C Suite executives who hold verified purchasing authority and active L&D needs.'),
-      cta: c?.access?.cta || (isAr ? 'انضم كمزود تدريب' : 'Apply as a Provider'),
+          ? 'يتواصل مزودو التدريب مباشرة مع رؤساء قطاع الموارد البشرية والتدريب أصحاب الميزانيات المعتمدة، وليس مع وسطاء.'
+          : 'Training providers connect directly with CHROs and L&D leaders who have active, funded requirements—not gatekeepers or interns.'),
+      cta: c?.access?.cta || (isAr ? 'انضم كمزود تدريب' : 'Join as a provider'),
       href: `/${lang}/for-providers`,
       isExternal: false,
       takeaways: [
@@ -252,7 +252,7 @@ export default function WhyDifferent() {
             </div>
             <div className="min-w-0 font-sans">
               <div className="text-[11px] font-semibold text-neutral-900 truncate">
-                {c?.access?.role || (isAr ? 'رئيس قطاع الموارد البشرية (CHRO)' : 'Chief Human Resources Officer (CHRO)')}
+                {c?.access?.role || (isAr ? 'الرئيس التنفيذي للموارد البشرية (CHRO)' : 'Chief Human Resources Officer (CHRO)')}
               </div>
               <div className="text-[9px] text-neutral-500 truncate">{isAr ? 'تعاقد مباشر ومؤكد' : 'Verified Direct Engagement'}</div>
             </div>
@@ -261,21 +261,21 @@ export default function WhyDifferent() {
       ),
     },
 
-    // Card 4: Clients Ready to Partner (Handshake icon - authentic B2B business partnership)
+    // Card 4: Pre-Scoped, Funded Engagements (Handshake icon)
     {
       id: 'ready',
       index: '04',
       icon: Handshake,
-      badge: isAr ? 'جاهزية التعاقد' : 'Ready to Partner',
-      title: c?.ready?.title || (isAr ? 'عملاء مستعدون للتعاقد والشراكة' : 'Clients Ready to Partner'),
-      angle: isAr ? 'فرص بميزانيات واضحة وأهداف محددة' : 'Active Purchasing Intent',
+      badge: isAr ? 'جاهزية' : 'SERIOUS',
+      title: c?.ready?.title || (isAr ? 'فرص محددة النطاق وبميزانيات مؤكدة' : 'Pre-Scoped, Funded Engagements'),
+      angle: isAr ? 'ميزانيات مؤكدة وموافقة تنفيذية مسبقة' : 'Active Purchasing Intent',
       visualMetaphor: isAr ? 'محاذاة مهنية وشراكة أعمال مباشرة' : 'Professional alignment & mutual enterprise partnership',
       text:
         c?.ready?.text ||
         (isAr
-          ? 'نقدر خبرتكم وتخصصكم. بدلاً من الفرص التخمينية، نقدم لكم منظمات جادة جاهزة للاستثمار بميزانيات محددة وأهداف دقيقة لضمان شراكة ناجحة للطرفين.'
-          : 'We respect your expertise. Instead of speculative leads, we bring you serious organizations that are ready to invest, with defined budgets and clear goals, creating partnerships where both sides succeed.'),
-      cta: c?.ready?.cta || (isAr ? 'تواصل مع عملاء جاهزين' : 'Connect with Ready Clients'),
+          ? 'يتم التحقق من ميزانية وجدية كل طلب مؤسسي وموافقة صاحب القرار قبل ربطه بأي شريك تدريبي.'
+          : 'Every corporate request is verified for budget, timeline, and decision-maker buy-in before reaching a training partner.'),
+      cta: c?.ready?.cta || (isAr ? 'استعرض الفرص النشطة' : 'View active demand'),
       href: `/${lang}/for-providers`,
       isExternal: false,
       takeaways: [
@@ -316,21 +316,21 @@ export default function WhyDifferent() {
       ),
     },
 
-    // Card 5: L&D Knowledge Hub (BookOpen icon)
+    // Card 5: Free Regional L&D Toolkits (BookOpen icon)
     {
       id: 'hub',
       index: '05',
       icon: BookOpen,
-      badge: isAr ? 'مركز المعرفة' : 'Knowledge Hub',
-      title: c?.hub?.title || (isAr ? 'مركز المعرفة والأبحاث التدريبية' : 'L&D Knowledge Hub'),
+      badge: isAr ? 'أدلة مجانية' : 'LEARN',
+      title: c?.hub?.title || (isAr ? 'حقائب وأدلة تطويرية مجانية' : 'Free Regional L&D Toolkits'),
       angle: isAr ? 'أدلة مجانية ودراسات سوقية موثوقة' : 'Free Practical Frameworks & Benchmarks',
       visualMetaphor: isAr ? 'إضاءة معرفية وهياكل تحليل البيانات' : 'Illuminated frameworks, libraries & data visualization',
       text:
         c?.hub?.text ||
         (isAr
-          ? 'نحلل باستمرار اتجاهات التدريب المؤسسي في المنطقة ونشارك حلولاً عملية وأدلة مجانية على مدونتنا، لمساعدة مسؤولي التطوير على اتخاذ قرارات تدريبية مدروسة.'
-          : 'We continuously analyze corporate training trends across the region and share fresh, actionable insights on our blog, providing free frameworks, guides, and research to help you make smarter L&D decisions.'),
-      cta: c?.hub?.cta || (isAr ? 'استكشف المدونة والموارد' : 'Explore our blog & resources'),
+          ? 'أدلة عملية، ومؤشرات فجوات التوطين الخليجية، ونماذج قياس عائد الاستثمار على التدريب — مجاناً بالكامل على مدونتنا.'
+          : 'Practical guides, Saudization/Emiratization workforce benchmarks, and corporate training ROI templates—completely free on our blog.'),
+      cta: c?.hub?.cta || (isAr ? 'تصفح الأدلة والموارد المجانية' : 'Browse free resources'),
       href: 'https://blog.pontlook.com',
       isExternal: true,
       takeaways: [
@@ -393,9 +393,14 @@ export default function WhyDifferent() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-5 sm:mb-8 text-center max-w-3xl mx-auto space-y-2 sm:space-y-2.5"
         >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-semibold uppercase tracking-wider font-sans mb-1">
+            <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 animate-pulse" />
+            <span>{dict.why_different?.eyebrow || (isAr ? 'حلول عملية مباشرة' : 'PROBLEM SOLVED')}</span>
+          </div>
+
           <TextReveal
             as="h2"
-            text={dict.why_different?.title || (isAr ? 'تحول عمليتنا التشخيصية طلبات تدريب الشركات المبهمة إلى خطط تطوير منظمة وقابلة للتنفيذ.' : 'Our diagnostic process turns vague corporate training requests into structured, actionable development roadmaps.')}
+            text={dict.why_different?.title || (isAr ? 'حدد فجواتك بدقة. ارتبط بنخبة الخبراء المعتمدين. بدون أي تعقيدات مشتريات.' : 'Pinpoint your gaps. Connect with vetted experts. Zero procurement friction.')}
             className="h-section text-neutral-950"
           />
 

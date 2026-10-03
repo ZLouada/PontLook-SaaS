@@ -103,7 +103,7 @@ export default function CommandMenu({ open, onOpenChange, lang = 'en' }: Command
         descEn: 'Deep-dive frameworks, budget guides, and executive whitepapers',
         descAr: 'أبحاث ودراسات وأدلة ميزانيات التدريب للقيادات التنفيذية',
         href: 'https://blog.pontlook.com',
-        external: true,
+        external: false,
         icon: BookOpen,
         keywords: ['blog', 'research', 'guides', 'مدونة', 'أبحاث', 'مقالات', 'معايير'],
       },

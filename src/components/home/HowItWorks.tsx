@@ -100,181 +100,170 @@ export default function HowItWorks() {
   };
 
   const steps = [
-    // Step 01 - Demand Detection
+    // Step 01 - Tell Us
     {
       id: 'step1',
       stepNumber: '01',
-      navTitle: isAr ? 'رصد الاحتياج' : 'Demand Detection',
-      mobileNavTitle: isAr ? 'رصد الطلب' : 'Demand',
-      tag: isAr ? 'الخطوة 01 // رصد الاحتياج المؤسسي' : 'STEP 01 // DEMAND DETECTION',
+      navTitle: isAr ? 'أخبرنا باحتياجك' : 'Tell Us',
+      mobileNavTitle: isAr ? 'أخبرنا' : 'Tell Us',
+      tag: isAr ? 'الخطوة 01 · دقيقتان' : 'STEP 01 · 2 MINUTES',
       tagColor: 'text-neutral-950',
       headline: isAr
-        ? 'رصد احتياجات التدريب المؤسسي المؤكدة قبل طرحها في السوق'
-        : 'Detect verified enterprise training demand before it goes public',
+        ? 'أخبرنا بما يحتاج فريقك إلى تحقيقه وتعلّمه'
+        : 'Tell us what your workforce needs to achieve',
       desc: isAr
-        ? 'نرصد باستمرار مؤشرات التوظيف، وإعادة الهيكلة، وفجوات الكفاءات عبر الشركات في السعودية والإمارات بميزانيات معتمدة ومؤكدة.'
-        : 'Continuous market intelligence detecting workforce restructuring and capability gaps with confirmed corporate budgets.',
+        ? 'حدد تحدي فريقك، والجدول الزمني، وعدد الموظفين. بدون أي مصطلحات تقنية معقدة.'
+        : "Submit your department's challenge, timeline, and team size. No technical jargon required.",
       canvasBg: 'bg-neutral-50/90 border-neutral-200/80',
       console: (
         <div className="w-full bg-white rounded-xl border border-neutral-200/80 p-3 sm:p-4 shadow-sm space-y-2.5 font-sans">
           {/* Console Window Header */}
           <div className="flex items-center justify-between pb-2 border-b border-neutral-200/80 text-xs">
             <span className="text-neutral-700 text-[11px] font-medium">
-              {isAr ? 'رادار الاحتياج المؤسسي' : 'Enterprise Demand Feed'}
+              {isAr ? 'طلب تدريب جديد' : 'New Training Request'}
             </span>
             <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50/80 border border-blue-200 text-blue-950 text-[10px] font-semibold">
               <Signal tone="accent" size={12} />
-              <span className="text-blue-900">{isAr ? 'إشارة نشطة' : 'Active Signal'}</span>
+              <span className="text-blue-900">{isAr ? 'تم استلام الطلب' : 'Request Received'}</span>
             </div>
           </div>
 
-          {/* Lead Item 1 */}
-          <div className="p-2.5 sm:p-3 rounded-lg bg-neutral-50/90 border border-neutral-200/70 space-y-1 text-xs shadow-xs">
+          {/* Lead Details */}
+          <div className="p-2.5 sm:p-3 rounded-lg bg-neutral-50/90 border border-neutral-200/70 space-y-1.5 text-xs shadow-xs">
             <div className="flex items-center justify-between">
+              <span className="text-neutral-500">{isAr ? 'القطاع والموقع' : 'Sector & Location'}</span>
               <span className="font-semibold text-neutral-950">
-                {isAr ? 'الخدمات المالية والمصرفية · الرياض' : 'Banking & FinTech · Riyadh'}
-              </span>
-              <span className="font-bold text-neutral-950 tabular-nums">SAR 450,000+</span>
-            </div>
-            <div className="flex items-center justify-between text-neutral-500 text-[11px]">
-              <span>{isAr ? '1,200+ موظف' : '1,200+ Employees'}</span>
-              <span className="text-neutral-700 font-medium">
-                {isAr ? 'أولوية عاجلة · القيادة التنفيذية' : 'High Intent · Executive Leadership'}
+                {isAr ? 'الخدمات المالية · الرياض' : 'Financial Services · Riyadh'}
               </span>
             </div>
-          </div>
-
-          {/* Lead Item 2 */}
-          <div className="p-2.5 sm:p-3 rounded-lg bg-neutral-50/90 border border-neutral-200/70 space-y-1 text-xs shadow-xs">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-neutral-950">
-                {isAr ? 'الطاقة والبنية التحتية · الظهران' : 'Energy & Infrastructure · Dhahran'}
-              </span>
-              <span className="font-bold text-neutral-900 text-[11px]">
-                {isAr ? 'ميزانية مؤكدة' : 'Confirmed Budget'}
+              <span className="text-neutral-500">{isAr ? 'التحدي التدريبي' : 'Training Challenge'}</span>
+              <span className="font-medium text-neutral-900">
+                {isAr ? 'القيادة التنفيذية والاستراتيجية الرقمية' : 'Executive Decision-Making & Digital Strategy'}
               </span>
             </div>
-            <div className="flex items-center justify-between text-neutral-500 text-[11px]">
-              <span>{isAr ? 'التحول الرقمي والذكاء الاصطناعي' : 'Digital Transformation & AI'}</span>
-              <span className="text-neutral-700 font-medium">
-                {isAr ? 'موعد التنفيذ: الربع الثاني' : 'Deployment: Q2'}
-              </span>
+            <div className="flex items-center justify-between pt-0.5 border-t border-neutral-200/60 text-[11px]">
+              <span className="text-neutral-500">{isAr ? 'حالة الميزانية' : 'Budget Status'}</span>
+              <span className="font-bold text-neutral-950">SAR 150,000+ ({isAr ? 'مؤكدة' : 'Confirmed'})</span>
             </div>
           </div>
         </div>
       ),
     },
 
-    // Step 02 - Fit Scoring
+    // Step 02 - Review Matches
     {
       id: 'step2',
       stepNumber: '02',
-      navTitle: isAr ? 'التأهيل والربط' : 'Fit Scoring',
-      mobileNavTitle: isAr ? 'التأهيل' : 'Fit Scoring',
-      tag: isAr ? 'الخطوة 02 // التأهيل والربط المعتمد' : 'STEP 02 // FIT SCORING & QUALIFICATION',
+      navTitle: isAr ? 'مراجعة الخبراء' : 'Review Matches',
+      mobileNavTitle: isAr ? 'المراجعة' : 'Review',
+      tag: isAr ? 'الخطوة 02 · 48 ساعة' : 'STEP 02 · 48 HOURS',
       tagColor: 'text-neutral-950',
       headline: isAr
-        ? 'تقييم تحليلي وبشري دقيق يطابق المتطلبات الحقيقية مع نخبة الخبراء'
-        : 'Deep analyst and human scoring against real enterprise constraints',
+        ? 'راجع من 2 إلى 3 عروض لخبراء تم اختيارهم بعناية'
+        : 'Review 2 to 3 handpicked, proven proposals',
       desc: isAr
-        ? 'خوارزمية تقييم شاملة تطابق سجل إنجازات المزود، اعتمادات المدربين، ومصادقة رؤساء قطاع الموارد البشرية.'
-        : 'Proprietary algorithm evaluating provider track record, trainer credentials, and direct CHRO qualification.',
+        ? 'نفحص مزودي التدريب مسبقاً وفق خبرتهم الإقليمية، وسوابق أعمالهم، وملاءمة الحقيبة التدريبية.'
+        : 'We pre-screen providers for regional experience, real case studies, and exact curriculum fit.',
       canvasBg: 'bg-neutral-50/90 border-neutral-200/80',
       console: (
         <div className="w-full bg-white rounded-xl border border-neutral-200/80 p-3 sm:p-4 shadow-sm space-y-2.5 font-sans">
           {/* Console Window Header */}
           <div className="flex items-center justify-between pb-2 border-b border-neutral-200/80 text-xs">
             <span className="text-neutral-700 text-[11px] font-medium">
-              {isAr ? 'منظومة المطابقة والتأهيل' : 'Match & Qualification'}
+              {isAr ? 'عروض الخبراء المعتمدين' : 'Verified Provider Matches'}
             </span>
             <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-950 text-xs font-bold">
               <Signal tone="neutral" size={12} />
-              <span>94%</span>
-              <span className="text-[10px] font-normal text-neutral-600">{isAr ? 'تطابق' : 'Match'}</span>
+              <span>{isAr ? '2 مطابقات مؤكدة' : '2 Curated Matches'}</span>
             </div>
           </div>
 
-          {/* Progress Bar */}
-          <div className="space-y-1">
-            <div className="flex justify-between text-xs text-neutral-700 font-medium">
-              <span>{isAr ? 'معايير التأهيل المكتملة' : 'Criteria Fulfilled'}</span>
-              <span className="font-bold text-neutral-950">4 / 4 Complete</span>
+          {/* Provider Matches */}
+          <div className="space-y-1.5 text-xs text-neutral-800">
+            <div className="p-2 sm:p-2.5 rounded-lg bg-neutral-50/90 border border-neutral-200/70 flex items-center justify-between">
+              <div>
+                <span className="font-semibold text-neutral-950 block">
+                  {isAr ? 'معهد القيادة (معتمد سعودياً)' : 'Leadership Institute (KSA Certified)'}
+                </span>
+                <span className="text-[10px] text-neutral-500">
+                  {isAr ? 'سجل تسليم مثبت في القطاع المالي' : 'Proven delivery in banking & fintech'}
+                </span>
+              </div>
+              <span className="text-xs font-bold text-neutral-950 px-2 py-0.5 bg-white border border-neutral-200 rounded">
+                98% Fit
+              </span>
             </div>
-            <div className="h-1.5 w-full bg-neutral-200 border border-neutral-300/60 rounded-full overflow-hidden p-0.5">
-              <div className="h-full bg-neutral-950 rounded-full w-[94%]" />
+            <div className="p-2 sm:p-2.5 rounded-lg bg-neutral-50/90 border border-neutral-200/70 flex items-center justify-between">
+              <div>
+                <span className="font-semibold text-neutral-950 block">
+                  {isAr ? 'شركاء التدريب التنفيذي (الإمارات)' : 'Executive Training Partners (UAE)'}
+                </span>
+                <span className="text-[10px] text-neutral-500">
+                  {isAr ? 'خبراء تدريب وتطوير معتمدون' : 'Certified executive coaches'}
+                </span>
+              </div>
+              <span className="text-xs font-bold text-neutral-950 px-2 py-0.5 bg-white border border-neutral-200 rounded">
+                95% Fit
+              </span>
             </div>
           </div>
-
-          {/* Checklist items */}
-          <div className="space-y-1.5 pt-0.5 text-xs text-neutral-800">
-            <div className="p-2 rounded-lg bg-neutral-50/90 border border-neutral-200/70">
-              <span className="truncate block">
-                {isAr
-                  ? 'صاحب القرار: رئيس الموارد البشرية التنفيذي'
-                  : 'Decision Maker: Chief Human Resources Officer'}
-              </span>
-            </div>
-            <div className="p-2 rounded-lg bg-neutral-50/90 border border-neutral-200/70">
-              <span className="truncate block">
-                {isAr
-                  ? 'الجدول الزمني المعتمد: خلال 30 يوماً'
-                  : 'Timeline: Deployment within 30 days'}
-              </span>
-            </div>
+          <div className="pt-0.5 text-center text-[10px] text-neutral-500">
+            {isAr ? 'بدون عروض تسويقية مزعجة · بدون مزايدات' : 'No spam · Zero bidding wars'}
           </div>
         </div>
       ),
     },
 
-    // Step 03 - Direct Engagement
+    // Step 03 - Execute & Train
     {
       id: 'step3',
       stepNumber: '03',
-      navTitle: isAr ? 'التعاقد المباشر' : 'Direct Engagement',
-      mobileNavTitle: isAr ? 'التعاقد' : 'Direct Intro',
-      tag: isAr ? 'الخطوة 03 // التقديم المباشر والتعاقد' : 'STEP 03 // DIRECT ENGAGEMENT',
+      navTitle: isAr ? 'بدء التدريب' : 'Start Training',
+      mobileNavTitle: isAr ? 'التنفيذ' : 'Train',
+      tag: isAr ? 'الخطوة 03 · مباشرة وسلسة' : 'STEP 03 · SEAMLESS',
       tagColor: 'text-neutral-950',
       headline: isAr
-        ? 'تقديم مباشر وتواصل شخصي مع ضمان الدفع مقابل النتائج'
-        : 'Direct warm introductions with pay on success guarantees',
+        ? 'تواصل مباشرة وأطلق برنامجك التدريبي'
+        : 'Connect directly and launch your program',
       desc: isAr
-        ? 'تنسيق مباشر للاجتماعات مع قادة المنشآت المستعدين لمراجعة العروض والبدء، مع ضمان استبدال الفرصة خلال 5 أيام.'
-        : 'Direct executive introductions with decision makers ready to review proposals, backed by a 5-day replacement SLA.',
+        ? 'تعاقد مباشرة مع جهة التدريب المختارة. مجاناً للشركات؛ ونجاح المزود مرتبط بنجاحكم.'
+        : 'Contract directly with your chosen specialist. Free for companies; providers succeed when you succeed.',
       canvasBg: 'bg-neutral-50/90 border-neutral-200/80',
       console: (
         <div className="w-full bg-white rounded-xl border border-neutral-200/80 p-3 sm:p-4 shadow-sm space-y-2.5 font-sans">
           {/* Console Window Header */}
           <div className="flex items-center justify-between pb-2 border-b border-neutral-200/80 text-xs">
             <span className="text-neutral-700 text-[11px] font-medium">
-              {isAr ? 'لوحة التعاقد المباشر' : 'Direct Engagement Console'}
+              {isAr ? 'الربط المباشر وجدولة الانطلاق' : 'Direct Introduction'}
             </span>
             <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-950 text-[10px] font-semibold">
               <Signal tone="neutral" size={12} />
-              <span>{isAr ? 'تم التقديم' : 'Intro Complete'}</span>
+              <span>{isAr ? 'تمت الجدولة' : 'Kickoff Scheduled'}</span>
             </div>
           </div>
 
           {/* Status Box */}
           <div className="p-2.5 sm:p-3 rounded-lg bg-neutral-50/90 border border-neutral-200/70 space-y-1.5 text-xs shadow-xs">
             <div className="flex items-center justify-between">
-              <span className="text-neutral-500">{isAr ? 'حالة الفرصة' : 'Pipeline Status'}</span>
+              <span className="text-neutral-500">{isAr ? 'حالة التنسيق' : 'Engagement Status'}</span>
               <span className="font-semibold text-neutral-950 bg-neutral-100 px-2 py-0.5 rounded text-[10px] border border-neutral-200">
-                {isAr ? 'مرحلة تقديم العرض الفني' : 'Proposal Review Stage'}
+                {isAr ? 'اجتماع انطلاق البرنامج محدد' : 'Kickoff Session Confirmed'}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-neutral-500">{isAr ? 'ضمان الفرصة' : 'Guarantee SLA'}</span>
-              <span className="font-medium text-neutral-900 text-[11px]">
-                {isAr ? 'ضمان استبدال خلال 5 أيام' : '5 Day Replacement Guarantee'}
+              <span className="text-neutral-500">{isAr ? 'رسوم المنصة على الشركة' : 'Cost to Enterprise'}</span>
+              <span className="font-bold text-neutral-950 text-[11px]">
+                SAR 0 ({isAr ? 'مجاناً 100%' : '100% Free'})
               </span>
             </div>
           </div>
 
           {/* Contract Terms */}
           <div className="pt-0.5 flex items-center justify-between text-xs text-neutral-500">
-            <span>{isAr ? 'بدون عمولات خفية' : 'No hidden fees'}</span>
+            <span>{isAr ? 'بدون وسطاء أو عمولات خفية' : 'Zero middleman retainers'}</span>
             <span className="font-bold text-neutral-950">
-              {isAr ? 'علاقة تعاقدية مباشرة 100%' : '100% Direct Contract'}
+              {isAr ? 'علاقة تعاقدية مباشرة' : 'Direct Executive Contract'}
             </span>
           </div>
         </div>
@@ -342,35 +331,35 @@ export default function HowItWorks() {
             >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-semibold uppercase tracking-wider font-sans">
                 <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 animate-pulse" />
-                <span>{isAr ? 'آلية العمل خطوة بخطوة' : 'HOW IT WORKS // POSTFLOWS'}</span>
+                <span>{dict.how_it_works?.eyebrow || (isAr ? 'آلية العمل' : 'HOW IT WORKS')}</span>
               </div>
 
               <TextReveal
                 as="h2"
-                text={dict.how_it_works?.title || (isAr ? 'الرحلة من التحدي إلى الحل.' : 'The journey from challenge to solution.')}
+                text={dict.how_it_works?.title || (isAr ? 'من تشخيص الفجوة المهارية إلى التدريب في 3 خطوات واضحة' : 'From Skill Gap to Training in 3 Straightforward Steps')}
                 className="text-[1.5rem] xs:text-[1.75rem] sm:text-4xl lg:text-[40px] font-semibold text-neutral-950 tracking-tight leading-[1.18] font-heading"
               />
 
               <p className="text-sm sm:text-base text-neutral-600 font-sans leading-relaxed">
                 {dict.how_it_works?.subtitle ||
                   (isAr
-                    ? 'ربط صناع القرار بشركات تدريب الشركات عبر طلب موثق ومؤكد'
-                    : 'Connecting decision-makers with corporate training firms through verified demand')}
+                    ? 'بدون مزايدات. بدون اتصالات مبيعات مزعجة. شراكات تدريبية دقيقة وموثوقة فقط.'
+                    : 'Zero bidding wars. No endless cold calls. Just verified, tailor-made partnerships.')}
               </p>
 
               {/* Benefit Checkpoints */}
               <div className="space-y-2.5 pt-1 w-full text-sm text-neutral-700 font-sans">
                 <div className="flex items-center gap-2.5">
                   <CheckCircle2 size={16} className="text-neutral-950 shrink-0" />
-                  <span>{isAr ? 'ميزانيات معتمدة مؤكدة مع الإدارة المالية' : 'Pre-allocated corporate training budgets'}</span>
+                  <span>{isAr ? 'مجاناً 100% للمنشآت والشركات' : '100% Free for corporate organizations'}</span>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <CheckCircle2 size={16} className="text-neutral-950 shrink-0" />
-                  <span>{isAr ? 'مواءمة دقيقة مع 2 إلى 3 خبراء معتمدين كحد أقصى' : '2 to 3 curated specialists per mandate (Zero bidding wars)'}</span>
+                  <span>{isAr ? 'عروض منتقاة من 2 إلى 3 خبراء معتمدين (بدون مزايدات)' : '2 to 3 curated specialists per mandate (Zero bidding wars)'}</span>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <CheckCircle2 size={16} className="text-neutral-950 shrink-0" />
-                  <span>{isAr ? 'بدون اشتراكات شهرية، الدفع فقط مقابل النتائج' : 'Strict pay-on-success model with 5-day replacement SLA'}</span>
+                  <span>{isAr ? 'علاقة تعاقدية مباشرة وبدون اشتراكات شهرية' : 'Direct executive contracting with zero retainers'}</span>
                 </div>
               </div>
 

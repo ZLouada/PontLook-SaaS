@@ -23,10 +23,11 @@ export const en = {
     switch_lang: "العربية"
   },
   hero: {
-    headline: "Your direct bridge to smarter enterprise training and actionable workforce intelligence.",
-    subtitle: "Where GCC enterprises solve workforce challenges and verified training providers meet qualified demand.",
-    btn_provider: "I'm a training provider",
-    btn_buyer: "I'm looking for training",
+    eyebrow: "B2B TRAINING MATCHMAKING · GCC",
+    headline: "Find Vetted Corporate Trainers. Without the Search, Spam, or Guesswork.",
+    subtitle: "We match GCC companies facing workforce challenges directly with verified training specialists—100% free for organizations.",
+    btn_provider: "Join as a Training Provider",
+    btn_buyer: "Find a Training Partner",
     badges: {
       verified_deciders: { value: "100%", label: "Verified Decision Makers" },
       zero_retainer: { value: "Zero", label: "Monthly Retainer Risk" },
@@ -35,67 +36,67 @@ export const en = {
     }
   },
   trust_bar: {
-    needs: { title: "Verified Needs", desc: "Qualified enterprise demand" },
-    access: { title: "Direct Access", desc: "CHRO & L&D decision makers" },
-    insights: { title: "Actionable L&D guides & insights", desc: "Real-time industry & skill research" },
-    gcc: { title: "Regional Focus", desc: "Saudi Arabia, UAE & Gulf" }
+    needs: { title: "Verified Budgets & Needs", desc: "Every project has confirmed executive funding—no speculative requests." },
+    access: { title: "Direct to Decision-Makers", desc: "Speak directly to CHROs and L&D heads—no gatekeepers or spam." },
+    insights: { title: "Free L&D Toolkits & Guides", desc: "Practical audit checklists, templates, and regional salary/training data." },
+    gcc: { title: "Saudi Arabia & UAE Aligned", desc: "Tailored to Saudization (Nitaqat), Emiratization, and Vision 2030 standards." }
   },
   how_it_works: {
-    eyebrow: "Just in three steps",
-    title: "The journey from challenge to solution.",
-    subtitle: "Connecting decision-makers with corporate training firms through verified demand",
+    eyebrow: "HOW IT WORKS",
+    title: "From Skill Gap to Training in 3 Straightforward Steps",
+    subtitle: "Zero bidding wars. No endless cold calls. Just verified, tailor-made partnerships.",
     step1: {
-      badge: "Step 01",
-      title: "Detect Need",
-      subtitle: "Market intelligence surfaces enterprises with verified workforce challenges, before they start searching."
+      badge: "STEP 01 · 2 MINUTES",
+      title: "Tell Us Your Skill Gap",
+      subtitle: "Submit your department's challenge, timeline, and team size. No technical jargon required."
     },
     step2: {
-      badge: "Step 02",
-      title: "Qualify & Match",
-      subtitle: "Decision makers are validated, budgets and timelines confirmed, then matched to the right training provider."
+      badge: "STEP 02 · 48 HOURS",
+      title: "We Curate 2–3 Vetted Specialists",
+      subtitle: "We pre-screen providers for regional experience, real case studies, and exact curriculum fit."
     },
     step3: {
-      badge: "Step 03",
-      title: "Close the Engagement",
-      subtitle: "Warm introductions directly to decision makers who are ready for proposals."
+      badge: "STEP 03 · SEAMLESS",
+      title: "Direct Partnership & Delivery",
+      subtitle: "Contract directly with your chosen specialist. Free for companies; providers succeed when you succeed."
     }
   },
   why_different: {
-    eyebrow: "ACTIONABLE MARKET INTELLIGENCE",
-    title: "Our diagnostic process turns vague corporate training requests into structured, actionable development roadmaps.",
+    eyebrow: "PROBLEM SOLVED",
+    title: "Pinpoint your gaps. Connect with vetted experts. Zero procurement friction.",
     subtitle: "We analyze real GCC workplace challenges to deliver free, actionable problem-solving guides on our blog, and directly connect corporate leaders with the verified training providers ready to implement the solution.",
     cards: {
       diagnose: {
-        title: "Diagnose Your Skill Gaps",
-        text: "We help you identify hidden capability gaps and workforce challenges across your teams, turning vague training requests into clear, actionable development priorities.",
-        cta: "Explore our L&D guides & blog",
+        title: "Pinpoint Your Exact Skill Gaps",
+        text: "Unsure whether you need management training, technical upskilling, or cultural alignment? We help you diagnose the root cause before spending budget.",
+        cta: "Read our diagnosis guides",
         mockupHeader: "Skill Gap Assessment",
         mockupSubheader: "Enterprise Department Level",
         tag1: "# Leadership & Tech Gaps",
         tag2: "Priority Roadmap"
       },
       match: {
-        title: "Matched Directly with the Right Training Partner",
-        text: "No endless searching or cold sales pitches. We match your specific requirements directly with vetted corporate training firms proven to deliver measurable results.",
-        cta: "Get matched for training",
+        title: "Handpicked Training Specialists",
+        text: "Skip Google searches and cold sales pitches. We match you with pre-vetted corporate training firms with proven track records in your industry.",
+        cta: "Find a training partner",
         mockupHeader: "Partner Fit Checklist",
         check1: "Specialized in your industry",
         check2: "Verified delivery track record",
         check3: "Aligned with your timeline & budget"
       },
       access: {
-        title: "Direct Access to Verified Decision Makers",
+        title: "Direct Access to Budget Owners",
         angle: "Skip the Gatekeepers. Talk Directly to the Budget Owners.",
-        text: "Stop wasting time with dead end outreach. We connect you directly with CHROs, VPs of Talent, and C Level executives who hold verified purchasing authority and active L&D needs.",
-        cta: "Apply as a Provider",
+        text: "Training providers connect directly with CHROs and L&D leaders who have active, funded requirements—not gatekeepers or interns.",
+        cta: "Join as a provider",
         clientTag: "Enterprise Client · GRC",
         role: "Chief Human Resources Officer (CHRO)",
         statusBadge: "Budget Authority: Confirmed"
       },
       ready: {
-        title: "Clients Ready to Partner",
-        text: "We respect your expertise. Instead of speculative leads, we bring you serious organizations that are ready to invest, with defined budgets and clear goals, creating partnerships where both sides succeed.",
-        cta: "Connect with Ready Clients",
+        title: "Pre-Scoped, Funded Engagements",
+        text: "Every corporate request is verified for budget, timeline, and decision-maker buy-in before reaching a training partner.",
+        cta: "View active demand",
         mockupHeader: "Partnership Readiness | Verified",
         needLabel: "Client Need",
         needVal: "Executive Leadership Program",
@@ -105,9 +106,9 @@ export const en = {
         fitVal: "Aligned on timeline & methodology"
       },
       hub: {
-        title: "L&D Knowledge Hub",
-        text: "We continuously analyze corporate training trends across the region and share fresh, actionable insights on our blog, providing free frameworks, guides, and research to help you make smarter L&D decisions.",
-        cta: "Explore our blog & resources",
+        title: "Free Regional L&D Toolkits",
+        text: "Practical guides, Saudization/Emiratization workforce benchmarks, and corporate training ROI templates—completely free on our blog.",
+        cta: "Browse free resources",
         mockupHeader: "Latest L&D Resources",
         item1Title: "GCC Workforce Skill Gaps Report",
         item1Badge: "New Guide",
