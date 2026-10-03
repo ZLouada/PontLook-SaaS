@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { m, AnimatePresence, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import {
   SlidersHorizontal,
@@ -202,13 +202,17 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
   ];
 
   /* Scroll-spy tracking for desktop Attio-style pinning */
+  const isClickLocked = useRef(false);
+  const clickUnlockTimer = useRef<NodeJS.Timeout | null>(null);
+
+  /* Scroll-spy tracking for desktop Attio-style pinning */
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    if (isUserClicking.current) return;
+    if (isClickLocked.current) return;
     if (latest < 0.33) {
       setActiveStep(0);
     } else if (latest < 0.67) {
@@ -220,27 +224,51 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
 
   const handleStepClick = useCallback((index: number) => {
     setActiveStep(index);
-    isUserClicking.current = true;
+    isClickLocked.current = true;
+
+    if (clickUnlockTimer.current) {
+      clearTimeout(clickUnlockTimer.current);
+    }
 
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const containerTop = rect.top + scrollTop;
-      const totalScrollable = containerRef.current.offsetHeight - window.innerHeight;
+      const totalScrollable = Math.max(0, containerRef.current.offsetHeight - window.innerHeight);
 
       // Position within the corresponding segment
-      const targetPercent = index === 0 ? 0.05 : index === 1 ? 0.5 : 0.95;
-      const targetScroll = containerTop + targetPercent * totalScrollable;
+      const targetRatio = index === 0 ? 0.05 : index === 1 ? 0.5 : 0.95;
+      const targetScroll = containerTop + targetRatio * totalScrollable;
 
       window.scrollTo({
         top: targetScroll,
         behavior: 'smooth',
       });
-
-      setTimeout(() => {
-        isUserClicking.current = false;
-      }, 700);
     }
+
+    // Keep locked for 1800ms during smooth scroll
+    clickUnlockTimer.current = setTimeout(() => {
+      isClickLocked.current = false;
+    }, 1800);
+  }, []);
+
+  // Unlock immediately upon manual wheel or touch scroll
+  useEffect(() => {
+    const handleUserScroll = () => {
+      if (isClickLocked.current) {
+        isClickLocked.current = false;
+        if (clickUnlockTimer.current) clearTimeout(clickUnlockTimer.current);
+      }
+    };
+
+    window.addEventListener('wheel', handleUserScroll, { passive: true });
+    window.addEventListener('touchmove', handleUserScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('wheel', handleUserScroll);
+      window.removeEventListener('touchmove', handleUserScroll);
+      if (clickUnlockTimer.current) clearTimeout(clickUnlockTimer.current);
+    };
   }, []);
 
   const currentStep = steps[activeStep] || steps[0];
@@ -248,8 +276,8 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
   return (
     <div className="w-full">
       {/* Animated Section Header */}
-      <div className="mb-6 sm:mb-8 text-center max-w-4xl mx-auto space-y-2.5">
-        <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-mono font-medium">
+      <div className="mb-8 sm:mb-12 text-center max-w-4xl mx-auto space-y-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-mono font-medium">
           <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00]" />
           <span>{isAr ? 'خطوات الحصول على التدريب' : 'HOW IT WORKS'}</span>
         </div>
@@ -257,10 +285,10 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         <TextReveal
           as="h2"
           text={isAr ? '3 خطوات بسيطة للحصول على تدريب معتمد' : '3 Simple Steps to Proven Training'}
-          className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-semibold text-white font-heading tracking-tight leading-tight"
+          className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-tight"
         />
 
-        <p className="text-xs sm:text-sm text-neutral-400 font-sans max-w-xl mx-auto leading-relaxed">
+        <p className="text-sm sm:text-base text-neutral-400 font-sans max-w-2xl mx-auto leading-relaxed">
           {isAr
             ? 'مسار منظم يختصر أسابيع من البحث عن جهات التدريب، مع معايير تدقيق صارمة وشفافية كاملة في العروض.'
             : 'A streamlined matchmaking process saving weeks of vendor searching. Explore our vetting rubric, cohort scoping, and proposal transparency.'}
@@ -270,8 +298,8 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
       {/* ============================================================== */}
       {/* DESKTOP ATTIO-STYLE STICKY SCROLL SECTION                     */}
       {/* ============================================================== */}
-      <div ref={containerRef} className="hidden lg:block relative min-h-[200vh]">
-        <div className="sticky top-20 xl:top-24 w-full">
+      <div ref={containerRef} className="hidden lg:block relative min-h-[280vh]">
+        <div className="sticky top-28 xl:top-32 w-full">
           <div className="grid grid-cols-12 gap-6 xl:gap-10 2xl:gap-12 items-center">
             {/* Left Column: Attio-style Navigation Titles in Orange (Minimized) */}
             <div className="col-span-4 xl:col-span-4 2xl:col-span-3 flex flex-col space-y-4">
@@ -330,7 +358,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
 
             {/* Right Column: Attio-style Black & White Content Panel (Full screen scale) */}
             <div className="col-span-8 xl:col-span-8 2xl:col-span-9">
-              <div className="relative rounded-2xl border border-white/10 bg-[#0B0C10] p-6 sm:p-8 lg:p-9 xl:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.08)] overflow-hidden flex flex-col justify-between">
+              <div className="relative rounded-2xl border border-white/10 bg-[#0B0C10] p-6 sm:p-8 lg:p-10 xl:p-12 min-h-[520px] lg:min-h-[560px] xl:min-h-[600px] shadow-[0_24px_60px_rgba(0,0,0,0.9),inset_0_1px_0_0_rgba(255,255,255,0.08)] overflow-hidden flex flex-col justify-between">
                 {/* Subtle Monochrome Tech Dots underlayer */}
                 <div
                   className="absolute inset-0 opacity-[0.06] pointer-events-none"
@@ -348,7 +376,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                     animate={{ opacity: 1, y: 0 }}
                     exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10 }}
                     transition={{ duration: 0.24, ease: ease.out }}
-                    className="relative z-10 flex flex-col justify-between h-full space-y-4"
+                    className="relative z-10 flex flex-col justify-between h-full space-y-6"
                   >
                     {/* Top Content Area: Monochrome Header & Angle */}
                     <div>
