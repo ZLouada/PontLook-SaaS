@@ -6,12 +6,22 @@ import {
   CircleDollarSign,
   Target,
   TrendingUp,
-  ArrowRight,
   CheckCircle2,
 } from '@/components/icons';
 import TextReveal from '@/components/shared/TextReveal';
-import ConsoleDialog, { type ConsoleRecord } from '@/components/shared/ConsoleDialog';
 import { ease } from '@/lib/motion';
+
+interface BenefitItem {
+  id: string;
+  index: string;
+  icon: any;
+  badge: string;
+  title: string;
+  angle: string;
+  body: string;
+  takeaways: string[];
+  mockup: React.ReactNode;
+}
 
 interface ProviderBenefitsCardsProps {
   lang: string;
@@ -21,12 +31,11 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
   const isAr = lang === 'ar';
   const reduce = useReducedMotion();
   const [activeStep, setActiveStep] = useState(0);
-  const [activeModalId, setActiveModalId] = useState<string | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const isUserClicking = useRef(false);
 
-  const benefits: ConsoleRecord[] = [
+  const benefits: BenefitItem[] = [
     {
       id: 'pay-per-lead',
       index: '01',
@@ -372,22 +381,6 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                     <div>
                       {currentBenefit.mockup}
                     </div>
-
-                    {/* Footer Trigger to open full console breakdown modal */}
-                    <div className="pt-2 flex items-center justify-between border-t border-white/[0.06]">
-                      <button
-                        type="button"
-                        onClick={() => setActiveModalId(currentBenefit.id)}
-                        className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-400 hover:text-white transition-colors cursor-pointer"
-                      >
-                        <span>{isAr ? 'عرض المواصفات والضمانات الكاملة' : 'Inspect full specifications & SLAs'}</span>
-                        <ArrowRight size={12} className="rtl:-scale-x-100" />
-                      </button>
-
-                      <span className="text-[10px] font-mono text-neutral-500">
-                        {currentBenefit.index} / 03
-                      </span>
-                    </div>
                   </m.div>
                 </AnimatePresence>
               </div>
@@ -461,42 +454,10 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
               <div>
                 {currentBenefit.mockup}
               </div>
-
-              {/* Modal trigger */}
-              <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={() => setActiveModalId(currentBenefit.id)}
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-400 hover:text-white transition-colors"
-                >
-                  <span>{isAr ? 'عرض المواصفات والضمانات' : 'Inspect breakdown & SLAs'}</span>
-                  <ArrowRight size={11} className="rtl:-scale-x-100" />
-                </button>
-                <span className="text-[10px] font-mono text-neutral-500">
-                  {currentBenefit.index} / 03
-                </span>
-              </div>
             </m.div>
           </AnimatePresence>
         </div>
       </div>
-
-      {/* Modal Dialog for detailed inspection */}
-      <ConsoleDialog
-        records={benefits}
-        activeId={activeModalId}
-        onClose={() => setActiveModalId(null)}
-        onSelect={setActiveModalId}
-        isAr={isAr}
-        accent="brand"
-        copy={{
-          takeawaysTitle: isAr ? 'المزايا والشروط المعتمدة' : 'GUARANTEED ADVANTAGES & SLAS',
-          hint: isAr ? 'انقر خارج النافذة أو زر Esc للإغلاق' : 'Click outside or press Esc to close',
-          closeLabel: isAr ? 'إغلاق النافذة' : 'Close window',
-          ctaLabel: isAr ? 'قدم كشريك تدريب معتمد' : 'Apply as Verified Provider',
-          ctaHref: `/${lang}/for-providers/apply`,
-        }}
-      />
     </div>
   );
 }

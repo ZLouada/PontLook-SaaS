@@ -199,8 +199,8 @@ export default async function FindTrainingPage({
       </div>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="bg-black py-16 sm:py-24 border-t border-[#26282D] scroll-mt-16">
-        <div className="container-site max-w-6xl mx-auto px-4 sm:px-6 space-y-16 sm:space-y-24">
+      <section id="how-it-works" className="bg-black py-10 sm:py-16 border-t border-[#26282D] scroll-mt-16">
+        <div className="container-site max-w-6xl mx-auto px-4 sm:px-6 space-y-12 sm:space-y-16">
           <div>
             <FindTrainingStepsCards lang={lang} />
           </div>

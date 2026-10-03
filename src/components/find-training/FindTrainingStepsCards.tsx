@@ -1,22 +1,27 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { m, useReducedMotion } from 'framer-motion';
+import React, { useState, useRef, useCallback } from 'react';
+import { m, AnimatePresence, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import {
   SlidersHorizontal,
   BadgeCheck,
   Scale,
-  ArrowRight,
-  ShieldCheck,
   CheckCircle2,
 } from '@/components/icons';
-import Spotlight from '@/components/shared/Spotlight';
 import TextReveal from '@/components/shared/TextReveal';
-import Press from '@/components/shared/Press';
-import Rail from '@/components/shared/Rail';
-import ConsoleDialog, { type ConsoleRecord } from '@/components/shared/ConsoleDialog';
-import { ease, viewportOnce } from '@/lib/motion';
+import { ease } from '@/lib/motion';
+
+interface StepItem {
+  id: string;
+  index: string;
+  icon: any;
+  badge: string;
+  title: string;
+  angle: string;
+  body: string;
+  takeaways: string[];
+  mockup: React.ReactNode;
+}
 
 interface FindTrainingStepsCardsProps {
   lang: string;
@@ -25,9 +30,12 @@ interface FindTrainingStepsCardsProps {
 export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsProps) {
   const isAr = lang === 'ar';
   const reduce = useReducedMotion();
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [activeStep, setActiveStep] = useState(0);
 
-  const steps: ConsoleRecord[] = [
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isUserClicking = useRef(false);
+
+  const steps: StepItem[] = [
     {
       id: 'step-specify',
       index: '01',
@@ -39,16 +47,16 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         ? 'حدد المهارات المستهدفة، أسلوب التدريب (حضوري أو افتراضي)، المدينة، وحجم الفريق في نموذج تفاعلي ومباشر.'
         : 'Define your targeted skills, delivery mode, city, and cohort size in our 60 second interactive questionnaire. No tedious RFP drafting.',
       takeaways: [
-        isAr ? 'تغطية متخصصة لأكثر من 20 مجالاً تدريبياً مؤسسياً معتمداً' : 'Specialized coverage across 20+ accredited enterprise training domains',
-        isAr ? 'تخصيص فوري للموقع: الرياض، جدة، الدمام، دبي، أبوظبي، أو عن بُعد' : 'Targeted city selection: Riyadh, Jeddah, Dammam, Dubai, Abu Dhabi, or live remote',
-        isAr ? 'حصر أهداف البرنامج ومواءمتها مع متطلبات التوطين والتحول الرقمي' : 'Targeted alignment with Saudization, Emiratization, or tech upskilling KPIs',
+        isAr ? 'تغطية متخصصة لأكثر من 20 مجالاً تدريبياً معتمداً' : 'Specialized coverage across 20+ training domains',
+        isAr ? 'تخصيص فوري: الرياض، جدة، دبي، أو عن بُعد' : 'Targeted city selection across GCC & live remote',
+        isAr ? 'مواءمة أهداف البرنامج مع مؤشرات التوطين والتحول' : 'Aligned with Saudization & tech upskilling KPIs',
       ],
       mockup: (
-        <div className="bg-black rounded-xl border border-[#26282D] w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans">
-          <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
+        <div className="bg-black/90 rounded-xl border border-white/10 w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans shadow-md">
+          <div className="flex items-center justify-between pb-2 border-b border-white/10">
             <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">
-                <SlidersHorizontal size={14} />
+              <div className="h-6 w-6 rounded-md bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
+                <SlidersHorizontal size={13} />
               </div>
               <div>
                 <div className="text-xs font-semibold text-white leading-tight">
@@ -59,23 +67,23 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                 </div>
               </div>
             </div>
-            <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white border border-white/20">
               {isAr ? 'جاهز للمطابقة' : 'Intake Ready'}
             </span>
           </div>
 
-          <div className="space-y-1.5 text-[10px] sm:text-[11px]">
-            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
-              <span className="text-neutral-400">{isAr ? 'المجال المستهدف:' : 'Domain:'}</span>
-              <span className="text-white font-medium">{isAr ? 'القيادة التنفيذية وإدارة التغيير' : 'Executive Leadership & Change'}</span>
+          <div className="space-y-1.5 text-xs">
+            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/10">
+              <span className="text-neutral-400 text-[11px]">{isAr ? 'المجال المستهدف:' : 'Domain:'}</span>
+              <span className="text-white font-medium text-xs">{isAr ? 'القيادة التنفيذية وإدارة التغيير' : 'Executive Leadership & Change'}</span>
             </div>
-            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
-              <span className="text-neutral-400">{isAr ? 'الموقع والفوج:' : 'Location & Cohort:'}</span>
-              <span className="text-neutral-200 font-medium">{isAr ? 'حضوري بالرياض · 25 متدرب' : 'Onsite Riyadh · 25 Executives'}</span>
+            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/10">
+              <span className="text-neutral-400 text-[11px]">{isAr ? 'الموقع والفوج:' : 'Location & Cohort:'}</span>
+              <span className="text-neutral-200 font-medium text-xs">{isAr ? 'حضوري بالرياض · 25 متدرب' : 'Onsite Riyadh · 25 Executives'}</span>
             </div>
-            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
-              <span className="text-neutral-400">{isAr ? 'الجدول الزمني المستهدف:' : 'Target Timeline:'}</span>
-              <span className="text-emerald-400 font-medium">{isAr ? 'خلال الربع القادم' : 'Upcoming Quarter Start'}</span>
+            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.08] border border-white/20">
+              <span className="text-neutral-300 text-[11px]">{isAr ? 'الجدول الزمني:' : 'Target Timeline:'}</span>
+              <span className="text-white font-semibold text-xs">{isAr ? 'خلال الربع القادم' : 'Upcoming Quarter Start'}</span>
             </div>
           </div>
         </div>
@@ -92,16 +100,16 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         ? 'يفحص فريقنا المختص أكثر من 120 مزود تدريب معتمد لاختيار أفضل المدربين أصحاب السجلات والإنجازات الموثوقة.'
         : 'Our matching desk screens 120+ accredited providers to select facilitators with verified enterprise outcomes and verified credentials.',
       takeaways: [
-        isAr ? 'التحقق المباشر من سجلات وخبرات المدربين والتأكد من مطابقتهم' : 'Independent verification of instructor track records and industry certifications',
-        isAr ? 'فحص تقييمات العملاء السابقين والجهات الحكومية والخاصة بالمنطقة' : 'Review of historical participant ratings across GCC corporate deployments',
-        isAr ? 'سرية تامة لبيانات مسؤولي الموارد البشرية ومنع أي اتصالات تسويقية مزعجة' : 'Zero cold spam or unsolicited vendor outreach; total decision maker privacy',
+        isAr ? 'تحقق مستقل من سجلات المدربين والشهادات' : 'Independent verification of facilitator records',
+        isAr ? 'مراجعة تقييمات المشاركين في برامج سابقة' : 'Review of historical participant ratings in GCC',
+        isAr ? 'سرية تامة لبيانات مسؤولي الموارد البشرية' : 'Zero cold spam; total decision maker privacy',
       ],
       mockup: (
-        <div className="bg-black rounded-xl border border-[#26282D] w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans">
-          <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
+        <div className="bg-black/90 rounded-xl border border-white/10 w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans shadow-md">
+          <div className="flex items-center justify-between pb-2 border-b border-white/10">
             <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
-                <BadgeCheck size={14} />
+              <div className="h-6 w-6 rounded-md bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
+                <BadgeCheck size={13} />
               </div>
               <div>
                 <div className="text-xs font-semibold text-white leading-tight">
@@ -112,28 +120,28 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                 </div>
               </div>
             </div>
-            <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white border border-white/20">
               {isAr ? 'معتمد 100%' : '100% Vetted'}
             </span>
           </div>
 
-          <div className="space-y-1.5 text-[10px] sm:text-[11px]">
-            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
-              <span className="text-neutral-300">{isAr ? 'اعتماد المنشأة والترخيص المهني:' : 'Accredited Corporate Entity:'}</span>
-              <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                <CheckCircle2 size={12} /> {isAr ? 'مرخص' : 'Verified'}
+          <div className="space-y-1.5 text-xs">
+            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/10">
+              <span className="text-neutral-400 text-[11px]">{isAr ? 'اعتماد المنشأة والترخيص المهني:' : 'Accredited Corporate Entity:'}</span>
+              <span className="text-white font-medium text-xs flex items-center gap-1">
+                <CheckCircle2 size={12} className="text-white" /> {isAr ? 'مرخص ومعتمد' : 'Verified Entity'}
               </span>
             </div>
-            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
-              <span className="text-neutral-300">{isAr ? 'خبرة المدرب التنفيذي:' : 'Facilitator Seniority:'}</span>
-              <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                <CheckCircle2 size={12} /> 10+ {isAr ? 'سنوات بالخليج' : 'Yrs GCC'}
+            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/10">
+              <span className="text-neutral-400 text-[11px]">{isAr ? 'خبرة المدرب التنفيذي:' : 'Facilitator Seniority:'}</span>
+              <span className="text-white font-medium text-xs flex items-center gap-1">
+                <CheckCircle2 size={12} className="text-white" /> 10+ {isAr ? 'سنوات بالخليج' : 'Yrs GCC'}
               </span>
             </div>
-            <div className="flex items-center justify-between p-1.5 sm:p-2 rounded bg-[#0F1013] border border-[#26282D]">
-              <span className="text-neutral-300">{isAr ? 'معدل رضا المتدربين السابق:' : 'Historical Satisfaction:'}</span>
-              <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                <CheckCircle2 size={12} /> 4.9 / 5.0
+            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.08] border border-white/20">
+              <span className="text-neutral-300 text-[11px]">{isAr ? 'معدل رضا المتدربين السابق:' : 'Historical Satisfaction:'}</span>
+              <span className="text-white font-semibold text-xs flex items-center gap-1">
+                <CheckCircle2 size={12} className="text-white" /> 4.9 / 5.0
               </span>
             </div>
           </div>
@@ -151,16 +159,16 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
         ? 'استلم من 2 إلى 3 عروض مفصلة خلال 48 ساعة متضمنة خطط البرامج والتكاليف الشفافة، وبدون أي التزام بالشراء.'
         : 'Receive 2 to 3 tailored proposals within 48 hours with custom syllabi, transparent pricing, and zero purchase obligation.',
       takeaways: [
-        isAr ? 'عروض أسعار مفصلة بالبنود (رسوم التدريب، المواد، التقييم، الشهادات)' : 'Itemized line-by-line budgets with transparent breakdown and zero surprises',
-        isAr ? 'حرية كاملة في تقييم واختيار العرض الأنسب لإدارة شركتك' : '100% freedom to review, negotiate, or decline with zero purchasing pressure',
-        isAr ? 'خدمة مجانية 100% للمنشآت الباحثة عن تدريب' : '100% free matchmaking service for enterprise buyers with no hidden fees',
+        isAr ? 'عروض أسعار مفصلة بالبنود بدون رسوم مخفية' : 'Itemized line-by-line budgets, zero surprises',
+        isAr ? 'حرية كاملة في تقييم واختيار العرض الأنسب' : '100% freedom to review with zero pressure',
+        isAr ? 'خدمة مجانية 100% للمنشآت الباحثة عن تدريب' : '100% free matchmaking for enterprise buyers',
       ],
       mockup: (
-        <div className="bg-black rounded-xl border border-[#26282D] w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans">
-          <div className="flex items-center justify-between pb-1.5 border-b border-[#26282D]">
+        <div className="bg-black/90 rounded-xl border border-white/10 w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans shadow-md">
+          <div className="flex items-center justify-between pb-2 border-b border-white/10">
             <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded-lg bg-white/10 text-white flex items-center justify-center font-bold">
-                <Scale size={14} />
+              <div className="h-6 w-6 rounded-md bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
+                <Scale size={13} />
               </div>
               <div>
                 <div className="text-xs font-semibold text-white leading-tight">
@@ -171,21 +179,21 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                 </div>
               </div>
             </div>
-            <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white border border-white/20">
               {isAr ? 'مواءمة الميزانية' : 'Budget Fit'}
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-2 text-xs">
-            <div className="p-2 rounded-lg bg-[#0F1013] border border-[#26282D]">
-              <div className="text-[9px] text-neutral-400 uppercase font-semibold">{isAr ? 'العرض أ' : 'Proposal Alpha'}</div>
-              <div className="text-xs font-bold text-white mt-0.5">{isAr ? 'ورش مكثفة حضوري' : 'Intensive Onsite'}</div>
-              <div className="text-[9px] text-emerald-400 mt-0.5">{isAr ? 'مطابقة تامة للميزانية' : 'Target Budget Match'}</div>
+            <div className="p-2 sm:p-2.5 rounded-lg bg-white/[0.03] border border-white/10">
+              <div className="text-[9px] text-neutral-400 uppercase font-mono font-medium">{isAr ? 'العرض أ' : 'Proposal Alpha'}</div>
+              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">{isAr ? 'ورش مكثفة حضوري' : 'Intensive Onsite'}</div>
+              <div className="text-[9px] text-neutral-300 mt-0.5">{isAr ? 'مطابقة تامة للميزانية' : 'Target Budget Match'}</div>
             </div>
-            <div className="p-2 rounded-lg bg-[#0F1013] border border-[#26282D]">
-              <div className="text-[9px] text-neutral-400 uppercase font-semibold">{isAr ? 'العرض ب' : 'Proposal Beta'}</div>
-              <div className="text-xs font-bold text-white mt-0.5">{isAr ? 'تدريب هجين + مشاريع' : 'Blended + Projects'}</div>
-              <div className="text-[9px] text-blue-400 mt-0.5">{isAr ? 'تأهيل كفاءات ممتد' : 'Extended Follow-up'}</div>
+            <div className="p-2 sm:p-2.5 rounded-lg bg-white/[0.08] border border-white/20">
+              <div className="text-[9px] text-white uppercase font-mono font-semibold">{isAr ? 'العرض ب' : 'Proposal Beta'}</div>
+              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">{isAr ? 'تدريب هجين + مشاريع' : 'Blended + Projects'}</div>
+              <div className="text-[9px] text-white mt-0.5">{isAr ? 'تأهيل كفاءات ممتد' : 'Extended Follow-up'}</div>
             </div>
           </div>
         </div>
@@ -193,136 +201,261 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
     },
   ];
 
+  /* Scroll-spy tracking for desktop Attio-style pinning */
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    if (isUserClicking.current) return;
+    if (latest < 0.33) {
+      setActiveStep(0);
+    } else if (latest < 0.67) {
+      setActiveStep(1);
+    } else {
+      setActiveStep(2);
+    }
+  });
+
+  const handleStepClick = useCallback((index: number) => {
+    setActiveStep(index);
+    isUserClicking.current = true;
+
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const containerTop = rect.top + scrollTop;
+      const totalScrollable = containerRef.current.offsetHeight - window.innerHeight;
+
+      // Position within the corresponding segment
+      const targetPercent = index === 0 ? 0.05 : index === 1 ? 0.5 : 0.95;
+      const targetScroll = containerTop + targetPercent * totalScrollable;
+
+      window.scrollTo({
+        top: targetScroll,
+        behavior: 'smooth',
+      });
+
+      setTimeout(() => {
+        isUserClicking.current = false;
+      }, 700);
+    }
+  }, []);
+
+  const currentStep = steps[activeStep] || steps[0];
+
   return (
     <div className="w-full">
       {/* Animated Section Header */}
-      <div className="mb-8 sm:mb-12 text-center max-w-3xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-mono font-medium">
-          <span className="w-1.5 h-1.5 rounded-full bg-white" />
-          <span>{isAr ? 'منظومة التوفيق والمطابقة' : 'HOW MATCHMAKING WORKS'}</span>
+      <div className="mb-6 sm:mb-8 text-center max-w-3xl mx-auto space-y-2.5">
+        <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-mono font-medium">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00]" />
+          <span>{isAr ? 'خطوات الحصول على التدريب' : 'HOW IT WORKS'}</span>
         </div>
 
         <TextReveal
           as="h2"
-          text={isAr ? '3 خطوات للحصول على أفضل عروض التدريب' : '3 Simple Steps to Proven Training Solutions'}
-          className="text-[1.75rem] xs:text-[2rem] sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-tight"
+          text={isAr ? '3 خطوات بسيطة للحصول على تدريب معتمد' : '3 Simple Steps to Proven Training'}
+          className="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-semibold text-white font-heading tracking-tight leading-tight"
         />
 
-        <p className="text-sm sm:text-base text-neutral-400 font-sans max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm text-neutral-400 font-sans max-w-xl mx-auto leading-relaxed">
           {isAr
-            ? 'عملية توفيق دقيقة وسريعة توفر عليك أسابيع من البحث والتقييم اليدوي. انقر على أي خطوة لاستعراض تفاصيلها والضمانات المعتمدة.'
-            : 'A streamlined matchmaking process saving weeks of vendor searching. Click any step to inspect the vetting rubric and deliverables.'}
+            ? 'مسار منظم يختصر أسابيع من البحث عن جهات التدريب، مع معايير تدقيق صارمة وشفافية كاملة في العروض.'
+            : 'A streamlined matchmaking process saving weeks of vendor searching. Explore our vetting rubric, cohort scoping, and proposal transparency.'}
         </p>
       </div>
 
-      {/* Modern 3-Card Grid (Horizontal flow on mobile, 3-col on desktop) */}
-      <Rail
-        className="gap-3.5 pb-4 px-3 -mx-3 xs:gap-4 xs:px-4 xs:-mx-4 sm:gap-6 sm:px-0 sm:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:pb-0"
-        dots
-        dotTone="light"
-        dotsHiddenAt="md:hidden"
-        ariaLabel={isAr ? 'خطوات المطابقة' : 'Matchmaking steps'}
-        dotLabel={(i) => (isAr ? `الانتقال إلى الخطوة ${i + 1}` : `Go to step ${i + 1}`)}
-      >
-        {steps.map((st, i) => (
-          <m.div
-            key={st.id}
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={viewportOnce}
-            transition={{
-              delay: i * 0.1,
-              type: 'spring',
-              stiffness: 160,
-              damping: 22,
-            }}
-            whileHover={reduce ? undefined : { y: -6 }}
-            className="group relative h-full flex flex-col w-[88vw] xs:w-[82vw] sm:w-[65vw] md:w-auto shrink-0 snap-center"
-          >
-            {/* Rail's swipe depth lands here, clear of the reveal transform above. */}
-            <div data-rail-depth className="flex h-full w-full flex-col transform-gpu">
-              <Press className="flex h-full w-full flex-col" strength={0.5} vibrate>
-                <Spotlight
-                  radius={360}
-                  className="relative z-10 flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-[#202227] hover:border-white/20 bg-[#0C0D11] p-4 xs:p-5 sm:p-7 text-start shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_32px_-12px_rgba(0,0,0,0.8)] transition-all duration-300"
-                >
+      {/* ============================================================== */}
+      {/* DESKTOP ATTIO-STYLE STICKY SCROLL SECTION                     */}
+      {/* ============================================================== */}
+      <div ref={containerRef} className="hidden lg:block relative min-h-[200vh]">
+        <div className="sticky top-20 xl:top-24 w-full">
+          <div className="grid grid-cols-12 gap-6 xl:gap-10 items-center">
+            {/* Left Column: Attio-style Navigation Titles in Orange (Minimized) */}
+            <div className="col-span-5 xl:col-span-4 flex flex-col space-y-3.5">
+              {steps.map((s, idx) => {
+                const isActive = activeStep === idx;
+                return (
                   <button
+                    key={s.id}
                     type="button"
-                    onClick={() => setActiveId(st.id)}
-                    aria-label={`${st.title} - ${isAr ? 'انقر لعرض التفاصيل' : 'Click to inspect breakdown'}`}
-                    className="relative z-10 flex h-full cursor-pointer flex-col text-start outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/40 w-full"
+                    onClick={() => handleStepClick(idx)}
+                    className="group relative flex items-start gap-3 text-start w-full py-1.5 transition-all duration-300 outline-none cursor-pointer"
+                    aria-current={isActive ? 'step' : undefined}
                   >
-                    {/* Top Row: Index Badge & Icon */}
-                    <div className="flex items-center justify-between gap-3 mb-5">
-                      <div className="flex items-center gap-2">
-                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/20 bg-white/10 font-mono text-xs font-bold text-white">
-                          {st.index}
+                    {/* Vertical Indicator Bar: Proportional height */}
+                    <div
+                      className={`w-1 rounded-full transition-all duration-300 shrink-0 ${
+                        isActive
+                          ? 'h-10 sm:h-12 bg-[#FF5C00]'
+                          : 'h-6 sm:h-7 bg-white/10 group-hover:bg-white/20'
+                      }`}
+                    />
+
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span
+                          className={`font-mono text-[11px] transition-colors duration-300 ${
+                            isActive ? 'text-[#FF5C00] font-bold' : 'text-neutral-500'
+                          }`}
+                        >
+                          {s.index}
                         </span>
-                        <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] font-semibold text-neutral-300">
-                          {st.badge}
+                        <span
+                          className={`text-[10px] font-mono tracking-wider uppercase transition-colors duration-300 ${
+                            isActive ? 'text-[#FF5C00]/90 font-medium' : 'text-neutral-500'
+                          }`}
+                        >
+                          {s.badge}
                         </span>
                       </div>
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-neutral-300 group-hover:border-white/30 group-hover:text-white transition-colors">
-                        <st.icon size={17} />
+
+                      {/* Main Title: Minimized scale, elegant font size */}
+                      <div
+                        className={`font-heading text-base sm:text-lg lg:text-xl font-medium tracking-tight transition-colors duration-300 mt-0.5 leading-snug ${
+                          isActive
+                            ? 'text-[#FF5C00] font-semibold'
+                            : 'text-neutral-500 group-hover:text-neutral-300'
+                        }`}
+                      >
+                        {s.title}
                       </div>
                     </div>
+                  </button>
+                );
+              })}
+            </div>
 
-                    {/* Headline */}
-                    <h3 className="font-heading text-lg sm:text-xl font-semibold text-white group-hover:text-neutral-200 transition-colors leading-tight">
-                      {st.title}
-                    </h3>
+            {/* Right Column: Attio-style Black & White Content Panel (Calibrated scale) */}
+            <div className="col-span-7 xl:col-span-8">
+              <div className="relative rounded-2xl border border-white/10 bg-[#0B0C10] p-5 sm:p-6 lg:p-7 shadow-[0_16px_40px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.08)] overflow-hidden flex flex-col justify-between">
+                {/* Subtle Monochrome Tech Dots underlayer */}
+                <div
+                  className="absolute inset-0 opacity-[0.06] pointer-events-none"
+                  style={{
+                    backgroundImage:
+                      'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.8) 1px, transparent 0)',
+                    backgroundSize: '24px 24px',
+                  }}
+                />
 
-                    {/* Body */}
-                    <p className="mt-2.5 font-sans text-sm text-neutral-400 leading-relaxed font-normal">
-                      {st.body}
-                    </p>
+                <AnimatePresence mode="wait">
+                  <m.div
+                    key={currentStep.id}
+                    initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10 }}
+                    transition={{ duration: 0.24, ease: ease.out }}
+                    className="relative z-10 flex flex-col justify-between h-full space-y-4"
+                  >
+                    {/* Top Content Area: Monochrome Header & Angle */}
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/15 text-neutral-300 text-[11px] font-mono font-medium">
+                        <span>{currentStep.badge}</span>
+                      </div>
 
-                    {/* Deliverables Takeaways List */}
-                    <div className="mt-6 pt-5 border-t border-white/[0.06] space-y-2.5">
-                      {st.takeaways.map((point, pIdx) => (
-                        <div key={pIdx} className="flex items-start gap-2.5 text-[0.8125rem] sm:text-sm text-neutral-300 font-sans">
-                          <CheckCircle2 size={14} className="text-white shrink-0 mt-0.5" />
+                      <h3 className="font-heading text-lg sm:text-xl lg:text-2xl font-semibold text-white tracking-tight leading-tight mt-2">
+                        {currentStep.angle}
+                      </h3>
+
+                      <p className="mt-1 text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed max-w-xl font-normal">
+                        {currentStep.body}
+                      </p>
+                    </div>
+
+                    {/* Middle: Takeaways in crisp Black & White */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-3 border-t border-white/[0.08]">
+                      {currentStep.takeaways.map((point, pIdx) => (
+                        <div key={pIdx} className="flex items-start gap-2 text-xs text-neutral-300 font-sans">
+                          <CheckCircle2 size={13} className="text-white shrink-0 mt-0.5" />
                           <span className="leading-snug text-neutral-300">{point}</span>
                         </div>
                       ))}
                     </div>
 
-                    {/* Action Strip */}
-                    <div className="mt-auto pt-6">
-                      <div className="pt-4 border-t border-white/[0.04] flex items-center justify-between text-[0.8125rem] sm:text-sm font-medium text-neutral-400 group-hover:text-white transition-colors">
-                        <span>{isAr ? 'عرض التفاصيل والضمانات' : 'Inspect breakdown & SLAs'}</span>
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.05] group-hover:bg-white group-hover:text-black transition-all">
-                          <ArrowRight
-                            size={12}
-                            className="transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5"
-                          />
-                        </span>
-                      </div>
+                    {/* Bottom: Mockup Widget in pure Black & White */}
+                    <div>
+                      {currentStep.mockup}
                     </div>
-                  </button>
-                </Spotlight>
-              </Press>
+                  </m.div>
+                </AnimatePresence>
+              </div>
             </div>
-          </m.div>
-        ))}
-      </Rail>
+          </div>
+        </div>
+      </div>
 
-      {/* Redesigned Clean & Modern Window Pop-up */}
-      <ConsoleDialog
-        records={steps}
-        activeId={activeId}
-        onClose={() => setActiveId(null)}
-        onSelect={setActiveId}
-        isAr={isAr}
-        accent="brand"
-        copy={{
-          takeawaysTitle: isAr ? 'المزايا والمخرجات الأساسية' : 'KEY ADVANTAGES & OUTPUT',
-          hint: isAr ? 'انقر خارج النافذة أو زر Esc للإغلاق' : 'Click outside or press Esc to close',
-          closeLabel: isAr ? 'إغلاق النافذة' : 'Close window',
-          ctaLabel: isAr ? 'ابدأ طلب عروض التدريب' : 'Request Training Proposals',
-          ctaHref: `/${lang}/find-training/request`,
-        }}
-      />
+      {/* ============================================================== */}
+      {/* MOBILE / TABLET VIEW (Segmented Tab Bar + Card View)           */}
+      {/* ============================================================== */}
+      <div className="lg:hidden space-y-4">
+        {/* Mobile Tab Control with Orange active indicator */}
+        <div className="flex items-center justify-between gap-1 p-1 bg-white/[0.04] border border-white/10 rounded-xl">
+          {steps.map((s, idx) => {
+            const isActive = activeStep === idx;
+            return (
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => setActiveStep(idx)}
+                className={`flex-1 py-1.5 px-2 rounded-lg text-center transition-all duration-200 outline-none text-xs font-medium ${
+                  isActive
+                    ? 'bg-black text-[#FF5C00] font-semibold border border-[#FF5C00]/30 shadow-sm'
+                    : 'text-neutral-400 hover:text-neutral-200'
+                }`}
+              >
+                <span className="font-mono text-[9px] block opacity-80">{s.index}</span>
+                <span className="truncate block mt-0.5 text-[11px]">{s.title}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Mobile Black & White Card */}
+        <div className="relative rounded-xl border border-white/10 bg-[#0B0C10] p-4 shadow-xl overflow-hidden space-y-3.5">
+          <AnimatePresence mode="wait">
+            <m.div
+              key={currentStep.id}
+              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
+              transition={{ duration: 0.2, ease: ease.out }}
+              className="space-y-3"
+            >
+              <div>
+                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/15 text-neutral-300 text-[10px] font-mono font-medium">
+                  <span>{currentStep.badge}</span>
+                </div>
+
+                <h3 className="font-heading text-base font-semibold text-white tracking-tight mt-2 leading-snug">
+                  {currentStep.angle}
+                </h3>
+
+                <p className="mt-1 text-xs text-neutral-400 font-sans leading-relaxed">
+                  {currentStep.body}
+                </p>
+              </div>
+
+              {/* Takeaways list */}
+              <div className="space-y-1.5 pt-2.5 border-t border-white/[0.08]">
+                {currentStep.takeaways.map((point, pIdx) => (
+                  <div key={pIdx} className="flex items-start gap-2 text-xs text-neutral-300 font-sans">
+                    <CheckCircle2 size={12} className="text-white shrink-0 mt-0.5" />
+                    <span className="leading-snug">{point}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Mockup */}
+              <div>
+                {currentStep.mockup}
+              </div>
+            </m.div>
+          </AnimatePresence>
+        </div>
+      </div>
     </div>
   );
 }
