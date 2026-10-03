@@ -42,6 +42,7 @@ interface CardItem {
   badge: string;
   title: string;
   angle?: string;
+  visualMetaphor?: string;
   text: string;
   cta: string;
   href: string;
@@ -96,6 +97,7 @@ export default function WhyDifferent() {
       badge: isAr ? 'التشخيص المهاري' : 'Skill Diagnosis',
       title: c?.diagnose?.title || (isAr ? 'تشخيص دقيق لفجوات الكفاءات والمهارات' : 'Diagnose Your Skill Gaps'),
       angle: isAr ? 'تحويل الاحتياجات العامة إلى أولويات تدريبية واضحة' : 'Actionable Workforce Gap Analysis',
+      visualMetaphor: isAr ? 'بيئة مؤسسية تشخيصية لتحليل الفجوات' : 'Corporate environment & meeting spaces representing capability gaps',
       text:
         c?.diagnose?.text ||
         (isAr
@@ -103,7 +105,7 @@ export default function WhyDifferent() {
           : 'We help you identify hidden capability gaps and workforce challenges across your teams, turning vague training requests into clear, actionable development priorities.'),
       cta: c?.diagnose?.cta || (isAr ? 'استكشف أدلة ومقالات التعلم والتطوير' : 'Explore our L&D guides & blog'),
       href: 'https://blog.pontlook.com',
-      isExternal: true,
+      isExternal: false,
       takeaways: [
         isAr ? 'تحليل عميق لاحتياجات الفرق التنفيذية' : 'Deep departmental skill gap discovery',
         isAr ? 'تحديد أولويات البرامج ذات الأثر المباشر' : 'Prioritized ROI focused learning roadmaps',
@@ -156,6 +158,7 @@ export default function WhyDifferent() {
       badge: isAr ? 'المطابقة المباشرة' : 'Direct Matching',
       title: c?.match?.title || (isAr ? 'ربط مباشر مع الشريك التدريبي الأنسب' : 'Matched Directly with the Right Training Partner'),
       angle: isAr ? 'بدون عروض تسويقية مزعجة' : 'No Cold Sales Pitches',
+      visualMetaphor: isAr ? 'مسارات تقاطع وجسور تربط بين طرفين' : 'Bridges & intersecting pathways linking enterprise to provider',
       text:
         c?.match?.text ||
         (isAr
@@ -210,6 +213,7 @@ export default function WhyDifferent() {
       badge: isAr ? 'وصول تنفيذي' : 'Executive Access',
       title: c?.access?.title || (isAr ? 'وصول مباشر لصناع القرار المعتمدين' : 'Direct Access to Verified Decision Makers'),
       angle: c?.access?.angle || (isAr ? 'تحدث مباشرة مع أصحاب الميزانيات وصلاحيات التعاقد' : 'Skip the Gatekeepers. Talk Directly to the Budget Owners.'),
+      visualMetaphor: isAr ? 'أروقة تنفيذية راقية وإطلالات على مدن الأعمال' : 'Executive corporate corridors & high-level cityscapes',
       text:
         c?.access?.text ||
         (isAr
@@ -265,6 +269,7 @@ export default function WhyDifferent() {
       badge: isAr ? 'جاهزية التعاقد' : 'Ready to Partner',
       title: c?.ready?.title || (isAr ? 'عملاء مستعدون للتعاقد والشراكة' : 'Clients Ready to Partner'),
       angle: isAr ? 'فرص بميزانيات واضحة وأهداف محددة' : 'Active Purchasing Intent',
+      visualMetaphor: isAr ? 'محاذاة مهنية وشراكة أعمال مباشرة' : 'Professional alignment & mutual enterprise partnership',
       text:
         c?.ready?.text ||
         (isAr
@@ -280,18 +285,18 @@ export default function WhyDifferent() {
       ],
       theme: {
         accentText: 'text-neutral-950',
-        badgeBg: 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:bg-neutral-200',
-        iconBg: 'bg-neutral-100 text-neutral-950 border border-neutral-200 group-hover:border-neutral-950',
+        badgeBg: 'bg-orange-500/10 text-[#FF5C00] border border-[#FF5C00]/25 group-hover:bg-[#FF5C00]/20',
+        iconBg: 'bg-orange-500/10 text-[#FF5C00] border border-[#FF5C00]/30 group-hover:border-[#FF5C00]',
         buttonBg: 'bg-neutral-950 hover:bg-black text-white shadow-md shadow-neutral-900/10',
-        checkColor: 'text-neutral-950',
+        checkColor: 'text-[#FF5C00]',
         flipHintBg: 'bg-neutral-100 text-neutral-700 border border-neutral-200 group-hover:border-neutral-900',
       },
-      themeVariant: 'dark',
+      themeVariant: 'brand',
       mockup: (
         <div className="bg-neutral-50 rounded-xl border border-neutral-200/90 w-full p-3 flex flex-col gap-1.5">
           <div className="flex items-center justify-between pb-1 border-b border-neutral-200 text-xs font-semibold text-neutral-900 font-sans">
             <span>{c?.ready?.mockupHeader || (isAr ? 'جاهزية الشراكة | مؤكدة' : 'Partnership Readiness | Confirmed')}</span>
-            <Signal tone="neutral" size={12} />
+            <Signal tone="orange" size={12} />
           </div>
           <div className="space-y-1 text-[10px] sm:text-[11px] font-sans">
             <div className="flex justify-between items-center">
@@ -304,7 +309,7 @@ export default function WhyDifferent() {
             </div>
             <div className="flex justify-between items-center">
               <span className="text-neutral-500">{c?.ready?.fitLabel || (isAr ? 'التوافق' : 'Mutual Fit')}</span>
-              <span className="text-neutral-700">{c?.ready?.fitVal || (isAr ? 'توافق كامل' : '100% Verified')}</span>
+              <span className="text-[#FF5C00] font-semibold">{c?.ready?.fitVal || (isAr ? 'توافق كامل' : '100% Verified')}</span>
             </div>
           </div>
         </div>
@@ -319,6 +324,7 @@ export default function WhyDifferent() {
       badge: isAr ? 'مركز المعرفة' : 'Knowledge Hub',
       title: c?.hub?.title || (isAr ? 'مركز المعرفة والأبحاث التدريبية' : 'L&D Knowledge Hub'),
       angle: isAr ? 'أدلة مجانية ودراسات سوقية موثوقة' : 'Free Practical Frameworks & Benchmarks',
+      visualMetaphor: isAr ? 'إضاءة معرفية وهياكل تحليل البيانات' : 'Illuminated frameworks, libraries & data visualization',
       text:
         c?.hub?.text ||
         (isAr
@@ -626,8 +632,15 @@ export default function WhyDifferent() {
                         transition={{ delay: 0.2, duration: 0.3 }}
                         className="rounded-xl p-3 sm:p-3.5 bg-neutral-50 border border-neutral-200 flex flex-col justify-between space-y-2"
                       >
-                        <div className="text-[11px] font-semibold text-neutral-900 uppercase tracking-wider font-sans">
-                          {isAr ? 'أهم المميزات والقيمة المقدمة' : 'Key Strategic Advantages'}
+                        <div>
+                          <div className="text-[11px] font-semibold text-neutral-900 uppercase tracking-wider font-sans mb-1">
+                            {isAr ? 'أهم المميزات والقيمة المقدمة' : 'Key Strategic Advantages'}
+                          </div>
+                          {activeCard.visualMetaphor && (
+                            <div className="text-[10px] text-neutral-500 font-sans mb-2 italic">
+                              {activeCard.visualMetaphor}
+                            </div>
+                          )}
                         </div>
                         <ul className="space-y-2 text-[0.8125rem] sm:text-sm text-neutral-700 font-sans">
                           {activeCard.takeaways.map((point, pIdx) => (
@@ -638,7 +651,7 @@ export default function WhyDifferent() {
                               transition={{ delay: 0.24 + pIdx * 0.06, type: 'spring', stiffness: 320, damping: 22 }}
                               className="leading-snug flex items-start gap-1.5"
                             >
-                              <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 mt-1 shrink-0" />
+                              <span className={`h-1.5 w-1.5 rounded-full ${activeCard.theme.checkColor === 'text-[#FF5C00]' ? 'bg-[#FF5C00]' : 'bg-neutral-950'} mt-1 shrink-0`} />
                               <span>{point}</span>
                             </m.li>
                           ))}

@@ -122,9 +122,9 @@ export default function HowItWorks() {
             <span className="text-neutral-700 text-[11px] font-medium">
               {isAr ? 'رادار الاحتياج المؤسسي' : 'Enterprise Demand Feed'}
             </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-950 text-[10px] font-semibold">
-              <Signal tone="neutral" size={12} />
-              <span>{isAr ? 'إشارة نشطة' : 'Active Signal'}</span>
+            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50/80 border border-blue-200 text-blue-950 text-[10px] font-semibold">
+              <Signal tone="accent" size={12} />
+              <span className="text-blue-900">{isAr ? 'إشارة نشطة' : 'Active Signal'}</span>
             </div>
           </div>
 

@@ -78,6 +78,41 @@ export default function Hero() {
           className="absolute top-1/4 start-1/2 w-[700px] h-[400px] bg-white/[0.02] blur-[160px] rounded-full pointer-events-none will-change-transform"
           style={reduce ? { x: '-50%' } : { x: '-50%', y: glowY, scale: glowScale }}
         />
+
+        {/* 'The Link' Visual Metaphor: Subtle architectural lines connecting two distinct points */}
+        <svg
+          className="absolute inset-0 w-full h-full opacity-[0.14] pointer-events-none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="link-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0" />
+              <stop offset="35%" stopColor="#ffffff" stopOpacity="0.8" />
+              <stop offset="65%" stopColor="#38bdf8" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="link-grad-2" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0" />
+              <stop offset="50%" stopColor="#ffffff" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M -100 240 C 300 280, 600 120, 1100 280 S 1600 460, 2100 320"
+            fill="none"
+            stroke="url(#link-grad-1)"
+            strokeWidth="1.25"
+            strokeDasharray="6 8"
+          />
+          <path
+            d="M 50 180 C 450 150, 750 360, 1300 220 S 1800 120, 2200 260"
+            fill="none"
+            stroke="url(#link-grad-2)"
+            strokeWidth="1"
+            strokeDasharray="4 6"
+          />
+        </svg>
       </m.div>
 
       {/* Main Hero Writing Section */}
