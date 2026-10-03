@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Inter, IBM_Plex_Sans_Arabic, JetBrains_Mono } from 'next/font/google';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import '../globals.css';
@@ -6,6 +7,25 @@ import { getDictionary, Locale } from '@/i18n';
 import { DictionaryProvider } from '@/components/providers/DictionaryProvider';
 import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
 import GlobalSpotlight from '@/components/shared/GlobalSpotlight';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-sans',
+});
+
+const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
+  subsets: ['arabic'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-arabic',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-mono',
+});
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -155,7 +175,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang={lang} dir={dir}>
+    <html lang={lang} dir={dir} className={`${inter.variable} ${ibmPlexSansArabic.variable} ${jetbrainsMono.variable}`}>
       <head>
         <script
           type="application/ld+json"

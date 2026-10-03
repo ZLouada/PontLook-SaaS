@@ -214,37 +214,18 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             aria-label="PontLook home"
           >
             <div className="relative h-7 w-7 xs:h-8 xs:w-8 shrink-0 flex items-center justify-center">
-              {/* Orange Icon - shown on 'I'm provider' pages */}
               <Image
-                src="/images/brand/pontlook-icon-orange.png"
+                src={
+                  isForProviders
+                    ? '/images/brand/pontlook-icon-orange.png'
+                    : isLightSection
+                    ? '/images/brand/pontlook-icon-black.png'
+                    : '/images/brand/pontlook-icon-white.png'
+                }
                 alt="PontLook"
                 width={32}
                 height={32}
-                className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ${
-                  isForProviders ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
-                priority
-              />
-              {/* Black Icon - shown on white/light sections when NOT provider */}
-              <Image
-                src="/images/brand/pontlook-icon-black.png"
-                alt="PontLook"
-                width={32}
-                height={32}
-                className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ${
-                  !isForProviders && isLightSection ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
-                priority
-              />
-              {/* White Icon - shown on dark/AMOLED sections when NOT provider */}
-              <Image
-                src="/images/brand/pontlook-icon-white.png"
-                alt="PontLook"
-                width={32}
-                height={32}
-                className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ${
-                  !isForProviders && !isLightSection ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
+                className="h-full w-full object-contain"
                 priority
               />
             </div>
@@ -691,7 +672,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             width={28}
                             height={28}
                             className="h-7 w-auto object-contain"
-                            priority
+                            loading="lazy"
                           />
                         </div>
                         <span
