@@ -570,34 +570,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             </li>
           </ul>
 
-          {/* Right actions: Search, Language Switcher, and Sleek "Let's talk ↗" CTA */}
+          {/* Right actions: Language Switcher, and Sleek "Let's talk ↗" CTA */}
           <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5">
-            {/* Quick Command Palette Trigger (Cmd+K) */}
-            <Magnetic strength={0.16} activeDistance={25}>
-              <button
-                type="button"
-                onClick={() => setCommandOpen(true)}
-                className={`inline-flex items-center gap-1.5 xs:gap-2 px-2 xs:px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 cursor-pointer ${
-                  isLightSection
-                    ? 'border border-neutral-300/80 bg-white/70 text-neutral-700 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
-                    : 'border border-[#26282D] bg-[#16171B] text-neutral-400 hover:text-white hover:border-white/30'
-                }`}
-                aria-label={lang === 'ar' ? 'البحث السريع (⌘K)' : 'Quick search (⌘K)'}
-              >
-                <Search size={13} className={isLightSection ? 'text-neutral-700' : 'text-neutral-400'} />
-                <span className="hidden md:inline">{lang === 'ar' ? 'بحث...' : 'Search...'}</span>
-                <kbd
-                  className={`hidden sm:inline-block px-1.5 py-0.2 rounded text-[10px] font-mono border ${
-                    isLightSection
-                      ? 'bg-neutral-100 text-neutral-700 border-neutral-300'
-                      : 'bg-white/[0.08] text-neutral-300 border-white/10'
-                  }`}
-                >
-                  ⌘K
-                </kbd>
-              </button>
-            </Magnetic>
-
             {/* Language Switcher */}
             <Magnetic strength={0.16} activeDistance={25} className="hidden lg:inline-flex">
               <Link

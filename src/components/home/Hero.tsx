@@ -10,7 +10,6 @@ import TextReveal from '@/components/shared/TextReveal';
 import WordRotate from '@/components/shared/WordRotate';
 import Magnetic from '@/components/shared/Magnetic';
 import Press from '@/components/shared/Press';
-import TrustBar from '@/components/home/TrustBar';
 import { fadeUp, dur, ease } from '@/lib/motion';
 
 export default function Hero() {
@@ -54,7 +53,7 @@ export default function Hero() {
     <section
       ref={sectionRef}
       data-nav-dark="true"
-      className="relative overflow-hidden bg-black text-white min-h-[calc(100svh-4rem)] sm:min-h-[100svh] flex flex-col justify-between pt-28 pb-4 sm:pt-36 sm:pb-6 select-none"
+      className="relative overflow-hidden bg-black text-white min-h-[calc(100svh-4rem)] sm:min-h-[100svh] flex flex-col justify-center pt-28 pb-16 sm:pt-36 sm:pb-24 select-none"
     >
       {/* Background Underlayer: Deep Black with Subtle Monochrome Tech Dots */}
       <m.div
@@ -199,11 +198,6 @@ export default function Hero() {
           </m.div>
 
         </div>
-      </div>
-
-      {/* TrustBar Marquee Ribbon integrated at the bottom of the black first section */}
-      <div className="relative z-10 w-full mt-auto pt-6">
-        <TrustBar />
       </div>
     </section>
   );
