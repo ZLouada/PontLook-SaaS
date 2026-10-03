@@ -4,8 +4,8 @@ import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
 import LeadTiers from '@/components/providers/LeadTiers';
 import ProviderBenefitsCards from '@/components/providers/ProviderBenefitsCards';
+import ProviderConnectionFlow from '@/components/providers/ProviderConnectionFlow';
 import Reveal from '@/components/shared/Reveal';
-import TextReveal from '@/components/shared/TextReveal';
 import NeuralGridBackground from '@/components/shared/NeuralGridBackground';
 import Magnetic from '@/components/shared/Magnetic';
 import { ArrowRight } from '@/components/icons';
@@ -138,7 +138,7 @@ export default async function ForProvidersPage({
 
                 <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                   <a
-                    href="#why-partner"
+                    href="#connection-bridge"
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 sm:px-7 rounded-xl bg-white hover:bg-neutral-200 text-black font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:outline-none min-h-[48px]"
                   >
                     <span>{isAr ? 'اعرف المزيد' : 'Learn more'}</span>
@@ -162,34 +162,8 @@ export default async function ForProvidersPage({
         <LeadTiers mode="providers" dict={dict} lang={lang} />
       </div>
 
-      {/* 4. BOTTOM CTA SECTION */}
-      <section id="apply" className="bg-black scroll-mt-24 pb-16 sm:pb-24 pt-4 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <Reveal>
-            <TextReveal
-              as="h2"
-              text={isAr ? 'جاهز لتوسيع قاعدة عملائك المؤسسيين؟' : 'Ready to Scale Your Enterprise Pipeline?'}
-              className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white font-heading leading-tight mb-4 text-center"
-            />
-
-            <p className="text-sm sm:text-base text-neutral-400 font-normal leading-relaxed max-w-2xl mx-auto mb-8 font-sans">
-              {isAr
-                ? 'أكمل نموذج التأهيل وسيقوم فريق الشراكات بمراجعة بياناتك والتواصل معك خلال يومي عمل لبدء استقبال الفرص المؤكدة.'
-                : 'Complete our streamlined qualification form. Our partnerships team will review your profile and reach out within 2 business days to begin delivering verified demand.'}
-            </p>
-
-            <div className="flex justify-center px-2">
-              <Link
-                href={`/${lang}/for-providers/apply`}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans min-h-[48px]"
-              >
-                <span>{isAr ? 'ابدأ طلب التأهيل للشراكة' : 'Apply for Provider Partnership'}</span>
-                <ArrowRight size={17} className="rtl:-scale-x-100" />
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      {/* 4. THE CONNECTION BRIDGE & ACTION ENGINE */}
+      <ProviderConnectionFlow lang={lang} />
     </>
   );
 }

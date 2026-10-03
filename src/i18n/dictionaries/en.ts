@@ -226,7 +226,7 @@ export const en = {
     badge: "For training providers",
     headline: "Predictable revenue from buyers who are already looking",
     subtitle: "Referrals are unpredictable. Cold outreach is expensive. We deliver verified, decision maker confirmed opportunities from enterprises with real budgets, and you only pay when a lead is qualified.",
-    applyBtn: "Apply for partnership",
+    applyBtn: "Apply as Verified Provider",
     form: {
       title: "Partnership application",
       subtitle: "Tell us about your firm. If there’s a fit, you’ll hear from us within 2 business days.",

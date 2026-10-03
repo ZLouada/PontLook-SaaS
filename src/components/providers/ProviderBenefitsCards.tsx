@@ -323,7 +323,7 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
           takeawaysTitle: isAr ? 'المزايا والشروط المعتمدة' : 'GUARANTEED ADVANTAGES & SLAS',
           hint: isAr ? 'انقر خارج النافذة أو زر Esc للإغلاق' : 'Click outside or press Esc to close',
           closeLabel: isAr ? 'إغلاق النافذة' : 'Close window',
-          ctaLabel: isAr ? 'ابدأ طلب التأهيل كشريك' : 'Apply for Provider Partnership',
+          ctaLabel: isAr ? 'قدم كشريك تدريب معتمد' : 'Apply as Verified Provider',
           ctaHref: `/${lang}/for-providers/apply`,
         }}
       />

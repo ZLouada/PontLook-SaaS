@@ -548,7 +548,7 @@ export default function LeadTiers(_props?: {
                                     href={`/${lang}/for-providers/apply`}
                                     className="w-full xs:w-auto inline-flex items-center justify-center px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-xs xs:text-sm shadow-lg shadow-orange-500/25 active:scale-95 transition-all"
                                   >
-                                    <span>{isAr ? 'قدم للانضمام إلى الشراكة' : 'Apply for partnership'}</span>
+                                    <span>{isAr ? 'قدم كشريك تدريب معتمد' : 'Apply as Verified Provider'}</span>
                                     <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
                                   </Link>
                                 </Magnetic>
