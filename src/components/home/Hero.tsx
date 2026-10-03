@@ -6,12 +6,16 @@ import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
 import { ArrowRight } from '@/components/icons';
 import { m, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import TextReveal from '@/components/shared/TextReveal';
 import WordRotate from '@/components/shared/WordRotate';
 import Magnetic from '@/components/shared/Magnetic';
 import Press from '@/components/shared/Press';
-import PontLookGlobe from '@/components/home/PontLookGlobe';
 import { fadeUp, dur, ease } from '@/lib/motion';
+
+const PontLookGlobe = dynamic(() => import('@/components/home/PontLookGlobe'), {
+  ssr: false,
+});
 
 export default function Hero() {
   const dict = useDictionary();
@@ -133,27 +137,16 @@ export default function Hero() {
             </p>
 
             {/* Dynamic rotating words subheadline */}
-            <m.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25, duration: 0.6, ease: ease.out }}
-              className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2 text-sm md:text-base text-neutral-400 font-sans"
-            >
+            <div className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2 text-sm md:text-base text-neutral-400 font-sans">
               <span>{isAr ? 'حلول وتطوير كفاءات في' : 'Enterprise capability solutions in'}</span>
               <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-md text-neutral-200">
                 <span className="h-1.5 w-1.5 rounded-full bg-neutral-300 animate-pulse" />
                 <WordRotate words={capabilityWords} />
               </span>
-            </m.div>
+            </div>
 
             {/* Side CTAs (Dual Action: HR Buyer vs Training Provider) */}
-            <m.div
-              variants={fadeUp}
-              initial="hidden"
-              animate="show"
-              transition={{ delay: 0.35, duration: dur.slow, ease: ease.out }}
-              className="mt-7 sm:mt-10 flex flex-col xs:flex-row flex-wrap items-stretch xs:items-center gap-3 sm:gap-4 w-full"
-            >
+            <div className="mt-7 sm:mt-10 flex flex-col xs:flex-row flex-wrap items-stretch xs:items-center gap-3 sm:gap-4 w-full">
               {/* Primary Action for HR & Enterprise Buyers */}
               <Magnetic strength={0.22} activeDistance={40} className="w-full xs:w-auto">
                 <Press className="w-full xs:w-auto" strength={0.7} vibrate>
@@ -185,19 +178,14 @@ export default function Hero() {
                   </Link>
                 </Press>
               </Magnetic>
-            </m.div>
+            </div>
 
           </div>
 
           {/* Right Column: Animated PontLook GCC 3D Earth Globe */}
-          <m.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.8, ease: ease.out }}
-            className="lg:col-span-5 w-full flex items-center justify-center pt-4 lg:pt-0"
-          >
-            <PontLookGlobe className="w-full max-w-[380px] xs:max-w-[420px] sm:max-w-[460px] lg:max-w-[500px]" />
-          </m.div>
+          <div className="lg:col-span-5 w-full flex items-center justify-center pt-4 lg:pt-0">
+            <PontLookGlobe className="w-full max-w-[340px] xs:max-w-[380px] sm:max-w-[440px] lg:max-w-[500px]" />
+          </div>
 
         </div>
       </div>
