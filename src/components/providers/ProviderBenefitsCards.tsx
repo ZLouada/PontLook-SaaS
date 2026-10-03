@@ -301,9 +301,9 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
       {/* ============================================================== */}
       <div ref={containerRef} className="hidden lg:block relative min-h-[280vh]">
         <div className="sticky top-28 xl:top-32 w-full">
-          <div className="grid grid-cols-12 gap-6 xl:gap-10 2xl:gap-12 items-center">
+          <div className="grid grid-cols-12 gap-6 xl:gap-8 2xl:gap-10 items-center">
             {/* Left Column: Attio-style Navigation Titles in Orange (Minimized) */}
-            <div className="col-span-4 xl:col-span-4 2xl:col-span-3 flex flex-col space-y-4">
+            <div className="col-span-4 xl:col-span-4 2xl:col-span-4 flex flex-col space-y-3">
               {benefits.map((b, idx) => {
                 const isActive = activeStep === idx;
                 return (
@@ -311,15 +311,15 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                     key={b.id}
                     type="button"
                     onClick={() => handleStepClick(idx)}
-                    className="group relative flex items-start gap-3 text-start w-full py-2 transition-all duration-300 outline-none cursor-pointer"
+                    className="group relative flex items-start gap-3 text-start w-full py-1.5 transition-all duration-300 outline-none cursor-pointer"
                     aria-current={isActive ? 'step' : undefined}
                   >
                     {/* Vertical Indicator Bar: Proportional height */}
                     <div
                       className={`w-1 rounded-full transition-all duration-300 shrink-0 ${
                         isActive
-                          ? 'h-10 sm:h-12 bg-[#FF5C00]'
-                          : 'h-6 sm:h-7 bg-white/10 group-hover:bg-white/20'
+                          ? 'h-9 sm:h-10 bg-[#FF5C00]'
+                          : 'h-5 sm:h-6 bg-white/10 group-hover:bg-white/20'
                       }`}
                     />
 
@@ -343,7 +343,7 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
 
                       {/* Main Title: Minimized scale, elegant font size */}
                       <div
-                        className={`font-heading text-base sm:text-lg lg:text-xl font-medium tracking-tight transition-colors duration-300 mt-0.5 leading-snug ${
+                        className={`font-heading text-sm sm:text-base lg:text-lg font-medium tracking-tight transition-colors duration-300 mt-0.5 leading-snug ${
                           isActive
                             ? 'text-[#FF5C00] font-semibold'
                             : 'text-neutral-500 group-hover:text-neutral-300'
@@ -357,9 +357,9 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
               })}
             </div>
 
-            {/* Right Column: Attio-style Black & White Content Panel (Full screen scale) */}
-            <div className="col-span-8 xl:col-span-8 2xl:col-span-9">
-              <div className="relative rounded-2xl border border-white/10 bg-[#0B0C10] p-6 sm:p-8 lg:p-10 xl:p-12 min-h-[520px] lg:min-h-[560px] xl:min-h-[600px] shadow-[0_24px_60px_rgba(0,0,0,0.9),inset_0_1px_0_0_rgba(255,255,255,0.08)] overflow-hidden flex flex-col justify-between">
+            {/* Right Column: Attio-style Black & White Content Panel (Minimized scale) */}
+            <div className="col-span-8 xl:col-span-8 2xl:col-span-8">
+              <div className="relative rounded-2xl border border-white/10 bg-[#0B0C10] p-5 sm:p-6 lg:p-7 xl:p-8 min-h-[380px] sm:min-h-[400px] lg:min-h-[430px] xl:min-h-[450px] shadow-[0_20px_50px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.08)] overflow-hidden flex flex-col justify-between">
                 {/* Subtle Monochrome Tech Dots underlayer */}
                 <div
                   className="absolute inset-0 opacity-[0.06] pointer-events-none"
@@ -377,28 +377,28 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                     animate={{ opacity: 1, y: 0 }}
                     exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10 }}
                     transition={{ duration: 0.24, ease: ease.out }}
-                    className="relative z-10 flex flex-col justify-between h-full space-y-6"
+                    className="relative z-10 flex flex-col justify-between h-full space-y-4"
                   >
                     {/* Top Content Area: Monochrome Header & Angle */}
                     <div>
-                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/15 text-neutral-300 text-[11px] font-mono font-medium">
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/15 text-neutral-300 text-[10px] sm:text-[11px] font-mono font-medium">
                         <span>{currentBenefit.badge}</span>
                       </div>
 
-                      <h3 className="font-heading text-lg sm:text-xl lg:text-2xl font-semibold text-white tracking-tight leading-tight mt-2">
+                      <h3 className="font-heading text-base sm:text-lg lg:text-xl font-semibold text-white tracking-tight leading-tight mt-1.5">
                         {currentBenefit.angle}
                       </h3>
 
-                      <p className="mt-1 text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed max-w-xl font-normal">
+                      <p className="mt-1 text-xs sm:text-[13px] text-neutral-400 font-sans leading-relaxed max-w-xl font-normal">
                         {currentBenefit.body}
                       </p>
                     </div>
 
                     {/* Middle: Takeaways in crisp Black & White */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-3 border-t border-white/[0.08]">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2.5 border-t border-white/[0.08]">
                       {currentBenefit.takeaways.map((point, pIdx) => (
-                        <div key={pIdx} className="flex items-start gap-2 text-xs text-neutral-300 font-sans">
-                          <CheckCircle2 size={13} className="text-white shrink-0 mt-0.5" />
+                        <div key={pIdx} className="flex items-start gap-1.5 text-[11px] sm:text-xs text-neutral-300 font-sans">
+                          <CheckCircle2 size={12} className="text-white shrink-0 mt-0.5" />
                           <span className="leading-snug text-neutral-300">{point}</span>
                         </div>
                       ))}

@@ -150,8 +150,8 @@ export default async function ForProvidersPage({
       </section>
 
       {/* 2. WHY PARTNER / DIRECT VALUE PROPOSITION */}
-      <section id="why-partner" className="bg-black pt-24 pb-16 sm:pt-32 sm:pb-24 scroll-mt-28 lg:scroll-mt-36 w-full">
-        <div className="w-full max-w-[96vw] xl:max-w-[94vw] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+      <section id="why-partner" className="bg-black pt-20 pb-16 sm:pt-28 sm:pb-24 scroll-mt-28 lg:scroll-mt-36 w-full">
+        <div className="w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <ProviderBenefitsCards lang={lang} />
         </div>
       </section>
