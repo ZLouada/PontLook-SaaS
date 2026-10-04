@@ -105,7 +105,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             ================================================================ */}
         <div
           id="our-mission"
-          className="absolute inset-0 w-full h-full bg-white text-neutral-900 flex flex-col justify-start lg:justify-center items-center overflow-y-auto z-10 py-12 sm:py-16 lg:py-4 select-text"
+          className="absolute inset-0 w-full h-full bg-white text-neutral-900 flex flex-col justify-center items-center overflow-y-auto md:overflow-hidden z-10 pt-16 sm:pt-20 lg:pt-12 pb-4 select-text"
         >
           {/* Attio-Style Subtle Grid dots */}
           <div
