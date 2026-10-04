@@ -39,6 +39,17 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(`https://blog.pontlook.com${blogPath}${search}`), 301);
   }
 
+const ALLOWED_HOSTS = ['pontlook.com', 'localhost', '127.0.0.1'];
+
+function getSafeHost(rawHost: string): { host: string; protocol: string } {
+  const cleanHost = rawHost.replace(/^www\./, '').replace(/:[0-9]+$/, '');
+  const isAllowed = ALLOWED_HOSTS.includes(cleanHost) || cleanHost.endsWith('.vercel.app');
+  const safeHost = isAllowed ? cleanHost : 'pontlook.com';
+  const isLocal = safeHost.includes('localhost') || safeHost.includes('127.0.0.1');
+  const protocol = isLocal ? 'http' : 'https';
+  return { host: safeHost, protocol };
+}
+
   // Determine if URL needs normalization (www removal, trailing slash stripping, or root locale addition)
   let targetHost = host;
   let targetPath = pathname;
@@ -62,7 +73,8 @@ export function middleware(request: NextRequest) {
 
   if (shouldRedirect) {
     if (isWww) {
-      const destination = `https://${targetHost.replace(/:[0-9]+$/, '')}${targetPath}${search}`;
+      const { host: safeHost, protocol } = getSafeHost(targetHost);
+      const destination = `${protocol}://${safeHost}${targetPath}${search}`;
       return NextResponse.redirect(new URL(destination), 301);
     }
     const targetUrl = new URL(request.url);

@@ -25,6 +25,7 @@ export default function ContactForm() {
   const dict = useDictionary();
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(schema),
   });
@@ -36,6 +37,7 @@ export default function ContactForm() {
     }
 
     setIsLoading(true);
+    setErrorMsg('');
 
     const payload = {
       access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '8b61988b-d8e3-414b-a843-5ea273292bb5',
@@ -78,13 +80,13 @@ export default function ContactForm() {
       if (response.ok && result?.success !== false) {
         setSubmitted(true);
       } else {
-        const errorMsg = result?.message || 'Message submission failed. Please check your details and try again.';
-        console.error('Web3Forms contact submission error:', errorMsg);
-        alert('Message submission failed. Please check your details and try again.');
+        const msg = result?.message || 'Message submission failed. Please check your details and try again.';
+        console.error('Web3Forms contact submission error:', msg);
+        setErrorMsg('Message submission failed. Please check your details and try again.');
       }
     } catch (err) {
       console.error('Contact submission error:', err);
-      alert('Network error sending your message. Please check your connection and try again.');
+      setErrorMsg('Network error sending your message. Please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -143,6 +145,11 @@ export default function ContactForm() {
         <textarea id="message" rows={5} placeholder={dict.contact.form.messagePlaceholder} className="field-input" {...register('message')} />
         {errors.message && <p className="field-error" role="alert">{errors.message.message}</p>}
       </div>
+      {errorMsg && (
+        <p role="alert" className="mt-4 rounded-xl border border-red-500/40 bg-red-950/30 p-4 text-sm text-red-400">
+          {errorMsg}
+        </p>
+      )}
       <button type="submit" disabled={isLoading} className="btn-primary mt-7 w-full sm:w-auto min-h-[48px] py-3.5 sm:py-3 text-base sm:text-sm font-semibold disabled:opacity-60 inline-flex items-center justify-center gap-2.5 active:scale-[0.98] touch-manipulation">
         {isLoading ? (
           <>

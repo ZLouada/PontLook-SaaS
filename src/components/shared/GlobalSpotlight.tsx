@@ -1,11 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { m, useMotionValue, useSpring } from 'framer-motion';
 
 export default function GlobalSpotlight() {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
+  // Stable ref so the mousemove handler never needs to be re-registered when
+  // visible state changes (which would cause listener churn on every mouse move)
+  const visibleRef = useRef(false);
 
   const mouseX = useMotionValue(-1000);
   const mouseY = useMotionValue(-1000);
@@ -25,10 +28,15 @@ export default function GlobalSpotlight() {
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
-      if (!visible) setVisible(true);
+      // Read from ref — no state dependency, handler registered exactly once
+      if (!visibleRef.current) {
+        visibleRef.current = true;
+        setVisible(true);
+      }
     };
 
     const handleMouseLeave = () => {
+      visibleRef.current = false;
       setVisible(false);
     };
 
@@ -39,7 +47,8 @@ export default function GlobalSpotlight() {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [mouseX, mouseY, visible]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!mounted) return null;
 

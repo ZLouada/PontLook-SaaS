@@ -6,7 +6,6 @@ import '../globals.css';
 import { getDictionary, Locale } from '@/i18n';
 import { DictionaryProvider } from '@/components/providers/DictionaryProvider';
 import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
-import GlobalSpotlight from '@/components/shared/GlobalSpotlight';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -189,7 +188,6 @@ export default async function RootLayout({
       <body className={`bg-black text-neutral-300 antialiased selection:bg-white/20 selection:text-white ${lang === 'ar' ? 'font-arabic' : ''}`}>
         <DictionaryProvider dictionary={dictionary}>
           <FramerMotionProvider>
-            <GlobalSpotlight />
             <Navbar lang={lang} />
             <main className="min-h-screen">{children}</main>
             <Footer />

@@ -331,7 +331,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
       </div>
 
       {/* animated wave curtain */}
-      <div className="relative flex-1 w-full flex flex-col items-center justify-end min-h-[380px] sm:min-h-[480px] mx-auto">
+      <div className="relative flex-1 w-full flex flex-col items-center justify-end min-h-[160px] sm:min-h-[220px] mx-auto py-2 sm:py-4">
         <div
           className="absolute inset-0 w-full h-full pointer-events-auto [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)] overflow-hidden"
           aria-hidden="true"
@@ -340,7 +340,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
         </div>
 
         {/* scroll indicator */}
-        <div className="relative z-10 mb-2 sm:mb-4">
+        <div className="relative z-10 mb-2 sm:mb-3">
           <button
             onClick={scrollToMission}
             className="inline-flex items-center gap-2 sm:gap-3 px-3 xs:px-3.5 sm:px-6 py-2 sm:py-3 rounded-full bg-[#111215]/80 hover:bg-[#16171B] border border-[#26282D] hover:border-neutral-600 text-[11px] sm:text-sm text-neutral-300 hover:text-white shadow-2xl backdrop-blur-xl transition-all active:scale-95 group max-w-[92vw]"

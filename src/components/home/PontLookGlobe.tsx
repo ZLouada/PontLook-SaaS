@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { REAL_LAND_DOTS } from './globeData';
 
 interface HubLocation {
@@ -30,11 +30,8 @@ const GLOBAL_HUBS: HubLocation[] = [
 export default function PontLookGlobe({ className = '' }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [gccScreenPos, setGccScreenPos] = useState<{ x: number; y: number; visible: boolean }>({
-    x: 0,
-    y: 0,
-    visible: false,
-  });
+  // Direct DOM ref for the floating badge — avoids setState in the RAF loop (60 re-renders/sec)
+  const badgeRef = useRef<HTMLDivElement>(null);
 
   // Rotation angles: side 3D pitch + natural axial tilt + rotating yaw
   const rotationRef = useRef({
@@ -370,14 +367,16 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // Position floating DOM badge
-        setGccScreenPos({
-          x: gccProj.x,
-          y: gccProj.y,
-          visible: true,
-        });
+        // Position floating DOM badge — direct DOM mutation, no setState in RAF
+        const badge = badgeRef.current;
+        if (badge) {
+          badge.style.left = `${gccProj.x}px`;
+          badge.style.top = `${gccProj.y}px`;
+          badge.style.display = 'block';
+        }
       } else {
-        setGccScreenPos((prev) => (prev.visible ? { ...prev, visible: false } : prev));
+        const badge = badgeRef.current;
+        if (badge) badge.style.display = 'none';
       }
 
       animId = requestAnimationFrame(render);
@@ -440,31 +439,26 @@ export default function PontLookGlobe({ className = '' }: { className?: string }
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />
 
-      {/* Floating 3D Tracked Badge for PontLook · GCC */}
-      {gccScreenPos.visible && (
-        <div
-          className="absolute z-20 pointer-events-none transition-transform duration-75 ease-out"
-          style={{
-            left: `${gccScreenPos.x}px`,
-            top: `${gccScreenPos.y}px`,
-            transform: 'translate(-50%, -135%)',
-          }}
-        >
-          {/* Connector stem */}
-          <div className="absolute left-1/2 -bottom-2 w-[1px] h-2 bg-gradient-to-b from-[#FF5C00] to-transparent -translate-x-1/2" />
+      {/* Floating 3D Tracked Badge for PontLook · GCC — position/visibility mutated directly in RAF */}
+      <div
+        ref={badgeRef}
+        className="absolute z-20 pointer-events-none"
+        style={{ display: 'none', transform: 'translate(-50%, -135%)' }}
+      >
+        {/* Connector stem */}
+        <div className="absolute left-1/2 -bottom-2 w-[1px] h-2 bg-gradient-to-b from-[#FF5C00] to-transparent -translate-x-1/2" />
 
-          {/* Glass Badge */}
-          <div className="px-3 py-1.5 rounded-full bg-black/85 border border-[#FF5C00]/70 backdrop-blur-md shadow-[0_4px_24px_rgba(255,92,0,0.4)] flex items-center gap-2 whitespace-nowrap">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF5C00] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF5C00]" />
-            </span>
-            <span className="text-xs font-semibold text-white tracking-wide">
-              PontLook · GCC
-            </span>
-          </div>
+        {/* Glass Badge */}
+        <div className="px-3 py-1.5 rounded-full bg-black/85 border border-[#FF5C00]/70 backdrop-blur-md shadow-[0_4px_24px_rgba(255,92,0,0.4)] flex items-center gap-2 whitespace-nowrap">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF5C00] opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF5C00]" />
+          </span>
+          <span className="text-xs font-semibold text-white tracking-wide">
+            PontLook · GCC
+          </span>
         </div>
-      )}
+      </div>
     </div>
   );
 }

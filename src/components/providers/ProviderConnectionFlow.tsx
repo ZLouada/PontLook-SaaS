@@ -74,10 +74,6 @@ export default function ProviderConnectionFlow({ lang }: ProviderConnectionFlowP
           
           {/* Top Bar: Headline Only (Removed 2-5 Days badge as requested) */}
           <div className="flex items-center gap-3 pb-6 border-b border-white/10">
-            {/* Pontlock Network Icon Miniature */}
-            <div className="w-9 h-9 rounded-xl bg-[#FF5C00]/10 border border-[#FF5C00]/30 flex items-center justify-center shrink-0">
-              <div className="w-3.5 h-3.5 rounded-full bg-[#FF5C00] shadow-[0_0_12px_#FF5C00]" />
-            </div>
             <div>
               <span className="text-[11px] uppercase tracking-widest text-[#FF5C00] font-semibold font-mono block">
                 {isAr ? 'نموذج الربط المباشر' : 'DIRECT CONNECTION ARCHITECTURE'}

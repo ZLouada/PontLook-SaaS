@@ -33,10 +33,61 @@ const resend = resendApiKey ? new Resend(resendApiKey) : null;
 const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
 const crmWebhookUrl = process.env.CRM_WEBHOOK_URL;
 
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 10;
+const ipRateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
+function checkRateLimit(ip: string): { allowed: boolean; retryAfter: number } {
+  const now = Date.now();
+  const record = ipRateLimitMap.get(ip);
+
+  // Periodically clean up expired entries
+  if (ipRateLimitMap.size > 2000) {
+    for (const [key, val] of ipRateLimitMap.entries()) {
+      if (val.resetTime < now) ipRateLimitMap.delete(key);
+    }
+  }
+
+  if (!record || record.resetTime < now) {
+    ipRateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
+    return { allowed: true, retryAfter: 0 };
+  }
+
+  if (record.count >= MAX_REQUESTS_PER_WINDOW) {
+    const retryAfter = Math.ceil((record.resetTime - now) / 1000);
+    return { allowed: false, retryAfter };
+  }
+
+  record.count += 1;
+  return { allowed: true, retryAfter: 0 };
+}
+
 export async function POST(req: NextRequest) {
   const startTime = Date.now();
 
   try {
+    // 1. IP Rate Limiting Check
+    const ip =
+      req.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+      req.headers.get('x-real-ip') ||
+      'anonymous';
+    const rateLimit = checkRateLimit(ip);
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { success: false, error: 'Too many requests. Please wait a minute before submitting again.' },
+        { status: 429, headers: { 'Retry-After': String(rateLimit.retryAfter) } }
+      );
+    }
+
+    // 2. Request body size limit check (100KB)
+    const contentLength = Number(req.headers.get('content-length') || 0);
+    if (contentLength > 100 * 1024) {
+      return NextResponse.json(
+        { success: false, error: 'Payload exceeds size limit (100KB)' },
+        { status: 413 }
+      );
+    }
+
     const rawBody = await req.json().catch(() => null);
     if (!rawBody) {
       return NextResponse.json(
@@ -230,9 +281,10 @@ export async function POST(req: NextRequest) {
           body: JSON.stringify({
             text: `${tierBadge} *New ${leadScoreResult.tier} Enterprise Lead (${leadScoreResult.score}/100)*: ${data.organizationName} (${data.country})\n• *Contact*: ${data.fullName} · ${data.jobTitle} (<mailto:${data.workEmail}|${data.workEmail}>)\n• *Domains*: ${domainNames}\n• *Cohort & Budget*: ${cohortLabel} | ${budgetLabel}\n• *Ref*: \`${leadId}\``,
           }),
+          signal: AbortSignal.timeout(5000),
         });
       } catch (slackErr) {
-        console.error('Slack webhook dispatch failed:', slackErr);
+        console.error('Slack webhook dispatch failed or timed out:', slackErr);
       }
     }
 
@@ -261,9 +313,10 @@ export async function POST(req: NextRequest) {
             message: `Lead ID: ${leadId} | Score: ${leadScoreResult.score}/100 (${leadScoreResult.tier})\nOrganization: ${data.organizationName || 'N/A'} (${data.country})\nContact: ${data.fullName} (${data.jobTitle || 'N/A'}) · ${data.workEmail}\nPhone: ${fullPhoneNumber}\nScope: ${domainNames}\nDelivery: ${deliveryModeName} ${data.city ? `(${data.city})` : ''}\nCohort: ${cohortLabel}\nBudget: ${budgetLabel}\nTimeline: ${timelineLabel}`,
             ...webhookPayload,
           }),
+          signal: AbortSignal.timeout(5000),
         });
       } catch (crmErr) {
-        console.error('CRM webhook dispatch failed:', crmErr);
+        console.error('CRM webhook dispatch failed or timed out:', crmErr);
       }
     }
 

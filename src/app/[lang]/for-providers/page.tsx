@@ -137,7 +137,7 @@ export default async function ForProvidersPage({
 
                 <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                   <a
-                    href="#connection-bridge"
+                    href="#why-partner"
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 sm:px-7 rounded-xl bg-white hover:bg-neutral-200 text-black font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:outline-none min-h-[48px]"
                   >
                     <span>{isAr ? 'اعرف المزيد' : 'Learn more'}</span>
@@ -149,7 +149,7 @@ export default async function ForProvidersPage({
         </div>
       </section>
 
-      {/* 2. WHY PARTNER / DIRECT VALUE PROPOSITION */}
+      {/* 2. WHY PARTNER / DIRECT VALUE PROPOSITION (Attio-style free-standing cards) */}
       <section id="why-partner" className="bg-black pt-20 pb-16 sm:pt-28 sm:pb-24 scroll-mt-28 lg:scroll-mt-36 w-full">
         <div className="w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <ProviderBenefitsCards lang={lang} />

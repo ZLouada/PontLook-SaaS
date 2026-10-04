@@ -213,13 +213,11 @@ export default function FindTrainingWizard() {
         const errorMsg = result?.message || 'Form submission failed. Please check your details and try again.';
         console.error('Web3Forms submission failed:', errorMsg);
         setErrorMessage(errorMsg);
-        alert('Submission failed. Please check your details and try again.');
       }
     } catch (err) {
       console.error('Submission network error:', err);
       const networkErrorMsg = 'Network connection error. Please check your connection and try again.';
       setErrorMessage(networkErrorMsg);
-      alert(networkErrorMsg);
     } finally {
       setIsSubmitting(false);
     }

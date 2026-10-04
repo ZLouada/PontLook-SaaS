@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { ArrowRight, CheckCircle2 } from '@/components/icons';
+import { ArrowRight } from '@/components/icons';
 import { m, AnimatePresence, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import Signal from '@/components/shared/Signal';
@@ -340,29 +340,6 @@ export default function HowItWorks() {
                 className="text-[1.5rem] xs:text-[1.75rem] sm:text-4xl lg:text-[40px] font-semibold text-neutral-950 tracking-tight leading-[1.18] font-heading"
               />
 
-              <p className="text-sm sm:text-base text-neutral-600 font-sans leading-relaxed">
-                {dict.how_it_works?.subtitle ||
-                  (isAr
-                    ? 'بدون مزايدات. بدون اتصالات مبيعات مزعجة. شراكات تدريبية دقيقة وموثوقة فقط.'
-                    : 'Zero bidding wars. No endless cold calls. Just verified, tailor-made partnerships.')}
-              </p>
-
-              {/* Benefit Checkpoints */}
-              <div className="space-y-2.5 pt-1 w-full text-sm text-neutral-700 font-sans">
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-neutral-950 shrink-0" />
-                  <span>{isAr ? 'مجاناً 100% للمنشآت والشركات' : '100% Free for corporate organizations'}</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-neutral-950 shrink-0" />
-                  <span>{isAr ? 'عروض منتقاة من 2 إلى 3 خبراء معتمدين (بدون مزايدات)' : '2 to 3 curated specialists per mandate (Zero bidding wars)'}</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-neutral-950 shrink-0" />
-                  <span>{isAr ? 'علاقة تعاقدية مباشرة وبدون اشتراكات شهرية' : 'Direct executive contracting with zero retainers'}</span>
-                </div>
-              </div>
-
               {/* White "Join network" Window Card */}
               <div className="pt-3 w-full sm:w-auto">
                 <Magnetic strength={0.2} activeDistance={35} className="w-full sm:w-auto">
@@ -394,11 +371,11 @@ export default function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewportOnceMobile}
               transition={{ duration: dur.slow, ease: ease.out, delay: 0.1 }}
-              className="lg:col-span-7 flex flex-col space-y-4"
+              className="lg:col-span-7 flex flex-col gap-4"
             >
 
-              {/* Step Navigation Tabs on Top - 3 cols on all screen sizes */}
-              <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 w-full py-1">
+              {/* Step Navigation Tabs — Ecomflow-style row docked UNDER the panel */}
+              <div className="order-2 grid grid-cols-3 gap-1.5 sm:gap-2.5 w-full py-1">
                 {steps.map((st, idx) => {
                   const isActive = activeStep === idx;
                   return (
@@ -436,12 +413,12 @@ export default function HowItWorks() {
                 })}
               </div>
 
-              {/* Active Step White Window Card */}
+              {/* Active Step White Window Card (content + mockup ABOVE the tabs) */}
               <div
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
-                className="w-full"
+                className="order-1 w-full"
               >
                 {/* `custom` carries the travel direction so the outgoing card
                     leaves the way the swipe pushed it. */}

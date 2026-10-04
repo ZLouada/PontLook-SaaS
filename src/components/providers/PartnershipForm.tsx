@@ -49,6 +49,7 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const [formData, setFormData] = useState({
     companyName: '',
@@ -96,6 +97,7 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
     }
 
     setIsLoading(true);
+    setErrorMsg('');
 
     const payload = {
       access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '8b61988b-d8e3-414b-a843-5ea273292bb5',
@@ -138,13 +140,13 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
       if (res.ok && data?.success !== false) {
         setIsSubmitted(true);
       } else {
-        const errorMsg = data?.message || 'Form submission failed. Please check your details and try again.';
-        console.error('Web3Forms submission error:', errorMsg);
-        alert('Form submission failed. Please check your details and try again.');
+        const msg = data?.message || 'Form submission failed. Please check your details and try again.';
+        console.error('Web3Forms submission error:', msg);
+        setErrorMsg('Form submission failed. Please check your details and try again.');
       }
     } catch (err) {
       console.error('Submission error:', err);
-      alert('Network connection error. Please check your connection and try again.');
+      setErrorMsg('Network connection error. Please check your connection and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -332,6 +334,12 @@ export default function PartnershipForm({ dict, lang }: PartnershipFormProps = {
             placeholder={messagePlaceholder}
           />
         </div>
+
+        {errorMsg && (
+          <p role="alert" className="mt-4 rounded-xl border border-red-500/40 bg-red-950/30 p-4 text-sm text-red-400">
+            {errorMsg}
+          </p>
+        )}
 
         <button
           type="submit"

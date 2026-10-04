@@ -329,7 +329,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
         const errMessage = resData?.message || 'Submission failed. Please verify your details and try again.';
         console.error('Submission failed:', errMessage);
         setSubmissionError(errMessage);
-        alert('Submission failed. Please check your details and try again.');
       }
     } catch (err) {
       console.error('Submission network error:', err);
@@ -351,7 +350,6 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       }
       const netErrorMsg = 'Network error. Please check your connection and try again.';
       setSubmissionError(netErrorMsg);
-      alert(netErrorMsg);
     } finally {
       setIsSubmitting(false);
     }

@@ -4,17 +4,12 @@ import Link from 'next/link';
 import Reveal from '@/components/shared/Reveal';
 import TextReveal from '@/components/shared/TextReveal';
 import FindTrainingStepsCards from '@/components/find-training/FindTrainingStepsCards';
+import BurjTower from '@/components/find-training/BurjTower';
 import NeuralGridBackground from '@/components/shared/NeuralGridBackground';
 import Magnetic from '@/components/shared/Magnetic';
-import CounterTicker from '@/components/shared/CounterTicker';
 import CardTilt3D from '@/components/shared/CardTilt3D';
 import BorderGlow from '@/components/shared/BorderGlow';
-import {
-  BadgeCheck,
-  BadgeDollarSign,
-  ArrowRight,
-  ChevronDown,
-} from '@/components/icons';
+import { ArrowRight, ChevronDown } from '@/components/icons';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 
@@ -63,20 +58,6 @@ export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
 }
 
-const trustMetricsEn = [
-  { num: 120, prefix: '', suffix: '+', label: 'Vetted Providers' },
-  { num: 48, prefix: '', suffix: ' Hours', label: 'Proposal SLA' },
-  { num: 0, prefix: '$', suffix: ' Cost', label: 'For Hiring Organizations' },
-  { num: 100, prefix: '', suffix: '%', label: 'Confidentiality Guaranteed' },
-];
-
-const trustMetricsAr = [
-  { num: 120, prefix: '+', suffix: '', label: 'مزود تدريب معتمد' },
-  { num: 48, prefix: '', suffix: ' ساعة', label: 'سرعة استلام العروض' },
-  { num: 0, prefix: '', suffix: '$ تكلفة', label: 'مجاناً للشركات والجهات' },
-  { num: 100, prefix: '', suffix: '%', label: 'سرية تامة ومضمونة' },
-];
-
 export default async function FindTrainingPage({
   params,
 }: {
@@ -85,8 +66,6 @@ export default async function FindTrainingPage({
   const resolvedParams = await params;
   const lang = resolvedParams?.lang || 'en';
   const isAr = lang === 'ar';
-
-  const trustMetrics = isAr ? trustMetricsAr : trustMetricsEn;
 
   return (
     <>
@@ -97,90 +76,54 @@ export default async function FindTrainingPage({
         <div className="pointer-events-none absolute top-10 start-1/4 w-[400px] h-[400px] bg-white/[0.01] blur-3xl -z-10 rounded-full" />
         <NeuralGridBackground className="z-0 opacity-40" gridSize={36} interactiveRadius={160} />
 
-        {/* Vertically Centered Content */}
-        <div className="container-site relative z-10 mx-auto max-w-4xl text-center py-2 sm:py-6">
-          <Reveal className="flex flex-col items-center">
-            <TextReveal
-              as="h1"
-              onScroll={false}
-              text={
-                isAr
-                  ? 'احصل على 3 عروض تدريبية مخصصة لتطوير كوادر منشأتك'
-                  : 'Get 3 Curated Training Proposals for Your Workforce'
-              }
-              className="text-2xl xs:text-3xl sm:text-5xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.08] font-heading tracking-tight"
-            />
+        {/* Vertically Centered Content — copy on one side, tower on the other */}
+        <div className="container-site relative z-10 mx-auto w-full max-w-6xl py-2 sm:py-6">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-8">
+            <Reveal className="lg:col-span-7 flex flex-col items-start text-start">
+              <TextReveal
+                as="h1"
+                onScroll={false}
+                text={
+                  isAr
+                    ? 'احصل على 3 عروض تدريبية مخصصة لتطوير كوادر منشأتك'
+                    : 'Get 3 Curated Training Proposals for Your Workforce'
+                }
+                className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.08] font-heading tracking-tight text-start"
+              />
 
-            <p className="mt-3.5 sm:mt-5 text-sm xs:text-base sm:text-xl text-neutral-400 leading-relaxed max-w-2xl mx-auto font-normal">
-              {isAr
-                ? 'لا داعي للبحث اليدوي بين مئات الكتالوجات العامة. حدد متطلباتك التدريبية في 60 ثانية، وسنصلك بأفضل مزودي التدريب المعتمدين وفق متطلباتك الدقيقة وبدون أي التزام.'
-                : 'Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds, and we will introduce you only to proven training providers matched to your exact domain and regional context.'}
-            </p>
+              <p className="mt-3.5 sm:mt-5 text-sm xs:text-base sm:text-xl text-neutral-400 leading-relaxed max-w-2xl font-normal text-start">
+                {isAr
+                  ? 'لا داعي للبحث اليدوي بين مئات الكتالوجات العامة. حدد متطلباتك التدريبية في 60 ثانية، وسنصلك بأفضل مزودي التدريب المعتمدين وفق متطلباتك الدقيقة وبدون أي التزام.'
+                  : 'Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds, and we will introduce you only to proven training providers matched to your exact domain and regional context.'}
+              </p>
 
-            <div className="mt-6 xs:mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
-              <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
-                <Link
-                  href={`/${lang}/find-training/request`}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 xs:py-3.5 sm:py-4 px-6 sm:px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-xs xs:text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
-                >
-                  <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals'}</span>
-                  <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
-                </Link>
-              </Magnetic>
+              <div className="mt-6 xs:mt-7 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3 sm:gap-4 w-full sm:w-auto">
+                <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
+                  <Link
+                    href={`/${lang}/find-training/request`}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 xs:py-3.5 sm:py-4 px-6 sm:px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-xs xs:text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
+                  >
+                    <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals'}</span>
+                    <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
+                  </Link>
+                </Magnetic>
 
-              <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
-                <a
-                  href="#how-it-works"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-base border border-[#26282D] hover:border-white/20 shadow-xs active:scale-[0.98] transition-all duration-200"
-                >
-                  <span>{isAr ? 'كيف تعمل المنصة' : 'How Matchmaking Works'}</span>
-                </a>
-              </Magnetic>
-            </div>
-
-            <div className="mt-8 sm:mt-10 grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3.5 w-full max-w-3xl">
-              {trustMetrics.map((m) => (
-                <div
-                  key={m.label}
-                  className="relative rounded-xl border border-[#26282D] bg-[#0F1013] p-3 sm:p-4 text-center shadow-xs overflow-hidden"
-                >
-                  <BorderGlow color="rgba(255, 255, 255, 0.18)" size={120} />
-                  <div className="relative z-10 text-xl font-bold text-white sm:text-2xl tabular-nums">
-                    <CounterTicker
-                      value={m.num}
-                      prefix={m.prefix}
-                      suffix={m.suffix}
-                      duration={1.8}
-                      className="text-white"
-                    />
-                  </div>
-                  <div className="relative z-10 mt-1 text-[10px] xs:text-[11px] font-medium uppercase tracking-wider text-neutral-400">
-                    {m.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-2 xs:gap-3 sm:gap-4 text-xs sm:text-sm text-neutral-400">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">
-                <BadgeDollarSign size={15} className="text-white shrink-0" />
-                <span className="font-medium text-neutral-300">
-                  {isAr ? 'مجاني 100% للشركات والمؤسسات' : '100% Free for Companies'}
-                </span>
+                <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
+                  <a
+                    href="#how-it-works"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-base border border-[#26282D] hover:border-white/20 shadow-xs active:scale-[0.98] transition-all duration-200"
+                  >
+                    <span>{isAr ? 'كيف تعمل المنصة' : 'How Matchmaking Works'}</span>
+                  </a>
+                </Magnetic>
               </div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">
-                <span className="font-medium text-neutral-300">
-                  {isAr ? 'بدون رسائل تسويقية عشوائية' : 'No cold outreach'}
-                </span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] shadow-xs">
-                <BadgeCheck size={15} className="text-white shrink-0" />
-                <span className="font-medium text-neutral-300">
-                  {isAr ? 'خصوصية تامة لصناع القرار' : 'Verified Decision Maker Privacy'}
-                </span>
-              </div>
+            </Reveal>
+
+            {/* Skyline anchor: supertall tower standing beside the copy */}
+            <div className="hidden lg:flex lg:col-span-5 items-end justify-center self-stretch">
+              <BurjTower className="h-[clamp(420px,66vh,640px)] w-full max-w-[280px] xl:max-w-[320px]" />
             </div>
-          </Reveal>
+          </div>
         </div>
 
         {/* Bottom Bouncing Scroll Prompt (Desktop only) */}

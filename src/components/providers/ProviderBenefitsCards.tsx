@@ -357,19 +357,9 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
               })}
             </div>
 
-            {/* Right Column: Attio-style Black & White Content Panel (Minimized scale) */}
+            {/* Right Column: Free-standing content panel (no card chrome) */}
             <div className="col-span-8 xl:col-span-8 2xl:col-span-8">
-              <div className="relative rounded-2xl border border-white/10 bg-[#0B0C10] p-5 sm:p-6 lg:p-7 xl:p-8 min-h-[380px] sm:min-h-[400px] lg:min-h-[430px] xl:min-h-[450px] shadow-[0_20px_50px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.08)] overflow-hidden flex flex-col justify-between">
-                {/* Subtle Monochrome Tech Dots underlayer */}
-                <div
-                  className="absolute inset-0 opacity-[0.06] pointer-events-none"
-                  style={{
-                    backgroundImage:
-                      'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.8) 1px, transparent 0)',
-                    backgroundSize: '24px 24px',
-                  }}
-                />
-
+              <div className="relative min-h-[380px] sm:min-h-[400px] lg:min-h-[430px] xl:min-h-[450px] flex flex-col justify-between">
                 <AnimatePresence mode="wait">
                   <m.div
                     key={currentBenefit.id}
@@ -442,8 +432,8 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
           })}
         </div>
 
-        {/* Mobile Black & White Card */}
-        <div className="relative rounded-xl border border-white/10 bg-[#0B0C10] p-4 shadow-xl overflow-hidden space-y-3.5">
+        {/* Mobile free-standing content (no card chrome) */}
+        <div className="relative space-y-3.5">
           <AnimatePresence mode="wait">
             <m.div
               key={currentBenefit.id}
