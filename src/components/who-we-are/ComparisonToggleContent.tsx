@@ -57,12 +57,6 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
               )}
             </h2>
           </div>
-
-          <p className="text-xs sm:text-sm lg:text-base text-neutral-600 font-sans leading-relaxed max-w-md sm:text-end">
-            {isAr
-              ? 'تشخيص فوري لاحتياج الكفاءات وربط مباشر مع مزودي تدريب معتمدين بميزانيات مؤكدة.'
-              : 'Keep requirements aligned to verified budgets. Send each corporate mandate straight to vetted specialists.'}
-          </p>
         </div>
 
         {/* ================================================================
@@ -113,44 +107,47 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
             </div>
           </div>
 
-          {/* Card 1 Pipeline Flow with FLASH LAMPS & CONNECTED BEAM */}
+          {/* Card 1 Pipeline Flow with COMPLETE GREEN ROAD FROM "Your enterprise" TO "2–3 Providers" */}
           <div className="relative my-3 sm:my-5 py-2">
-            {/* Connecting Track with Pulsing Signal Beam & Flash Lamps (Desktop/Tablet) */}
-            <div className="hidden sm:block absolute top-[24px] sm:top-[28px] lg:top-[30px] left-14 right-14 h-[2px] -translate-y-1/2 bg-emerald-300/80 z-0">
-              {/* Traveling light packet / laser signal beam */}
+            {/* Complete Green Road Track (From center of col 1 to center of col 4: left 12.5% to right 12.5%) */}
+            <div className="hidden sm:block absolute top-[24px] sm:top-[28px] lg:top-[30px] left-[12.5%] right-[12.5%] h-[3px] -translate-y-1/2 bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500 rounded-full shadow-[0_0_12px_#10B981,0_0_24px_rgba(16,185,129,0.5)] z-0 overflow-visible">
+              {/* Continuous ambient green glow under-beam */}
+              <div className="absolute -inset-x-2 -top-[2px] h-[7px] bg-emerald-400/40 blur-[4px] rounded-full pointer-events-none" />
+
+              {/* High-speed white/neon traveling energy pulse across the entire road */}
               <m.div
-                animate={{ x: ['-10%', '110%'] }}
+                animate={{ x: ['-100%', '250%'] }}
                 transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute top-0 w-28 h-[2px] bg-gradient-to-r from-transparent via-emerald-600 to-transparent shadow-[0_0_10px_#059669]"
+                className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white to-transparent opacity-90 pointer-events-none"
               />
 
-              {/* Flash Lamp 1: "is connected" (Between Step 1 & Step 2) */}
-              <div className="absolute left-[25%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/95 border border-emerald-300 shadow-xs backdrop-blur-xs z-20">
+              {/* Flash Lamp 1: "is connected" (Between Step 1 & Step 2, at 1/6 of road = ~16.7%) */}
+              <div className="absolute left-[16.7%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/95 border border-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.3)] backdrop-blur-xs z-20">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600 shadow-[0_0_6px_#10B981]" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600 shadow-[0_0_8px_#10B981]" />
                 </span>
                 <span className="text-[8.5px] sm:text-[9.5px] font-mono font-bold text-emerald-900 tracking-wider whitespace-nowrap">
                   {isAr ? 'متصل' : 'is connected'}
                 </span>
               </div>
 
-              {/* Flash Lamp 2: "verified" (Between Step 2 & Step 3) */}
-              <div className="absolute left-[50%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/95 border border-emerald-300 shadow-xs backdrop-blur-xs z-20">
+              {/* Flash Lamp 2: "verified" (Between Step 2 & Step 3, at midpoint of road = 50%) */}
+              <div className="absolute left-[50%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/95 border border-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.3)] backdrop-blur-xs z-20">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600 shadow-[0_0_6px_#10B981]" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600 shadow-[0_0_8px_#10B981]" />
                 </span>
                 <span className="text-[8.5px] sm:text-[9.5px] font-mono font-bold text-emerald-900 tracking-wider whitespace-nowrap">
                   {isAr ? 'معتمد' : 'verified'}
                 </span>
               </div>
 
-              {/* Flash Lamp 3: "matched" (Between Step 3 & Step 4) */}
-              <div className="absolute left-[75%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/95 border border-emerald-300 shadow-xs backdrop-blur-xs z-20">
+              {/* Flash Lamp 3: "matched" (Between Step 3 & Step 4, at 5/6 of road = ~83.3%) */}
+              <div className="absolute left-[83.3%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/95 border border-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.3)] backdrop-blur-xs z-20">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600 shadow-[0_0_6px_#10B981]" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600 shadow-[0_0_8px_#10B981]" />
                 </span>
                 <span className="text-[8.5px] sm:text-[9.5px] font-mono font-bold text-emerald-900 tracking-wider whitespace-nowrap">
                   {isAr ? 'مطابق' : 'matched'}
@@ -162,7 +159,7 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 relative z-10">
               {/* Step 1 */}
               <div className="flex flex-col items-center text-center bg-white/70 sm:bg-transparent p-2.5 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-emerald-100">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-2xl bg-white border border-emerald-200 flex items-center justify-center text-emerald-700 shadow-xs mb-2 relative z-10">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-2xl bg-white border border-emerald-300 flex items-center justify-center text-emerald-700 shadow-sm mb-2 relative z-10 ring-2 ring-emerald-500/20">
                   <Building2 size={20} />
                 </div>
                 <span className="text-xs sm:text-sm lg:text-base font-bold text-neutral-900 leading-tight">
@@ -175,7 +172,7 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
 
               {/* Step 2 (Official PontLook Engine with Logo) */}
               <div className="flex flex-col items-center text-center bg-white/70 sm:bg-transparent p-2.5 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-emerald-100">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-2xl bg-neutral-950 flex items-center justify-center p-2.5 shadow-md mb-2 border border-emerald-500/30 ring-2 ring-emerald-500/20 relative z-10">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-2xl bg-neutral-950 flex items-center justify-center p-2.5 shadow-md mb-2 border border-emerald-500/40 ring-4 ring-emerald-500/20 relative z-10">
                   <Image
                     src="/images/brand/pontlook-icon-white.png"
                     alt="PontLook Engine"
@@ -195,7 +192,7 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
 
               {/* Step 3 */}
               <div className="flex flex-col items-center text-center bg-white/70 sm:bg-transparent p-2.5 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-emerald-100">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-2xl bg-white border border-emerald-200 flex items-center justify-center text-emerald-700 shadow-xs mb-2 relative z-10">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-2xl bg-white border border-emerald-300 flex items-center justify-center text-emerald-700 shadow-sm mb-2 relative z-10 ring-2 ring-emerald-500/20">
                   <Handshake size={20} />
                 </div>
                 <span className="text-xs sm:text-sm lg:text-base font-bold text-neutral-900 leading-tight">
@@ -208,7 +205,7 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
 
               {/* Step 4 */}
               <div className="flex flex-col items-center text-center bg-white/70 sm:bg-transparent p-2.5 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-emerald-100">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-2xl bg-white border border-emerald-200 flex items-center justify-center text-emerald-700 shadow-xs mb-2 relative z-10">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-2xl bg-white border border-emerald-300 flex items-center justify-center text-emerald-700 shadow-sm mb-2 relative z-10 ring-2 ring-emerald-500/20">
                   <BadgeCheck size={20} />
                 </div>
                 <span className="text-xs sm:text-sm lg:text-base font-bold text-neutral-900 leading-tight">
@@ -221,23 +218,14 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
             </div>
           </div>
 
-          {/* Card 1 Footer Row */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-emerald-200/80">
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-neutral-800 font-medium">
-              <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-              <span>
-                {isAr
-                  ? 'منظومة مطابقة واحدة مؤكدة. ميزانيات معتمدة، وصفر رسائل باردة أو مناقصات عشوائية.'
-                  : 'One verified alignment. Confirmed corporate budget, zero cold outreach, zero retainers.'}
-              </span>
-            </div>
-
+          {/* Card 1 Action Button Row (Fixed & Spacious) */}
+          <div className="flex items-center justify-end pt-3 sm:pt-4 border-t border-emerald-200/80">
             <Link
               href={`/${lang}/find-training`}
-              className="inline-flex items-center justify-center gap-1.5 px-4.5 py-2 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white text-xs sm:text-sm font-semibold shadow-xs transition-all active:scale-95 shrink-0 self-start sm:self-auto"
+              className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white text-xs sm:text-sm font-semibold shadow-md hover:shadow-lg transition-all active:scale-95 group shrink-0"
             >
               <span>{isAr ? 'ابدأ المطابقة الآن' : 'Find your match'}</span>
-              <ArrowRight size={13} className="rtl:-scale-x-100" />
+              <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform rtl:-scale-x-100" />
             </Link>
           </div>
         </div>
@@ -285,7 +273,7 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
           {/* Card 2 Pipeline Flow (5 Centered Steps with Dashed Line) */}
           <div className="relative my-3 sm:my-4 py-2">
             {/* Dashed Connecting Track (Desktop/Tablet) */}
-            <div className="hidden sm:block absolute top-[20px] sm:top-[22px] lg:top-[24px] left-12 right-12 h-[2px] -translate-y-1/2 border-t-2 border-dashed border-[#DDD4C5] z-0">
+            <div className="hidden sm:block absolute top-[20px] sm:top-[22px] lg:top-[24px] left-[10%] right-[10%] h-[2px] -translate-y-1/2 border-t-2 border-dashed border-[#DDD4C5] z-0">
               {/* Friction Delay Marker */}
               <div className="absolute left-[60%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#F2EDE2] border border-[#DDD4C5] shadow-xs z-20">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
@@ -361,16 +349,6 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
                 </span>
               </div>
             </div>
-          </div>
-
-          {/* Card 2 Footer Row */}
-          <div className="flex items-center gap-2 text-xs sm:text-sm text-neutral-600 font-medium pt-2.5 border-t border-[#E5DFD4]">
-            <XCircle size={15} className="text-neutral-400 shrink-0" />
-            <span>
-              {isAr
-                ? 'إجراءات معقدة وأسابيع مهدرة في البحث والمراسلات قبل العثور على أي خبير مؤهل.'
-                : 'More handoffs. Weeks lost sifting generic course catalogs before any verified engagement.'}
-            </span>
           </div>
         </div>
 

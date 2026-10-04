@@ -105,7 +105,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             ================================================================ */}
         <div
           id="our-mission"
-          className="absolute inset-0 w-full h-full bg-white text-neutral-900 flex flex-col justify-start items-center overflow-y-auto z-10 pt-28 sm:pt-32 lg:pt-32 pb-16 select-text scrollbar-none"
+          className="absolute inset-0 w-full h-full bg-white text-neutral-900 flex flex-col justify-start items-center overflow-y-auto z-10 pt-36 sm:pt-40 lg:pt-40 pb-20 select-text scrollbar-none"
         >
           {/* Pop-Up White Content */}
           <m.div
