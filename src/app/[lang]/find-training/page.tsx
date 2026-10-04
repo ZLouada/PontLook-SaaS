@@ -119,9 +119,9 @@ export default async function FindTrainingPage({
               </div>
             </Reveal>
 
-            {/* Right Column: Burj Al Arab Architectural Illustration */}
+            {/* Right Column: Burj Al Arab Architectural Line Art */}
             <div className="lg:col-span-5 w-full flex items-center justify-center pt-8 lg:pt-0">
-              <BurjTower className="w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[360px] lg:max-w-[420px] xl:max-w-[460px]" />
+              <BurjTower className="w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[380px] lg:max-w-[440px] xl:max-w-[480px] h-[440px] xs:h-[480px] sm:h-[540px] lg:h-[600px]" />
             </div>
           </div>
         </div>
