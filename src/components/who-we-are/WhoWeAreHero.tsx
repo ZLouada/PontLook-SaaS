@@ -15,7 +15,7 @@ import {
 } from '@/components/icons';
 import Signal from '@/components/shared/Signal';
 import Magnetic from '@/components/shared/Magnetic';
-import WhoWeAreBridge3D from './WhoWeAreBridge3D';
+import WhoWeAreThreeBridge, { HudPinData } from './WhoWeAreThreeBridge';
 
 interface WhoWeAreHeroProps {
   lang?: 'en' | 'ar';
@@ -25,6 +25,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
   const isAr = lang === 'ar';
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [hudPins, setHudPins] = useState<HudPinData[]>([]);
   const [isDesktop, setIsDesktop] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
@@ -44,7 +45,6 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
     setScrollProgress(latest);
   });
 
-  // Smooth scroll to specific phase
   const scrollToPhase = (targetFraction: number) => {
     if (containerRef.current) {
       const top = containerRef.current.offsetTop;
@@ -64,10 +64,8 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
   };
 
   // Phase Opacities
-  // Phase 1: 0.00 -> 0.32
-  const heroOpacity = Math.max(0, Math.min(1, 1 - scrollProgress * 3.3));
+  const heroOpacity = Math.max(0, Math.min(1, 1 - scrollProgress * 3.2));
 
-  // Phase 2: 0.30 -> 0.65
   let transformOpacity = 0;
   if (scrollProgress >= 0.28 && scrollProgress <= 0.65) {
     if (scrollProgress < 0.42) {
@@ -79,10 +77,8 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
     }
   }
 
-  // Phase 3: 0.60 -> 1.0
-  const lightContentOpacity = Math.max(0, Math.min(1, (scrollProgress - 0.60) / 0.22));
+  const lightContentOpacity = Math.max(0, Math.min(1, (scrollProgress - 0.58) / 0.24));
 
-  // Active Phase Index (0 = Hero, 1 = Transformation, 2 = Mission & Vision)
   const activePhase =
     scrollProgress < 0.32 ? 0 : scrollProgress < 0.64 ? 1 : 2;
 
@@ -93,7 +89,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
       data-nav-theme={scrollProgress > 0.55 ? 'light' : 'dark'}
       className="relative w-full h-[250vh] sm:h-[280vh] lg:h-[300vh] bg-[#07080A] select-none"
     >
-      {/* STICKY 3D VIEWPORT STAGE */}
+      {/* STICKY VIEWPORT STAGE */}
       <div className="sticky top-0 w-full h-[100dvh] overflow-hidden flex flex-col justify-between">
         {/* Dynamic Dual-Tone Environmental Canvas Background */}
         <div
@@ -101,14 +97,14 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
           style={{
             background: `linear-gradient(to bottom, #07080A ${Math.round(
               (1 - scrollProgress) * 55
-            )}%, #FFFFFF 100%)`,
+            )}%, #F8FAFC 100%)`,
           }}
           aria-hidden="true"
         />
 
-        {/* Ambient Dark Atmospheric Lighting (Top Hero) */}
+        {/* Ambient Dark Atmospheric Glow (Top Hero) */}
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-sky-500/[0.045] rounded-full blur-[150px] pointer-events-none transition-opacity duration-500"
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-sky-500/[0.04] rounded-full blur-[150px] pointer-events-none transition-opacity duration-500"
           style={{ opacity: heroOpacity }}
           aria-hidden="true"
         />
@@ -117,7 +113,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
         <div
           className="absolute inset-0 pointer-events-none transition-opacity duration-500"
           style={{
-            opacity: lightContentOpacity * 0.4,
+            opacity: lightContentOpacity * 0.35,
             backgroundImage:
               'radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.08) 1px, transparent 0)',
             backgroundSize: '32px 32px',
@@ -125,14 +121,70 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
           aria-hidden="true"
         />
 
-        {/* SOLID 3D FUTURISTIC SUSPENSION BRIDGE ENGINE */}
+        {/* TRUE 3D THREE.JS FUTURISTIC SUSPENSION BRIDGE */}
         <div className="absolute inset-0 w-full h-full z-10 pointer-events-none">
-          <WhoWeAreBridge3D
+          <WhoWeAreThreeBridge
             isAr={isAr}
             scrollProgress={scrollProgress}
+            onHudUpdate={setHudPins}
             className="w-full h-full"
           />
         </div>
+
+        {/* PINNED 3D HUD LEADER LINES & CALLOUTS (ATTACHED DIRECTLY TO THE 3D BRIDGE) */}
+        {lightContentOpacity > 0.05 && (
+          <svg className="absolute inset-0 w-full h-full pointer-events-none z-20">
+            {hudPins.map((pin) => {
+              if (!pin.visible) return null;
+              const isLeftAnchor = pin.id === 'hud-1' || pin.id === 'hud-2';
+              const xOffset = isAr ? (isLeftAnchor ? 65 : -65) : (isLeftAnchor ? -65 : 65);
+              const targetX = pin.x + xOffset;
+              const targetY = pin.y + (isLeftAnchor ? 22 : -22);
+
+              return (
+                <g key={pin.id} opacity={lightContentOpacity} className="transition-opacity duration-300">
+                  {/* Anchor Point on Bridge Deck */}
+                  <circle cx={pin.x} cy={pin.y} r={3.5} fill="#00C2FF" />
+                  <circle
+                    cx={pin.x}
+                    cy={pin.y}
+                    r={6.5}
+                    fill="none"
+                    stroke="#00C2FF"
+                    strokeWidth={1}
+                    opacity={0.7}
+                  />
+
+                  {/* Diagonal Leader Line */}
+                  <polyline
+                    points={`${pin.x},${pin.y} ${pin.x + xOffset * 0.35},${targetY} ${targetX},${targetY}`}
+                    fill="none"
+                    stroke="#64748B"
+                    strokeWidth={1.2}
+                    strokeDasharray="3 2"
+                  />
+
+                  {/* Pin Dot at Label End */}
+                  <circle cx={targetX} cy={targetY} r={2} fill="#0F172A" />
+
+                  {/* Clean Technical Label */}
+                  <text
+                    x={targetX + (isAr ? (isLeftAnchor ? 8 : -8) : (isLeftAnchor ? -8 : 8))}
+                    y={targetY + 3.5}
+                    fill="#0F172A"
+                    fontSize={10}
+                    fontFamily="monospace"
+                    fontWeight={700}
+                    textAnchor={isAr ? (isLeftAnchor ? 'start' : 'end') : (isLeftAnchor ? 'end' : 'start')}
+                    letterSpacing="0.08em"
+                  >
+                    {isAr ? pin.labelAr : pin.labelEn}
+                  </text>
+                </g>
+              );
+            })}
+          </svg>
+        )}
 
         {/* =========================================================================
             PHASE 1: THE DARK HERO (0.00 - 0.32)
@@ -144,8 +196,8 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             pointerEvents: scrollProgress < 0.25 ? 'auto' : 'none',
           }}
         >
-          {/* Top Hero Headline Block */}
-          <div className="container-site max-w-5xl mx-auto text-center flex flex-col items-center">
+          {/* Top Hero Headline Block (Left-Aligned Clean Layout matching Video) */}
+          <div className="container-site max-w-6xl mx-auto w-full flex flex-col items-start text-start">
             {/* Status Pill */}
             <div className="mb-4 sm:mb-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#121318]/90 border border-[#26282D] hover:border-white/30 backdrop-blur-xl shadow-2xl transition-all max-w-[92vw]">
               <Signal />
@@ -165,8 +217,8 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
               </span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-[62px] font-semibold text-white leading-[1.12] font-heading tracking-tight max-w-4xl">
+            {/* Main Headline matching Video */}
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-[58px] font-semibold text-white leading-[1.12] font-heading tracking-tight max-w-2xl">
               {isAr ? (
                 <>
                   من نحن: <span className="text-white">جسر الكفاءات</span> إلى كبرى الفرص المؤسسية
@@ -179,74 +231,12 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             </h1>
 
             {/* Subtitle */}
-            <p className="mt-3.5 sm:mt-5 text-xs xs:text-sm sm:text-base lg:text-lg text-neutral-400 max-w-2xl font-normal leading-relaxed">
+            <p className="mt-3.5 sm:mt-5 text-xs xs:text-sm sm:text-base lg:text-lg text-neutral-400 max-w-xl font-normal leading-relaxed">
               {isAr
                 ? 'بونت لوك هي المنصة الرائدة في الخليج لربط مديري الموارد البشرية بأفضل مزودي التدريب المعتمدين مع ميزانيات مؤكدة وبدون اشتراك شهري.'
                 : 'PontLook is the Gulf’s premier B2B matchmaking engine, connecting corporate HR departments with pre-vetted training providers with confirmed budgets.'}
             </p>
           </div>
-
-          {/* Floating Holographic Glass HUD Badges (Desktop Only) */}
-          {isDesktop && (
-            <div className="absolute inset-0 pointer-events-none max-w-6xl mx-auto">
-              {/* Top-Right Holographic Glass Card (Global Hub) */}
-              <div
-                className={`absolute top-28 ${
-                  isAr ? 'left-6' : 'right-6'
-                } p-3 rounded-2xl bg-[#101218]/80 border border-sky-500/25 backdrop-blur-md shadow-2xl shadow-sky-950/40 flex items-center gap-3 transition-transform duration-700 hover:scale-105 pointer-events-auto`}
-              >
-                <div className="w-9 h-9 rounded-xl bg-sky-500/15 border border-sky-400/30 flex items-center justify-center text-sky-400">
-                  <Globe size={18} />
-                </div>
-                <div>
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-sky-400">
-                    {isAr ? 'الشبكة المعتمدة' : 'VERIFIED NETWORK'}
-                  </div>
-                  <div className="text-xs font-semibold text-white">
-                    {isAr ? 'الرياض · دبي · العالمية' : 'Riyadh · Dubai · Global'}
-                  </div>
-                </div>
-              </div>
-
-              {/* Center-Right Holographic Glass Card (Deal Partnership) */}
-              <div
-                className={`absolute top-64 ${
-                  isAr ? 'left-12' : 'right-12'
-                } p-3 rounded-2xl bg-[#101218]/80 border border-emerald-500/25 backdrop-blur-md shadow-2xl shadow-emerald-950/40 flex items-center gap-3 transition-transform duration-700 hover:scale-105 pointer-events-auto`}
-              >
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-emerald-400">
-                  <Handshake size={18} />
-                </div>
-                <div>
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-emerald-400">
-                    {isAr ? 'اتفاقية مستوى الخدمة' : 'GUARANTEED SLA'}
-                  </div>
-                  <div className="text-xs font-semibold text-white">
-                    {isAr ? '2-3 عروض مؤهلة فقط' : '2-3 Vetted Specialists'}
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom-Left Holographic Terminal Badge */}
-              <div
-                className={`absolute bottom-28 ${
-                  isAr ? 'right-8' : 'left-8'
-                } p-3 rounded-2xl bg-[#101218]/80 border border-white/15 backdrop-blur-md shadow-2xl flex items-center gap-3 pointer-events-auto`}
-              >
-                <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white">
-                  <Cpu size={18} />
-                </div>
-                <div>
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-neutral-400">
-                    {isAr ? 'محرك المطابقة' : 'MATCH PROTOCOL'}
-                  </div>
-                  <div className="text-xs font-semibold text-white">
-                    {isAr ? 'ربط مباشر وتوافق فوري' : 'Zero Friction Handshake'}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Bottom Hero Scroll Prompt */}
           <div className="relative z-20 flex justify-center mb-1">
@@ -306,48 +296,66 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
 
         {/* =========================================================================
             PHASE 3: THE LIGHT INFORMATIONAL SECTION (0.60 - 1.0)
-            OUR MISSION · OUR VISION · OUR IMPACT
+            OUR MISSION · OUR VISION · OUR IMPACT (MATCHING VIDEO FRAME 00:08)
             ========================================================================= */}
         <div
           id="our-mission"
-          className="absolute inset-0 z-20 flex flex-col justify-between pt-16 sm:pt-20 lg:pt-24 pb-14 sm:pb-16 px-4 sm:px-6 lg:px-12 transition-opacity duration-300 text-neutral-900"
+          className="absolute inset-0 z-20 flex flex-col justify-between pt-16 sm:pt-20 lg:pt-22 pb-14 sm:pb-16 px-4 sm:px-6 lg:px-12 transition-opacity duration-300 text-neutral-900 pointer-events-none"
           style={{
             opacity: lightContentOpacity,
             pointerEvents: scrollProgress > 0.65 ? 'auto' : 'none',
           }}
         >
-          {/* Top Section Header */}
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-300 text-neutral-800 text-[11px] sm:text-xs font-semibold uppercase tracking-wider font-sans mb-2 shadow-xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-neutral-900" />
-              <span>{isAr ? 'نموذج بونت لوك' : 'THE PONTLOOK PARADIGM'}</span>
-            </div>
-            <h2 className="text-xl sm:text-3xl lg:text-4xl font-semibold text-neutral-950 font-heading tracking-tight leading-tight">
-              {isAr ? 'بنية تحتية متطورة لربط تدريب الشركات' : 'Architecting the Future of Corporate Learning'}
-            </h2>
-          </div>
-
-          {/* Flanking Cards: OUR MISSION (Left) & OUR VISION (Right) */}
-          <div className="container-site max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 my-auto">
-            {/* Left Card: OUR MISSION */}
-            <div className="bg-white/95 backdrop-blur-md p-5 sm:p-6 lg:p-7 rounded-2xl sm:rounded-3xl border border-neutral-200/90 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.06)] hover:border-neutral-400 transition-colors">
-              <div className="flex items-center gap-2.5 mb-2.5 sm:mb-3">
-                <div className="w-8 h-8 rounded-xl bg-neutral-950 text-white flex items-center justify-center shadow-xs">
-                  <Target size={16} />
+          {/* Top Row: OUR MISSION (Left) & OUR VISION (Right) Flanking the Bridge */}
+          <div className="container-site max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-6 items-start pt-2">
+            {/* Left Top Block: OUR MISSION */}
+            <div className="md:col-span-4 bg-white/80 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+              <div className="flex items-center gap-2 mb-1.5">
+                <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center">
+                  <Target size={13} />
                 </div>
-                <h3 className="text-base sm:text-lg font-heading font-semibold text-neutral-950">
+                <h3 className="text-sm sm:text-base font-heading font-bold text-neutral-950 uppercase tracking-wide">
                   {isAr ? 'رسالتنا' : 'OUR MISSION'}
                 </h3>
               </div>
-              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-sans mb-3 sm:mb-4">
+              <p className="text-[11px] sm:text-xs text-neutral-600 leading-relaxed font-sans">
                 {isAr
                   ? 'إنهاء التشتت والوقت الضائع في البحث عن التدريب المؤسسي عبر توجيه ميزانيات الشركات مباشرة إلى 2-3 خبراء معتمدين كحد أقصى.'
-                  : 'Connecting corporate training demand with pre-vetted specialists with approved budgets, eliminating discovery friction and cold outreach.'}
+                  : 'Curated corporate training matchmaking that eliminates discovery friction and connects validated enterprises directly with pre-vetted specialists.'}
               </p>
-              <div className="space-y-1.5 text-[11px] sm:text-xs text-neutral-700 font-medium">
+            </div>
+
+            <div className="md:col-span-4" />
+
+            {/* Right Top Block: OUR VISION */}
+            <div className="md:col-span-4 bg-white/80 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+              <div className="flex items-center gap-2 mb-1.5">
+                <div className="w-6 h-6 rounded-lg bg-neutral-900 text-white flex items-center justify-center">
+                  <Building2 size={13} />
+                </div>
+                <h3 className="text-sm sm:text-base font-heading font-bold text-neutral-950 uppercase tracking-wide">
+                  {isAr ? 'رؤيتنا' : 'OUR VISION'}
+                </h3>
+              </div>
+              <p className="text-[11px] sm:text-xs text-neutral-600 leading-relaxed font-sans">
+                {isAr
+                  ? 'بناء المنظومة الرقمية الأكثر موثوقية في المملكة والخليج لتطوير رأس المال البشري ودعم خطط التحول المؤسسي الكبرى.'
+                  : 'We build the sovereign digital infrastructure powering corporate workforce transformation and executive learning across Saudi Arabia and the GCC.'}
+              </p>
+            </div>
+          </div>
+
+          {/* Bottom Row: OUR IMPACT (Center-Right) & Detailed Pillars (Left) */}
+          <div className="container-site max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-6 items-end pb-2">
+            {/* Lower Left Block: MISSION PILLARS */}
+            <div className="md:col-span-5 bg-white/85 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+              <h4 className="text-xs font-bold text-neutral-950 uppercase tracking-wider mb-2 font-mono">
+                {isAr ? 'ركائز المنظومة المباشرة' : 'MATCHMAKING ARCHITECTURE'}
+              </h4>
+              <div className="space-y-1.5 text-[11px] text-neutral-700 font-medium">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
-                  <span>{isAr ? 'ميزانيات مؤسسية معتمدة ومؤكدة' : 'Confirmed enterprise budgets & intent'}</span>
+                  <span>{isAr ? 'ميزانيات مؤسسية معتمدة ومؤكدة' : 'Confirmed enterprise budgets & verified intent'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
@@ -360,83 +368,68 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
               </div>
             </div>
 
-            {/* Right Card: OUR VISION */}
-            <div className="bg-white/95 backdrop-blur-md p-5 sm:p-6 lg:p-7 rounded-2xl sm:rounded-3xl border border-neutral-200/90 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.06)] hover:border-neutral-400 transition-colors">
-              <div className="flex items-center gap-2.5 mb-2.5 sm:mb-3">
-                <div className="w-8 h-8 rounded-xl bg-neutral-950 text-white flex items-center justify-center shadow-xs">
-                  <Building2 size={16} />
+            {/* Lower Right Block: OUR IMPACT */}
+            <div className="md:col-span-7 bg-white/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+              <div className="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
+                <div>
+                  <h3 className="text-base sm:text-lg font-heading font-bold text-neutral-950 uppercase tracking-tight">
+                    {isAr ? 'أثرنا المؤسسي' : 'OUR IMPACT'}
+                  </h3>
+                  <div className="text-[10px] text-neutral-500 font-mono uppercase">
+                    {isAr ? 'نتائج مؤكدة وملموسة' : 'MEASURABLE CERTAINTY'}
+                  </div>
                 </div>
-                <h3 className="text-base sm:text-lg font-heading font-semibold text-neutral-950">
-                  {isAr ? 'رؤيتنا' : 'OUR VISION'}
-                </h3>
-              </div>
-              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-sans mb-3 sm:mb-4">
-                {isAr
-                  ? 'بناء المنظومة الرقمية الأكثر موثوقية في المملكة والخليج لتطوير رأس المال البشري ودعم خطط التحول المؤسسي الكبرى.'
-                  : 'To be the sovereign exchange infrastructure powering corporate workforce transformation and executive learning across Saudi Arabia and the GCC.'}
-              </p>
-              <div className="space-y-1.5 text-[11px] sm:text-xs text-neutral-700 font-medium">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
-                  <span>{isAr ? 'تغطية شاملة للأسواق السعودية والإماراتية' : 'Full GCC coverage (Saudi Arabia & UAE)'}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
-                  <span>{isAr ? 'تدريب متخصص في الذكاء الاصطناعي والقيادة' : 'AI, Leadership, and Deep-Tech specialized paths'}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
-                  <span>{isAr ? 'مواءمة استراتيجية مع مستهدفات رؤية 2030' : 'Aligned with Vision 2030 national transformation'}</span>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Bottom Card: OUR IMPACT METRICS & NEXT STEP CTA */}
-          <div className="container-site max-w-4xl mx-auto w-full pt-1">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-neutral-50/95 border border-neutral-300 p-3 sm:p-4 rounded-2xl shadow-xs">
-              <div className="flex items-center gap-3 sm:gap-6 text-center sm:text-start">
-                <div>
-                  <div className="text-base sm:text-xl font-bold text-neutral-950">100%</div>
-                  <div className="text-[10px] text-neutral-500 font-medium uppercase">
-                    {isAr ? 'ميزانيات مؤكدة' : 'Verified Budgets'}
+                <div className="flex items-center gap-4 text-center">
+                  <div>
+                    <div className="text-sm font-bold text-neutral-950">100%</div>
+                    <div className="text-[9px] text-neutral-500 uppercase">{isAr ? 'ميزانية مؤكدة' : 'Verified'}</div>
                   </div>
-                </div>
-                <div className="w-[1px] h-8 bg-neutral-300" />
-                <div>
-                  <div className="text-base sm:text-xl font-bold text-neutral-950">2 - 3</div>
-                  <div className="text-[10px] text-neutral-500 font-medium uppercase">
-                    {isAr ? 'خبراء كحد أقصى' : 'Specialists Max'}
+                  <div className="w-[1px] h-6 bg-neutral-200" />
+                  <div>
+                    <div className="text-sm font-bold text-neutral-950">2 - 3</div>
+                    <div className="text-[9px] text-neutral-500 uppercase">{isAr ? 'خبراء كحد أقصى' : 'Specialists'}</div>
                   </div>
-                </div>
-                <div className="w-[1px] h-8 bg-neutral-300" />
-                <div>
-                  <div className="text-base sm:text-xl font-bold text-neutral-950">0 SAR</div>
-                  <div className="text-[10px] text-neutral-500 font-medium uppercase">
-                    {isAr ? 'رسوم شهرية' : 'Monthly Retainer'}
+                  <div className="w-[1px] h-6 bg-neutral-200" />
+                  <div>
+                    <div className="text-sm font-bold text-neutral-950">0 SAR</div>
+                    <div className="text-[9px] text-neutral-500 uppercase">{isAr ? 'رسوم شهرية' : 'Retainer'}</div>
                   </div>
                 </div>
               </div>
 
-              <Magnetic strength={0.2} activeDistance={30} className="w-full sm:w-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-neutral-600 leading-relaxed font-sans">
+                <p>
+                  {isAr
+                    ? 'نمنح المنشآت دقة اختيار غير مسبوقة، متجاوزين المناقصات العشوائية وفوضى المراسلات عبر فحص دقيق لاحتياج المهارات.'
+                    : 'Enterprises receive precision matchmaking with 2-3 vetted firms capable of delivering exact outcomes within approved timelines.'}
+                </p>
+                <p>
+                  {isAr
+                    ? 'يحصل مزودو التدريب على فرص مؤهلة وجاهزة للإغلاق مع صناع القرار الفعليين، محققين نمواً سريعاً دون تكاليف تسويق باهظة.'
+                    : 'Training providers gain high-intent qualified enterprise opportunities with verified budgets, eliminating cold outreach overhead.'}
+                </p>
+              </div>
+
+              <div className="mt-3 pt-2 border-t border-slate-100 flex justify-end">
                 <button
                   onClick={scrollToComparison}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white font-medium text-xs shadow-md shadow-neutral-950/20 transition-all active:scale-95 cursor-pointer"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white font-medium text-xs shadow-xs transition-all active:scale-95 cursor-pointer"
                 >
                   <span>
                     {isAr
                       ? 'مقارنة طريقة بونت لوك بالطريقة التقليدية'
                       : 'Compare PontLook vs Traditional'}
                   </span>
-                  <ArrowDown size={14} />
+                  <ArrowDown size={13} />
                 </button>
-              </Magnetic>
+              </div>
             </div>
           </div>
         </div>
 
         {/* =========================================================================
-            BOTTOM CENTER PHASE INDICATOR PILLS (As seen in video 00:00 - 00:04)
+            BOTTOM CENTER PHASE INDICATOR PILLS (MATCHING VIDEO 00:00 - 00:04)
             ========================================================================= */}
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 p-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-md shadow-lg pointer-events-auto">
           {[
