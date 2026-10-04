@@ -105,7 +105,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             ================================================================ */}
         <div
           id="our-mission"
-          className="absolute inset-0 w-full h-full bg-white text-neutral-900 flex flex-col justify-center items-center overflow-hidden z-10 pt-16 sm:pt-20 lg:pt-0"
+          className="absolute inset-0 w-full h-full bg-white text-neutral-900 flex flex-col justify-start lg:justify-center items-center overflow-y-auto z-10 py-12 sm:py-16 lg:py-4 select-text"
         >
           {/* Attio-Style Subtle Grid dots */}
           <div
@@ -216,27 +216,8 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
           }}
           className="relative z-30 container-site max-w-4xl text-center mx-auto px-3.5 xs:px-4 sm:px-6 flex flex-col items-center justify-between h-[85vh] sm:h-[82vh] pt-20 sm:pt-24 lg:pt-28 pb-4"
         >
-          {/* Top Architectural Status Pill & Headlines */}
+          {/* Headlines & Subtitle */}
           <Reveal className="flex flex-col items-center">
-            {/* Status Pill */}
-            <div className="mb-5 sm:mb-6 inline-flex items-center gap-2 xs:gap-2.5 px-3 xs:px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#16171B]/85 border border-[#26282D] hover:border-white/30 backdrop-blur-xl shadow-xl transition-all duration-300 max-w-[94vw]">
-              <Signal />
-              <span className="text-[11px] xs:text-xs sm:text-sm font-medium truncate">
-                <span
-                  className="text-shimmer"
-                  data-text={
-                    isAr
-                      ? 'منظومة التوفيق والربط المعتمد · شفافية تامة 100%'
-                      : 'Curated Matchmaking Architecture · 100% Transparent'
-                  }
-                >
-                  {isAr
-                    ? 'منظومة التوفيق والربط المعتمد · شفافية تامة 100%'
-                    : 'Curated Matchmaking Architecture · 100% Transparent'}
-                </span>
-              </span>
-            </div>
-
             {/* Main Headline */}
             <TextReveal
               as="h1"
