@@ -50,40 +50,17 @@ const config: Config = {
           900: '#0C1833',
         },
         // Fallbacks for existing component class names
-        ink: {
-          DEFAULT: '#1E293B',
-          900: '#0F172A',
-          800: '#191D42',
-          600: '#475569',
-        },
+        ink: '#1E293B',
         body: '#475569',
-        brand: {
-          DEFAULT: '#2451BF',
-          bright: '#3D7BFF',
-          soft: '#7FB8FF',
-          mist: '#F4F7FF',
-        },
-        night: {
-          900: '#0B0F14',
-          800: '#14171C',
-          700: '#212227',
-        },
-        steel: {
-          300: '#D1EFFA',
-          500: '#617985',
-          700: '#3A4650',
-        },
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-        heading: ['var(--font-sans)', 'Poppins', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        heading: ['var(--font-sans)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
         arabic: ['var(--font-arabic)', 'system-ui', 'sans-serif'],
         body: ['var(--font-sans)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         mono: ['var(--font-mono)', 'JetBrains Mono', 'monospace'],
       },
       boxShadow: {
-        soft: '0 20px 60px -20px rgba(36, 81, 191, 0.25)',
-        glow: '0 0 24px rgba(127, 184, 255, 0.55)',
         // Elevation ramp for the dark canvas. Each step adds spread and depth
         // rather than opacity, so cards stay separable against #000000 (AMOLED canvas).
         e1: '0 1px 2px 0 rgba(0, 0, 0, 0.55)',
