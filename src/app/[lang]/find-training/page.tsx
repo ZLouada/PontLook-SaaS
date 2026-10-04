@@ -119,9 +119,9 @@ export default async function FindTrainingPage({
               </div>
             </Reveal>
 
-            {/* Skyline anchor: supertall tower standing beside the copy */}
-            <div className="hidden lg:flex lg:col-span-5 items-end justify-center self-stretch">
-              <BurjTower className="h-[clamp(420px,66vh,640px)] w-full max-w-[280px] xl:max-w-[320px]" />
+            {/* Right Column: Animated PontLook GCC 3D Burj Al Arab */}
+            <div className="lg:col-span-5 w-full flex items-center justify-center pt-8 lg:pt-0">
+              <BurjTower className="w-full max-w-[340px] xs:max-w-[380px] sm:max-w-[440px] lg:max-w-[480px] xl:max-w-[520px] aspect-[4/5] sm:aspect-square lg:aspect-[4/5] min-h-[380px] xs:min-h-[440px] sm:min-h-[520px]" />
             </div>
           </div>
         </div>
