@@ -110,17 +110,37 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
           {/* Card 1 Pipeline Flow: White Track Line with Green Flash Light */}
           <div className="relative my-2 sm:my-3.5 py-1.5">
             {/* White Connecting Track (From center of col 1 to center of col 4: left 12.5% to right 12.5%) */}
-            <div className="hidden sm:block absolute top-[24px] sm:top-[28px] lg:top-[30px] left-[12.5%] right-[12.5%] h-[2px] -translate-y-1/2 bg-white rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.05)] z-0 overflow-visible">
+            <div className="hidden sm:block absolute top-[24px] sm:top-[28px] lg:top-[30px] left-[12.5%] right-[12.5%] h-[2px] -translate-y-1/2 bg-white rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.05)] z-0">
               
-              {/* Green Flash Light: Sleek, compact traveling laser pulse along the white line */}
-              <m.div
-                animate={{ x: ['-100%', '350%'] }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -top-[0.75px] h-[3.5px] w-20 sm:w-24 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_8px_#10B981,0_0_12px_#059669] rounded-full pointer-events-none"
-              />
+              {/* Bounded Laser Rail: Strictly clips any light before Step 1 ("Your enterprise") or after Step 4 ("2–3 Providers") */}
+              <div className="absolute -top-3 h-7 left-0 right-0 overflow-hidden pointer-events-none">
+                <m.div
+                  animate={
+                    isAr
+                      ? {
+                          left: ['100%', '0%'],
+                          x: ['-100%', '0%'],
+                          opacity: [0, 1, 1, 0],
+                        }
+                      : {
+                          left: ['0%', '100%'],
+                          x: ['0%', '-100%'],
+                          opacity: [0, 1, 1, 0],
+                        }
+                  }
+                  transition={{
+                    duration: 2.4,
+                    repeat: Infinity,
+                    repeatDelay: 0.2,
+                    ease: 'easeInOut',
+                    times: [0, 0.06, 0.94, 1],
+                  }}
+                  className="absolute top-1/2 -translate-y-1/2 h-[3.5px] w-20 sm:w-24 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_8px_#10B981,0_0_14px_#059669] rounded-full pointer-events-none"
+                />
+              </div>
 
-              {/* Flash Lamp 1: "is connected" (Between Step 1 & Step 2, at 1/6 of road = ~16.7%) */}
-              <div className="absolute left-[16.7%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-white border border-emerald-300 shadow-[0_0_6px_rgba(16,185,129,0.2)] z-20">
+              {/* Flash Lamp 1: "is connected" (Between Step 1 & Step 2) */}
+              <div className={`absolute ${isAr ? 'left-[83.3%]' : 'left-[16.7%]'} top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-white border border-emerald-300 shadow-[0_0_6px_rgba(16,185,129,0.2)] z-20`}>
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500 shadow-[0_0_6px_#10B981]" />
@@ -141,8 +161,8 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
                 </span>
               </div>
 
-              {/* Flash Lamp 3: "matched" (Between Step 3 & Step 4, at 5/6 of road = ~83.3%) */}
-              <div className="absolute left-[83.3%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-white border border-emerald-300 shadow-[0_0_6px_rgba(16,185,129,0.2)] z-20">
+              {/* Flash Lamp 3: "matched" (Between Step 3 & Step 4) */}
+              <div className={`absolute ${isAr ? 'left-[16.7%]' : 'left-[83.3%]'} top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-white border border-emerald-300 shadow-[0_0_6px_rgba(16,185,129,0.2)] z-20`}>
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500 shadow-[0_0_6px_#10B981]" />
