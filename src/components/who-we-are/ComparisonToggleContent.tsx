@@ -107,25 +107,23 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
             </div>
           </div>
 
-          {/* Card 1 Pipeline Flow with COMPLETE GREEN ROAD FROM "Your enterprise" TO "2–3 Providers" */}
+          {/* Card 1 Pipeline Flow: White Track Line with Green Flash Light */}
           <div className="relative my-3 sm:my-5 py-2">
-            {/* Complete Green Road Track (From center of col 1 to center of col 4: left 12.5% to right 12.5%) */}
-            <div className="hidden sm:block absolute top-[24px] sm:top-[28px] lg:top-[30px] left-[12.5%] right-[12.5%] h-[3px] -translate-y-1/2 bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500 rounded-full shadow-[0_0_12px_#10B981,0_0_24px_rgba(16,185,129,0.5)] z-0 overflow-visible">
-              {/* Continuous ambient green glow under-beam */}
-              <div className="absolute -inset-x-2 -top-[2px] h-[7px] bg-emerald-400/40 blur-[4px] rounded-full pointer-events-none" />
-
-              {/* High-speed white/neon traveling energy pulse across the entire road */}
+            {/* White Connecting Track (From center of col 1 to center of col 4: left 12.5% to right 12.5%) */}
+            <div className="hidden sm:block absolute top-[24px] sm:top-[28px] lg:top-[30px] left-[12.5%] right-[12.5%] h-[2.5px] -translate-y-1/2 bg-white rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.06)] z-0 overflow-visible">
+              
+              {/* Green Flash Light: Traveling laser energy pulse along the white line */}
               <m.div
-                animate={{ x: ['-100%', '250%'] }}
+                animate={{ x: ['-100%', '300%'] }}
                 transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white to-transparent opacity-90 pointer-events-none"
+                className="absolute -top-[1.5px] h-[5.5px] w-44 bg-gradient-to-r from-transparent via-emerald-500 to-transparent shadow-[0_0_14px_#10B981,0_0_22px_#059669] rounded-full pointer-events-none"
               />
 
               {/* Flash Lamp 1: "is connected" (Between Step 1 & Step 2, at 1/6 of road = ~16.7%) */}
-              <div className="absolute left-[16.7%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/95 border border-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.3)] backdrop-blur-xs z-20">
+              <div className="absolute left-[16.7%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white border border-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.25)] z-20">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600 shadow-[0_0_8px_#10B981]" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_#10B981]" />
                 </span>
                 <span className="text-[8.5px] sm:text-[9.5px] font-mono font-bold text-emerald-900 tracking-wider whitespace-nowrap">
                   {isAr ? 'متصل' : 'is connected'}
@@ -133,10 +131,10 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
               </div>
 
               {/* Flash Lamp 2: "verified" (Between Step 2 & Step 3, at midpoint of road = 50%) */}
-              <div className="absolute left-[50%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/95 border border-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.3)] backdrop-blur-xs z-20">
+              <div className="absolute left-[50%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white border border-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.25)] z-20">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600 shadow-[0_0_8px_#10B981]" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_#10B981]" />
                 </span>
                 <span className="text-[8.5px] sm:text-[9.5px] font-mono font-bold text-emerald-900 tracking-wider whitespace-nowrap">
                   {isAr ? 'معتمد' : 'verified'}
@@ -144,10 +142,10 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
               </div>
 
               {/* Flash Lamp 3: "matched" (Between Step 3 & Step 4, at 5/6 of road = ~83.3%) */}
-              <div className="absolute left-[83.3%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/95 border border-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.3)] backdrop-blur-xs z-20">
+              <div className="absolute left-[83.3%] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white border border-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.25)] z-20">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600 shadow-[0_0_8px_#10B981]" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_#10B981]" />
                 </span>
                 <span className="text-[8.5px] sm:text-[9.5px] font-mono font-bold text-emerald-900 tracking-wider whitespace-nowrap">
                   {isAr ? 'مطابق' : 'matched'}
@@ -159,7 +157,7 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 relative z-10">
               {/* Step 1 */}
               <div className="flex flex-col items-center text-center bg-white/70 sm:bg-transparent p-2.5 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-emerald-100">
-                <div className="w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-2xl bg-white border border-emerald-300 flex items-center justify-center text-emerald-700 shadow-sm mb-2 relative z-10 ring-2 ring-emerald-500/20">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-2xl bg-white border border-emerald-200 flex items-center justify-center text-emerald-700 shadow-xs mb-2 relative z-10">
                   <Building2 size={20} />
                 </div>
                 <span className="text-xs sm:text-sm lg:text-base font-bold text-neutral-900 leading-tight">
