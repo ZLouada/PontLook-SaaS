@@ -6,6 +6,7 @@ import ProviderBenefitsCards from '@/components/providers/ProviderBenefitsCards'
 import ProviderConnectionFlow from '@/components/providers/ProviderConnectionFlow';
 import Reveal from '@/components/shared/Reveal';
 import NeuralGridBackground from '@/components/shared/NeuralGridBackground';
+import ProviderDnaHelix from '@/components/providers/ProviderDnaHelix';
 import Magnetic from '@/components/shared/Magnetic';
 import { ArrowRight } from '@/components/icons';
 import { constructAlternates, providerIcons } from '@/lib/seo/metadata';
@@ -93,16 +94,25 @@ export default async function ForProvidersPage({
       />
 
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-black pt-24 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-3.5 xs:px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden bg-black pt-24 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-3.5 xs:px-4 sm:px-6 lg:px-8 min-h-[580px] lg:min-h-[640px] flex items-center">
         {/* Ambient Depth Glows */}
         <div className="pointer-events-none absolute top-1/4 start-0 w-[550px] h-[450px] bg-orange-500/[0.05] blur-[160px] -z-10 rounded-full" />
-        <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-orange-500/[0.02] blur-[160px] -z-10 rounded-full" />
-        <NeuralGridBackground className="z-0 opacity-40" gridSize={36} interactiveRadius={160} activeColor="rgba(255, 92, 0, 0.6)" />
+        <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-orange-500/[0.03] blur-[160px] -z-10 rounded-full" />
+        <NeuralGridBackground className="z-0 opacity-20" gridSize={36} interactiveRadius={160} activeColor="rgba(255, 92, 0, 0.4)" />
+
+        {/* 3D Rotating DNA Double Helix Background Visual */}
+        <ProviderDnaHelix isAr={isAr} className="z-0" />
 
         <div className="container-site max-w-6xl mx-auto relative z-10 w-full">
           {/* Left-Aligned Header Block */}
           <div className="max-w-3xl text-start">
             <Reveal>
+              {/* Eyebrow Badge */}
+              <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[#FF5C00] text-xs font-semibold uppercase tracking-wider font-mono">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] animate-pulse" />
+                <span>{isAr ? 'لمزودي التدريب' : 'FOR PROVIDERS'}</span>
+              </div>
+
               <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.05] font-heading tracking-tight text-start">
                 {isAr ? (
                   <>
