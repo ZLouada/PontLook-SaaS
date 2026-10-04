@@ -235,32 +235,30 @@ export function ComparisonToggleSection({ lang = 'en' }: WhoWeAreProps) {
 
   return (
     <section
-      id="our-mission"
+      id="comparison-engine"
       ref={containerRef}
       data-nav-light="true"
       data-nav-theme="light"
-      className="relative bg-black transition-colors duration-500 overflow-visible lg:h-[110vh] h-auto py-12 xs:py-16 sm:py-20 lg:py-0 border-t border-neutral-200 lg:border-t-0"
+      className="relative bg-[#FAFAFA] transition-colors duration-500 overflow-visible lg:h-[110vh] h-auto py-12 xs:py-16 sm:py-20 lg:py-0 border-t border-neutral-200 lg:border-t-0"
       aria-labelledby="comparison-title"
     >
       {/* Viewport Stage: Pinned during the garage door closure on desktop; natural layout on mobile */}
       <div className="relative lg:sticky top-0 w-full min-h-0 lg:min-h-[100dvh] h-auto lg:h-[100dvh] flex flex-col justify-center items-center z-20 overflow-visible lg:overflow-hidden bg-white lg:bg-transparent">
         
-        {/* Background Underlayer: Dark aesthetic connecting seamlessly with WhoWeAreHero (Desktop only) */}
+        {/* Background Underlayer: Crisp architectural aesthetic connecting seamlessly with WhoWeAreHero (Desktop only) */}
         <div
-          className="hidden lg:block absolute inset-0 bg-black pointer-events-none"
+          className="hidden lg:block absolute inset-0 bg-[#FAFAFA] pointer-events-none"
           aria-hidden="true"
         >
-          {/* Subtle dark technical dot grid */}
+          {/* Subtle light technical dot grid */}
           <div
-            className="absolute inset-0 opacity-[0.06]"
+            className="absolute inset-0 opacity-[0.04]"
             style={{
               backgroundImage:
-                'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.7) 1px, transparent 0)',
+                'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.8) 1px, transparent 0)',
               backgroundSize: '36px 36px',
             }}
           />
-          {/* Faint blue ambient glow matching hero */}
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-blue-500/[0.04] rounded-full blur-[120px]" />
         </div>
 
         {/* ================================================================
