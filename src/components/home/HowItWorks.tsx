@@ -14,6 +14,9 @@ import Magnetic from '@/components/shared/Magnetic';
 import Press from '@/components/shared/Press';
 import BorderGlow from '@/components/shared/BorderGlow';
 import { ease, dur, spring, viewportOnceMobile } from '@/lib/motion';
+import DiagnosticBoxCard from './how-it-works/DiagnosticBoxCard';
+import ScoopMatchesCard from './how-it-works/ScoopMatchesCard';
+import ConnectionBridgeCard from './how-it-works/ConnectionBridgeCard';
 
 /**
  * Step cards travel on the axis the swipe pushed them: the outgoing card leaves
@@ -100,7 +103,7 @@ export default function HowItWorks() {
   };
 
   const steps = [
-    // Step 01 - Tell Us
+    // Step 01 - Tell Us (Skill Gap Diagnostics)
     {
       id: 'step1',
       stepNumber: '01',
@@ -114,44 +117,10 @@ export default function HowItWorks() {
       desc: isAr
         ? 'حدد تحدي فريقك، والجدول الزمني، وعدد الموظفين. بدون أي مصطلحات تقنية معقدة.'
         : "Submit your department's challenge, timeline, and team size. No technical jargon required.",
-      canvasBg: 'bg-neutral-50/90 border-neutral-200/80',
-      console: (
-        <div className="w-full bg-white rounded-xl border border-neutral-200/80 p-3 sm:p-4 shadow-sm space-y-2.5 font-sans">
-          {/* Console Window Header */}
-          <div className="flex items-center justify-between pb-2 border-b border-neutral-200/80 text-xs">
-            <span className="text-neutral-700 text-[11px] font-medium">
-              {isAr ? 'طلب تدريب جديد' : 'New Training Request'}
-            </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50/80 border border-blue-200 text-blue-950 text-[10px] font-semibold">
-              <Signal tone="accent" size={12} />
-              <span className="text-blue-900">{isAr ? 'تم استلام الطلب' : 'Request Received'}</span>
-            </div>
-          </div>
-
-          {/* Lead Details */}
-          <div className="p-2.5 sm:p-3 rounded-lg bg-neutral-50/90 border border-neutral-200/70 space-y-1.5 text-xs shadow-xs">
-            <div className="flex items-center justify-between">
-              <span className="text-neutral-500">{isAr ? 'القطاع والموقع' : 'Sector & Location'}</span>
-              <span className="font-semibold text-neutral-950">
-                {isAr ? 'الخدمات المالية · الرياض' : 'Financial Services · Riyadh'}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-neutral-500">{isAr ? 'التحدي التدريبي' : 'Training Challenge'}</span>
-              <span className="font-medium text-neutral-900">
-                {isAr ? 'القيادة التنفيذية والاستراتيجية الرقمية' : 'Executive Decision-Making & Digital Strategy'}
-              </span>
-            </div>
-            <div className="flex items-center justify-between pt-0.5 border-t border-neutral-200/60 text-[11px]">
-              <span className="text-neutral-500">{isAr ? 'حالة الميزانية' : 'Budget Status'}</span>
-              <span className="font-bold text-neutral-950">SAR 150,000+ ({isAr ? 'مؤكدة' : 'Confirmed'})</span>
-            </div>
-          </div>
-        </div>
-      ),
+      console: <DiagnosticBoxCard isAr={isAr} />,
     },
 
-    // Step 02 - Review Matches
+    // Step 02 - Review Matches (Vetted Proposal Intelligence)
     {
       id: 'step2',
       stepNumber: '02',
@@ -165,109 +134,24 @@ export default function HowItWorks() {
       desc: isAr
         ? 'نفحص مزودي التدريب مسبقاً وفق خبرتهم الإقليمية، وسوابق أعمالهم، وملاءمة الحقيبة التدريبية.'
         : 'We pre-screen providers for regional experience, real case studies, and exact curriculum fit.',
-      canvasBg: 'bg-neutral-50/90 border-neutral-200/80',
-      console: (
-        <div className="w-full bg-white rounded-xl border border-neutral-200/80 p-3 sm:p-4 shadow-sm space-y-2.5 font-sans">
-          {/* Console Window Header */}
-          <div className="flex items-center justify-between pb-2 border-b border-neutral-200/80 text-xs">
-            <span className="text-neutral-700 text-[11px] font-medium">
-              {isAr ? 'عروض الخبراء المعتمدين' : 'Verified Provider Matches'}
-            </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-950 text-xs font-bold">
-              <Signal tone="neutral" size={12} />
-              <span>{isAr ? '2 مطابقات مؤكدة' : '2 Curated Matches'}</span>
-            </div>
-          </div>
-
-          {/* Provider Matches */}
-          <div className="space-y-1.5 text-xs text-neutral-800">
-            <div className="p-2 sm:p-2.5 rounded-lg bg-neutral-50/90 border border-neutral-200/70 flex items-center justify-between">
-              <div>
-                <span className="font-semibold text-neutral-950 block">
-                  {isAr ? 'معهد القيادة (معتمد سعودياً)' : 'Leadership Institute (KSA Certified)'}
-                </span>
-                <span className="text-[10px] text-neutral-500">
-                  {isAr ? 'سجل تسليم مثبت في القطاع المالي' : 'Proven delivery in banking & fintech'}
-                </span>
-              </div>
-              <span className="text-xs font-bold text-neutral-950 px-2 py-0.5 bg-white border border-neutral-200 rounded">
-                98% Fit
-              </span>
-            </div>
-            <div className="p-2 sm:p-2.5 rounded-lg bg-neutral-50/90 border border-neutral-200/70 flex items-center justify-between">
-              <div>
-                <span className="font-semibold text-neutral-950 block">
-                  {isAr ? 'شركاء التدريب التنفيذي (الإمارات)' : 'Executive Training Partners (UAE)'}
-                </span>
-                <span className="text-[10px] text-neutral-500">
-                  {isAr ? 'خبراء تدريب وتطوير معتمدون' : 'Certified executive coaches'}
-                </span>
-              </div>
-              <span className="text-xs font-bold text-neutral-950 px-2 py-0.5 bg-white border border-neutral-200 rounded">
-                95% Fit
-              </span>
-            </div>
-          </div>
-          <div className="pt-0.5 text-center text-[10px] text-neutral-500">
-            {isAr ? 'بدون عروض تسويقية مزعجة · بدون مزايدات' : 'No spam · Zero bidding wars'}
-          </div>
-        </div>
-      ),
+      console: <ScoopMatchesCard isAr={isAr} />,
     },
 
-    // Step 03 - Execute & Train
+    // Step 03 - Connection (Direct Engagement & Launch)
     {
       id: 'step3',
       stepNumber: '03',
-      navTitle: isAr ? 'بدء التدريب' : 'Start Training',
-      mobileNavTitle: isAr ? 'التنفيذ' : 'Train',
-      tag: isAr ? 'الخطوة 03 · مباشرة وسلسة' : 'STEP 03 · SEAMLESS',
+      navTitle: isAr ? 'الربط المباشر' : 'Connection',
+      mobileNavTitle: isAr ? 'الربط' : 'Connect',
+      tag: isAr ? 'الخطوة 03 · ربط مباشر' : 'STEP 03 · DIRECT CONNECTION',
       tagColor: 'text-neutral-950',
       headline: isAr
-        ? 'تواصل مباشرة وأطلق برنامجك التدريبي'
-        : 'Connect directly and launch your program',
+        ? 'الربط المباشر وتدشين البرنامج التدريبي'
+        : 'Direct Connection & Program Launch',
       desc: isAr
-        ? 'تعاقد مباشرة مع جهة التدريب المختارة. مجاناً للشركات؛ ونجاح المزود مرتبط بنجاحكم.'
-        : 'Contract directly with your chosen specialist. Free for companies; providers succeed when you succeed.',
-      canvasBg: 'bg-neutral-50/90 border-neutral-200/80',
-      console: (
-        <div className="w-full bg-white rounded-xl border border-neutral-200/80 p-3 sm:p-4 shadow-sm space-y-2.5 font-sans">
-          {/* Console Window Header */}
-          <div className="flex items-center justify-between pb-2 border-b border-neutral-200/80 text-xs">
-            <span className="text-neutral-700 text-[11px] font-medium">
-              {isAr ? 'الربط المباشر وجدولة الانطلاق' : 'Direct Introduction'}
-            </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-950 text-[10px] font-semibold">
-              <Signal tone="neutral" size={12} />
-              <span>{isAr ? 'تمت الجدولة' : 'Kickoff Scheduled'}</span>
-            </div>
-          </div>
-
-          {/* Status Box */}
-          <div className="p-2.5 sm:p-3 rounded-lg bg-neutral-50/90 border border-neutral-200/70 space-y-1.5 text-xs shadow-xs">
-            <div className="flex items-center justify-between">
-              <span className="text-neutral-500">{isAr ? 'حالة التنسيق' : 'Engagement Status'}</span>
-              <span className="font-semibold text-neutral-950 bg-neutral-100 px-2 py-0.5 rounded text-[10px] border border-neutral-200">
-                {isAr ? 'اجتماع انطلاق البرنامج محدد' : 'Kickoff Session Confirmed'}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-neutral-500">{isAr ? 'رسوم المنصة على الشركة' : 'Cost to Enterprise'}</span>
-              <span className="font-bold text-neutral-950 text-[11px]">
-                SAR 0 ({isAr ? 'مجاناً 100%' : '100% Free'})
-              </span>
-            </div>
-          </div>
-
-          {/* Contract Terms */}
-          <div className="pt-0.5 flex items-center justify-between text-xs text-neutral-500">
-            <span>{isAr ? 'بدون وسطاء أو عمولات خفية' : 'Zero middleman retainers'}</span>
-            <span className="font-bold text-neutral-950">
-              {isAr ? 'علاقة تعاقدية مباشرة' : 'Direct Executive Contract'}
-            </span>
-          </div>
-        </div>
-      ),
+        ? 'تعاقد مباشر بين المنشأة ومزود التدريب المعتمد عبر بونت لوك. مجاناً للشركات وبدون أي عمولات أو وسطاء.'
+        : 'Direct engagement between your enterprise and the vetted specialist via PontLook. Zero markup, 100% free for companies.',
+      console: <ConnectionBridgeCard isAr={isAr} />,
     },
   ];
 
@@ -450,8 +334,8 @@ export default function HowItWorks() {
                       </div>
 
                       {/* Inner Console Window Mockup Display */}
-                      <CardTilt3D maxTilt={4} glareOpacity={0.06} className="w-full pt-1">
-                        <div className={`w-full rounded-xl sm:rounded-2xl ${currentStep.canvasBg} border p-2.5 sm:p-3.5 shadow-inner`}>
+                      <CardTilt3D maxTilt={3} glareOpacity={0.05} className="w-full pt-1">
+                        <div className="w-full">
                           {currentStep.console}
                         </div>
                       </CardTilt3D>
