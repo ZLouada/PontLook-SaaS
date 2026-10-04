@@ -4,20 +4,18 @@ import React, { useRef, useState, useEffect } from 'react';
 import { m, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import {
   ArrowDown,
-  ArrowRight,
   Globe,
   Handshake,
   Cpu,
-  ShieldCheck,
   CheckCircle2,
   Sparkles,
   Target,
   Building2,
+  TrendingUp,
 } from '@/components/icons';
 import Signal from '@/components/shared/Signal';
-import TextReveal from '@/components/shared/TextReveal';
 import Magnetic from '@/components/shared/Magnetic';
-import WhoWeAreBridge3D, { HudPinData } from './WhoWeAreBridge3D';
+import WhoWeAreBridge3D from './WhoWeAreBridge3D';
 
 interface WhoWeAreHeroProps {
   lang?: 'en' | 'ar';
@@ -37,7 +35,6 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Track scroll through the multi-phase bridge experience
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
@@ -47,24 +44,13 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
     setScrollProgress(latest);
   });
 
-  // Smooth scroll helpers
-  const scrollToTransformation = () => {
+  // Smooth scroll to specific phase
+  const scrollToPhase = (targetFraction: number) => {
     if (containerRef.current) {
       const top = containerRef.current.offsetTop;
       const height = containerRef.current.offsetHeight;
       window.scrollTo({
-        top: top + height * 0.42,
-        behavior: 'smooth',
-      });
-    }
-  };
-
-  const scrollToMission = () => {
-    if (containerRef.current) {
-      const top = containerRef.current.offsetTop;
-      const height = containerRef.current.offsetHeight;
-      window.scrollTo({
-        top: top + height * 0.82,
+        top: top + height * targetFraction,
         behavior: 'smooth',
       });
     }
@@ -77,11 +63,11 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
     }
   };
 
-  // Phase opacity calculations
-  // Phase 1 (Dark Hero): 0.0 -> 0.32
+  // Phase Opacities
+  // Phase 1: 0.00 -> 0.32
   const heroOpacity = Math.max(0, Math.min(1, 1 - scrollProgress * 3.3));
 
-  // Phase 2 (Transformation): 0.30 -> 0.65
+  // Phase 2: 0.30 -> 0.65
   let transformOpacity = 0;
   if (scrollProgress >= 0.28 && scrollProgress <= 0.65) {
     if (scrollProgress < 0.42) {
@@ -93,44 +79,45 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
     }
   }
 
-  // Phase 3 (Light Mission & Vision): 0.60 -> 1.0
+  // Phase 3: 0.60 -> 1.0
   const lightContentOpacity = Math.max(0, Math.min(1, (scrollProgress - 0.60) / 0.22));
 
-  // Background interpolation: from dark #0A0B0D to pure #FFFFFF
-  // Follows the rising horizon of the 3D bridge
-  const bgDarkAlpha = Math.max(0, Math.min(1, 1 - scrollProgress * 1.5));
-  const bgLightAlpha = Math.max(0, Math.min(1, scrollProgress * 1.6));
+  // Active Phase Index (0 = Hero, 1 = Transformation, 2 = Mission & Vision)
+  const activePhase =
+    scrollProgress < 0.32 ? 0 : scrollProgress < 0.64 ? 1 : 2;
 
   return (
     <section
       ref={containerRef}
       id="bridge-journey"
       data-nav-theme={scrollProgress > 0.55 ? 'light' : 'dark'}
-      className="relative w-full h-[250vh] sm:h-[280vh] lg:h-[300vh] bg-[#0A0B0D] select-none"
+      className="relative w-full h-[250vh] sm:h-[280vh] lg:h-[300vh] bg-[#07080A] select-none"
     >
-      {/* STICKY VIEWPORT STAGE */}
+      {/* STICKY 3D VIEWPORT STAGE */}
       <div className="sticky top-0 w-full h-[100dvh] overflow-hidden flex flex-col justify-between">
         {/* Dynamic Dual-Tone Environmental Canvas Background */}
         <div
           className="absolute inset-0 transition-opacity duration-300 pointer-events-none"
           style={{
-            background: `linear-gradient(to bottom, #0A0B0D ${Math.round((1 - scrollProgress) * 55)}%, #FFFFFF 100%)`,
+            background: `linear-gradient(to bottom, #07080A ${Math.round(
+              (1 - scrollProgress) * 55
+            )}%, #FFFFFF 100%)`,
           }}
           aria-hidden="true"
         />
 
-        {/* Ambient Dark Atmospheric Glow (Top Hero) */}
+        {/* Ambient Dark Atmospheric Lighting (Top Hero) */}
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-sky-500/[0.05] rounded-full blur-[140px] pointer-events-none transition-opacity duration-500"
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-sky-500/[0.045] rounded-full blur-[150px] pointer-events-none transition-opacity duration-500"
           style={{ opacity: heroOpacity }}
           aria-hidden="true"
         />
 
-        {/* Tech Grid Watermark for Light Mode */}
+        {/* Minimal Technical Dot Grid for Light Mode */}
         <div
           className="absolute inset-0 pointer-events-none transition-opacity duration-500"
           style={{
-            opacity: lightContentOpacity * 0.45,
+            opacity: lightContentOpacity * 0.4,
             backgroundImage:
               'radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.08) 1px, transparent 0)',
             backgroundSize: '32px 32px',
@@ -138,7 +125,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
           aria-hidden="true"
         />
 
-        {/* 3D FUTURISTIC BRIDGE ENGINE */}
+        {/* SOLID 3D FUTURISTIC SUSPENSION BRIDGE ENGINE */}
         <div className="absolute inset-0 w-full h-full z-10 pointer-events-none">
           <WhoWeAreBridge3D
             isAr={isAr}
@@ -148,7 +135,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
         </div>
 
         {/* =========================================================================
-            PHASE 1: THE DARK HERO OVERLAY (0.0 - 0.32)
+            PHASE 1: THE DARK HERO (0.00 - 0.32)
             ========================================================================= */}
         <div
           className="absolute inset-0 z-20 flex flex-col justify-between pt-24 sm:pt-28 lg:pt-32 pb-8 px-4 sm:px-6 lg:px-12 transition-opacity duration-300"
@@ -159,8 +146,8 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
         >
           {/* Top Hero Headline Block */}
           <div className="container-site max-w-5xl mx-auto text-center flex flex-col items-center">
-            {/* Status Signal Pill */}
-            <div className="mb-4 sm:mb-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B]/90 border border-[#26282D] hover:border-white/30 backdrop-blur-xl shadow-2xl transition-all max-w-[92vw]">
+            {/* Status Pill */}
+            <div className="mb-4 sm:mb-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#121318]/90 border border-[#26282D] hover:border-white/30 backdrop-blur-xl shadow-2xl transition-all max-w-[92vw]">
               <Signal />
               <span className="text-[11px] sm:text-xs font-medium text-neutral-300 truncate">
                 <span
@@ -186,7 +173,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
                 </>
               ) : (
                 <>
-                  WHO WE ARE: <span className="text-white">Connecting Enterprise Demand</span> to Elite Training Providers
+                  Who We Are: <span className="text-white">Connecting Enterprise Demand</span> to Elite Training Providers
                 </>
               )}
             </h1>
@@ -206,7 +193,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
               <div
                 className={`absolute top-28 ${
                   isAr ? 'left-6' : 'right-6'
-                } p-3 rounded-2xl bg-[#12141A]/75 border border-sky-500/20 backdrop-blur-md shadow-2xl shadow-sky-950/30 flex items-center gap-3 transition-transform duration-700 hover:scale-105 pointer-events-auto`}
+                } p-3 rounded-2xl bg-[#101218]/80 border border-sky-500/25 backdrop-blur-md shadow-2xl shadow-sky-950/40 flex items-center gap-3 transition-transform duration-700 hover:scale-105 pointer-events-auto`}
               >
                 <div className="w-9 h-9 rounded-xl bg-sky-500/15 border border-sky-400/30 flex items-center justify-center text-sky-400">
                   <Globe size={18} />
@@ -225,7 +212,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
               <div
                 className={`absolute top-64 ${
                   isAr ? 'left-12' : 'right-12'
-                } p-3 rounded-2xl bg-[#12141A]/75 border border-emerald-500/20 backdrop-blur-md shadow-2xl shadow-emerald-950/30 flex items-center gap-3 transition-transform duration-700 hover:scale-105 pointer-events-auto`}
+                } p-3 rounded-2xl bg-[#101218]/80 border border-emerald-500/25 backdrop-blur-md shadow-2xl shadow-emerald-950/40 flex items-center gap-3 transition-transform duration-700 hover:scale-105 pointer-events-auto`}
               >
                 <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-emerald-400">
                   <Handshake size={18} />
@@ -244,7 +231,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
               <div
                 className={`absolute bottom-28 ${
                   isAr ? 'right-8' : 'left-8'
-                } p-3 rounded-2xl bg-[#12141A]/75 border border-white/10 backdrop-blur-md shadow-2xl flex items-center gap-3 pointer-events-auto`}
+                } p-3 rounded-2xl bg-[#101218]/80 border border-white/15 backdrop-blur-md shadow-2xl flex items-center gap-3 pointer-events-auto`}
               >
                 <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white">
                   <Cpu size={18} />
@@ -264,7 +251,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
           {/* Bottom Hero Scroll Prompt */}
           <div className="relative z-20 flex justify-center mb-1">
             <button
-              onClick={scrollToTransformation}
+              onClick={() => scrollToPhase(0.44)}
               className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#111215]/85 hover:bg-[#16171B] border border-[#26282D] hover:border-neutral-500 text-xs text-neutral-300 hover:text-white shadow-xl backdrop-blur-xl transition-all active:scale-95 group cursor-pointer"
             >
               <Signal />
@@ -289,7 +276,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             pointerEvents: scrollProgress >= 0.32 && scrollProgress <= 0.62 ? 'auto' : 'none',
           }}
         >
-          <div className="max-w-2xl text-center backdrop-blur-xl bg-black/40 lg:bg-transparent p-6 rounded-3xl border border-white/10 lg:border-none shadow-2xl lg:shadow-none">
+          <div className="max-w-2xl text-center backdrop-blur-xl bg-black/45 lg:bg-transparent p-6 rounded-3xl border border-white/10 lg:border-none shadow-2xl lg:shadow-none">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-400 text-xs font-mono font-semibold uppercase tracking-wider mb-4">
               <Sparkles size={13} className="text-sky-400 animate-pulse" />
               <span>{isAr ? 'بداية التحول' : 'THE TRANSFORMATION BEGINS'}</span>
@@ -307,8 +294,8 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
 
             <div className="mt-6 flex justify-center">
               <button
-                onClick={scrollToMission}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-medium text-white backdrop-blur-md transition-all active:scale-95"
+                onClick={() => scrollToPhase(0.85)}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-medium text-white backdrop-blur-md transition-all active:scale-95 cursor-pointer"
               >
                 <span>{isAr ? 'استكشف رسالتنا ورؤيتنا' : 'Explore Our Mission & Vision'}</span>
                 <ArrowDown size={14} />
@@ -323,7 +310,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             ========================================================================= */}
         <div
           id="our-mission"
-          className="absolute inset-0 z-20 flex flex-col justify-between pt-16 sm:pt-20 lg:pt-24 pb-4 sm:pb-6 px-4 sm:px-6 lg:px-12 transition-opacity duration-300 text-neutral-900"
+          className="absolute inset-0 z-20 flex flex-col justify-between pt-16 sm:pt-20 lg:pt-24 pb-14 sm:pb-16 px-4 sm:px-6 lg:px-12 transition-opacity duration-300 text-neutral-900"
           style={{
             opacity: lightContentOpacity,
             pointerEvents: scrollProgress > 0.65 ? 'auto' : 'none',
@@ -343,9 +330,9 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
           {/* Flanking Cards: OUR MISSION (Left) & OUR VISION (Right) */}
           <div className="container-site max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 my-auto">
             {/* Left Card: OUR MISSION */}
-            <div className="bg-white/90 backdrop-blur-md p-4 sm:p-6 lg:p-7 rounded-2xl sm:rounded-3xl border border-neutral-200/90 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.06)] hover:border-neutral-400 transition-colors">
-              <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                <div className="w-8 h-8 rounded-xl bg-neutral-900 text-white flex items-center justify-center shadow-xs">
+            <div className="bg-white/95 backdrop-blur-md p-5 sm:p-6 lg:p-7 rounded-2xl sm:rounded-3xl border border-neutral-200/90 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.06)] hover:border-neutral-400 transition-colors">
+              <div className="flex items-center gap-2.5 mb-2.5 sm:mb-3">
+                <div className="w-8 h-8 rounded-xl bg-neutral-950 text-white flex items-center justify-center shadow-xs">
                   <Target size={16} />
                 </div>
                 <h3 className="text-base sm:text-lg font-heading font-semibold text-neutral-950">
@@ -374,9 +361,9 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             </div>
 
             {/* Right Card: OUR VISION */}
-            <div className="bg-white/90 backdrop-blur-md p-4 sm:p-6 lg:p-7 rounded-2xl sm:rounded-3xl border border-neutral-200/90 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.06)] hover:border-neutral-400 transition-colors">
-              <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                <div className="w-8 h-8 rounded-xl bg-neutral-900 text-white flex items-center justify-center shadow-xs">
+            <div className="bg-white/95 backdrop-blur-md p-5 sm:p-6 lg:p-7 rounded-2xl sm:rounded-3xl border border-neutral-200/90 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.06)] hover:border-neutral-400 transition-colors">
+              <div className="flex items-center gap-2.5 mb-2.5 sm:mb-3">
+                <div className="w-8 h-8 rounded-xl bg-neutral-950 text-white flex items-center justify-center shadow-xs">
                   <Building2 size={16} />
                 </div>
                 <h3 className="text-base sm:text-lg font-heading font-semibold text-neutral-950">
@@ -406,7 +393,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
           </div>
 
           {/* Bottom Card: OUR IMPACT METRICS & NEXT STEP CTA */}
-          <div className="container-site max-w-4xl mx-auto w-full pt-1 pb-2">
+          <div className="container-site max-w-4xl mx-auto w-full pt-1">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-neutral-50/95 border border-neutral-300 p-3 sm:p-4 rounded-2xl shadow-xs">
               <div className="flex items-center gap-3 sm:gap-6 text-center sm:text-start">
                 <div>
@@ -446,6 +433,31 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
               </Magnetic>
             </div>
           </div>
+        </div>
+
+        {/* =========================================================================
+            BOTTOM CENTER PHASE INDICATOR PILLS (As seen in video 00:00 - 00:04)
+            ========================================================================= */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 p-1 rounded-full bg-black/40 border border-white/10 backdrop-blur-md shadow-lg pointer-events-auto">
+          {[
+            { id: 0, labelEn: '01 · Who We Are', labelAr: '٠١ · من نحن', target: 0.0 },
+            { id: 1, labelEn: '02 · Transformation', labelAr: '٠٢ · التحول', target: 0.44 },
+            { id: 2, labelEn: '03 · Mission & Impact', labelAr: '٠٣ · رسالتنا وأثرنا', target: 0.85 },
+          ].map((phase, idx) => {
+            const isActive = activePhase === idx;
+            return (
+              <button
+                key={phase.id}
+                onClick={() => scrollToPhase(phase.target)}
+                aria-label={isAr ? phase.labelAr : phase.labelEn}
+                className={`transition-all duration-300 rounded-full cursor-pointer flex items-center justify-center ${
+                  isActive
+                    ? 'w-10 sm:w-12 h-1.5 sm:h-2 bg-white shadow-xs'
+                    : 'w-4 sm:w-6 h-1.5 sm:h-2 bg-white/30 hover:bg-white/50'
+                }`}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
