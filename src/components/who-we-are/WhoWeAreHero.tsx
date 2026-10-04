@@ -105,19 +105,8 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             ================================================================ */}
         <div
           id="our-mission"
-          className="absolute inset-0 w-full h-full bg-white text-neutral-900 flex flex-col justify-center items-center overflow-y-auto md:overflow-hidden z-10 pt-16 sm:pt-20 lg:pt-12 pb-4 select-text"
+          className="absolute inset-0 w-full h-full bg-white text-neutral-900 flex flex-col justify-start items-center overflow-y-auto z-10 pt-28 sm:pt-32 lg:pt-32 pb-16 select-text scrollbar-none"
         >
-          {/* Attio-Style Subtle Grid dots */}
-          <div
-            className="absolute inset-0 opacity-[0.035] pointer-events-none"
-            style={{
-              backgroundImage:
-                'radial-gradient(circle at 1px 1px, #000 1px, transparent 0)',
-              backgroundSize: '24px 24px',
-            }}
-            aria-hidden="true"
-          />
-
           {/* Pop-Up White Content */}
           <m.div
             style={
@@ -129,7 +118,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
                     y: contentY,
                   }
             }
-            className="w-full flex flex-col justify-center items-center"
+            className="w-full flex flex-col justify-start items-center"
           >
             <ComparisonToggleContent lang={lang} />
           </m.div>
