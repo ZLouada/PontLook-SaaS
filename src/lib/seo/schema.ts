@@ -1,4 +1,3 @@
-import { CityData, CountryData, ServiceVertical } from '@/data/geoData';
 import { SITE_URL } from './metadata';
 
 /**
@@ -20,7 +19,7 @@ export function buildOrganizationSchema() {
       height: 100,
     },
     description:
-      'Premier corporate training matchmaking platform connecting enterprise HR leaders with vetted, accredited corporate training academies across the GCC, UK, US, and Australia.',
+      'Premier corporate training matchmaking platform connecting enterprise HR leaders with vetted, accredited corporate training academies across the GCC and internationally.',
     sameAs: [
       'https://www.linkedin.com/company/pontlook',
       'https://twitter.com/pontlook',
@@ -34,111 +33,6 @@ export function buildOrganizationSchema() {
         availableLanguage: ['en', 'ar'],
       },
     ],
-  };
-}
-
-/**
- * 2. EducationalOrganization / LocalBusiness Schema for Cities
- */
-export function buildCityOrganizationSchema({
-  city,
-  country,
-  lang,
-  canonicalUrl,
-}: {
-  city: CityData;
-  country: CountryData;
-  lang: 'en' | 'ar';
-  canonicalUrl: string;
-}) {
-  const isAr = lang === 'ar';
-  const cityName = isAr ? city.nameAr : city.nameEn;
-  const countryName = isAr ? country.nameAr : country.nameEn;
-
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'EducationalOrganization',
-    '@id': `${canonicalUrl}#organization`,
-    name: `PontLook ${cityName}`,
-    url: canonicalUrl,
-    logo: `${SITE_URL}/images/brand/pontlook-logo-orange.png`,
-    description: isAr ? city.leadParagraphAr : city.leadParagraphEn,
-    currenciesAccepted: country.currency,
-    paymentAccepted: 'Corporate Invoicing, Bank Transfer',
-    priceRange: '$$$',
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: cityName,
-      addressCountry: country.isoCode,
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: city.lat,
-      longitude: city.lng,
-    },
-    areaServed: [
-      {
-        '@type': 'AdministrativeArea',
-        name: cityName,
-      },
-      {
-        '@type': 'Country',
-        name: countryName,
-      },
-    ],
-    parentOrganization: {
-      '@type': 'Organization',
-      name: 'PontLook',
-      url: SITE_URL,
-    },
-  };
-}
-
-/**
- * 3. Service Schema for Service Catalog & Service Detail Pages
- */
-export function buildServiceSchema({
-  service,
-  country,
-  lang,
-  canonicalUrl,
-}: {
-  service: ServiceVertical;
-  country: CountryData;
-  lang: 'en' | 'ar';
-  canonicalUrl: string;
-}) {
-  const isAr = lang === 'ar';
-  const serviceTitle = isAr ? service.titleAr : service.titleEn;
-  const serviceDesc = isAr ? service.shortDescAr : service.shortDescEn;
-  const countryName = isAr ? country.nameAr : country.nameEn;
-
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    '@id': `${canonicalUrl}#service`,
-    name: `${serviceTitle} in ${countryName}`,
-    serviceType: serviceTitle,
-    description: serviceDesc,
-    provider: {
-      '@type': 'Organization',
-      name: 'PontLook',
-      url: SITE_URL,
-    },
-    areaServed: {
-      '@type': 'Country',
-      name: countryName,
-    },
-    audience: {
-      '@type': 'BusinessAudience',
-      audienceType: isAr ? service.audienceAr : service.audienceEn,
-    },
-    availableChannel: {
-      '@type': 'ServiceChannel',
-      serviceUrl: canonicalUrl,
-      availableLanguage: country.supportedLangs,
-    },
-    category: 'Corporate Training & Executive Capability Building',
   };
 }
 

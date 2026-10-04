@@ -2,21 +2,15 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { defaultLocale } from '@/i18n/config';
 
-interface RegionalMapping {
-  prefix: string;
-  targetLang: string;
-  targetCountry: string;
-}
-
-const REGIONAL_REWRITES: RegionalMapping[] = [
-  { prefix: '/ar-ae', targetLang: 'ar', targetCountry: 'ae' },
-  { prefix: '/en-sa', targetLang: 'en', targetCountry: 'sa' },
-  { prefix: '/ae', targetLang: 'en', targetCountry: 'ae' },
-  { prefix: '/sa', targetLang: 'ar', targetCountry: 'sa' },
-  { prefix: '/uk', targetLang: 'en', targetCountry: 'uk' },
-  { prefix: '/us', targetLang: 'en', targetCountry: 'us' },
-  { prefix: '/au', targetLang: 'en', targetCountry: 'au' },
-];
+const LEGACY_REGIONAL_REDIRECTS: Record<string, string> = {
+  '/ar-ae': '/ar',
+  '/sa': '/ar',
+  '/en-sa': '/en',
+  '/ae': '/en',
+  '/uk': '/en',
+  '/us': '/en',
+  '/au': '/en',
+};
 
 export function middleware(request: NextRequest) {
   const host = request.headers.get('host') || '';
@@ -82,15 +76,20 @@ function getSafeHost(rawHost: string): { host: string; protocol: string } {
     return NextResponse.redirect(targetUrl, 301);
   }
 
-  // 5. Regional clean URL rewrites (e.g. /ae/locations/dubai -> /en/ae/locations/dubai)
-  for (const mapping of REGIONAL_REWRITES) {
-    if (targetPath === mapping.prefix || targetPath.startsWith(`${mapping.prefix}/`)) {
-      const rest = targetPath.slice(mapping.prefix.length);
-      const internalDestination = `/${mapping.targetLang}/${mapping.targetCountry}${rest}`;
-      const rewriteUrl = new URL(request.url);
-      rewriteUrl.pathname = internalDestination;
-      return NextResponse.rewrite(rewriteUrl);
+  // 5. Legacy Regional & Solutions clean redirects
+  for (const [prefix, destination] of Object.entries(LEGACY_REGIONAL_REDIRECTS)) {
+    if (targetPath === prefix || targetPath.startsWith(`${prefix}/`)) {
+      const redirectUrl = new URL(request.url);
+      redirectUrl.pathname = destination;
+      return NextResponse.redirect(redirectUrl, 301);
     }
+  }
+
+  if (targetPath.includes('/solutions/') || targetPath.endsWith('/solutions')) {
+    const redirectUrl = new URL(request.url);
+    const targetLang = targetPath.startsWith('/ar') ? 'ar' : 'en';
+    redirectUrl.pathname = `/${targetLang}/find-training`;
+    return NextResponse.redirect(redirectUrl, 301);
   }
 
   return NextResponse.next();
