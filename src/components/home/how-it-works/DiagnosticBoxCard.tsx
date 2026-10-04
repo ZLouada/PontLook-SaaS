@@ -18,37 +18,37 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
       id: 'p1',
       icon: AlertCircle,
       iconColor: 'text-amber-500',
-      bgColor: 'bg-amber-50/95 border-amber-200/90 text-amber-950',
+      bgColor: 'bg-amber-50 border-amber-200/90 text-amber-950',
       title: isAr ? 'فجوة القيادة التنفيذية' : 'Executive Leadership Gap',
-      desc: isAr ? 'بطء اتخاذ القرارات C-Suite' : 'Slow C-Suite Decision Velocity',
-      position: 'top-1 start-1 sm:top-2 sm:start-2',
+      desc: isAr ? 'بطء اتخاذ القرارات C-Suite' : 'Slow C-Suite Decisions',
+      position: 'top-1 start-1 sm:top-1.5 sm:start-1.5',
     },
     {
       id: 'p2',
       icon: TrendingDown,
       iconColor: 'text-rose-500',
-      bgColor: 'bg-rose-50/95 border-rose-200/90 text-rose-950',
+      bgColor: 'bg-rose-50 border-rose-200/90 text-rose-950',
       title: isAr ? 'بطء مسار المبيعات B2B' : 'B2B Sales Velocity Lag',
-      desc: isAr ? '-32% إغلاق الصفقات' : '-32% Deal Conversion Pace',
-      position: 'top-1 end-1 sm:top-2 end-2 sm:end-2',
+      desc: isAr ? '-32% إغلاق الصفقات' : '-32% Conversion Pace',
+      position: 'top-1 end-1 sm:top-1.5 end-1 sm:end-1.5',
     },
     {
       id: 'p3',
       icon: Cpu,
       iconColor: 'text-blue-500',
-      bgColor: 'bg-blue-50/95 border-blue-200/90 text-blue-950',
-      title: isAr ? 'تأخر التحول الرقمي و AI' : 'Digital & AI Upskilling Gap',
-      desc: isAr ? 'نقص المهارات التطبيقية' : 'Applied Tech Capability Lag',
-      position: 'bottom-8 start-1 sm:bottom-10 sm:start-2',
+      bgColor: 'bg-blue-50 border-blue-200/90 text-blue-950',
+      title: isAr ? 'تأخر التحول الرقمي و AI' : 'Digital & AI Upskilling',
+      desc: isAr ? 'نقص المهارات التطبيقية' : 'Applied Tech Gap',
+      position: 'bottom-7 start-1 sm:bottom-7 sm:start-1.5',
     },
     {
       id: 'p4',
       icon: ShieldCheck,
       iconColor: 'text-emerald-600',
-      bgColor: 'bg-emerald-50/95 border-emerald-200/90 text-emerald-950',
+      bgColor: 'bg-emerald-50 border-emerald-200/90 text-emerald-950',
       title: isAr ? 'شهادات اعتماد خليجية' : 'Accredited GCC Certs',
-      desc: isAr ? 'مستهدفات التوطين 2030' : 'Vision 2030 Standards Missing',
-      position: 'bottom-8 end-1 sm:bottom-10 end-2 sm:end-2',
+      desc: isAr ? 'مستهدفات التوطين 2030' : 'Vision 2030 Standards',
+      position: 'bottom-7 end-1 sm:bottom-7 end-1 sm:end-1.5',
     },
   ];
 
@@ -81,18 +81,18 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
       </div>
 
       {/* Center 3D Box & Scanner Stage */}
-      <div className="relative z-10 h-52 sm:h-60 w-full flex items-center justify-center my-1">
+      <div className="relative z-10 h-44 sm:h-48 w-full flex items-center justify-center my-0.5">
         {/* HUD Corner Target Brackets */}
-        <div className="absolute top-2 start-2 w-4 h-4 border-t-2 border-s-2 border-emerald-500/70 rounded-tl pointer-events-none" />
-        <div className="absolute top-2 end-2 w-4 h-4 border-t-2 border-e-2 border-emerald-500/70 rounded-tr pointer-events-none" />
-        <div className="absolute bottom-2 start-2 w-4 h-4 border-b-2 border-s-2 border-emerald-500/70 rounded-bl pointer-events-none" />
-        <div className="absolute bottom-2 end-2 w-4 h-4 border-b-2 border-e-2 border-emerald-500/70 rounded-br pointer-events-none" />
+        <div className="absolute top-2 start-2 w-3.5 h-3.5 border-t-2 border-s-2 border-emerald-500/70 rounded-tl pointer-events-none" />
+        <div className="absolute top-2 end-2 w-3.5 h-3.5 border-t-2 border-e-2 border-emerald-500/70 rounded-tr pointer-events-none" />
+        <div className="absolute bottom-2 start-2 w-3.5 h-3.5 border-b-2 border-s-2 border-emerald-500/70 rounded-bl pointer-events-none" />
+        <div className="absolute bottom-2 end-2 w-3.5 h-3.5 border-b-2 border-e-2 border-emerald-500/70 rounded-br pointer-events-none" />
 
         {/* 3D Isometric Enterprise Box */}
         <div className="relative flex items-center justify-center">
           <svg
             viewBox="0 0 200 200"
-            className="w-36 h-36 sm:w-44 sm:h-44 drop-shadow-[0_15px_30px_rgba(20,40,30,0.18)]"
+            className="w-32 h-32 sm:w-36 sm:h-36 drop-shadow-[0_12px_24px_rgba(20,40,30,0.16)]"
           >
             {/* Box Bottom Shadow */}
             <ellipse cx="100" cy="175" rx="70" ry="18" fill="rgba(0,0,0,0.08)" />
@@ -156,17 +156,17 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
           {/* Animated Glowing Laser Scanner Line */}
           <m.div
             animate={{
-              y: [-60, 50, -60],
-              opacity: [0.65, 1, 0.65],
+              y: [-45, 38, -45],
+              opacity: [0.7, 1, 0.7],
             }}
             transition={{
               duration: 3,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
-            className="pointer-events-none absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_16px_rgba(52,211,153,0.9)] z-20"
+            className="pointer-events-none absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_12px_rgba(52,211,153,0.8)] z-20"
           >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-1.5 rounded-full bg-white blur-[1px]" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-1 rounded-full bg-white" />
           </m.div>
         </div>
 
@@ -179,15 +179,15 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
               initial={{ opacity: 0, scale: 0.88, y: 4 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: 0.15 + idx * 0.1, duration: 0.4 }}
-              className={`absolute ${prob.position} z-30 max-w-[130px] xs:max-w-[150px] sm:max-w-[170px] p-1.5 sm:p-2 rounded-xl border ${prob.bgColor} shadow-sm backdrop-blur-md transition-transform hover:scale-105`}
+              className={`absolute ${prob.position} z-30 max-w-[125px] xs:max-w-[140px] sm:max-w-[160px] p-1.5 sm:p-2 rounded-xl border ${prob.bgColor} shadow-sm transition-transform hover:scale-105`}
             >
               <div className="flex items-start gap-1.5">
-                <IconComp size={13} className={`${prob.iconColor} shrink-0 mt-0.5`} />
+                <IconComp size={12} className={`${prob.iconColor} shrink-0 mt-0.5`} />
                 <div className="min-w-0">
-                  <div className="text-[10px] sm:text-[11px] font-bold leading-tight truncate">
+                  <div className="text-[9.5px] sm:text-[10.5px] font-bold leading-tight truncate">
                     {prob.title}
                   </div>
-                  <div className="text-[8.5px] sm:text-[9.5px] opacity-75 leading-tight truncate">
+                  <div className="text-[8px] sm:text-[9px] opacity-75 leading-tight truncate">
                     {prob.desc}
                   </div>
                 </div>

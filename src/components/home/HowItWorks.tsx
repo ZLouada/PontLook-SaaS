@@ -9,10 +9,8 @@ import { m, AnimatePresence, useScroll, useTransform, useReducedMotion } from 'f
 import type { Variants } from 'framer-motion';
 import Signal from '@/components/shared/Signal';
 import TextReveal from '@/components/shared/TextReveal';
-import CardTilt3D from '@/components/shared/CardTilt3D';
 import Magnetic from '@/components/shared/Magnetic';
 import Press from '@/components/shared/Press';
-import BorderGlow from '@/components/shared/BorderGlow';
 import { ease, dur, spring, viewportOnceMobile } from '@/lib/motion';
 import DiagnosticBoxCard from './how-it-works/DiagnosticBoxCard';
 import ScoopMatchesCard from './how-it-works/ScoopMatchesCard';
@@ -167,7 +165,7 @@ export default function HowItWorks() {
       aria-labelledby="how-it-works-title"
     >
       {/* Viewport Stage: Pinned during the garage door opening on desktop; natural flow on mobile */}
-      <div className="relative lg:sticky top-0 w-full min-h-0 lg:min-h-[100dvh] h-auto lg:h-[100dvh] flex flex-col justify-center items-center z-20 pt-0 sm:pt-4 lg:pt-16 xl:pt-20 pb-0 lg:pb-8 overflow-visible lg:overflow-hidden bg-white">
+      <div className="relative lg:sticky top-0 w-full min-h-0 lg:min-h-[100dvh] h-auto lg:h-[100dvh] flex flex-col justify-center items-center z-20 pt-16 sm:pt-20 lg:pt-20 xl:pt-24 pb-4 lg:pb-6 overflow-visible lg:overflow-hidden bg-white">
         
         {/* Attio-Style Subtle Grid dots on the white floor */}
         <div
@@ -211,7 +209,7 @@ export default function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewportOnceMobile}
               transition={{ duration: dur.slow, ease: ease.out }}
-              className="lg:col-span-5 flex flex-col items-start text-start space-y-5"
+              className="lg:col-span-5 flex flex-col items-start text-start space-y-4"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-semibold uppercase tracking-wider font-sans">
                 <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 animate-pulse" />
@@ -221,7 +219,7 @@ export default function HowItWorks() {
               <TextReveal
                 as="h2"
                 text={dict.how_it_works?.title || (isAr ? 'من تشخيص الفجوة المهارية إلى التدريب في 3 خطوات واضحة' : 'From Skill Gap to Training in 3 Straightforward Steps')}
-                className="text-[1.5rem] xs:text-[1.75rem] sm:text-4xl lg:text-[40px] font-semibold text-neutral-950 tracking-tight leading-[1.18] font-heading"
+                className="text-[1.35rem] xs:text-[1.5rem] sm:text-3xl lg:text-[34px] xl:text-[36px] font-semibold text-neutral-950 tracking-tight leading-[1.18] font-heading"
               />
 
               {/* White "Join network" Window Card */}
@@ -259,14 +257,14 @@ export default function HowItWorks() {
             >
 
               {/* Step Navigation Tabs — Ecomflow-style row docked UNDER the panel */}
-              <div className="order-2 grid grid-cols-3 gap-1.5 sm:gap-2.5 w-full py-1">
+              <div className="order-2 grid grid-cols-3 gap-1.5 sm:gap-2.5 w-full py-0.5">
                 {steps.map((st, idx) => {
                   const isActive = activeStep === idx;
                   return (
                     <button
                       key={st.id}
                       onClick={() => goToStep(idx)}
-                      className={`group relative flex min-h-[44px] items-center justify-center gap-1 sm:gap-2 py-2.5 sm:py-2.5 px-1.5 xs:px-2 sm:px-4 rounded-xl border transition-colors duration-200 text-[11px] xs:text-xs font-medium cursor-pointer ${
+                      className={`group relative flex min-h-[38px] sm:min-h-[40px] items-center justify-center gap-1 sm:gap-1.5 py-2 px-1.5 xs:px-2 sm:px-3 rounded-xl border transition-colors duration-200 text-[11px] xs:text-xs font-medium cursor-pointer ${
                         isActive
                           ? 'text-white border-neutral-950'
                           : 'bg-white text-neutral-600 border-neutral-200 hover:border-neutral-300 hover:text-neutral-950 hover:bg-neutral-50'
@@ -315,34 +313,30 @@ export default function HowItWorks() {
                     animate="center"
                     exit={prefersReducedMotion ? 'center' : 'exit'}
                     transition={{ duration: dur.base, ease: ease.out }}
-                    className="relative rounded-2xl sm:rounded-3xl border border-neutral-200/90 bg-white p-4 xs:p-4 sm:p-6 lg:p-7 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.08)] overflow-hidden transition-colors"
+                    className="relative rounded-2xl sm:rounded-3xl border border-neutral-200/90 bg-white p-3.5 xs:p-4 sm:p-5 lg:p-5 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.06)] overflow-hidden transition-colors"
                   >
-                    <BorderGlow glowColor="rgba(255, 92, 0, 0.15)" size={280} opacity={0.35} />
-
-                    <div className="space-y-4 relative z-10">
+                    <div className="space-y-2.5 sm:space-y-3 relative z-10">
                       {/* Card Header with Eyebrow and Headline */}
-                      <div className="space-y-1.5 text-start">
-                        <span className={`text-[11px] sm:text-xs font-bold uppercase tracking-wider font-mono ${currentStep.tagColor}`}>
+                      <div className="space-y-1 text-start">
+                        <span className={`text-[10px] sm:text-[11px] font-bold uppercase tracking-wider font-mono ${currentStep.tagColor}`}>
                           {currentStep.tag}
                         </span>
-                        <h3 className="text-lg sm:text-lg lg:text-xl font-heading font-semibold text-neutral-950 leading-snug">
+                        <h3 className="text-base sm:text-lg font-heading font-semibold text-neutral-950 leading-snug">
                           {currentStep.headline}
                         </h3>
-                        <p className="text-sm text-neutral-600 font-sans leading-relaxed">
+                        <p className="text-xs sm:text-[13px] text-neutral-600 font-sans leading-relaxed">
                           {currentStep.desc}
                         </p>
                       </div>
 
-                      {/* Inner Console Window Mockup Display */}
-                      <CardTilt3D maxTilt={3} glareOpacity={0.05} className="w-full pt-1">
-                        <div className="w-full">
-                          {currentStep.console}
-                        </div>
-                      </CardTilt3D>
+                      {/* Inner Console Window Mockup Display - Clean vector, no 3D subpixel perspective blur */}
+                      <div className="w-full pt-0.5">
+                        {currentStep.console}
+                      </div>
                     </div>
 
                     {/* Card Bottom Progress Dots */}
-                    <div className="flex items-center justify-between pt-1 mt-3 border-t border-neutral-200 text-xs text-neutral-500">
+                    <div className="flex items-center justify-between pt-1 mt-2.5 border-t border-neutral-200 text-xs text-neutral-500">
                       <div className="flex items-center">
                         {steps.map((_, dotIdx) => (
                           <button
@@ -350,7 +344,7 @@ export default function HowItWorks() {
                             onClick={() => goToStep(dotIdx)}
                             aria-label={`Go to step ${dotIdx + 1}`}
                             aria-current={activeStep === dotIdx}
-                            className="group flex h-11 w-6 items-center justify-center"
+                            className="group flex h-9 w-5 items-center justify-center"
                           >
                             <span
                               className={`block h-1.5 rounded-full transition-all duration-300 ${
@@ -365,7 +359,7 @@ export default function HowItWorks() {
 
                       <button
                         onClick={() => goToStep((activeStep + 1) % steps.length)}
-                        className="inline-flex min-h-[44px] items-center gap-1.5 font-medium text-xs text-neutral-600 hover:text-neutral-950 transition-colors"
+                        className="inline-flex min-h-[38px] items-center gap-1.5 font-medium text-xs text-neutral-600 hover:text-neutral-950 transition-colors"
                       >
                         <span>{isAr ? 'الخطوة التالية' : 'Next Step'}</span>
                         <ArrowRight size={12} className="rtl:-scale-x-100" />
