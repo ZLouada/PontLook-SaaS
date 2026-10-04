@@ -70,15 +70,15 @@ export default async function FindTrainingPage({
   return (
     <>
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-black min-h-0 sm:min-h-[100dvh] flex flex-col justify-center items-center pt-24 xs:pt-28 sm:pt-32 pb-12 sm:pb-16 px-3.5 xs:px-4 sm:px-6">
+      <div className="relative overflow-hidden bg-black min-h-0 sm:min-h-[100dvh] flex flex-col justify-center items-center pt-20 xs:pt-24 sm:pt-28 pb-10 sm:pb-12 px-3.5 xs:px-4 sm:px-6">
         {/* Ambient Depth Glows */}
         <div className="pointer-events-none absolute top-1/4 start-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-white/[0.02] blur-3xl -z-10 rounded-full" />
         <div className="pointer-events-none absolute top-10 start-1/4 w-[400px] h-[400px] bg-white/[0.01] blur-3xl -z-10 rounded-full" />
         <NeuralGridBackground className="z-0 opacity-40" gridSize={36} interactiveRadius={160} />
 
         {/* Vertically Centered Content — copy on one side, tower on the other */}
-        <div className="container-site relative z-10 mx-auto w-full max-w-6xl py-2 sm:py-6">
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-8">
+        <div className="container-site relative z-10 mx-auto w-full max-w-6xl pt-0 sm:pt-2 pb-2 sm:pb-4 -mt-4 sm:-mt-8 lg:-mt-12">
+          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-8">
             <Reveal className="lg:col-span-7 flex flex-col items-start text-start">
               <TextReveal
                 as="h1"
