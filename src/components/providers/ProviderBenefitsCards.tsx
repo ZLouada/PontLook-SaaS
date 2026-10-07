@@ -1,26 +1,52 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { m, AnimatePresence, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion';
+import React, { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
+import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   CircleDollarSign,
   Target,
   TrendingUp,
   CheckCircle2,
+  RefreshCw,
+  ArrowUpRight,
+  ArrowRight,
+  X,
+  ShieldCheck,
 } from '@/components/icons';
 import TextReveal from '@/components/shared/TextReveal';
-import { ease } from '@/lib/motion';
 
-interface BenefitItem {
+interface MetricItem {
+  valueEn: string;
+  valueAr: string;
+  labelEn: string;
+  labelAr: string;
+}
+
+interface ProviderCardData {
   id: string;
   index: string;
   icon: any;
-  badge: string;
-  title: string;
-  angle: string;
-  body: string;
-  takeaways: string[];
-  mockup: React.ReactNode;
+  categoryEn: string;
+  categoryAr: string;
+  statusEn: string;
+  statusAr: string;
+  titleEn: string;
+  titleAr: string;
+  subEn: string;
+  subAr: string;
+  quoteEn: string;
+  quoteAr: string;
+  metrics: MetricItem[];
+  backTitleEn: string;
+  backTitleAr: string;
+  backSubEn: string;
+  backSubAr: string;
+  slaEn: string;
+  slaAr: string;
+  takeaways: { en: string; ar: string }[];
+  renderBackContent: (isAr: boolean) => React.ReactNode;
+  renderFullMockup: (isAr: boolean) => React.ReactNode;
 }
 
 interface ProviderBenefitsCardsProps {
@@ -30,172 +56,386 @@ interface ProviderBenefitsCardsProps {
 export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsProps) {
   const isAr = lang === 'ar';
   const reduce = useReducedMotion();
-  const [activeStep, setActiveStep] = useState(0);
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isUserClicking = useRef(false);
+  // Track flipped state for each card independently
+  const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
+  // Track hovered state for border lighting
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  // Track active full-screen dossier modal
+  const [activeModalIdx, setActiveModalIdx] = useState<number | null>(null);
 
-  const benefits: BenefitItem[] = [
+  const toggleFlip = useCallback((idx: number) => {
+    setFlippedCards((prev) => ({
+      ...prev,
+      [idx]: !prev[idx],
+    }));
+  }, []);
+
+  // Keyboard shortcut to close modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveModalIdx(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const cards: ProviderCardData[] = [
     {
-      id: 'pay-per-lead',
+      id: 'zero-retainer',
       index: '01',
       icon: CircleDollarSign,
-      badge: isAr ? 'نموذج الدفع بالأداء' : 'Performance-Based',
-      title: isAr ? 'انعدام مخاطر الرسوم الشهرية' : 'Zero Retainer Risk',
-      angle: isAr ? 'صفر اشتراكات ثابتة · دفع حصري لكل مشترٍ مؤهل' : 'Zero Retainers · Pay Per Qualified Buyer',
-      body: isAr
-        ? 'لا توجد رسوم إدارة أو اشتراكات شهرية ثابتة. الدفع يتم حصراً لكل صانع قرار مؤكد ومؤهل يتم تقديمه لك مع كراسة متطلبات واضحة.'
-        : 'No monthly management fees or fixed retainers. You pay strictly per verified decision maker delivered ($50 to $200 per lead).',
-      takeaways: [
-        isAr ? 'انعدام الالتزامات التعاقدية أو رسوم الوكالات' : 'No binding contracts or retainer fees',
-        isAr ? 'ضمان استبدال فوري 100% لأي فرصة غير مطابقة' : '100% instant lead replacement SLA',
-        isAr ? 'تكلفة استحواذ عملاء محسوبة وقابلة للتوسع' : 'Predictable CAC aligned with capacity',
+      categoryEn: 'ECONOMIC MODEL',
+      categoryAr: 'نموذج الاستحواذ',
+      statusEn: 'ACTIVE SLA',
+      statusAr: 'اتفاقية نشطة',
+      titleEn: 'ZERO RETAINER RISK',
+      titleAr: 'انعدام مخاطر الرسوم',
+      subEn: 'Performance-Based Acquisition',
+      subAr: 'استحواذ قائم حصراً على النتائج',
+      quoteEn:
+        'Zero monthly management retainers. Zero agency lock-in. You pay exclusively per verified corporate decision maker delivered with confirmed budget authority.',
+      quoteAr:
+        'صفر اشتراكات شهرية، وصفر التزامات وكالات. الدفع يتم حصراً لكل صانع قرار معتمد مع كراسة متطلبات مؤكدة وميزانية مرصودة.',
+      metrics: [
+        {
+          valueEn: '$0',
+          valueAr: '0 ر.س',
+          labelEn: 'MONTHLY RETAINER',
+          labelAr: 'رسوم إدارة شهرية',
+        },
+        {
+          valueEn: '100%',
+          valueAr: '100%',
+          labelEn: 'INSTANT REPLACEMENT SLA',
+          labelAr: 'ضمان استبدال فوري',
+        },
       ],
-      mockup: (
-        <div className="bg-black/90 rounded-xl border border-white/10 w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans shadow-md">
-          <div className="flex items-center justify-between pb-2 border-b border-white/10">
-            <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded-md bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
-                <CircleDollarSign size={13} />
+      backTitleEn: 'ACQUISITION UNIT ECONOMICS',
+      backTitleAr: 'مقارنة اقتصاديات الاستحواذ',
+      backSubEn: 'Traditional Retainer vs PontLook Performance',
+      backSubAr: 'الرسوم الشهرية التقليدية مقابل نموذج PontLook',
+      slaEn: 'Instant replacement for any disputed lead within 48 hours.',
+      slaAr: 'ضمان استبدال فوري لأي فرصة غير مطابقة خلال 48 ساعة.',
+      takeaways: [
+        { en: 'Zero upfront management or agency fees', ar: 'انعدام الالتزامات التعاقدية أو رسوم الوكالات' },
+        { en: 'Strictly pay per verified enterprise buyer ($50–$200)', ar: 'دفع حصري لكل صانع قرار مؤهل ومؤكد' },
+        { en: 'Predictable CAC directly aligned with firm capacity', ar: 'تكلفة استحواذ عملاء محسوبة وقابلة للتوسع' },
+      ],
+      renderBackContent: (isAr) => (
+        <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10 flex flex-col justify-between">
+              <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-wider">
+                {isAr ? 'الوكالة التقليدية' : 'Traditional Retainer'}
+              </span>
+              <div className="my-1.5">
+                <span className="text-sm font-semibold text-neutral-500 line-through block">
+                  $3,500 / {isAr ? 'شهر' : 'mo'}
+                </span>
+                <span className="text-[10px] text-neutral-500 block">
+                  {isAr ? 'نتائج غير مضمونة' : 'Zero output guarantee'}
+                </span>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-lg bg-[#FF5C00]/[0.08] border border-[#FF5C00]/30 flex flex-col justify-between">
+              <span className="text-[10px] font-mono text-[#FF5C00] uppercase tracking-wider font-semibold">
+                {isAr ? 'نموذج PontLook' : 'PontLook Model'}
+              </span>
+              <div className="my-1.5">
+                <span className="text-base font-bold text-white block">
+                  $0 {isAr ? 'اشتراك' : 'Retainer'}
+                </span>
+                <span className="text-[10px] text-orange-200/80 block">
+                  {isAr ? 'دفع فقط عند استلام الفرصة' : 'Pay strictly per lead'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/10 flex items-center gap-2 text-[11px] text-neutral-300">
+            <ShieldCheck size={14} className="text-[#FF5C00] shrink-0" />
+            <span>{isAr ? 'ضمان استبدال فوري لأي فرصة غير مطابقة خلال 48 ساعة' : '100% instant lead replacement SLA within 48 hours'}</span>
+          </div>
+        </div>
+      ),
+      renderFullMockup: (isAr) => (
+        <div className="bg-[#0B0C0F] rounded-xl border border-white/10 w-full p-4 sm:p-5 flex flex-col gap-3 font-sans shadow-2xl">
+          <div className="flex items-center justify-between pb-3 border-b border-white/10">
+            <div className="flex items-center gap-2.5">
+              <div className="h-8 w-8 rounded-lg bg-[#FF5C00]/20 text-[#FF5C00] flex items-center justify-center font-bold border border-[#FF5C00]/30">
+                <CircleDollarSign size={16} />
               </div>
               <div>
-                <div className="text-xs font-semibold text-white leading-tight">
+                <div className="text-sm font-semibold text-white">
                   {isAr ? 'مقارنة اقتصاديات الاستحواذ' : 'Acquisition Unit Economics'}
                 </div>
-                <div className="text-[10px] text-neutral-400">
-                  {isAr ? 'الرسوم الشهرية مقابل PontLook' : 'Traditional Retainer vs PontLook'}
+                <div className="text-xs text-neutral-400">
+                  {isAr ? 'الرسوم الشهرية مقابل PontLook' : 'Traditional Retainer vs PontLook Performance'}
                 </div>
               </div>
             </div>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white border border-white/20">
+            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#FF5C00]/15 text-[#FF5C00] border border-[#FF5C00]/30 font-mono">
               {isAr ? 'عائد مضمون' : 'Guaranteed ROI'}
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <div className="p-2 sm:p-2.5 rounded-lg bg-white/[0.03] border border-white/10">
-              <div className="text-[9px] text-neutral-400 uppercase font-mono font-medium">{isAr ? 'الاشتراك الشهري التقليدي' : 'Traditional Retainer'}</div>
-              <div className="text-xs sm:text-sm font-semibold text-neutral-400 line-through mt-0.5">$3,500 / {isAr ? 'شهر' : 'mo'}</div>
-              <div className="text-[9px] text-neutral-400 mt-0.5">{isAr ? 'نتائج غير مضمونة' : 'Zero output guarantee'}</div>
+          <div className="grid grid-cols-2 gap-3 text-xs">
+            <div className="p-3.5 rounded-lg bg-white/[0.03] border border-white/10">
+              <div className="text-[10px] text-neutral-400 uppercase font-mono font-medium">
+                {isAr ? 'الاشتراك الشهري التقليدي' : 'Traditional Agency Retainer'}
+              </div>
+              <div className="text-base font-semibold text-neutral-400 line-through mt-1">$3,500 / {isAr ? 'شهر' : 'mo'}</div>
+              <div className="text-[11px] text-neutral-400 mt-1">{isAr ? 'التزام طويل بدون ضمان نتائج' : 'Fixed retainer with zero output guarantee'}</div>
             </div>
-            <div className="p-2 sm:p-2.5 rounded-lg bg-white/[0.08] border border-white/20">
-              <div className="text-[9px] text-white uppercase font-mono font-semibold">{isAr ? 'نموذج PontLook' : 'PontLook Model'}</div>
-              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">$0 {isAr ? 'اشتراك' : 'Retainer'}</div>
-              <div className="text-[9px] text-white mt-0.5 font-medium">{isAr ? 'دفع فقط عند استلام الفرصة' : 'Pay strictly per lead'}</div>
+            <div className="p-3.5 rounded-lg bg-[#FF5C00]/10 border border-[#FF5C00]/30">
+              <div className="text-[10px] text-[#FF5C00] uppercase font-mono font-semibold">
+                {isAr ? 'نموذج PontLook' : 'PontLook Performance Model'}
+              </div>
+              <div className="text-base font-bold text-white mt-1">$0 {isAr ? 'اشتراك' : 'Retainer'}</div>
+              <div className="text-[11px] text-neutral-200 mt-1">{isAr ? 'دفع فقط لكل مشترٍ مؤهل تم اعتماده' : 'Pay strictly per verified decision maker ($50–$200)'}</div>
             </div>
           </div>
 
-          <div className="text-[10px] text-neutral-300 flex items-center gap-1.5 pt-1 border-t border-white/[0.06]">
-            <CheckCircle2 size={12} className="text-white shrink-0" />
-            <span className="truncate">{isAr ? 'استبدال أي فرصة غير مطابقة خلال 48 ساعة' : 'SLA: Instant replacement for any disputed lead within 48h'}</span>
+          <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10 space-y-1.5 text-xs text-neutral-300">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
+              <span>{isAr ? 'صفر رسوم إدارة أو التزامات تعاقدية طويلة الأجل' : 'No long-term binding contracts or hidden platform fees'}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
+              <span>{isAr ? 'ضمان استبدال فوري 100% لأي فرصة غير مطابقة خلال 48 ساعة' : '100% Instant lead replacement SLA within 48h for any dispute'}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
+              <span>{isAr ? 'تكلفة استحواذ متطابقة تماماً مع طاقتك الاستيعابية' : 'Predictable customer acquisition cost aligned with your schedule'}</span>
+            </div>
           </div>
         </div>
       ),
     },
     {
-      id: 'qualified-buyers',
+      id: 'bant-verified',
       index: '02',
       icon: Target,
-      badge: isAr ? 'معايير BANT التنفيذية' : 'BANT Verified',
-      title: isAr ? 'عملاء مؤسسيون تم تأهيل احتياجاتهم' : 'Qualified Enterprise Buyers',
-      angle: isAr ? 'صلاحيات ميزانية معتمدة واحتياجات دقيقة' : 'Confirmed Budget Authority & Strategic Scope',
-      body: isAr
-        ? 'كل فرصة تدريبية تتضمن احتياجاً مؤسسياً مؤكداً، وصلاحية قرار واضحة، ومتطلبات متوافقة مع أهداف التوطين أو التحول الرقمي أو القيادة.'
-        : 'Every lead has confirmed corporate training needs, authority, and explicit problem definitions tied to Saudization, Emiratization, or digital upskilling.',
-      takeaways: [
-        isAr ? 'تواصل مباشر مع رؤساء الموارد والتدريب' : 'Direct engagement with CHROs & VP HR',
-        isAr ? 'معرفة مسبقة بحجم المجموعات والميزانية' : 'Pre-scoped cohort sizes & budget range',
-        isAr ? 'تجنب المكالمات الاستكشافية غير المجدية' : 'Zero wasted meetings with unbudgeted leads',
+      categoryEn: 'BUYER AUDIT',
+      categoryAr: 'تدقيق المشترين',
+      statusEn: 'TIER-A QUALIFIED',
+      statusAr: 'مؤهل تنفيذي',
+      titleEn: 'QUALIFIED ENTERPRISE BUYERS',
+      titleAr: 'عملاء مؤسسيون مؤهلون',
+      subEn: 'Pre-Scoped Budget Authority',
+      subAr: 'صلاحيات ميزانية معتمدة',
+      quoteEn:
+        'Direct connection with VP HR and CHRO leadership. Every opportunity arrives with confirmed corporate budget, scoped cohorts, and explicit corporate training mandates.',
+      quoteAr:
+        'تواصل مباشر مع نواب رؤساء الموارد البشرية والتدريب. كل فرصة تأتي بميزانية معتمدة، وأفواج محددة، واحتياجات تدريبية موثقة.',
+      metrics: [
+        {
+          valueEn: 'CHRO / VP',
+          valueAr: 'قيادات HR',
+          labelEn: 'DECISION MAKER LEVEL',
+          labelAr: 'صناع القرار المستهدفون',
+        },
+        {
+          valueEn: 'SAR 120k+',
+          valueAr: '+120 ألف ر.س',
+          labelEn: 'AVG MANDATE SCOPE',
+          labelAr: 'متوسط حجم التعاقد',
+        },
       ],
-      mockup: (
-        <div className="bg-black/90 rounded-xl border border-white/10 w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans shadow-md">
-          <div className="flex items-center justify-between pb-2 border-b border-white/10">
-            <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded-md bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
-                <Target size={13} />
+      backTitleEn: 'ENTERPRISE LEAD DOSSIER',
+      backTitleAr: 'بطاقة تأهيل الفرصة المؤسسية',
+      backSubEn: 'BANT-Verified Corporate Mandate Specification',
+      backSubAr: 'معايير BANT التنفيذية المعتمدة مسبقاً',
+      slaEn: 'Zero unvetted or unbudgeted exploratory meetings.',
+      slaAr: 'صفر اجتماعات استكشافية غير مجدية أو بدون ميزانية معتمدة.',
+      takeaways: [
+        { en: 'Direct engagement with CHROs & VP of HR', ar: 'تواصل مباشر مع رؤساء الموارد والتدريب' },
+        { en: 'Pre-scoped cohort sizes & training mandates', ar: 'معرفة مسبقة بحجم المجموعات والميزانية' },
+        { en: 'Zero wasted time with exploratory tire-kickers', ar: 'تجنب المكالمات الاستكشافية غير المجدية' },
+      ],
+      renderBackContent: (isAr) => (
+        <div className="space-y-2 text-xs">
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.02] border border-white/10">
+            <span className="text-neutral-400 text-[11px] font-mono">{isAr ? 'صانع القرار:' : 'Decision Maker:'}</span>
+            <span className="text-white font-medium text-xs">{isAr ? 'نائب رئيس الموارد (الرياض)' : 'VP HR / CHRO (Riyadh)'}</span>
+          </div>
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.02] border border-white/10">
+            <span className="text-neutral-400 text-[11px] font-mono">{isAr ? 'المجال التدريبي:' : 'Domain Scope:'}</span>
+            <span className="text-white font-medium text-xs">{isAr ? 'القيادات التنفيذية والتحول' : 'Executive Leadership & Ops'}</span>
+          </div>
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#FF5C00]/[0.08] border border-[#FF5C00]/30">
+            <span className="text-neutral-300 text-[11px] font-mono">{isAr ? 'الميزانية والفوج:' : 'Cohort & Budget:'}</span>
+            <span className="text-[#FF5C00] font-bold text-xs">35 {isAr ? 'تنفيذياً' : 'Execs'} · SAR 120k+</span>
+          </div>
+        </div>
+      ),
+      renderFullMockup: (isAr) => (
+        <div className="bg-[#0B0C0F] rounded-xl border border-white/10 w-full p-4 sm:p-5 flex flex-col gap-3 font-sans shadow-2xl">
+          <div className="flex items-center justify-between pb-3 border-b border-white/10">
+            <div className="flex items-center gap-2.5">
+              <div className="h-8 w-8 rounded-lg bg-[#FF5C00]/20 text-[#FF5C00] flex items-center justify-center font-bold border border-[#FF5C00]/30">
+                <Target size={16} />
               </div>
               <div>
-                <div className="text-xs font-semibold text-white leading-tight">
-                  {isAr ? 'بطاقة تأهيل الفرصة المؤسسية' : 'Enterprise Lead Dossier'}
+                <div className="text-sm font-semibold text-white">
+                  {isAr ? 'ملف مواصفات الفرصة المؤسسية' : 'Enterprise Lead Dossier'}
                 </div>
-                <div className="text-[10px] text-neutral-400">
-                  {isAr ? 'عينة من بيانات الفرصة المسلمة' : 'Sample Verified Lead Specification'}
+                <div className="text-xs text-neutral-400">
+                  {isAr ? 'عينة من متطلبات القرار والطلب المسلم' : 'Verified Decision-Maker Specification'}
                 </div>
               </div>
             </div>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white border border-white/20">
-              {isAr ? 'مؤهل تنفيذي' : 'Tier-A Qualified'}
+            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#FF5C00]/15 text-[#FF5C00] border border-[#FF5C00]/30 font-mono">
+              {isAr ? 'مؤهل BANT' : 'BANT Audited'}
             </span>
           </div>
 
-          <div className="space-y-1.5 text-xs">
-            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/10">
-              <span className="text-neutral-400 text-[11px]">{isAr ? 'صانع القرار المستهدف:' : 'Decision Maker:'}</span>
-              <span className="text-white font-medium text-xs">{isAr ? 'نائب رئيس الموارد البشرية' : 'VP of HR (Riyadh)'}</span>
+          <div className="space-y-2 text-xs">
+            <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.03] border border-white/10">
+              <span className="text-neutral-400">{isAr ? 'صانع القرار المستهدف:' : 'Verified Authority:'}</span>
+              <span className="text-white font-medium">{isAr ? 'نائب رئيس الموارد البشرية · الرياض' : 'VP of HR / CHRO (Riyadh Hub)'}</span>
             </div>
-            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/10">
-              <span className="text-neutral-400 text-[11px]">{isAr ? 'المجال التدريبي:' : 'Training Domain:'}</span>
-              <span className="text-white font-medium text-xs">{isAr ? 'تطوير القيادات التنفيذية' : 'Executive Leadership'}</span>
+            <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.03] border border-white/10">
+              <span className="text-neutral-400">{isAr ? 'الاحتياج الاستراتيجي:' : 'Corporate Need:'}</span>
+              <span className="text-white font-medium">{isAr ? 'تطوير القيادات والتوطين النوعي' : 'Executive Leadership & Nationalization'}</span>
             </div>
-            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.08] border border-white/20">
-              <span className="text-neutral-300 text-[11px]">{isAr ? 'حجم الفوج والميزانية:' : 'Cohort & Budget:'}</span>
-              <span className="text-white font-semibold text-xs">35 {isAr ? 'متدرب' : 'execs'} · SAR 120k+</span>
+            <div className="flex items-center justify-between p-3 rounded-lg bg-[#FF5C00]/10 border border-[#FF5C00]/30">
+              <span className="text-neutral-300">{isAr ? 'حجم الفوج والميزانية:' : 'Cohort & Budget Authority:'}</span>
+              <span className="text-white font-semibold">35 {isAr ? 'قائداً تنفيذياً' : 'Leaders'} · SAR 120k–250k</span>
+            </div>
+          </div>
+
+          <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10 space-y-1.5 text-xs text-neutral-300">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
+              <span>{isAr ? 'صلاحية ميزانية معتمدة وموقعة قبل تسليم الفرصة' : 'Confirmed budget sign-off prior to lead introduction'}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
+              <span>{isAr ? 'وثيقة متطلبات دقيقة توضح الفجوات التدريبية المطلوبة' : 'Scoped problem definitions detailing existing corporate skills gaps'}</span>
             </div>
           </div>
         </div>
       ),
     },
     {
-      id: 'consistent-pipeline',
+      id: 'pipeline-engine',
       index: '03',
       icon: TrendingUp,
-      badge: isAr ? 'استقرار الإيرادات' : 'Revenue Predictability',
-      title: isAr ? 'تدفق مستمر لفرص الأعمال' : 'Consistent Pipeline',
-      angle: isAr ? 'توزيع ذكي للطلب المؤسسي على مدار الفصول' : 'Multi-City GCC Inflow Across All Quarters',
-      body: isAr
-        ? 'حافظ على استمرارية ونمو أعمالك على مدار العام، وتجاوز فترات الركود الموسمي عبر استقبال طلبات مؤكدة وجاهزة للتعاقد.'
-        : 'Keep your business development active and predictable throughout the year, even during delivery seasons.',
-      takeaways: [
-        isAr ? 'توجيه آلي للطلبات المتوافقة مع تخصصك' : 'Algorithmic routing matching credentials',
-        isAr ? 'تغطية واسعة: الرياض، جدة، دبي، أبوظبي' : 'Active coverage across Riyadh, Dubai, etc.',
-        isAr ? 'التركيز 100% على التميز في التدريب' : 'Focus 100% on delivery excellence',
+      categoryEn: 'PIPELINE DISPATCH',
+      categoryAr: 'محرك التدفق',
+      statusEn: 'MULTI-CITY GCC',
+      statusAr: 'عواصم الخليج',
+      titleEn: 'CONSISTENT GCC PIPELINE',
+      titleAr: 'تدفق مستمر لفرص الأعمال',
+      subEn: 'Algorithmic Demand Routing',
+      subAr: 'توجيه آلي للطلب المؤسسي',
+      quoteEn:
+        'Continuous corporate demand routing across Riyadh, Jeddah, Dubai, and Abu Dhabi. Smooth out seasonal dips with steady quarterly corporate intake.',
+      quoteAr:
+        'توجيه آلي للطلبات المؤسسية عبر الرياض وجدة ودبي وأبوظبي. تجاوز فترات الركود الموسمي عبر استقبال طلبات مؤكدة على مدار العام.',
+      metrics: [
+        {
+          valueEn: '4+ Hubs',
+          valueAr: '4+ عواصم',
+          labelEn: 'GCC ENTERPRISE HUBS',
+          labelAr: 'مراكز الأعمال الخليجية',
+        },
+        {
+          valueEn: 'Quarterly',
+          valueAr: 'فصلي مستمر',
+          labelEn: 'CAPACITY SMOOTHING',
+          labelAr: 'استقرار التدفق والإيرادات',
+        },
       ],
-      mockup: (
-        <div className="bg-black/90 rounded-xl border border-white/10 w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans shadow-md">
-          <div className="flex items-center justify-between pb-2 border-b border-white/10">
-            <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded-md bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
-                <TrendingUp size={13} />
+      backTitleEn: 'QUARTERLY INTAKE SCHEDULE',
+      backTitleAr: 'جدول توزيع الفرص الفصلي',
+      backSubEn: 'Active Multi-Quarter Inflow Across GCC Enterprise Hubs',
+      backSubAr: 'توزيع تدفق الطلبات عبر فصول العام في مدن الخليج',
+      slaEn: 'Algorithmic routing matching verified provider credentials.',
+      slaAr: 'توجيه آلي مطابق تماماً لخبراتك واعتماداتك التدريبية الموثقة.',
+      takeaways: [
+        { en: 'Automated matching to your core training specialties', ar: 'توجيه آلي للطلبات المتوافقة مع تخصصك' },
+        { en: 'Multi-city coverage: Riyadh, Dubai, Abu Dhabi & Doha', ar: 'تغطية واسعة: الرياض، جدة، دبي، أبوظبي' },
+        { en: 'Focus 100% on delivery while we maintain pipeline', ar: 'التركيز 100% على التميز في التدريب' },
+      ],
+      renderBackContent: (isAr) => (
+        <div className="space-y-2 text-xs">
+          <div className="grid grid-cols-3 gap-1.5 text-center">
+            <div className="p-2 rounded-lg bg-white/[0.02] border border-white/10">
+              <span className="text-[9px] text-neutral-400 font-mono block">Q1</span>
+              <span className="text-xs font-bold text-white block mt-0.5">14+ {isAr ? 'فرصة' : 'Leads'}</span>
+              <span className="text-[9px] text-neutral-500 block truncate">{isAr ? 'القيادات' : 'Leadership'}</span>
+            </div>
+            <div className="p-2 rounded-lg bg-white/[0.02] border border-white/10">
+              <span className="text-[9px] text-neutral-400 font-mono block">Q2</span>
+              <span className="text-xs font-bold text-white block mt-0.5">19+ {isAr ? 'فرصة' : 'Leads'}</span>
+              <span className="text-[9px] text-neutral-500 block truncate">{isAr ? 'التقنية' : 'Digital Ops'}</span>
+            </div>
+            <div className="p-2 rounded-lg bg-[#FF5C00]/[0.08] border border-[#FF5C00]/30">
+              <span className="text-[9px] text-[#FF5C00] font-mono font-semibold block">Q3-Q4</span>
+              <span className="text-xs font-bold text-white block mt-0.5">25+ {isAr ? 'فرصة' : 'Leads'}</span>
+              <span className="text-[9px] text-orange-200/80 block truncate">{isAr ? 'التوطين' : 'National'}</span>
+            </div>
+          </div>
+          <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/10 flex items-center gap-2 text-[11px] text-neutral-300">
+            <ShieldCheck size={14} className="text-[#FF5C00] shrink-0" />
+            <span>{isAr ? 'الرياض · جدة · دبي · أبوظبي · الدوحة' : 'Active routing: Riyadh, Dubai, Abu Dhabi & Doha'}</span>
+          </div>
+        </div>
+      ),
+      renderFullMockup: (isAr) => (
+        <div className="bg-[#0B0C0F] rounded-xl border border-white/10 w-full p-4 sm:p-5 flex flex-col gap-3 font-sans shadow-2xl">
+          <div className="flex items-center justify-between pb-3 border-b border-white/10">
+            <div className="flex items-center gap-2.5">
+              <div className="h-8 w-8 rounded-lg bg-[#FF5C00]/20 text-[#FF5C00] flex items-center justify-center font-bold border border-[#FF5C00]/30">
+                <TrendingUp size={16} />
               </div>
               <div>
-                <div className="text-xs font-semibold text-white leading-tight">
+                <div className="text-sm font-semibold text-white">
                   {isAr ? 'جدول توزيع الفرص الفصلي' : 'Quarterly Opportunity Schedule'}
                 </div>
-                <div className="text-[10px] text-neutral-400">
-                  {isAr ? 'توزيع تدفق الطلبات عبر الفصول' : 'Active Intake Distribution'}
+                <div className="text-xs text-neutral-400">
+                  {isAr ? 'توزيع تدفق الطلبات المؤسسية عبر الفصول' : 'Multi-Quarter GCC Pipeline Flow'}
                 </div>
               </div>
             </div>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white border border-white/20">
-              {isAr ? 'طلب نشط' : 'Active Demand'}
+            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#FF5C00]/15 text-[#FF5C00] border border-[#FF5C00]/30 font-mono">
+              {isAr ? 'طلب نشط' : 'Active Flow'}
             </span>
           </div>
 
           <div className="grid grid-cols-3 gap-2 text-center text-xs">
-            <div className="p-1.5 sm:p-2 rounded-lg bg-white/[0.03] border border-white/10">
-              <div className="text-[9px] text-neutral-400 font-mono">Q1 (Jan-Mar)</div>
-              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">14 {isAr ? 'فرصة' : 'Leads'}</div>
-              <div className="text-[9px] text-neutral-400">{isAr ? 'القيادات' : 'Leadership'}</div>
+            <div className="p-2.5 rounded-lg bg-white/[0.03] border border-white/10">
+              <div className="text-[10px] text-neutral-400 font-mono">Q1 (Jan–Mar)</div>
+              <div className="text-sm font-bold text-white mt-1">14 {isAr ? 'فرصة' : 'Leads'}</div>
+              <div className="text-[10px] text-neutral-400 mt-0.5">{isAr ? 'القيادات والتنفيذ' : 'Executive Leadership'}</div>
             </div>
-            <div className="p-1.5 sm:p-2 rounded-lg bg-white/[0.03] border border-white/10">
-              <div className="text-[9px] text-neutral-400 font-mono">Q2 (Apr-Jun)</div>
-              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">19 {isAr ? 'فرصة' : 'Leads'}</div>
-              <div className="text-[9px] text-neutral-400">{isAr ? 'التحول' : 'Digital Ops'}</div>
+            <div className="p-2.5 rounded-lg bg-white/[0.03] border border-white/10">
+              <div className="text-[10px] text-neutral-400 font-mono">Q2 (Apr–Jun)</div>
+              <div className="text-sm font-bold text-white mt-1">19 {isAr ? 'فرصة' : 'Leads'}</div>
+              <div className="text-[10px] text-neutral-400 mt-0.5">{isAr ? 'التحول والعمليات' : 'Digital Transformation'}</div>
             </div>
-            <div className="p-1.5 sm:p-2 rounded-lg bg-white/[0.08] border border-white/20">
-              <div className="text-[9px] text-white font-mono font-semibold">Q3-Q4</div>
-              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">25+ {isAr ? 'فرصة' : 'Leads'}</div>
-              <div className="text-[9px] text-neutral-300">{isAr ? 'التوطين' : 'Localization'}</div>
+            <div className="p-2.5 rounded-lg bg-[#FF5C00]/10 border border-[#FF5C00]/30">
+              <div className="text-[10px] text-[#FF5C00] font-mono font-semibold">Q3–Q4</div>
+              <div className="text-sm font-bold text-white mt-1">25+ {isAr ? 'فرصة' : 'Leads'}</div>
+              <div className="text-[10px] text-neutral-200 mt-0.5">{isAr ? 'التوطين والمهارات' : 'Nationalization & Scale'}</div>
+            </div>
+          </div>
+
+          <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10 space-y-1.5 text-xs text-neutral-300">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
+              <span>{isAr ? 'توجيه آلي مطابق تماماً للاعتمادات والتخصصات التدريبية' : 'Algorithmic routing matching verified credentials and domain niches'}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
+              <span>{isAr ? 'تغطية واسعة لكبرى الشركات في السعودية والإمارات وقطر' : 'Cross-border intake across tier-1 enterprises in KSA, UAE, and Qatar'}</span>
             </div>
           </div>
         </div>
@@ -203,278 +443,398 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
     },
   ];
 
-  const isClickLocked = useRef(false);
-  const clickUnlockTimer = useRef<NodeJS.Timeout | null>(null);
+  // Cut-corner clip path calculation (Palantir document cut)
+  // In LTR: top-right corner is cut.
+  // In RTL: top-left corner is cut.
+  const frontClipPath = isAr
+    ? 'polygon(24px 0, 100% 0, 100% 100%, 0 100%, 0 24px)'
+    : 'polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%)';
 
-  /* Scroll-spy tracking for desktop Attio-style pinning */
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start 112px', 'end end'],
-  });
-
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    if (isClickLocked.current) return;
-    if (latest < 0.33) {
-      setActiveStep(0);
-    } else if (latest < 0.67) {
-      setActiveStep(1);
-    } else {
-      setActiveStep(2);
-    }
-  });
-
-  const handleStepClick = useCallback((index: number) => {
-    setActiveStep(index);
-    isClickLocked.current = true;
-
-    if (clickUnlockTimer.current) {
-      clearTimeout(clickUnlockTimer.current);
-    }
-
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const containerTop = rect.top + scrollTop;
-      const totalScrollable = Math.max(0, containerRef.current.offsetHeight - window.innerHeight);
-
-      // Target position for step 0, 1, 2
-      const targetRatio = index === 0 ? 0.05 : index === 1 ? 0.5 : 0.95;
-      const targetScroll = containerTop + targetRatio * totalScrollable;
-
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'smooth',
-      });
-    }
-
-    // Keep locked for 1800ms during smooth scroll
-    clickUnlockTimer.current = setTimeout(() => {
-      isClickLocked.current = false;
-    }, 1800);
-  }, []);
-
-  // Unlock immediately upon manual wheel or touch scroll
-  useEffect(() => {
-    const handleUserScroll = () => {
-      if (isClickLocked.current) {
-        isClickLocked.current = false;
-        if (clickUnlockTimer.current) clearTimeout(clickUnlockTimer.current);
-      }
-    };
-
-    window.addEventListener('wheel', handleUserScroll, { passive: true });
-    window.addEventListener('touchmove', handleUserScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('wheel', handleUserScroll);
-      window.removeEventListener('touchmove', handleUserScroll);
-      if (clickUnlockTimer.current) clearTimeout(clickUnlockTimer.current);
-    };
-  }, []);
-
-  const currentBenefit = benefits[activeStep] || benefits[0];
+  // For the back face (rotated 180deg in 3D), to match the viewer's screen cut corner:
+  // In LTR: back face local cut is on the left so when flipped it stays on viewer's right.
+  // In RTL: back face local cut is on the right so when flipped it stays on viewer's left.
+  const backClipPath = isAr
+    ? 'polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%)'
+    : 'polygon(24px 0, 100% 0, 100% 100%, 0 100%, 0 24px)';
 
   return (
     <div className="w-full">
-      {/* Animated Section Header */}
-      <div className="mb-8 sm:mb-12 text-center max-w-4xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-mono font-medium">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00]" />
-          <span>{isAr ? 'مزايا ونموذج الشراكة' : 'PARTNERSHIP ADVANTAGES'}</span>
+      {/* Section Header: Minimalist Palantir Architectural Style */}
+      <div className="mb-10 sm:mb-14 text-center max-w-4xl mx-auto space-y-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-neutral-300 text-xs font-mono font-medium tracking-wider">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00] animate-pulse" />
+          <span>{isAr ? 'معمارية الشراكة // المواصفات التنفيذية' : 'PARTNERSHIP ARCHITECTURE // SPEC'}</span>
         </div>
 
         <TextReveal
           as="h2"
-          text={isAr ? 'كيف تعمل الشراكة ومزايا الانضمام' : 'How the Partnership Works & Key Advantages'}
+          text={isAr ? 'نمو فوري ومستدام. بدون رسوم شهرية.' : 'High-Velocity Growth. Zero Retainers.'}
           className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-tight"
         />
 
-        <p className="text-sm sm:text-base text-neutral-400 font-sans max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm md:text-base text-neutral-400 font-sans max-w-2xl mx-auto leading-relaxed">
           {isAr
-            ? 'نموذج دفع حصري لكل فرصة مؤهلة بدون اشتراكات شهرية، مع ضمانات استبدال صارمة وتدفق مستمر للطلبات المؤسسية.'
-            : 'Performance-based growth with zero retainers. Explore our unit economics, buyer qualification rubric, and pipeline consistency.'}
+            ? 'مواصفات تنفيذية فائقة الدقة. انقر على أي بطاقة لقلبها ومعاينة الاقتصاديات ومعايير التأهيل وتدفق الطلبات.'
+            : 'Minimal words, verified metrics. Click any card to flip and inspect unit economics, buyer rubrics, and pipeline flow.'}
         </p>
       </div>
 
-      {/* ============================================================== */}
-      {/* DESKTOP ATTIO-STYLE STICKY SCROLL SECTION                     */}
-      {/* ============================================================== */}
-      <div ref={containerRef} className="hidden lg:block relative min-h-[280vh]">
-        <div className="sticky top-28 xl:top-32 w-full">
-          <div className="grid grid-cols-12 gap-6 xl:gap-8 2xl:gap-10 items-center">
-            {/* Left Column: Attio-style Navigation Titles in Orange (Minimized) */}
-            <div className="col-span-4 xl:col-span-4 2xl:col-span-4 flex flex-col space-y-3">
-              {benefits.map((b, idx) => {
-                const isActive = activeStep === idx;
-                return (
-                  <button
-                    key={b.id}
-                    type="button"
-                    onClick={() => handleStepClick(idx)}
-                    className="group relative flex items-start gap-3 text-start w-full py-1.5 transition-all duration-300 outline-none cursor-pointer"
-                    aria-current={isActive ? 'step' : undefined}
+      {/* 3 Palantir-Style Dog-Ear Vertical Cards in a Row */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        {cards.map((card, idx) => {
+          const isFlipped = !!flippedCards[idx];
+          const isHovered = hoveredCard === idx;
+
+          return (
+            <div
+              key={card.id}
+              className="relative w-full h-[540px] sm:h-[530px] lg:h-[550px]"
+              style={{ perspective: '1200px' }}
+              onMouseEnter={() => setHoveredCard(idx)}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
+              {/* 3D Flipping Card Container */}
+              <m.div
+                animate={{
+                  rotateY: reduce ? 0 : isFlipped ? 180 : 0,
+                  opacity: reduce && isFlipped ? 0.95 : 1,
+                }}
+                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                style={{ transformStyle: 'preserve-3d' }}
+                className="relative w-full h-full"
+              >
+                {/* ======================================================== */}
+                {/* FRONT FACE: Palantir Clean Tech Card with Dog-Ear Corner */}
+                {/* ======================================================== */}
+                <div
+                  style={{
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                  }}
+                  onClick={() => toggleFlip(idx)}
+                  className="absolute inset-0 w-full h-full cursor-pointer group select-none transition-all duration-300"
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isFlipped}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      toggleFlip(idx);
+                    }
+                  }}
+                >
+                  {/* Outer Border Layer with Chamfer Cut */}
+                  <div
+                    className="absolute inset-0 transition-all duration-300"
+                    style={{
+                      clipPath: frontClipPath,
+                      backgroundColor: isHovered
+                        ? 'rgba(255, 92, 0, 0.45)'
+                        : 'rgba(255, 255, 255, 0.12)',
+                    }}
+                  />
+
+                  {/* Inner Surface with Chamfer Cut */}
+                  <div
+                    className="absolute inset-[1px] bg-[#0C0D11] p-6 sm:p-7 flex flex-col justify-between transition-colors duration-300 group-hover:bg-[#0F1016]"
+                    style={{ clipPath: frontClipPath }}
                   >
-                    {/* Vertical Indicator Bar: Proportional height */}
+                    {/* Dog-Ear Triangle Corner Flap */}
                     <div
-                      className={`w-1 rounded-full transition-all duration-300 shrink-0 ${
-                        isActive
-                          ? 'h-9 sm:h-10 bg-[#FF5C00]'
-                          : 'h-5 sm:h-6 bg-white/10 group-hover:bg-white/20'
+                      className={`absolute top-0 pointer-events-none transition-all duration-300 w-6 h-6 ${
+                        isAr ? 'left-0' : 'right-0'
                       }`}
+                      style={{
+                        clipPath: isAr
+                          ? 'polygon(100% 0, 0 100%, 100% 100%)'
+                          : 'polygon(0 0, 0 100%, 100% 100%)',
+                        backgroundColor: isHovered
+                          ? 'rgba(255, 92, 0, 0.35)'
+                          : 'rgba(255, 255, 255, 0.12)',
+                        borderBottom: isHovered
+                          ? '1px solid rgba(255, 92, 0, 0.6)'
+                          : '1px solid rgba(255, 255, 255, 0.25)',
+                        borderLeft: !isAr
+                          ? isHovered
+                            ? '1px solid rgba(255, 92, 0, 0.6)'
+                            : '1px solid rgba(255, 255, 255, 0.25)'
+                          : undefined,
+                        borderRight: isAr
+                          ? isHovered
+                            ? '1px solid rgba(255, 92, 0, 0.6)'
+                            : '1px solid rgba(255, 255, 255, 0.25)'
+                          : undefined,
+                      }}
                     />
 
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <span
-                          className={`font-mono text-[11px] transition-colors duration-300 ${
-                            isActive ? 'text-[#FF5C00] font-bold' : 'text-neutral-500'
-                          }`}
-                        >
-                          {b.index}
+                    {/* Top Telemetry Bar */}
+                    <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-[11px] font-bold text-[#FF5C00]">
+                          {card.index}
                         </span>
-                        <span
-                          className={`text-[10px] font-mono tracking-wider uppercase transition-colors duration-300 ${
-                            isActive ? 'text-[#FF5C00]/90 font-medium' : 'text-neutral-500'
-                          }`}
-                        >
-                          {b.badge}
+                        <span className="font-mono text-[10px] tracking-widest text-neutral-400 uppercase">
+                          {isAr ? card.categoryAr : card.categoryEn}
                         </span>
                       </div>
-
-                      {/* Main Title: Minimized scale, elegant font size */}
-                      <div
-                        className={`font-heading text-sm sm:text-base lg:text-lg font-medium tracking-tight transition-colors duration-300 mt-0.5 leading-snug ${
-                          isActive
-                            ? 'text-[#FF5C00] font-semibold'
-                            : 'text-neutral-500 group-hover:text-neutral-300'
-                        }`}
-                      >
-                        {b.title}
-                      </div>
+                      <span className="font-mono text-[9px] px-2 py-0.5 rounded-full bg-white/[0.04] border border-white/10 text-neutral-300">
+                        {isAr ? card.statusAr : card.statusEn}
+                      </span>
                     </div>
-                  </button>
-                );
-              })}
-            </div>
 
-            {/* Right Column: Free-standing content panel (no card chrome) */}
-            <div className="col-span-8 xl:col-span-8 2xl:col-span-8">
-              <div className="relative min-h-[380px] sm:min-h-[400px] lg:min-h-[430px] xl:min-h-[450px] flex flex-col justify-between">
-                <AnimatePresence mode="wait">
-                  <m.div
-                    key={currentBenefit.id}
-                    initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10 }}
-                    transition={{ duration: 0.24, ease: ease.out }}
-                    className="relative z-10 flex flex-col justify-between h-full space-y-4"
-                  >
-                    {/* Top Content Area: Monochrome Header & Angle */}
-                    <div>
-                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/15 text-neutral-300 text-[10px] sm:text-[11px] font-mono font-medium">
-                        <span>{currentBenefit.badge}</span>
+                    {/* Middle: Clean Palantir Corporate Typography & Quote */}
+                    <div className="space-y-4 my-auto">
+                      <div>
+                        <h3 className="text-xl sm:text-2xl font-bold font-heading text-white tracking-tight leading-snug group-hover:text-neutral-100 transition-colors">
+                          {isAr ? card.titleAr : card.titleEn}
+                        </h3>
+                        <p className="text-xs font-mono text-[#FF5C00] mt-1 tracking-wide">
+                          {isAr ? card.subAr : card.subEn}
+                        </p>
                       </div>
 
-                      <h3 className="font-heading text-base sm:text-lg lg:text-xl font-semibold text-white tracking-tight leading-tight mt-1.5">
-                        {currentBenefit.angle}
-                      </h3>
-
-                      <p className="mt-1 text-xs sm:text-[13px] text-neutral-400 font-sans leading-relaxed max-w-xl font-normal">
-                        {currentBenefit.body}
-                      </p>
+                      {/* Palantir Impact Quote */}
+                      <blockquote className="text-[13px] sm:text-sm text-neutral-300/90 font-sans leading-relaxed border-s-2 border-white/20 ps-3 italic">
+                        &ldquo;{isAr ? card.quoteAr : card.quoteEn}&rdquo;
+                      </blockquote>
                     </div>
 
-                    {/* Middle: Takeaways in crisp Black & White */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2.5 border-t border-white/[0.08]">
-                      {currentBenefit.takeaways.map((point, pIdx) => (
-                        <div key={pIdx} className="flex items-start gap-1.5 text-[11px] sm:text-xs text-neutral-300 font-sans">
-                          <CheckCircle2 size={12} className="text-white shrink-0 mt-0.5" />
-                          <span className="leading-snug text-neutral-300">{point}</span>
-                        </div>
-                      ))}
+                    {/* Bottom: High-Density Key Metrics & Interactive Flip Prompt */}
+                    <div className="space-y-4 pt-3 border-t border-white/[0.08]">
+                      <div className="grid grid-cols-2 gap-2 text-start">
+                        {card.metrics.map((m, mIdx) => (
+                          <div
+                            key={mIdx}
+                            className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] group-hover:border-white/15 transition-colors"
+                          >
+                            <div className="text-sm sm:text-base font-bold font-heading text-white">
+                              {isAr ? m.valueAr : m.valueEn}
+                            </div>
+                            <div className="text-[9px] font-mono text-neutral-400 mt-0.5 uppercase tracking-wider truncate">
+                              {isAr ? m.labelAr : m.labelEn}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Flip Action Indicator */}
+                      <div className="flex items-center justify-between text-xs font-mono text-neutral-400 group-hover:text-[#FF5C00] transition-colors pt-1">
+                        <span className="flex items-center gap-1.5 text-[11px]">
+                          <RefreshCw size={12} className="group-hover:rotate-180 transition-transform duration-500" />
+                          <span>{isAr ? 'انقر لقلب البطاقة والمعاينة' : 'Click to flip & inspect'}</span>
+                        </span>
+                        <span className="text-[10px] text-neutral-500 font-mono">⟲</span>
+                      </div>
                     </div>
-
-                    {/* Bottom: Mockup Widget in pure Black & White */}
-                    <div>
-                      {currentBenefit.mockup}
-                    </div>
-                  </m.div>
-                </AnimatePresence>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ============================================================== */}
-      {/* MOBILE / TABLET VIEW (Segmented Tab Bar + Card View)           */}
-      {/* ============================================================== */}
-      <div className="lg:hidden space-y-4">
-        {/* Mobile Tab Control with Orange active indicator */}
-        <div className="flex items-center justify-between gap-1 p-1 bg-white/[0.04] border border-white/10 rounded-xl">
-          {benefits.map((b, idx) => {
-            const isActive = activeStep === idx;
-            return (
-              <button
-                key={b.id}
-                type="button"
-                onClick={() => setActiveStep(idx)}
-                className={`flex-1 py-1.5 px-2 rounded-lg text-center transition-all duration-200 outline-none text-xs font-medium ${
-                  isActive
-                    ? 'bg-black text-[#FF5C00] font-semibold border border-[#FF5C00]/30 shadow-sm'
-                    : 'text-neutral-400 hover:text-neutral-200'
-                }`}
-              >
-                <span className="font-mono text-[9px] block opacity-80">{b.index}</span>
-                <span className="truncate block mt-0.5 text-[11px]">{b.title}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Mobile free-standing content (no card chrome) */}
-        <div className="relative space-y-3.5">
-          <AnimatePresence mode="wait">
-            <m.div
-              key={currentBenefit.id}
-              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
-              transition={{ duration: 0.2, ease: ease.out }}
-              className="space-y-3"
-            >
-              <div>
-                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/15 text-neutral-300 text-[10px] font-mono font-medium">
-                  <span>{currentBenefit.badge}</span>
+                  </div>
                 </div>
 
-                <h3 className="font-heading text-base font-semibold text-white tracking-tight mt-2 leading-snug">
-                  {currentBenefit.angle}
-                </h3>
+                {/* ======================================================== */}
+                {/* BACK FACE: Detailed Flipped Dossier with Pop-up Content   */}
+                {/* ======================================================== */}
+                <div
+                  style={{
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                    transform: 'rotateY(180deg)',
+                  }}
+                  className="absolute inset-0 w-full h-full select-none"
+                >
+                  {/* Outer Border Layer with Matching Reversed Cut */}
+                  <div
+                    className="absolute inset-0 transition-all duration-300"
+                    style={{
+                      clipPath: backClipPath,
+                      backgroundColor: 'rgba(255, 92, 0, 0.45)',
+                    }}
+                  />
 
-                <p className="mt-1 text-xs text-neutral-400 font-sans leading-relaxed">
-                  {currentBenefit.body}
+                  {/* Inner Surface */}
+                  <div
+                    className="absolute inset-[1px] bg-[#0E0F14] p-5 sm:p-6 flex flex-col justify-between"
+                    style={{ clipPath: backClipPath }}
+                  >
+                    {/* Dog-Ear Triangle Corner Flap for Back Face */}
+                    <div
+                      className={`absolute top-0 pointer-events-none w-6 h-6 ${
+                        isAr ? 'right-0' : 'left-0'
+                      }`}
+                      style={{
+                        clipPath: isAr
+                          ? 'polygon(0 0, 0 100%, 100% 100%)'
+                          : 'polygon(100% 0, 0 100%, 100% 100%)',
+                        backgroundColor: 'rgba(255, 92, 0, 0.35)',
+                        borderBottom: '1px solid rgba(255, 92, 0, 0.6)',
+                        borderRight: !isAr ? '1px solid rgba(255, 92, 0, 0.6)' : undefined,
+                        borderLeft: isAr ? '1px solid rgba(255, 92, 0, 0.6)' : undefined,
+                      }}
+                    />
+
+                    {/* Back Header with Close / Flip Button */}
+                    <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-[10px] font-bold text-[#FF5C00]">
+                          {isAr ? 'المواصفات' : 'SPEC'} {'//'} {card.index}
+                        </span>
+                        <span className="text-[10px] font-mono text-neutral-400 uppercase">
+                          {isAr ? 'ملف تدقيق' : 'AUDITED'}
+                        </span>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFlip(idx);
+                        }}
+                        className="p-1 rounded-md text-neutral-400 hover:text-white hover:bg-white/10 transition-colors text-[10px] font-mono flex items-center gap-1"
+                        title={isAr ? 'قلب البطاقة للواجهة' : 'Flip back to front'}
+                      >
+                        <RefreshCw size={11} />
+                        <span>{isAr ? 'رجوع' : 'Back'}</span>
+                      </button>
+                    </div>
+
+                    {/* Back Content Body (Unit Economics / Rubric / Schedule) */}
+                    <div className="my-auto space-y-3">
+                      <div>
+                        <h4 className="text-base font-bold font-heading text-white">
+                          {isAr ? card.backTitleAr : card.backTitleEn}
+                        </h4>
+                        <p className="text-[11px] text-neutral-400 font-sans mt-0.5">
+                          {isAr ? card.backSubAr : card.backSubEn}
+                        </p>
+                      </div>
+
+                      {/* Dynamic Compact Component */}
+                      {card.renderBackContent(isAr)}
+
+                      {/* Takeaways List */}
+                      <div className="space-y-1.5 pt-1">
+                        {card.takeaways.map((point, pIdx) => (
+                          <div key={pIdx} className="flex items-start gap-1.5 text-[11px] text-neutral-300 font-sans">
+                            <CheckCircle2 size={12} className="text-[#FF5C00] shrink-0 mt-0.5" />
+                            <span className="leading-snug">{isAr ? point.ar : point.en}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Back Action Controls: Flip Back & Expand Full Dossier Modal */}
+                    <div className="pt-3 border-t border-white/10 flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFlip(idx);
+                        }}
+                        className="flex-1 py-2 px-3 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 hover:text-white border border-white/10 text-xs font-mono transition-all flex items-center justify-center gap-1.5"
+                      >
+                        <RefreshCw size={12} />
+                        <span>{isAr ? 'قلب للواجهة' : 'Flip to Front'}</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveModalIdx(idx);
+                        }}
+                        className="flex-1 py-2 px-3 rounded-lg bg-[#FF5C00] hover:bg-[#FF6A1A] text-white text-xs font-semibold font-sans transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-orange-500/20"
+                      >
+                        <span>{isAr ? 'الملف الكامل' : 'Full Dossier'}</span>
+                        <ArrowUpRight size={13} className="rtl:-scale-x-100" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </m.div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ================================================================ */}
+      {/* FULL-SCREEN EXPANDED DOSSIER MODAL POP-UP                        */}
+      {/* ================================================================ */}
+      <AnimatePresence>
+        {activeModalIdx !== null && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto"
+            onClick={() => setActiveModalIdx(null)}
+          >
+            <m.div
+              initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-2xl bg-[#0E0F14] border border-white/15 rounded-2xl shadow-2xl p-5 sm:p-7 overflow-hidden my-auto"
+            >
+              {/* Modal Top Bar */}
+              <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
+                <div className="flex items-center gap-2.5">
+                  <span className="font-mono text-xs px-2.5 py-1 rounded-full bg-[#FF5C00]/15 text-[#FF5C00] border border-[#FF5C00]/30 font-semibold">
+                    {cards[activeModalIdx].index} {'//'} {isAr ? cards[activeModalIdx].categoryAr : cards[activeModalIdx].categoryEn}
+                  </span>
+                  <span className="text-xs font-mono text-neutral-400">
+                    {isAr ? 'ملف المواصفات التنفيذية المعتمدة' : 'CONFIDENTIAL // AUDITED SPEC'}
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveModalIdx(null)}
+                  className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 transition-colors"
+                  aria-label={isAr ? 'إغلاق' : 'Close modal'}
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Title & Description */}
+              <div className="mb-4">
+                <h3 className="text-xl sm:text-2xl font-bold font-heading text-white">
+                  {isAr ? cards[activeModalIdx].titleAr : cards[activeModalIdx].titleEn}
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-400 font-sans mt-1">
+                  {isAr ? cards[activeModalIdx].subAr : cards[activeModalIdx].subEn}
                 </p>
               </div>
 
-              {/* Takeaways list */}
-              <div className="space-y-1.5 pt-2.5 border-t border-white/[0.08]">
-                {currentBenefit.takeaways.map((point, pIdx) => (
-                  <div key={pIdx} className="flex items-start gap-2 text-xs text-neutral-300 font-sans">
-                    <CheckCircle2 size={12} className="text-white shrink-0 mt-0.5" />
-                    <span className="leading-snug">{point}</span>
-                  </div>
-                ))}
+              {/* Full Interactive Mockup Widget */}
+              <div className="mb-5">
+                {cards[activeModalIdx].renderFullMockup(isAr)}
               </div>
 
-              {/* Mockup */}
-              <div>
-                {currentBenefit.mockup}
+              {/* Modal Footer with CTA */}
+              <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div className="text-xs text-neutral-400 font-mono text-center sm:text-start">
+                  <span>{isAr ? 'ضمان استبدال فوري 100% لأي فرصة غير مطابقة' : '100% Instant lead replacement SLA'}</span>
+                </div>
+
+                <div className="flex items-center gap-2.5 w-full sm:w-auto">
+                  <button
+                    type="button"
+                    onClick={() => setActiveModalIdx(null)}
+                    className="py-2.5 px-4 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 text-xs font-mono transition-colors border border-white/10"
+                  >
+                    {isAr ? 'إغلاق النافذة' : 'Close'}
+                  </button>
+
+                  <Link
+                    href={`/${lang}/for-providers/apply`}
+                    className="flex-1 sm:flex-initial py-2.5 px-5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white text-xs font-semibold font-sans transition-all shadow-md shadow-orange-500/20 inline-flex items-center justify-center gap-2"
+                  >
+                    <span>{isAr ? 'انضم كشريك تدريب معتمد' : 'Apply as Training Partner'}</span>
+                    <ArrowRight size={14} className="rtl:-scale-x-100" />
+                  </Link>
+                </div>
               </div>
             </m.div>
-          </AnimatePresence>
-        </div>
-      </div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
