@@ -1,90 +1,231 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { m, AnimatePresence, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion';
+import React, { useState, useCallback } from 'react';
+import { m, useReducedMotion } from 'framer-motion';
 import {
   SlidersHorizontal,
   BadgeCheck,
   Scale,
   CheckCircle2,
+  RefreshCw,
+  ShieldCheck,
+  FileText,
+  Clock,
 } from '@/components/icons';
 import TextReveal from '@/components/shared/TextReveal';
-import { ease } from '@/lib/motion';
 
-interface StepItem {
+interface MetricItem {
+  valueEn: string;
+  valueAr: string;
+  labelEn: string;
+  labelAr: string;
+}
+
+interface StepCardData {
   id: string;
   index: string;
+  cubeType: 'scoping' | 'vetting' | 'comparison';
   icon: any;
-  badge: string;
-  title: string;
-  angle: string;
-  body: string;
-  takeaways: string[];
-  mockup: React.ReactNode;
+  categoryEn: string;
+  categoryAr: string;
+  statusEn: string;
+  statusAr: string;
+  titleEn: string;
+  titleAr: string;
+  subEn: string;
+  subAr: string;
+  quoteEn: string;
+  quoteAr: string;
+  metrics: MetricItem[];
+  backTitleEn: string;
+  backTitleAr: string;
+  backSubEn: string;
+  backSubAr: string;
+  takeaways: { en: string; ar: string }[];
+  renderBackContent: (isAr: boolean) => React.ReactNode;
 }
 
 interface FindTrainingStepsCardsProps {
   lang: string;
 }
 
+/**
+ * 3D Isometric Cube Visual with Floating Animation
+ * Inspired by Pradis (pradis.webflow.io) 3D isometric cube architecture
+ */
+function IsometricCubeVisual({
+  type,
+  isHovered,
+  reduce,
+}: {
+  type: 'scoping' | 'vetting' | 'comparison';
+  isHovered: boolean;
+  reduce: boolean | null;
+}) {
+  const drawCube = (cx: number, cy: number, s: number, key: string) => {
+    const dx = s * 0.866;
+    const dy = s * 0.5;
+
+    const topPath = `M ${cx} ${cy - s} L ${cx + dx} ${cy - dy} L ${cx} ${cy} L ${cx - dx} ${cy - dy} Z`;
+    const leftPath = `M ${cx} ${cy} L ${cx - dx} ${cy - dy} L ${cx - dx} ${cy + dy} L ${cx} ${cy + s} Z`;
+    const rightPath = `M ${cx} ${cy} L ${cx + dx} ${cy - dy} L ${cx + dx} ${cy + dy} L ${cx} ${cy + s} Z`;
+
+    return (
+      <g key={key}>
+        {/* Top Face */}
+        <path
+          d={topPath}
+          fill={isHovered ? 'rgba(255, 92, 0, 0.65)' : 'rgba(255, 92, 0, 0.45)'}
+          stroke="#FF5C00"
+          strokeWidth="1.2"
+          strokeLinejoin="round"
+          className="transition-colors duration-300"
+        />
+        {/* Left Face */}
+        <path
+          d={leftPath}
+          fill={isHovered ? 'rgba(255, 92, 0, 0.40)' : 'rgba(255, 92, 0, 0.26)'}
+          stroke="#FF5C00"
+          strokeWidth="1.2"
+          strokeLinejoin="round"
+          className="transition-colors duration-300"
+        />
+        {/* Right Face */}
+        <path
+          d={rightPath}
+          fill={isHovered ? 'rgba(255, 92, 0, 0.25)' : 'rgba(255, 92, 0, 0.14)'}
+          stroke="#FF5C00"
+          strokeWidth="1.2"
+          strokeLinejoin="round"
+          className="transition-colors duration-300"
+        />
+      </g>
+    );
+  };
+
+  return (
+    <div className="relative w-full h-20 sm:h-22 flex items-center justify-center pointer-events-none select-none">
+      <svg
+        viewBox="0 0 100 80"
+        className="w-24 h-20 overflow-visible transition-all duration-300"
+        style={{
+          filter: isHovered
+            ? 'drop-shadow(0 0 14px rgba(255, 92, 0, 0.55))'
+            : 'drop-shadow(0 0 6px rgba(255, 92, 0, 0.25))',
+        }}
+      >
+        {type === 'scoping' && (
+          <m.g
+            animate={reduce ? undefined : { y: [-3.5, 3.5, -3.5] }}
+            transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            {/* Main Central Cube */}
+            {drawCube(50, 42, 20, 'scoping-main')}
+            {/* Satellite Floating Micro-Cube */}
+            {drawCube(80, 22, 8, 'scoping-satellite')}
+          </m.g>
+        )}
+
+        {type === 'vetting' && (
+          <m.g
+            animate={reduce ? undefined : { y: [3, -3, 3] }}
+            transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            {/* Lower Interlocking Cube */}
+            {drawCube(38, 48, 17, 'vetting-lower')}
+            {/* Upper Interlocking Cube */}
+            {drawCube(62, 32, 17, 'vetting-upper')}
+          </m.g>
+        )}
+
+        {type === 'comparison' && (
+          <m.g
+            animate={reduce ? undefined : { y: [-3, 3, -3] }}
+            transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            {/* Base Left Cube */}
+            {drawCube(32, 54, 15, 'comp-left')}
+            {/* Base Right Cube */}
+            {drawCube(68, 54, 15, 'comp-right')}
+            {/* Top Apex Cube */}
+            {drawCube(50, 28, 15, 'comp-apex')}
+          </m.g>
+        )}
+      </svg>
+    </div>
+  );
+}
+
 export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsProps) {
   const isAr = lang === 'ar';
   const reduce = useReducedMotion();
-  const [activeStep, setActiveStep] = useState(0);
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isUserClicking = useRef(false);
+  // Track flipped state for each card independently
+  const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
+  // Track hovered state for border lighting
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
-  const steps: StepItem[] = [
+  const toggleFlip = useCallback((idx: number) => {
+    setFlippedCards((prev) => ({
+      ...prev,
+      [idx]: !prev[idx],
+    }));
+  }, []);
+
+  const steps: StepCardData[] = [
     {
       id: 'step-specify',
       index: '01',
+      cubeType: 'scoping',
       icon: SlidersHorizontal,
-      badge: isAr ? 'استيعاب دقيق' : 'Rapid Scoping',
-      title: isAr ? 'حدد المتطلبات والاحتياج' : 'Specify Training Needs',
-      angle: isAr ? 'استبيان تفاعلي خلال 60 ثانية بدون تعقيدات' : '60-Second Interactive Intake',
-      body: isAr
-        ? 'حدد المهارات المستهدفة، أسلوب التدريب (حضوري أو افتراضي)، المدينة، وحجم الفريق في نموذج تفاعلي ومباشر.'
-        : 'Define your targeted skills, delivery mode, city, and cohort size in our 60 second interactive questionnaire. No tedious RFP drafting.',
-      takeaways: [
-        isAr ? 'تغطية متخصصة لأكثر من 20 مجالاً تدريبياً معتمداً' : 'Specialized coverage across 20+ training domains',
-        isAr ? 'تخصيص فوري: الرياض، جدة، دبي، أو عن بُعد' : 'Targeted city selection across GCC & live remote',
-        isAr ? 'مواءمة أهداف البرنامج مع مؤشرات التوطين والتحول' : 'Aligned with Saudization & tech upskilling KPIs',
+      categoryEn: 'RAPID SCOPING',
+      categoryAr: 'استيعاب دقيق',
+      statusEn: '60-SEC INTAKE',
+      statusAr: 'استيعاب 60 ثانية',
+      titleEn: 'SPECIFY TRAINING NEEDS',
+      titleAr: 'تحديد الاحتياج المؤسسي',
+      subEn: 'Interactive Scope Definition',
+      subAr: 'تحديد فوري للمتطلبات',
+      quoteEn:
+        'Define your required skills, delivery mode, and cohort size in 60 seconds. Zero tedious RFP drafting or endless agency briefings.',
+      quoteAr:
+        'حدد المهارات المستهدفة وحجم الفوج وأسلوب التدريب في 60 ثانية، بدون كراسات شروط معقدة أو استشارات لا تنتهي.',
+      metrics: [
+        {
+          valueEn: '60s',
+          valueAr: '60 ثانية',
+          labelEn: 'INTERACTIVE INTAKE',
+          labelAr: 'استيعاب فوري',
+        },
+        {
+          valueEn: '20+ Domains',
+          valueAr: '20+ مجالاً',
+          labelEn: 'SPECIALIZED COVERAGE',
+          labelAr: 'تخصصات معتمدة',
+        },
       ],
-      mockup: (
-        <div className="bg-black/90 rounded-xl border border-white/10 w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans shadow-md">
-          <div className="flex items-center justify-between pb-2 border-b border-white/10">
-            <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded-md bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
-                <SlidersHorizontal size={13} />
-              </div>
-              <div>
-                <div className="text-xs font-semibold text-white leading-tight">
-                  {isAr ? 'ملف كراسة التدريب المؤسسي' : 'Enterprise RFP Intake Brief'}
-                </div>
-                <div className="text-[10px] text-neutral-400">
-                  {isAr ? 'بيانات الاحتياج المسجلة' : 'Submitted Scope Specifications'}
-                </div>
-              </div>
-            </div>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white border border-white/20">
-              {isAr ? 'جاهز للمطابقة' : 'Intake Ready'}
-            </span>
+      backTitleEn: 'ENTERPRISE SCOPE SPECIFICATION',
+      backTitleAr: 'كراسة مواصفات التدريب',
+      backSubEn: 'Submitted Scope Parameters & Deliverables',
+      backSubAr: 'معايير الاحتياج المحددة والجاهزة للمطابقة',
+      takeaways: [
+        { en: 'Specialized coverage across 20+ corporate domains', ar: 'تغطية متخصصة لأكثر من 20 مجالاً تدريبياً معتمداً' },
+        { en: 'Targeted city selection across GCC & live remote', ar: 'تخصيص فوري: الرياض، جدة، دبي، أو عن بُعد' },
+        { en: 'Aligned with Saudization & tech upskilling KPIs', ar: 'مواءمة الأهداف مع مؤشرات التوطين والتحول' },
+      ],
+      renderBackContent: (isAr) => (
+        <div className="space-y-2 text-xs">
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.02] border border-white/10">
+            <span className="text-neutral-400 text-[11px] font-mono">{isAr ? 'المجال المستهدف:' : 'Domain Scope:'}</span>
+            <span className="text-white font-medium text-xs">{isAr ? 'القيادة التنفيذية وإدارة التغيير' : 'Executive Leadership & Ops'}</span>
           </div>
-
-          <div className="space-y-1.5 text-xs">
-            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/10">
-              <span className="text-neutral-400 text-[11px]">{isAr ? 'المجال المستهدف:' : 'Domain:'}</span>
-              <span className="text-white font-medium text-xs">{isAr ? 'القيادة التنفيذية وإدارة التغيير' : 'Executive Leadership & Change'}</span>
-            </div>
-            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/10">
-              <span className="text-neutral-400 text-[11px]">{isAr ? 'الموقع والفوج:' : 'Location & Cohort:'}</span>
-              <span className="text-neutral-200 font-medium text-xs">{isAr ? 'حضوري بالرياض · 25 متدرب' : 'Onsite Riyadh · 25 Executives'}</span>
-            </div>
-            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.08] border border-white/20">
-              <span className="text-neutral-300 text-[11px]">{isAr ? 'الجدول الزمني:' : 'Target Timeline:'}</span>
-              <span className="text-white font-semibold text-xs">{isAr ? 'خلال الربع القادم' : 'Upcoming Quarter Start'}</span>
-            </div>
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.02] border border-white/10">
+            <span className="text-neutral-400 text-[11px] font-mono">{isAr ? 'الموقع والفوج:' : 'Location & Cohort:'}</span>
+            <span className="text-white font-medium text-xs">{isAr ? 'حضوري بالرياض · 25 متدرباً' : 'Onsite Riyadh · 25 Execs'}</span>
+          </div>
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#FF5C00]/[0.08] border border-[#FF5C00]/30">
+            <span className="text-neutral-300 text-[11px] font-mono">{isAr ? 'الجدول الزمني:' : 'Timeline:'}</span>
+            <span className="text-[#FF5C00] font-bold text-xs">{isAr ? 'الربع القادم · تسليم فوري' : 'Upcoming Quarter Start'}</span>
           </div>
         </div>
       ),
@@ -92,58 +233,62 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
     {
       id: 'step-matching',
       index: '02',
+      cubeType: 'vetting',
       icon: BadgeCheck,
-      badge: isAr ? 'فحص واعتماد الخبراء' : 'Dual-Screening Vetting',
-      title: isAr ? 'المطابقة والتحقق من المدربين' : 'Matching & Faculty Vetting',
-      angle: isAr ? 'فرز أكثر من 120 مزود معتمد لضمان نخبة الميسرين' : 'Screening 120+ Accredited GCC Entities',
-      body: isAr
-        ? 'يفحص فريقنا المختص أكثر من 120 مزود تدريب معتمد لاختيار أفضل المدربين أصحاب السجلات والإنجازات الموثوقة.'
-        : 'Our matching desk screens 120+ accredited providers to select facilitators with verified enterprise outcomes and verified credentials.',
-      takeaways: [
-        isAr ? 'تحقق مستقل من سجلات المدربين والشهادات' : 'Independent verification of facilitator records',
-        isAr ? 'مراجعة تقييمات المشاركين في برامج سابقة' : 'Review of historical participant ratings in GCC',
-        isAr ? 'سرية تامة لبيانات مسؤولي الموارد البشرية' : 'Zero cold spam; total decision maker privacy',
+      categoryEn: 'DUAL VETTING',
+      categoryAr: 'فحص واعتماد الخبراء',
+      statusEn: '100% VETTED',
+      statusAr: 'معتمد 100%',
+      titleEn: 'FACULTY & ENTITY VETTING',
+      titleAr: 'فحص واعتماد المدربين',
+      subEn: 'Screened GCC Training Desks',
+      subAr: 'تدقيق مستقل للنخبة',
+      quoteEn:
+        'Screening 120+ accredited GCC training entities. Every facilitator audited for verified enterprise track records and 4.9+ feedback ratings.',
+      quoteAr:
+        'فحص وتدقيق أكثر من 120 منشأة تدريبية معتمدة لاختيار أفضل المدربين التنفيذيين أصحاب السجلات والإنجازات الموثوقة.',
+      metrics: [
+        {
+          valueEn: '120+ Entities',
+          valueAr: '120+ منشأة',
+          labelEn: 'ACCREDITED NETWORK',
+          labelAr: 'شبكة معتمدة بالخليج',
+        },
+        {
+          valueEn: '4.9 / 5.0',
+          valueAr: '4.9 / 5.0',
+          labelEn: 'HISTORICAL SATISFACTION',
+          labelAr: 'معدل رضا المتدربين',
+        },
       ],
-      mockup: (
-        <div className="bg-black/90 rounded-xl border border-white/10 w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans shadow-md">
-          <div className="flex items-center justify-between pb-2 border-b border-white/10">
-            <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded-md bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
-                <BadgeCheck size={13} />
-              </div>
-              <div>
-                <div className="text-xs font-semibold text-white leading-tight">
-                  {isAr ? 'معايير فحص واعتماد المزود' : 'Provider Vetting Scorecard'}
-                </div>
-                <div className="text-[10px] text-neutral-400">
-                  {isAr ? 'مؤشرات جودة التدريب المعتمدة' : 'Compliance & Quality Standards'}
-                </div>
-              </div>
-            </div>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white border border-white/20">
-              {isAr ? 'معتمد 100%' : '100% Vetted'}
+      backTitleEn: 'PROVIDER VETTING SCORECARD',
+      backTitleAr: 'معايير تدقيق واعتماد المزود',
+      backSubEn: 'Compliance & Quality Standards Audited',
+      backSubAr: 'مؤشرات الجودة والخبرة التنفيذية المعتمدة',
+      takeaways: [
+        { en: 'Independent verification of facilitator credentials', ar: 'تحقق مستقل من سجلات المدربين والشهادات' },
+        { en: 'Historical participant audit across GCC enterprises', ar: 'مراجعة تقييمات المشاركين في برامج سابقة' },
+        { en: 'Total privacy: zero unsolicited vendor spam', ar: 'سرية تامة لبيانات مسؤولي الموارد البشرية' },
+      ],
+      renderBackContent: (isAr) => (
+        <div className="space-y-2 text-xs">
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.02] border border-white/10">
+            <span className="text-neutral-400 text-[11px] font-mono">{isAr ? 'الاعتماد المؤسسي:' : 'Accreditation:'}</span>
+            <span className="text-white font-medium text-xs flex items-center gap-1">
+              <CheckCircle2 size={12} className="text-[#FF5C00]" /> {isAr ? 'مرخص ومعتمد بالخليج' : 'Verified GCC Entity'}
             </span>
           </div>
-
-          <div className="space-y-1.5 text-xs">
-            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/10">
-              <span className="text-neutral-400 text-[11px]">{isAr ? 'اعتماد المنشأة والترخيص المهني:' : 'Accredited Corporate Entity:'}</span>
-              <span className="text-white font-medium text-xs flex items-center gap-1">
-                <CheckCircle2 size={12} className="text-white" /> {isAr ? 'مرخص ومعتمد' : 'Verified Entity'}
-              </span>
-            </div>
-            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/10">
-              <span className="text-neutral-400 text-[11px]">{isAr ? 'خبرة المدرب التنفيذي:' : 'Facilitator Seniority:'}</span>
-              <span className="text-white font-medium text-xs flex items-center gap-1">
-                <CheckCircle2 size={12} className="text-white" /> 10+ {isAr ? 'سنوات بالخليج' : 'Yrs GCC'}
-              </span>
-            </div>
-            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.08] border border-white/20">
-              <span className="text-neutral-300 text-[11px]">{isAr ? 'معدل رضا المتدربين السابق:' : 'Historical Satisfaction:'}</span>
-              <span className="text-white font-semibold text-xs flex items-center gap-1">
-                <CheckCircle2 size={12} className="text-white" /> 4.9 / 5.0
-              </span>
-            </div>
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.02] border border-white/10">
+            <span className="text-neutral-400 text-[11px] font-mono">{isAr ? 'خبرة الميسر التنفيذي:' : 'Facilitator:'}</span>
+            <span className="text-white font-medium text-xs flex items-center gap-1">
+              <CheckCircle2 size={12} className="text-[#FF5C00]" /> 10+ {isAr ? 'سنوات إقليمية' : 'Yrs Regional'}
+            </span>
+          </div>
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#FF5C00]/[0.08] border border-[#FF5C00]/30">
+            <span className="text-neutral-300 text-[11px] font-mono">{isAr ? 'تقييم المشاركين:' : 'Participant Rating:'}</span>
+            <span className="text-[#FF5C00] font-bold text-xs flex items-center gap-1">
+              <CheckCircle2 size={12} className="text-[#FF5C00]" /> 4.9 / 5.0
+            </span>
           </div>
         </div>
       ),
@@ -151,338 +296,367 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
     {
       id: 'step-compare',
       index: '03',
+      cubeType: 'comparison',
       icon: Scale,
-      badge: isAr ? 'مقارنة شفافة' : 'Proposal Comparison',
-      title: isAr ? 'استلم وقارن العروض' : 'Compare Itemized Proposals',
-      angle: isAr ? '2 إلى 3 عروض مفصلة خلال 48 ساعة وبدون أي التزام' : '2 to 3 Proposals in 48h · Zero Obligation',
-      body: isAr
-        ? 'استلم من 2 إلى 3 عروض مفصلة خلال 48 ساعة متضمنة خطط البرامج والتكاليف الشفافة، وبدون أي التزام بالشراء.'
-        : 'Receive 2 to 3 tailored proposals within 48 hours with custom syllabi, transparent pricing, and zero purchase obligation.',
-      takeaways: [
-        isAr ? 'عروض أسعار مفصلة بالبنود بدون رسوم مخفية' : 'Itemized line-by-line budgets, zero surprises',
-        isAr ? 'حرية كاملة في تقييم واختيار العرض الأنسب' : '100% freedom to review with zero pressure',
-        isAr ? 'خدمة مجانية 100% للمنشآت الباحثة عن تدريب' : '100% free matchmaking for enterprise buyers',
+      categoryEn: 'PROPOSAL AUDIT',
+      categoryAr: 'مقارنة العروض المعتمدة',
+      statusEn: '48H DELIVERY',
+      statusAr: 'تسليم 48 ساعة',
+      titleEn: 'COMPARE ITEMIZE PROPOSALS',
+      titleAr: 'مقارنة العروض المفصلة',
+      subEn: 'Side-by-Side Scope Transparency',
+      subAr: 'شفافية تامة للأسعار والمناهج',
+      quoteEn:
+        'Receive 2 to 3 tailored, itemized proposals in 48 hours. Transparent faculty rates, detailed course syllabi, and zero hidden platform markups.',
+      quoteAr:
+        'استلم 2 إلى 3 عروض مفصلة وشفافة خلال 48 ساعة، بأسعار واضحة ومناهج معتمدة وبدون أي تكاليف خفية أو وسطاء.',
+      metrics: [
+        {
+          valueEn: '2–3 Offers',
+          valueAr: '2–3 عروض',
+          labelEn: 'CURATED PROPOSALS',
+          labelAr: 'عروض مدققة ومطابقة',
+        },
+        {
+          valueEn: '48 Hours',
+          valueAr: '48 ساعة',
+          labelEn: 'SLA DELIVERY WINDOW',
+          labelAr: 'مهلة التسليم المضمونة',
+        },
       ],
-      mockup: (
-        <div className="bg-black/90 rounded-xl border border-white/10 w-full p-3 sm:p-3.5 flex flex-col gap-2 font-sans shadow-md">
-          <div className="flex items-center justify-between pb-2 border-b border-white/10">
-            <div className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded-md bg-white/10 text-white flex items-center justify-center font-bold border border-white/15">
-                <Scale size={13} />
-              </div>
-              <div>
-                <div className="text-xs font-semibold text-white leading-tight">
-                  {isAr ? 'جدول مقارنة العروض المتطابقة' : 'Comparative Proposal Matrix'}
-                </div>
-                <div className="text-[10px] text-neutral-400">
-                  {isAr ? 'عروض معتمدة خلال 48 ساعة' : 'Standardized Evaluation Grid'}
-                </div>
-              </div>
+      backTitleEn: 'COMPARATIVE PROPOSAL MATRIX',
+      backTitleAr: 'مصفوفة مقارنة العروض',
+      backSubEn: 'Transparent Itemized Scope & Deliverables',
+      backSubAr: 'بنود تعاقدية شفافة ومفصلة بدون أي وساطة',
+      takeaways: [
+        { en: 'Direct interview with matched facilitators prior to award', ar: 'مقابلة الميسرين مباشرة قبل توقيع التعاقد' },
+        { en: 'Clear line-item pricing with zero markups', ar: 'شفافية كاملة لتفاصيل تكلفة التدريب والمواد' },
+        { en: 'Guaranteed proposal delivery within 48-hour SLA', ar: 'استلام كافة العروض المطابقة خلال 48 ساعة' },
+      ],
+      renderBackContent: (isAr) => (
+        <div className="space-y-2 text-xs">
+          <div className="grid grid-cols-2 gap-1.5">
+            <div className="p-2 rounded-lg bg-white/[0.02] border border-white/10">
+              <span className="text-[9px] text-neutral-400 font-mono block">{isAr ? 'العرض الأول' : 'Proposal A'}</span>
+              <span className="text-xs font-bold text-white block mt-0.5">SAR 125k</span>
+              <span className="text-[9px] text-neutral-400 block truncate">{isAr ? 'أكاديمية إقليمية' : 'Tier-1 Academy'}</span>
             </div>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white border border-white/20">
-              {isAr ? 'مواءمة الميزانية' : 'Budget Fit'}
-            </span>
+            <div className="p-2 rounded-lg bg-[#FF5C00]/[0.08] border border-[#FF5C00]/30">
+              <span className="text-[9px] text-[#FF5C00] font-mono block">{isAr ? 'العرض الثاني' : 'Proposal B'}</span>
+              <span className="text-xs font-bold text-white block mt-0.5">SAR 110k</span>
+              <span className="text-[9px] text-orange-200/80 block truncate">{isAr ? 'بيت خبرة تخصصي' : 'Boutique Firm'}</span>
+            </div>
           </div>
-
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <div className="p-2 sm:p-2.5 rounded-lg bg-white/[0.03] border border-white/10">
-              <div className="text-[9px] text-neutral-400 uppercase font-mono font-medium">{isAr ? 'العرض أ' : 'Proposal Alpha'}</div>
-              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">{isAr ? 'ورش مكثفة حضوري' : 'Intensive Onsite'}</div>
-              <div className="text-[9px] text-neutral-300 mt-0.5">{isAr ? 'مطابقة تامة للميزانية' : 'Target Budget Match'}</div>
-            </div>
-            <div className="p-2 sm:p-2.5 rounded-lg bg-white/[0.08] border border-white/20">
-              <div className="text-[9px] text-white uppercase font-mono font-semibold">{isAr ? 'العرض ب' : 'Proposal Beta'}</div>
-              <div className="text-xs sm:text-sm font-bold text-white mt-0.5">{isAr ? 'تدريب هجين + مشاريع' : 'Blended + Projects'}</div>
-              <div className="text-[9px] text-white mt-0.5">{isAr ? 'تأهيل كفاءات ممتد' : 'Extended Follow-up'}</div>
-            </div>
+          <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/10 flex items-center gap-2 text-[11px] text-neutral-300">
+            <ShieldCheck size={14} className="text-[#FF5C00] shrink-0" />
+            <span>{isAr ? 'تسليم العروض ومطابقتها خلال 48 ساعة كحد أقصى' : 'Guaranteed 48h delivery SLA with line-item detail'}</span>
           </div>
         </div>
       ),
     },
   ];
 
-  /* Scroll-spy tracking for desktop Attio-style pinning */
-  const isClickLocked = useRef(false);
-  const clickUnlockTimer = useRef<NodeJS.Timeout | null>(null);
+  // Cut-corner clip path calculation (Palantir document cut)
+  const frontClipPath = isAr
+    ? 'polygon(24px 0, 100% 0, 100% 100%, 0 100%, 0 24px)'
+    : 'polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%)';
 
-  /* Scroll-spy tracking for desktop Attio-style pinning */
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start 112px', 'end end'],
-  });
-
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    if (isClickLocked.current) return;
-    if (latest < 0.33) {
-      setActiveStep(0);
-    } else if (latest < 0.67) {
-      setActiveStep(1);
-    } else {
-      setActiveStep(2);
-    }
-  });
-
-  const handleStepClick = useCallback((index: number) => {
-    setActiveStep(index);
-    isClickLocked.current = true;
-
-    if (clickUnlockTimer.current) {
-      clearTimeout(clickUnlockTimer.current);
-    }
-
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const containerTop = rect.top + scrollTop;
-      const totalScrollable = Math.max(0, containerRef.current.offsetHeight - window.innerHeight);
-
-      // Position within the corresponding segment
-      const targetRatio = index === 0 ? 0.05 : index === 1 ? 0.5 : 0.95;
-      const targetScroll = containerTop + targetRatio * totalScrollable;
-
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'smooth',
-      });
-    }
-
-    // Keep locked for 1800ms during smooth scroll
-    clickUnlockTimer.current = setTimeout(() => {
-      isClickLocked.current = false;
-    }, 1800);
-  }, []);
-
-  // Unlock immediately upon manual wheel or touch scroll
-  useEffect(() => {
-    const handleUserScroll = () => {
-      if (isClickLocked.current) {
-        isClickLocked.current = false;
-        if (clickUnlockTimer.current) clearTimeout(clickUnlockTimer.current);
-      }
-    };
-
-    window.addEventListener('wheel', handleUserScroll, { passive: true });
-    window.addEventListener('touchmove', handleUserScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('wheel', handleUserScroll);
-      window.removeEventListener('touchmove', handleUserScroll);
-      if (clickUnlockTimer.current) clearTimeout(clickUnlockTimer.current);
-    };
-  }, []);
-
-  const currentStep = steps[activeStep] || steps[0];
+  const backClipPath = isAr
+    ? 'polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%)'
+    : 'polygon(24px 0, 100% 0, 100% 100%, 0 100%, 0 24px)';
 
   return (
     <div className="w-full">
-      {/* Animated Section Header */}
-      <div className="mb-8 sm:mb-12 text-center max-w-4xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.05] border border-white/10 text-neutral-300 text-xs font-mono font-medium">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00]" />
-          <span>{isAr ? 'خطوات الحصول على التدريب' : 'HOW IT WORKS'}</span>
+      {/* Section Header: Minimalist Palantir Architectural Style */}
+      <div className="mb-10 sm:mb-14 text-center max-w-4xl mx-auto space-y-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-neutral-300 text-xs font-mono font-medium tracking-wider">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00] animate-pulse" />
+          <span>{isAr ? 'مسار المطابقة // خارطة الطريق التنفيذية' : 'MATCHING ROADMAP // WORKFLOW'}</span>
         </div>
 
         <TextReveal
           as="h2"
-          text={isAr ? '3 خطوات بسيطة للحصول على تدريب معتمد' : '3 Simple Steps to Proven Training'}
+          text={isAr ? '3 خطوات بسيطة لتدريب معتمد وموثوق' : '3 Simple Steps to Proven Training'}
           className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-tight"
         />
 
-        <p className="text-sm sm:text-base text-neutral-400 font-sans max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm md:text-base text-neutral-400 font-sans max-w-2xl mx-auto leading-relaxed">
           {isAr
-            ? 'مسار منظم يختصر أسابيع من البحث عن جهات التدريب، مع معايير تدقيق صارمة وشفافية كاملة في العروض.'
-            : 'A streamlined matchmaking process saving weeks of vendor searching. Explore our vetting rubric, cohort scoping, and proposal transparency.'}
+            ? 'مواصفات تنفيذية فائقة الدقة. انقر على أي بطاقة لقلبها ومعاينة خطوات الاستيعاب والفحص ومقارنة العروض.'
+            : 'Minimal words, verified precision. Click any card to flip and inspect scoping rubrics, faculty vetting, and itemized comparison.'}
         </p>
       </div>
 
-      {/* ============================================================== */}
-      {/* DESKTOP ATTIO-STYLE STICKY SCROLL SECTION                     */}
-      {/* ============================================================== */}
-      <div ref={containerRef} className="hidden lg:block relative min-h-[280vh]">
-        <div className="sticky top-28 xl:top-32 w-full">
-          <div className="grid grid-cols-12 gap-6 xl:gap-8 2xl:gap-10 items-center">
-            {/* Left Column: Attio-style Navigation Titles in Orange (Minimized) */}
-            <div className="col-span-4 xl:col-span-4 2xl:col-span-4 flex flex-col space-y-3">
-              {steps.map((s, idx) => {
-                const isActive = activeStep === idx;
-                return (
-                  <button
-                    key={s.id}
-                    type="button"
-                    onClick={() => handleStepClick(idx)}
-                    className="group relative flex items-start gap-3 text-start w-full py-1.5 transition-all duration-300 outline-none cursor-pointer"
-                    aria-current={isActive ? 'step' : undefined}
+      {/* 3 Palantir-Style Dog-Ear Vertical Cards with Isometric Cubes in a Row */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        {steps.map((step, idx) => {
+          const isFlipped = !!flippedCards[idx];
+          const isHovered = hoveredCard === idx;
+
+          return (
+            <div
+              key={step.id}
+              className="relative w-full h-[560px] sm:h-[550px] lg:h-[570px]"
+              style={{ perspective: '1200px' }}
+              onMouseEnter={() => setHoveredCard(idx)}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
+              {/* 3D Flipping Card Container */}
+              <m.div
+                animate={{
+                  rotateY: reduce ? 0 : isFlipped ? 180 : 0,
+                  opacity: reduce && isFlipped ? 0.95 : 1,
+                }}
+                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                style={{ transformStyle: 'preserve-3d' }}
+                className="relative w-full h-full"
+              >
+                {/* ======================================================== */}
+                {/* FRONT FACE: Palantir Clean Tech Card with Isometric Cube */}
+                {/* ======================================================== */}
+                <div
+                  style={{
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                  }}
+                  onClick={() => toggleFlip(idx)}
+                  className="absolute inset-0 w-full h-full cursor-pointer group select-none transition-all duration-300"
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isFlipped}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      toggleFlip(idx);
+                    }
+                  }}
+                >
+                  {/* Outer Border Layer with Chamfer Cut */}
+                  <div
+                    className="absolute inset-0 transition-all duration-300"
+                    style={{
+                      clipPath: frontClipPath,
+                      backgroundColor: isHovered
+                        ? 'rgba(255, 92, 0, 0.45)'
+                        : 'rgba(255, 255, 255, 0.12)',
+                    }}
+                  />
+
+                  {/* Inner Surface with Chamfer Cut */}
+                  <div
+                    className="absolute inset-[1px] bg-[#0C0D11] p-6 sm:p-7 flex flex-col justify-between transition-colors duration-300 group-hover:bg-[#0F1016]"
+                    style={{ clipPath: frontClipPath }}
                   >
-                    {/* Vertical Indicator Bar: Proportional height */}
+                    {/* Dog-Ear Triangle Corner Flap */}
                     <div
-                      className={`w-1 rounded-full transition-all duration-300 shrink-0 ${
-                        isActive
-                          ? 'h-9 sm:h-10 bg-[#FF5C00]'
-                          : 'h-5 sm:h-6 bg-white/10 group-hover:bg-white/20'
+                      className={`absolute top-0 pointer-events-none transition-all duration-300 w-6 h-6 ${
+                        isAr ? 'left-0' : 'right-0'
                       }`}
+                      style={{
+                        clipPath: isAr
+                          ? 'polygon(100% 0, 0 100%, 100% 100%)'
+                          : 'polygon(0 0, 0 100%, 100% 100%)',
+                        backgroundColor: isHovered
+                          ? 'rgba(255, 92, 0, 0.35)'
+                          : 'rgba(255, 255, 255, 0.12)',
+                        borderBottom: isHovered
+                          ? '1px solid rgba(255, 92, 0, 0.6)'
+                          : '1px solid rgba(255, 255, 255, 0.25)',
+                        borderLeft: !isAr
+                          ? isHovered
+                            ? '1px solid rgba(255, 92, 0, 0.6)'
+                            : '1px solid rgba(255, 255, 255, 0.25)'
+                          : undefined,
+                        borderRight: isAr
+                          ? isHovered
+                            ? '1px solid rgba(255, 92, 0, 0.6)'
+                            : '1px solid rgba(255, 255, 255, 0.25)'
+                          : undefined,
+                      }}
                     />
 
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <span
-                          className={`font-mono text-[11px] transition-colors duration-300 ${
-                            isActive ? 'text-[#FF5C00] font-bold' : 'text-neutral-500'
-                          }`}
-                        >
-                          {s.index}
+                    {/* Top Telemetry Bar */}
+                    <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-[11px] font-bold text-[#FF5C00]">
+                          {step.index}
                         </span>
-                        <span
-                          className={`text-[10px] font-mono tracking-wider uppercase transition-colors duration-300 ${
-                            isActive ? 'text-[#FF5C00]/90 font-medium' : 'text-neutral-500'
-                          }`}
-                        >
-                          {s.badge}
+                        <span className="font-mono text-[10px] tracking-widest text-neutral-400 uppercase">
+                          {isAr ? step.categoryAr : step.categoryEn}
                         </span>
                       </div>
-
-                      {/* Main Title: Minimized scale, elegant font size */}
-                      <div
-                        className={`font-heading text-sm sm:text-base lg:text-lg font-medium tracking-tight transition-colors duration-300 mt-0.5 leading-snug ${
-                          isActive
-                            ? 'text-[#FF5C00] font-semibold'
-                            : 'text-neutral-500 group-hover:text-neutral-300'
-                        }`}
-                      >
-                        {s.title}
-                      </div>
+                      <span className="font-mono text-[9px] px-2 py-0.5 rounded-full bg-white/[0.04] border border-white/10 text-neutral-300">
+                        {isAr ? step.statusAr : step.statusEn}
+                      </span>
                     </div>
-                  </button>
-                );
-              })}
-            </div>
 
-            {/* Right Column: Attio-style Black & White Content Panel (Minimized scale) */}
-            <div className="col-span-8 xl:col-span-8 2xl:col-span-8">
-              <div className="relative rounded-2xl border border-white/10 bg-[#0B0C10] p-5 sm:p-6 lg:p-7 xl:p-8 min-h-[380px] sm:min-h-[400px] lg:min-h-[430px] xl:min-h-[450px] shadow-[0_20px_50px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.08)] overflow-hidden flex flex-col justify-between">
-                {/* Subtle Monochrome Tech Dots underlayer */}
-                <div
-                  className="absolute inset-0 opacity-[0.06] pointer-events-none"
-                  style={{
-                    backgroundImage:
-                      'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.8) 1px, transparent 0)',
-                    backgroundSize: '24px 24px',
-                  }}
-                />
+                    {/* 3D Animated Isometric Cube (Pradis Style) */}
+                    <div className="pt-2">
+                      <IsometricCubeVisual
+                        type={step.cubeType}
+                        isHovered={isHovered}
+                        reduce={reduce}
+                      />
+                    </div>
 
-                <AnimatePresence mode="wait">
-                  <m.div
-                    key={currentStep.id}
-                    initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10 }}
-                    transition={{ duration: 0.24, ease: ease.out }}
-                    className="relative z-10 flex flex-col justify-between h-full space-y-4"
-                  >
-                    {/* Top Content Area: Monochrome Header & Angle */}
-                    <div>
-                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/15 text-neutral-300 text-[10px] sm:text-[11px] font-mono font-medium">
-                        <span>{currentStep.badge}</span>
+                    {/* Middle: Clean Corporate Typography & Quote */}
+                    <div className="space-y-3 my-auto">
+                      <div>
+                        <h3 className="text-xl sm:text-2xl font-bold font-heading text-white tracking-tight leading-snug group-hover:text-neutral-100 transition-colors">
+                          {isAr ? step.titleAr : step.titleEn}
+                        </h3>
+                        <p className="text-xs font-mono text-[#FF5C00] mt-1 tracking-wide">
+                          {isAr ? step.subAr : step.subEn}
+                        </p>
                       </div>
 
-                      <h3 className="font-heading text-base sm:text-lg lg:text-xl font-semibold text-white tracking-tight leading-tight mt-1.5">
-                        {currentStep.angle}
-                      </h3>
-
-                      <p className="mt-1 text-xs sm:text-[13px] text-neutral-400 font-sans leading-relaxed max-w-xl font-normal">
-                        {currentStep.body}
-                      </p>
+                      {/* Executive Impact Quote */}
+                      <blockquote className="text-[13px] sm:text-sm text-neutral-300/90 font-sans leading-relaxed border-s-2 border-white/20 ps-3 italic">
+                        &ldquo;{isAr ? step.quoteAr : step.quoteEn}&rdquo;
+                      </blockquote>
                     </div>
 
-                    {/* Middle: Takeaways in crisp Black & White */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2.5 border-t border-white/[0.08]">
-                      {currentStep.takeaways.map((point, pIdx) => (
-                        <div key={pIdx} className="flex items-start gap-1.5 text-[11px] sm:text-xs text-neutral-300 font-sans">
-                          <CheckCircle2 size={12} className="text-white shrink-0 mt-0.5" />
-                          <span className="leading-snug text-neutral-300">{point}</span>
-                        </div>
-                      ))}
+                    {/* Bottom: Key Metrics & Interactive Flip Prompt */}
+                    <div className="space-y-3.5 pt-3 border-t border-white/[0.08]">
+                      <div className="grid grid-cols-2 gap-2 text-start">
+                        {step.metrics.map((m, mIdx) => (
+                          <div
+                            key={mIdx}
+                            className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] group-hover:border-white/15 transition-colors"
+                          >
+                            <div className="text-sm sm:text-base font-bold font-heading text-white">
+                              {isAr ? m.valueAr : m.valueEn}
+                            </div>
+                            <div className="text-[9px] font-mono text-neutral-400 mt-0.5 uppercase tracking-wider truncate">
+                              {isAr ? m.labelAr : m.labelEn}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Flip Action Indicator */}
+                      <div className="flex items-center justify-between text-xs font-mono text-neutral-400 group-hover:text-[#FF5C00] transition-colors pt-0.5">
+                        <span className="flex items-center gap-1.5 text-[11px]">
+                          <RefreshCw size={12} className="group-hover:rotate-180 transition-transform duration-500" />
+                          <span>{isAr ? 'انقر لقلب البطاقة والمعاينة' : 'Click to flip & inspect'}</span>
+                        </span>
+                        <span className="text-[10px] text-neutral-500 font-mono">⟲</span>
+                      </div>
                     </div>
-
-                    {/* Bottom: Mockup Widget in pure Black & White */}
-                    <div>
-                      {currentStep.mockup}
-                    </div>
-                  </m.div>
-                </AnimatePresence>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ============================================================== */}
-      {/* MOBILE / TABLET VIEW (Segmented Tab Bar + Card View)           */}
-      {/* ============================================================== */}
-      <div className="lg:hidden space-y-4">
-        {/* Mobile Tab Control with Orange active indicator */}
-        <div className="flex items-center justify-between gap-1 p-1 bg-white/[0.04] border border-white/10 rounded-xl">
-          {steps.map((s, idx) => {
-            const isActive = activeStep === idx;
-            return (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => setActiveStep(idx)}
-                className={`flex-1 py-1.5 px-2 rounded-lg text-center transition-all duration-200 outline-none text-xs font-medium ${
-                  isActive
-                    ? 'bg-black text-[#FF5C00] font-semibold border border-[#FF5C00]/30 shadow-sm'
-                    : 'text-neutral-400 hover:text-neutral-200'
-                }`}
-              >
-                <span className="font-mono text-[9px] block opacity-80">{s.index}</span>
-                <span className="truncate block mt-0.5 text-[11px]">{s.title}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Mobile Black & White Card */}
-        <div className="relative rounded-xl border border-white/10 bg-[#0B0C10] p-4 shadow-xl overflow-hidden space-y-3.5">
-          <AnimatePresence mode="wait">
-            <m.div
-              key={currentStep.id}
-              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
-              transition={{ duration: 0.2, ease: ease.out }}
-              className="space-y-3"
-            >
-              <div>
-                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/15 text-neutral-300 text-[10px] font-mono font-medium">
-                  <span>{currentStep.badge}</span>
+                  </div>
                 </div>
 
-                <h3 className="font-heading text-base font-semibold text-white tracking-tight mt-2 leading-snug">
-                  {currentStep.angle}
-                </h3>
+                {/* ======================================================== */}
+                {/* BACK FACE: Detailed Flipped Dossier (Self-Contained)     */}
+                {/* ======================================================== */}
+                <div
+                  style={{
+                    backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                    transform: 'rotateY(180deg)',
+                  }}
+                  className="absolute inset-0 w-full h-full select-none"
+                >
+                  {/* Outer Border Layer with Matching Reversed Cut */}
+                  <div
+                    className="absolute inset-0 transition-all duration-300"
+                    style={{
+                      clipPath: backClipPath,
+                      backgroundColor: 'rgba(255, 92, 0, 0.45)',
+                    }}
+                  />
 
-                <p className="mt-1 text-xs text-neutral-400 font-sans leading-relaxed">
-                  {currentStep.body}
-                </p>
-              </div>
+                  {/* Inner Surface */}
+                  <div
+                    className="absolute inset-[1px] bg-[#0E0F14] p-5 sm:p-6 flex flex-col justify-between"
+                    style={{ clipPath: backClipPath }}
+                  >
+                    {/* Dog-Ear Triangle Corner Flap for Back Face */}
+                    <div
+                      className={`absolute top-0 pointer-events-none w-6 h-6 ${
+                        isAr ? 'right-0' : 'left-0'
+                      }`}
+                      style={{
+                        clipPath: isAr
+                          ? 'polygon(0 0, 0 100%, 100% 100%)'
+                          : 'polygon(100% 0, 0 100%, 100% 100%)',
+                        backgroundColor: 'rgba(255, 92, 0, 0.35)',
+                        borderBottom: '1px solid rgba(255, 92, 0, 0.6)',
+                        borderRight: !isAr ? '1px solid rgba(255, 92, 0, 0.6)' : undefined,
+                        borderLeft: isAr ? '1px solid rgba(255, 92, 0, 0.6)' : undefined,
+                      }}
+                    />
 
-              {/* Takeaways list */}
-              <div className="space-y-1.5 pt-2.5 border-t border-white/[0.08]">
-                {currentStep.takeaways.map((point, pIdx) => (
-                  <div key={pIdx} className="flex items-start gap-2 text-xs text-neutral-300 font-sans">
-                    <CheckCircle2 size={12} className="text-white shrink-0 mt-0.5" />
-                    <span className="leading-snug">{point}</span>
+                    {/* Back Header with Close / Flip Button */}
+                    <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-[10px] font-bold text-[#FF5C00]">
+                          {isAr ? 'المواصفات' : 'SPEC'} {'//'} {step.index}
+                        </span>
+                        <span className="text-[10px] font-mono text-neutral-400 uppercase">
+                          {isAr ? 'خطوة معتمدة' : 'VERIFIED'}
+                        </span>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFlip(idx);
+                        }}
+                        className="p-1 rounded-md text-neutral-400 hover:text-white hover:bg-white/10 transition-colors text-[10px] font-mono flex items-center gap-1"
+                        title={isAr ? 'قلب البطاقة للواجهة' : 'Flip back to front'}
+                      >
+                        <RefreshCw size={11} />
+                        <span>{isAr ? 'رجوع' : 'Back'}</span>
+                      </button>
+                    </div>
+
+                    {/* Back Content Body */}
+                    <div className="my-auto space-y-3">
+                      <div>
+                        <h4 className="text-base font-bold font-heading text-white">
+                          {isAr ? step.backTitleAr : step.backTitleEn}
+                        </h4>
+                        <p className="text-[11px] text-neutral-400 font-sans mt-0.5">
+                          {isAr ? step.backSubAr : step.backSubEn}
+                        </p>
+                      </div>
+
+                      {/* Dynamic Compact Component */}
+                      {step.renderBackContent(isAr)}
+
+                      {/* Takeaways List */}
+                      <div className="space-y-1.5 pt-1">
+                        {step.takeaways.map((point, pIdx) => (
+                          <div key={pIdx} className="flex items-start gap-1.5 text-[11px] text-neutral-300 font-sans">
+                            <CheckCircle2 size={12} className="text-[#FF5C00] shrink-0 mt-0.5" />
+                            <span className="leading-snug">{isAr ? point.ar : point.en}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Back Action Controls: Flip Back (Clean, Full-Width) */}
+                    <div className="pt-3 border-t border-white/10">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFlip(idx);
+                        }}
+                        className="w-full py-2.5 px-3 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 hover:text-white border border-white/10 text-xs font-mono transition-all flex items-center justify-center gap-2 group/btn"
+                      >
+                        <RefreshCw size={12} className="group-hover/btn:rotate-180 transition-transform duration-500" />
+                        <span>{isAr ? 'قلب للواجهة' : 'Flip to Front'}</span>
+                      </button>
+                    </div>
                   </div>
-                ))}
-              </div>
-
-              {/* Mockup */}
-              <div>
-                {currentStep.mockup}
-              </div>
-            </m.div>
-          </AnimatePresence>
-        </div>
+                </div>
+              </m.div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

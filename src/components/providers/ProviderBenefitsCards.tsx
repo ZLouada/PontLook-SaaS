@@ -1,17 +1,13 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
-import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
+import React, { useState, useCallback } from 'react';
+import { m, useReducedMotion } from 'framer-motion';
 import {
   CircleDollarSign,
   Target,
   TrendingUp,
   CheckCircle2,
   RefreshCw,
-  ArrowUpRight,
-  ArrowRight,
-  X,
   ShieldCheck,
 } from '@/components/icons';
 import TextReveal from '@/components/shared/TextReveal';
@@ -46,7 +42,6 @@ interface ProviderCardData {
   slaAr: string;
   takeaways: { en: string; ar: string }[];
   renderBackContent: (isAr: boolean) => React.ReactNode;
-  renderFullMockup: (isAr: boolean) => React.ReactNode;
 }
 
 interface ProviderBenefitsCardsProps {
@@ -61,25 +56,12 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
   const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
   // Track hovered state for border lighting
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  // Track active full-screen dossier modal
-  const [activeModalIdx, setActiveModalIdx] = useState<number | null>(null);
 
   const toggleFlip = useCallback((idx: number) => {
     setFlippedCards((prev) => ({
       ...prev,
       [idx]: !prev[idx],
     }));
-  }, []);
-
-  // Keyboard shortcut to close modal
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setActiveModalIdx(null);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const cards: ProviderCardData[] = [
@@ -162,60 +144,6 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
           </div>
         </div>
       ),
-      renderFullMockup: (isAr) => (
-        <div className="bg-[#0B0C0F] rounded-xl border border-white/10 w-full p-4 sm:p-5 flex flex-col gap-3 font-sans shadow-2xl">
-          <div className="flex items-center justify-between pb-3 border-b border-white/10">
-            <div className="flex items-center gap-2.5">
-              <div className="h-8 w-8 rounded-lg bg-[#FF5C00]/20 text-[#FF5C00] flex items-center justify-center font-bold border border-[#FF5C00]/30">
-                <CircleDollarSign size={16} />
-              </div>
-              <div>
-                <div className="text-sm font-semibold text-white">
-                  {isAr ? 'مقارنة اقتصاديات الاستحواذ' : 'Acquisition Unit Economics'}
-                </div>
-                <div className="text-xs text-neutral-400">
-                  {isAr ? 'الرسوم الشهرية مقابل PontLook' : 'Traditional Retainer vs PontLook Performance'}
-                </div>
-              </div>
-            </div>
-            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#FF5C00]/15 text-[#FF5C00] border border-[#FF5C00]/30 font-mono">
-              {isAr ? 'عائد مضمون' : 'Guaranteed ROI'}
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 text-xs">
-            <div className="p-3.5 rounded-lg bg-white/[0.03] border border-white/10">
-              <div className="text-[10px] text-neutral-400 uppercase font-mono font-medium">
-                {isAr ? 'الاشتراك الشهري التقليدي' : 'Traditional Agency Retainer'}
-              </div>
-              <div className="text-base font-semibold text-neutral-400 line-through mt-1">$3,500 / {isAr ? 'شهر' : 'mo'}</div>
-              <div className="text-[11px] text-neutral-400 mt-1">{isAr ? 'التزام طويل بدون ضمان نتائج' : 'Fixed retainer with zero output guarantee'}</div>
-            </div>
-            <div className="p-3.5 rounded-lg bg-[#FF5C00]/10 border border-[#FF5C00]/30">
-              <div className="text-[10px] text-[#FF5C00] uppercase font-mono font-semibold">
-                {isAr ? 'نموذج PontLook' : 'PontLook Performance Model'}
-              </div>
-              <div className="text-base font-bold text-white mt-1">$0 {isAr ? 'اشتراك' : 'Retainer'}</div>
-              <div className="text-[11px] text-neutral-200 mt-1">{isAr ? 'دفع فقط لكل مشترٍ مؤهل تم اعتماده' : 'Pay strictly per verified decision maker ($50–$200)'}</div>
-            </div>
-          </div>
-
-          <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10 space-y-1.5 text-xs text-neutral-300">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
-              <span>{isAr ? 'صفر رسوم إدارة أو التزامات تعاقدية طويلة الأجل' : 'No long-term binding contracts or hidden platform fees'}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
-              <span>{isAr ? 'ضمان استبدال فوري 100% لأي فرصة غير مطابقة خلال 48 ساعة' : '100% Instant lead replacement SLA within 48h for any dispute'}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
-              <span>{isAr ? 'تكلفة استحواذ متطابقة تماماً مع طاقتك الاستيعابية' : 'Predictable customer acquisition cost aligned with your schedule'}</span>
-            </div>
-          </div>
-        </div>
-      ),
     },
     {
       id: 'bant-verified',
@@ -271,54 +199,6 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
           <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#FF5C00]/[0.08] border border-[#FF5C00]/30">
             <span className="text-neutral-300 text-[11px] font-mono">{isAr ? 'الميزانية والفوج:' : 'Cohort & Budget:'}</span>
             <span className="text-[#FF5C00] font-bold text-xs">35 {isAr ? 'تنفيذياً' : 'Execs'} · SAR 120k+</span>
-          </div>
-        </div>
-      ),
-      renderFullMockup: (isAr) => (
-        <div className="bg-[#0B0C0F] rounded-xl border border-white/10 w-full p-4 sm:p-5 flex flex-col gap-3 font-sans shadow-2xl">
-          <div className="flex items-center justify-between pb-3 border-b border-white/10">
-            <div className="flex items-center gap-2.5">
-              <div className="h-8 w-8 rounded-lg bg-[#FF5C00]/20 text-[#FF5C00] flex items-center justify-center font-bold border border-[#FF5C00]/30">
-                <Target size={16} />
-              </div>
-              <div>
-                <div className="text-sm font-semibold text-white">
-                  {isAr ? 'ملف مواصفات الفرصة المؤسسية' : 'Enterprise Lead Dossier'}
-                </div>
-                <div className="text-xs text-neutral-400">
-                  {isAr ? 'عينة من متطلبات القرار والطلب المسلم' : 'Verified Decision-Maker Specification'}
-                </div>
-              </div>
-            </div>
-            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#FF5C00]/15 text-[#FF5C00] border border-[#FF5C00]/30 font-mono">
-              {isAr ? 'مؤهل BANT' : 'BANT Audited'}
-            </span>
-          </div>
-
-          <div className="space-y-2 text-xs">
-            <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.03] border border-white/10">
-              <span className="text-neutral-400">{isAr ? 'صانع القرار المستهدف:' : 'Verified Authority:'}</span>
-              <span className="text-white font-medium">{isAr ? 'نائب رئيس الموارد البشرية · الرياض' : 'VP of HR / CHRO (Riyadh Hub)'}</span>
-            </div>
-            <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.03] border border-white/10">
-              <span className="text-neutral-400">{isAr ? 'الاحتياج الاستراتيجي:' : 'Corporate Need:'}</span>
-              <span className="text-white font-medium">{isAr ? 'تطوير القيادات والتوطين النوعي' : 'Executive Leadership & Nationalization'}</span>
-            </div>
-            <div className="flex items-center justify-between p-3 rounded-lg bg-[#FF5C00]/10 border border-[#FF5C00]/30">
-              <span className="text-neutral-300">{isAr ? 'حجم الفوج والميزانية:' : 'Cohort & Budget Authority:'}</span>
-              <span className="text-white font-semibold">35 {isAr ? 'قائداً تنفيذياً' : 'Leaders'} · SAR 120k–250k</span>
-            </div>
-          </div>
-
-          <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10 space-y-1.5 text-xs text-neutral-300">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
-              <span>{isAr ? 'صلاحية ميزانية معتمدة وموقعة قبل تسليم الفرصة' : 'Confirmed budget sign-off prior to lead introduction'}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
-              <span>{isAr ? 'وثيقة متطلبات دقيقة توضح الفجوات التدريبية المطلوبة' : 'Scoped problem definitions detailing existing corporate skills gaps'}</span>
-            </div>
           </div>
         </div>
       ),
@@ -389,70 +269,14 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
           </div>
         </div>
       ),
-      renderFullMockup: (isAr) => (
-        <div className="bg-[#0B0C0F] rounded-xl border border-white/10 w-full p-4 sm:p-5 flex flex-col gap-3 font-sans shadow-2xl">
-          <div className="flex items-center justify-between pb-3 border-b border-white/10">
-            <div className="flex items-center gap-2.5">
-              <div className="h-8 w-8 rounded-lg bg-[#FF5C00]/20 text-[#FF5C00] flex items-center justify-center font-bold border border-[#FF5C00]/30">
-                <TrendingUp size={16} />
-              </div>
-              <div>
-                <div className="text-sm font-semibold text-white">
-                  {isAr ? 'جدول توزيع الفرص الفصلي' : 'Quarterly Opportunity Schedule'}
-                </div>
-                <div className="text-xs text-neutral-400">
-                  {isAr ? 'توزيع تدفق الطلبات المؤسسية عبر الفصول' : 'Multi-Quarter GCC Pipeline Flow'}
-                </div>
-              </div>
-            </div>
-            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#FF5C00]/15 text-[#FF5C00] border border-[#FF5C00]/30 font-mono">
-              {isAr ? 'طلب نشط' : 'Active Flow'}
-            </span>
-          </div>
-
-          <div className="grid grid-cols-3 gap-2 text-center text-xs">
-            <div className="p-2.5 rounded-lg bg-white/[0.03] border border-white/10">
-              <div className="text-[10px] text-neutral-400 font-mono">Q1 (Jan–Mar)</div>
-              <div className="text-sm font-bold text-white mt-1">14 {isAr ? 'فرصة' : 'Leads'}</div>
-              <div className="text-[10px] text-neutral-400 mt-0.5">{isAr ? 'القيادات والتنفيذ' : 'Executive Leadership'}</div>
-            </div>
-            <div className="p-2.5 rounded-lg bg-white/[0.03] border border-white/10">
-              <div className="text-[10px] text-neutral-400 font-mono">Q2 (Apr–Jun)</div>
-              <div className="text-sm font-bold text-white mt-1">19 {isAr ? 'فرصة' : 'Leads'}</div>
-              <div className="text-[10px] text-neutral-400 mt-0.5">{isAr ? 'التحول والعمليات' : 'Digital Transformation'}</div>
-            </div>
-            <div className="p-2.5 rounded-lg bg-[#FF5C00]/10 border border-[#FF5C00]/30">
-              <div className="text-[10px] text-[#FF5C00] font-mono font-semibold">Q3–Q4</div>
-              <div className="text-sm font-bold text-white mt-1">25+ {isAr ? 'فرصة' : 'Leads'}</div>
-              <div className="text-[10px] text-neutral-200 mt-0.5">{isAr ? 'التوطين والمهارات' : 'Nationalization & Scale'}</div>
-            </div>
-          </div>
-
-          <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10 space-y-1.5 text-xs text-neutral-300">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
-              <span>{isAr ? 'توجيه آلي مطابق تماماً للاعتمادات والتخصصات التدريبية' : 'Algorithmic routing matching verified credentials and domain niches'}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-[#FF5C00] shrink-0" />
-              <span>{isAr ? 'تغطية واسعة لكبرى الشركات في السعودية والإمارات وقطر' : 'Cross-border intake across tier-1 enterprises in KSA, UAE, and Qatar'}</span>
-            </div>
-          </div>
-        </div>
-      ),
     },
   ];
 
   // Cut-corner clip path calculation (Palantir document cut)
-  // In LTR: top-right corner is cut.
-  // In RTL: top-left corner is cut.
   const frontClipPath = isAr
     ? 'polygon(24px 0, 100% 0, 100% 100%, 0 100%, 0 24px)'
     : 'polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%)';
 
-  // For the back face (rotated 180deg in 3D), to match the viewer's screen cut corner:
-  // In LTR: back face local cut is on the left so when flipped it stays on viewer's right.
-  // In RTL: back face local cut is on the right so when flipped it stays on viewer's left.
   const backClipPath = isAr
     ? 'polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%)'
     : 'polygon(24px 0, 100% 0, 100% 100%, 0 100%, 0 24px)';
@@ -630,7 +454,7 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                 </div>
 
                 {/* ======================================================== */}
-                {/* BACK FACE: Detailed Flipped Dossier with Pop-up Content   */}
+                {/* BACK FACE: Detailed Flipped Dossier (Self-Contained)     */}
                 {/* ======================================================== */}
                 <div
                   style={{
@@ -720,30 +544,18 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
                       </div>
                     </div>
 
-                    {/* Back Action Controls: Flip Back & Expand Full Dossier Modal */}
-                    <div className="pt-3 border-t border-white/10 flex items-center gap-2">
+                    {/* Back Action Controls: Flip Back (Clean, Full-Width) */}
+                    <div className="pt-3 border-t border-white/10">
                       <button
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           toggleFlip(idx);
                         }}
-                        className="flex-1 py-2 px-3 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 hover:text-white border border-white/10 text-xs font-mono transition-all flex items-center justify-center gap-1.5"
+                        className="w-full py-2.5 px-3 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 hover:text-white border border-white/10 text-xs font-mono transition-all flex items-center justify-center gap-2 group/btn"
                       >
-                        <RefreshCw size={12} />
+                        <RefreshCw size={12} className="group-hover/btn:rotate-180 transition-transform duration-500" />
                         <span>{isAr ? 'قلب للواجهة' : 'Flip to Front'}</span>
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveModalIdx(idx);
-                        }}
-                        className="flex-1 py-2 px-3 rounded-lg bg-[#FF5C00] hover:bg-[#FF6A1A] text-white text-xs font-semibold font-sans transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-orange-500/20"
-                      >
-                        <span>{isAr ? 'الملف الكامل' : 'Full Dossier'}</span>
-                        <ArrowUpRight size={13} className="rtl:-scale-x-100" />
                       </button>
                     </div>
                   </div>
@@ -753,88 +565,6 @@ export default function ProviderBenefitsCards({ lang }: ProviderBenefitsCardsPro
           );
         })}
       </div>
-
-      {/* ================================================================ */}
-      {/* FULL-SCREEN EXPANDED DOSSIER MODAL POP-UP                        */}
-      {/* ================================================================ */}
-      <AnimatePresence>
-        {activeModalIdx !== null && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto"
-            onClick={() => setActiveModalIdx(null)}
-          >
-            <m.div
-              initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 15 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-2xl bg-[#0E0F14] border border-white/15 rounded-2xl shadow-2xl p-5 sm:p-7 overflow-hidden my-auto"
-            >
-              {/* Modal Top Bar */}
-              <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
-                <div className="flex items-center gap-2.5">
-                  <span className="font-mono text-xs px-2.5 py-1 rounded-full bg-[#FF5C00]/15 text-[#FF5C00] border border-[#FF5C00]/30 font-semibold">
-                    {cards[activeModalIdx].index} {'//'} {isAr ? cards[activeModalIdx].categoryAr : cards[activeModalIdx].categoryEn}
-                  </span>
-                  <span className="text-xs font-mono text-neutral-400">
-                    {isAr ? 'ملف المواصفات التنفيذية المعتمدة' : 'CONFIDENTIAL // AUDITED SPEC'}
-                  </span>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setActiveModalIdx(null)}
-                  className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 transition-colors"
-                  aria-label={isAr ? 'إغلاق' : 'Close modal'}
-                >
-                  <X size={18} />
-                </button>
-              </div>
-
-              {/* Title & Description */}
-              <div className="mb-4">
-                <h3 className="text-xl sm:text-2xl font-bold font-heading text-white">
-                  {isAr ? cards[activeModalIdx].titleAr : cards[activeModalIdx].titleEn}
-                </h3>
-                <p className="text-xs sm:text-sm text-neutral-400 font-sans mt-1">
-                  {isAr ? cards[activeModalIdx].subAr : cards[activeModalIdx].subEn}
-                </p>
-              </div>
-
-              {/* Full Interactive Mockup Widget */}
-              <div className="mb-5">
-                {cards[activeModalIdx].renderFullMockup(isAr)}
-              </div>
-
-              {/* Modal Footer with CTA */}
-              <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
-                <div className="text-xs text-neutral-400 font-mono text-center sm:text-start">
-                  <span>{isAr ? 'ضمان استبدال فوري 100% لأي فرصة غير مطابقة' : '100% Instant lead replacement SLA'}</span>
-                </div>
-
-                <div className="flex items-center gap-2.5 w-full sm:w-auto">
-                  <button
-                    type="button"
-                    onClick={() => setActiveModalIdx(null)}
-                    className="py-2.5 px-4 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 text-xs font-mono transition-colors border border-white/10"
-                  >
-                    {isAr ? 'إغلاق النافذة' : 'Close'}
-                  </button>
-
-                  <Link
-                    href={`/${lang}/for-providers/apply`}
-                    className="flex-1 sm:flex-initial py-2.5 px-5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white text-xs font-semibold font-sans transition-all shadow-md shadow-orange-500/20 inline-flex items-center justify-center gap-2"
-                  >
-                    <span>{isAr ? 'انضم كشريك تدريب معتمد' : 'Apply as Training Partner'}</span>
-                    <ArrowRight size={14} className="rtl:-scale-x-100" />
-                  </Link>
-                </div>
-              </div>
-            </m.div>
-          </div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
