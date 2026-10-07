@@ -50,10 +50,90 @@ interface FindTrainingStepsCardsProps {
 }
 
 /**
- * 3D Isometric Cube Visual with Floating Animation
- * Inspired by Pradis (pradis.webflow.io) 3D isometric cube architecture
+ * 3D Holographic Kinetic Cube Component
+ * Six interactive 3D faces with glowing PontLook orange wireframe borders,
+ * translucent amber glass fill, inner pulse core, and realistic lighting.
  */
-function IsometricCubeVisual({
+function Cube3D({
+  size = 36,
+  color = '#FF5C00',
+  isHovered = false,
+  className = '',
+  style = {},
+}: {
+  size?: number;
+  color?: string;
+  isHovered?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const half = size / 2;
+  const faces = [
+    { name: 'front', transform: `translateZ(${half}px)` },
+    { name: 'back', transform: `rotateY(180deg) translateZ(${half}px)` },
+    { name: 'right', transform: `rotateY(90deg) translateZ(${half}px)` },
+    { name: 'left', transform: `rotateY(-90deg) translateZ(${half}px)` },
+    { name: 'top', transform: `rotateX(90deg) translateZ(${half}px)` },
+    { name: 'bottom', transform: `rotateX(-90deg) translateZ(${half}px)` },
+  ];
+
+  return (
+    <div
+      className={`relative ${className}`}
+      style={{
+        width: `${size}px`,
+        height: `${size}px`,
+        transformStyle: 'preserve-3d',
+        ...style,
+      }}
+    >
+      {/* Inner Glowing Core */}
+      <div
+        className="absolute inset-0 m-auto rounded-full pointer-events-none transition-all duration-300"
+        style={{
+          width: `${size * 0.4}px`,
+          height: `${size * 0.4}px`,
+          backgroundColor: color,
+          filter: isHovered ? 'blur(6px)' : 'blur(4px)',
+          opacity: isHovered ? 0.9 : 0.6,
+          transform: 'translateZ(0px)',
+        }}
+      />
+
+      {faces.map((f) => (
+        <div
+          key={f.name}
+          className="absolute inset-0 pointer-events-none transition-all duration-300"
+          style={{
+            width: `${size}px`,
+            height: `${size}px`,
+            transform: f.transform,
+            backgroundColor: isHovered
+              ? 'rgba(255, 92, 0, 0.18)'
+              : 'rgba(255, 92, 0, 0.10)',
+            border: isHovered ? `1.4px solid ${color}` : `1.1px solid ${color}`,
+            boxShadow: isHovered
+              ? `0 0 14px rgba(255, 92, 0, 0.45) inset, 0 0 10px rgba(255, 92, 0, 0.4)`
+              : `0 0 8px rgba(255, 92, 0, 0.25) inset, 0 0 6px rgba(255, 92, 0, 0.25)`,
+            backfaceVisibility: 'visible',
+          }}
+        >
+          {/* Subtle grid line or crosshairs on faces */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-30">
+            <div className="w-full h-[1px] bg-[#FF5C00]" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * 3D Isometric Kinetic Cubes System
+ * Features true 3D continuous rotation, levitation, orbital satellite physics,
+ * and multi-cube synchronized breathing animations.
+ */
+function KineticCubesVisual({
   type,
   isHovered,
   reduce,
@@ -62,96 +142,199 @@ function IsometricCubeVisual({
   isHovered: boolean;
   reduce: boolean | null;
 }) {
-  const drawCube = (cx: number, cy: number, s: number, key: string) => {
-    const dx = s * 0.866;
-    const dy = s * 0.5;
-
-    const topPath = `M ${cx} ${cy - s} L ${cx + dx} ${cy - dy} L ${cx} ${cy} L ${cx - dx} ${cy - dy} Z`;
-    const leftPath = `M ${cx} ${cy} L ${cx - dx} ${cy - dy} L ${cx - dx} ${cy + dy} L ${cx} ${cy + s} Z`;
-    const rightPath = `M ${cx} ${cy} L ${cx + dx} ${cy - dy} L ${cx + dx} ${cy + dy} L ${cx} ${cy + s} Z`;
-
-    return (
-      <g key={key}>
-        {/* Top Face */}
-        <path
-          d={topPath}
-          fill={isHovered ? 'rgba(255, 92, 0, 0.65)' : 'rgba(255, 92, 0, 0.45)'}
-          stroke="#FF5C00"
-          strokeWidth="1.2"
-          strokeLinejoin="round"
-          className="transition-colors duration-300"
-        />
-        {/* Left Face */}
-        <path
-          d={leftPath}
-          fill={isHovered ? 'rgba(255, 92, 0, 0.40)' : 'rgba(255, 92, 0, 0.26)'}
-          stroke="#FF5C00"
-          strokeWidth="1.2"
-          strokeLinejoin="round"
-          className="transition-colors duration-300"
-        />
-        {/* Right Face */}
-        <path
-          d={rightPath}
-          fill={isHovered ? 'rgba(255, 92, 0, 0.25)' : 'rgba(255, 92, 0, 0.14)'}
-          stroke="#FF5C00"
-          strokeWidth="1.2"
-          strokeLinejoin="round"
-          className="transition-colors duration-300"
-        />
-      </g>
-    );
-  };
-
   return (
-    <div className="relative w-full h-20 sm:h-22 flex items-center justify-center pointer-events-none select-none">
-      <svg
-        viewBox="0 0 100 80"
-        className="w-24 h-20 overflow-visible transition-all duration-300"
+    <div
+      className="relative w-full h-24 sm:h-26 flex items-center justify-center pointer-events-none select-none overflow-visible"
+      style={{ perspective: '800px' }}
+    >
+      {/* Ambient Floor Glow */}
+      <div
+        className="absolute w-24 h-7 bottom-0 rounded-full blur-md pointer-events-none transition-all duration-300"
         style={{
-          filter: isHovered
-            ? 'drop-shadow(0 0 14px rgba(255, 92, 0, 0.55))'
-            : 'drop-shadow(0 0 6px rgba(255, 92, 0, 0.25))',
+          backgroundColor: isHovered ? 'rgba(255, 92, 0, 0.3)' : 'rgba(255, 92, 0, 0.15)',
         }}
-      >
-        {type === 'scoping' && (
-          <m.g
-            animate={reduce ? undefined : { y: [-3.5, 3.5, -3.5] }}
-            transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            {/* Main Central Cube */}
-            {drawCube(50, 42, 20, 'scoping-main')}
-            {/* Satellite Floating Micro-Cube */}
-            {drawCube(80, 22, 8, 'scoping-satellite')}
-          </m.g>
-        )}
+      />
 
-        {type === 'vetting' && (
-          <m.g
-            animate={reduce ? undefined : { y: [3, -3, 3] }}
-            transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
+      {/* 01: RAPID SCOPING -> Main Core Cube + Orbiting Satellite Cube */}
+      {type === 'scoping' && (
+        <div className="relative flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
+          {/* Main Core 3D Cube */}
+          <m.div
+            animate={
+              reduce
+                ? undefined
+                : {
+                    rotateY: [0, 360],
+                    rotateX: [-18, -32, -18],
+                    y: [-6, 6, -6],
+                    scale: isHovered ? 1.08 : 1,
+                  }
+            }
+            transition={{
+              rotateY: { duration: isHovered ? 6 : 10, repeat: Infinity, ease: 'linear' },
+              rotateX: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
+              y: { duration: 3.5, repeat: Infinity, ease: 'easeInOut' },
+              scale: { duration: 0.3 },
+            }}
+            style={{ transformStyle: 'preserve-3d' }}
+            className="relative"
           >
-            {/* Lower Interlocking Cube */}
-            {drawCube(38, 48, 17, 'vetting-lower')}
-            {/* Upper Interlocking Cube */}
-            {drawCube(62, 32, 17, 'vetting-upper')}
-          </m.g>
-        )}
+            <Cube3D size={36} color="#FF5C00" isHovered={isHovered} />
+          </m.div>
 
-        {type === 'comparison' && (
-          <m.g
-            animate={reduce ? undefined : { y: [-3, 3, -3] }}
-            transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
+          {/* Orbiting Satellite Micro-Cube */}
+          <m.div
+            animate={
+              reduce
+                ? undefined
+                : {
+                    rotateY: [0, -360],
+                    y: [6, -6, 6],
+                  }
+            }
+            transition={{
+              rotateY: { duration: isHovered ? 4.5 : 7, repeat: Infinity, ease: 'linear' },
+              y: { duration: 3.5, repeat: Infinity, ease: 'easeInOut' },
+            }}
+            style={{
+              position: 'absolute',
+              width: '90px',
+              height: '90px',
+              transformStyle: 'preserve-3d',
+            }}
+            className="flex items-center justify-center"
           >
-            {/* Base Left Cube */}
-            {drawCube(32, 54, 15, 'comp-left')}
-            {/* Base Right Cube */}
-            {drawCube(68, 54, 15, 'comp-right')}
+            <div
+              style={{
+                transform: 'translateX(42px) rotateX(25deg)',
+                transformStyle: 'preserve-3d',
+              }}
+            >
+              <Cube3D size={16} color="#FFA055" isHovered={isHovered} />
+            </div>
+          </m.div>
+        </div>
+      )}
+
+      {/* 02: DUAL VETTING -> Interlocking Twin Stepped Cubes (Anti-phase Bobbing) */}
+      {type === 'vetting' && (
+        <div
+          className="relative flex items-center justify-center gap-3.5"
+          style={{ transformStyle: 'preserve-3d' }}
+        >
+          {/* Lower Left Cube */}
+          <m.div
+            animate={
+              reduce
+                ? undefined
+                : {
+                    rotateY: [25, 385],
+                    rotateX: [-20, -10, -20],
+                    y: [-7, 7, -7],
+                    scale: isHovered ? 1.06 : 1,
+                  }
+            }
+            transition={{
+              rotateY: { duration: isHovered ? 6.5 : 10.5, repeat: Infinity, ease: 'linear' },
+              rotateX: { duration: 4.5, repeat: Infinity, ease: 'easeInOut' },
+              y: { duration: 3.6, repeat: Infinity, ease: 'easeInOut' },
+              scale: { duration: 0.3 },
+            }}
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            <Cube3D size={30} color="#FF5C00" isHovered={isHovered} />
+          </m.div>
+
+          {/* Upper Right Cube (Anti-phase floating) */}
+          <m.div
+            animate={
+              reduce
+                ? undefined
+                : {
+                    rotateY: [55, 415],
+                    rotateX: [-10, -24, -10],
+                    y: [7, -7, 7],
+                    scale: isHovered ? 1.06 : 1,
+                  }
+            }
+            transition={{
+              rotateY: { duration: isHovered ? 6.5 : 10.5, repeat: Infinity, ease: 'linear' },
+              rotateX: { duration: 4.5, repeat: Infinity, ease: 'easeInOut' },
+              y: { duration: 3.6, repeat: Infinity, ease: 'easeInOut' },
+              scale: { duration: 0.3 },
+            }}
+            style={{
+              transformStyle: 'preserve-3d',
+              transform: 'translateY(-14px)',
+            }}
+          >
+            <Cube3D size={30} color="#FF7A1A" isHovered={isHovered} />
+          </m.div>
+        </div>
+      )}
+
+      {/* 03: PROPOSAL AUDIT -> Revolving Tri-Cube Constellation */}
+      {type === 'comparison' && (
+        <div className="relative flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
+          <m.div
+            animate={
+              reduce
+                ? undefined
+                : {
+                    rotateY: [0, 360],
+                    rotateX: [-16, -28, -16],
+                    y: [-5, 5, -5],
+                    scale: isHovered ? 1.08 : 1,
+                  }
+            }
+            transition={{
+              rotateY: { duration: isHovered ? 8 : 13, repeat: Infinity, ease: 'linear' },
+              rotateX: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
+              y: { duration: 3.8, repeat: Infinity, ease: 'easeInOut' },
+              scale: { duration: 0.3 },
+            }}
+            style={{
+              transformStyle: 'preserve-3d',
+              width: '84px',
+              height: '84px',
+            }}
+            className="relative flex items-center justify-center"
+          >
             {/* Top Apex Cube */}
-            {drawCube(50, 28, 15, 'comp-apex')}
-          </m.g>
-        )}
-      </svg>
+            <div
+              style={{
+                position: 'absolute',
+                transform: 'translateY(-22px) translateZ(10px)',
+                transformStyle: 'preserve-3d',
+              }}
+            >
+              <Cube3D size={24} color="#FF5C00" isHovered={isHovered} />
+            </div>
+
+            {/* Bottom Left Cube */}
+            <div
+              style={{
+                position: 'absolute',
+                transform: 'translateX(-22px) translateY(18px) translateZ(-10px)',
+                transformStyle: 'preserve-3d',
+              }}
+            >
+              <Cube3D size={24} color="#FF7A1A" isHovered={isHovered} />
+            </div>
+
+            {/* Bottom Right Cube */}
+            <div
+              style={{
+                position: 'absolute',
+                transform: 'translateX(22px) translateY(18px) translateZ(-10px)',
+                transformStyle: 'preserve-3d',
+              }}
+            >
+              <Cube3D size={24} color="#FF5C00" isHovered={isHovered} />
+            </div>
+          </m.div>
+        </div>
+      )}
     </div>
   );
 }
@@ -490,9 +673,9 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                       </span>
                     </div>
 
-                    {/* 3D Animated Isometric Cube (Pradis Style) */}
+                    {/* 3D Animated Kinetic Cubes (Alive Holographic Physics) */}
                     <div className="pt-2">
-                      <IsometricCubeVisual
+                      <KineticCubesVisual
                         type={step.cubeType}
                         isHovered={isHovered}
                         reduce={reduce}
