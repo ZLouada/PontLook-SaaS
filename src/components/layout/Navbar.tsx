@@ -565,8 +565,10 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 }`}
                 aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
               >
-                <Globe size={13} className={isLightSection ? 'text-neutral-700' : 'text-neutral-400'} />
-                <span>{lang === 'en' ? 'العربية' : 'English'}</span>
+                <Globe size={13} className={`shrink-0 ${isLightSection ? 'text-neutral-700' : 'text-neutral-400'}`} />
+                <span className={lang === 'en' ? 'font-arabic tracking-normal' : ''} dir={lang === 'en' ? 'rtl' : 'ltr'}>
+                  {lang === 'en' ? 'العربية' : 'English'}
+                </span>
               </Link>
             </Magnetic>
 
@@ -589,15 +591,22 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             <div className="flex items-center gap-1.5 xs:gap-2 lg:hidden">
               <Link
                 href={switchHref}
-                className={`tap-target inline-flex items-center gap-1 xs:gap-1.5 px-2.5 xs:px-3 py-2 min-h-[44px] rounded-full text-xs font-medium active:scale-95 transition-all duration-200 touch-manipulation ${
+                className={`tap-target inline-flex items-center gap-1 xs:gap-1.5 px-2.5 xs:px-3 py-2 min-h-[44px] rounded-full text-xs font-medium active:scale-95 transition-all duration-200 touch-manipulation whitespace-nowrap shrink-0 ${
                   isLightSection
                     ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
                     : 'border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30'
                 }`}
                 aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
               >
-                <Globe size={13} className={isLightSection ? 'text-neutral-700' : 'text-neutral-400'} />
-                <span className="font-semibold text-[11px] xs:text-xs">{lang === 'en' ? 'العربية' : 'EN'}</span>
+                <Globe size={13} className={`shrink-0 ${isLightSection ? 'text-neutral-700' : 'text-neutral-400'}`} />
+                <span
+                  className={`font-semibold text-[11px] xs:text-xs whitespace-nowrap shrink-0 leading-none ${
+                    lang === 'en' ? 'font-arabic tracking-normal' : ''
+                  }`}
+                  dir={lang === 'en' ? 'rtl' : 'ltr'}
+                >
+                  {lang === 'en' ? 'العربية' : 'EN'}
+                </span>
               </Link>
 
               {/* `tap-target` grows the tappable box to 44px without growing the

@@ -58,7 +58,7 @@ export default function Hero() {
     <section
       ref={sectionRef}
       data-nav-dark="true"
-      className="relative overflow-hidden bg-black text-white min-h-[calc(100svh-4rem)] sm:min-h-[100svh] flex flex-col justify-center pt-16 pb-12 sm:pt-24 sm:pb-16 select-none"
+      className="relative overflow-hidden bg-black text-white min-h-[100svh] flex flex-col justify-start sm:justify-center pt-[calc(env(safe-area-inset-top,0px)+5.75rem)] xs:pt-[calc(env(safe-area-inset-top,0px)+6.25rem)] sm:pt-28 lg:pt-32 pb-12 sm:pb-16 select-none"
     >
       {/* Background Underlayer: Deep Black with Subtle Monochrome Tech Dots */}
       <m.div
@@ -120,33 +120,33 @@ export default function Hero() {
       </m.div>
 
       {/* Main Hero Writing Section */}
-      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-7xl pt-0 sm:pt-2 flex-1 flex flex-col justify-center">
+      <div className="container-site relative z-10 mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-7xl flex-1 flex flex-col justify-start sm:justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
           {/* Left Column: Headline, Subtitle, Capability words, CTAs */}
           <div className="lg:col-span-7 flex flex-col items-start text-start">
             
             {/* Hero headline */}
-            <h1 className="text-[1.875rem] xs:text-[2.125rem] sm:text-4xl md:text-5xl lg:text-[46px] xl:text-[52px] font-medium sm:font-semibold text-white tracking-tight leading-[1.14] sm:leading-[1.16] font-heading w-full">
+            <h1 className="text-[1.75rem] 2xs:text-[1.875rem] xs:text-[2.125rem] sm:text-4xl md:text-5xl lg:text-[46px] xl:text-[52px] font-medium sm:font-semibold text-white tracking-tight leading-[1.16] font-heading w-full">
               {dict.hero.headline}
             </h1>
 
             {/* Hero subtitle statement */}
-            <p className="mt-4 sm:mt-5 text-base sm:text-lg md:text-xl text-neutral-400 font-sans leading-relaxed max-w-2xl">
+            <p className="mt-3.5 sm:mt-5 text-[0.9375rem] xs:text-base sm:text-lg md:text-xl text-neutral-400 font-sans leading-relaxed max-w-2xl">
               {dict.hero.subtitle}
             </p>
 
             {/* Dynamic rotating words subheadline */}
-            <div className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2 text-sm md:text-base text-neutral-400 font-sans">
+            <div className="mt-3.5 sm:mt-5 flex flex-wrap items-center gap-2 text-xs xs:text-sm md:text-base text-neutral-400 font-sans">
               <span>{isAr ? 'حلول وتطوير كفاءات في' : 'Enterprise capability solutions in'}</span>
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-md text-neutral-200">
-                <span className="h-1.5 w-1.5 rounded-full bg-neutral-300 animate-pulse" />
+              <span className="inline-flex items-center gap-2 px-2.5 xs:px-3 py-1 xs:py-1.5 rounded-full bg-white/[0.05] border border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] backdrop-blur-md text-neutral-200">
+                <span className="h-1.5 w-1.5 rounded-full bg-neutral-300 animate-pulse shrink-0" />
                 <WordRotate words={capabilityWords} />
               </span>
             </div>
 
             {/* Side CTAs (Dual Action: HR Buyer vs Training Provider) */}
-            <div className="mt-7 sm:mt-10 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4 w-full">
+            <div className="mt-6 sm:mt-10 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 xs:gap-3 sm:gap-4 w-full">
               {/* Primary Action for HR & Enterprise Buyers */}
               <Magnetic strength={0.22} activeDistance={40} className="w-full sm:w-auto">
                 <Press className="w-full sm:w-auto" strength={0.7} vibrate>
