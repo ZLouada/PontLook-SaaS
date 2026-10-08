@@ -44,9 +44,11 @@ export async function generateMetadata({
       type: 'website',
       images: [
         {
-          url: '/og-image.png',
+          url: 'https://pontlook.com/images/brand/og-main.png',
+          secureUrl: 'https://pontlook.com/images/brand/og-main.png',
           width: 1200,
           height: 630,
+          type: 'image/png',
           alt: title,
         },
       ],

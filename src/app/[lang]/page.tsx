@@ -42,12 +42,24 @@ export async function generateMetadata({
       type: 'website',
       images: [
         {
-          url: '/og-image.png',
+          url: 'https://pontlook.com/images/brand/og-main.png',
+          secureUrl: 'https://pontlook.com/images/brand/og-main.png',
           width: 1200,
           height: 630,
+          type: 'image/png',
           alt: 'PontLook Corporate Training Matchmaking Platform',
         },
       ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: isAr
+        ? 'PontLook | منصة التوفيق بين مزودي التدريب والشركات'
+        : 'PontLook | Corporate Training Matchmaking Platform',
+      description: isAr
+        ? 'اربط شركتك بأفضل مزودي التدريب المعتمدين في السعودية والإمارات. فرص تدريب حقيقية ومؤهلة بنموذج الدفع مقابل النتائج وبدون رسوم اشتراك شهرية.'
+        : 'PontLook connects enterprise HR leaders with verified corporate training providers across Saudi Arabia & UAE. Pay per qualified lead, no retainers.',
+      images: ['https://pontlook.com/images/brand/og-main.png'],
     },
   };
 }

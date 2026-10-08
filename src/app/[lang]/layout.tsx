@@ -81,9 +81,21 @@ export async function generateMetadata({
       siteName: 'PontLook',
       images: [
         {
-          url: '/og-image.png',
+          url: 'https://pontlook.com/images/brand/og-main.png',
+          secureUrl: 'https://pontlook.com/images/brand/og-main.png',
           width: 1200,
           height: 630,
+          type: 'image/png',
+          alt: isAr
+            ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات'
+            : 'PontLook Corporate Training Matchmaking Logo',
+        },
+        {
+          url: 'https://pontlook.com/og-image.png',
+          secureUrl: 'https://pontlook.com/og-image.png',
+          width: 1200,
+          height: 630,
+          type: 'image/png',
           alt: isAr
             ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات'
             : 'PontLook Corporate Training Matchmaking Logo',
@@ -93,7 +105,16 @@ export async function generateMetadata({
       type: 'website',
     },
     manifest: '/site.webmanifest',
-    twitter: { card: 'summary_large_image' },
+    twitter: {
+      card: 'summary_large_image',
+      title: isAr
+        ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات'
+        : 'PontLook: Corporate Training Matchmaking Platform',
+      description: isAr
+        ? 'منصة ربط مديري الموارد البشرية والشركات بأفضل مزودي التدريب المعتمدين في السعودية والإمارات. فرص معتمدة 100% بدون رسوم شهرية.'
+        : 'Connect corporate buyers with verified training providers across Saudi Arabia and UAE. Qualified leads only with zero monthly retainers or cold outreach.',
+      images: ['https://pontlook.com/images/brand/og-main.png'],
+    },
   };
 }
 
@@ -124,6 +145,7 @@ export default async function RootLayout({
         "name": "PontLook",
         "alternateName": ["Pont Look", "pontlook", "PontLook SaaS"],
         "description": "B2B Corporate Training Matchmaking Platform & Pay-Per-Lead Engine",
+        "image": "https://pontlook.com/images/brand/og-main.png",
         "inLanguage": ["en", "ar"]
       },
       {
@@ -132,6 +154,7 @@ export default async function RootLayout({
         "name": "PontLook",
         "legalName": "Firstnestcare, LLC",
         "url": "https://pontlook.com",
+        "image": "https://pontlook.com/images/brand/og-main.png",
         "logo": {
           "@type": "ImageObject",
           "url": "https://pontlook.com/images/brand/pontlook-logo-orange.png",

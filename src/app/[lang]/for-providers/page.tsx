@@ -39,9 +39,11 @@ export async function generateMetadata({
       type: 'website',
       images: [
         {
-          url: '/images/brand/og-providers.png',
+          url: 'https://pontlook.com/images/brand/og-providers.png',
+          secureUrl: 'https://pontlook.com/images/brand/og-providers.png',
           width: 1200,
           height: 630,
+          type: 'image/png',
           alt: title,
         },
       ],
@@ -50,7 +52,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title,
       description,
-      images: ['/images/brand/og-providers.png'],
+      images: ['https://pontlook.com/images/brand/og-providers.png'],
     },
   };
 }

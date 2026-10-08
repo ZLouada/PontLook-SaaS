@@ -18,6 +18,7 @@ export function buildOrganizationSchema() {
       width: 400,
       height: 100,
     },
+    image: `${SITE_URL}/images/brand/og-main.png`,
     description:
       'Premier corporate training matchmaking platform connecting enterprise HR leaders with vetted, accredited corporate training academies across the GCC and internationally.',
     sameAs: [
