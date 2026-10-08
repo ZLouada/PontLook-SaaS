@@ -158,6 +158,8 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
     <section
       ref={containerRef}
       id="w"
+      data-nav-light="true"
+      data-nav-theme="light"
       className="bg-white text-[#0F172A] py-[14vh] px-5 sm:px-8 lg:px-12 relative z-10 select-none border-t border-slate-200"
     >
       <div className="max-w-7xl mx-auto">

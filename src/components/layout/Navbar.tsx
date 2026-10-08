@@ -216,10 +216,10 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             <div className="relative h-7 w-7 xs:h-8 xs:w-8 shrink-0 flex items-center justify-center">
               <Image
                 src={
-                  isForProviders
-                    ? '/images/brand/pontlook-icon-orange.png'
-                    : isLightSection
+                  isLightSection
                     ? '/images/brand/pontlook-icon-black.png'
+                    : isForProviders
+                    ? '/images/brand/pontlook-icon-orange.png'
                     : '/images/brand/pontlook-icon-white.png'
                 }
                 alt="PontLook"
@@ -240,10 +240,10 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   exit={{ opacity: 0, width: 0, scale: 0.95 }}
                   transition={{ duration: 0.22, ease: 'easeInOut' }}
                   className={`font-heading font-extrabold tracking-tight text-xl xs:text-2xl whitespace-nowrap overflow-hidden select-none transition-colors duration-300 ${
-                    isForProviders
-                      ? 'text-[#FF5C00]'
-                      : isLightSection
+                    isLightSection
                       ? 'text-neutral-950'
+                      : isForProviders
+                      ? 'text-[#FF5C00]'
                       : 'text-white'
                   }`}
                 >
