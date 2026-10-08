@@ -430,9 +430,9 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         </div>
 
         {/* Bottom Banner with Metadata & Massive Word */}
-        <div className="absolute inset-x-0 bottom-[1vh] px-[2.2vw] pointer-events-none z-10">
+        <div className="absolute inset-x-0 bottom-[0.5vh] sm:bottom-[1vh] px-[1vw] sm:px-[1.5vw] pointer-events-none z-10">
           {/* Metadata Cards */}
-          <div className="flex justify-end gap-[2.2vw] font-sans font-normal text-[10.5px] leading-[1.25] tracking-[0.04em] uppercase mb-[1.2vw] text-slate-300">
+          <div className="flex justify-end gap-[2vw] font-sans font-normal text-[10px] sm:text-[10.5px] leading-[1.25] tracking-[0.04em] uppercase mb-[0.8vw] text-slate-300 px-[0.5vw]">
             <div className="border-s border-white/40 ps-2 max-w-[150px]">
               {isAr ? (
                 <>أنت الآن<br />تدخل المنظومة</>
@@ -461,17 +461,17 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
             </div>
           </div>
 
-          {/* Massive Word: Providers */}
+          {/* Massive Word: Providers - Fills entire screen width display */}
           <h1
             ref={bigWordRef}
             id="big"
-            className="font-heading font-light text-[17vw] leading-[0.82] tracking-[-0.05em] whitespace-nowrap text-[#E4EAF6] block select-none"
+            className="w-full flex justify-between items-baseline font-heading font-light text-[clamp(4.2rem,22vw,25.5vw)] leading-[0.78] tracking-tight whitespace-nowrap text-[#E4EAF6] select-none overflow-hidden"
             aria-label={word}
           >
             {word.split('').map((char, idx) => (
               <b
                 key={idx}
-                className="inline-block animate-[in_1.2s_cubic-bezier(0.2,0.8,0.2,1)_forwards]"
+                className="inline-block animate-[in_1.2s_cubic-bezier(0.2,0.8,0.2,1)_forwards] shrink-0"
                 style={{
                   animationDelay: `calc(1.8s + ${idx} * 0.09s)`,
                 }}
