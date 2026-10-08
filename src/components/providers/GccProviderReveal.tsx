@@ -45,19 +45,19 @@ const PIPELINE_STEPS_AR = [
 const LEAD_DETAILS_EN = [
   {
     grade: 'HOT',
-    badgeColor: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10',
+    badgeColor: 'text-emerald-700 border-emerald-300 bg-emerald-50',
     title: 'Immediate Engagement',
     desc: 'Budget fully signed off, training kick-off mandated within 30 days, HR Director directly engaged.',
   },
   {
     grade: 'WARM',
-    badgeColor: 'text-amber-400 border-amber-500/30 bg-amber-500/10',
+    badgeColor: 'text-amber-800 border-amber-300 bg-amber-50',
     title: 'Budget Approved in Cycle',
     desc: 'Confirmed organizational pain, scope defined, procurement cycle underway for the upcoming quarter.',
   },
   {
     grade: 'QUALIFIED',
-    badgeColor: 'text-blue-400 border-blue-500/30 bg-blue-500/10',
+    badgeColor: 'text-blue-700 border-blue-300 bg-blue-50',
     title: 'Pre-Scoped Need',
     desc: 'Verified executive intent and leadership gap, currently establishing project specifications.',
   },
@@ -66,19 +66,19 @@ const LEAD_DETAILS_EN = [
 const LEAD_DETAILS_AR = [
   {
     grade: 'مؤكدة (HOT)',
-    badgeColor: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10',
+    badgeColor: 'text-emerald-700 border-emerald-300 bg-emerald-50',
     title: 'تعاقد وشراء فوري',
     desc: 'الميزانية معتمدة بالكامل، انطلاق البرنامج التدريبي خلال 30 يوماً، وتواصل مباشر مع صاحب القرار.',
   },
   {
     grade: 'نشطة (WARM)',
-    badgeColor: 'text-amber-400 border-amber-500/30 bg-amber-500/10',
+    badgeColor: 'text-amber-800 border-amber-300 bg-amber-50',
     title: 'ميزانية قيد الاعتماد',
     desc: 'احتياج مؤسسي موثق، وتحديد أهداف البرنامج، وتنسيق الإجراءات للربع المالي القادم.',
   },
   {
     grade: 'مؤهلة (QUALIFIED)',
-    badgeColor: 'text-blue-400 border-blue-500/30 bg-blue-500/10',
+    badgeColor: 'text-blue-700 border-blue-300 bg-blue-50',
     title: 'احتياج محدد مسبقاً',
     desc: 'تحدٍ مهاري معتمد لدى الإدارة التنفيذية، وفي مرحلة تحديد المواصفات والمحاور التدريبية.',
   },
@@ -142,7 +142,7 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
       const activeCount = Math.floor(progress * total);
 
       spans.forEach((span, idx) => {
-        (span as HTMLElement).style.opacity = idx < activeCount ? '1' : '0.15';
+        (span as HTMLElement).style.opacity = idx < activeCount ? '1' : '0.12';
       });
     };
 
@@ -158,33 +158,33 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
     <section
       ref={containerRef}
       id="w"
-      className="bg-black text-white py-[14vh] px-5 sm:px-8 lg:px-12 relative z-10 select-none border-t border-white/10"
+      className="bg-white text-[#0F172A] py-[14vh] px-5 sm:px-8 lg:px-12 relative z-10 select-none border-t border-slate-200"
     >
       <div className="max-w-7xl mx-auto">
         {/* Sub-Navigation Links */}
-        <div className="flex gap-6 sm:gap-8 flex-wrap text-xs sm:text-sm mb-12 sm:mb-16 text-neutral-400 font-sans">
-          <a href="#w" className="hover:text-white transition-colors">
+        <div className="flex gap-6 sm:gap-8 flex-wrap text-xs sm:text-sm mb-12 sm:mb-16 text-slate-500 font-sans">
+          <a href="#w" className="hover:text-slate-900 transition-colors">
             {isAr ? 'لماذا ينضم المزودون' : 'Why providers join'}
           </a>
-          <a href="#w" className="hover:text-white transition-colors">
+          <a href="#w" className="hover:text-slate-900 transition-colors">
             {isAr ? 'درجات وتصنيف الفرص' : 'Lead grades'}
           </a>
-          <a href="#w" className="hover:text-white transition-colors">
+          <a href="#w" className="hover:text-slate-900 transition-colors">
             {isAr ? 'نموذج العمل' : 'The model'}
           </a>
           <a
             href="#connection-bridge"
-            className="hover:text-[#FFA048] transition-colors font-semibold text-[#FF5C00]"
+            className="hover:text-[#E05200] transition-colors font-semibold text-[#FF5C00]"
           >
             {isAr ? 'طلب الانضمام' : 'Apply'}
           </a>
         </div>
 
-        {/* Massive Scroll-Driven Reveal Headline in Pure White */}
+        {/* Massive Scroll-Driven Reveal Headline in Deep Ink Slate */}
         <h2
           ref={headlineRef}
           id="rv"
-          className="font-heading font-light text-[clamp(2.4rem,7vw,6.8rem)] leading-[1.03] tracking-[-0.03em] max-w-6xl text-white"
+          className="font-heading font-light text-[clamp(2.4rem,7vw,6.8rem)] leading-[1.03] tracking-[-0.03em] max-w-6xl text-[#0F172A]"
         >
           {words.map((word, wIdx) => (
             <span key={wIdx} className="inline-block me-3">
@@ -202,16 +202,16 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
 
         {/* Dynamic Interactive Panel with Toggle Tabs */}
         <div className="mt-12 sm:mt-16">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-white/10">
-            <p className="text-neutral-400 text-sm sm:text-base max-w-xl font-sans leading-relaxed">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-slate-200">
+            <p className="text-slate-600 text-sm sm:text-base max-w-xl font-sans leading-relaxed">
               {isAr
                 ? 'نرصد المنشآت التي تواجه تحديات تدريبية حقيقية، نتحقق من عمق الاحتياج، ونؤكد صلاحية صانع القرار، ثم نسلمك الفرصة جاهزة للتعاقد.'
                 : 'Market intelligence identifies verified enterprise demand. We confirm approved budgets and executive decision-makers before dispatching the lead to your firm.'}
             </p>
 
-            {/* Dark Enterprise Toggle Pill Buttons */}
+            {/* Toggle Pill Buttons */}
             <div
-              className="inline-flex self-start sm:self-auto p-1 rounded-full bg-[#111215] border border-white/10"
+              className="inline-flex self-start sm:self-auto p-1 rounded-full bg-slate-100 border border-slate-200"
               role="tablist"
             >
               <button
@@ -219,8 +219,8 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
                 onClick={() => setTabIdx(0)}
                 className={`py-2 px-5 sm:px-6 rounded-full font-mono text-xs font-semibold tracking-wider cursor-pointer transition-all duration-200 ${
                   tabIdx === 0
-                    ? 'bg-[#FF5C00] text-white shadow-lg shadow-orange-500/25'
-                    : 'bg-transparent text-neutral-400 hover:text-white'
+                    ? 'bg-[#FF5C00] text-white shadow-md shadow-orange-500/20'
+                    : 'bg-transparent text-slate-600 hover:text-slate-900'
                 }`}
               >
                 {isAr ? 'مسار الربط (Pipeline)' : 'PIPELINE FLOW'}
@@ -230,8 +230,8 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
                 onClick={() => setTabIdx(1)}
                 className={`py-2 px-5 sm:px-6 rounded-full font-mono text-xs font-semibold tracking-wider cursor-pointer transition-all duration-200 ${
                   tabIdx === 1
-                    ? 'bg-[#FF5C00] text-white shadow-lg shadow-orange-500/25'
-                    : 'bg-transparent text-neutral-400 hover:text-white'
+                    ? 'bg-[#FF5C00] text-white shadow-md shadow-orange-500/20'
+                    : 'bg-transparent text-slate-600 hover:text-slate-900'
                 }`}
               >
                 {isAr ? 'تصنيف الفرص (Lead Details)' : 'LEAD DETAILS'}
@@ -247,16 +247,16 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
                 {pipeline.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-5 sm:p-6 rounded-2xl bg-[#0C0D11] border border-white/10 hover:border-white/20 transition-all duration-200 flex flex-col justify-between"
+                    className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200/90 hover:border-slate-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between"
                   >
                     <div>
-                      <span className="text-[10px] font-mono font-semibold text-[#FF5C00] tracking-widest block mb-2">
+                      <span className="text-[10px] font-mono font-bold text-[#FF5C00] tracking-widest block mb-2.5">
                         {item.step}
                       </span>
-                      <h3 className="text-base sm:text-lg font-bold text-white mb-2 font-heading">
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2 font-heading">
                         {item.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-sans">
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
                         {item.desc}
                       </p>
                     </div>
@@ -269,7 +269,7 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
                 {leadDetails.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-5 sm:p-6 rounded-2xl bg-[#0C0D11] border border-white/10 hover:border-white/20 transition-all duration-200 flex flex-col justify-between"
+                    className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200/90 hover:border-slate-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between"
                   >
                     <div>
                       <span
@@ -277,10 +277,10 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
                       >
                         {item.grade}
                       </span>
-                      <h3 className="text-base sm:text-lg font-bold text-white mb-2 font-heading">
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2 font-heading">
                         {item.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-sans">
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
                         {item.desc}
                       </p>
                     </div>
@@ -291,17 +291,17 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
           </div>
         </div>
 
-        {/* 3-Column Feature Grid (Dark Enterprise Styled) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-16 sm:mt-24 pt-10 border-t border-white/10">
+        {/* 3-Column Feature Grid (Light Theme Styled) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-16 sm:mt-24 pt-10 border-t border-slate-200">
           {features.map((feat, idx) => (
             <div key={idx} className="flex flex-col">
               <span className="text-xs font-mono text-[#FF5C00] font-semibold mb-2">
                 0{idx + 1}
               </span>
-              <h3 className="font-heading font-medium text-xl sm:text-2xl mb-2.5 text-white">
+              <h3 className="font-heading font-medium text-xl sm:text-2xl mb-2.5 text-slate-900">
                 {feat.title}
               </h3>
-              <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed font-sans">
+              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-sans">
                 {feat.desc}
               </p>
             </div>
