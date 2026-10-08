@@ -6,43 +6,111 @@ interface GccProviderRevealProps {
   isAr?: boolean;
 }
 
-const CP_EN = [
-  'We find organisations with live workforce challenges, verify the pain, confirm the decision-maker and hand you the opportunity. You skip the cold outreach and talk to buyers who already need training.',
-  'Market intelligence finds the signal. Pain verification and decision-maker validation confirm it. Only then is the lead graded Hot, Warm or Qualified and sent to a provider who fits.',
+const PIPELINE_STEPS_EN = [
+  {
+    step: 'PHASE 01',
+    title: 'Workforce & Signal Detection',
+    desc: 'Live intelligence tracks corporate expansions, Saudization / Emiratization quotas, and organizational skills gaps before RFP publication.',
+  },
+  {
+    step: 'PHASE 02',
+    title: 'BANT & Economic Buyer Validation',
+    desc: 'Direct verification with HR Directors and L&D heads. We confirm approved training budgets, timelines, and delivery format.',
+  },
+  {
+    step: 'PHASE 03',
+    title: 'Exclusive Provider Dispatch',
+    desc: 'Mandate is dispatched exclusively to the verified provider matching the exact domain. Zero competing lists, zero cold outreach.',
+  },
 ];
 
-const CP_AR = [
-  'نرصد المنشآت والشركات التي تواجه تحديات مهارية وتدريبية حقيقية، نتحقق من عمق الاحتياج، ونؤكد هوية صانع القرار، ثم نسلمك الفرصة جاهزة. تتخطى المبيعات الباردة وتتحدث مباشرة مع مشترين يحتاجون لتدريبك الآن.',
-  'الرصد الاستخباراتي الميداني يلتقط الإشارة، والتحقق المباشر يثبت الاحتياج وصلاحية صانع القرار. وفقط بعد ذلك تُصنف الفرصة (مؤكدة، نشطة، أو مؤهلة) وتُرسل للمزود المتخصص المطابق.',
+const PIPELINE_STEPS_AR = [
+  {
+    step: 'المرحلة ٠١',
+    title: 'رصد المؤشرات والتحديات المهارية',
+    desc: 'رصد استخباراتي استباقي لتوسعات الشركات واشتراطات التوطين والامتثال وفجوات الكفاءات قبل طرح المناقصات العامة.',
+  },
+  {
+    step: 'المرحلة ٠٢',
+    title: 'توثيق صانع القرار والميزانية',
+    desc: 'تحقق مباشر مع مدراء الموارد البشرية والتدريب، واعتماد نطاق الميزانية المرصودة وموعد بدء التنفيذ التدريبي.',
+  },
+  {
+    step: 'المرحلة ٠٣',
+    title: 'الربط الحصري المباشر',
+    desc: 'إرسال الفرصة حصرياً للمزود المتخصص المطابق لمتطلبات التعاقد، بدون منافسة عشوائية أو مكالمات بيع باردة.',
+  },
+];
+
+const LEAD_DETAILS_EN = [
+  {
+    grade: 'HOT',
+    badgeColor: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10',
+    title: 'Immediate Engagement',
+    desc: 'Budget fully signed off, training kick-off mandated within 30 days, HR Director directly engaged.',
+  },
+  {
+    grade: 'WARM',
+    badgeColor: 'text-amber-400 border-amber-500/30 bg-amber-500/10',
+    title: 'Budget Approved in Cycle',
+    desc: 'Confirmed organizational pain, scope defined, procurement cycle underway for the upcoming quarter.',
+  },
+  {
+    grade: 'QUALIFIED',
+    badgeColor: 'text-blue-400 border-blue-500/30 bg-blue-500/10',
+    title: 'Pre-Scoped Need',
+    desc: 'Verified executive intent and leadership gap, currently establishing project specifications.',
+  },
+];
+
+const LEAD_DETAILS_AR = [
+  {
+    grade: 'مؤكدة (HOT)',
+    badgeColor: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10',
+    title: 'تعاقد وشراء فوري',
+    desc: 'الميزانية معتمدة بالكامل، انطلاق البرنامج التدريبي خلال 30 يوماً، وتواصل مباشر مع صاحب القرار.',
+  },
+  {
+    grade: 'نشطة (WARM)',
+    badgeColor: 'text-amber-400 border-amber-500/30 bg-amber-500/10',
+    title: 'ميزانية قيد الاعتماد',
+    desc: 'احتياج مؤسسي موثق، وتحديد أهداف البرنامج، وتنسيق الإجراءات للربع المالي القادم.',
+  },
+  {
+    grade: 'مؤهلة (QUALIFIED)',
+    badgeColor: 'text-blue-400 border-blue-500/30 bg-blue-500/10',
+    title: 'احتياج محدد مسبقاً',
+    desc: 'تحدٍ مهاري معتمد لدى الإدارة التنفيذية، وفي مرحلة تحديد المواصفات والمحاور التدريبية.',
+  },
 ];
 
 const FEATURES_EN = [
   {
     title: 'No retainers',
-    desc: 'You pay for results, not for access to a list.',
+    desc: 'You pay for results, not for access to a list. Zero monthly recurring fees.',
   },
   {
     title: 'Pay per qualified lead',
-    desc: 'Every lead is graded Hot, Warm or Qualified before it reaches you.',
+    desc: 'Every opportunity is audited, graded, and validated before reaching your delivery schedule.',
   },
   {
     title: 'Built for the GCC',
-    desc: 'Saudization, Emiratization and regional compliance needs shape every match.',
+    desc: 'Saudization, Emiratization, and regional compliance mandates shape every direct match.',
   },
 ];
 
 const FEATURES_AR = [
   {
     title: 'بدون اشتراكات شهرية',
-    desc: 'تدفع فقط مقابل النتائج والفرص المؤكدة، لا لقاء قوائم اتصالات ميتة.',
+    desc: 'تدفع فقط مقابل النتائج والفرص المؤكدة، لا لقاء اشتراكات دورية أو رسوم مسبقة.',
   },
   {
     title: 'دفع لكل عميل مؤهل',
-    desc: 'كل فرصة تُفرز وتصنف قبل أن تصل إليك لتضمن الجدوى والعائد.',
+    desc: 'كل فرصة تُفرز وتُصنف وتُدقق قبل أن تصل إليك لتضمن الجدوى والعائد الاستثماري.',
   },
   {
     title: 'مصممة لواقع الخليج',
-    desc: 'متطلبات التوطين، ونيتاقات، واشتراطات الامتثال الإقليمية توجه كل ربط.',
+    desc: 'متطلبات التوطين، ونطاقات، واشتراطات الامتثال الإقليمية توجه كل ربط مباشر.',
   },
 ];
 
@@ -55,7 +123,8 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
     ? 'تمكين خط تدريب الشركات في الخليج'
     : "Powering the GCC's corporate training pipeline";
 
-  const cp = isAr ? CP_AR : CP_EN;
+  const pipeline = isAr ? PIPELINE_STEPS_AR : PIPELINE_STEPS_EN;
+  const leadDetails = isAr ? LEAD_DETAILS_AR : LEAD_DETAILS_EN;
   const features = isAr ? FEATURES_AR : FEATURES_EN;
 
   useEffect(() => {
@@ -73,7 +142,7 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
       const activeCount = Math.floor(progress * total);
 
       spans.forEach((span, idx) => {
-        (span as HTMLElement).style.opacity = idx < activeCount ? '1' : '0.12';
+        (span as HTMLElement).style.opacity = idx < activeCount ? '1' : '0.15';
       });
     };
 
@@ -83,103 +152,161 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Split headline into words and letters for granular scroll reveal
   const words = headlineText.split(' ');
 
   return (
     <section
       ref={containerRef}
       id="w"
-      className="bg-[#FFFFFF] text-[#0F172A] py-[16vh] px-[2.2vw] relative z-10 transition-colors select-none"
+      className="bg-black text-white py-[14vh] px-5 sm:px-8 lg:px-12 relative z-10 select-none border-t border-white/10"
     >
-      {/* Sub-Navigation Links */}
-      <div className="flex gap-8 flex-wrap text-sm mb-[10vh] text-[#475569] font-sans">
-        <a href="#w" className="hover:text-[#0F172A] transition-colors">
-          {isAr ? 'لماذا ينضم المزودون' : 'Why providers join'}
-        </a>
-        <a href="#w" className="hover:text-[#0F172A] transition-colors">
-          {isAr ? 'درجات وتصنيف الفرص' : 'Lead grades'}
-        </a>
-        <a href="#w" className="hover:text-[#0F172A] transition-colors">
-          {isAr ? 'نموذج العمل' : 'The model'}
-        </a>
-        <a href="#connection-bridge" className="hover:text-[#FF5C00] transition-colors font-semibold text-[#FF5C00]">
-          {isAr ? 'طلب الانضمام' : 'Apply'}
-        </a>
-      </div>
-
-      {/* Massive Scroll-Driven Reveal Headline */}
-      <h2
-        ref={headlineRef}
-        id="rv"
-        className="font-heading font-light text-[clamp(2.4rem,7.5vw,7.2rem)] leading-[1.02] tracking-[-0.03em] max-w-6xl text-[#0F172A]"
-      >
-        {words.map((word, wIdx) => (
-          <span key={wIdx} className="inline-block me-3">
-            {word.split('').map((char, cIdx) => (
-              <span
-                key={cIdx}
-                className="rv-char inline-block opacity-10 transition-opacity duration-200"
-              >
-                {char}
-              </span>
-            ))}
-          </span>
-        ))}
-      </h2>
-
-      {/* Content Columns with Tab Toggle */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[6vw] mt-[10vh]">
-        <div />
-
-        <div>
-          <p className="text-[#475569] text-base sm:text-lg max-w-lg mb-6 leading-relaxed font-sans min-h-[96px]">
-            {cp[tabIdx]}
-          </p>
-
-          {/* Toggle pill buttons */}
-          <div
-            className="inline-flex border border-[#D7E2F8] rounded-full p-[3px]"
-            role="tablist"
+      <div className="max-w-7xl mx-auto">
+        {/* Sub-Navigation Links */}
+        <div className="flex gap-6 sm:gap-8 flex-wrap text-xs sm:text-sm mb-12 sm:mb-16 text-neutral-400 font-sans">
+          <a href="#w" className="hover:text-white transition-colors">
+            {isAr ? 'لماذا ينضم المزودون' : 'Why providers join'}
+          </a>
+          <a href="#w" className="hover:text-white transition-colors">
+            {isAr ? 'درجات وتصنيف الفرص' : 'Lead grades'}
+          </a>
+          <a href="#w" className="hover:text-white transition-colors">
+            {isAr ? 'نموذج العمل' : 'The model'}
+          </a>
+          <a
+            href="#connection-bridge"
+            className="hover:text-[#FFA048] transition-colors font-semibold text-[#FF5C00]"
           >
-            <button
-              type="button"
-              onClick={() => setTabIdx(0)}
-              className={`border-0 py-2 px-5 rounded-full font-sans font-medium text-xs tracking-wider cursor-pointer transition-all ${
-                tabIdx === 0
-                  ? 'bg-[#D7E2F8] text-[#0F172A] shadow-xs'
-                  : 'bg-transparent text-[#475569] hover:text-[#0F172A]'
-              }`}
+            {isAr ? 'طلب الانضمام' : 'Apply'}
+          </a>
+        </div>
+
+        {/* Massive Scroll-Driven Reveal Headline in Pure White */}
+        <h2
+          ref={headlineRef}
+          id="rv"
+          className="font-heading font-light text-[clamp(2.4rem,7vw,6.8rem)] leading-[1.03] tracking-[-0.03em] max-w-6xl text-white"
+        >
+          {words.map((word, wIdx) => (
+            <span key={wIdx} className="inline-block me-3">
+              {word.split('').map((char, cIdx) => (
+                <span
+                  key={cIdx}
+                  className="rv-char inline-block opacity-15 transition-opacity duration-200"
+                >
+                  {char}
+                </span>
+              ))}
+            </span>
+          ))}
+        </h2>
+
+        {/* Dynamic Interactive Panel with Toggle Tabs */}
+        <div className="mt-12 sm:mt-16">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-white/10">
+            <p className="text-neutral-400 text-sm sm:text-base max-w-xl font-sans leading-relaxed">
+              {isAr
+                ? 'نرصد المنشآت التي تواجه تحديات تدريبية حقيقية، نتحقق من عمق الاحتياج، ونؤكد صلاحية صانع القرار، ثم نسلمك الفرصة جاهزة للتعاقد.'
+                : 'Market intelligence identifies verified enterprise demand. We confirm approved budgets and executive decision-makers before dispatching the lead to your firm.'}
+            </p>
+
+            {/* Dark Enterprise Toggle Pill Buttons */}
+            <div
+              className="inline-flex self-start sm:self-auto p-1 rounded-full bg-[#111215] border border-white/10"
+              role="tablist"
             >
-              {isAr ? 'خط الفرص' : 'PIPELINE'}
-            </button>
-            <button
-              type="button"
-              onClick={() => setTabIdx(1)}
-              className={`border-0 py-2 px-5 rounded-full font-sans font-medium text-xs tracking-wider cursor-pointer transition-all ${
-                tabIdx === 1
-                  ? 'bg-[#D7E2F8] text-[#0F172A] shadow-xs'
-                  : 'bg-transparent text-[#475569] hover:text-[#0F172A]'
-              }`}
-            >
-              {isAr ? 'التفاصيل' : 'DETAILS'}
-            </button>
+              <button
+                type="button"
+                onClick={() => setTabIdx(0)}
+                className={`py-2 px-5 sm:px-6 rounded-full font-mono text-xs font-semibold tracking-wider cursor-pointer transition-all duration-200 ${
+                  tabIdx === 0
+                    ? 'bg-[#FF5C00] text-white shadow-lg shadow-orange-500/25'
+                    : 'bg-transparent text-neutral-400 hover:text-white'
+                }`}
+              >
+                {isAr ? 'مسار الربط (Pipeline)' : 'PIPELINE FLOW'}
+              </button>
+              <button
+                type="button"
+                onClick={() => setTabIdx(1)}
+                className={`py-2 px-5 sm:px-6 rounded-full font-mono text-xs font-semibold tracking-wider cursor-pointer transition-all duration-200 ${
+                  tabIdx === 1
+                    ? 'bg-[#FF5C00] text-white shadow-lg shadow-orange-500/25'
+                    : 'bg-transparent text-neutral-400 hover:text-white'
+                }`}
+              >
+                {isAr ? 'تصنيف الفرص (Lead Details)' : 'LEAD DETAILS'}
+              </button>
+            </div>
+          </div>
+
+          {/* Panel Content Changing dynamically between PIPELINE and LEAD DETAILS */}
+          <div className="mt-8 transition-all duration-300">
+            {tabIdx === 0 ? (
+              /* Pipeline Flow Cards */
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                {pipeline.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="p-5 sm:p-6 rounded-2xl bg-[#0C0D11] border border-white/10 hover:border-white/20 transition-all duration-200 flex flex-col justify-between"
+                  >
+                    <div>
+                      <span className="text-[10px] font-mono font-semibold text-[#FF5C00] tracking-widest block mb-2">
+                        {item.step}
+                      </span>
+                      <h3 className="text-base sm:text-lg font-bold text-white mb-2 font-heading">
+                        {item.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-sans">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              /* Lead Details / Grading Cards */
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                {leadDetails.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="p-5 sm:p-6 rounded-2xl bg-[#0C0D11] border border-white/10 hover:border-white/20 transition-all duration-200 flex flex-col justify-between"
+                  >
+                    <div>
+                      <span
+                        className={`inline-block px-2.5 py-0.5 rounded-full border text-[10px] font-mono font-bold tracking-wider mb-3 ${item.badgeColor}`}
+                      >
+                        {item.grade}
+                      </span>
+                      <h3 className="text-base sm:text-lg font-bold text-white mb-2 font-heading">
+                        {item.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-sans">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
-      </div>
 
-      {/* 3-Column Feature Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 mt-[12vh] border-t border-[#D7E2F8]">
-        {features.map((feat, idx) => (
-          <div key={idx} className="pt-7 pe-6">
-            <h3 className="font-heading font-light text-2xl sm:text-3xl mb-2 text-[#0F172A]">
-              {feat.title}
-            </h3>
-            <p className="text-[#475569] text-sm sm:text-base leading-relaxed font-sans">
-              {feat.desc}
-            </p>
-          </div>
-        ))}
+        {/* 3-Column Feature Grid (Dark Enterprise Styled) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-16 sm:mt-24 pt-10 border-t border-white/10">
+          {features.map((feat, idx) => (
+            <div key={idx} className="flex flex-col">
+              <span className="text-xs font-mono text-[#FF5C00] font-semibold mb-2">
+                0{idx + 1}
+              </span>
+              <h3 className="font-heading font-medium text-xl sm:text-2xl mb-2.5 text-white">
+                {feat.title}
+              </h3>
+              <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed font-sans">
+                {feat.desc}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
