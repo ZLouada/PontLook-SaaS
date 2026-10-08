@@ -395,9 +395,9 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         <div
           ref={leadRef}
           id="lead"
-          className="absolute inset-0 grid place-content-center text-center opacity-0 pointer-events-none px-[5vw] z-10 transition-transform duration-75 ease-out"
+          className="absolute inset-0 grid place-content-center text-center opacity-0 pointer-events-none px-[5vw] z-10 transition-transform duration-75 ease-out pb-[6vh]"
         >
-          <h2 className="font-heading font-light text-[clamp(2.2rem,6vw,5.6rem)] leading-[1.04] tracking-tight text-white max-w-5xl mx-auto">
+          <h2 className="font-heading font-light text-[clamp(2.2rem,6vw,5.6rem)] leading-[1.04] tracking-tight text-white max-w-5xl mx-auto drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
             {isAr ? (
               <>
                 توقف عن ملاحقة الشركات. <br />
@@ -411,7 +411,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
             )}
           </h2>
 
-          <p className="mt-7 text-neutral-300 text-sm sm:text-base font-sans">
+          <p className="mt-7 text-neutral-300 text-sm sm:text-base font-sans drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
             {isAr ? 'منظومة التشغيل والربط لـ' : 'Operating System for'}
             <b className="block text-white font-medium mt-1">
               {isAr ? 'مزودي تدريب الشركات في الخليج' : 'GCC Corporate Training Providers'}
@@ -431,28 +431,28 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
 
         {/* Bottom Banner with Metadata & Massive Word */}
         <div className="absolute inset-x-0 bottom-[0.5vh] sm:bottom-[1vh] px-[1vw] sm:px-[1.5vw] pointer-events-none z-10">
-          {/* Metadata Cards */}
-          <div className="flex justify-end gap-[2vw] font-sans font-normal text-[10px] sm:text-[10.5px] leading-[1.25] tracking-[0.04em] uppercase mb-[0.8vw] text-slate-300 px-[0.5vw]">
-            <div className="border-s border-white/40 ps-2 max-w-[150px]">
+          {/* Metadata Cards - Positioned at Bottom Left for optimal readability and zero text collision */}
+          <div className="flex justify-start gap-[2vw] sm:gap-[2.5vw] font-sans font-normal text-[10px] sm:text-[10.5px] leading-[1.25] tracking-[0.04em] uppercase mb-[0.8vw] text-slate-200 px-[0.5vw]">
+            <div className="border-s border-white/50 ps-2.5 max-w-[150px] drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
               {isAr ? (
                 <>أنت الآن<br />تدخل المنظومة</>
               ) : (
                 <>You are<br />now<br />entering</>
               )}
             </div>
-            <div className="border-s border-white/40 ps-2 max-w-[150px]">
+            <div className="border-s border-white/50 ps-2.5 max-w-[150px] drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
               {isAr ? (
                 <>الوقت: 3 دقائق<br />مرّر<br />للاستكشاف</>
               ) : (
                 <>Time: 3 mins<br />scroll<br />to explore</>
               )}
             </div>
-            <div className="border-s border-white/40 ps-2 max-w-[160px] hidden sm:block">
+            <div className="border-s border-white/50 ps-2.5 max-w-[160px] hidden sm:block drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
               {isAr
                 ? 'خط الفرص المؤهلة لمزودي التدريب في الخليج'
                 : 'The qualified pipeline for GCC training providers'}
             </div>
-            <div className="border-s border-white/40 ps-2 max-w-[150px] hidden sm:block">
+            <div className="border-s border-white/50 ps-2.5 max-w-[150px] hidden sm:block drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
               {isAr ? (
                 <>انقر في أي مكان<br />لإعادة تسلسل<br />الشبكة</>
               ) : (
