@@ -91,7 +91,8 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
     let my = 0;
     let tx = 0;
     let ty = 0;
-    let scrollP = 0;
+    let targetScrollP = 0;
+    let smoothScrollP = 0;
     let blast = 0;
     let shock: { x: number; y: number; t: number } | null = null;
     let pulses: { i: number; t: number; s: number }[] = [];
@@ -118,7 +119,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       const hh = heroRef.current.offsetHeight - window.innerHeight;
       if (hh <= 0) return;
       const p = cl(window.scrollY / hh);
-      scrollP = p;
+      targetScrollP = p;
 
       // Big word letter animation
       if (bigWordRef.current) {
@@ -147,13 +148,15 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       animId = requestAnimationFrame(frame);
       if (window.scrollY > window.innerHeight * 5.2) return;
 
+      // Butter-smooth damped scroll progression (never snaps or accelerates abruptly)
+      smoothScrollP += (targetScrollP - smoothScrollP) * 0.045;
+
       const t = (now - t0) / 1000;
       const asm = RM ? 1 : ez(cl(t / 3.6));
-      const sep = sm(scrollP, 0.28, 0.82);
-      const unw = sm(scrollP, 0.18, 0.62);
+      const sep = sm(smoothScrollP, 0.32, 0.88) * 0.24;
 
-      mx += (tx - mx) * 0.06;
-      my += (ty - my) * 0.06;
+      mx += (tx - mx) * 0.05;
+      my += (ty - my) * 0.05;
       blast *= 0.955;
 
       ctx.globalCompositeOperation = 'source-over';
@@ -163,12 +166,23 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
 
       const R = Math.min(W, H) * 0.2;
       const len = H * 1.7;
-      const zoom = 1 + scrollP * 1.15;
-      const spin = t * 0.6 * (1 - unw) + mx * 0.9;
-      const tl = -0.5 + unw * 0.5 + my * 0.12;
+
+      // Gentle zoom - restrained so points don't rush toward camera
+      const zoom = 1 + smoothScrollP * 0.25;
+
+      // Calm, slow idle rotation with subtle scroll progression (walks slowly, no speedup)
+      const baseSpin = t * 0.2;
+      const scrollSpin = smoothScrollP * 0.55;
+      const spin = baseSpin + scrollSpin + mx * 0.35;
+
+      // Gentle tilt and stable twist amount (never unwinds or whips fast)
+      const tl = -0.35 + smoothScrollP * 0.12 + my * 0.06;
       const ct = Math.cos(tl);
       const st = Math.sin(tl);
-      const TW = TAU * 3.4 * (1 - unw * 0.93);
+      const TW = TAU * 3.2;
+
+      // Slow vertical translation creating steady walking cadence down the helix
+      const walkOffset = smoothScrollP * 0.26;
 
       if (shock) {
         shock.t += 0.016;
@@ -183,8 +197,9 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         const e = ez(cl(asm * 1.6 - u * 0.6));
         const bl = blast * W * 0.55;
 
-        const X = lp(q.a * W * 0.7, R * Math.cos(ang), e) + q.a * bl + (q.s ? 1 : -1) * sep * W * 0.2;
-        const Y = lp(q.b * H * 0.7, (u - 0.5) * len, e) + q.b * bl;
+        // Coordinates with calm vertical walk traversal
+        const X = lp(q.a * W * 0.7, R * Math.cos(ang), e) + q.a * bl + (q.s ? 1 : -1) * sep * W * 0.18;
+        const Y = lp(q.b * H * 0.7, (u - 0.5 - walkOffset) * len, e) + q.b * bl;
         const Z = lp(q.c * R * 2, R * Math.sin(ang), e);
 
         const rx = X * ct - Y * st;
@@ -280,7 +295,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       ctx.font = '500 10.5px Inter, system-ui, sans-serif';
       ctx.fillStyle = '#FFB280';
 
-      if (asm >= 1 && scrollP < 0.9) {
+      if (asm >= 1 && smoothScrollP < 0.9) {
         for (let i = 6, k = 0; i < K; i += 15, k++) {
           const a = A[0][i];
           const b = A[1][i];
