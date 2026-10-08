@@ -694,7 +694,7 @@ export default function WhyDifferent() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                        className={`w-full sm:w-auto inline-flex items-center justify-center min-h-[46px] px-5 py-3 rounded-xl ${activeCard.theme.buttonBg} font-medium text-sm transition-colors font-sans`}
+                        className={`w-full sm:w-auto inline-flex items-center justify-center min-h-[48px] px-5 py-3 rounded-xl ${activeCard.theme.buttonBg} font-medium text-sm transition-colors font-sans touch-manipulation active:scale-[0.98]`}
                       >
                         <span>{activeCard.cta}</span>
                         <ExternalLink size={14} className="ms-1.5" />
@@ -708,7 +708,7 @@ export default function WhyDifferent() {
                       >
                         <Link
                           href={activeCard.href}
-                          className={`w-full inline-flex items-center justify-center min-h-[46px] px-5 py-3 rounded-xl ${activeCard.theme.buttonBg} font-medium text-sm transition-colors font-sans`}
+                          className={`w-full inline-flex items-center justify-center min-h-[48px] px-5 py-3 rounded-xl ${activeCard.theme.buttonBg} font-medium text-sm transition-colors font-sans touch-manipulation active:scale-[0.98]`}
                         >
                           <span>{activeCard.cta}</span>
                           <ArrowRight size={14} className="ms-1.5 rtl:-scale-x-100" />

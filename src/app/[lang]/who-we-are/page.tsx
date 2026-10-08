@@ -106,11 +106,11 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                   )}
                 </p>
 
-                <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
                   <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                     <Link 
                       href={`/${lang}/for-providers`} 
-                      className="inline-flex items-center justify-center w-full sm:w-auto px-5 xs:px-8 py-3 xs:py-4 text-xs xs:text-sm sm:text-base font-medium text-white bg-white/[0.05] hover:bg-white/[0.10] border border-[#26282D] hover:border-white/30 backdrop-blur-md rounded-xl shadow-xs transition-all active:scale-[0.98]"
+                      className="inline-flex items-center justify-center w-full sm:w-auto px-5 xs:px-8 py-3.5 xs:py-4 text-xs xs:text-sm sm:text-base font-medium text-white bg-white/[0.05] hover:bg-white/[0.10] border border-[#26282D] hover:border-white/30 backdrop-blur-md rounded-xl shadow-xs transition-all active:scale-[0.98] min-h-[48px] touch-manipulation"
                     >
                       <span>{isAr ? 'ابدأ باستقبال الفرص المؤهلة' : 'Start Receiving Qualified Leads'}</span>
                       <ArrowRight size={17} className="ms-2 rtl:-scale-x-100" />
@@ -120,7 +120,7 @@ export default async function WhoWeArePage({ params }: { params: Promise<{ lang:
                   <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                     <Link 
                       href={`/${lang}/contact`} 
-                      className="inline-flex items-center justify-center w-full sm:w-auto px-5 xs:px-8 py-3 xs:py-4 text-xs xs:text-sm sm:text-base font-medium text-neutral-300 hover:text-white bg-transparent hover:bg-white/[0.05] rounded-xl border border-[#26282D] hover:border-white/30 shadow-xs transition-all active:scale-[0.98]"
+                      className="inline-flex items-center justify-center w-full sm:w-auto px-5 xs:px-8 py-3.5 xs:py-4 text-xs xs:text-sm sm:text-base font-medium text-neutral-300 hover:text-white bg-transparent hover:bg-white/[0.05] rounded-xl border border-[#26282D] hover:border-white/30 shadow-xs transition-all active:scale-[0.98] min-h-[48px] touch-manipulation"
                     >
                       <span>{isAr ? 'احجز جلسة استكشافية' : 'Book a Discovery Call'}</span>
                     </Link>

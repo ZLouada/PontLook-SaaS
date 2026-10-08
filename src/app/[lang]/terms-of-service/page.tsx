@@ -59,7 +59,7 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
   return (
     <>
       <section className="bg-black pt-36 pb-16 relative overflow-hidden border-b border-[#26282D]">
-        <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6">
+        <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-4 sm:px-6">
           <Reveal>
             <span className="chip mx-auto">{isAr ? 'الشروط والأحكام' : 'Legal & Terms'}</span>
             <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-white leading-tight font-heading tracking-[-0.03em]">
@@ -83,10 +83,10 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
       </section>
 
       <section className="bg-black py-20">
-        <div className="container-site max-w-4xl mx-auto px-6">
+        <div className="container-site max-w-4xl mx-auto px-4 sm:px-6">
           <Reveal>
             <div className="prose prose-invert max-w-none space-y-12 text-neutral-300 leading-relaxed font-sans">
-              <div className="bg-[#0F1013] p-8 rounded-2xl sm:rounded-3xl border border-[#26282D]">
+              <div className="bg-[#0F1013] p-5 xs:p-7 sm:p-8 rounded-2xl sm:rounded-3xl border border-[#26282D]">
                 <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
                   1. Service Overview & Agreement
                 </h2>

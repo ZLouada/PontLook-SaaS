@@ -313,18 +313,18 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
                 </ul>
               </div>
 
-              <div className="bg-[#0F1013] p-8 rounded-2xl sm:rounded-3xl border border-[#26282D] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div className="bg-[#0F1013] p-5 xs:p-7 sm:p-8 rounded-2xl sm:rounded-3xl border border-[#26282D] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-6">
                 <div>
-                  <h2 className="text-2xl font-semibold text-white mb-2 font-heading">
+                  <h2 className="text-xl sm:text-2xl font-semibold text-white mb-2 font-heading">
                     Need Help With an Order?
                   </h2>
-                  <p className="text-neutral-400 text-sm">
+                  <p className="text-neutral-400 text-sm leading-relaxed">
                     Our support team is ready to assist you with any questions regarding returns, orders, or quality inquiries.
                   </p>
                 </div>
                 <Link
                   href={`/${lang}/contact`}
-                  className="btn-primary inline-flex items-center gap-2 text-sm shrink-0 px-6 py-3 rounded-full"
+                  className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm shrink-0 px-6 py-3 rounded-full"
                 >
                   <Mail size={16} />
                   Contact Support

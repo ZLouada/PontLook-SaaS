@@ -589,7 +589,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             <div className="flex items-center gap-1.5 xs:gap-2 lg:hidden">
               <Link
                 href={switchHref}
-                className={`tap-target inline-flex items-center gap-1 xs:gap-1.5 px-2.5 xs:px-3 py-2 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 ${
+                className={`tap-target inline-flex items-center gap-1 xs:gap-1.5 px-2.5 xs:px-3 py-2 min-h-[44px] rounded-full text-xs font-medium active:scale-95 transition-all duration-200 touch-manipulation ${
                   isLightSection
                     ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
                     : 'border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30'
@@ -604,7 +604,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   capsule the control sits inside. */}
               <button
                 type="button"
-                className={`tap-target flex h-9 w-9 xs:h-10 xs:w-10 items-center justify-center rounded-full transition-all active:scale-90 ${
+                className={`tap-target flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full transition-all active:scale-90 touch-manipulation ${
                   isLightSection
                     ? 'text-neutral-800 bg-white/80 border border-neutral-300/80 hover:bg-white hover:text-black shadow-xs'
                     : 'text-neutral-300 bg-[#16171B] border border-[#26282D] hover:bg-white/10 hover:text-white'
@@ -807,7 +807,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                     <Link
                       href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
                       onClick={() => setOpen(false)}
-                      className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-sm w-full shadow-lg active:scale-95 transition-all min-h-[46px]"
+                      className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-sm w-full shadow-lg active:scale-95 transition-all min-h-[48px] touch-manipulation"
                     >
                       <span>{dict.nav.lets_talk}</span>
                       <ArrowUpRight size={16} className="rtl:-scale-x-100" />
@@ -820,7 +820,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       <Link
                         href={switchHref}
                         onClick={() => setOpen(false)}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full font-medium text-xs text-neutral-300 bg-white/[0.05] hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95 min-h-[40px]"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full font-medium text-xs text-neutral-300 bg-white/[0.05] hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95 min-h-[44px] touch-manipulation"
                       >
                         <Globe size={13} className="text-neutral-400" />
                         <span>{lang === 'en' ? 'العربية' : 'English'}</span>

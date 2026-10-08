@@ -264,7 +264,7 @@ export default function HowItWorks() {
                     <button
                       key={st.id}
                       onClick={() => goToStep(idx)}
-                      className={`group relative flex min-h-[38px] sm:min-h-[40px] items-center justify-center gap-1 sm:gap-1.5 py-2 px-1.5 xs:px-2 sm:px-3 rounded-xl border transition-colors duration-200 text-[11px] xs:text-xs font-medium cursor-pointer ${
+                      className={`group relative flex min-h-[44px] items-center justify-center gap-1 sm:gap-1.5 py-2 px-1.5 xs:px-2 sm:px-3 rounded-xl border transition-colors duration-200 text-[11px] xs:text-xs font-medium cursor-pointer touch-manipulation select-none active:scale-[0.98] ${
                         isActive
                           ? 'text-white border-neutral-950'
                           : 'bg-white text-neutral-600 border-neutral-200 hover:border-neutral-300 hover:text-neutral-950 hover:bg-neutral-50'

@@ -174,7 +174,7 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
             </div>
 
             {/* 4 Pipeline Nodes (Centered Ecomflow Style) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 relative z-10">
+            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 relative z-10">
               {/* Step 1 */}
               <div className="flex flex-col items-center text-center bg-white/70 sm:bg-transparent p-2.5 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-emerald-100">
                 <div className="w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-2xl bg-white border border-emerald-200 flex items-center justify-center text-emerald-700 shadow-xs mb-2 relative z-10">
@@ -237,13 +237,13 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
           </div>
 
           {/* Card 1 Action Button Row (Fixed & Spacious) */}
-          <div className="flex items-center justify-end pt-3 sm:pt-4 border-t border-emerald-200/80">
+          <div className="flex items-center justify-center sm:justify-end pt-3 sm:pt-4 border-t border-emerald-200/80">
             <Link
               href={`/${lang}/find-training`}
-              className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white text-xs sm:text-sm font-semibold shadow-md hover:shadow-lg transition-all active:scale-95 group shrink-0"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 sm:py-2.5 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white text-xs sm:text-sm font-semibold shadow-md hover:shadow-lg transition-all active:scale-[0.98] min-h-[44px] touch-manipulation group"
             >
               <span>{isAr ? 'ابدأ المطابقة الآن' : 'Find your match'}</span>
-              <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform rtl:-scale-x-100" />
+              <ArrowRight size={14} className="group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform rtl:-scale-x-100" />
             </Link>
           </div>
         </div>
@@ -301,7 +301,7 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
               </div>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4 relative z-10">
+            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4 relative z-10">
               {/* Step 1 */}
               <div className="flex flex-col items-center text-center bg-white/60 sm:bg-transparent p-2 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-[#EFE7D8]">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-[#F2EDE2] border border-[#DDD4C5] flex items-center justify-center text-neutral-600 mb-1.5 relative z-10">
@@ -355,7 +355,7 @@ export default function ComparisonToggleContent({ lang = 'en' }: ComparisonToggl
               </div>
 
               {/* Step 5 */}
-              <div className="flex flex-col items-center text-center bg-white/60 sm:bg-transparent p-2 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-[#EFE7D8]">
+              <div className="flex flex-col items-center text-center bg-white/60 sm:bg-transparent p-2 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-[#EFE7D8] xs:col-span-2 sm:col-span-1">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-xl bg-[#F2EDE2] border border-[#DDD4C5] flex items-center justify-center text-neutral-600 mb-1.5 relative z-10">
                   <Layers size={18} />
                 </div>

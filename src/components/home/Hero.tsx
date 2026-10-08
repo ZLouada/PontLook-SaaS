@@ -146,13 +146,13 @@ export default function Hero() {
             </div>
 
             {/* Side CTAs (Dual Action: HR Buyer vs Training Provider) */}
-            <div className="mt-7 sm:mt-10 flex flex-col xs:flex-row flex-wrap items-stretch xs:items-center gap-3 sm:gap-4 w-full">
+            <div className="mt-7 sm:mt-10 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4 w-full">
               {/* Primary Action for HR & Enterprise Buyers */}
-              <Magnetic strength={0.22} activeDistance={40} className="w-full xs:w-auto">
-                <Press className="w-full xs:w-auto" strength={0.7} vibrate>
+              <Magnetic strength={0.22} activeDistance={40} className="w-full sm:w-auto">
+                <Press className="w-full sm:w-auto" strength={0.7} vibrate>
                   <Link
                     href={`/${lang}/find-training`}
-                    className="w-full xs:w-auto inline-flex items-center justify-center gap-2.5 py-3.5 sm:py-3.5 px-6 sm:px-7 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-[0.9375rem] sm:text-base shadow-md transition-colors duration-200 group"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 min-h-[48px] py-3.5 sm:py-3.5 px-5 sm:px-7 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-[0.9375rem] sm:text-base shadow-md transition-colors duration-200 group active:scale-[0.98] touch-manipulation"
                   >
                     <span>{dict.hero?.btn_buyer || (isAr ? 'ابحث عن شريك تدريب' : 'Find a Training Partner')}</span>
                     <ArrowRight
@@ -164,11 +164,11 @@ export default function Hero() {
               </Magnetic>
 
               {/* Secondary Action for Training Companies / Providers */}
-              <Magnetic strength={0.22} activeDistance={40} className="w-full xs:w-auto">
-                <Press className="w-full xs:w-auto" strength={0.7} vibrate>
+              <Magnetic strength={0.22} activeDistance={40} className="w-full sm:w-auto">
+                <Press className="w-full sm:w-auto" strength={0.7} vibrate>
                   <Link
                     href={`/${lang}/for-providers`}
-                    className="w-full xs:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-3.5 px-6 sm:px-7 rounded-full bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-semibold text-[0.9375rem] sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] transition-colors duration-200 group"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] py-3.5 sm:py-3.5 px-5 sm:px-7 rounded-full bg-transparent hover:bg-white/[0.08] text-neutral-300 hover:text-white font-semibold text-[0.9375rem] sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] transition-colors duration-200 group active:scale-[0.98] touch-manipulation"
                   >
                     <span>{dict.hero?.btn_provider || (isAr ? 'انضم كشريك تدريبي' : 'Join as a Training Provider')}</span>
                     <ArrowRight
@@ -184,7 +184,7 @@ export default function Hero() {
 
           {/* Right Column: Animated PontLook GCC 3D Earth Globe */}
           <div className="lg:col-span-5 w-full flex items-center justify-center pt-4 lg:pt-0">
-            <PontLookGlobe className="w-full max-w-[340px] xs:max-w-[380px] sm:max-w-[440px] lg:max-w-[500px]" />
+            <PontLookGlobe className="w-full max-w-[280px] 2xs:max-w-[320px] xs:max-w-[380px] sm:max-w-[440px] lg:max-w-[500px]" />
           </div>
 
         </div>

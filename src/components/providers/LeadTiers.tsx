@@ -719,7 +719,7 @@ export default function LeadTiers(_props?: {
                                 href={href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className={`w-full xs:w-auto inline-flex items-center justify-center px-4 xs:px-5 py-2 xs:py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all`}
+                                className={`w-full xs:w-auto inline-flex items-center justify-center min-h-[44px] px-4 xs:px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all touch-manipulation active:scale-[0.98]`}
                               >
                                 <span>{cta}</span>
                                 <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
@@ -727,7 +727,7 @@ export default function LeadTiers(_props?: {
                             ) : (
                               <Link
                                 href={href.startsWith('http') ? href : `/${lang}${href}`}
-                                className={`w-full xs:w-auto inline-flex items-center justify-center px-4 xs:px-5 py-2 xs:py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all`}
+                                className={`w-full xs:w-auto inline-flex items-center justify-center min-h-[44px] px-4 xs:px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all touch-manipulation active:scale-[0.98]`}
                               >
                                 <span>{cta}</span>
                                 <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />

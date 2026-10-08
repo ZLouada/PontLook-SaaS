@@ -39,7 +39,7 @@ export default function Footer() {
             {/* Giant Metallic Gradient Wordmark — it has to span the horizon on a
                 phone too, so the mobile sizes are set to fill 375px rather than
                 shrinking to a caption. */}
-            <span className="text-[3.5rem] xs:text-[4.25rem] sm:text-8xl md:text-9xl lg:text-[10.5rem] font-bold tracking-[-0.03em] text-transparent bg-clip-text bg-gradient-to-b from-white/90 via-white/30 to-white/0 leading-none font-sans">
+            <span className="text-[3rem] 2xs:text-[3.5rem] xs:text-[4.25rem] sm:text-8xl md:text-9xl lg:text-[10.5rem] font-bold tracking-[-0.03em] text-transparent bg-clip-text bg-gradient-to-b from-white/90 via-white/30 to-white/0 leading-none font-sans">
               PontLook
             </span>
           </div>
@@ -67,7 +67,7 @@ export default function Footer() {
                 <Press className="w-full sm:w-auto" strength={0.4} vibrate>
                   <Link
                     href={`/${lang}/contact`}
-                    className="relative z-10 inline-flex items-center justify-center gap-2.5 bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10 hover:border-white/30 font-medium px-5 xs:px-8 py-3 sm:py-3.5 rounded-xl text-sm sm:text-base min-h-[48px] backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(255,255,255,0.08)] hover:scale-[1.02] active:scale-[0.98] transition-all group w-full sm:w-auto"
+                    className="relative z-10 inline-flex items-center justify-center gap-2.5 bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10 hover:border-white/30 font-medium px-5 xs:px-8 py-3.5 rounded-xl text-sm sm:text-base min-h-[48px] backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(255,255,255,0.08)] hover:scale-[1.02] active:scale-[0.98] touch-manipulation transition-all group w-full sm:w-auto"
                   >
                     <span>{dict.final_cta?.btn_call || (lang === 'ar' ? 'احجز استشارة' : 'Book a consultation')}</span>
                     <ArrowRight size={17} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />

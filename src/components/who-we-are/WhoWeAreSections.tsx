@@ -130,8 +130,8 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
           </p>
         </div>
 
-        {/* 4 Technical Architecture Specs (White Pop-up Cards in 2-col mobile / 4-col desktop) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 xs:gap-2.5 sm:gap-5 items-stretch">
+        {/* 4 Technical Architecture Specs (White Pop-up Cards in 1-col 320px / 2-col mobile / 4-col desktop) */}
+        <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-2.5 xs:gap-3 sm:gap-5 items-stretch">
           {specs.map((item, idx) => (
             <m.div
               key={idx}
@@ -140,7 +140,7 @@ export function ValueModelBilateral({ lang = 'en' }: WhoWeAreProps) {
               viewport={{ once: true, margin: '-40px' }}
               transition={{ type: 'spring', damping: 22, stiffness: 300, delay: idx * 0.08 }}
               whileHover={{ y: -6, scale: 1.02 }}
-              className="rounded-xl sm:rounded-2xl border border-neutral-200/90 hover:border-neutral-400 bg-white p-2.5 xs:p-3.5 sm:p-6 flex flex-col justify-between shadow-[0_10px_30px_-5px_rgba(0,0,0,0.06),0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-8px_rgba(0,0,0,0.12)] text-neutral-900 transition-all duration-300 group relative overflow-hidden"
+              className="rounded-xl sm:rounded-2xl border border-neutral-200/90 hover:border-neutral-400 bg-white p-3.5 xs:p-4 sm:p-6 flex flex-col justify-between shadow-[0_10px_30px_-5px_rgba(0,0,0,0.06),0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-8px_rgba(0,0,0,0.12)] text-neutral-900 transition-all duration-300 group relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-neutral-100/60 rounded-full blur-2xl pointer-events-none group-hover:bg-blue-50/80 transition-colors" />
               
@@ -299,7 +299,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
         </div>
 
         {/* 4 Ecomflow-Inspired Stage Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 mb-4 sm:mb-6 w-full">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 xs:gap-2.5 sm:gap-4 mb-4 sm:mb-6 w-full">
           {steps.map((st, idx) => {
             const isActive = activeStep === idx;
             return (
@@ -307,7 +307,7 @@ export function TrainingJourneyFlow({ lang = 'en' }: WhoWeAreProps) {
                 key={st.num}
                 type="button"
                 onClick={() => setActiveStep(idx)}
-                className={`group relative text-start p-3 sm:p-4 rounded-xl sm:rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between min-h-[105px] sm:min-h-[120px] ${
+                className={`group relative text-start p-2.5 xs:p-3 sm:p-4 rounded-xl sm:rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between min-h-[105px] sm:min-h-[120px] touch-manipulation select-none active:scale-[0.98] ${
                   isActive
                     ? 'bg-neutral-900 text-white border-neutral-900 shadow-md shadow-neutral-900/15'
                     : 'bg-white text-neutral-800 border-neutral-200 hover:border-neutral-400 hover:bg-neutral-50/80 shadow-xs'

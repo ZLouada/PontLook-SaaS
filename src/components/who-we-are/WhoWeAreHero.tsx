@@ -203,7 +203,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             scale: heroTextScale,
             pointerEvents: isDoorOpen ? 'none' : 'auto',
           }}
-          className="relative z-30 container-site max-w-4xl text-center mx-auto px-3.5 xs:px-4 sm:px-6 flex flex-col items-center justify-between h-[85vh] sm:h-[82vh] pt-20 sm:pt-24 lg:pt-28 pb-4"
+          className="relative z-30 container-site max-w-4xl text-center mx-auto px-3.5 xs:px-4 sm:px-6 flex flex-col items-center justify-between min-h-[75dvh] max-h-[88dvh] h-full sm:h-[82vh] pt-20 sm:pt-24 lg:pt-28 pb-4"
         >
           {/* Headlines & Subtitle */}
           <Reveal className="flex flex-col items-center">
@@ -232,7 +232,7 @@ export default function WhoWeAreHero({ lang = 'en' }: WhoWeAreHeroProps) {
             <button
               type="button"
               onClick={scrollToMission}
-              className="inline-flex items-center gap-2 sm:gap-3 px-3.5 xs:px-4 sm:px-6 py-2.5 sm:py-3.5 rounded-full bg-[#111215]/85 hover:bg-[#16171B] border border-[#26282D] hover:border-neutral-500 text-[11px] sm:text-sm text-neutral-200 hover:text-white shadow-2xl backdrop-blur-xl transition-all active:scale-95 group max-w-[92vw] cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 sm:gap-3 px-3.5 xs:px-5 sm:px-6 py-2.5 sm:py-3.5 rounded-full bg-[#111215]/85 hover:bg-[#16171B] border border-[#26282D] hover:border-neutral-500 text-[11px] sm:text-sm text-neutral-200 hover:text-white shadow-2xl backdrop-blur-xl transition-all active:scale-95 group max-w-[94vw] min-h-[44px] touch-manipulation cursor-pointer"
             >
               <Signal />
               <span>

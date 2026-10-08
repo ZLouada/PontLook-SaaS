@@ -627,7 +627,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
 
                   {/* Inner Surface with Chamfer Cut */}
                   <div
-                    className="absolute inset-[1px] bg-[#0C0D11] p-6 sm:p-7 flex flex-col justify-between transition-colors duration-300 group-hover:bg-[#0F1016]"
+                    className="absolute inset-[1px] bg-[#0C0D11] p-4 xs:p-5 sm:p-7 flex flex-col justify-between transition-colors duration-300 group-hover:bg-[#0F1016]"
                     style={{ clipPath: frontClipPath }}
                   >
                     {/* Dog-Ear Triangle Corner Flap */}
@@ -751,7 +751,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
 
                   {/* Inner Surface */}
                   <div
-                    className="absolute inset-[1px] bg-[#0E0F14] p-5 sm:p-6 flex flex-col justify-between"
+                    className="absolute inset-[1px] bg-[#0E0F14] p-4 xs:p-5 sm:p-6 flex flex-col justify-between"
                     style={{ clipPath: backClipPath }}
                   >
                     {/* Dog-Ear Triangle Corner Flap for Back Face */}
@@ -828,7 +828,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                           e.stopPropagation();
                           toggleFlip(idx);
                         }}
-                        className="w-full py-2.5 px-3 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 hover:text-white border border-white/10 text-xs font-mono transition-all flex items-center justify-center gap-2 group/btn"
+                        className="w-full min-h-[44px] py-2.5 px-3 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-neutral-300 hover:text-white border border-white/10 text-xs font-mono transition-all flex items-center justify-center gap-2 group/btn touch-manipulation active:scale-[0.98]"
                       >
                         <RefreshCw size={12} className="group-hover/btn:rotate-180 transition-transform duration-500" />
                         <span>{isAr ? 'قلب للواجهة' : 'Flip to Front'}</span>

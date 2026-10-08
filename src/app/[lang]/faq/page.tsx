@@ -142,18 +142,18 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: Loca
           <FAQAccordion faqs={faqs} />
 
           <Reveal delay={0.4}>
-            <div className="mt-16 bg-[#0F1013] border border-[#26282D] p-10 rounded-2xl text-center shadow-sm">
+            <div className="mt-16 bg-[#0F1013] border border-[#26282D] p-5 xs:p-7 sm:p-10 rounded-2xl text-center shadow-sm">
               <TextReveal
                 as="h3"
                 text={isAr ? 'هل ما زال لديك أي استفسار؟' : 'Still have questions?'}
                 className="text-2xl font-semibold text-white mb-4 font-heading text-center"
               />
-              <p className="text-neutral-400 text-lg mb-8 max-w-2xl mx-auto">
+              <p className="text-neutral-400 text-base sm:text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
                 {isAr
                   ? 'فريقنا جاهز لمساعدتك دائماً. تواصل معنا لمناقشة متطلباتك المحددة وكيف يمكننا دعم نمو أعمالك في أسواق المنطقة.'
                   : 'We’re here to help. Reach out to our team to discuss your specific needs and how we can support your growth across the region.'}
               </p>
-              <Link href={`/${lang}/contact`} className="btn-primary inline-flex">
+              <Link href={`/${lang}/contact`} className="btn-primary w-full sm:w-auto inline-flex items-center justify-center">
                 {isAr ? 'تواصل معنا' : 'Contact Us'}
               </Link>
             </div>

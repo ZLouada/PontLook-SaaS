@@ -101,17 +101,17 @@ export default async function FindTrainingPage({
                 <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                   <Link
                     href={`/${lang}/find-training/request`}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 xs:py-3.5 sm:py-4 px-6 sm:px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-xs xs:text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-6 sm:px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-xs xs:text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] min-h-[48px] touch-manipulation transition-all duration-200"
                   >
                     <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals'}</span>
-                    <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
+                    <ArrowRight size={18} className="rtl:-scale-x-100" />
                   </Link>
                 </Magnetic>
 
                 <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                   <a
                     href="#how-it-works"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-base border border-[#26282D] hover:border-white/20 shadow-xs active:scale-[0.98] transition-all duration-200"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-6 sm:px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-xs xs:text-sm sm:text-base border border-[#26282D] hover:border-white/20 shadow-xs active:scale-[0.98] min-h-[48px] touch-manipulation transition-all duration-200"
                   >
                     <span>{isAr ? 'كيف تعمل المنصة' : 'How Matchmaking Works'}</span>
                   </a>
@@ -121,7 +121,7 @@ export default async function FindTrainingPage({
 
             {/* Right Column: Burj Al Arab Architectural Line Art */}
             <div className="lg:col-span-5 w-full flex items-center justify-center pt-8 lg:pt-0">
-              <BurjTower className="w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[380px] lg:max-w-[440px] xl:max-w-[480px] h-[440px] xs:h-[480px] sm:h-[540px] lg:h-[600px]" />
+              <BurjTower className="w-full max-w-[260px] 2xs:max-w-[280px] xs:max-w-[320px] sm:max-w-[380px] lg:max-w-[440px] xl:max-w-[480px] h-[440px] xs:h-[480px] sm:h-[540px] lg:h-[600px]" />
             </div>
           </div>
         </div>
@@ -173,21 +173,21 @@ export default async function FindTrainingPage({
                         : 'Submit your training requirements in 60 seconds. Our matching concierge will connect you with top tier accredited providers across the GCC.'}
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
                       <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                         <Link
                           href={`/${lang}/find-training/request`}
-                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all duration-200"
+                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-6 sm:px-8 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] text-white font-semibold text-xs xs:text-sm sm:text-base border border-[#26282D] hover:border-white/30 backdrop-blur-md shadow-xs active:scale-[0.98] min-h-[48px] touch-manipulation transition-all duration-200"
                         >
                           <span>{isAr ? 'ابدأ طلب التدريب الآن' : 'Request Training Proposals'}</span>
-                          <ArrowRight size={18} className={isAr ? 'rotate-180' : ''} />
+                          <ArrowRight size={18} className="rtl:-scale-x-100" />
                         </Link>
                       </Magnetic>
 
                       <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
                         <a
                           href="#how-it-works"
-                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-4 px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-base border border-[#26282D] hover:border-white/20 shadow-xs transition-all duration-200"
+                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 sm:py-4 px-6 sm:px-8 rounded-xl bg-transparent hover:bg-white/[0.05] text-neutral-300 hover:text-white font-medium text-xs xs:text-sm sm:text-base border border-[#26282D] hover:border-white/20 shadow-xs active:scale-[0.98] min-h-[48px] touch-manipulation transition-all duration-200"
                         >
                           <span>{isAr ? 'استكشف خطوات العمل' : 'Explore How It Works'}</span>
                         </a>
