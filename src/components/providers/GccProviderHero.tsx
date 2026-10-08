@@ -215,7 +215,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         const dp = (a.Z + b.Z) / (4 * R) + 0.5;
         if (a.e < 0.2) continue;
 
-        ctx.strokeStyle = `rgba(127, 184, 255, ${(0.14 + 0.3 * dp) * a.e * (1 + sep * 0.8)})`;
+        ctx.strokeStyle = `rgba(255, 92, 0, ${(0.16 + 0.35 * dp) * a.e * (1 + sep * 0.8)})`;
         ctx.lineWidth = 1 + sep;
         ctx.beginPath();
         ctx.moveTo(a.sx, a.sy);
@@ -223,9 +223,9 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         ctx.stroke();
       }
 
-      // Strand dots
+      // Strand dots - PontLook Orange theme
       for (let s = 0; s < 2; s++) {
-        ctx.fillStyle = s ? '#3D7BFF' : '#9CCBFF';
+        ctx.fillStyle = s ? '#FF5C00' : '#FFA048';
         for (let i = 0; i < K; i++) {
           const o = A[s][i];
           if (!o) continue;
@@ -275,10 +275,10 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         ctx.fill();
       }
 
-      // 3D floating enterprise domain tags
+      // 3D floating enterprise domain tags (Orange glow)
       ctx.globalAlpha = 1;
       ctx.font = '500 10.5px Inter, system-ui, sans-serif';
-      ctx.fillStyle = '#BFD9FF';
+      ctx.fillStyle = '#FFB280';
 
       if (asm >= 1 && scrollP < 0.9) {
         for (let i = 6, k = 0; i < K; i += 15, k++) {
@@ -301,9 +301,9 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         }
       }
 
-      // Ambient dust particles
+      // Ambient dust particles (Warm golden amber)
       ctx.globalAlpha = 1;
-      ctx.fillStyle = '#7FB8FF';
+      ctx.fillStyle = '#FFA048';
       for (const d of dust) {
         d.y -= d.v * 0.004;
         if (d.y < -1) d.y = 1;
@@ -319,7 +319,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       // Shockwave ring
       if (shock) {
         ctx.globalAlpha = (0.6 * (1.6 - shock.t)) / 1.6;
-        ctx.strokeStyle = '#7FB8FF';
+        ctx.strokeStyle = '#FF5C00';
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.arc(shock.x, shock.y, shock.t * 1000, 0, TAU);
@@ -357,9 +357,9 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
   }, [isAr, pairs]);
 
   return (
-    <section ref={heroRef} id="hero" className="relative h-[440vh] select-none">
+    <section ref={heroRef} id="hero" className="relative h-[440vh] select-none bg-black">
       {/* Pinned 100vh Viewport */}
-      <div className="sticky top-0 h-[100svh] overflow-hidden bg-[radial-gradient(ellipse_at_50%_40%,#0C1A3D_0,#05070D_70%)]">
+      <div className="sticky top-0 h-[100svh] overflow-hidden bg-[radial-gradient(ellipse_at_50%_40%,rgba(255,92,0,0.1)_0,#05070D_70%)] bg-black">
         {/* Interactive 3D Canvas */}
         <canvas
           ref={canvasRef}
@@ -371,7 +371,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         {/* Top-Left Telemetry HUD */}
         <div
           id="hud"
-          className="absolute start-[2.2vw] top-[calc(88px+env(safe-area-inset-top,0px))] font-sans font-medium text-[11px] tracking-[0.14em] text-[#7FB8FF] pointer-events-none z-10"
+          className="absolute start-[2.2vw] top-[calc(88px+env(safe-area-inset-top,0px))] font-sans font-medium text-[11px] tracking-[0.14em] text-[#FF5C00] pointer-events-none z-10"
         >
           {hudText}
         </div>
@@ -396,17 +396,17 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
             )}
           </h2>
 
-          <p className="mt-7 text-[#9FB1D1] text-sm sm:text-base font-sans">
+          <p className="mt-7 text-neutral-300 text-sm sm:text-base font-sans">
             {isAr ? 'منظومة التشغيل والربط لـ' : 'Operating System for'}
-            <b className="block text-[#E6ECF8] font-medium mt-1">
+            <b className="block text-white font-medium mt-1">
               {isAr ? 'مزودي تدريب الشركات في الخليج' : 'GCC Corporate Training Providers'}
             </b>
           </p>
 
           <div className="mt-8 flex justify-center gap-3 pointer-events-auto">
             <a
-              href="#ap"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-[#7FB8FF]/60 hover:bg-[#3D7BFF] hover:border-[#3D7BFF] text-white text-xs sm:text-sm font-sans transition-all duration-200"
+              href="#connection-bridge"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF5C00] hover:bg-[#FF6A1A] text-white text-xs sm:text-sm font-sans font-semibold rounded-xl shadow-lg shadow-orange-500/25 transition-all duration-200"
             >
               <span>{isAr ? 'انضم كشريك تدريب' : 'Apply as provider'}</span>
               <span>→</span>

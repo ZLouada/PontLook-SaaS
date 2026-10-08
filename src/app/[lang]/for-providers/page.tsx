@@ -5,7 +5,7 @@ import { buildProviderNetworkSchema } from '@/lib/seo/schema';
 import GccProviderHero from '@/components/providers/GccProviderHero';
 import GccProviderStory from '@/components/providers/GccProviderStory';
 import GccProviderReveal from '@/components/providers/GccProviderReveal';
-import GccProviderApply from '@/components/providers/GccProviderApply';
+import ProviderConnectionFlow from '@/components/providers/ProviderConnectionFlow';
 
 export async function generateMetadata({
   params,
@@ -90,8 +90,8 @@ export default async function ForProvidersPage({
       {/* 3. WHITE CONTRAST CHARACTER-BY-CHARACTER REVEAL & PIPELINE TOGGLE */}
       <GccProviderReveal isAr={isAr} />
 
-      {/* 4. JOIN PROVIDER NETWORK APPLICATION TERMINAL */}
-      <GccProviderApply isAr={isAr} />
+      {/* 4. JOIN PROVIDER NETWORK CONNECTION FLOW & DIRECT APPLICATION TRIGGER */}
+      <ProviderConnectionFlow lang={lang} />
     </div>
   );
 }

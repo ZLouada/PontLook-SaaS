@@ -103,7 +103,7 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
         <a href="#w" className="hover:text-[#0F172A] transition-colors">
           {isAr ? 'نموذج العمل' : 'The model'}
         </a>
-        <a href="#ap" className="hover:text-[#0F172A] transition-colors font-semibold text-[#2451BF]">
+        <a href="#connection-bridge" className="hover:text-[#FF5C00] transition-colors font-semibold text-[#FF5C00]">
           {isAr ? 'طلب الانضمام' : 'Apply'}
         </a>
       </div>
