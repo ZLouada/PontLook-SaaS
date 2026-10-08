@@ -2,11 +2,10 @@ import type { Metadata } from 'next';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates, providerIcons } from '@/lib/seo/metadata';
 import { buildProviderNetworkSchema } from '@/lib/seo/schema';
-import ProviderHero from '@/components/providers/ProviderHero';
-import ProviderMetricsRibbon from '@/components/providers/ProviderMetricsRibbon';
-import ProviderProtocolBreakdown from '@/components/providers/ProviderProtocolBreakdown';
-import ProviderLeadMatrix from '@/components/providers/ProviderLeadMatrix';
-import ProviderIntakeTerminal from '@/components/providers/ProviderIntakeTerminal';
+import GccProviderHero from '@/components/providers/GccProviderHero';
+import GccProviderStory from '@/components/providers/GccProviderStory';
+import GccProviderReveal from '@/components/providers/GccProviderReveal';
+import GccProviderApply from '@/components/providers/GccProviderApply';
 
 export async function generateMetadata({
   params,
@@ -18,11 +17,11 @@ export async function generateMetadata({
   const isAr = lang === 'ar';
 
   const title = isAr
-    ? 'فرص وعملاء تدريب معتمدين للشركات | PontLook'
-    : 'Direct Enterprise Training Procurement & Leads | PontLook';
+    ? 'لمزودي التدريب | فرص وعملاء تدريب معتمدين للشركات | PontLook'
+    : 'For Providers | GCC Corporate Training Matchmaking | PontLook';
   const description = isAr
     ? 'احصل على فرص تعاقد وتدريب معتمدة مع كبرى الشركات في السعودية والإمارات. بدون اشتراكات شهرية أو رسوم احتجاز، ادفع فقط مقابل كل عميل مهتم ومؤهل.'
-    : 'Direct enterprise corporate training procurement in Saudi Arabia and the UAE. Verified C-level buyers, zero monthly retainers, 100% pay per qualified lead.';
+    : 'Stop chasing companies. Match with verified corporate decision makers seeking training in the GCC. Zero retainers, 100% pay per qualified lead.';
 
   return {
     title: {
@@ -75,27 +74,24 @@ export default async function ForProvidersPage({
   });
 
   return (
-    <div className="bg-[#07090E] min-h-screen text-slate-100 selection:bg-sky-500 selection:text-black">
+    <div className="bg-[#05070D] min-h-screen text-[#E6ECF8] font-sans selection:bg-[#3D7BFF] selection:text-white">
       {/* Search Engine & Rich Snippets Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(providerSchema) }}
       />
 
-      {/* 1. HERO VIEWPORT & INTERACTIVE KNOWLEDGE GRAPH */}
-      <ProviderHero lang={lang} />
+      {/* 1. HERO PINNED 3D CANVAS & LEAD REVEAL */}
+      <GccProviderHero isAr={isAr} />
 
-      {/* 2. INSTITUTIONAL PROOF POINTS / METRICS RIBBON */}
-      <ProviderMetricsRibbon isAr={isAr} />
+      {/* 2. PINNED ABCD STORY NARRATIVE & MORPHING BLUEPRINT PANEL */}
+      <GccProviderStory isAr={isAr} />
 
-      {/* 3. 3-PHASE PROTOCOL BREAKDOWN ARCHITECTURE */}
-      <ProviderProtocolBreakdown isAr={isAr} />
+      {/* 3. WHITE CONTRAST CHARACTER-BY-CHARACTER REVEAL & PIPELINE TOGGLE */}
+      <GccProviderReveal isAr={isAr} />
 
-      {/* 4. TECHNICAL LEAD TAXONOMY MATRIX */}
-      <ProviderLeadMatrix isAr={isAr} />
-
-      {/* 5. PROVIDER INTAKE & ONBOARDING TERMINAL */}
-      <ProviderIntakeTerminal isAr={isAr} />
+      {/* 4. JOIN PROVIDER NETWORK APPLICATION TERMINAL */}
+      <GccProviderApply isAr={isAr} />
     </div>
   );
 }
