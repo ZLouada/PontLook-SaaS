@@ -51,12 +51,12 @@ interface FindTrainingStepsCardsProps {
 
 /**
  * 3D Holographic Kinetic Cube Component
- * Six interactive 3D faces with glowing PontLook orange wireframe borders,
- * translucent amber glass fill, inner pulse core, and realistic lighting.
+ * Six interactive 3D faces with glowing white wireframe borders,
+ * translucent frosted glass fill, inner pulse core, and realistic lighting.
  */
 function Cube3D({
   size = 36,
-  color = '#FF5C00',
+  color = '#FFFFFF',
   isHovered = false,
   className = '',
   style = {},
@@ -109,18 +109,18 @@ function Cube3D({
             height: `${size}px`,
             transform: f.transform,
             backgroundColor: isHovered
-              ? 'rgba(255, 92, 0, 0.18)'
-              : 'rgba(255, 92, 0, 0.10)',
+              ? 'rgba(255, 255, 255, 0.18)'
+              : 'rgba(255, 255, 255, 0.10)',
             border: isHovered ? `1.4px solid ${color}` : `1.1px solid ${color}`,
             boxShadow: isHovered
-              ? `0 0 14px rgba(255, 92, 0, 0.45) inset, 0 0 10px rgba(255, 92, 0, 0.4)`
-              : `0 0 8px rgba(255, 92, 0, 0.25) inset, 0 0 6px rgba(255, 92, 0, 0.25)`,
+              ? `0 0 14px rgba(255, 255, 255, 0.45) inset, 0 0 10px rgba(255, 255, 255, 0.4)`
+              : `0 0 8px rgba(255, 255, 255, 0.25) inset, 0 0 6px rgba(255, 255, 255, 0.25)`,
             backfaceVisibility: 'visible',
           }}
         >
           {/* Subtle grid line or crosshairs on faces */}
           <div className="absolute inset-0 flex items-center justify-center opacity-30">
-            <div className="w-full h-[1px] bg-[#FF5C00]" />
+            <div className="w-full h-[1px] bg-white" />
           </div>
         </div>
       ))}
@@ -151,7 +151,7 @@ function KineticCubesVisual({
       <div
         className="absolute w-24 h-7 bottom-0 rounded-full blur-md pointer-events-none transition-all duration-300"
         style={{
-          backgroundColor: isHovered ? 'rgba(255, 92, 0, 0.3)' : 'rgba(255, 92, 0, 0.15)',
+          backgroundColor: isHovered ? 'rgba(255, 255, 255, 0.3)' : 'rgba(255, 255, 255, 0.15)',
         }}
       />
 
@@ -179,7 +179,7 @@ function KineticCubesVisual({
             style={{ transformStyle: 'preserve-3d' }}
             className="relative"
           >
-            <Cube3D size={36} color="#FF5C00" isHovered={isHovered} />
+            <Cube3D size={36} color="#FFFFFF" isHovered={isHovered} />
           </m.div>
 
           {/* Orbiting Satellite Micro-Cube */}
@@ -210,7 +210,7 @@ function KineticCubesVisual({
                 transformStyle: 'preserve-3d',
               }}
             >
-              <Cube3D size={16} color="#FFA055" isHovered={isHovered} />
+              <Cube3D size={16} color="#FFFFFF" isHovered={isHovered} />
             </div>
           </m.div>
         </div>
@@ -242,7 +242,7 @@ function KineticCubesVisual({
             }}
             style={{ transformStyle: 'preserve-3d' }}
           >
-            <Cube3D size={30} color="#FF5C00" isHovered={isHovered} />
+            <Cube3D size={30} color="#FFFFFF" isHovered={isHovered} />
           </m.div>
 
           {/* Upper Right Cube (Anti-phase floating) */}
@@ -268,7 +268,7 @@ function KineticCubesVisual({
               transform: 'translateY(-14px)',
             }}
           >
-            <Cube3D size={30} color="#FF7A1A" isHovered={isHovered} />
+            <Cube3D size={30} color="#FFFFFF" isHovered={isHovered} />
           </m.div>
         </div>
       )}
@@ -308,7 +308,7 @@ function KineticCubesVisual({
                 transformStyle: 'preserve-3d',
               }}
             >
-              <Cube3D size={24} color="#FF5C00" isHovered={isHovered} />
+              <Cube3D size={24} color="#FFFFFF" isHovered={isHovered} />
             </div>
 
             {/* Bottom Left Cube */}
@@ -319,7 +319,7 @@ function KineticCubesVisual({
                 transformStyle: 'preserve-3d',
               }}
             >
-              <Cube3D size={24} color="#FF7A1A" isHovered={isHovered} />
+              <Cube3D size={24} color="#FFFFFF" isHovered={isHovered} />
             </div>
 
             {/* Bottom Right Cube */}
@@ -330,7 +330,7 @@ function KineticCubesVisual({
                 transformStyle: 'preserve-3d',
               }}
             >
-              <Cube3D size={24} color="#FF5C00" isHovered={isHovered} />
+              <Cube3D size={24} color="#FFFFFF" isHovered={isHovered} />
             </div>
           </m.div>
         </div>
@@ -406,9 +406,9 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
             <span className="text-neutral-400 text-[11px] font-mono">{isAr ? 'الموقع والفوج:' : 'Location & Cohort:'}</span>
             <span className="text-white font-medium text-xs">{isAr ? 'حضوري بالرياض · 25 متدرباً' : 'Onsite Riyadh · 25 Execs'}</span>
           </div>
-          <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#FF5C00]/[0.08] border border-[#FF5C00]/30">
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.08] border border-white/30">
             <span className="text-neutral-300 text-[11px] font-mono">{isAr ? 'الجدول الزمني:' : 'Timeline:'}</span>
-            <span className="text-[#FF5C00] font-bold text-xs">{isAr ? 'الربع القادم · تسليم فوري' : 'Upcoming Quarter Start'}</span>
+            <span className="text-white font-bold text-xs">{isAr ? 'الربع القادم · تسليم فوري' : 'Upcoming Quarter Start'}</span>
           </div>
         </div>
       ),
@@ -458,19 +458,19 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
           <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.02] border border-white/10">
             <span className="text-neutral-400 text-[11px] font-mono">{isAr ? 'الاعتماد المؤسسي:' : 'Accreditation:'}</span>
             <span className="text-white font-medium text-xs flex items-center gap-1">
-              <CheckCircle2 size={12} className="text-[#FF5C00]" /> {isAr ? 'مرخص ومعتمد بالخليج' : 'Verified GCC Entity'}
+              <CheckCircle2 size={12} className="text-white" /> {isAr ? 'مرخص ومعتمد بالخليج' : 'Verified GCC Entity'}
             </span>
           </div>
           <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.02] border border-white/10">
             <span className="text-neutral-400 text-[11px] font-mono">{isAr ? 'خبرة الميسر التنفيذي:' : 'Facilitator:'}</span>
             <span className="text-white font-medium text-xs flex items-center gap-1">
-              <CheckCircle2 size={12} className="text-[#FF5C00]" /> 10+ {isAr ? 'سنوات إقليمية' : 'Yrs Regional'}
+              <CheckCircle2 size={12} className="text-white" /> 10+ {isAr ? 'سنوات إقليمية' : 'Yrs Regional'}
             </span>
           </div>
-          <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#FF5C00]/[0.08] border border-[#FF5C00]/30">
+          <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.08] border border-white/30">
             <span className="text-neutral-300 text-[11px] font-mono">{isAr ? 'تقييم المشاركين:' : 'Participant Rating:'}</span>
-            <span className="text-[#FF5C00] font-bold text-xs flex items-center gap-1">
-              <CheckCircle2 size={12} className="text-[#FF5C00]" /> 4.9 / 5.0
+            <span className="text-white font-bold text-xs flex items-center gap-1">
+              <CheckCircle2 size={12} className="text-white" /> 4.9 / 5.0
             </span>
           </div>
         </div>
@@ -524,14 +524,14 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
               <span className="text-xs font-bold text-white block mt-0.5">SAR 125k</span>
               <span className="text-[9px] text-neutral-400 block truncate">{isAr ? 'أكاديمية إقليمية' : 'Tier-1 Academy'}</span>
             </div>
-            <div className="p-2 rounded-lg bg-[#FF5C00]/[0.08] border border-[#FF5C00]/30">
-              <span className="text-[9px] text-[#FF5C00] font-mono block">{isAr ? 'العرض الثاني' : 'Proposal B'}</span>
+            <div className="p-2 rounded-lg bg-white/[0.08] border border-white/30">
+              <span className="text-[9px] text-white font-mono block">{isAr ? 'العرض الثاني' : 'Proposal B'}</span>
               <span className="text-xs font-bold text-white block mt-0.5">SAR 110k</span>
-              <span className="text-[9px] text-orange-200/80 block truncate">{isAr ? 'بيت خبرة تخصصي' : 'Boutique Firm'}</span>
+              <span className="text-[9px] text-neutral-300 block truncate">{isAr ? 'بيت خبرة تخصصي' : 'Boutique Firm'}</span>
             </div>
           </div>
           <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/10 flex items-center gap-2 text-[11px] text-neutral-300">
-            <ShieldCheck size={14} className="text-[#FF5C00] shrink-0" />
+            <ShieldCheck size={14} className="text-white shrink-0" />
             <span>{isAr ? 'تسليم العروض ومطابقتها خلال 48 ساعة كحد أقصى' : 'Guaranteed 48h delivery SLA with line-item detail'}</span>
           </div>
         </div>
@@ -553,7 +553,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
       {/* Section Header: Minimalist Palantir Architectural Style */}
       <div className="mb-10 sm:mb-14 text-center max-w-4xl mx-auto space-y-3">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-neutral-300 text-xs font-mono font-medium tracking-wider">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00] animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
           <span>{isAr ? 'مسار المطابقة // خارطة الطريق التنفيذية' : 'MATCHING ROADMAP // WORKFLOW'}</span>
         </div>
 
@@ -620,7 +620,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                     style={{
                       clipPath: frontClipPath,
                       backgroundColor: isHovered
-                        ? 'rgba(255, 92, 0, 0.45)'
+                        ? 'rgba(255, 255, 255, 0.45)'
                         : 'rgba(255, 255, 255, 0.12)',
                     }}
                   />
@@ -640,19 +640,19 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                           ? 'polygon(100% 0, 0 100%, 100% 100%)'
                           : 'polygon(0 0, 0 100%, 100% 100%)',
                         backgroundColor: isHovered
-                          ? 'rgba(255, 92, 0, 0.35)'
+                          ? 'rgba(255, 255, 255, 0.35)'
                           : 'rgba(255, 255, 255, 0.12)',
                         borderBottom: isHovered
-                          ? '1px solid rgba(255, 92, 0, 0.6)'
+                          ? '1px solid rgba(255, 255, 255, 0.6)'
                           : '1px solid rgba(255, 255, 255, 0.25)',
                         borderLeft: !isAr
                           ? isHovered
-                            ? '1px solid rgba(255, 92, 0, 0.6)'
+                            ? '1px solid rgba(255, 255, 255, 0.6)'
                             : '1px solid rgba(255, 255, 255, 0.25)'
                           : undefined,
                         borderRight: isAr
                           ? isHovered
-                            ? '1px solid rgba(255, 92, 0, 0.6)'
+                            ? '1px solid rgba(255, 255, 255, 0.6)'
                             : '1px solid rgba(255, 255, 255, 0.25)'
                           : undefined,
                       }}
@@ -661,7 +661,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                     {/* Top Telemetry Bar */}
                     <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-[11px] font-bold text-[#FF5C00]">
+                        <span className="font-mono text-[11px] font-bold text-white">
                           {step.index}
                         </span>
                         <span className="font-mono text-[10px] tracking-widest text-neutral-400 uppercase">
@@ -688,7 +688,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                         <h3 className="text-xl sm:text-2xl font-bold font-heading text-white tracking-tight leading-snug group-hover:text-neutral-100 transition-colors">
                           {isAr ? step.titleAr : step.titleEn}
                         </h3>
-                        <p className="text-xs font-mono text-[#FF5C00] mt-1 tracking-wide">
+                        <p className="text-xs font-mono text-white mt-1 tracking-wide">
                           {isAr ? step.subAr : step.subEn}
                         </p>
                       </div>
@@ -718,7 +718,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                       </div>
 
                       {/* Flip Action Indicator */}
-                      <div className="flex items-center justify-between text-xs font-mono text-neutral-400 group-hover:text-[#FF5C00] transition-colors pt-0.5">
+                      <div className="flex items-center justify-between text-xs font-mono text-neutral-400 group-hover:text-white transition-colors pt-0.5">
                         <span className="flex items-center gap-1.5 text-[11px]">
                           <RefreshCw size={12} className="group-hover:rotate-180 transition-transform duration-500" />
                           <span>{isAr ? 'انقر لقلب البطاقة والمعاينة' : 'Click to flip & inspect'}</span>
@@ -745,7 +745,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                     className="absolute inset-0 transition-all duration-300"
                     style={{
                       clipPath: backClipPath,
-                      backgroundColor: 'rgba(255, 92, 0, 0.45)',
+                      backgroundColor: 'rgba(255, 255, 255, 0.45)',
                     }}
                   />
 
@@ -763,17 +763,17 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                         clipPath: isAr
                           ? 'polygon(0 0, 0 100%, 100% 100%)'
                           : 'polygon(100% 0, 0 100%, 100% 100%)',
-                        backgroundColor: 'rgba(255, 92, 0, 0.35)',
-                        borderBottom: '1px solid rgba(255, 92, 0, 0.6)',
-                        borderRight: !isAr ? '1px solid rgba(255, 92, 0, 0.6)' : undefined,
-                        borderLeft: isAr ? '1px solid rgba(255, 92, 0, 0.6)' : undefined,
+                        backgroundColor: 'rgba(255, 255, 255, 0.35)',
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.6)',
+                        borderRight: !isAr ? '1px solid rgba(255, 255, 255, 0.6)' : undefined,
+                        borderLeft: isAr ? '1px solid rgba(255, 255, 255, 0.6)' : undefined,
                       }}
                     />
 
                     {/* Back Header with Close / Flip Button */}
                     <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-[10px] font-bold text-[#FF5C00]">
+                        <span className="font-mono text-[10px] font-bold text-white">
                           {isAr ? 'المواصفات' : 'SPEC'} {'//'} {step.index}
                         </span>
                         <span className="text-[10px] font-mono text-neutral-400 uppercase">
@@ -813,7 +813,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                       <div className="space-y-1.5 pt-1">
                         {step.takeaways.map((point, pIdx) => (
                           <div key={pIdx} className="flex items-start gap-1.5 text-[11px] text-neutral-300 font-sans">
-                            <CheckCircle2 size={12} className="text-[#FF5C00] shrink-0 mt-0.5" />
+                            <CheckCircle2 size={12} className="text-white shrink-0 mt-0.5" />
                             <span className="leading-snug">{isAr ? point.ar : point.en}</span>
                           </div>
                         ))}
