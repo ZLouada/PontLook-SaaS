@@ -1,16 +1,12 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { getDictionary } from '@/i18n';
 import { Locale, i18n } from '@/i18n/config';
-import ProviderBenefitsCards from '@/components/providers/ProviderBenefitsCards';
-import ProviderConnectionFlow from '@/components/providers/ProviderConnectionFlow';
-import Reveal from '@/components/shared/Reveal';
-import NeuralGridBackground from '@/components/shared/NeuralGridBackground';
-import ProviderDnaHelix from '@/components/providers/ProviderDnaHelix';
-import Magnetic from '@/components/shared/Magnetic';
-import { ArrowRight } from '@/components/icons';
 import { constructAlternates, providerIcons } from '@/lib/seo/metadata';
 import { buildProviderNetworkSchema } from '@/lib/seo/schema';
+import ProviderHero from '@/components/providers/ProviderHero';
+import ProviderMetricsRibbon from '@/components/providers/ProviderMetricsRibbon';
+import ProviderProtocolBreakdown from '@/components/providers/ProviderProtocolBreakdown';
+import ProviderLeadMatrix from '@/components/providers/ProviderLeadMatrix';
+import ProviderIntakeTerminal from '@/components/providers/ProviderIntakeTerminal';
 
 export async function generateMetadata({
   params,
@@ -23,10 +19,10 @@ export async function generateMetadata({
 
   const title = isAr
     ? 'فرص وعملاء تدريب معتمدين للشركات | PontLook'
-    : 'Corporate Training Leads & Matchmaking | PontLook';
+    : 'Direct Enterprise Training Procurement & Leads | PontLook';
   const description = isAr
     ? 'احصل على فرص تعاقد وتدريب معتمدة مع كبرى الشركات في السعودية والإمارات. بدون اشتراكات شهرية أو رسوم احتجاز، ادفع فقط مقابل كل عميل مهتم ومؤهل.'
-    : 'Acquire vetted enterprise corporate training leads in Saudi Arabia and the UAE. No retainers or monthly fees — pay strictly per qualified decision maker.';
+    : 'Direct enterprise corporate training procurement in Saudi Arabia and the UAE. Verified C-level buyers, zero monthly retainers, 100% pay per qualified lead.';
 
   return {
     title: {
@@ -72,102 +68,34 @@ export default async function ForProvidersPage({
   const resolvedParams = await params;
   const lang = resolvedParams?.lang || 'en';
   const isAr = lang === 'ar';
-  let dict: any = {};
-
-  try {
-    dict = await getDictionary(lang);
-  } catch (err) {
-    console.error('Error loading dictionary:', err);
-  }
 
   const providerSchema = buildProviderNetworkSchema({
-    lang,
+    lang: isAr ? 'ar' : 'en',
     canonicalUrl: `https://pontlook.com/${lang}/for-providers`,
   });
 
   return (
-    <>
+    <div className="bg-[#07090E] min-h-screen text-slate-100 selection:bg-sky-500 selection:text-black">
       {/* Search Engine & Rich Snippets Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(providerSchema) }}
       />
 
-      {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-black pt-24 sm:pt-36 lg:pt-40 pb-16 sm:pb-24 px-3.5 xs:px-4 sm:px-6 lg:px-8 min-h-[580px] lg:min-h-[640px] flex items-center">
-        {/* Ambient Depth Glows */}
-        <div className="pointer-events-none absolute top-1/4 start-0 w-[550px] h-[450px] bg-orange-500/[0.05] blur-[160px] -z-10 rounded-full" />
-        <div className="pointer-events-none absolute top-1/3 end-0 w-[500px] h-[500px] bg-orange-500/[0.03] blur-[160px] -z-10 rounded-full" />
-        <NeuralGridBackground className="z-0 opacity-20" gridSize={36} interactiveRadius={160} activeColor="rgba(255, 92, 0, 0.4)" />
+      {/* 1. HERO VIEWPORT & INTERACTIVE KNOWLEDGE GRAPH */}
+      <ProviderHero lang={lang} />
 
-        {/* 3D Rotating DNA Double Helix Background Visual */}
-        <ProviderDnaHelix isAr={isAr} className="z-0" />
+      {/* 2. INSTITUTIONAL PROOF POINTS / METRICS RIBBON */}
+      <ProviderMetricsRibbon isAr={isAr} />
 
-        <div className="container-site max-w-6xl mx-auto relative z-10 w-full">
-          {/* Left-Aligned Header Block */}
-          <div className="max-w-3xl text-start">
-            <Reveal>
-              {/* Eyebrow Badge */}
-              <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[#FF5C00] text-xs font-semibold uppercase tracking-wider font-mono">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00] animate-pulse" />
-                <span>{isAr ? 'لمزودي التدريب' : 'FOR PROVIDERS'}</span>
-              </div>
+      {/* 3. 3-PHASE PROTOCOL BREAKDOWN ARCHITECTURE */}
+      <ProviderProtocolBreakdown isAr={isAr} />
 
-              <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-7xl font-semibold text-white leading-[1.12] sm:leading-[1.05] font-heading tracking-tight text-start">
-                {isAr ? (
-                  <>
-                    فرص تدريبية للشركات{' '}
-                    <span className="text-[#FF5C00]">حسب الطلب.</span>
-                  </>
-                ) : (
-                  <>
-                    Enterprise Training Leads{' '}
-                    <span className="text-[#FF5C00]">On Demand.</span>
-                  </>
-                )}
-              </h1>
+      {/* 4. TECHNICAL LEAD TAXONOMY MATRIX */}
+      <ProviderLeadMatrix isAr={isAr} />
 
-              <p className="mt-3.5 sm:mt-5 text-sm xs:text-base sm:text-lg text-neutral-300 leading-relaxed max-w-2xl font-normal font-sans text-start">
-                {isAr
-                  ? 'تواصل مباشرة مع صناع القرار في كبرى المنشآت والشركات التي تبحث بنشاط عن حلول تدريبية. بدون رسوم شهرية ثابتة، الدفع فقط لكل فرصة مؤكدة ومؤهلة.'
-                  : 'Connect directly with verified corporate decision makers actively seeking training solutions. Zero retainers, 100% pay per lead.'}
-              </p>
-
-              {/* Hero Action Buttons */}
-              <div className="mt-6 xs:mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5 w-full sm:w-auto">
-                <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
-                  <Link
-                    href={`/${lang}/for-providers/apply`}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 xs:py-3.5 px-6 sm:px-8 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-xs xs:text-sm sm:text-base shadow-lg shadow-orange-500/25 active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-orange-500/50 focus-visible:outline-none min-h-[48px]"
-                  >
-                    <span>{isAr ? 'انضم كشريك تدريب' : 'Become a Partner'}</span>
-                    <ArrowRight size={16} className="rtl:-scale-x-100" />
-                  </Link>
-                </Magnetic>
-
-                <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
-                  <a
-                    href="#why-partner"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3.5 px-6 sm:px-7 rounded-xl bg-white hover:bg-neutral-200 text-black font-semibold text-sm sm:text-base shadow-sm active:scale-95 transition-all duration-200 font-sans focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:outline-none min-h-[48px]"
-                  >
-                    <span>{isAr ? 'اعرف المزيد' : 'Learn more'}</span>
-                  </a>
-                </Magnetic>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. WHY PARTNER / DIRECT VALUE PROPOSITION (Attio-style free-standing cards) */}
-      <section id="why-partner" className="bg-black pt-20 pb-16 sm:pt-28 sm:pb-24 scroll-mt-28 lg:scroll-mt-36 w-full">
-        <div className="w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-          <ProviderBenefitsCards lang={lang} />
-        </div>
-      </section>
-
-      {/* 3. THE CONNECTION BRIDGE & ACTION ENGINE */}
-      <ProviderConnectionFlow lang={lang} />
-    </>
+      {/* 5. PROVIDER INTAKE & ONBOARDING TERMINAL */}
+      <ProviderIntakeTerminal isAr={isAr} />
+    </div>
   );
 }
