@@ -577,3 +577,17 @@
 .node-halo {
   animation: node-halo var(--halo-duration, 2.8s) var(--ease-out) infinite;
 }
+
+/* Staggered entrance for hero large typography letters */
+@keyframes in {
+  from {
+    opacity: 0;
+    filter: blur(20px);
+    transform: translateY(45%);
+  }
+  to {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
