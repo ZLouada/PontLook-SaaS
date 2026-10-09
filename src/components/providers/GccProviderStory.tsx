@@ -135,19 +135,34 @@ export default function GccProviderStory({ isAr = false }: GccProviderStoryProps
 
   useEffect(() => {
     const cl = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+    let activeIdxCurrent = -1;
+    let ticking = false;
 
     const onScroll = () => {
-      const storyEl = storyRef.current;
-      if (!storyEl) return;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        const storyEl = storyRef.current;
+        if (!storyEl) return;
 
-      const r = storyEl.getBoundingClientRect();
-      const scrollableHeight = r.height - window.innerHeight;
-      if (scrollableHeight <= 0) return;
+        const r = storyEl.getBoundingClientRect();
+        // Skip calculations if completely offscreen
+        if (r.bottom < 0 || r.top > window.innerHeight) return;
 
-      const q = cl(-r.top / scrollableHeight);
-      const n = chapters.length;
-      const i = Math.min(n - 1, Math.floor(q * n));
-      setActiveIdx(i);
+        const scrollableHeight = r.height - window.innerHeight;
+        if (scrollableHeight <= 0) return;
+
+        const q = cl(-r.top / scrollableHeight);
+        const n = chapters.length;
+        const i = Math.min(n - 1, Math.floor(q * n));
+
+        // Only trigger React state change when index actually flips (4 times total instead of hundreds)
+        if (i !== activeIdxCurrent) {
+          activeIdxCurrent = i;
+          setActiveIdx(i);
+        }
+      });
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -157,9 +172,9 @@ export default function GccProviderStory({ isAr = false }: GccProviderStoryProps
   }, [chapters.length]);
 
   return (
-    <section ref={storyRef} id="story" className="relative h-[480vh] bg-black select-none">
+    <section ref={storyRef} id="story" className="relative h-[240vh] md:h-[480vh] bg-black select-none touch-pan-y">
       {/* Sticky 100vh Viewport */}
-      <div className="sticky top-0 h-[100svh] overflow-hidden bg-black text-white flex items-center">
+      <div className="sticky top-0 h-[100svh] overflow-hidden bg-black text-white flex items-center touch-pan-y">
         {/* Ambient Subtle Background Glow */}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] bg-[#FF5C00]/5 rounded-full blur-[150px] pointer-events-none -z-10"

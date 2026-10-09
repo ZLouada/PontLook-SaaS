@@ -76,7 +76,7 @@ export default async function ForProvidersPage({
   });
 
   return (
-    <div className="bg-[#05070D] min-h-screen text-[#E6ECF8] font-sans selection:bg-[#3D7BFF] selection:text-white">
+    <div className="bg-[#05070D] min-h-screen text-[#E6ECF8] font-sans selection:bg-[#3D7BFF] selection:text-white touch-pan-y">
       {/* Search Engine & Rich Snippets Structured Data */}
       <script
         type="application/ld+json"

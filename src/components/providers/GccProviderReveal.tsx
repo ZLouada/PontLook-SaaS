@@ -129,20 +129,34 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
 
   useEffect(() => {
     const cl = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+    const heading = headlineRef.current;
+    if (!heading) return;
+
+    // Cache spans once to eliminate expensive DOM queries on every scroll frame
+    const spans = Array.from(heading.querySelectorAll('.rv-char')) as HTMLElement[];
+    const total = spans.length;
+    let lastActiveCount = -1;
+    let ticking = false;
 
     const onScroll = () => {
-      const heading = headlineRef.current;
-      if (!heading) return;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        const r = heading.getBoundingClientRect();
+        // Skip if completely out of viewport
+        if (r.bottom < -100 || r.top > window.innerHeight + 100) return;
 
-      const r = heading.getBoundingClientRect();
-      const progress = cl((window.innerHeight * 0.9 - r.top) / (window.innerHeight * 0.7));
+        const progress = cl((window.innerHeight * 0.9 - r.top) / (window.innerHeight * 0.7));
+        const activeCount = Math.floor(progress * total);
 
-      const spans = heading.querySelectorAll('.rv-char');
-      const total = spans.length;
-      const activeCount = Math.floor(progress * total);
-
-      spans.forEach((span, idx) => {
-        (span as HTMLElement).style.opacity = idx < activeCount ? '1' : '0.12';
+        // Only touch DOM styles when the count actually changes
+        if (activeCount !== lastActiveCount) {
+          lastActiveCount = activeCount;
+          spans.forEach((span, idx) => {
+            span.style.opacity = idx < activeCount ? '1' : '0.12';
+          });
+        }
       });
     };
 

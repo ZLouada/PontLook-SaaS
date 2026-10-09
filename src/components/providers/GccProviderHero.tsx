@@ -45,14 +45,16 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
     const ctx = cv.getContext('2d');
     if (!ctx) return;
 
-    const K = 170;
+    const isMobile = window.innerWidth < 768;
+    const K = isMobile ? 84 : 170;
     const TAU = Math.PI * 2;
     let W = 0;
     let H = 0;
     let D = 1;
 
     const resize = () => {
-      D = Math.min(window.devicePixelRatio || 1, 2);
+      const mobile = window.innerWidth < 768;
+      D = mobile ? Math.min(window.devicePixelRatio || 1, 1.25) : Math.min(window.devicePixelRatio || 1, 2);
       W = cv.clientWidth;
       H = cv.clientHeight;
       cv.width = W * D;
@@ -71,7 +73,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
 
     const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Node points: 2 strands
+    // Node points: 2 strands (adaptive count for silky smooth mobile performance)
     const P: { s: number; i: number; a: number; b: number; c: number }[] = [];
     for (let s = 0; s < 2; s++) {
       for (let i = 0; i < K; i++) {
@@ -79,8 +81,8 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       }
     }
 
-    // Ambient floating dust particles
-    const dust = Array.from({ length: 320 }, () => ({
+    // Ambient floating dust particles (reduced on mobile)
+    const dust = Array.from({ length: isMobile ? 50 : 300 }, () => ({
       x: rnd(-1, 1),
       y: rnd(-1, 1),
       z: rnd(0.2, 1),
@@ -99,6 +101,16 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
     let lastP = 0;
     const t0 = performance.now();
     let animId: number;
+    let isVisible = true;
+
+    // Pause canvas execution completely when out of viewport to free mobile GPU/CPU
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0].isIntersecting;
+      },
+      { threshold: 0 }
+    );
+    if (heroRef.current) observer.observe(heroRef.current);
 
     const onPointerMove = (e: PointerEvent) => {
       tx = (e.clientX / window.innerWidth) * 2 - 1;
@@ -110,35 +122,49 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       shock = { x: e.clientX, y: e.clientY, t: 0 };
     };
 
-    cv.addEventListener('pointermove', onPointerMove);
-    cv.addEventListener('pointerdown', onPointerDown);
+    cv.addEventListener('pointermove', onPointerMove, { passive: true });
+    cv.addEventListener('pointerdown', onPointerDown, { passive: true });
 
-    // Track scroll
+    // Pre-cache letter elements to avoid DOM querySelectorAll on every scroll event
+    const letterNodes = bigWordRef.current
+      ? (Array.from(bigWordRef.current.querySelectorAll('i')) as HTMLElement[])
+      : [];
+
+    // RAF-throttled scroll handler to prevent thread lock during mobile touchmomentum
+    let scrollTicking = false;
     const onScroll = () => {
-      if (!heroRef.current) return;
-      const hh = heroRef.current.offsetHeight - window.innerHeight;
-      if (hh <= 0) return;
-      const p = cl(window.scrollY / hh);
-      targetScrollP = p;
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(() => {
+        scrollTicking = false;
+        if (!heroRef.current) return;
+        const hh = heroRef.current.offsetHeight - window.innerHeight;
+        if (hh <= 0) return;
+        const p = cl(window.scrollY / hh);
+        targetScrollP = p;
 
-      // Big word letter animation
-      if (bigWordRef.current) {
-        const letters = bigWordRef.current.querySelectorAll('i');
-        letters.forEach((l, idx) => {
-          const k = cl(p * 5 - idx * 0.14);
-          (l as HTMLElement).style.opacity = `${1 - k}`;
-          (l as HTMLElement).style.transform = `translateY(${-k * 26}px)`;
-          (l as HTMLElement).style.filter = `blur(${k * 10}px)`;
-        });
-      }
+        // Big word letter animation
+        if (letterNodes.length > 0) {
+          const mobile = window.innerWidth < 768;
+          letterNodes.forEach((l, idx) => {
+            const k = cl(p * 5 - idx * 0.14);
+            l.style.opacity = `${1 - k}`;
+            l.style.transform = `translateY(${-k * 26}px)`;
+            // Omit expensive blur filter on mobile to eliminate GPU compositing lag
+            if (!mobile) {
+              l.style.filter = `blur(${k * 10}px)`;
+            }
+          });
+        }
 
-      // Lead text animation
-      if (leadRef.current) {
-        const leadOpacity = sm(p, 0.45, 0.65) * (1 - sm(p, 0.9, 0.99));
-        const leadY = (1 - sm(p, 0.45, 0.7)) * 40;
-        leadRef.current.style.opacity = `${leadOpacity}`;
-        leadRef.current.style.transform = `translateY(${leadY}px)`;
-      }
+        // Lead text animation
+        if (leadRef.current) {
+          const leadOpacity = sm(p, 0.45, 0.65) * (1 - sm(p, 0.9, 0.99));
+          const leadY = (1 - sm(p, 0.45, 0.7)) * 40;
+          leadRef.current.style.opacity = `${leadOpacity}`;
+          leadRef.current.style.transform = `translateY(${leadY}px)`;
+        }
+      });
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -146,7 +172,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
 
     const frame = (now: number) => {
       animId = requestAnimationFrame(frame);
-      if (window.scrollY > window.innerHeight * 5.2) return;
+      if (!isVisible) return; // Sleep when hero is scrolled past
 
       // Butter-smooth damped scroll progression (never snaps or accelerates abruptly)
       smoothScrollP += (targetScrollP - smoothScrollP) * 0.045;
@@ -253,7 +279,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
           ctx.arc(o.sx, o.sy, r, 0, TAU);
           ctx.fill();
 
-          if (i % 3 === 0) {
+          if (i % (isMobile ? 6 : 3) === 0) {
             ctx.globalAlpha = al * 0.22;
             ctx.beginPath();
             ctx.arc(o.sx, o.sy, r * 3.6, 0, TAU);
@@ -364,6 +390,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
 
     return () => {
       cancelAnimationFrame(animId);
+      observer.disconnect();
       window.removeEventListener('resize', resize);
       window.removeEventListener('scroll', onScroll);
       cv.removeEventListener('pointermove', onPointerMove);
@@ -372,14 +399,14 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
   }, [isAr, pairs]);
 
   return (
-    <section ref={heroRef} id="hero" className="relative h-[440vh] select-none bg-black">
+    <section ref={heroRef} id="hero" className="relative h-[230vh] md:h-[440vh] select-none bg-black touch-pan-y">
       {/* Pinned 100vh Viewport */}
-      <div className="sticky top-0 h-[100svh] overflow-hidden bg-[radial-gradient(ellipse_at_50%_40%,rgba(255,92,0,0.1)_0,#05070D_70%)] bg-black">
+      <div className="sticky top-0 h-[100svh] overflow-hidden bg-[radial-gradient(ellipse_at_50%_40%,rgba(255,92,0,0.1)_0,#05070D_70%)] bg-black touch-pan-y">
         {/* Interactive 3D Canvas */}
         <canvas
           ref={canvasRef}
           id="c"
-          className="absolute inset-0 w-full h-full cursor-crosshair block"
+          className="absolute inset-0 w-full h-full cursor-crosshair block touch-pan-y"
           aria-label="Animated DNA helix linking training providers to GCC companies"
         />
 
