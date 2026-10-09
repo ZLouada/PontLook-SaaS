@@ -104,81 +104,87 @@ export default async function DownloadsPage({
   ];
 
   return (
-    <div className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="max-w-3xl mb-14">
-        <Reveal>
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-xs font-mono uppercase tracking-wider text-neutral-300 mb-5">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00]" />
-            <Link href={`/${lang}/resources`} className="hover:text-white transition-colors">
-              {isAr ? 'الموارد' : 'Resources'}
-            </Link>
-            <span className="text-neutral-500">/</span>
-            <span className="text-white">{isAr ? 'التحميلات' : 'Downloads'}</span>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-white tracking-tight leading-tight mb-4">
-            {isAr ? 'أدوات ونماذج عمل قابلة للتحميل والتطبيق' : 'Executive Toolkits & Downloadable Frameworks'}
-          </h1>
-        </Reveal>
-
-        <Reveal delay={0.2}>
-          <p className="text-neutral-400 text-sm sm:text-base leading-relaxed">
-            {isAr
-              ? 'صممت خصيصاً لمساعدة فرق الموارد البشرية والتدريب على تشخيص الاحتياجات، ضبط الميزانيات، واختيار المزود الأنسب دون هدر.'
-              : 'Field-tested templates built to help GCC corporate leaders assess workforce needs, structure procurement RFPs, and verify training impact.'}
-          </p>
-        </Reveal>
-      </div>
-
-      {/* Grid of Toolkits */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-        {toolkits.map((tool, idx) => (
-          <Reveal key={tool.id} delay={0.1 * (idx + 1)}>
-            <div className="h-full flex flex-col justify-between p-8 rounded-3xl bg-[#121316]/80 hover:bg-[#16171B] border border-white/[0.08] hover:border-white/20 transition-all duration-300 shadow-xl">
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <div className="h-12 w-12 rounded-2xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-[#FF5C00]">
-                    <FileText size={22} />
-                  </div>
-                  <div className="flex items-center gap-2 text-[11px] font-mono text-neutral-400">
-                    <span className="px-2 py-0.5 rounded bg-white/[0.06]">{tool.format}</span>
-                    <span>{tool.fileSize}</span>
-                  </div>
-                </div>
-
-                <h2 className="text-lg sm:text-xl font-heading font-bold text-white mb-3">
-                  {tool.title}
-                </h2>
-
-                <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed mb-6">
-                  {tool.desc}
-                </p>
-
-                <div className="space-y-2 mb-8 pt-4 border-t border-white/[0.06]">
-                  {tool.features.map((feat, fIdx) => (
-                    <div key={fIdx} className="flex items-start gap-2 text-xs text-neutral-300">
-                      <CheckCircle2 size={14} className="text-[#FF5C00] shrink-0 mt-0.5" />
-                      <span>{feat}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <Link
-                  href={`/${lang}/contact?interest=${encodeURIComponent(tool.id)}`}
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs transition-all active:scale-95 shadow-md"
-                >
-                  <Download size={14} />
-                  <span>{isAr ? 'طلب التحميل مجاناً' : 'Download Toolkit Free'}</span>
-                </Link>
-              </div>
+    <div
+      data-nav-light="true"
+      data-nav-theme="light"
+      className="min-h-screen bg-white text-neutral-900 transition-colors duration-200"
+    >
+      <div className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="max-w-3xl mb-14">
+          <Reveal>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 bg-neutral-100/80 text-xs font-mono uppercase tracking-wider text-neutral-700 mb-5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00]" />
+              <Link href={`/${lang}/resources`} className="hover:text-black transition-colors">
+                {isAr ? 'الموارد' : 'Resources'}
+              </Link>
+              <span className="text-neutral-400">/</span>
+              <span className="text-neutral-950 font-semibold">{isAr ? 'التحميلات' : 'Downloads'}</span>
             </div>
           </Reveal>
-        ))}
+
+          <Reveal delay={0.1}>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-neutral-950 tracking-tight leading-tight mb-4">
+              {isAr ? 'أدوات ونماذج عمل قابلة للتحميل والتطبيق' : 'Executive Toolkits & Downloadable Frameworks'}
+            </h1>
+          </Reveal>
+
+          <Reveal delay={0.2}>
+            <p className="text-neutral-600 text-sm sm:text-base leading-relaxed">
+              {isAr
+                ? 'صممت خصيصاً لمساعدة فرق الموارد البشرية والتدريب على تشخيص الاحتياجات، ضبط الميزانيات، واختيار المزود الأنسب دون هدر.'
+                : 'Field-tested templates built to help GCC corporate leaders assess workforce needs, structure procurement RFPs, and verify training impact.'}
+            </p>
+          </Reveal>
+        </div>
+
+        {/* Grid of Toolkits */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          {toolkits.map((tool, idx) => (
+            <Reveal key={tool.id} delay={0.1 * (idx + 1)}>
+              <div className="h-full flex flex-col justify-between p-8 rounded-3xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md">
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="h-12 w-12 rounded-2xl bg-[#FF5C00]/10 border border-[#FF5C00]/20 flex items-center justify-center text-[#FF5C00]">
+                      <FileText size={22} />
+                    </div>
+                    <div className="flex items-center gap-2 text-[11px] font-mono text-neutral-500">
+                      <span className="px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 font-medium">{tool.format}</span>
+                      <span>{tool.fileSize}</span>
+                    </div>
+                  </div>
+
+                  <h2 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 mb-3">
+                    {tool.title}
+                  </h2>
+
+                  <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-6">
+                    {tool.desc}
+                  </p>
+
+                  <div className="space-y-2 mb-8 pt-4 border-t border-neutral-200">
+                    {tool.features.map((feat, fIdx) => (
+                      <div key={fIdx} className="flex items-start gap-2 text-xs text-neutral-700">
+                        <CheckCircle2 size={14} className="text-[#FF5C00] shrink-0 mt-0.5" />
+                        <span>{feat}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <Link
+                    href={`/${lang}/contact?interest=${encodeURIComponent(tool.id)}`}
+                    className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all active:scale-95 shadow-sm"
+                  >
+                    <Download size={14} />
+                    <span>{isAr ? 'طلب التحميل مجاناً' : 'Download Toolkit Free'}</span>
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -104,85 +104,91 @@ export default async function EventsPage({
   ];
 
   return (
-    <div className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="max-w-3xl mb-14">
-        <Reveal>
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-xs font-mono uppercase tracking-wider text-neutral-300 mb-5">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00]" />
-            <Link href={`/${lang}/resources`} className="hover:text-white transition-colors">
-              {isAr ? 'الموارد' : 'Resources'}
-            </Link>
-            <span className="text-neutral-500">/</span>
-            <span className="text-white">{isAr ? 'الفعاليات' : 'Events'}</span>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-white tracking-tight leading-tight mb-4">
-            {isAr ? 'فعاليات وموائد مستديرة تجمع صُنّاع القرار' : 'Executive Events, Summits & Briefings'}
-          </h1>
-        </Reveal>
-
-        <Reveal delay={0.2}>
-          <p className="text-neutral-400 text-sm sm:text-base leading-relaxed">
-            {isAr
-              ? 'لقاءات حضورية وافتراضية هادفة تركز على تبادل التجارب الحقيقية والربط المباشر بين قادة التدريب في منشآت الخليج والخبراء المعتمدين.'
-              : 'Curated peer discussions and direct matchmaking sessions designed to connect corporate training buyers with verified specialists.'}
-          </p>
-        </Reveal>
-      </div>
-
-      {/* Events List */}
-      <div className="space-y-6">
-        {upcomingEvents.map((evt, idx) => (
-          <Reveal key={evt.id} delay={0.1 * (idx + 1)}>
-            <div className="p-8 rounded-3xl bg-[#121316]/80 hover:bg-[#16171B] border border-white/[0.08] hover:border-white/20 transition-all duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 shadow-xl">
-              <div className="flex-1">
-                <div className="flex flex-wrap items-center gap-2.5 text-xs text-neutral-400 mb-3">
-                  <span className="px-2.5 py-0.5 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/20 text-[#FF5C00] font-medium">
-                    {evt.type}
-                  </span>
-                  <span className="text-neutral-500">•</span>
-                  <span className="font-mono text-neutral-300 font-semibold">{evt.spotsLeft}</span>
-                </div>
-
-                <h2 className="text-xl sm:text-2xl font-heading font-bold text-white mb-3">
-                  {evt.title}
-                </h2>
-
-                <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-400 mb-4">
-                  <div className="flex items-center gap-1.5 font-mono text-neutral-300">
-                    <Calendar size={13} className="text-[#FF5C00]" />
-                    <span>{evt.date}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5 font-mono">
-                    <Clock size={13} />
-                    <span>{evt.time}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <MapPin size={13} />
-                    <span>{evt.location}</span>
-                  </div>
-                </div>
-
-                <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed max-w-3xl">
-                  {evt.desc}
-                </p>
-              </div>
-
-              <div className="w-full lg:w-auto shrink-0">
-                <Link
-                  href={`/${lang}/contact?event=${encodeURIComponent(evt.id)}`}
-                  className="w-full lg:w-auto inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs transition-all active:scale-95 shadow-md"
-                >
-                  <span>{isAr ? 'حجز مقعد / استفسار' : 'Request Invitation'}</span>
-                  <ArrowRight size={14} className="rtl:-scale-x-100" />
-                </Link>
-              </div>
+    <div
+      data-nav-light="true"
+      data-nav-theme="light"
+      className="min-h-screen bg-white text-neutral-900 transition-colors duration-200"
+    >
+      <div className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="max-w-3xl mb-14">
+          <Reveal>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 bg-neutral-100/80 text-xs font-mono uppercase tracking-wider text-neutral-700 mb-5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00]" />
+              <Link href={`/${lang}/resources`} className="hover:text-black transition-colors">
+                {isAr ? 'الموارد' : 'Resources'}
+              </Link>
+              <span className="text-neutral-400">/</span>
+              <span className="text-neutral-950 font-semibold">{isAr ? 'الفعاليات' : 'Events'}</span>
             </div>
           </Reveal>
-        ))}
+
+          <Reveal delay={0.1}>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-neutral-950 tracking-tight leading-tight mb-4">
+              {isAr ? 'فعاليات وموائد مستديرة تجمع صُنّاع القرار' : 'Executive Events, Summits & Briefings'}
+            </h1>
+          </Reveal>
+
+          <Reveal delay={0.2}>
+            <p className="text-neutral-600 text-sm sm:text-base leading-relaxed">
+              {isAr
+                ? 'لقاءات حضورية وافتراضية هادفة تركز على تبادل التجارب الحقيقية والربط المباشر بين قادة التدريب في منشآت الخليج والخبراء المعتمدين.'
+                : 'Curated peer discussions and direct matchmaking sessions designed to connect corporate training buyers with verified specialists.'}
+            </p>
+          </Reveal>
+        </div>
+
+        {/* Events List */}
+        <div className="space-y-6">
+          {upcomingEvents.map((evt, idx) => (
+            <Reveal key={evt.id} delay={0.1 * (idx + 1)}>
+              <div className="p-8 rounded-3xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 shadow-sm hover:shadow-md">
+                <div className="flex-1">
+                  <div className="flex flex-wrap items-center gap-2.5 text-xs text-neutral-500 mb-3">
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/20 text-[#FF5C00] font-medium">
+                      {evt.type}
+                    </span>
+                    <span className="text-neutral-400">•</span>
+                    <span className="font-mono text-neutral-800 font-semibold">{evt.spotsLeft}</span>
+                  </div>
+
+                  <h2 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 mb-3">
+                    {evt.title}
+                  </h2>
+
+                  <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-600 mb-4">
+                    <div className="flex items-center gap-1.5 font-mono text-neutral-800">
+                      <Calendar size={13} className="text-[#FF5C00]" />
+                      <span>{evt.date}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 font-mono">
+                      <Clock size={13} />
+                      <span>{evt.time}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <MapPin size={13} />
+                      <span>{evt.location}</span>
+                    </div>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-3xl">
+                    {evt.desc}
+                  </p>
+                </div>
+
+                <div className="w-full lg:w-auto shrink-0">
+                  <Link
+                    href={`/${lang}/contact?event=${encodeURIComponent(evt.id)}`}
+                    className="w-full lg:w-auto inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all active:scale-95 shadow-sm"
+                  >
+                    <span>{isAr ? 'حجز مقعد / استفسار' : 'Request Invitation'}</span>
+                    <ArrowRight size={14} className="rtl:-scale-x-100" />
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </div>
   );

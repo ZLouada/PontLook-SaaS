@@ -139,512 +139,518 @@ export default async function ResourcesPage({
   ];
 
   return (
-    <div className="relative pt-28 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Background ambient lighting */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-b from-white/[0.07] via-white/[0.02] to-transparent blur-3xl pointer-events-none -z-10" />
+    <div
+      data-nav-light="true"
+      data-nav-theme="light"
+      className="min-h-screen bg-white text-neutral-900 transition-colors duration-200"
+    >
+      <div className="relative pt-28 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Background ambient lighting */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-b from-orange-500/[0.04] via-neutral-100/60 to-transparent blur-3xl pointer-events-none -z-10" />
 
-      {/* ======================================================== */}
-      {/* 1. HERO HEADER                                           */}
-      {/* ======================================================== */}
-      <div className="max-w-4xl mb-10 sm:mb-12">
-        <Reveal>
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-xs font-mono uppercase tracking-wider text-neutral-300 mb-5">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00]" />
-            {isAr ? 'مركز المعرفة والتدريب المؤسسي' : 'PONTLOOK RESOURCE HUB'}
-          </div>
-        </Reveal>
+        {/* ======================================================== */}
+        {/* 1. HERO HEADER                                           */}
+        {/* ======================================================== */}
+        <div className="max-w-4xl mb-10 sm:mb-12">
+          <Reveal>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 bg-neutral-100/80 text-xs font-mono uppercase tracking-wider text-neutral-700 mb-5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00]" />
+              {isAr ? 'مركز المعرفة والتدريب المؤسسي' : 'PONTLOOK RESOURCE HUB'}
+            </div>
+          </Reveal>
 
-        <Reveal delay={0.08}>
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold text-white tracking-tight leading-[1.08] mb-5">
-            {isAr
-              ? 'المرجع المعرفي لقادة الموارد البشرية وتطوير الكفاءات في الخليج'
-              : 'The Resource Hub to Power Your Corporate L&D Strategy'}
-          </h1>
-        </Reveal>
+          <Reveal delay={0.08}>
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold text-neutral-950 tracking-tight leading-[1.08] mb-5">
+              {isAr
+                ? 'المرجع المعرفي لقادة الموارد البشرية وتطوير الكفاءات في الخليج'
+                : 'The Resource Hub to Power Your Corporate L&D Strategy'}
+            </h1>
+          </Reveal>
 
-        <Reveal delay={0.16}>
-          <p className="text-neutral-300 text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl font-normal">
-            {isAr
-              ? 'أدلة بحثية مجانية، دراسات حالة معمقة، قوالب تشخيصية جاهزة، وفعاليات حصرية صممت خصيصاً لمساعدة منشآت السعودية والإمارات على بناء فرق عمل استثنائية.'
-              : 'Actionable benchmarks, executive podcasts, free diagnostic toolkits, and curated summits designed for HR and talent executives across the GCC.'}
-          </p>
-        </Reveal>
-      </div>
+          <Reveal delay={0.16}>
+            <p className="text-neutral-600 text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl font-normal">
+              {isAr
+                ? 'أدلة بحثية مجانية، دراسات حالة معمقة، قوالب تشخيصية جاهزة، وفعاليات حصرية صممت خصيصاً لمساعدة منشآت السعودية والإمارات على بناء فرق عمل استثنائية.'
+                : 'Actionable benchmarks, executive podcasts, free diagnostic toolkits, and curated summits designed for HR and talent executives across the GCC.'}
+            </p>
+          </Reveal>
+        </div>
 
-      {/* ======================================================== */}
-      {/* 2. CATEGORY PILL FILTER NAVIGATION TABS                  */}
-      {/* ======================================================== */}
-      <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-4 mb-12 sm:mb-16 border-b border-white/10 no-scrollbar">
-        {categoryPills.map((pill, idx) => (
-          <Link
-            key={idx}
-            href={pill.href}
-            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
-              pill.active
-                ? 'bg-white text-black shadow-md'
-                : 'bg-white/[0.05] hover:bg-white/[0.1] text-neutral-300 hover:text-white border border-white/10'
-            }`}
-          >
-            {pill.label}
-          </Link>
-        ))}
-      </div>
-
-      {/* ======================================================== */}
-      {/* 3. FEATURED SPOTLIGHT GRID (GoodHabitz Inspired Layout)   */}
-      {/* ======================================================== */}
-      <section className="mb-20 sm:mb-28">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Main Large Spotlight Card (8 Cols) */}
-          <div className="lg:col-span-7 xl:col-span-8">
+        {/* ======================================================== */}
+        {/* 2. CATEGORY PILL FILTER NAVIGATION TABS                  */}
+        {/* ======================================================== */}
+        <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-4 mb-12 sm:mb-16 border-b border-neutral-200 no-scrollbar">
+          {categoryPills.map((pill, idx) => (
             <Link
-              href={`/${lang}/resources/blog`}
-              className="group relative flex flex-col justify-between h-full rounded-3xl bg-[#0F1014] border border-white/15 hover:border-white/30 transition-all duration-300 overflow-hidden shadow-2xl"
+              key={idx}
+              href={pill.href}
+              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
+                pill.active
+                  ? 'bg-neutral-950 text-white shadow-sm'
+                  : 'bg-neutral-100 hover:bg-neutral-200/80 text-neutral-700 hover:text-neutral-950 border border-neutral-200'
+              }`}
             >
-              <div className="relative aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/9] w-full bg-neutral-900 overflow-hidden">
-                <Image
-                  src="/executive_training_room.jpg"
-                  alt="GCC Corporate Training Benchmark"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0F1014] via-[#0F1014]/40 to-transparent" />
-                <div className="absolute top-4 start-4 sm:top-6 sm:start-6 flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-white/20 text-white backdrop-blur-md border border-white/30">
-                    {isAr ? 'تقرير مميز · ٢٠٢٦' : 'FEATURED GUIDE · 2026'}
-                  </span>
-                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#FF5C00]/90 text-white backdrop-blur-md">
-                    {isAr ? 'استراتيجيات التدريب' : 'L&D STRATEGIES'}
-                  </span>
-                </div>
-              </div>
+              {pill.label}
+            </Link>
+          ))}
+        </div>
 
-              <div className="p-6 sm:p-8 lg:p-10 flex-1 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-3 text-xs font-mono text-neutral-400 mb-3">
-                    <span>{isAr ? '١٢ دقيقة قراءة' : '12 min read'}</span>
-                    <span>•</span>
-                    <span>{isAr ? 'أكتوبر ٢٠٢٦' : 'October 2026'}</span>
+        {/* ======================================================== */}
+        {/* 3. FEATURED SPOTLIGHT GRID (GoodHabitz Inspired Layout)   */}
+        {/* ======================================================== */}
+        <section className="mb-20 sm:mb-28">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            {/* Main Large Spotlight Card (8 Cols) */}
+            <div className="lg:col-span-7 xl:col-span-8">
+              <Link
+                href={`/${lang}/resources/blog`}
+                className="group relative flex flex-col justify-between h-full rounded-3xl bg-white border border-neutral-200 hover:border-neutral-400 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl"
+              >
+                <div className="relative aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/9] w-full bg-neutral-100 overflow-hidden">
+                  <Image
+                    src="/executive_training_room.jpg"
+                    alt="GCC Corporate Training Benchmark"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute top-4 start-4 sm:top-6 sm:start-6 flex items-center gap-2">
+                    <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-white/20 text-white backdrop-blur-md border border-white/30">
+                      {isAr ? 'تقرير مميز · ٢٠٢٦' : 'FEATURED GUIDE · 2026'}
+                    </span>
+                    <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#FF5C00] text-white">
+                      {isAr ? 'استراتيجيات التدريب' : 'L&D STRATEGIES'}
+                    </span>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-white group-hover:text-white transition-colors leading-tight mb-4">
+                </div>
+
+                <div className="p-6 sm:p-8 lg:p-10 flex-1 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-3 text-xs font-mono text-neutral-500 mb-3">
+                      <span>{isAr ? '١٢ دقيقة قراءة' : '12 min read'}</span>
+                      <span>•</span>
+                      <span>{isAr ? 'أكتوبر ٢٠٢٦' : 'October 2026'}</span>
+                    </div>
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-neutral-950 group-hover:text-black transition-colors leading-tight mb-4">
+                      {isAr
+                        ? 'دليل معايير تدريب الشركات في الخليج ٢٠٢٦: سد فجوات المهارات ومواءمة التوطين'
+                        : 'The 2026 GCC Corporate Training Benchmark: Closing Workforce Skill Gaps'}
+                    </h2>
+                    <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-normal">
+                      {isAr
+                        ? 'دراسة واقعية وشاملة تستند إلى مقابلات مع أكثر من ٤٥٠ قائداً تنفيذياً في الرياض ودبي حول قياس الاحتياج التدريبي الحقيقي، التعامل مع تراخيص TVTC، وبناء كوادر وطنية عالية الأداء.'
+                        : 'A comprehensive study of 450+ enterprise HR leaders in Riyadh and Dubai navigating diagnostic TNA methods, TVTC accreditations, and high-impact corporate cohorts.'}
+                    </p>
+                  </div>
+
+                  <div className="mt-8 pt-6 border-t border-neutral-200 flex items-center justify-between text-sm font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
+                    <span>{isAr ? 'قراءة الدليل بالكامل' : 'Read Full Guide'}</span>
+                    <ArrowRight size={18} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </Link>
+            </div>
+
+            {/* Right 2-Card Stack (4 Cols) */}
+            <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-6 sm:gap-8 justify-between">
+              {/* Card A: Upcoming Event */}
+              <Link
+                href={`/${lang}/resources/events`}
+                className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex-1"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-neutral-200 text-neutral-800 border border-neutral-300">
+                      {isAr ? 'حدث افتراضي مباشر' : '3-DAY VIRTUAL EVENT'}
+                    </span>
+                    <span className="text-xs font-mono text-neutral-500">
+                      {isAr ? '٧ – ٩ أكتوبر' : '7 – 9 Oct'}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
+                    {isAr ? 'قمة مهارات المستقبل الخليجية \'٢٦' : 'Human Skills Fest \'26'}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
                     {isAr
-                      ? 'دليل معايير تدريب الشركات في الخليج ٢٠٢٦: سد فجوات المهارات ومواءمة التوطين'
-                      : 'The 2026 GCC Corporate Training Benchmark: Closing Workforce Skill Gaps'}
-                  </h2>
-                  <p className="text-neutral-300 text-sm sm:text-base leading-relaxed font-normal">
-                    {isAr
-                      ? 'دراسة واقعية وشاملة تستند إلى مقابلات مع أكثر من ٤٥٠ قائداً تنفيذياً في الرياض ودبي حول قياس الاحتياج التدريبي الحقيقي، التعامل مع تراخيص TVTC، وبناء كوادر وطنية عالية الأداء.'
-                      : 'A comprehensive study of 450+ enterprise HR leaders in Riyadh and Dubai navigating diagnostic TNA methods, TVTC accreditations, and high-impact corporate cohorts.'}
+                      ? 'جلسات تفاعلية مع قادة الموارد البشرية والتدريب في كبرى المنشآت لمناقشة القيادة، المهارات البشرية، واستدامة التدريب.'
+                      : 'Ten expert sessions, three days, one unmissable online summit. Join HR and L&D professionals to future-proof workforce capability.'}
                   </p>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between text-sm font-semibold text-white group-hover:text-[#FF5C00] transition-colors">
-                  <span>{isAr ? 'قراءة الدليل بالكامل' : 'Read Full Guide'}</span>
-                  <ArrowRight size={18} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
+                  <span>{isAr ? 'حجز مقعد مجاني' : 'Secure your spot'}</span>
+                  <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                 </div>
-              </div>
-            </Link>
-          </div>
+              </Link>
 
-          {/* Right 2-Card Stack (4 Cols) */}
-          <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-6 sm:gap-8 justify-between">
-            {/* Card A: Upcoming Event (GoodHabitz "Human Skills Fest" Inspired) */}
-            <Link
-              href={`/${lang}/resources/events`}
-              className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-[#171124] border border-white/15 hover:border-white/30 transition-all duration-300 shadow-xl flex-1"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-white/15 text-white border border-white/20">
-                    {isAr ? 'حدث افتراضي مباشر' : '3-DAY VIRTUAL EVENT'}
-                  </span>
-                  <span className="text-xs font-mono text-neutral-400">
-                    {isAr ? '٧ – ٩ أكتوبر' : '7 – 9 Oct'}
-                  </span>
-                </div>
-
-                <h3 className="text-xl sm:text-2xl font-heading font-bold text-white group-hover:text-white transition-colors leading-snug mb-2">
-                  {isAr ? 'قمة مهارات المستقبل الخليجية \'٢٦' : 'Human Skills Fest \'26'}
-                </h3>
-                <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
-                  {isAr
-                    ? 'جلسات تفاعلية مع قادة الموارد البشرية والتدريب في كبرى المنشآت لمناقشة القيادة، المهارات البشرية، واستدامة التدريب.'
-                    : 'Ten expert sessions, three days, one unmissable online summit. Join HR and L&D professionals to future-proof workforce capability.'}
-                </p>
-              </div>
-
-              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-white group-hover:text-white">
-                <span>{isAr ? 'حجز مقعد مجاني' : 'Secure your spot'}</span>
-                <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
-              </div>
-            </Link>
-
-            {/* Card B: Downloadable Toolkit */}
-            <Link
-              href={`/${lang}/resources/downloads`}
-              className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-[#0F1014] border border-white/15 hover:border-white/30 transition-all duration-300 shadow-xl flex-1"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-[#FF5C00]/20 text-[#FF5C00] border border-[#FF5C00]/30 font-bold">
-                    {isAr ? 'قالب إكسل مجاني' : 'FREE TOOLKIT'}
-                  </span>
-                  <span className="text-xs font-mono text-neutral-400">
-                    {isAr ? 'جاهز للتطبيق' : 'Instant Download'}
-                  </span>
-                </div>
-
-                <h3 className="text-xl sm:text-2xl font-heading font-bold text-white group-hover:text-white transition-colors leading-snug mb-2">
-                  {isAr ? 'مصفوفة تشخيص الاحتياج التدريبي (TNA)' : 'Complete Enterprise TNA Excel Framework'}
-                </h3>
-                <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
-                  {isAr
-                    ? 'جداول ومعادلات جاهزة لحساب فجوات المهارات، تصنيف الميزانيات، ومقارنة عروض المعاهد التدريبية.'
-                    : 'Pre-built formulas, departmental skill gap matrices, and RFP vendor comparison scorecards.'}
-                </p>
-              </div>
-
-              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-white group-hover:text-[#FF5C00] transition-colors">
-                <span>{isAr ? 'تحميل القالب مجاناً' : 'Download Template'}</span>
-                <Download size={15} />
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ======================================================== */}
-      {/* 4. THE CORPORATE L&D BLOG SECTION                        */}
-      {/* ======================================================== */}
-      <section className="mb-20 sm:mb-28 pt-10 border-t border-white/10">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
-          <div>
-            <div className="font-mono text-xs uppercase tracking-widest text-neutral-400 mb-2">
-              {isAr ? 'المدونة ومقالات الخبراء' : 'THE CORPORATE L&D BLOG'}
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white">
-              {isAr ? 'أحدث المقالات والرؤى الميدانية' : 'Latest Articles & Practical Guides'}
-            </h2>
-          </div>
-          <Link
-            href={`/${lang}/resources/blog`}
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-300 hover:text-white transition-colors"
-          >
-            <span>{isAr ? 'تصفح كافة المقالات' : 'View all blog posts'}</span>
-            <ArrowRight size={14} className="rtl:-scale-x-100" />
-          </Link>
-        </div>
-
-        {/* Articles Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {(sanityPosts && sanityPosts.length > 0 ? sanityPosts.slice(0, 3) : fallbackArticles).map(
-            (article: any, idx: number) => {
-              const isSanity = Boolean(article._id);
-              const title = article.title;
-              const excerpt = article.excerpt || article.title;
-              const date = isSanity && article.publishedAt
-                ? new Date(article.publishedAt).toLocaleDateString(isAr ? 'ar-SA' : 'en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                  })
-                : article.date || 'Oct 2026';
-              const category = isSanity && article.categories?.[0]
-                ? article.categories[0].title
-                : article.category || (isAr ? 'تدريب مؤسسي' : 'L&D STRATEGIES');
-              const href = isSanity
-                ? `/${lang}/resources/blog/${article.slug?.current || article.slug}`
-                : `/${lang}/resources/blog`;
-              const imageUrl = isSanity && article.mainImage ? urlForImage(article.mainImage).width(700).height(420).url() : null;
-
-              return (
-                <Link
-                  key={idx}
-                  href={href}
-                  className="group flex flex-col justify-between rounded-3xl bg-[#0F1014] border border-white/10 hover:border-white/25 transition-all duration-300 overflow-hidden shadow-lg"
-                >
-                  {imageUrl ? (
-                    <div className="relative aspect-video w-full bg-neutral-900 overflow-hidden">
-                      <Image
-                        src={imageUrl}
-                        alt={title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                  ) : (
-                    <div className="h-3 w-full bg-gradient-to-r from-white/20 via-[#FF5C00]/40 to-white/10" />
-                  )}
-
-                  <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-3">
-                        <span className="px-2 py-0.5 rounded-md bg-white/[0.06] text-white font-medium text-[10px] tracking-wide uppercase">
-                          {category}
-                        </span>
-                        <span>{date}</span>
-                      </div>
-                      <h3 className="text-lg sm:text-xl font-heading font-bold text-white group-hover:text-white transition-colors leading-snug mb-3">
-                        {title}
-                      </h3>
-                      <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed line-clamp-3 font-normal">
-                        {excerpt}
-                      </p>
-                    </div>
-
-                    <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-neutral-300 group-hover:text-white">
-                      <span>{isAr ? 'قراءة المقال' : 'Read Article'}</span>
-                      <ArrowRight size={14} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
-                    </div>
+              {/* Card B: Downloadable Toolkit */}
+              <Link
+                href={`/${lang}/resources/downloads`}
+                className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex-1"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-[#FF5C00]/10 text-[#FF5C00] border border-[#FF5C00]/25 font-bold">
+                      {isAr ? 'قالب إكسل مجاني' : 'FREE TOOLKIT'}
+                    </span>
+                    <span className="text-xs font-mono text-neutral-500">
+                      {isAr ? 'جاهز للتطبيق' : 'Instant Download'}
+                    </span>
                   </div>
-                </Link>
-              );
-            }
-          )}
-        </div>
-      </section>
 
-      {/* ======================================================== */}
-      {/* 5. EXECUTIVE EVENTS & WEBINARS SECTION                   */}
-      {/* ======================================================== */}
-      <section className="mb-20 sm:mb-28 pt-10 border-t border-white/10">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
-          <div>
-            <div className="font-mono text-xs uppercase tracking-widest text-neutral-400 mb-2">
-              {isAr ? 'الفعاليات وورش العمل' : 'EVENTS & ROUNDTABLES'}
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
+                    {isAr ? 'مصفوفة تشخيص الاحتياج التدريبي (TNA)' : 'Complete Enterprise TNA Excel Framework'}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
+                    {isAr
+                      ? 'جداول ومعادلات جاهزة لحساب فجوات المهارات، تصنيف الميزانيات، ومقارنة عروض المعاهد التدريبية.'
+                      : 'Pre-built formulas, departmental skill gap matrices, and RFP vendor comparison scorecards.'}
+                  </p>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
+                  <span>{isAr ? 'تحميل القالب مجاناً' : 'Download Template'}</span>
+                  <Download size={15} />
+                </div>
+              </Link>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white">
-              {isAr ? 'الفعاليات القادمة والجلسات التنفيذية' : 'Upcoming Summits & Masterclasses'}
-            </h2>
           </div>
-          <Link
-            href={`/${lang}/resources/events`}
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-300 hover:text-white transition-colors"
-          >
-            <span>{isAr ? 'جدول الفعاليات بالكامل' : 'View all events'}</span>
-            <ArrowRight size={14} className="rtl:-scale-x-100" />
-          </Link>
-        </div>
+        </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {/* Event 1 */}
-          <div className="p-6 sm:p-7 rounded-3xl bg-[#0F1014] border border-white/10 flex flex-col justify-between space-y-6">
+        {/* ======================================================== */}
+        {/* 4. THE CORPORATE L&D BLOG SECTION                        */}
+        {/* ======================================================== */}
+        <section className="mb-20 sm:mb-28 pt-10 border-t border-neutral-200">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
             <div>
-              <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-4">
-                <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-white font-bold text-[10px] uppercase">
-                  {isAr ? 'افتراضي' : 'Virtual'}
-                </span>
-                <span className="text-[#FF5C00] font-bold">7 – 9 Oct 2026</span>
+              <div className="font-mono text-xs uppercase tracking-widest text-neutral-500 mb-2">
+                {isAr ? 'المدونة ومقالات الخبراء' : 'THE CORPORATE L&D BLOG'}
               </div>
-              <h3 className="text-lg sm:text-xl font-heading font-bold text-white leading-snug mb-2">
-                {isAr ? 'قمة مهارات المستقبل الخليجية ٢٠٢٦' : 'GCC Human Skills Fest 2026'}
-              </h3>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
-                {isAr
-                  ? '٣ أيام متواصلة تجمع رؤساء الموارد البشرية ومسؤولي التطوير في الرياض ودبي لمناقشة الاتجاهات الحديثة.'
-                  : '3-day executive summit addressing leadership resilience, emotional intelligence, and team capability.'}
-              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-neutral-950">
+                {isAr ? 'أحدث المقالات والرؤى الميدانية' : 'Latest Articles & Practical Guides'}
+              </h2>
             </div>
             <Link
-              href={`/${lang}/resources/events`}
-              className="w-full py-2.5 px-4 rounded-xl border border-white/20 bg-white/5 hover:bg-white text-neutral-200 hover:text-black font-semibold text-xs text-center transition-all"
+              href={`/${lang}/resources/blog`}
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-600 hover:text-black transition-colors"
             >
-              {isAr ? 'تسجيل مقعد مجاني' : 'Register for Free'}
+              <span>{isAr ? 'تصفح كافة المقالات' : 'View all blog posts'}</span>
+              <ArrowRight size={14} className="rtl:-scale-x-100" />
             </Link>
           </div>
 
-          {/* Event 2 */}
-          <div className="p-6 sm:p-7 rounded-3xl bg-[#0F1014] border border-white/10 flex flex-col justify-between space-y-6">
+          {/* Articles Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {(sanityPosts && sanityPosts.length > 0 ? sanityPosts.slice(0, 3) : fallbackArticles).map(
+              (article: any, idx: number) => {
+                const isSanity = Boolean(article._id);
+                const title = article.title;
+                const excerpt = article.excerpt || article.title;
+                const date = isSanity && article.publishedAt
+                  ? new Date(article.publishedAt).toLocaleDateString(isAr ? 'ar-SA' : 'en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })
+                  : article.date || 'Oct 2026';
+                const category = isSanity && article.categories?.[0]
+                  ? article.categories[0].title
+                  : article.category || (isAr ? 'تدريب مؤسسي' : 'L&D STRATEGIES');
+                const href = isSanity
+                  ? `/${lang}/resources/blog/${article.slug?.current || article.slug}`
+                  : `/${lang}/resources/blog`;
+                const imageUrl = isSanity && article.mainImage ? urlForImage(article.mainImage).width(700).height(420).url() : null;
+
+                return (
+                  <Link
+                    key={idx}
+                    href={href}
+                    className="group flex flex-col justify-between rounded-3xl bg-white border border-neutral-200 hover:border-neutral-300 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md"
+                  >
+                    {imageUrl ? (
+                      <div className="relative aspect-video w-full bg-neutral-100 overflow-hidden">
+                        <Image
+                          src={imageUrl}
+                          alt={title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                    ) : (
+                      <div className="h-3 w-full bg-gradient-to-r from-neutral-200 via-[#FF5C00]/40 to-neutral-200" />
+                    )}
+
+                    <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between text-xs font-mono text-neutral-500 mb-3">
+                          <span className="px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 font-medium text-[10px] tracking-wide uppercase">
+                            {category}
+                          </span>
+                          <span>{date}</span>
+                        </div>
+                        <h3 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-3">
+                          {title}
+                        </h3>
+                        <p className="text-neutral-600 text-xs sm:text-sm leading-relaxed line-clamp-3 font-normal">
+                          {excerpt}
+                        </p>
+                      </div>
+
+                      <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-700 group-hover:text-[#FF5C00] transition-colors">
+                        <span>{isAr ? 'قراءة المقال' : 'Read Article'}</span>
+                        <ArrowRight size={14} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+                  </Link>
+                );
+              }
+            )}
+          </div>
+        </section>
+
+        {/* ======================================================== */}
+        {/* 5. EXECUTIVE EVENTS & WEBINARS SECTION                   */}
+        {/* ======================================================== */}
+        <section className="mb-20 sm:mb-28 pt-10 border-t border-neutral-200">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
             <div>
-              <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-4">
-                <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-white font-bold text-[10px] uppercase">
-                  {isAr ? 'الرياض · حضوري' : 'Riyadh · In-Person'}
-                </span>
-                <span className="text-[#FF5C00] font-bold">24 Oct 2026</span>
+              <div className="font-mono text-xs uppercase tracking-widest text-neutral-500 mb-2">
+                {isAr ? 'الفعاليات وورش العمل' : 'EVENTS & ROUNDTABLES'}
               </div>
-              <h3 className="text-lg sm:text-xl font-heading font-bold text-white leading-snug mb-2">
-                {isAr ? 'ورشة معايير TVTC والامتثال المؤسسي' : 'TVTC Accreditation & Enterprise Compliance'}
-              </h3>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
-                {isAr
-                  ? 'جلسة مغلقة لقيادات التدريب حول توثيق البرامج التدريبية لدى المؤسسة العامة للتدريب التقني والمهني.'
-                  : 'Closed-door masterclass for Saudi L&D leaders on structuring TVTC-compliant enterprise training cohorts.'}
-              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-neutral-950">
+                {isAr ? 'الفعاليات القادمة والجلسات التنفيذية' : 'Upcoming Summits & Masterclasses'}
+              </h2>
             </div>
             <Link
               href={`/${lang}/resources/events`}
-              className="w-full py-2.5 px-4 rounded-xl border border-white/20 bg-white/5 hover:bg-white text-neutral-200 hover:text-black font-semibold text-xs text-center transition-all"
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-600 hover:text-black transition-colors"
             >
-              {isAr ? 'طلب دعوة خاصة' : 'Request Invitation'}
+              <span>{isAr ? 'جدول الفعاليات بالكامل' : 'View all events'}</span>
+              <ArrowRight size={14} className="rtl:-scale-x-100" />
             </Link>
           </div>
 
-          {/* Event 3 */}
-          <div className="p-6 sm:p-7 rounded-3xl bg-[#0F1014] border border-white/10 flex flex-col justify-between space-y-6">
-            <div>
-              <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-4">
-                <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-white font-bold text-[10px] uppercase">
-                  {isAr ? 'دبي · مائدة مستديرة' : 'Dubai · Roundtable'}
-                </span>
-                <span className="text-[#FF5C00] font-bold">12 Nov 2026</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {/* Event 1 */}
+            <div className="p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 flex flex-col justify-between space-y-6 shadow-sm">
+              <div>
+                <div className="flex items-center justify-between text-xs font-mono text-neutral-500 mb-4">
+                  <span className="px-2.5 py-0.5 rounded-full bg-neutral-200 text-neutral-800 font-bold text-[10px] uppercase">
+                    {isAr ? 'افتراضي' : 'Virtual'}
+                  </span>
+                  <span className="text-[#FF5C00] font-bold">7 – 9 Oct 2026</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 leading-snug mb-2">
+                  {isAr ? 'قمة مهارات المستقبل الخليجية ٢٠٢٦' : 'GCC Human Skills Fest 2026'}
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
+                  {isAr
+                    ? '٣ أيام متواصلة تجمع رؤساء الموارد البشرية ومسؤولي التطوير في الرياض ودبي لمناقشة الاتجاهات الحديثة.'
+                    : '3-day executive summit addressing leadership resilience, emotional intelligence, and team capability.'}
+                </p>
               </div>
-              <h3 className="text-lg sm:text-xl font-heading font-bold text-white leading-snug mb-2">
-                {isAr ? 'مائدة تسريع مهارات نافس للكوادر الوطنية' : 'Nafis Talent Acceleration Roundtable'}
-              </h3>
-              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
-                {isAr
-                  ? 'حوار تنفيذي مع قيادات القطاع الخاص في الإمارات حول برامج التوجيه والإرشاد المهني للكوادر الإماراتية.'
-                  : 'Executive dialogue on scaling high-retention corporate mentoring and technical upskilling in the UAE.'}
-              </p>
+              <Link
+                href={`/${lang}/resources/events`}
+                className="w-full py-2.5 px-4 rounded-xl border border-neutral-300 bg-white hover:bg-neutral-950 text-neutral-900 hover:text-white font-semibold text-xs text-center transition-all shadow-xs"
+              >
+                {isAr ? 'تسجيل مقعد مجاني' : 'Register for Free'}
+              </Link>
+            </div>
+
+            {/* Event 2 */}
+            <div className="p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 flex flex-col justify-between space-y-6 shadow-sm">
+              <div>
+                <div className="flex items-center justify-between text-xs font-mono text-neutral-500 mb-4">
+                  <span className="px-2.5 py-0.5 rounded-full bg-neutral-200 text-neutral-800 font-bold text-[10px] uppercase">
+                    {isAr ? 'الرياض · حضوري' : 'Riyadh · In-Person'}
+                  </span>
+                  <span className="text-[#FF5C00] font-bold">24 Oct 2026</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 leading-snug mb-2">
+                  {isAr ? 'ورشة معايير TVTC والامتثال المؤسسي' : 'TVTC Accreditation & Enterprise Compliance'}
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
+                  {isAr
+                    ? 'جلسة مغلقة لقيادات التدريب حول توثيق البرامج التدريبية لدى المؤسسة العامة للتدريب التقني والمهني.'
+                    : 'Closed-door masterclass for Saudi L&D leaders on structuring TVTC-compliant enterprise training cohorts.'}
+                </p>
+              </div>
+              <Link
+                href={`/${lang}/resources/events`}
+                className="w-full py-2.5 px-4 rounded-xl border border-neutral-300 bg-white hover:bg-neutral-950 text-neutral-900 hover:text-white font-semibold text-xs text-center transition-all shadow-xs"
+              >
+                {isAr ? 'طلب دعوة خاصة' : 'Request Invitation'}
+              </Link>
+            </div>
+
+            {/* Event 3 */}
+            <div className="p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 flex flex-col justify-between space-y-6 shadow-sm">
+              <div>
+                <div className="flex items-center justify-between text-xs font-mono text-neutral-500 mb-4">
+                  <span className="px-2.5 py-0.5 rounded-full bg-neutral-200 text-neutral-800 font-bold text-[10px] uppercase">
+                    {isAr ? 'دبي · مائدة مستديرة' : 'Dubai · Roundtable'}
+                  </span>
+                  <span className="text-[#FF5C00] font-bold">12 Nov 2026</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 leading-snug mb-2">
+                  {isAr ? 'مائدة تسريع مهارات نافس للكوادر الوطنية' : 'Nafis Talent Acceleration Roundtable'}
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
+                  {isAr
+                    ? 'حوار تنفيذي مع قيادات القطاع الخاص في الإمارات حول برامج التوجيه والإرشاد المهني للكوادر الإماراتية.'
+                    : 'Executive dialogue on scaling high-retention corporate mentoring and technical upskilling in the UAE.'}
+                </p>
+              </div>
+              <Link
+                href={`/${lang}/resources/events`}
+                className="w-full py-2.5 px-4 rounded-xl border border-neutral-300 bg-white hover:bg-neutral-950 text-neutral-900 hover:text-white font-semibold text-xs text-center transition-all shadow-xs"
+              >
+                {isAr ? 'طلب دعوة خاصة' : 'Request Invitation'}
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ======================================================== */}
+        {/* 6. CASE STUDIES SECTION (#case-studies)                  */}
+        {/* ======================================================== */}
+        <section id="case-studies" className="mb-20 sm:mb-28 pt-10 border-t border-neutral-200 scroll-mt-28 lg:scroll-mt-36">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase bg-neutral-100 text-neutral-800 border border-neutral-200 mb-3">
+                <Sparkles size={12} className="text-[#FF5C00]" />
+                <span>{isAr ? 'دراسات الحالة الإقليمية' : 'REGIONAL CASE STUDIES'}</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-neutral-950">
+                {isAr ? 'كيف حققت كبرى المنشآت نتائج استثنائية مع PontLook' : 'Real Workforce Outcomes Across Saudi Arabia & UAE'}
+              </h2>
             </div>
             <Link
-              href={`/${lang}/resources/events`}
-              className="w-full py-2.5 px-4 rounded-xl border border-white/20 bg-white/5 hover:bg-white text-neutral-200 hover:text-black font-semibold text-xs text-center transition-all"
+              href={`/${lang}/find-training`}
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-600 hover:text-black transition-colors shrink-0"
             >
-              {isAr ? 'طلب دعوة خاصة' : 'Request Invitation'}
+              <span>{isAr ? 'ابدأ تشخيص احتياجك' : 'Start workforce assessment'}</span>
+              <ArrowRight size={14} className="rtl:-scale-x-100" />
             </Link>
           </div>
-        </div>
-      </section>
 
-      {/* ======================================================== */}
-      {/* 6. CASE STUDIES SECTION (#case-studies)                  */}
-      {/* ======================================================== */}
-      <section id="case-studies" className="mb-20 sm:mb-28 pt-10 border-t border-white/10 scroll-mt-28 lg:scroll-mt-36">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase bg-white/10 text-white border border-white/20 mb-3">
-              <Sparkles size={12} className="text-[#FF5C00]" />
-              <span>{isAr ? 'دراسات الحالة الإقليمية' : 'REGIONAL CASE STUDIES'}</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white">
-              {isAr ? 'كيف حققت كبرى المنشآت نتائج استثنائية مع PontLook' : 'Real Workforce Outcomes Across Saudi Arabia & UAE'}
-            </h2>
-          </div>
-          <Link
-            href={`/${lang}/find-training`}
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-300 hover:text-white transition-colors shrink-0"
-          >
-            <span>{isAr ? 'ابدأ تشخيص احتياجك' : 'Start workforce assessment'}</span>
-            <ArrowRight size={14} className="rtl:-scale-x-100" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Case 1 */}
-          <div className="p-7 sm:p-8 rounded-3xl bg-gradient-to-b from-[#14151B] to-[#0D0E13] border border-white/20 hover:border-white/35 transition-all duration-300 shadow-xl hover:shadow-2xl flex flex-col justify-between space-y-6 group">
-            <div>
-              <div className="flex items-center justify-between gap-3 mb-5">
-                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-white/10 text-white border border-white/15">
-                  {isAr ? 'قطاع البنوك والمالية · الرياض' : 'Financial Services · Riyadh'}
-                </span>
-                <span className="text-xs font-mono text-[#FF5C00] font-bold px-2.5 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25">
-                  {isAr ? '٨٥٠ موظف مدرب' : '850+ Participants'}
-                </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Case 1 */}
+            <div className="p-7 sm:p-8 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between space-y-6 group">
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-5">
+                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-white text-neutral-800 border border-neutral-200 shadow-2xs">
+                    {isAr ? 'قطاع البنوك والمالية · الرياض' : 'Financial Services · Riyadh'}
+                  </span>
+                  <span className="text-xs font-mono text-[#FF5C00] font-bold px-2.5 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25">
+                    {isAr ? '٨٥٠ موظف مدرب' : '850+ Participants'}
+                  </span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-black leading-snug mb-3">
+                  {isAr
+                    ? 'تدريب ٨٥٠ موظفاً بنكياً على التحول الرقمي بمعدل رضا ٩٦٪'
+                    : 'Upskilling 850 Bank Officers on Digital Product Management with 96% Satisfaction'}
+                </h3>
+                <p className="text-sm text-neutral-600 leading-relaxed font-normal">
+                  {isAr
+                    ? 'قامت PontLook بتشخيص الاحتياج الدقيق وربط المصرف بثلاثة مراكز تدريب معتمدة خلال 48 ساعة فقط، مما وفّر ٤ أسابيع من البحث التقليدي وخفّض تكلفة المشتريات بنسبة ٢٨٪.'
+                    : 'PontLook matched the bank with 3 TVTC-accredited fintech academies within 48 hours, saving 4 weeks of procurement delays and eliminating all agency broker markups.'}
+                </p>
               </div>
-              <h3 className="text-xl sm:text-2xl font-heading font-bold text-white group-hover:text-white leading-snug mb-3">
-                {isAr
-                  ? 'تدريب ٨٥٠ موظفاً بنكياً على التحول الرقمي بمعدل رضا ٩٦٪'
-                  : 'Upskilling 850 Bank Officers on Digital Product Management with 96% Satisfaction'}
-              </h3>
-              <p className="text-sm text-neutral-300 leading-relaxed font-normal">
-                {isAr
-                  ? 'قامت PontLook بتشخيص الاحتياج الدقيق وربط المصرف بثلاثة مراكز تدريب معتمدة خلال 48 ساعة فقط، مما وفّر ٤ أسابيع من البحث التقليدي وخفّض تكلفة المشتريات بنسبة ٢٨٪.'
-                  : 'PontLook matched the bank with 3 TVTC-accredited fintech academies within 48 hours, saving 4 weeks of procurement delays and eliminating all agency broker markups.'}
-              </p>
-            </div>
-            <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-neutral-400">
-              <span className="flex items-center gap-1.5 text-neutral-300">
-                <CheckCircle2 size={13} className="text-[#FF5C00]" />
-                {isAr ? 'النتيجة: ٩٢٪ وصول للاجتماعات' : 'Outcome: 92% Meeting Completion'}
-              </span>
-              <span className="text-white font-semibold px-2.5 py-0.5 rounded-md bg-white/10 border border-white/15">{isAr ? 'صفر رسوم وساطة' : '$0 Retainer Cost'}</span>
-            </div>
-          </div>
-
-          {/* Case 2 */}
-          <div className="p-7 sm:p-8 rounded-3xl bg-gradient-to-b from-[#14151B] to-[#0D0E13] border border-white/20 hover:border-white/35 transition-all duration-300 shadow-xl hover:shadow-2xl flex flex-col justify-between space-y-6 group">
-            <div>
-              <div className="flex items-center justify-between gap-3 mb-5">
-                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-white/10 text-white border border-white/15">
-                  {isAr ? 'اللوجستيات وسلاسل الإمداد · دبي' : 'Logistics Conglomerate · Dubai'}
+              <div className="pt-4 border-t border-neutral-200 flex items-center justify-between text-xs text-neutral-500">
+                <span className="flex items-center gap-1.5 text-neutral-700">
+                  <CheckCircle2 size={13} className="text-[#FF5C00]" />
+                  {isAr ? 'النتيجة: ٩٢٪ وصول للاجتماعات' : 'Outcome: 92% Meeting Completion'}
                 </span>
-                <span className="text-xs font-mono text-[#FF5C00] font-bold px-2.5 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25">
-                  {isAr ? '٣٢٠ مهندساً' : '320 Engineers'}
-                </span>
+                <span className="text-neutral-900 font-semibold px-2.5 py-0.5 rounded-md bg-white border border-neutral-200 shadow-2xs">{isAr ? 'صفر رسوم وساطة' : '$0 Retainer Cost'}</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-heading font-bold text-white group-hover:text-white leading-snug mb-3">
-                {isAr
-                  ? 'برنامج تدريب هندسي معتمد لبرنامج نافس في زمن قياسي'
-                  : 'Rapid Delivery of a Nafis-Compliant Technical Engineering Cohort'}
-              </h3>
-              <p className="text-sm text-neutral-300 leading-relaxed font-normal">
-                {isAr
-                  ? 'ربط مباشر مع معهد تدريب فني متخصص في دبي لتصميم منهج عملي مخصص لسلاسل الإمداد وتأهيل الكوادر الوطنية خلال مهلة تعاقدية تقل عن أسبوعين.'
-                  : 'Direct bilateral matchmaking delivered a customized syllabus from a KHDA-certified institute, achieving 100% on-time deployment under a strict 14-day SLA.'}
-              </p>
             </div>
-            <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-neutral-400">
-              <span className="flex items-center gap-1.5 text-neutral-300">
-                <CheckCircle2 size={13} className="text-[#FF5C00]" />
-                {isAr ? 'النتيجة: اعتماد كامل للميزانية' : 'Outcome: Confirmed Budget Delivery'}
-              </span>
-              <span className="text-white font-semibold px-2.5 py-0.5 rounded-md bg-white/10 border border-white/15">{isAr ? 'فحص كامل للاعتمادات' : '100% Verified'}</span>
+
+            {/* Case 2 */}
+            <div className="p-7 sm:p-8 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between space-y-6 group">
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-5">
+                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-white text-neutral-800 border border-neutral-200 shadow-2xs">
+                    {isAr ? 'اللوجستيات وسلاسل الإمداد · دبي' : 'Logistics Conglomerate · Dubai'}
+                  </span>
+                  <span className="text-xs font-mono text-[#FF5C00] font-bold px-2.5 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25">
+                    {isAr ? '٣٢٠ مهندساً' : '320 Engineers'}
+                  </span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-black leading-snug mb-3">
+                  {isAr
+                    ? 'برنامج تدريب هندسي معتمد لبرنامج نافس في زمن قياسي'
+                    : 'Rapid Delivery of a Nafis-Compliant Technical Engineering Cohort'}
+                </h3>
+                <p className="text-sm text-neutral-600 leading-relaxed font-normal">
+                  {isAr
+                    ? 'ربط مباشر مع معهد تدريب فني متخصص في دبي لتصميم منهج عملي مخصص لسلاسل الإمداد وتأهيل الكوادر الوطنية خلال مهلة تعاقدية تقل عن أسبوعين.'
+                    : 'Direct bilateral matchmaking delivered a customized syllabus from a KHDA-certified institute, achieving 100% on-time deployment under a strict 14-day SLA.'}
+                </p>
+              </div>
+              <div className="pt-4 border-t border-neutral-200 flex items-center justify-between text-xs text-neutral-500">
+                <span className="flex items-center gap-1.5 text-neutral-700">
+                  <CheckCircle2 size={13} className="text-[#FF5C00]" />
+                  {isAr ? 'النتيجة: اعتماد كامل للميزانية' : 'Outcome: Confirmed Budget Delivery'}
+                </span>
+                <span className="text-neutral-900 font-semibold px-2.5 py-0.5 rounded-md bg-white border border-neutral-200 shadow-2xs">{isAr ? 'فحص كامل للاعتمادات' : '100% Verified'}</span>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ======================================================== */}
-      {/* 7. NEWSLETTER SUBSCRIPTION BLOCK (GoodHabitz Inspired)    */}
-      {/* ======================================================== */}
-      <section className="rounded-3xl border border-white/20 bg-gradient-to-b from-[#14151B] to-[#0A0B0E] p-8 sm:p-12 text-center max-w-4xl mx-auto shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-48 bg-[#FF5C00]/10 rounded-full blur-3xl pointer-events-none" />
+        {/* ======================================================== */}
+        {/* 7. NEWSLETTER SUBSCRIPTION BLOCK                         */}
+        {/* ======================================================== */}
+        <section className="rounded-3xl border border-neutral-200 bg-neutral-50 p-8 sm:p-12 text-center max-w-4xl mx-auto shadow-sm relative overflow-hidden text-neutral-900">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-48 bg-[#FF5C00]/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase bg-white/10 text-white border border-white/20 mb-4">
-            <Sparkles size={13} className="text-[#FF5C00]" />
-            <span>{isAr ? 'النشرة المعرفية الدورية' : 'MONTHLY L&D INTELLIGENCE'}</span>
-          </div>
+          <div className="relative z-10 max-w-2xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase bg-white text-neutral-800 border border-neutral-200 mb-4 shadow-2xs">
+              <Sparkles size={13} className="text-[#FF5C00]" />
+              <span>{isAr ? 'النشرة المعرفية الدورية' : 'MONTHLY L&D INTELLIGENCE'}</span>
+            </div>
 
-          <h3 className="text-2xl sm:text-3xl font-heading font-bold text-white mb-3">
-            {isAr
-              ? 'ابقَ في الصدارة في مجال تدريب وتطوير الكفاءات المؤسسية'
-              : 'Stay Ahead in Corporate Learning & Workforce Development'}
-          </h3>
+            <h3 className="text-2xl sm:text-3xl font-heading font-bold text-neutral-950 mb-3">
+              {isAr
+                ? 'ابقَ في الصدارة في مجال تدريب وتطوير الكفاءات المؤسسية'
+                : 'Stay Ahead in Corporate Learning & Workforce Development'}
+            </h3>
 
-          <p className="text-sm sm:text-base text-neutral-300 leading-relaxed font-normal mb-8">
-            {isAr
-              ? 'انضم إلى أكثر من ٥,٠٠٠ قائد موارد بشرية يستلمون تقاريرنا الدورية، أحدث قوائم المراجعة، ونماذج التقييم مجاناً.'
-              : 'Join 5,000+ GCC HR directors receiving our curated quarterly benchmarks, TVTC compliance guides, and free operational templates.'}
-          </p>
+            <p className="text-sm sm:text-base text-neutral-600 leading-relaxed font-normal mb-8">
+              {isAr
+                ? 'انضم إلى أكثر من ٥,٠٠٠ قائد موارد بشرية يستلمون تقاريرنا الدورية، أحدث قوائم المراجعة، ونماذج التقييم مجاناً.'
+                : 'Join 5,000+ GCC HR directors receiving our curated quarterly benchmarks, TVTC compliance guides, and free operational templates.'}
+            </p>
 
-          <form
-            action="#"
-            className="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto"
-          >
-            <input
-              type="email"
-              placeholder={isAr ? 'أدخل بريدك الإلكتروني المؤسسي' : 'Enter your corporate email'}
-              className="w-full px-5 py-3.5 rounded-full bg-black/60 border border-white/20 text-white text-sm placeholder:text-neutral-500 focus:outline-none focus:border-white transition-colors"
-              required
-            />
-            <button
-              type="submit"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-white text-black font-semibold text-xs sm:text-sm hover:bg-neutral-200 transition-all shrink-0 cursor-pointer"
+            <form
+              action="#"
+              className="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto"
             >
-              {isAr ? 'اشترك مجاناً' : 'Subscribe Free'}
-            </button>
-          </form>
+              <input
+                type="email"
+                placeholder={isAr ? 'أدخل بريدك الإلكتروني المؤسسي' : 'Enter your corporate email'}
+                className="w-full px-5 py-3.5 rounded-full bg-white border border-neutral-300 text-neutral-900 text-sm placeholder:text-neutral-400 focus:outline-none focus:border-neutral-950 transition-colors shadow-2xs"
+                required
+              />
+              <button
+                type="submit"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-neutral-950 text-white font-semibold text-xs sm:text-sm hover:bg-black transition-all shrink-0 cursor-pointer shadow-sm"
+              >
+                {isAr ? 'اشترك مجاناً' : 'Subscribe Free'}
+              </button>
+            </form>
 
-          <p className="text-[11px] text-neutral-500 mt-4">
-            {isAr
-              ? 'نحترم خصوصيتك بالكامل. يمكنك إلغاء الاشتراك في أي وقت بنقرة واحدة.'
-              : 'Zero spam. Unsubscribe at any time with one click.'}
-          </p>
-        </div>
-      </section>
+            <p className="text-[11px] text-neutral-500 mt-4">
+              {isAr
+                ? 'نحترم خصوصيتك بالكامل. يمكنك إلغاء الاشتراك في أي وقت بنقرة واحدة.'
+                : 'Zero spam. Unsubscribe at any time with one click.'}
+            </p>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

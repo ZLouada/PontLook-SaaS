@@ -109,122 +109,128 @@ export default async function BlogPostDetailPage({
     : null;
 
   return (
-    <article className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-      {/* Back button */}
-      <Reveal>
-        <Link
-          href={`/${lang}/resources/blog`}
-          className="inline-flex items-center gap-2 text-xs font-medium text-neutral-400 hover:text-white transition-colors mb-8"
-        >
-          <ArrowLeft size={14} className="rtl:rotate-180" />
-          <span>{isAr ? 'العودة لجميع المقالات' : 'Back to All Articles'}</span>
-        </Link>
-      </Reveal>
+    <div
+      data-nav-light="true"
+      data-nav-theme="light"
+      className="min-h-screen bg-white text-neutral-900 transition-colors duration-200"
+    >
+      <article className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        {/* Back button */}
+        <Reveal>
+          <Link
+            href={`/${lang}/resources/blog`}
+            className="inline-flex items-center gap-2 text-xs font-medium text-neutral-600 hover:text-black transition-colors mb-8"
+          >
+            <ArrowLeft size={14} className="rtl:rotate-180" />
+            <span>{isAr ? 'العودة لجميع المقالات' : 'Back to All Articles'}</span>
+          </Link>
+        </Reveal>
 
-      {/* Categories & Date */}
-      <Reveal delay={0.05}>
-        <div className="flex flex-wrap items-center gap-3 mb-4 text-xs">
-          {post.categories && post.categories.length > 0 && (
-            <div className="flex gap-2">
-              {post.categories.map((cat) => (
-                <span
-                  key={cat._id}
-                  className="px-3 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/20 text-[#FF5C00] font-medium"
-                >
-                  {cat.title}
-                </span>
-              ))}
-            </div>
-          )}
-          {postDate && (
-            <span className="flex items-center gap-1.5 text-neutral-400 font-mono text-[11px]">
-              <Calendar size={13} />
-              {postDate}
-            </span>
-          )}
-        </div>
-      </Reveal>
-
-      {/* Title */}
-      <Reveal delay={0.1}>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-white tracking-tight leading-tight mb-6">
-          {post.title}
-        </h1>
-      </Reveal>
-
-      {/* Author info */}
-      {post.author && (
-        <Reveal delay={0.15}>
-          <div className="flex items-center gap-3.5 pb-8 mb-8 border-b border-white/[0.08]">
-            {post.author.image ? (
-              <Image
-                src={urlForImage(post.author.image).width(80).height(80).url()}
-                alt={post.author.name}
-                width={40}
-                height={40}
-                className="rounded-full object-cover border border-white/10"
-              />
-            ) : (
-              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center text-neutral-300">
-                <User size={18} />
+        {/* Categories & Date */}
+        <Reveal delay={0.05}>
+          <div className="flex flex-wrap items-center gap-3 mb-4 text-xs">
+            {post.categories && post.categories.length > 0 && (
+              <div className="flex gap-2">
+                {post.categories.map((cat) => (
+                  <span
+                    key={cat._id}
+                    className="px-3 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25 text-[#FF5C00] font-medium"
+                  >
+                    {cat.title}
+                  </span>
+                ))}
               </div>
             )}
-            <div>
-              <p className="text-sm font-semibold text-white">{post.author.name}</p>
-              {post.author.bio && (
-                <p className="text-xs text-neutral-400 line-clamp-1">{post.author.bio}</p>
+            {postDate && (
+              <span className="flex items-center gap-1.5 text-neutral-500 font-mono text-[11px]">
+                <Calendar size={13} />
+                {postDate}
+              </span>
+            )}
+          </div>
+        </Reveal>
+
+        {/* Title */}
+        <Reveal delay={0.1}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-neutral-950 tracking-tight leading-tight mb-6">
+            {post.title}
+          </h1>
+        </Reveal>
+
+        {/* Author info */}
+        {post.author && (
+          <Reveal delay={0.15}>
+            <div className="flex items-center gap-3.5 pb-8 mb-8 border-b border-neutral-200">
+              {post.author.image ? (
+                <Image
+                  src={urlForImage(post.author.image).width(80).height(80).url()}
+                  alt={post.author.name}
+                  width={40}
+                  height={40}
+                  className="rounded-full object-cover border border-neutral-200"
+                />
+              ) : (
+                <div className="h-10 w-10 rounded-full bg-neutral-200 flex items-center justify-center text-neutral-700">
+                  <User size={18} />
+                </div>
               )}
+              <div>
+                <p className="text-sm font-semibold text-neutral-950">{post.author.name}</p>
+                {post.author.bio && (
+                  <p className="text-xs text-neutral-600 line-clamp-1">{post.author.bio}</p>
+                )}
+              </div>
             </div>
+          </Reveal>
+        )}
+
+        {/* Main Feature Image */}
+        {imageUrl && (
+          <Reveal delay={0.2}>
+            <div className="relative aspect-video w-full rounded-3xl overflow-hidden mb-10 border border-neutral-200 bg-neutral-100 shadow-sm">
+              <Image
+                src={imageUrl}
+                alt={post.mainImage?.alt || post.title}
+                fill
+                priority
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
+        )}
+
+        {/* Excerpt Lead */}
+        {post.excerpt && (
+          <Reveal delay={0.25}>
+            <p className="text-base sm:text-lg text-neutral-700 leading-relaxed font-medium mb-8 p-6 rounded-2xl bg-neutral-50 border border-neutral-200 italic">
+              {post.excerpt}
+            </p>
+          </Reveal>
+        )}
+
+        {/* Body Portable Text Content */}
+        {post.body && (
+          <div className="prose prose-neutral max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:text-neutral-950 prose-p:text-neutral-700 prose-p:leading-relaxed prose-a:text-[#FF5C00] prose-a:no-underline hover:prose-a:underline prose-li:text-neutral-700 prose-strong:text-neutral-950 prose-blockquote:border-neutral-300 prose-blockquote:text-neutral-600">
+            <PortableText value={post.body} />
           </div>
-        </Reveal>
-      )}
+        )}
 
-      {/* Main Feature Image */}
-      {imageUrl && (
-        <Reveal delay={0.2}>
-          <div className="relative aspect-video w-full rounded-3xl overflow-hidden mb-10 border border-white/10 bg-neutral-900">
-            <Image
-              src={imageUrl}
-              alt={post.mainImage?.alt || post.title}
-              fill
-              priority
-              className="object-cover"
-            />
-          </div>
-        </Reveal>
-      )}
-
-      {/* Excerpt Lead */}
-      {post.excerpt && (
-        <Reveal delay={0.25}>
-          <p className="text-base sm:text-lg text-neutral-300 leading-relaxed font-medium mb-8 p-6 rounded-2xl bg-white/[0.03] border border-white/[0.06] italic">
-            {post.excerpt}
-          </p>
-        </Reveal>
-      )}
-
-      {/* Body Portable Text Content */}
-      {post.body && (
-        <div className="prose prose-invert prose-neutral max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:text-white prose-p:text-neutral-300 prose-p:leading-relaxed prose-a:text-[#FF5C00] prose-a:no-underline hover:prose-a:underline prose-li:text-neutral-300">
-          <PortableText value={post.body} />
+        {/* Share / CTA Footer */}
+        <div className="mt-16 pt-8 border-t border-neutral-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <Link
+            href={`/${lang}/find-training`}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF5C00] hover:bg-[#ff6d1a] text-black font-semibold text-xs transition-all shadow-md shadow-[#FF5C00]/20"
+          >
+            <span>{isAr ? 'ابحث عن مزود تدريب معتمد' : 'Find a Verified Training Provider'}</span>
+          </Link>
+          <Link
+            href={`/${lang}/resources/blog`}
+            className="text-xs font-medium text-neutral-600 hover:text-black transition-colors"
+          >
+            {isAr ? '← تصفح المزيد من المقالات' : 'Browse more articles →'}
+          </Link>
         </div>
-      )}
-
-      {/* Share / CTA Footer */}
-      <div className="mt-16 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
-        <Link
-          href={`/${lang}/find-training`}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF5C00] hover:bg-[#ff6d1a] text-black font-semibold text-xs transition-all shadow-lg shadow-[#FF5C00]/20"
-        >
-          <span>{isAr ? 'ابحث عن مزود تدريب معتمد' : 'Find a Verified Training Provider'}</span>
-        </Link>
-        <Link
-          href={`/${lang}/resources/blog`}
-          className="text-xs font-medium text-neutral-400 hover:text-white transition-colors"
-        >
-          {isAr ? '← تصفح المزيد من المقالات' : 'Browse more articles →'}
-        </Link>
-      </div>
-    </article>
+      </article>
+    </div>
   );
 }
