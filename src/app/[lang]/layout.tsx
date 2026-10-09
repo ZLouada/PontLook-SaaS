@@ -6,6 +6,7 @@ import '../globals.css';
 import { getDictionary, Locale } from '@/i18n';
 import { DictionaryProvider } from '@/components/providers/DictionaryProvider';
 import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
+import { SanityLive } from '@/sanity/lib/live';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -192,7 +193,7 @@ export default async function RootLayout({
           { "@type": "SiteNavigationElement", "position": 2, "name": dictionary.nav.find_training, "url": `https://pontlook.com/${lang}/find-training` },
           { "@type": "SiteNavigationElement", "position": 3, "name": dictionary.nav.for_providers, "url": `https://pontlook.com/${lang}/for-providers` },
           { "@type": "SiteNavigationElement", "position": 4, "name": dictionary.nav.contact, "url": `https://pontlook.com/${lang}/contact` },
-          { "@type": "SiteNavigationElement", "position": 5, "name": dictionary.nav.blog, "url": "https://blog.pontlook.com" }
+          { "@type": "SiteNavigationElement", "position": 5, "name": dictionary.nav.resources, "url": `https://pontlook.com/${lang}/resources` }
         ]
       }
     ]
@@ -214,6 +215,7 @@ export default async function RootLayout({
             <Navbar lang={lang} />
             <main className="min-h-screen">{children}</main>
             <Footer />
+            <SanityLive />
           </FramerMotionProvider>
         </DictionaryProvider>
       </body>

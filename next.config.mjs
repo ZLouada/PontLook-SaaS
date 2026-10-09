@@ -31,7 +31,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "img-src 'self' data: blob: https:",
       "font-src 'self' data: https://fonts.gstatic.com",
-      "connect-src 'self' https://api.web3forms.com https://*.resend.com",
+      "connect-src 'self' https://api.web3forms.com https://*.resend.com https://*.sanity.io wss://*.sanity.io",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self' https://api.web3forms.com",
@@ -54,6 +54,12 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200],
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
+    ],
   },
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],

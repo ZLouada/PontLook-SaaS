@@ -287,8 +287,8 @@ const EXPERIENCE_CARDS_EN: ExperienceCardData[] = [
       'Proven ROI: Real case studies on corporate training impact',
     ],
     cta: 'Explore Blog & Guides',
-    href: 'https://blog.pontlook.com',
-    isExternal: true,
+    href: '/resources',
+    isExternal: false,
     clayTheme: {
       bgClass: 'bg-white text-neutral-900',
       borderClass: 'border-neutral-200/90 hover:border-neutral-900',
@@ -410,8 +410,8 @@ const EXPERIENCE_CARDS_AR: ExperienceCardData[] = [
       'دراسات حالة واقعية حول قياس العائد على التدريب',
     ],
     cta: 'استكشف المدونة والأدلة',
-    href: 'https://blog.pontlook.com',
-    isExternal: true,
+    href: '/resources',
+    isExternal: false,
     clayTheme: {
       bgClass: 'bg-white text-neutral-900',
       borderClass: 'border-neutral-200/90 hover:border-neutral-900',
@@ -632,13 +632,13 @@ export default function LeadTiers(_props?: {
           {/* Top Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 xs:gap-3.5 sm:gap-4 mt-6 xs:mt-8">
             <Magnetic strength={0.22} activeDistance={35}>
-              <a
-                href="https://blog.pontlook.com"
+              <Link
+                href={`/${lang}/resources`}
                 className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-300 font-medium text-xs xs:text-sm shadow-xs active:scale-[0.98] transition-all"
               >
                 <span>{exp?.btn_blog || (isAr ? 'استكشف المدونة والموارد' : 'Explore the Blog & Resources')}</span>
                 <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
-              </a>
+              </Link>
             </Magnetic>
 
             <Magnetic strength={0.22} activeDistance={35}>

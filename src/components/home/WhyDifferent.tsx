@@ -104,7 +104,7 @@ export default function WhyDifferent() {
           ? 'متردد بين التدريب الإداري، أو التقني، أو تطوير ثقافة العمل؟ نساعدك على تشخيص السبب الجذري قبل إنفاق الميزانية.'
           : 'Unsure whether you need management training, technical upskilling, or cultural alignment? We help you diagnose the root cause before spending budget.'),
       cta: c?.diagnose?.cta || (isAr ? 'اقرأ أدلة التشخيص المهاري' : 'Read our diagnosis guides'),
-      href: 'https://blog.pontlook.com',
+      href: `/${lang}/resources/blog`,
       isExternal: false,
       takeaways: [
         isAr ? 'تحليل عميق لاحتياجات الفرق التنفيذية' : 'Deep departmental skill gap discovery',
@@ -331,8 +331,8 @@ export default function WhyDifferent() {
           ? 'أدلة عملية، ومؤشرات فجوات التوطين الخليجية، ونماذج قياس عائد الاستثمار على التدريب — مجاناً بالكامل على مدونتنا.'
           : 'Practical guides, Saudization/Emiratization workforce benchmarks, and corporate training ROI templates—completely free on our blog.'),
       cta: c?.hub?.cta || (isAr ? 'تصفح الأدلة والموارد المجانية' : 'Browse free resources'),
-      href: 'https://blog.pontlook.com',
-      isExternal: true,
+      href: `/${lang}/resources`,
+      isExternal: false,
       takeaways: [
         isAr ? 'أدلة تدقيق وتحليل التعلم والتطوير خطوة بخطوة' : 'Step by step L&D audit frameworks',
         isAr ? 'تقارير دورية حول اتجاهات الرواتب والمهارات' : 'Regional workforce shortage benchmarks',

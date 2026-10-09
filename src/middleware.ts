@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
   const isWww = host.startsWith('www.');
   const { pathname, search } = request.nextUrl;
 
-  // 1. Check for blog redirects to external WordPress subdomain
+  // 1. Internal redirect for legacy /blog paths to /resources/blog
   if (
     pathname === '/blog' ||
     pathname === '/blog/' ||
@@ -26,11 +26,14 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/en/blog/') ||
     pathname.startsWith('/ar/blog/')
   ) {
-    const blogPath =
-      pathname
-        .replace(/^\/(en|ar)\/blog/, '')
-        .replace(/^\/blog/, '') || '/';
-    return NextResponse.redirect(new URL(`https://blog.pontlook.com${blogPath}${search}`), 301);
+    const localeMatch = pathname.match(/^\/(en|ar)/);
+    const targetLang = localeMatch ? localeMatch[1] : defaultLocale;
+    const subPath = pathname
+      .replace(/^\/(en|ar)\/blog/, '')
+      .replace(/^\/blog/, '');
+    const targetUrl = new URL(request.url);
+    targetUrl.pathname = `/${targetLang}/resources/blog${subPath}`;
+    return NextResponse.redirect(targetUrl, 301);
   }
 
 const ALLOWED_HOSTS = ['pontlook.com', 'localhost', '127.0.0.1'];

@@ -30,6 +30,7 @@ export { FileText } from './FileText';
 export { Globe } from './Globe';
 export { GraduationCap } from './GraduationCap';
 export { Handshake } from './Handshake';
+export { Headphones } from './Headphones';
 export { HelpCircle } from './HelpCircle';
 export { Layers } from './Layers';
 export { Lightbulb } from './Lightbulb';

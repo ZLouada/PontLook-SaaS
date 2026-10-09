@@ -129,9 +129,9 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="https://blog.pontlook.com/" className="inline-flex min-h-[44px] items-center gap-1 hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
-                  {dict.nav?.blog || 'Blog'}
-                </a>
+                <Link href={`/${lang}/resources`} className="inline-flex min-h-[44px] items-center gap-1 hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
+                  {dict.nav?.resources || 'Resources'}
+                </Link>
               </li>
             </ul>
           </m.nav>

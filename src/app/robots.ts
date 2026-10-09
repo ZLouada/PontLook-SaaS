@@ -18,7 +18,6 @@ export default function robots(): MetadataRoute.Robots {
     ],
     sitemap: [
       'https://pontlook.com/sitemap.xml',
-      'https://blog.pontlook.com/sitemap_index.xml',
     ],
   };
 }

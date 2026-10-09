@@ -24,7 +24,6 @@ export function buildOrganizationSchema() {
     sameAs: [
       'https://www.linkedin.com/company/pontlook',
       'https://twitter.com/pontlook',
-      'https://blog.pontlook.com',
     ],
     contactPoint: [
       {
@@ -108,7 +107,6 @@ export function buildProviderNetworkSchema({
     sameAs: [
       'https://www.linkedin.com/company/pontlook',
       'https://twitter.com/pontlook',
-      'https://blog.pontlook.com',
     ],
   };
 }

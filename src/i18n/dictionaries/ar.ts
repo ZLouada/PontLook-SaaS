@@ -19,7 +19,16 @@ export const ar = {
     faq: "الأسئلة الشائعة",
     search: "بحث...",
     get_matched: "ابدأ الربط",
+    resources: "الموارد",
+    resources_desc: "أدلة وحلقات بودكاست ونماذج وفعاليات تدريبية متخصصة",
     blog: "المدونة",
+    blog_desc: "أدلة ودراسات معمقة حول تدريب وتطوير الكفاءات",
+    podcasts: "البودكاست",
+    podcasts_desc: "حوارات مع قادة التطوير المؤسسي والموارد البشرية",
+    downloads: "التحميلات",
+    downloads_desc: "نماذج مجانية وتقارير قياس الأداء وأدلة إرشادية",
+    events: "الفعاليات",
+    events_desc: "ندوات رقمية وورش عمل وجلسات حوارية تنفيذية",
     switch_lang: "English"
   },
   hero: {
@@ -172,7 +181,7 @@ export const ar = {
           "أفضل الممارسات: دراسات حالة عملية حول العائد على الاستثمار التدريبي"
         ],
         cta: "استكشف المدونة والموارد",
-        href: "https://blog.pontlook.com"
+        href: "/resources"
       },
       consultation: {
         badgePersona: "استشارة خاصة",

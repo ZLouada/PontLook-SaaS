@@ -19,7 +19,16 @@ export const en = {
     faq: "FAQ",
     search: "Search...",
     get_matched: "Get Matched",
+    resources: "Resources",
+    resources_desc: "Guides, podcasts, templates, and corporate training events",
     blog: "Blog",
+    blog_desc: "In-depth workforce and corporate training guides",
+    podcasts: "Podcasts",
+    podcasts_desc: "Interviews with leading regional L&D and talent executives",
+    downloads: "Downloads",
+    downloads_desc: "Free templates, benchmark reports, and toolkits",
+    events: "Events",
+    events_desc: "Upcoming webinars, executive roundtables, and workshops",
     switch_lang: "العربية"
   },
   hero: {
@@ -172,7 +181,7 @@ export const en = {
           "Best Practices: Practical case studies on corporate ROI"
         ],
         cta: "Explore the Blog & Resources",
-        href: "https://blog.pontlook.com"
+        href: "/resources"
       },
       consultation: {
         badgePersona: "Personal Consultation",
