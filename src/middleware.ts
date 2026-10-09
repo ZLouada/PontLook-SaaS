@@ -88,12 +88,6 @@ function getSafeHost(rawHost: string): { host: string; protocol: string } {
     }
   }
 
-  if (targetPath.includes('/solutions/') || targetPath.endsWith('/solutions')) {
-    const redirectUrl = new URL(request.url);
-    const targetLang = targetPath.startsWith('/ar') ? 'ar' : 'en';
-    redirectUrl.pathname = `/${targetLang}/find-training`;
-    return NextResponse.redirect(redirectUrl, 301);
-  }
 
   return NextResponse.next();
 }
