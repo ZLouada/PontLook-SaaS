@@ -114,11 +114,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href={`/${lang}/solutions`} className="inline-flex min-h-[44px] items-center hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
-                  {dict.nav?.solutions || 'Solutions'}
-                </Link>
-              </li>
-              <li>
                 <Link href={`/${lang}/for-providers`} className="inline-flex min-h-[44px] items-center hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
                   {dict.nav?.for_providers || "I'm a training provider"}
                 </Link>

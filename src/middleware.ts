@@ -10,6 +10,9 @@ const LEGACY_REGIONAL_REDIRECTS: Record<string, string> = {
   '/uk': '/en',
   '/us': '/en',
   '/au': '/en',
+  '/en/solutions': '/en/find-training',
+  '/ar/solutions': '/ar/find-training',
+  '/solutions': '/en/find-training',
 };
 
 export function middleware(request: NextRequest) {

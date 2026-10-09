@@ -23,7 +23,6 @@ import {
   Headphones,
   Download,
   Calendar,
-  Layers,
   Folder,
   RefreshCw,
 } from '@/components/icons';
@@ -181,8 +180,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
   }, []);
 
   const isSolutionsActive =
-    pathname === `/${lang}/solutions` ||
-    pathname.startsWith(`/${lang}/solutions/`) ||
     pathname.includes('/find-training') ||
     pathname.includes('/for-providers');
 
@@ -306,57 +303,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                     }`}
                   >
                     <div className="space-y-1">
-                      {/* Solutions Hub Overview */}
-                      <Link
-                        href={`/${lang}/solutions`}
-                        onClick={() => setActiveDropdown(null)}
-                        className={`group flex items-start gap-3 p-2.5 rounded-xl border border-transparent transition-all duration-200 ${
-                          isLightSection
-                            ? 'hover:bg-neutral-100/90 active:bg-neutral-200/70 border-b-neutral-200/60 pb-3 mb-1'
-                            : 'hover:bg-white/[0.06] active:bg-white/[0.1] border-b-white/[0.08] pb-3 mb-1'
-                        }`}
-                      >
-                        <div
-                          className={`h-9 w-9 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-105 transition-all ${
-                            isLightSection
-                              ? 'bg-neutral-900 text-white border border-neutral-900'
-                              : 'bg-white text-black border border-white'
-                          }`}
-                        >
-                          <Layers size={16} />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center justify-between">
-                            <span
-                              className={`text-xs font-semibold transition-colors ${
-                                isLightSection
-                                  ? 'text-neutral-900 group-hover:text-black'
-                                  : 'text-white group-hover:text-white'
-                              }`}
-                            >
-                              {dict.nav.solutions_overview}
-                            </span>
-                            <ArrowRight
-                              size={12}
-                              className={`transition-all transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-scale-x-100 ${
-                                isLightSection
-                                  ? 'text-neutral-400 group-hover:text-black'
-                                  : 'text-neutral-400 group-hover:text-white'
-                              }`}
-                            />
-                          </div>
-                          <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
-                            {dict.nav.solutions_overview_desc}
-                          </p>
-                        </div>
-                      </Link>
-
-                      <div className="px-2 pt-1 pb-1">
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block">
-                          {isRtl ? 'المسارات التخصصية' : 'Specialized Extensions'}
-                        </span>
-                      </div>
-
                       {/* Looking for training */}
                       <Link
                         href={`/${lang}/find-training`}
@@ -984,27 +930,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                           {dict.nav.solutions}
                         </span>
                         <div className="space-y-1.5">
-                          {/* Solutions Overview */}
-                          <m.div variants={staggerItemMobile}>
-                            <Link
-                              href={`/${lang}/solutions`}
-                              onClick={() => setOpen(false)}
-                              className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.08] hover:bg-white/[0.12] border border-white/20 text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
-                            >
-                              <div className="h-9 w-9 rounded-xl bg-white text-black border border-white flex items-center justify-center shrink-0">
-                                <Layers size={17} />
-                              </div>
-                              <div className="min-w-0 flex-1">
-                                <div className="text-sm font-semibold text-white">
-                                  {dict.nav.solutions_overview}
-                                </div>
-                                <div className="text-[11px] text-neutral-300 truncate">
-                                  {dict.nav.solutions_overview_desc}
-                                </div>
-                              </div>
-                            </Link>
-                          </m.div>
-
                           {/* Enterprise Extension */}
                           <m.div variants={staggerItemMobile}>
                             <Link
