@@ -35,7 +35,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
   const leadRef = useRef<HTMLDivElement>(null);
 
   const pairs = isAr ? PR_AR : PR_EN;
-  const word = isAr ? 'المزودون' : 'Providers';
+  const word = 'Providers';
 
   useEffect(() => {
     const cv = canvasRef.current;
@@ -459,12 +459,18 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         </div>
 
         {/* Bottom Banner with Massive Word */}
-        <div className="absolute inset-x-0 bottom-0 sm:bottom-[0.5vh] px-[1vw] sm:px-[1.5vw] pointer-events-none z-10 overflow-hidden">
+        <div
+          dir="ltr"
+          style={{ direction: 'ltr' }}
+          className="absolute inset-x-0 bottom-0 sm:bottom-[0.5vh] px-[1vw] sm:px-[1.5vw] pointer-events-none z-10 overflow-hidden"
+        >
           {/* Massive Word: Providers */}
           <h1
             ref={bigWordRef}
             id="big"
-            className="w-full flex justify-between items-baseline font-heading font-light text-[clamp(4.2rem,22vw,25.5vw)] leading-[0.78] tracking-tight whitespace-nowrap text-[#E4EAF6] select-none overflow-hidden"
+            dir="ltr"
+            style={{ direction: 'ltr' }}
+            className="w-full flex justify-between items-baseline font-heading font-light text-[clamp(3.4rem,19.5vw,25.5vw)] leading-[0.78] tracking-tight whitespace-nowrap text-[#E4EAF6] select-none overflow-hidden"
             aria-label={word}
           >
             {word.split('').map((char, idx) => (

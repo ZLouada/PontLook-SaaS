@@ -721,10 +721,16 @@ export default function Hero() {
         </div>
 
         {/* Lowered Edge-to-Edge "PontLook" Brand Typography at the Bottom Baseline */}
-        <div className="absolute inset-x-0 bottom-0 sm:bottom-[0.5vh] px-[1vw] sm:px-[1.5vw] pointer-events-none z-10 overflow-hidden">
+        <div
+          dir="ltr"
+          style={{ direction: 'ltr' }}
+          className="absolute inset-x-0 bottom-0 sm:bottom-[0.5vh] px-[1vw] sm:px-[1.5vw] pointer-events-none z-10 overflow-hidden"
+        >
           <h1
             ref={bigWordRef}
             id="big"
+            dir="ltr"
+            style={{ direction: 'ltr' }}
             className="w-full flex justify-between items-baseline font-heading font-light text-[clamp(4.2rem,22vw,25.5vw)] leading-[0.78] tracking-tight whitespace-nowrap text-[#DCDCDC] select-none"
             aria-label="PontLook"
           >

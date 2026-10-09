@@ -202,18 +202,27 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
           id="rv"
           className="font-heading font-light text-[clamp(2.4rem,7vw,6.8rem)] leading-[1.03] tracking-[-0.03em] max-w-6xl text-[#0F172A]"
         >
-          {words.map((word, wIdx) => (
-            <span key={wIdx} className="inline-block me-3">
-              {word.split('').map((char, cIdx) => (
+          {isAr
+            ? words.map((word, wIdx) => (
                 <span
-                  key={cIdx}
-                  className="rv-char inline-block opacity-15 transition-opacity duration-200"
+                  key={wIdx}
+                  className="rv-char inline-block me-3 opacity-15 transition-opacity duration-200"
                 >
-                  {char}
+                  {word}
+                </span>
+              ))
+            : words.map((word, wIdx) => (
+                <span key={wIdx} className="inline-block me-3">
+                  {word.split('').map((char, cIdx) => (
+                    <span
+                      key={cIdx}
+                      className="rv-char inline-block opacity-15 transition-opacity duration-200"
+                    >
+                      {char}
+                    </span>
+                  ))}
                 </span>
               ))}
-            </span>
-          ))}
         </h2>
 
         {/* Dynamic Interactive Panel with Toggle Tabs */}
@@ -233,24 +242,24 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
               <button
                 type="button"
                 onClick={() => setTabIdx(0)}
-                className={`py-2 px-5 sm:px-6 rounded-full font-mono text-xs font-semibold tracking-wider cursor-pointer transition-all duration-200 ${
+                className={`py-2 px-4 sm:px-6 rounded-full font-sans sm:font-mono text-xs font-semibold tracking-wider cursor-pointer whitespace-nowrap transition-all duration-200 ${
                   tabIdx === 0
                     ? 'bg-[#FF5C00] text-white shadow-md shadow-orange-500/20'
                     : 'bg-transparent text-slate-600 hover:text-slate-900'
                 }`}
               >
-                {isAr ? 'مسار الربط (Pipeline)' : 'PIPELINE FLOW'}
+                {isAr ? 'مسار الربط' : 'PIPELINE FLOW'}
               </button>
               <button
                 type="button"
                 onClick={() => setTabIdx(1)}
-                className={`py-2 px-5 sm:px-6 rounded-full font-mono text-xs font-semibold tracking-wider cursor-pointer transition-all duration-200 ${
+                className={`py-2 px-4 sm:px-6 rounded-full font-sans sm:font-mono text-xs font-semibold tracking-wider cursor-pointer whitespace-nowrap transition-all duration-200 ${
                   tabIdx === 1
                     ? 'bg-[#FF5C00] text-white shadow-md shadow-orange-500/20'
                     : 'bg-transparent text-slate-600 hover:text-slate-900'
                 }`}
               >
-                {isAr ? 'تصنيف الفرص (Lead Details)' : 'LEAD DETAILS'}
+                {isAr ? 'تصنيف الفرص' : 'LEAD DETAILS'}
               </button>
             </div>
           </div>
