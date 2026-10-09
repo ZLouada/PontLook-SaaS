@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 interface GccProviderHeroProps {
   isAr?: boolean;
@@ -33,8 +33,6 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const bigWordRef = useRef<HTMLHeadingElement>(null);
   const leadRef = useRef<HTMLDivElement>(null);
-
-  const [hudText, setHudText] = useState('SEQUENCING PROVIDER GENOME 0%');
 
   const pairs = isAr ? PR_AR : PR_EN;
   const word = isAr ? 'المزودون' : 'Providers';
@@ -392,22 +390,6 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       }
 
       ctx.globalAlpha = 1;
-
-      // Update HUD telemetry
-      const nextHud =
-        asm < 1
-          ? isAr
-            ? `تسلسل جينات المزود ${Math.round(asm * 100)}%`
-            : `SEQUENCING PROVIDER GENOME ${Math.round(asm * 100)}%`
-          : blast > 0.15
-          ? isAr
-            ? 'إعادة التسلسل التدريبي…'
-            : 'RE-SEQUENCING…'
-          : isAr
-          ? `رابط المزود ↔ الشركات ${Math.round(sep * 100)}%`
-          : `PROVIDER ↔ COMPANY LINK ${Math.round(sep * 100)}%`;
-
-      setHudText(nextHud);
     };
 
     animId = requestAnimationFrame(frame);
@@ -437,14 +419,6 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
           className="absolute inset-0 w-full h-full cursor-crosshair block touch-pan-y"
           aria-label="Animated DNA helix linking training providers to GCC companies"
         />
-
-        {/* Top-Left Telemetry HUD */}
-        <div
-          id="hud"
-          className="absolute start-[2.2vw] top-[calc(88px+env(safe-area-inset-top,0px))] font-sans font-medium text-[11px] tracking-[0.14em] text-[#FF5C00] pointer-events-none z-10"
-        >
-          {hudText}
-        </div>
 
         {/* Center Scroll-Revealed Lead Section */}
         <div
@@ -484,37 +458,8 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
           </div>
         </div>
 
-        {/* Bottom Banner with Metadata & Massive Word */}
-        <div className="absolute inset-x-0 bottom-[0.5vh] sm:bottom-[1vh] px-[1vw] sm:px-[1.5vw] pointer-events-none z-10">
-          <div className="flex justify-start gap-[2vw] sm:gap-[2.5vw] font-sans font-normal text-[10px] sm:text-[10.5px] leading-[1.25] tracking-[0.04em] uppercase mb-[0.8vw] text-slate-200 px-[0.5vw]">
-            <div className="border-s border-white/50 ps-2.5 max-w-[150px]">
-              {isAr ? (
-                <>أنت الآن<br />تدخل المنظومة</>
-              ) : (
-                <>You are<br />now<br />entering</>
-              )}
-            </div>
-            <div className="border-s border-white/50 ps-2.5 max-w-[150px]">
-              {isAr ? (
-                <>الوقت: 3 دقائق<br />مرّر<br />للاستكشاف</>
-              ) : (
-                <>Time: 3 mins<br />scroll<br />to explore</>
-              )}
-            </div>
-            <div className="border-s border-white/50 ps-2.5 max-w-[160px] hidden sm:block">
-              {isAr
-                ? 'خط الفرص المؤهلة لمزودي التدريب في الخليج'
-                : 'The qualified pipeline for GCC training providers'}
-            </div>
-            <div className="border-s border-white/50 ps-2.5 max-w-[150px] hidden sm:block">
-              {isAr ? (
-                <>انقر في أي مكان<br />لإعادة تسلسل<br />الشبكة</>
-              ) : (
-                <>Click anywhere<br />to re-sequence<br />the helix</>
-              )}
-            </div>
-          </div>
-
+        {/* Bottom Banner with Massive Word */}
+        <div className="absolute inset-x-0 bottom-0 sm:bottom-[0.5vh] px-[1vw] sm:px-[1.5vw] pointer-events-none z-10 overflow-hidden">
           {/* Massive Word: Providers */}
           <h1
             ref={bigWordRef}
