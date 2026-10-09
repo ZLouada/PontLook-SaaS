@@ -204,13 +204,13 @@ export default function RoadmapTabs({ isAr = false }: RoadmapTabsProps) {
     <div className="w-full">
       {/* Section Header */}
       <div className="mb-12 sm:mb-16">
-        <div className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-500 mb-3 sm:mb-4">
+        <div className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-400 mb-3 sm:mb-4">
           {isAr ? 'خارطة طريق تشغيلية من 4 مراحل' : '4-STAGE OPERATIONAL ROADMAP'}
         </div>
-        <h2 className="font-heading font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.05] text-black max-w-4xl mb-4 sm:mb-5">
+        <h2 className="font-heading font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.05] text-white max-w-4xl mb-4 sm:mb-5">
           {isAr ? 'رحلة التدريب المؤسسي المتكاملة' : 'The end to end training journey'}
         </h2>
-        <p className="text-base sm:text-lg text-neutral-600 max-w-2xl font-normal leading-relaxed">
+        <p className="text-base sm:text-lg text-neutral-400 max-w-2xl font-normal leading-relaxed">
           {isAr
             ? 'جسر شفاف وسلس ينقلك من تشخيص الفجوة المهارية إلى تحقيق أثر أعمال ملموس ومستدام.'
             : 'A seamless, transparent bridge from diagnosed skill deficit to measurable business impact.'}
@@ -221,7 +221,7 @@ export default function RoadmapTabs({ isAr = false }: RoadmapTabsProps) {
       <div
         role="tablist"
         aria-label={isAr ? 'مراحل رحلة التدريب' : 'Training journey stages'}
-        className="grid grid-cols-2 md:grid-cols-4 gap-0 border-b border-black"
+        className="grid grid-cols-2 md:grid-cols-4 gap-0 border-b border-white/20"
       >
         {stages.map((stage, i) => {
           const isSelected = activeStage === i;
@@ -231,10 +231,10 @@ export default function RoadmapTabs({ isAr = false }: RoadmapTabsProps) {
               role="tab"
               aria-selected={isSelected}
               onClick={() => setActiveStage(i)}
-              className={`text-start p-4 sm:p-5 lg:p-6 border-t-[5px] sm:border-t-[6px] border-black transition-all duration-200 cursor-pointer outline-none focus-visible:outline-2 focus-visible:outline-black ${
+              className={`text-start p-4 sm:p-5 lg:p-6 border-t-[5px] sm:border-t-[6px] transition-all duration-200 cursor-pointer outline-none focus-visible:outline-2 focus-visible:outline-white ${
                 isSelected
-                  ? 'bg-black text-white'
-                  : 'bg-white text-black hover:bg-neutral-100'
+                  ? 'bg-white text-black border-white'
+                  : 'bg-black text-white border-neutral-700 hover:bg-neutral-900 hover:border-white/60'
               }`}
             >
               <b className="block font-mono text-xs sm:text-sm font-semibold tracking-wider mb-1.5 sm:mb-2">
@@ -252,31 +252,31 @@ export default function RoadmapTabs({ isAr = false }: RoadmapTabsProps) {
       <div
         role="tabpanel"
         aria-live="polite"
-        className="mt-8 sm:mt-10 border-[1.5px] border-black p-6 sm:p-10 md:p-14 bg-white"
+        className="mt-8 sm:mt-10 border-[1.5px] border-white/20 p-6 sm:p-10 md:p-14 bg-black"
       >
-        <small className="block font-mono text-xs uppercase tracking-[0.14em] font-semibold text-neutral-500 mb-3 sm:mb-4">
+        <small className="block font-mono text-xs uppercase tracking-[0.14em] font-semibold text-neutral-400 mb-3 sm:mb-4">
           {current.headerSmall}
         </small>
 
-        <h3 className="font-heading font-semibold text-2xl sm:text-3xl md:text-4xl text-black tracking-tight leading-snug mb-3 sm:mb-4">
+        <h3 className="font-heading font-semibold text-2xl sm:text-3xl md:text-4xl text-white tracking-tight leading-snug mb-3 sm:mb-4">
           {current.heading}
         </h3>
 
-        <p className="text-base sm:text-lg text-neutral-700 max-w-3xl leading-relaxed mb-8 sm:mb-10 font-normal">
+        <p className="text-base sm:text-lg text-neutral-300 max-w-3xl leading-relaxed mb-8 sm:mb-10 font-normal">
           {current.body}
         </p>
 
         {current.deliverables.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 pt-6 border-t border-black/20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 pt-6 border-t border-white/15">
             {current.deliverables.map((del, dIdx) => (
               <div
                 key={dIdx}
-                className="border-t-[1.5px] border-black pt-3.5 sm:pt-4"
+                className="border-t-[1.5px] border-white/30 pt-3.5 sm:pt-4"
               >
-                <b className="block font-mono text-[11px] sm:text-xs uppercase tracking-wider font-semibold text-neutral-500 mb-1.5 sm:mb-2">
+                <b className="block font-mono text-[11px] sm:text-xs uppercase tracking-wider font-semibold text-neutral-400 mb-1.5 sm:mb-2">
                   {del.label}
                 </b>
-                <span className="text-sm sm:text-base text-black font-medium leading-relaxed block">
+                <span className="text-sm sm:text-base text-white font-medium leading-relaxed block">
                   {del.desc}
                 </span>
               </div>

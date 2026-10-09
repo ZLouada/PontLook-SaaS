@@ -5,9 +5,10 @@ import React, { useRef, useEffect } from 'react';
 interface RaceBridgeCanvasProps {
   isAr?: boolean;
   className?: string;
+  darkMode?: boolean;
 }
 
-export default function RaceBridgeCanvas({ isAr = false, className = '' }: RaceBridgeCanvasProps) {
+export default function RaceBridgeCanvas({ isAr = false, className = '', darkMode = true }: RaceBridgeCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -32,11 +33,16 @@ export default function RaceBridgeCanvas({ isAr = false, className = '' }: RaceB
     let t0 = performance.now();
     let TP: [number, number][] = [];
 
-    // Colors: adapt to document theme (default black foreground, white background)
-    let FG = '#000000';
-    let BG = '#FFFFFF';
+    // Colors: adapt to document theme (default white foreground on black background)
+    let FG = darkMode ? '#FFFFFF' : '#000000';
+    let BG = darkMode ? '#000000' : '#FFFFFF';
 
     const updateColors = () => {
+      if (darkMode) {
+        FG = '#FFFFFF';
+        BG = '#000000';
+        return;
+      }
       const s = getComputedStyle(document.documentElement);
       const k = s.getPropertyValue('--k')?.trim();
       const w = s.getPropertyValue('--w')?.trim();
@@ -445,7 +451,7 @@ export default function RaceBridgeCanvas({ isAr = false, className = '' }: RaceB
       mediaDark.removeEventListener('change', updateColors);
       cv.removeEventListener('click', resetRace);
     };
-  }, [isAr]);
+  }, [isAr, darkMode]);
 
   return (
     <div
