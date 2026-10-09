@@ -208,12 +208,12 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 isLightSection ? 'liquid-glass-capsule-light' : 'liquid-glass-capsule-dark'
               }`
             : isLightSection
-            ? 'top-0 w-full max-w-full rounded-none px-3.5 xs:px-4 sm:px-8 lg:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-light'
-            : 'top-0 w-full max-w-full rounded-none px-3.5 xs:px-4 sm:px-8 lg:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-dark'
+            ? 'top-0 w-full max-w-full rounded-none px-3.5 xs:px-4 sm:px-6 lg:px-8 xl:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-light'
+            : 'top-0 w-full max-w-full rounded-none px-3.5 xs:px-4 sm:px-6 lg:px-8 xl:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-dark'
         }`}
       >
         <nav
-          className="container-site !px-0 flex items-center justify-between w-full"
+          className="container-site !px-0 flex items-center justify-between w-full min-w-0"
           aria-label="Main navigation"
         >
           {/* Brand Logo: Orange on 'I'm provider', Black on white background, White on black background */}
@@ -267,7 +267,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           </Link>
 
           {/* Desktop Navigation Links with Solutions & About Dropdowns (No "Home" link) */}
-          <ul className="hidden lg:flex items-center gap-1.5 relative px-2">
+          <ul className="hidden lg:flex items-center gap-1 xl:gap-1.5 relative px-1 xl:px-2 shrink-0">
             {/* Solutions Dropdown Menu */}
             <li
               className="relative"
@@ -279,7 +279,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 onClick={() =>
                   setActiveDropdown((prev) => (prev === 'solutions' ? null : 'solutions'))
                 }
-                className={`relative z-10 inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-medium rounded-full transition-colors duration-200 cursor-pointer ${
+                className={`relative z-10 inline-flex items-center gap-1 px-3 xl:px-3.5 py-1.5 text-xs font-medium rounded-full transition-colors duration-200 cursor-pointer ${
                   isLightSection
                     ? isSolutionsActive || activeDropdown === 'solutions'
                       ? 'text-neutral-950 font-bold bg-black/[0.05]'
@@ -471,7 +471,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 onClick={() =>
                   setActiveDropdown((prev) => (prev === 'about' ? null : 'about'))
                 }
-                className={`relative z-10 inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-medium rounded-full transition-colors duration-200 cursor-pointer ${
+                className={`relative z-10 inline-flex items-center gap-1 px-3 xl:px-3.5 py-1.5 text-xs font-medium rounded-full transition-colors duration-200 cursor-pointer ${
                   isLightSection
                     ? isAboutActive || activeDropdown === 'about'
                       ? 'text-neutral-950 font-bold bg-black/[0.05]'
@@ -612,7 +612,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 onClick={() =>
                   setActiveDropdown((prev) => (prev === 'resources' ? null : 'resources'))
                 }
-                className={`relative z-10 inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer ${
+                className={`relative z-10 inline-flex items-center gap-1.5 px-3 xl:px-3.5 py-1.5 text-xs font-medium rounded-full transition-all duration-200 cursor-pointer ${
                   isLightSection
                     ? activeDropdown === 'resources'
                       ? 'border border-black text-black font-semibold bg-black/[0.04]'
@@ -644,7 +644,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 6, scale: 0.96 }}
                     transition={{ duration: 0.18, ease: 'easeOut' }}
-                    className={`absolute top-full mt-2.5 ltr:end-[-120px] rtl:start-[-120px] w-[690px] rounded-3xl p-5 z-50 shadow-2xl transition-colors ${
+                    className={`absolute top-full mt-2.5 ltr:right-0 xl:ltr:end-[-60px] rtl:left-0 xl:rtl:start-[-60px] w-[min(690px,calc(100vw-2.5rem))] rounded-3xl p-5 z-50 shadow-2xl transition-colors ${
                       isLightSection
                         ? 'bg-white/98 backdrop-blur-2xl border border-neutral-200 text-neutral-900 shadow-[0_25px_60px_rgba(0,0,0,0.14)]'
                         : 'bg-[#101115]/98 backdrop-blur-2xl border border-[#26282D] text-white shadow-[0_25px_60px_rgba(0,0,0,0.7)]'
@@ -817,12 +817,12 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           </ul>
 
           {/* Right actions: Language Switcher, and Sleek "Let's talk ↗" CTA */}
-          <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5">
+          <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 shrink-0">
             {/* Language Switcher */}
-            <Magnetic strength={0.16} activeDistance={25} className="hidden lg:inline-flex">
+            <Magnetic strength={0.16} activeDistance={25} className="hidden lg:inline-flex shrink-0">
               <Link
                 href={switchHref}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 ${
+                className={`inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 shrink-0 whitespace-nowrap ${
                   isLightSection
                     ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
                     : 'border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30'
@@ -830,24 +830,29 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
               >
                 <Globe size={13} className={`shrink-0 ${isLightSection ? 'text-neutral-700' : 'text-neutral-400'}`} />
-                <span className={lang === 'en' ? 'font-arabic tracking-normal' : ''} dir={lang === 'en' ? 'rtl' : 'ltr'}>
+                <span
+                  className={`whitespace-nowrap shrink-0 leading-none ${
+                    lang === 'en' ? 'font-arabic [letter-spacing:0!important]' : ''
+                  }`}
+                  dir={lang === 'en' ? 'rtl' : 'ltr'}
+                >
                   {lang === 'en' ? 'العربية' : 'English'}
                 </span>
               </Link>
             </Magnetic>
 
             {/* Sleek CTA Button: Black when background is white, White when background is black */}
-            <Magnetic strength={0.18} activeDistance={30} className="hidden sm:inline-flex">
+            <Magnetic strength={0.18} activeDistance={30} className="hidden sm:inline-flex shrink-0">
               <Link
                 href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
-                className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold active:scale-95 transition-all ${
+                className={`inline-flex items-center gap-1.5 px-3 xl:px-4 py-1.5 rounded-full text-xs font-semibold active:scale-95 transition-all shrink-0 whitespace-nowrap ${
                   isLightSection
                     ? 'bg-neutral-950 hover:bg-black text-white shadow-xs hover:shadow-md hover:shadow-black/20'
                     : 'bg-white hover:bg-neutral-200 text-black shadow-xs hover:shadow-md hover:shadow-white/20'
                 }`}
               >
-                <span>{dict.nav.lets_talk}</span>
-                <ArrowUpRight size={13} className="rtl:-scale-x-100" />
+                <span className="shrink-0 whitespace-nowrap">{dict.nav.lets_talk}</span>
+                <ArrowUpRight size={13} className="rtl:-scale-x-100 shrink-0" />
               </Link>
             </Magnetic>
 
@@ -865,7 +870,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 <Globe size={13} className={`shrink-0 ${isLightSection ? 'text-neutral-700' : 'text-neutral-400'}`} />
                 <span
                   className={`font-semibold text-[11px] xs:text-xs whitespace-nowrap shrink-0 leading-none ${
-                    lang === 'en' ? 'font-arabic tracking-normal' : ''
+                    lang === 'en' ? 'font-arabic [letter-spacing:0!important]' : ''
                   }`}
                   dir={lang === 'en' ? 'rtl' : 'ltr'}
                 >
@@ -1203,7 +1208,9 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                         className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full font-medium text-xs text-neutral-300 bg-white/[0.05] hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95 min-h-[44px] touch-manipulation"
                       >
                         <Globe size={13} className="text-neutral-400" />
-                        <span>{lang === 'en' ? 'العربية' : 'English'}</span>
+                        <span className={lang === 'en' ? 'font-arabic [letter-spacing:0!important]' : ''} dir={lang === 'en' ? 'rtl' : 'ltr'}>
+                          {lang === 'en' ? 'العربية' : 'English'}
+                        </span>
                       </Link>
                     </div>
                   </div>

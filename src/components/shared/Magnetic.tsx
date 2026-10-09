@@ -105,7 +105,7 @@ function MagneticDesktop({
         x: smoothX,
         y: smoothY,
       }}
-      className={`inline-block transform-gpu will-change-transform ${className}`}
+      className={`transform-gpu will-change-transform ${className}`}
     >
       {children}
     </m.div>

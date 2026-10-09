@@ -19,7 +19,7 @@ const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-arabic',
-  preload: false,
+  preload: true,
 });
 
 const jetbrainsMono = JetBrains_Mono({
