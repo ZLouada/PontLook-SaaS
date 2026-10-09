@@ -34,9 +34,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
   const bigWordRef = useRef<HTMLHeadingElement>(null);
   const leadRef = useRef<HTMLDivElement>(null);
 
-  const [hudText, setHudText] = useState(
-    isAr ? 'منظومة تسلسل مزودي التدريب' : 'ACTIVE GCC PROVIDER HELIX'
-  );
+  const [hudText, setHudText] = useState('SEQUENCING PROVIDER GENOME 0%');
 
   const pairs = isAr ? PR_AR : PR_EN;
   const word = isAr ? 'المزودون' : 'Providers';
@@ -48,7 +46,8 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
     if (!ctx) return;
 
     const isMobile = window.innerWidth < 768;
-    const K = isMobile ? 84 : 170;
+    // Optimized particle count for silky-smooth framerates
+    const K = isMobile ? 70 : 160;
     const TAU = Math.PI * 2;
     let W = 0;
     let H = 0;
@@ -73,15 +72,17 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
     const ez = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
     const sm = (v: number, a: number, b: number) => ez(cl((v - a) / (b - a)));
 
-    // Clean double-helix nodes: 2 intertwining strands with zero explosive scattering
-    const P: { s: number; i: number }[] = [];
+    const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Double-helix node points
+    const P: { s: number; i: number; a: number; b: number; c: number }[] = [];
     for (let s = 0; s < 2; s++) {
       for (let i = 0; i < K; i++) {
-        P.push({ s, i });
+        P.push({ s, i, a: rnd(-1, 1), b: rnd(-1, 1), c: rnd(-1, 1) });
       }
     }
 
-    // Ambient floating dust particles (calm golden stardust)
+    // Ambient floating dust particles
     const dust = Array.from({ length: isMobile ? 40 : 160 }, () => ({
       x: rnd(-1, 1),
       y: rnd(-1, 1),
@@ -95,13 +96,15 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
     let ty = 0;
     let targetScrollP = 0;
     let smoothScrollP = 0;
+    let blast = 0;
+    let shock: { x: number; y: number; t: number } | null = null;
     let pulses: { i: number; t: number; s: number }[] = [];
     let lastP = 0;
     const t0 = performance.now();
     let animId: number;
     let isVisible = true;
 
-    // Pause canvas execution completely when out of viewport to free GPU/CPU
+    // Pause canvas execution completely when out of viewport to save battery/GPU
     const observer = new IntersectionObserver(
       (entries) => {
         isVisible = entries[0].isIntersecting;
@@ -115,14 +118,32 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       ty = (e.clientY / window.innerHeight) * 2 - 1;
     };
 
+    // Intentional tap/click detection: avoids triggering explosions during scroll drag gestures
+    let pointerDownPos = { x: 0, y: 0, time: 0 };
+    const onPointerDown = (e: PointerEvent) => {
+      pointerDownPos = { x: e.clientX, y: e.clientY, time: performance.now() };
+    };
+
+    const onPointerUp = (e: PointerEvent) => {
+      const dist = Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y);
+      const duration = performance.now() - pointerDownPos.time;
+      // Only explode when user taps/clicks intentionally, not during page scrolling!
+      if (dist < 14 && duration < 400) {
+        blast = 1;
+        shock = { x: e.clientX, y: e.clientY, t: 0 };
+      }
+    };
+
     cv.addEventListener('pointermove', onPointerMove, { passive: true });
+    cv.addEventListener('pointerdown', onPointerDown, { passive: true });
+    cv.addEventListener('pointerup', onPointerUp, { passive: true });
 
     // Pre-cache letter elements to avoid DOM querySelectorAll on every scroll event
     const letterNodes = bigWordRef.current
       ? (Array.from(bigWordRef.current.querySelectorAll('i')) as HTMLElement[])
       : [];
 
-    // RAF-throttled scroll handler to prevent thread lock
+    // RAF-throttled scroll handler
     let scrollTicking = false;
     const onScroll = () => {
       if (scrollTicking) return;
@@ -169,10 +190,13 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       smoothScrollP += (targetScrollP - smoothScrollP) * 0.045;
 
       const t = (now - t0) / 1000;
+      const asm = RM ? 1 : ez(cl(t / 3.2));
       const sep = sm(smoothScrollP, 0.32, 0.88) * 0.24;
 
       mx += (tx - mx) * 0.04;
       my += (ty - my) * 0.04;
+      blast *= 0.94; // Fast, smooth decay
+      if (blast < 0.005) blast = 0;
 
       ctx.globalCompositeOperation = 'source-over';
       ctx.fillStyle = 'rgba(5, 7, 13, 0.32)';
@@ -185,38 +209,64 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       // Gentle camera zoom
       const zoom = 1 + smoothScrollP * 0.25;
 
-      // Steady, calm continuous rotation
+      // Steady continuous rotation with subtle scroll twist
       const baseSpin = t * 0.2;
       const scrollSpin = smoothScrollP * 0.55;
       const spin = baseSpin + scrollSpin + mx * 0.32;
 
-      // Stable 3D perspective orientation
+      // 3D perspective orientation
       const tl = -0.35 + smoothScrollP * 0.12 + my * 0.05;
       const ct = Math.cos(tl);
       const st = Math.sin(tl);
       const TW = TAU * 3.2;
 
-      // Steady walking cadence down the helix
+      // Slow vertical translation creating steady walking cadence down the helix
       const walkOffset = smoothScrollP * 0.26;
 
-      const A: { sx: number; sy: number; Z: number; f: number }[][] = [[], []];
+      if (shock) {
+        shock.t += 0.02;
+        if (shock.t > 1.5) shock = null;
+      }
+
+      const A: { sx: number; sy: number; Z: number; f: number; e: number; bright: number }[][] = [[], []];
+      const bl = blast * W * 0.45;
 
       for (const q of P) {
         const u = q.i / (K - 1);
         const ang = u * TW + q.s * Math.PI + spin;
+        const e = ez(cl(asm * 1.6 - u * 0.6));
 
-        // Perfectly formed double helix coordinates (no explosions or scatter)
-        const X = R * Math.cos(ang) + (q.s ? 1 : -1) * sep * W * 0.18;
-        const Y = (u - 0.5 - walkOffset) * len;
-        const Z = R * Math.sin(ang);
+        // Coordinates with calm vertical walk traversal + blast dispersion
+        const X = lp(q.a * W * 0.65, R * Math.cos(ang), e) + q.a * bl + (q.s ? 1 : -1) * sep * W * 0.18;
+        const Y = lp(q.b * H * 0.65, (u - 0.5 - walkOffset) * len, e) + q.b * bl;
+        const Z = lp(q.c * R * 2, R * Math.sin(ang), e);
 
         const rx = X * ct - Y * st;
         const ry = X * st + Y * ct;
         const f = 1100 / (1100 - Z);
-        const sx = W / 2 + rx * f * zoom;
-        const sy = H / 2 + ry * f * zoom;
+        let sx = W / 2 + rx * f * zoom;
+        let sy = H / 2 + ry * f * zoom;
+        let bright = 1;
 
-        A[q.s][q.i] = { sx, sy, Z, f };
+        // High-performance shockwave displacement with fast bounding-box rejection
+        if (shock) {
+          const dx = sx - shock.x;
+          const dy = sy - shock.y;
+          const r = shock.t * 900;
+          if (Math.abs(dx) < r + 75 && Math.abs(dy) < r + 75) {
+            const d = Math.hypot(dx, dy);
+            const distFromWave = Math.abs(d - r);
+            if (distFromWave < 65) {
+              const g = (1 - distFromWave / 65) * (1.5 - shock.t);
+              const k = (g * 36) / (d || 1);
+              sx += dx * k;
+              sy += dy * k;
+              bright += g * 1.8;
+            }
+          }
+        }
+
+        A[q.s][q.i] = { sx, sy, Z, f, e, bright };
       }
 
       // Base pair rungs between strands
@@ -225,8 +275,9 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         const b = A[1][i];
         if (!a || !b) continue;
         const dp = (a.Z + b.Z) / (4 * R) + 0.5;
+        if (a.e < 0.2) continue;
 
-        ctx.strokeStyle = `rgba(255, 92, 0, ${(0.18 + 0.36 * dp) * (1 + sep * 0.8)})`;
+        ctx.strokeStyle = `rgba(255, 92, 0, ${(0.16 + 0.35 * dp) * a.e * (1 + sep * 0.8)})`;
         ctx.lineWidth = 1 + sep;
         ctx.beginPath();
         ctx.moveTo(a.sx, a.sy);
@@ -241,7 +292,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
           const o = A[s][i];
           if (!o) continue;
           const dp = cl((o.Z / R + 1) / 2);
-          const al = cl(0.22 + 0.78 * dp);
+          const al = cl((0.18 + 0.82 * dp) * o.bright * (0.4 + 0.6 * o.e));
           const r = Math.max(0.3, (1.1 + 2.4 * dp) * Math.abs(o.f) * (i % 3 ? 1 : 2.1));
 
           ctx.globalAlpha = al;
@@ -260,7 +311,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       ctx.globalAlpha = 1;
 
       // Energy pulses traveling across rungs
-      if (now - lastP > 140) {
+      if (asm >= 1 && now - lastP > 140) {
         lastP = now;
         pulses.push({ i: Math.floor(rnd(0, K / 3)) * 3, t: 0, s: rnd(0.012, 0.025) });
       }
@@ -291,7 +342,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       ctx.font = '500 10.5px Inter, system-ui, sans-serif';
       ctx.fillStyle = '#FFB280';
 
-      if (smoothScrollP < 0.9) {
+      if (asm >= 1 && smoothScrollP < 0.9) {
         for (let i = 6, k = 0; i < K; i += 15, k++) {
           const a = A[0][i];
           const b = A[1][i];
@@ -327,12 +378,31 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         );
       }
 
+      // Smooth shockwave ring
+      if (shock) {
+        ctx.globalAlpha = Math.max(0, (0.5 * (1.5 - shock.t)) / 1.5);
+        ctx.strokeStyle = '#FF5C00';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(shock.x, shock.y, shock.t * 900, 0, TAU);
+        ctx.stroke();
+      }
+
       ctx.globalAlpha = 1;
 
-      // Update HUD telemetry state
-      const nextHud = isAr
-        ? `رابط المزود ↔ الشركات ${Math.round(sep * 100)}%`
-        : `PROVIDER ↔ COMPANY LINK ${Math.round(sep * 100)}%`;
+      // Update HUD state
+      const nextHud =
+        asm < 1
+          ? isAr
+            ? `تسلسل جينات المزود ${Math.round(asm * 100)}%`
+            : `SEQUENCING PROVIDER GENOME ${Math.round(asm * 100)}%`
+          : blast > 0.15
+          ? isAr
+            ? 'إعادة التسلسل التدريبي…'
+            : 'RE-SEQUENCING…'
+          : isAr
+          ? `رابط المزود ↔ الشركات ${Math.round(sep * 100)}%`
+          : `PROVIDER ↔ COMPANY LINK ${Math.round(sep * 100)}%`;
 
       setHudText(nextHud);
     };
@@ -345,6 +415,8 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       window.removeEventListener('resize', resize);
       window.removeEventListener('scroll', onScroll);
       cv.removeEventListener('pointermove', onPointerMove);
+      cv.removeEventListener('pointerdown', onPointerDown);
+      cv.removeEventListener('pointerup', onPointerUp);
     };
   }, [isAr, pairs]);
 
@@ -356,7 +428,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         <canvas
           ref={canvasRef}
           id="c"
-          className="absolute inset-0 w-full h-full cursor-default block touch-pan-y"
+          className="absolute inset-0 w-full h-full cursor-crosshair block touch-pan-y"
           aria-label="Animated DNA helix linking training providers to GCC companies"
         />
 
@@ -431,9 +503,9 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
             </div>
             <div className="border-s border-white/50 ps-2.5 max-w-[150px] hidden sm:block drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
               {isAr ? (
-                <>سلسلة تدريبية<br />مستمرة<br />ثلاثية الأبعاد</>
+                <>انقر في أي مكان<br />لإعادة تسلسل<br />الشبكة</>
               ) : (
-                <>Continuous<br />3D animated<br />helix</>
+                <>Click anywhere<br />to re-sequence<br />the helix</>
               )}
             </div>
           </div>
@@ -448,9 +520,12 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
             {word.split('').map((char, idx) => (
               <b
                 key={idx}
-                className="inline-block transition-transform duration-75 ease-out"
+                className="inline-block animate-[in_1.2s_cubic-bezier(0.2,0.8,0.2,1)_forwards] shrink-0"
+                style={{
+                  animationDelay: `calc(1.8s + ${idx} * 0.09s)`,
+                }}
               >
-                {char}
+                <i className="inline-block not-italic will-change-transform">{char}</i>
               </b>
             ))}
           </h1>
