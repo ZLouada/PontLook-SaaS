@@ -511,29 +511,39 @@ export default async function ResourcesPage({
       {/* ======================================================== */}
       {/* 6. CASE STUDIES SECTION (#case-studies)                  */}
       {/* ======================================================== */}
-      <section id="case-studies" className="mb-20 sm:mb-28 pt-10 border-t border-white/10">
-        <div className="max-w-3xl mb-10">
-          <div className="font-mono text-xs uppercase tracking-widest text-neutral-400 mb-2">
-            {isAr ? 'دراسات الحالة الإقليمية' : 'REGIONAL CASE STUDIES'}
+      <section id="case-studies" className="mb-20 sm:mb-28 pt-10 border-t border-white/10 scroll-mt-28 lg:scroll-mt-36">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase bg-white/10 text-white border border-white/20 mb-3">
+              <Sparkles size={12} className="text-[#FF5C00]" />
+              <span>{isAr ? 'دراسات الحالة الإقليمية' : 'REGIONAL CASE STUDIES'}</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white">
+              {isAr ? 'كيف حققت كبرى المنشآت نتائج استثنائية مع PontLook' : 'Real Workforce Outcomes Across Saudi Arabia & UAE'}
+            </h2>
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white">
-            {isAr ? 'كيف حققت كبرى المنشآت نتائج استثنائية مع PontLook' : 'Real Workforce Outcomes Across Saudi Arabia & UAE'}
-          </h2>
+          <Link
+            href={`/${lang}/find-training`}
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-300 hover:text-white transition-colors shrink-0"
+          >
+            <span>{isAr ? 'ابدأ تشخيص احتياجك' : 'Start workforce assessment'}</span>
+            <ArrowRight size={14} className="rtl:-scale-x-100" />
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Case 1 */}
-          <div className="p-8 rounded-3xl bg-[#0F1014] border border-white/15 flex flex-col justify-between space-y-6">
+          <div className="p-7 sm:p-8 rounded-3xl bg-gradient-to-b from-[#14151B] to-[#0D0E13] border border-white/20 hover:border-white/35 transition-all duration-300 shadow-xl hover:shadow-2xl flex flex-col justify-between space-y-6 group">
             <div>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-white/10 text-white">
+              <div className="flex items-center justify-between gap-3 mb-5">
+                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-white/10 text-white border border-white/15">
                   {isAr ? 'قطاع البنوك والمالية · الرياض' : 'Financial Services · Riyadh'}
                 </span>
-                <span className="text-xs font-mono text-[#FF5C00] font-bold">
+                <span className="text-xs font-mono text-[#FF5C00] font-bold px-2.5 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25">
                   {isAr ? '٨٥٠ موظف مدرب' : '850+ Participants'}
                 </span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-heading font-bold text-white leading-snug mb-3">
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-white group-hover:text-white leading-snug mb-3">
                 {isAr
                   ? 'تدريب ٨٥٠ موظفاً بنكياً على التحول الرقمي بمعدل رضا ٩٦٪'
                   : 'Upskilling 850 Bank Officers on Digital Product Management with 96% Satisfaction'}
@@ -545,23 +555,26 @@ export default async function ResourcesPage({
               </p>
             </div>
             <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-neutral-400">
-              <span>{isAr ? 'النتيجة: ٩٢٪ وصول للاجتماعات' : 'Outcome: 92% Meeting Completion'}</span>
-              <span className="text-white font-semibold">{isAr ? 'صفر رسوم وساطة' : '$0 Retainer Cost'}</span>
+              <span className="flex items-center gap-1.5 text-neutral-300">
+                <CheckCircle2 size={13} className="text-[#FF5C00]" />
+                {isAr ? 'النتيجة: ٩٢٪ وصول للاجتماعات' : 'Outcome: 92% Meeting Completion'}
+              </span>
+              <span className="text-white font-semibold px-2.5 py-0.5 rounded-md bg-white/10 border border-white/15">{isAr ? 'صفر رسوم وساطة' : '$0 Retainer Cost'}</span>
             </div>
           </div>
 
           {/* Case 2 */}
-          <div className="p-8 rounded-3xl bg-[#0F1014] border border-white/15 flex flex-col justify-between space-y-6">
+          <div className="p-7 sm:p-8 rounded-3xl bg-gradient-to-b from-[#14151B] to-[#0D0E13] border border-white/20 hover:border-white/35 transition-all duration-300 shadow-xl hover:shadow-2xl flex flex-col justify-between space-y-6 group">
             <div>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-white/10 text-white">
+              <div className="flex items-center justify-between gap-3 mb-5">
+                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-white/10 text-white border border-white/15">
                   {isAr ? 'اللوجستيات وسلاسل الإمداد · دبي' : 'Logistics Conglomerate · Dubai'}
                 </span>
-                <span className="text-xs font-mono text-[#FF5C00] font-bold">
+                <span className="text-xs font-mono text-[#FF5C00] font-bold px-2.5 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25">
                   {isAr ? '٣٢٠ مهندساً' : '320 Engineers'}
                 </span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-heading font-bold text-white leading-snug mb-3">
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-white group-hover:text-white leading-snug mb-3">
                 {isAr
                   ? 'برنامج تدريب هندسي معتمد لبرنامج نافس في زمن قياسي'
                   : 'Rapid Delivery of a Nafis-Compliant Technical Engineering Cohort'}
@@ -573,8 +586,11 @@ export default async function ResourcesPage({
               </p>
             </div>
             <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-neutral-400">
-              <span>{isAr ? 'النتيجة: اعتماد كامل للميزانية' : 'Outcome: Confirmed Budget Delivery'}</span>
-              <span className="text-white font-semibold">{isAr ? 'فحص كامل للاعتمادات' : '100% Verified'}</span>
+              <span className="flex items-center gap-1.5 text-neutral-300">
+                <CheckCircle2 size={13} className="text-[#FF5C00]" />
+                {isAr ? 'النتيجة: اعتماد كامل للميزانية' : 'Outcome: Confirmed Budget Delivery'}
+              </span>
+              <span className="text-white font-semibold px-2.5 py-0.5 rounded-md bg-white/10 border border-white/15">{isAr ? 'فحص كامل للاعتمادات' : '100% Verified'}</span>
             </div>
           </div>
         </div>

@@ -202,8 +202,14 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
       <ScrollProgress />
       <header
         ref={headerRef}
-        className={`fixed inset-x-0 mx-auto z-50 transition-all duration-300 top-2 xs:top-3 w-[94%] sm:w-[92%] max-w-5xl rounded-full py-2 sm:py-2.5 px-3.5 xs:px-4 sm:px-6 ${
-          isLightSection ? 'liquid-glass-capsule-light' : 'liquid-glass-capsule-dark'
+        className={`fixed inset-x-0 mx-auto z-50 liquid-glass-morph-header transition-all duration-300 ${
+          scrolled
+            ? `top-2 xs:top-3 w-[94%] sm:w-[92%] max-w-5xl rounded-full py-2 sm:py-2.5 px-3.5 xs:px-4 sm:px-6 ${
+                isLightSection ? 'liquid-glass-capsule-light' : 'liquid-glass-capsule-dark'
+              }`
+            : isLightSection
+            ? 'top-0 w-full max-w-full rounded-none px-3.5 xs:px-4 sm:px-6 lg:px-8 xl:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-light'
+            : 'top-0 w-full max-w-full rounded-none px-3.5 xs:px-4 sm:px-6 lg:px-8 xl:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-dark'
         }`}
       >
         <nav
@@ -271,8 +277,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       ? 'text-neutral-950 font-bold bg-black/[0.05]'
                       : 'text-neutral-700 hover:text-neutral-950 hover:bg-black/[0.04]'
                     : isSolutionsActive || activeDropdown === 'solutions'
-                    ? 'text-white font-semibold bg-white/[0.08]'
-                    : 'text-neutral-400 hover:text-white hover:bg-white/[0.04]'
+                    ? 'text-white font-semibold bg-white/[0.12] border border-white/20'
+                    : 'text-neutral-200 hover:text-white hover:bg-white/[0.06]'
                 }`}
                 aria-expanded={activeDropdown === 'solutions'}
               >
@@ -463,8 +469,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       ? 'text-neutral-950 font-bold bg-black/[0.05]'
                       : 'text-neutral-700 hover:text-neutral-950 hover:bg-black/[0.04]'
                     : isAboutActive || activeDropdown === 'about'
-                    ? 'text-white font-semibold bg-white/[0.08]'
-                    : 'text-neutral-400 hover:text-white hover:bg-white/[0.04]'
+                    ? 'text-white font-semibold bg-white/[0.12] border border-white/20'
+                    : 'text-neutral-200 hover:text-white hover:bg-white/[0.06]'
                 }`}
                 aria-expanded={activeDropdown === 'about'}
               >
@@ -606,10 +612,10 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                       ? 'text-neutral-950 font-bold bg-black/[0.05]'
                       : 'text-neutral-700 hover:text-neutral-950 hover:bg-black/[0.04]'
                     : activeDropdown === 'resources'
-                    ? 'border border-white/50 text-white font-semibold bg-white/[0.08]'
+                    ? 'border border-white/50 text-white font-semibold bg-white/[0.14]'
                     : isResourcesActive
-                    ? 'text-white font-semibold bg-white/[0.08]'
-                    : 'text-neutral-400 hover:text-white hover:bg-white/[0.04]'
+                    ? 'text-white font-semibold bg-white/[0.12] border border-white/20'
+                    : 'text-neutral-200 hover:text-white hover:bg-white/[0.06]'
                 }`}
                 aria-expanded={activeDropdown === 'resources'}
               >
@@ -811,11 +817,11 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 className={`inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 shrink-0 whitespace-nowrap ${
                   isLightSection
                     ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
-                    : 'border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30'
+                    : 'border border-white/20 bg-white/[0.08] text-neutral-200 hover:text-white hover:border-white/40 shadow-xs'
                 }`}
                 aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
               >
-                <Globe size={13} className={`shrink-0 ${isLightSection ? 'text-neutral-700' : 'text-neutral-400'}`} />
+                <Globe size={13} className={`shrink-0 ${isLightSection ? 'text-neutral-700' : 'text-neutral-300'}`} />
                 <span
                   className={`whitespace-nowrap shrink-0 leading-none ${
                     lang === 'en' ? 'font-arabic [letter-spacing:0!important]' : ''
@@ -871,7 +877,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 className={`tap-target flex h-10 w-10 min-h-[44px] min-w-[44px] items-center justify-center rounded-full transition-all active:scale-90 touch-manipulation ${
                   isLightSection
                     ? 'text-neutral-800 bg-white/80 border border-neutral-300/80 hover:bg-white hover:text-black shadow-xs'
-                    : 'text-neutral-300 bg-[#16171B] border border-[#26282D] hover:bg-white/10 hover:text-white'
+                    : 'text-white bg-white/[0.08] border border-white/20 hover:bg-white/[0.15] hover:text-white shadow-xs'
                 }`}
                 onClick={() => setOpen(true)}
                 aria-expanded={open}
