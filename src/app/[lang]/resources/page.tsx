@@ -139,7 +139,10 @@ export default async function ResourcesPage({
   ];
 
   return (
-    <div className="pt-28 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto font-sans">
+    <div className="relative pt-28 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* Background ambient lighting */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-b from-white/[0.07] via-white/[0.02] to-transparent blur-3xl pointer-events-none -z-10" />
+
       {/* ======================================================== */}
       {/* 1. HERO HEADER                                           */}
       {/* ======================================================== */}

@@ -343,14 +343,14 @@
 }
 
 .liquid-glass-capsule-dark {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
-  background-color: rgba(10, 11, 15, 0.96) !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.03) 100%) !important;
+  background-color: rgba(16, 17, 24, 0.96) !important;
   backdrop-filter: blur(28px) saturate(180%) contrast(105%) !important;
   -webkit-backdrop-filter: blur(28px) saturate(180%) contrast(105%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 18px 42px -8px rgba(0, 0, 0, 0.85),
-              0 6px 16px -3px rgba(0, 0, 0, 0.5),
-              inset 0 1px 1px 0 rgba(255, 255, 255, 0.18) !important;
+  border: 1px solid rgba(255, 255, 255, 0.20) !important;
+  box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.92),
+              0 6px 18px -3px rgba(0, 0, 0, 0.6),
+              inset 0 1px 1px 0 rgba(255, 255, 255, 0.25) !important;
 }
 
 .liquid-glass-capsule-light {

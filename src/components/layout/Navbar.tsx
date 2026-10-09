@@ -202,14 +202,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
       <ScrollProgress />
       <header
         ref={headerRef}
-        className={`fixed inset-x-0 mx-auto z-50 liquid-glass-morph-header ${
-          scrolled
-            ? `top-2 xs:top-3 w-[92%] sm:w-[90%] max-w-5xl rounded-full py-2 sm:py-2.5 px-3.5 xs:px-4 sm:px-6 ${
-                isLightSection ? 'liquid-glass-capsule-light' : 'liquid-glass-capsule-dark'
-              }`
-            : isLightSection
-            ? 'top-0 w-full max-w-full rounded-none px-3.5 xs:px-4 sm:px-6 lg:px-8 xl:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-light'
-            : 'top-0 w-full max-w-full rounded-none px-3.5 xs:px-4 sm:px-6 lg:px-8 xl:px-12 pb-3.5 sm:py-4 pt-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.875rem))] liquid-glass-top-dark'
+        className={`fixed inset-x-0 mx-auto z-50 transition-all duration-300 top-2 xs:top-3 w-[94%] sm:w-[92%] max-w-5xl rounded-full py-2 sm:py-2.5 px-3.5 xs:px-4 sm:px-6 ${
+          isLightSection ? 'liquid-glass-capsule-light' : 'liquid-glass-capsule-dark'
         }`}
       >
         <nav
@@ -244,26 +238,18 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               />
             </div>
 
-            {/* "pontlook" text: displayed only when normal (not floating / !scrolled) */}
-            <AnimatePresence initial={false}>
-              {!scrolled && (
-                <m.span
-                  initial={{ opacity: 0, width: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, width: 'auto', scale: 1 }}
-                  exit={{ opacity: 0, width: 0, scale: 0.95 }}
-                  transition={{ duration: 0.22, ease: 'easeInOut' }}
-                  className={`font-heading font-extrabold tracking-tight text-xl xs:text-2xl whitespace-nowrap overflow-hidden select-none transition-colors duration-300 ${
-                    isLightSection
-                      ? 'text-neutral-950'
-                      : isForProviders
-                      ? 'text-[#FF5C00]'
-                      : 'text-white'
-                  }`}
-                >
-                  PontLook
-                </m.span>
-              )}
-            </AnimatePresence>
+            {/* "PontLook" brand title */}
+            <span
+              className={`font-heading font-extrabold tracking-tight text-lg xs:text-xl whitespace-nowrap overflow-hidden select-none transition-colors duration-300 ${
+                isLightSection
+                  ? 'text-neutral-950'
+                  : isForProviders
+                  ? 'text-[#FF5C00]'
+                  : 'text-white'
+              }`}
+            >
+              PontLook
+            </span>
           </Link>
 
           {/* Desktop Navigation Links with Solutions & About Dropdowns (No "Home" link) */}
