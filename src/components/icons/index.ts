@@ -27,6 +27,7 @@ export { CreditCard } from './CreditCard';
 export { Download } from './Download';
 export { ExternalLink } from './ExternalLink';
 export { FileText } from './FileText';
+export { Folder } from './Folder';
 export { Globe } from './Globe';
 export { GraduationCap } from './GraduationCap';
 export { Handshake } from './Handshake';

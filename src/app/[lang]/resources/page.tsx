@@ -1,10 +1,28 @@
+import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
-import SectionHeading from '@/components/shared/SectionHeading';
-import { BookOpen, Headphones, Download, Calendar, ArrowRight, ArrowUpRight } from '@/components/icons';
+import { sanityFetch } from '@/sanity/lib/live';
+import { POSTS_QUERY } from '@/sanity/lib/queries';
+import { urlForImage } from '@/sanity/lib/image';
+import {
+  BookOpen,
+  Headphones,
+  Download,
+  Calendar,
+  ArrowRight,
+  ArrowUpRight,
+  Sparkles,
+  FileText,
+  Clock,
+  User,
+  CheckCircle2,
+  Folder,
+  RefreshCw,
+} from '@/components/icons';
 
 export async function generateMetadata({
   params,
@@ -16,11 +34,11 @@ export async function generateMetadata({
   const isAr = lang === 'ar';
 
   const title = isAr
-    ? 'الموارد والأبحاث | منصة PontLook للتدريب المؤسسي'
-    : 'Resources & Insights | PontLook B2B Matchmaking';
+    ? 'مركز الموارد والأبحاث | منصة PontLook للتدريب المؤسسي'
+    : 'Resource Hub for HR & Corporate L&D Leaders | PontLook';
   const description = isAr
     ? 'استكشف أحدث المقالات، وحلقات البودكاست، والتقارير القابلة للتحميل، والفعاليات التنفيذية المتخصصة في تدريب وتطوير الكفاءات في الخليج.'
-    : 'Explore in-depth corporate training guides, executive podcasts, downloadable toolkits, and upcoming GCC workforce development events.';
+    : 'Explore GoodHabitz-inspired resource library: in-depth corporate training guides, executive podcasts, downloadable toolkits, and upcoming GCC workforce events.';
 
   return {
     title: {
@@ -59,120 +77,555 @@ export default async function ResourcesPage({
   const { lang } = await params;
   const isAr = lang === 'ar';
 
-  const sections = [
+  // Fetch real posts from Sanity if available
+  let sanityPosts: any[] = [];
+  try {
+    const { data } = await sanityFetch({ query: POSTS_QUERY });
+    if (data && Array.isArray(data)) {
+      sanityPosts = data;
+    }
+  } catch (err) {
+    // Graceful fallback if studio is offline or empty
+    sanityPosts = [];
+  }
+
+  // Curated fallback articles for rich presentation
+  const fallbackArticles = [
     {
-      id: 'blog',
-      title: isAr ? 'المدونة ومقالات الخبراء' : 'Blog & In-Depth Guides',
-      desc: isAr
-        ? 'تحليلات واقعية حول تحديات سوق العمل الخليجي، مؤشرات السعودة والإمرتة، وأطر قياس العائد التدريبي.'
-        : 'Actionable workforce benchmarks, Saudization/Emiratization ROI frameworks, and corporate L&D strategy guides.',
-      href: `/${lang}/resources/blog`,
-      icon: BookOpen,
-      badge: isAr ? 'محدث أسبوعياً' : 'Weekly Insights',
-      cta: isAr ? 'تصفح المقالات' : 'Read Articles',
+      title: isAr
+        ? 'بناء المهارات القيادية في عصر الذكاء الاصطناعي: ٥ كفاءات غير قابلة للتفاوض'
+        : 'Human Skills in the Age of AI: 5 Non-Negotiable Leadership Capabilities',
+      category: isAr ? 'استراتيجيات التدريب' : 'L&D STRATEGIES',
+      readTime: isAr ? '٦ دقائق قراءة' : '6 min read',
+      date: isAr ? '٢٥ سبتمبر ٢٠٢٦' : 'Sep 25, 2026',
+      excerpt: isAr
+        ? 'كيف توازن المنشآت الرائدة بين الأتمتة التقنية وتطوير التفكير النقدي، والتواصل التنفيذي، والذكاء العاطفي لفرق العمل.'
+        : 'How leading enterprises balance technical automation with critical thinking, executive communication, and emotional resilience.',
+      slug: 'human-skills-in-the-age-of-ai',
     },
     {
-      id: 'podcasts',
-      title: isAr ? 'بودكاست التدريب المؤسسي' : 'Executive Podcasts',
-      desc: isAr
-        ? 'حوارات معمقة مع قادة الموارد البشرية ومديري التدريب حول تطوير المهارات وبناء فرق عالية الأداء.'
-        : 'Conversations with Chief Learning Officers and VP HR executives across Saudi Arabia and the UAE.',
-      href: `/${lang}/resources/podcasts`,
-      icon: Headphones,
-      badge: isAr ? 'حلقات صوتية' : 'Audio Series',
-      cta: isAr ? 'استمع للحلقات' : 'Listen Now',
+      title: isAr
+        ? 'مواءمة التدريب مع مستهدفات التوطين (نطاقات ونافس): دليل الموارد البشرية'
+        : 'Saudization & Emiratization ROI: Aligning L&D With National Quotas',
+      category: isAr ? 'حوكمة وتوطين' : 'NATIONAL TALENT',
+      readTime: isAr ? '٨ دقائق قراءة' : '8 min read',
+      date: isAr ? '١٨ سبتمبر ٢٠٢٦' : 'Sep 18, 2026',
+      excerpt: isAr
+        ? 'تحويل متطلبات التوطين من مجرد أرقام امتثال إلى برامج تطوير وظيفي مستدامة تعزز الإنتاجية والولاء المؤسسي.'
+        : 'Transforming compliance quotas into high-retention talent pipelines through accredited vocational and corporate academies.',
+      slug: 'saudization-emiratization-roi-framework',
     },
     {
-      id: 'downloads',
-      title: isAr ? 'النماذج والتقارير القابلة للتحميل' : 'Downloads & Toolkits',
-      desc: isAr
-        ? 'أدلة إرشادية جاهزة، مصفوفات تقييم الاحتياج التدريبي (TNA)، وقوالب حساب الميزانيات مجاناً.'
-        : 'Ready-to-use Training Needs Analysis (TNA) spreadsheets, RFP evaluation matrices, and budgeting templates.',
-      href: `/${lang}/resources/downloads`,
-      icon: Download,
-      badge: isAr ? 'قوالب مجانية' : 'Free Templates',
-      cta: isAr ? 'استكشف التحميلات' : 'Get Toolkits',
-    },
-    {
-      id: 'events',
-      title: isAr ? 'الفعاليات وورش العمل' : 'Events & Roundtables',
-      desc: isAr
-        ? 'ندوات رقمية، موائد مستديرة تنفيذية، وورش عمل متخصصة تجمع صناع القرار بنخبة مدربي المنطقة.'
-        : 'Closed-door executive roundtables, interactive webinars, and curated GCC corporate training matchmaking summits.',
-      href: `/${lang}/resources/events`,
-      icon: Calendar,
-      badge: isAr ? 'مباشر وتفاعلي' : 'Live & Virtual',
-      cta: isAr ? 'استعرض الفعاليات' : 'View Schedule',
+      title: isAr
+        ? 'كيف تحسب العائد الفعلي على الاستثمار التدريبي (ROI) لفرق المبيعات والعمليات؟'
+        : 'How to Calculate True Corporate Training ROI for Enterprise Teams',
+      category: isAr ? 'قياس الأثر' : 'IMPACT & METRICS',
+      readTime: isAr ? '٥ دقائق قراءة' : '5 min read',
+      date: isAr ? '١٢ سبتمبر ٢٠٢٦' : 'Sep 12, 2026',
+      excerpt: isAr
+        ? 'صيغ عملية ومؤشرات أداء واضحة لعزل أثر البرامج التدريبية وقياس مساهمتها المباشرة في الإيرادات وتقليل الأخطاء.'
+        : 'Actionable equations and KPI matrices to isolate training effects and quantify operational improvements for executive boards.',
+      slug: 'calculate-true-corporate-training-roi',
     },
   ];
 
+  const categoryPills = [
+    { label: isAr ? 'كافة الموارد' : 'All Resources', href: `/${lang}/resources`, active: true },
+    { label: isAr ? 'المدونة' : 'Blog', href: `/${lang}/resources/blog` },
+    { label: isAr ? 'الفعاليات' : 'Events', href: `/${lang}/resources/events` },
+    { label: isAr ? 'التحميلات' : 'Downloads', href: `/${lang}/resources/downloads` },
+    { label: isAr ? 'دراسات الحالة' : 'Case Studies', href: '#case-studies' },
+    { label: isAr ? 'البودكاست' : 'Podcasts', href: `/${lang}/resources/podcasts` },
+  ];
+
   return (
-    <div className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Hero Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
+    <div className="pt-28 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto font-sans">
+      {/* ======================================================== */}
+      {/* 1. HERO HEADER                                           */}
+      {/* ======================================================== */}
+      <div className="max-w-4xl mb-10 sm:mb-12">
         <Reveal>
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-xs font-mono uppercase tracking-wider text-neutral-300 mb-6">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-xs font-mono uppercase tracking-wider text-neutral-300 mb-5">
             <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00]" />
-            {isAr ? 'مركز الموارد والمعرفة' : 'PontLook Resource Center'}
+            {isAr ? 'مركز المعرفة والتدريب المؤسسي' : 'PONTLOOK RESOURCE HUB'}
           </div>
         </Reveal>
 
-        <Reveal delay={0.1}>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-white tracking-tight leading-tight mb-5">
-            {isAr ? 'كل ما تحتاجه لبناء كفاءات مؤسسية رائدة' : 'Everything You Need to Scale Corporate Learning in the GCC'}
+        <Reveal delay={0.08}>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold text-white tracking-tight leading-[1.08] mb-5">
+            {isAr
+              ? 'المرجع المعرفي لقادة الموارد البشرية وتطوير الكفاءات في الخليج'
+              : 'The Resource Hub to Power Your Corporate L&D Strategy'}
           </h1>
         </Reveal>
 
-        <Reveal delay={0.2}>
-          <p className="text-neutral-400 text-sm sm:text-base md:text-lg leading-relaxed">
+        <Reveal delay={0.16}>
+          <p className="text-neutral-300 text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl font-normal">
             {isAr
-              ? 'أدلة بحثية مجانية، حوارات بودكاست تنفيذية، نماذج عمل قابلة للتطبيق، وفعاليات حصرية للربط بين منشآت الخليج وخبرات التدريب.'
-              : 'Free benchmarks, executive podcasts, proven diagnostic toolkits, and curated matchmaking events designed for enterprise leaders.'}
+              ? 'أدلة بحثية مجانية، دراسات حالة معمقة، قوالب تشخيصية جاهزة، وفعاليات حصرية صممت خصيصاً لمساعدة منشآت السعودية والإمارات على بناء فرق عمل استثنائية.'
+              : 'Actionable benchmarks, executive podcasts, free diagnostic toolkits, and curated summits designed for HR and talent executives across the GCC.'}
           </p>
         </Reveal>
       </div>
 
-      {/* Grid of 4 Hub Sections */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-        {sections.map((section, idx) => {
-          const IconComponent = section.icon;
-          return (
-            <Reveal key={section.id} delay={0.1 * (idx + 1)}>
-              <Link
-                href={section.href}
-                className="group relative flex flex-col justify-between p-8 rounded-3xl bg-[#121316]/80 hover:bg-[#16171B] border border-white/[0.08] hover:border-white/20 transition-all duration-300 shadow-xl overflow-hidden min-h-[300px]"
-              >
-                {/* Glow on hover */}
-                <div className="absolute -top-24 -end-24 w-48 h-48 bg-[#FF5C00]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#FF5C00]/20 transition-all duration-500" />
+      {/* ======================================================== */}
+      {/* 2. CATEGORY PILL FILTER NAVIGATION TABS                  */}
+      {/* ======================================================== */}
+      <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-4 mb-12 sm:mb-16 border-b border-white/10 no-scrollbar">
+        {categoryPills.map((pill, idx) => (
+          <Link
+            key={idx}
+            href={pill.href}
+            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
+              pill.active
+                ? 'bg-white text-black shadow-md'
+                : 'bg-white/[0.05] hover:bg-white/[0.1] text-neutral-300 hover:text-white border border-white/10'
+            }`}
+          >
+            {pill.label}
+          </Link>
+        ))}
+      </div>
 
+      {/* ======================================================== */}
+      {/* 3. FEATURED SPOTLIGHT GRID (GoodHabitz Inspired Layout)   */}
+      {/* ======================================================== */}
+      <section className="mb-20 sm:mb-28">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          {/* Main Large Spotlight Card (8 Cols) */}
+          <div className="lg:col-span-7 xl:col-span-8">
+            <Link
+              href={`/${lang}/resources/blog`}
+              className="group relative flex flex-col justify-between h-full rounded-3xl bg-[#0F1014] border border-white/15 hover:border-white/30 transition-all duration-300 overflow-hidden shadow-2xl"
+            >
+              <div className="relative aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/9] w-full bg-neutral-900 overflow-hidden">
+                <Image
+                  src="/executive_training_room.jpg"
+                  alt="GCC Corporate Training Benchmark"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0F1014] via-[#0F1014]/40 to-transparent" />
+                <div className="absolute top-4 start-4 sm:top-6 sm:start-6 flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-white/20 text-white backdrop-blur-md border border-white/30">
+                    {isAr ? 'تقرير مميز · ٢٠٢٦' : 'FEATURED GUIDE · 2026'}
+                  </span>
+                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#FF5C00]/90 text-white backdrop-blur-md">
+                    {isAr ? 'استراتيجيات التدريب' : 'L&D STRATEGIES'}
+                  </span>
+                </div>
+              </div>
+
+              <div className="p-6 sm:p-8 lg:p-10 flex-1 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="h-12 w-12 rounded-2xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white group-hover:bg-[#FF5C00] group-hover:border-[#FF5C00] group-hover:text-black transition-all duration-300">
-                      <IconComponent size={22} />
-                    </div>
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 px-3 py-1 rounded-full border border-white/[0.06] bg-white/[0.02]">
-                      {section.badge}
-                    </span>
+                  <div className="flex items-center gap-3 text-xs font-mono text-neutral-400 mb-3">
+                    <span>{isAr ? '١٢ دقيقة قراءة' : '12 min read'}</span>
+                    <span>•</span>
+                    <span>{isAr ? 'أكتوبر ٢٠٢٦' : 'October 2026'}</span>
                   </div>
-
-                  <h2 className="text-xl sm:text-2xl font-heading font-bold text-white group-hover:text-white transition-colors mb-3">
-                    {section.title}
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-white group-hover:text-white transition-colors leading-tight mb-4">
+                    {isAr
+                      ? 'دليل معايير تدريب الشركات في الخليج ٢٠٢٦: سد فجوات المهارات ومواءمة التوطين'
+                      : 'The 2026 GCC Corporate Training Benchmark: Closing Workforce Skill Gaps'}
                   </h2>
-
-                  <p className="text-sm text-neutral-400 leading-relaxed">
-                    {section.desc}
+                  <p className="text-neutral-300 text-sm sm:text-base leading-relaxed font-normal">
+                    {isAr
+                      ? 'دراسة واقعية وشاملة تستند إلى مقابلات مع أكثر من ٤٥٠ قائداً تنفيذياً في الرياض ودبي حول قياس الاحتياج التدريبي الحقيقي، التعامل مع تراخيص TVTC، وبناء كوادر وطنية عالية الأداء.'
+                      : 'A comprehensive study of 450+ enterprise HR leaders in Riyadh and Dubai navigating diagnostic TNA methods, TVTC accreditations, and high-impact corporate cohorts.'}
                   </p>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-semibold text-neutral-300 group-hover:text-[#FF5C00] transition-colors">
-                  <span>{section.cta}</span>
-                  <ArrowRight size={16} className="transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 transition-transform" />
+                <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between text-sm font-semibold text-white group-hover:text-[#FF5C00] transition-colors">
+                  <span>{isAr ? 'قراءة الدليل بالكامل' : 'Read Full Guide'}</span>
+                  <ArrowRight size={18} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                 </div>
-              </Link>
-            </Reveal>
-          );
-        })}
-      </div>
+              </div>
+            </Link>
+          </div>
+
+          {/* Right 2-Card Stack (4 Cols) */}
+          <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-6 sm:gap-8 justify-between">
+            {/* Card A: Upcoming Event (GoodHabitz "Human Skills Fest" Inspired) */}
+            <Link
+              href={`/${lang}/resources/events`}
+              className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-[#171124] border border-white/15 hover:border-white/30 transition-all duration-300 shadow-xl flex-1"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-white/15 text-white border border-white/20">
+                    {isAr ? 'حدث افتراضي مباشر' : '3-DAY VIRTUAL EVENT'}
+                  </span>
+                  <span className="text-xs font-mono text-neutral-400">
+                    {isAr ? '٧ – ٩ أكتوبر' : '7 – 9 Oct'}
+                  </span>
+                </div>
+
+                <h3 className="text-xl sm:text-2xl font-heading font-bold text-white group-hover:text-white transition-colors leading-snug mb-2">
+                  {isAr ? 'قمة مهارات المستقبل الخليجية \'٢٦' : 'Human Skills Fest \'26'}
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
+                  {isAr
+                    ? 'جلسات تفاعلية مع قادة الموارد البشرية والتدريب في كبرى المنشآت لمناقشة القيادة، المهارات البشرية، واستدامة التدريب.'
+                    : 'Ten expert sessions, three days, one unmissable online summit. Join HR and L&D professionals to future-proof workforce capability.'}
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-white group-hover:text-white">
+                <span>{isAr ? 'حجز مقعد مجاني' : 'Secure your spot'}</span>
+                <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Card B: Downloadable Toolkit */}
+            <Link
+              href={`/${lang}/resources/downloads`}
+              className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-[#0F1014] border border-white/15 hover:border-white/30 transition-all duration-300 shadow-xl flex-1"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-[#FF5C00]/20 text-[#FF5C00] border border-[#FF5C00]/30 font-bold">
+                    {isAr ? 'قالب إكسل مجاني' : 'FREE TOOLKIT'}
+                  </span>
+                  <span className="text-xs font-mono text-neutral-400">
+                    {isAr ? 'جاهز للتطبيق' : 'Instant Download'}
+                  </span>
+                </div>
+
+                <h3 className="text-xl sm:text-2xl font-heading font-bold text-white group-hover:text-white transition-colors leading-snug mb-2">
+                  {isAr ? 'مصفوفة تشخيص الاحتياج التدريبي (TNA)' : 'Complete Enterprise TNA Excel Framework'}
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
+                  {isAr
+                    ? 'جداول ومعادلات جاهزة لحساب فجوات المهارات، تصنيف الميزانيات، ومقارنة عروض المعاهد التدريبية.'
+                    : 'Pre-built formulas, departmental skill gap matrices, and RFP vendor comparison scorecards.'}
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-white group-hover:text-[#FF5C00] transition-colors">
+                <span>{isAr ? 'تحميل القالب مجاناً' : 'Download Template'}</span>
+                <Download size={15} />
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 4. THE CORPORATE L&D BLOG SECTION                        */}
+      {/* ======================================================== */}
+      <section className="mb-20 sm:mb-28 pt-10 border-t border-white/10">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
+          <div>
+            <div className="font-mono text-xs uppercase tracking-widest text-neutral-400 mb-2">
+              {isAr ? 'المدونة ومقالات الخبراء' : 'THE CORPORATE L&D BLOG'}
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white">
+              {isAr ? 'أحدث المقالات والرؤى الميدانية' : 'Latest Articles & Practical Guides'}
+            </h2>
+          </div>
+          <Link
+            href={`/${lang}/resources/blog`}
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-300 hover:text-white transition-colors"
+          >
+            <span>{isAr ? 'تصفح كافة المقالات' : 'View all blog posts'}</span>
+            <ArrowRight size={14} className="rtl:-scale-x-100" />
+          </Link>
+        </div>
+
+        {/* Articles Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          {(sanityPosts && sanityPosts.length > 0 ? sanityPosts.slice(0, 3) : fallbackArticles).map(
+            (article: any, idx: number) => {
+              const isSanity = Boolean(article._id);
+              const title = article.title;
+              const excerpt = article.excerpt || article.title;
+              const date = isSanity && article.publishedAt
+                ? new Date(article.publishedAt).toLocaleDateString(isAr ? 'ar-SA' : 'en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })
+                : article.date || 'Oct 2026';
+              const category = isSanity && article.categories?.[0]
+                ? article.categories[0].title
+                : article.category || (isAr ? 'تدريب مؤسسي' : 'L&D STRATEGIES');
+              const href = isSanity
+                ? `/${lang}/resources/blog/${article.slug?.current || article.slug}`
+                : `/${lang}/resources/blog`;
+              const imageUrl = isSanity && article.mainImage ? urlForImage(article.mainImage).width(700).height(420).url() : null;
+
+              return (
+                <Link
+                  key={idx}
+                  href={href}
+                  className="group flex flex-col justify-between rounded-3xl bg-[#0F1014] border border-white/10 hover:border-white/25 transition-all duration-300 overflow-hidden shadow-lg"
+                >
+                  {imageUrl ? (
+                    <div className="relative aspect-video w-full bg-neutral-900 overflow-hidden">
+                      <Image
+                        src={imageUrl}
+                        alt={title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-3 w-full bg-gradient-to-r from-white/20 via-[#FF5C00]/40 to-white/10" />
+                  )}
+
+                  <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-3">
+                        <span className="px-2 py-0.5 rounded-md bg-white/[0.06] text-white font-medium text-[10px] tracking-wide uppercase">
+                          {category}
+                        </span>
+                        <span>{date}</span>
+                      </div>
+                      <h3 className="text-lg sm:text-xl font-heading font-bold text-white group-hover:text-white transition-colors leading-snug mb-3">
+                        {title}
+                      </h3>
+                      <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed line-clamp-3 font-normal">
+                        {excerpt}
+                      </p>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-neutral-300 group-hover:text-white">
+                      <span>{isAr ? 'قراءة المقال' : 'Read Article'}</span>
+                      <ArrowRight size={14} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </Link>
+              );
+            }
+          )}
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 5. EXECUTIVE EVENTS & WEBINARS SECTION                   */}
+      {/* ======================================================== */}
+      <section className="mb-20 sm:mb-28 pt-10 border-t border-white/10">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
+          <div>
+            <div className="font-mono text-xs uppercase tracking-widest text-neutral-400 mb-2">
+              {isAr ? 'الفعاليات وورش العمل' : 'EVENTS & ROUNDTABLES'}
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white">
+              {isAr ? 'الفعاليات القادمة والجلسات التنفيذية' : 'Upcoming Summits & Masterclasses'}
+            </h2>
+          </div>
+          <Link
+            href={`/${lang}/resources/events`}
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-300 hover:text-white transition-colors"
+          >
+            <span>{isAr ? 'جدول الفعاليات بالكامل' : 'View all events'}</span>
+            <ArrowRight size={14} className="rtl:-scale-x-100" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          {/* Event 1 */}
+          <div className="p-6 sm:p-7 rounded-3xl bg-[#0F1014] border border-white/10 flex flex-col justify-between space-y-6">
+            <div>
+              <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-4">
+                <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-white font-bold text-[10px] uppercase">
+                  {isAr ? 'افتراضي' : 'Virtual'}
+                </span>
+                <span className="text-[#FF5C00] font-bold">7 – 9 Oct 2026</span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-heading font-bold text-white leading-snug mb-2">
+                {isAr ? 'قمة مهارات المستقبل الخليجية ٢٠٢٦' : 'GCC Human Skills Fest 2026'}
+              </h3>
+              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
+                {isAr
+                  ? '٣ أيام متواصلة تجمع رؤساء الموارد البشرية ومسؤولي التطوير في الرياض ودبي لمناقشة الاتجاهات الحديثة.'
+                  : '3-day executive summit addressing leadership resilience, emotional intelligence, and team capability.'}
+              </p>
+            </div>
+            <Link
+              href={`/${lang}/resources/events`}
+              className="w-full py-2.5 px-4 rounded-xl border border-white/20 bg-white/5 hover:bg-white text-neutral-200 hover:text-black font-semibold text-xs text-center transition-all"
+            >
+              {isAr ? 'تسجيل مقعد مجاني' : 'Register for Free'}
+            </Link>
+          </div>
+
+          {/* Event 2 */}
+          <div className="p-6 sm:p-7 rounded-3xl bg-[#0F1014] border border-white/10 flex flex-col justify-between space-y-6">
+            <div>
+              <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-4">
+                <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-white font-bold text-[10px] uppercase">
+                  {isAr ? 'الرياض · حضوري' : 'Riyadh · In-Person'}
+                </span>
+                <span className="text-[#FF5C00] font-bold">24 Oct 2026</span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-heading font-bold text-white leading-snug mb-2">
+                {isAr ? 'ورشة معايير TVTC والامتثال المؤسسي' : 'TVTC Accreditation & Enterprise Compliance'}
+              </h3>
+              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
+                {isAr
+                  ? 'جلسة مغلقة لقيادات التدريب حول توثيق البرامج التدريبية لدى المؤسسة العامة للتدريب التقني والمهني.'
+                  : 'Closed-door masterclass for Saudi L&D leaders on structuring TVTC-compliant enterprise training cohorts.'}
+              </p>
+            </div>
+            <Link
+              href={`/${lang}/resources/events`}
+              className="w-full py-2.5 px-4 rounded-xl border border-white/20 bg-white/5 hover:bg-white text-neutral-200 hover:text-black font-semibold text-xs text-center transition-all"
+            >
+              {isAr ? 'طلب دعوة خاصة' : 'Request Invitation'}
+            </Link>
+          </div>
+
+          {/* Event 3 */}
+          <div className="p-6 sm:p-7 rounded-3xl bg-[#0F1014] border border-white/10 flex flex-col justify-between space-y-6">
+            <div>
+              <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-4">
+                <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-white font-bold text-[10px] uppercase">
+                  {isAr ? 'دبي · مائدة مستديرة' : 'Dubai · Roundtable'}
+                </span>
+                <span className="text-[#FF5C00] font-bold">12 Nov 2026</span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-heading font-bold text-white leading-snug mb-2">
+                {isAr ? 'مائدة تسريع مهارات نافس للكوادر الوطنية' : 'Nafis Talent Acceleration Roundtable'}
+              </h3>
+              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
+                {isAr
+                  ? 'حوار تنفيذي مع قيادات القطاع الخاص في الإمارات حول برامج التوجيه والإرشاد المهني للكوادر الإماراتية.'
+                  : 'Executive dialogue on scaling high-retention corporate mentoring and technical upskilling in the UAE.'}
+              </p>
+            </div>
+            <Link
+              href={`/${lang}/resources/events`}
+              className="w-full py-2.5 px-4 rounded-xl border border-white/20 bg-white/5 hover:bg-white text-neutral-200 hover:text-black font-semibold text-xs text-center transition-all"
+            >
+              {isAr ? 'طلب دعوة خاصة' : 'Request Invitation'}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 6. CASE STUDIES SECTION (#case-studies)                  */}
+      {/* ======================================================== */}
+      <section id="case-studies" className="mb-20 sm:mb-28 pt-10 border-t border-white/10">
+        <div className="max-w-3xl mb-10">
+          <div className="font-mono text-xs uppercase tracking-widest text-neutral-400 mb-2">
+            {isAr ? 'دراسات الحالة الإقليمية' : 'REGIONAL CASE STUDIES'}
+          </div>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white">
+            {isAr ? 'كيف حققت كبرى المنشآت نتائج استثنائية مع PontLook' : 'Real Workforce Outcomes Across Saudi Arabia & UAE'}
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Case 1 */}
+          <div className="p-8 rounded-3xl bg-[#0F1014] border border-white/15 flex flex-col justify-between space-y-6">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-white/10 text-white">
+                  {isAr ? 'قطاع البنوك والمالية · الرياض' : 'Financial Services · Riyadh'}
+                </span>
+                <span className="text-xs font-mono text-[#FF5C00] font-bold">
+                  {isAr ? '٨٥٠ موظف مدرب' : '850+ Participants'}
+                </span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-white leading-snug mb-3">
+                {isAr
+                  ? 'تدريب ٨٥٠ موظفاً بنكياً على التحول الرقمي بمعدل رضا ٩٦٪'
+                  : 'Upskilling 850 Bank Officers on Digital Product Management with 96% Satisfaction'}
+              </h3>
+              <p className="text-sm text-neutral-300 leading-relaxed font-normal">
+                {isAr
+                  ? 'قامت PontLook بتشخيص الاحتياج الدقيق وربط المصرف بثلاثة مراكز تدريب معتمدة خلال 48 ساعة فقط، مما وفّر ٤ أسابيع من البحث التقليدي وخفّض تكلفة المشتريات بنسبة ٢٨٪.'
+                  : 'PontLook matched the bank with 3 TVTC-accredited fintech academies within 48 hours, saving 4 weeks of procurement delays and eliminating all agency broker markups.'}
+              </p>
+            </div>
+            <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-neutral-400">
+              <span>{isAr ? 'النتيجة: ٩٢٪ وصول للاجتماعات' : 'Outcome: 92% Meeting Completion'}</span>
+              <span className="text-white font-semibold">{isAr ? 'صفر رسوم وساطة' : '$0 Retainer Cost'}</span>
+            </div>
+          </div>
+
+          {/* Case 2 */}
+          <div className="p-8 rounded-3xl bg-[#0F1014] border border-white/15 flex flex-col justify-between space-y-6">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-white/10 text-white">
+                  {isAr ? 'اللوجستيات وسلاسل الإمداد · دبي' : 'Logistics Conglomerate · Dubai'}
+                </span>
+                <span className="text-xs font-mono text-[#FF5C00] font-bold">
+                  {isAr ? '٣٢٠ مهندساً' : '320 Engineers'}
+                </span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-white leading-snug mb-3">
+                {isAr
+                  ? 'برنامج تدريب هندسي معتمد لبرنامج نافس في زمن قياسي'
+                  : 'Rapid Delivery of a Nafis-Compliant Technical Engineering Cohort'}
+              </h3>
+              <p className="text-sm text-neutral-300 leading-relaxed font-normal">
+                {isAr
+                  ? 'ربط مباشر مع معهد تدريب فني متخصص في دبي لتصميم منهج عملي مخصص لسلاسل الإمداد وتأهيل الكوادر الوطنية خلال مهلة تعاقدية تقل عن أسبوعين.'
+                  : 'Direct bilateral matchmaking delivered a customized syllabus from a KHDA-certified institute, achieving 100% on-time deployment under a strict 14-day SLA.'}
+              </p>
+            </div>
+            <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-neutral-400">
+              <span>{isAr ? 'النتيجة: اعتماد كامل للميزانية' : 'Outcome: Confirmed Budget Delivery'}</span>
+              <span className="text-white font-semibold">{isAr ? 'فحص كامل للاعتمادات' : '100% Verified'}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 7. NEWSLETTER SUBSCRIPTION BLOCK (GoodHabitz Inspired)    */}
+      {/* ======================================================== */}
+      <section className="rounded-3xl border border-white/20 bg-gradient-to-b from-[#14151B] to-[#0A0B0E] p-8 sm:p-12 text-center max-w-4xl mx-auto shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-48 bg-[#FF5C00]/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase bg-white/10 text-white border border-white/20 mb-4">
+            <Sparkles size={13} className="text-[#FF5C00]" />
+            <span>{isAr ? 'النشرة المعرفية الدورية' : 'MONTHLY L&D INTELLIGENCE'}</span>
+          </div>
+
+          <h3 className="text-2xl sm:text-3xl font-heading font-bold text-white mb-3">
+            {isAr
+              ? 'ابقَ في الصدارة في مجال تدريب وتطوير الكفاءات المؤسسية'
+              : 'Stay Ahead in Corporate Learning & Workforce Development'}
+          </h3>
+
+          <p className="text-sm sm:text-base text-neutral-300 leading-relaxed font-normal mb-8">
+            {isAr
+              ? 'انضم إلى أكثر من ٥,٠٠٠ قائد موارد بشرية يستلمون تقاريرنا الدورية، أحدث قوائم المراجعة، ونماذج التقييم مجاناً.'
+              : 'Join 5,000+ GCC HR directors receiving our curated quarterly benchmarks, TVTC compliance guides, and free operational templates.'}
+          </p>
+
+          <form
+            action="#"
+            className="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto"
+          >
+            <input
+              type="email"
+              placeholder={isAr ? 'أدخل بريدك الإلكتروني المؤسسي' : 'Enter your corporate email'}
+              className="w-full px-5 py-3.5 rounded-full bg-black/60 border border-white/20 text-white text-sm placeholder:text-neutral-500 focus:outline-none focus:border-white transition-colors"
+              required
+            />
+            <button
+              type="submit"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-white text-black font-semibold text-xs sm:text-sm hover:bg-neutral-200 transition-all shrink-0 cursor-pointer"
+            >
+              {isAr ? 'اشترك مجاناً' : 'Subscribe Free'}
+            </button>
+          </form>
+
+          <p className="text-[11px] text-neutral-500 mt-4">
+            {isAr
+              ? 'نحترم خصوصيتك بالكامل. يمكنك إلغاء الاشتراك في أي وقت بنقرة واحدة.'
+              : 'Zero spam. Unsubscribe at any time with one click.'}
+          </p>
+        </div>
+      </section>
     </div>
   );
 }
