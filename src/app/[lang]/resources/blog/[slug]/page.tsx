@@ -164,7 +164,7 @@ export default async function BlogPostDetailPage({
     const date = isAr ? localArticle.dateAr || localArticle.dateEn : localArticle.dateEn;
     const excerpt = isAr ? localArticle.excerptAr || localArticle.excerptEn : localArticle.excerptEn;
     const content = isAr ? localArticle.contentAr || localArticle.contentEn : localArticle.contentEn;
-    const imageUrl = localArticle.image || null;
+    const imageUrl = localArticle.image?.trim() || null;
 
     return (
       <div
@@ -230,6 +230,7 @@ export default async function BlogPostDetailPage({
                   alt={title}
                   fill
                   priority
+                  unoptimized
                   className="object-cover"
                 />
               </div>
@@ -372,6 +373,7 @@ export default async function BlogPostDetailPage({
                 alt={post.mainImage?.alt || post.title}
                 fill
                 priority
+                unoptimized
                 className="object-cover"
               />
             </div>

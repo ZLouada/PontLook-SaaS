@@ -140,11 +140,6 @@ export default async function BlogPage({
         {posts && posts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {posts.map((post, idx) => {
-              const imageUrl = post.customImage
-                ? post.customImage
-                : post.mainImage
-                ? urlForImage(post.mainImage).width(800).height(500).url()
-                : null;
               const postDate = post.displayDate
                 ? post.displayDate
                 : post.publishedAt
@@ -158,16 +153,7 @@ export default async function BlogPage({
               return (
                 <Reveal key={post._id} delay={0.08 * (idx + 1)}>
                   <article className="group h-full flex flex-col justify-between rounded-3xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md">
-                    {imageUrl && (
-                      <div className="relative aspect-video w-full overflow-hidden bg-neutral-100">
-                        <Image
-                          src={imageUrl}
-                          alt={post.mainImage?.alt || post.title || 'Blog Post'}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
-                    )}
+                    <div className="h-2 w-full bg-gradient-to-r from-neutral-200 via-neutral-300 to-neutral-200 group-hover:from-neutral-900 group-hover:to-neutral-700 transition-colors" />
 
                     <div className="p-6 flex-1 flex flex-col justify-between">
                       <div>

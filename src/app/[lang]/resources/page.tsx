@@ -380,9 +380,6 @@ export default async function ResourcesPage({
                   const href = isSanity
                     ? `/${lang}/resources/blog/${article.slug?.current || article.slug}`
                     : (article.slug ? `/${lang}/resources/blog/${article.slug}` : `/${lang}/resources/blog`);
-                  const imageUrl = isSanity && article.mainImage
-                    ? urlForImage(article.mainImage).width(700).height(420).url()
-                    : (article.image || null);
 
                   return (
                     <Link
@@ -390,18 +387,7 @@ export default async function ResourcesPage({
                       href={href}
                       className="group flex flex-col justify-between rounded-3xl bg-white border border-neutral-200 hover:border-neutral-300 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md"
                     >
-                      {imageUrl ? (
-                        <div className="relative aspect-video w-full bg-neutral-100 overflow-hidden">
-                          <Image
-                            src={imageUrl}
-                            alt={title}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                        </div>
-                      ) : (
-                        <div className="h-3 w-full bg-gradient-to-r from-neutral-200 via-[#FF5C00]/40 to-neutral-200" />
-                      )}
+                      <div className="h-2 w-full bg-gradient-to-r from-neutral-200 via-neutral-300 to-neutral-200 group-hover:from-neutral-900 group-hover:to-neutral-700 transition-colors" />
 
                       <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
                         <div>

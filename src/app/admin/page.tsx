@@ -44,12 +44,19 @@ function ImageUploadField({
 }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [previewError, setPreviewError] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    setPreviewError(false);
+  }, [value]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setError(null);
+    setUploadSuccess(false);
     setUploading(true);
 
     try {
@@ -65,6 +72,8 @@ function ImageUploadField({
       if (!res.ok) throw new Error(json.error || 'Upload failed');
 
       onChange(json.url);
+      setUploadSuccess(true);
+      setTimeout(() => setUploadSuccess(false), 3000);
     } catch (err: any) {
       setError(err.message || 'Error uploading file');
     } finally {
@@ -80,8 +89,11 @@ function ImageUploadField({
         {value && (
           <button
             type="button"
-            onClick={() => onChange('')}
-            className="text-[10px] text-neutral-500 hover:text-red-400 flex items-center gap-1 transition-colors"
+            onClick={() => {
+              onChange('');
+              setPreviewError(false);
+            }}
+            className="text-[10px] text-neutral-500 hover:text-red-400 flex items-center gap-1 transition-colors cursor-pointer"
           >
             <X size={11} /> Clear
           </button>
@@ -92,7 +104,10 @@ function ImageUploadField({
         <input
           type="text"
           value={value || ''}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => {
+            onChange(e.target.value);
+            setPreviewError(false);
+          }}
           placeholder="/uploads/... or image URL"
           className="flex-1 bg-[#141416] border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-white font-mono"
         />
@@ -100,7 +115,7 @@ function ImageUploadField({
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml,image/avif"
+          accept="image/*,image/png,image/jpeg,image/webp,image/gif,image/svg+xml,image/avif"
           onChange={handleFileChange}
           className="hidden"
         />
@@ -125,22 +140,40 @@ function ImageUploadField({
         </button>
       </div>
 
+      {uploadSuccess && (
+        <p className="text-[10px] text-emerald-400 font-medium">✓ Image uploaded successfully! Remember to save changes.</p>
+      )}
+
       {error && <p className="text-[10px] text-red-400">{error}</p>}
 
       {value && (
         <div className={`relative ${aspect} w-full max-w-xs rounded-xl overflow-hidden border border-white/10 bg-neutral-900 mt-2 group`}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={value} alt="Preview" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-            <a
-              href={value}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-2.5 py-1 rounded-lg bg-black/70 text-white text-[10px] hover:bg-black flex items-center gap-1"
-            >
-              <ExternalLink size={10} /> View full
-            </a>
-          </div>
+          {previewError ? (
+            <div className="w-full h-full flex flex-col items-center justify-center p-3 text-center bg-neutral-950 text-neutral-500 text-[11px]">
+              <p>Image preview unavailable</p>
+              <span className="text-[9px] font-mono text-neutral-600 truncate max-w-full px-2">{value}</span>
+            </div>
+          ) : (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={value}
+                alt="Preview"
+                onError={() => setPreviewError(true)}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                <a
+                  href={value}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-2.5 py-1 rounded-lg bg-black/70 text-white text-[10px] hover:bg-black flex items-center gap-1"
+                >
+                  <ExternalLink size={10} /> View full
+                </a>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
@@ -727,9 +760,10 @@ export default function AdminDashboardPage() {
                   <ImageUploadField
                     label="Spotlight Feature Image"
                     value={data.spotlight.image}
-                    onChange={(url) =>
-                      setData({ ...data, spotlight: { ...data.spotlight, image: url } })
-                    }
+                    onChange={(url) => {
+                      setData({ ...data, spotlight: { ...data.spotlight, image: url } });
+                      setHasUnsavedChanges(true);
+                    }}
                   />
                 </div>
               </div>
@@ -1202,6 +1236,7 @@ export default function AdminDashboardPage() {
                           const updated = [...data.articles];
                           updated[idx].image = url;
                           setData({ ...data, articles: updated });
+                          setHasUnsavedChanges(true);
                         }}
                       />
                     </div>
@@ -1417,6 +1452,7 @@ export default function AdminDashboardPage() {
                       const updated = [...data.downloads];
                       updated[idx].image = url;
                       setData({ ...data, downloads: updated });
+                      setHasUnsavedChanges(true);
                     }}
                   />
                 </div>
@@ -1612,6 +1648,7 @@ export default function AdminDashboardPage() {
                       const updated = [...data.events];
                       updated[idx].image = url;
                       setData({ ...data, events: updated });
+                      setHasUnsavedChanges(true);
                     }}
                   />
                 </div>
@@ -1805,6 +1842,7 @@ export default function AdminDashboardPage() {
                       const updated = [...data.podcasts];
                       updated[idx].image = url;
                       setData({ ...data, podcasts: updated });
+                      setHasUnsavedChanges(true);
                     }}
                   />
                 </div>
