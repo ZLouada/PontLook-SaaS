@@ -44,12 +44,8 @@ export default function AdminLoginPage() {
 
       if (data.requireOtp) {
         setStep('otp');
-        if (data.code) {
-          setOtpCode(data.code);
-          setInfoMessage(`Verification code: ${data.code} (Enter this code below to sign in)`);
-        } else {
-          setInfoMessage(`A 6-digit verification code has been dispatched to ${email}.`);
-        }
+        setOtpCode('');
+        setInfoMessage(`A 6-digit verification code has been dispatched to ${email}.`);
       } else {
         router.push('/admin');
         router.refresh();
@@ -102,12 +98,8 @@ export default function AdminLoginPage() {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to resend verification code');
-      if (data.code) {
-        setOtpCode(data.code);
-        setInfoMessage(`Verification code: ${data.code}`);
-      } else {
-        setInfoMessage(`A new verification code was sent to ${email}.`);
-      }
+      setOtpCode('');
+      setInfoMessage(`A new verification code was dispatched to ${email}.`);
     } catch (err: any) {
       setError(err.message || 'Failed to resend code');
     } finally {
