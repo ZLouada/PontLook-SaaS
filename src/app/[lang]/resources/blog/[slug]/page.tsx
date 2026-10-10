@@ -12,6 +12,10 @@ import { urlForImage } from '@/sanity/lib/image';
 import { ArrowLeft, Calendar, User } from '@/components/icons';
 import { getResourcesStore } from '@/lib/resources-store';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const dynamicParams = true;
+
 export async function generateMetadata({
   params,
 }: {
@@ -58,7 +62,10 @@ export async function generateMetadata({
 
   // Check admin resources store
   const store = getResourcesStore();
-  const localArticle = store.articles.find((a) => a.slug === slug);
+  const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase();
+  const localArticle = (store.articles || []).find(
+    (a) => (a.slug || '').trim().toLowerCase() === normalizedSlug || a.id === slug
+  );
   if (localArticle) {
     const title = isAr ? localArticle.titleAr || localArticle.titleEn : localArticle.titleEn;
     const description = isAr ? localArticle.excerptAr || localArticle.excerptEn : localArticle.excerptEn;
@@ -143,7 +150,10 @@ export default async function BlogPostDetailPage({
 
   if (!post) {
     const store = getResourcesStore();
-    const localArticle = store.articles.find((a) => a.slug === slug);
+    const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase();
+    const localArticle = (store.articles || []).find(
+      (a) => (a.slug || '').trim().toLowerCase() === normalizedSlug || a.id === slug
+    );
 
     if (!localArticle) {
       notFound();

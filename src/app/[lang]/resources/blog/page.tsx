@@ -10,6 +10,9 @@ import { urlForImage } from '@/sanity/lib/image';
 import { ArrowRight, BookOpen, Calendar, User } from '@/components/icons';
 import { getResourcesStore } from '@/lib/resources-store';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function generateMetadata({
   params,
 }: {

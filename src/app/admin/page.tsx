@@ -156,6 +156,7 @@ export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const [activeTab, setActiveTab] = useState<
@@ -176,7 +177,7 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch('/api/admin/resources');
+        const res = await fetch('/api/admin/resources', { cache: 'no-store' });
         if (res.status === 401) {
           router.push('/admin/login');
           return;
@@ -216,17 +217,51 @@ export default function AdminDashboardPage() {
   }, [activeTab]);
 
   // Save changes
-  const handleSave = async () => {
-    if (!data) return;
+  const handleSave = async (overrideData?: any) => {
+    const toSave = (overrideData && typeof overrideData === 'object' && 'articles' in overrideData)
+      ? (overrideData as ResourcesContent)
+      : data;
+    if (!toSave) return;
     setSaving(true);
     setSaveSuccess(false);
     setErrorMessage(null);
+
+    // Sanitize articles: ensure each article has a valid unique slug and id
+    const sanitizedArticles = (toSave.articles || []).map((art, idx) => {
+      let slug = (art.slug || '')
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      if (!slug && art.titleEn) {
+        slug = art.titleEn
+          .trim()
+          .toLowerCase()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/[\s_-]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+      }
+      if (!slug) {
+        slug = `article-${Date.now()}-${idx + 1}`;
+      }
+      return {
+        ...art,
+        id: art.id || `art-${Date.now()}-${idx}`,
+        slug,
+      };
+    });
+
+    const payload: ResourcesContent = {
+      ...toSave,
+      articles: sanitizedArticles,
+    };
 
     try {
       const res = await fetch('/api/admin/resources', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
 
       if (res.status === 401) {
@@ -234,15 +269,72 @@ export default function AdminDashboardPage() {
         return;
       }
 
-      if (!res.ok) throw new Error('Failed to save changes');
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => null);
+        throw new Error(errJson?.error || 'Failed to save changes');
+      }
 
+      setData(payload);
       setSaveSuccess(true);
-      setTimeout(() => setSaveSuccess(false), 4000);
+      setHasUnsavedChanges(false);
+      setTimeout(() => setSaveSuccess(false), 5000);
     } catch (err: any) {
       setErrorMessage(err.message || 'Error saving changes');
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleDeleteArticle = async (idx: number) => {
+    if (!data) return;
+    const artToDelete = data.articles[idx];
+    const title = artToDelete.titleEn || artToDelete.titleAr || `Article #${idx + 1}`;
+    if (!confirm(`Are you sure you want to delete "${title}"?`)) {
+      return;
+    }
+    const updatedArticles = data.articles.filter((_, i) => i !== idx);
+    const updatedData = { ...data, articles: updatedArticles };
+    setData(updatedData);
+    await handleSave(updatedData);
+  };
+
+  const handleDeleteDownload = async (idx: number) => {
+    if (!data) return;
+    const item = data.downloads[idx];
+    const title = item.titleEn || item.titleAr || `Download #${idx + 1}`;
+    if (!confirm(`Are you sure you want to delete "${title}"?`)) {
+      return;
+    }
+    const updated = data.downloads.filter((_, i) => i !== idx);
+    const updatedData = { ...data, downloads: updated };
+    setData(updatedData);
+    await handleSave(updatedData);
+  };
+
+  const handleDeleteEvent = async (idx: number) => {
+    if (!data) return;
+    const item = data.events[idx];
+    const title = item.titleEn || item.titleAr || `Event #${idx + 1}`;
+    if (!confirm(`Are you sure you want to delete "${title}"?`)) {
+      return;
+    }
+    const updated = data.events.filter((_, i) => i !== idx);
+    const updatedData = { ...data, events: updated };
+    setData(updatedData);
+    await handleSave(updatedData);
+  };
+
+  const handleDeletePodcast = async (idx: number) => {
+    if (!data) return;
+    const item = data.podcasts[idx];
+    const title = item.titleEn || item.titleAr || `Episode #${idx + 1}`;
+    if (!confirm(`Are you sure you want to delete "${title}"?`)) {
+      return;
+    }
+    const updated = data.podcasts.filter((_, i) => i !== idx);
+    const updatedData = { ...data, podcasts: updated };
+    setData(updatedData);
+    await handleSave(updatedData);
   };
 
   const handleLogout = async () => {
@@ -351,7 +443,37 @@ export default function AdminDashboardPage() {
           </span>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          {saveSuccess && (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-white text-xs border border-white/20 animate-in fade-in">
+              <CheckCircle2 size={13} />
+              <span className="hidden sm:inline">Saved live!</span>
+            </span>
+          )}
+
+          <button
+            type="button"
+            disabled={saving}
+            onClick={() => handleSave()}
+            className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer shadow-md ${
+              hasUnsavedChanges
+                ? 'bg-white hover:bg-neutral-200 text-black ring-2 ring-white/50'
+                : 'bg-white hover:bg-neutral-200 text-black'
+            }`}
+          >
+            {saving ? (
+              <>
+                <RefreshCw size={13} className="animate-spin" />
+                <span>Saving...</span>
+              </>
+            ) : (
+              <>
+                <Save size={13} />
+                <span>Save Changes</span>
+              </>
+            )}
+          </button>
+
           <Link
             href="/en/resources"
             target="_blank"
@@ -762,7 +884,7 @@ export default function AdminDashboardPage() {
         {/* ======================================================== */}
         {activeTab === 'articles' && (
           <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-300 font-bold">
                   Articles &amp; Blog Library ({data.articles.length})
@@ -771,34 +893,46 @@ export default function AdminDashboardPage() {
                   Click &ldquo;Add Article&rdquo; to start a clean new blog post with empty fields ready to fill.
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => {
-                  // ALL FIELDS EXPLICITLY INITIALIZED TO EMPTY STRINGS
-                  const newArt = {
-                    id: `art-${Date.now()}`,
-                    slug: '',
-                    titleEn: '',
-                    titleAr: '',
-                    categoryEn: '',
-                    categoryAr: '',
-                    readTimeEn: '',
-                    readTimeAr: '',
-                    dateEn: '',
-                    dateAr: '',
-                    excerptEn: '',
-                    excerptAr: '',
-                    image: '',
-                    contentEn: '',
-                    contentAr: '',
-                  };
-                  setData({ ...data, articles: [newArt, ...data.articles] });
-                }}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs cursor-pointer shadow-md"
-              >
-                <Plus size={14} />
-                <span>Add Article (New Blog)</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  disabled={saving}
+                  onClick={() => handleSave()}
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-neutral-200 text-black font-bold text-xs cursor-pointer shadow-md"
+                >
+                  {saving ? <RefreshCw size={14} className="animate-spin" /> : <Save size={14} />}
+                  <span>{saving ? 'Publishing...' : 'Save & Publish Articles'}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    // ALL FIELDS EXPLICITLY INITIALIZED TO EMPTY STRINGS
+                    const newArt = {
+                      id: `art-${Date.now()}`,
+                      slug: '',
+                      titleEn: '',
+                      titleAr: '',
+                      categoryEn: '',
+                      categoryAr: '',
+                      readTimeEn: '',
+                      readTimeAr: '',
+                      dateEn: '',
+                      dateAr: '',
+                      excerptEn: '',
+                      excerptAr: '',
+                      image: '',
+                      contentEn: '',
+                      contentAr: '',
+                    };
+                    setData({ ...data, articles: [newArt, ...data.articles] });
+                    setHasUnsavedChanges(true);
+                  }}
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-xs cursor-pointer border border-white/15"
+                >
+                  <Plus size={14} />
+                  <span>Add Article (New Blog)</span>
+                </button>
+              </div>
             </div>
 
             <div className="space-y-6">
@@ -814,6 +948,7 @@ export default function AdminDashboardPage() {
                   const updated = [...data.articles];
                   updated[idx].slug = slugified;
                   setData({ ...data, articles: updated });
+                  setHasUnsavedChanges(true);
                 };
 
                 return (
@@ -830,17 +965,26 @@ export default function AdminDashboardPage() {
                           </span>
                         )}
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const updated = data.articles.filter((_, i) => i !== idx);
-                          setData({ ...data, articles: updated });
-                        }}
-                        className="text-neutral-500 hover:text-red-400 text-xs transition-colors p-1"
-                        title="Delete article"
-                      >
-                        <Trash2 size={15} />
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          disabled={saving}
+                          onClick={() => handleSave()}
+                          className="text-[11px] text-neutral-300 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-lg border border-white/10 flex items-center gap-1 transition-colors cursor-pointer"
+                          title="Save all changes"
+                        >
+                          <Save size={12} />
+                          <span>Save</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteArticle(idx)}
+                          className="text-neutral-500 hover:text-red-400 text-xs transition-colors p-1 cursor-pointer"
+                          title="Delete article"
+                        >
+                          <Trash2 size={15} />
+                        </button>
+                      </div>
                     </div>
 
                     {/* Titles */}
@@ -854,9 +998,26 @@ export default function AdminDashboardPage() {
                           value={art.titleEn}
                           placeholder="e.g. Human Skills in the Age of AI"
                           onChange={(e) => {
+                            const newTitle = e.target.value;
                             const updated = [...data.articles];
-                            updated[idx].titleEn = e.target.value;
+                            const oldSlug = updated[idx].slug;
+                            const oldAuto = (art.titleEn || '')
+                              .toLowerCase()
+                              .trim()
+                              .replace(/[^\w\s-]/g, '')
+                              .replace(/[\s_-]+/g, '-')
+                              .replace(/^-+|-+$/g, '');
+                            updated[idx].titleEn = newTitle;
+                            if (!oldSlug || oldSlug === oldAuto) {
+                              updated[idx].slug = newTitle
+                                .toLowerCase()
+                                .trim()
+                                .replace(/[^\w\s-]/g, '')
+                                .replace(/[\s_-]+/g, '-')
+                                .replace(/^-+|-+$/g, '');
+                            }
                             setData({ ...data, articles: updated });
+                            setHasUnsavedChanges(true);
                           }}
                           className="w-full bg-[#181A20] border border-white/10 focus:border-white rounded-xl px-3 py-2 text-xs text-white placeholder-neutral-600 focus:outline-none"
                         />
@@ -1093,7 +1254,7 @@ export default function AdminDashboardPage() {
         {/* ======================================================== */}
         {activeTab === 'downloads' && (
           <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-300 font-bold">
                   Downloads &amp; Toolkits Library ({data.downloads.length})
@@ -1102,29 +1263,41 @@ export default function AdminDashboardPage() {
                   Click &ldquo;Add Download&rdquo; to create a new resource with clean empty fields.
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => {
-                  const newDl = {
-                    id: `dl-${Date.now()}`,
-                    titleEn: '',
-                    titleAr: '',
-                    format: '',
-                    fileSize: '',
-                    descEn: '',
-                    descAr: '',
-                    image: '',
-                    fileUrl: '',
-                    featuresEn: [],
-                    featuresAr: [],
-                  };
-                  setData({ ...data, downloads: [newDl, ...data.downloads] });
-                }}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs cursor-pointer shadow-md"
-              >
-                <Plus size={14} />
-                <span>Add Download</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  disabled={saving}
+                  onClick={() => handleSave()}
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-neutral-200 text-black font-bold text-xs cursor-pointer shadow-md"
+                >
+                  {saving ? <RefreshCw size={14} className="animate-spin" /> : <Save size={14} />}
+                  <span>{saving ? 'Publishing...' : 'Save & Publish'}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newDl = {
+                      id: `dl-${Date.now()}`,
+                      titleEn: '',
+                      titleAr: '',
+                      format: '',
+                      fileSize: '',
+                      descEn: '',
+                      descAr: '',
+                      image: '',
+                      fileUrl: '',
+                      featuresEn: [],
+                      featuresAr: [],
+                    };
+                    setData({ ...data, downloads: [newDl, ...data.downloads] });
+                    setHasUnsavedChanges(true);
+                  }}
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-xs cursor-pointer border border-white/15"
+                >
+                  <Plus size={14} />
+                  <span>Add Download</span>
+                </button>
+              </div>
             </div>
 
             <div className="space-y-4">
@@ -1134,11 +1307,9 @@ export default function AdminDashboardPage() {
                     <span className="text-xs font-mono text-neutral-300 font-bold">#{idx + 1} Download</span>
                     <button
                       type="button"
-                      onClick={() => {
-                        const updated = data.downloads.filter((_, i) => i !== idx);
-                        setData({ ...data, downloads: updated });
-                      }}
-                      className="text-neutral-500 hover:text-red-400 text-xs transition-colors p-1"
+                      onClick={() => handleDeleteDownload(idx)}
+                      className="text-neutral-500 hover:text-red-400 text-xs transition-colors p-1 cursor-pointer"
+                      title="Delete download"
                     >
                       <Trash2 size={15} />
                     </button>
@@ -1259,7 +1430,7 @@ export default function AdminDashboardPage() {
         {/* ======================================================== */}
         {activeTab === 'events' && (
           <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-300 font-bold">
                   Events &amp; Summits Library ({data.events.length})
@@ -1268,34 +1439,46 @@ export default function AdminDashboardPage() {
                   Click &ldquo;Add Event&rdquo; to schedule a new corporate summit or webinar.
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => {
-                  const newEvt = {
-                    id: `evt-${Date.now()}`,
-                    titleEn: '',
-                    titleAr: '',
-                    dateEn: '',
-                    dateAr: '',
-                    time: '',
-                    locationEn: '',
-                    locationAr: '',
-                    typeEn: '',
-                    typeAr: '',
-                    descEn: '',
-                    descAr: '',
-                    spotsLeftEn: '',
-                    spotsLeftAr: '',
-                    image: '',
-                    link: '',
-                  };
-                  setData({ ...data, events: [newEvt, ...data.events] });
-                }}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs cursor-pointer shadow-md"
-              >
-                <Plus size={14} />
-                <span>Add Event</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  disabled={saving}
+                  onClick={() => handleSave()}
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-neutral-200 text-black font-bold text-xs cursor-pointer shadow-md"
+                >
+                  {saving ? <RefreshCw size={14} className="animate-spin" /> : <Save size={14} />}
+                  <span>{saving ? 'Publishing...' : 'Save & Publish'}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newEvt = {
+                      id: `evt-${Date.now()}`,
+                      titleEn: '',
+                      titleAr: '',
+                      dateEn: '',
+                      dateAr: '',
+                      time: '',
+                      locationEn: '',
+                      locationAr: '',
+                      typeEn: '',
+                      typeAr: '',
+                      descEn: '',
+                      descAr: '',
+                      spotsLeftEn: '',
+                      spotsLeftAr: '',
+                      image: '',
+                      link: '',
+                    };
+                    setData({ ...data, events: [newEvt, ...data.events] });
+                    setHasUnsavedChanges(true);
+                  }}
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-xs cursor-pointer border border-white/15"
+                >
+                  <Plus size={14} />
+                  <span>Add Event</span>
+                </button>
+              </div>
             </div>
 
             <div className="space-y-4">
@@ -1305,11 +1488,9 @@ export default function AdminDashboardPage() {
                     <span className="text-xs font-mono text-neutral-300 font-bold">#{idx + 1} Event</span>
                     <button
                       type="button"
-                      onClick={() => {
-                        const updated = data.events.filter((_, i) => i !== idx);
-                        setData({ ...data, events: updated });
-                      }}
-                      className="text-neutral-500 hover:text-red-400 text-xs transition-colors p-1"
+                      onClick={() => handleDeleteEvent(idx)}
+                      className="text-neutral-500 hover:text-red-400 text-xs transition-colors p-1 cursor-pointer"
+                      title="Delete event"
                     >
                       <Trash2 size={15} />
                     </button>
@@ -1444,7 +1625,7 @@ export default function AdminDashboardPage() {
         {/* ======================================================== */}
         {activeTab === 'podcasts' && (
           <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h3 className="text-sm font-mono uppercase tracking-wider text-neutral-300 font-bold">
                   Podcasts Library ({data.podcasts.length})
@@ -1453,32 +1634,44 @@ export default function AdminDashboardPage() {
                   Click &ldquo;Add Episode&rdquo; to publish a new podcast episode.
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => {
-                  const newPod = {
-                    id: `pod-${Date.now()}`,
-                    titleEn: '',
-                    titleAr: '',
-                    guestEn: '',
-                    guestAr: '',
-                    duration: '',
-                    dateEn: '',
-                    dateAr: '',
-                    descEn: '',
-                    descAr: '',
-                    tagEn: '',
-                    tagAr: '',
-                    image: '',
-                    audioUrl: '',
-                  };
-                  setData({ ...data, podcasts: [newPod, ...data.podcasts] });
-                }}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs cursor-pointer shadow-md"
-              >
-                <Plus size={14} />
-                <span>Add Episode</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  disabled={saving}
+                  onClick={() => handleSave()}
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-neutral-200 text-black font-bold text-xs cursor-pointer shadow-md"
+                >
+                  {saving ? <RefreshCw size={14} className="animate-spin" /> : <Save size={14} />}
+                  <span>{saving ? 'Publishing...' : 'Save & Publish'}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newPod = {
+                      id: `pod-${Date.now()}`,
+                      titleEn: '',
+                      titleAr: '',
+                      guestEn: '',
+                      guestAr: '',
+                      duration: '',
+                      dateEn: '',
+                      dateAr: '',
+                      descEn: '',
+                      descAr: '',
+                      tagEn: '',
+                      tagAr: '',
+                      image: '',
+                      audioUrl: '',
+                    };
+                    setData({ ...data, podcasts: [newPod, ...data.podcasts] });
+                    setHasUnsavedChanges(true);
+                  }}
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-xs cursor-pointer border border-white/15"
+                >
+                  <Plus size={14} />
+                  <span>Add Episode</span>
+                </button>
+              </div>
             </div>
 
             <div className="space-y-4">
@@ -1488,11 +1681,9 @@ export default function AdminDashboardPage() {
                     <span className="text-xs font-mono text-neutral-300 font-bold">#{idx + 1} Episode</span>
                     <button
                       type="button"
-                      onClick={() => {
-                        const updated = data.podcasts.filter((_, i) => i !== idx);
-                        setData({ ...data, podcasts: updated });
-                      }}
-                      className="text-neutral-500 hover:text-red-400 text-xs transition-colors p-1"
+                      onClick={() => handleDeletePodcast(idx)}
+                      className="text-neutral-500 hover:text-red-400 text-xs transition-colors p-1 cursor-pointer"
+                      title="Delete podcast episode"
                     >
                       <Trash2 size={15} />
                     </button>
@@ -1812,7 +2003,7 @@ export default function AdminDashboardPage() {
           <button
             type="button"
             disabled={saving}
-            onClick={handleSave}
+            onClick={() => handleSave()}
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white hover:bg-neutral-200 text-black font-bold text-xs sm:text-sm transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
           >
             {saving ? (

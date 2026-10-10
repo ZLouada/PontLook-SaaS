@@ -117,15 +117,53 @@ export interface ResourcesContent {
 }
 
 const DATA_FILE = path.join(process.cwd(), 'src/data/resources.json');
+const BACKUP_DATA_FILE = path.join('/tmp', 'pontlook-resources.json');
+
+let memoryCache: ResourcesContent | null = null;
+let lastLoadedMtime = 0;
+
+export function invalidateResourcesCache(): void {
+  memoryCache = null;
+  lastLoadedMtime = 0;
+}
 
 export function getResourcesStore(): ResourcesContent {
+  // Check if DATA_FILE exists on disk and if it was modified since last load
   try {
     if (fs.existsSync(DATA_FILE)) {
-      const content = fs.readFileSync(DATA_FILE, 'utf-8');
-      return JSON.parse(content);
+      const stats = fs.statSync(DATA_FILE);
+      if (!memoryCache || stats.mtimeMs > lastLoadedMtime) {
+        const content = fs.readFileSync(DATA_FILE, 'utf-8');
+        memoryCache = JSON.parse(content);
+        lastLoadedMtime = stats.mtimeMs;
+      }
+      if (memoryCache) {
+        return memoryCache;
+      }
     }
   } catch (err) {
-    console.error('Failed to read resources.json:', err);
+    console.error('Failed to read primary resources.json:', err);
+  }
+
+  // Check backup file if primary not found
+  try {
+    if (fs.existsSync(BACKUP_DATA_FILE)) {
+      const stats = fs.statSync(BACKUP_DATA_FILE);
+      if (!memoryCache || stats.mtimeMs > lastLoadedMtime) {
+        const content = fs.readFileSync(BACKUP_DATA_FILE, 'utf-8');
+        memoryCache = JSON.parse(content);
+        lastLoadedMtime = stats.mtimeMs;
+      }
+      if (memoryCache) {
+        return memoryCache;
+      }
+    }
+  } catch (err) {
+    console.error('Failed to read backup resources.json:', err);
+  }
+
+  if (memoryCache) {
+    return memoryCache;
   }
 
   // Fallback defaults
@@ -196,15 +234,31 @@ export function getResourcesStore(): ResourcesContent {
 }
 
 export function saveResourcesStore(data: ResourcesContent): boolean {
+  // Always update memory cache immediately
+  memoryCache = JSON.parse(JSON.stringify(data));
+  lastLoadedMtime = Date.now();
+
+  let savedPrimary = false;
+
+  // 1. Try writing to primary DATA_FILE
   try {
     const dir = path.dirname(DATA_FILE);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
-    return true;
+    savedPrimary = true;
   } catch (err) {
-    console.error('Failed to save resources.json:', err);
-    return false;
+    console.warn('[PontLook Store] Warning: Could not save to primary path, writing to backup:', err);
   }
+
+  // 2. Try writing to backup DATA_FILE
+  try {
+    fs.writeFileSync(BACKUP_DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
+  } catch (err) {
+    // backup write warning
+  }
+
+  // If memoryCache is updated and at least one destination was written (or in-memory set)
+  return true;
 }

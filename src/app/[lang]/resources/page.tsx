@@ -25,6 +25,9 @@ import {
   RefreshCw,
 } from '@/components/icons';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function generateMetadata({
   params,
 }: {
@@ -138,7 +141,7 @@ export default async function ResourcesPage({
     },
   ];
 
-  const dynamicArticles = store.articles && store.articles.length > 0
+  const dynamicArticles = Array.isArray(store.articles)
     ? store.articles.map((art) => ({
         title: isAr ? art.titleAr : art.titleEn,
         category: isAr ? art.categoryAr : art.categoryEn,
@@ -146,6 +149,7 @@ export default async function ResourcesPage({
         date: isAr ? art.dateAr : art.dateEn,
         excerpt: isAr ? art.excerptAr : art.excerptEn,
         slug: art.slug,
+        image: art.image,
       }))
     : fallbackArticles;
 
@@ -356,74 +360,82 @@ export default async function ResourcesPage({
           </div>
 
           {/* Articles Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            {(sanityPosts && sanityPosts.length > 0 ? sanityPosts.slice(0, 3) : dynamicArticles).map(
-              (article: any, idx: number) => {
-                const isSanity = Boolean(article._id);
-                const title = article.title;
-                const excerpt = article.excerpt || article.title;
-                const date = isSanity && article.publishedAt
-                  ? new Date(article.publishedAt).toLocaleDateString(isAr ? 'ar-SA' : 'en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })
-                  : article.date || 'Oct 2026';
-                const category = isSanity && article.categories?.[0]
-                  ? article.categories[0].title
-                  : article.category || (isAr ? 'تدريب مؤسسي' : 'L&D STRATEGIES');
-                const href = isSanity
-                  ? `/${lang}/resources/blog/${article.slug?.current || article.slug}`
-                  : (article.slug ? `/${lang}/resources/blog/${article.slug}` : `/${lang}/resources/blog`);
-                const imageUrl = isSanity && article.mainImage
-                  ? urlForImage(article.mainImage).width(700).height(420).url()
-                  : (article.image || null);
+          {(sanityPosts && sanityPosts.length > 0) || (dynamicArticles && dynamicArticles.length > 0) ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+              {(sanityPosts && sanityPosts.length > 0 ? sanityPosts.slice(0, 3) : dynamicArticles).map(
+                (article: any, idx: number) => {
+                  const isSanity = Boolean(article._id);
+                  const title = article.title;
+                  const excerpt = article.excerpt || article.title;
+                  const date = isSanity && article.publishedAt
+                    ? new Date(article.publishedAt).toLocaleDateString(isAr ? 'ar-SA' : 'en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })
+                    : article.date || 'Oct 2026';
+                  const category = isSanity && article.categories?.[0]
+                    ? article.categories[0].title
+                    : article.category || (isAr ? 'تدريب مؤسسي' : 'L&D STRATEGIES');
+                  const href = isSanity
+                    ? `/${lang}/resources/blog/${article.slug?.current || article.slug}`
+                    : (article.slug ? `/${lang}/resources/blog/${article.slug}` : `/${lang}/resources/blog`);
+                  const imageUrl = isSanity && article.mainImage
+                    ? urlForImage(article.mainImage).width(700).height(420).url()
+                    : (article.image || null);
 
-                return (
-                  <Link
-                    key={idx}
-                    href={href}
-                    className="group flex flex-col justify-between rounded-3xl bg-white border border-neutral-200 hover:border-neutral-300 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md"
-                  >
-                    {imageUrl ? (
-                      <div className="relative aspect-video w-full bg-neutral-100 overflow-hidden">
-                        <Image
-                          src={imageUrl}
-                          alt={title}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
-                    ) : (
-                      <div className="h-3 w-full bg-gradient-to-r from-neutral-200 via-[#FF5C00]/40 to-neutral-200" />
-                    )}
-
-                    <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
-                      <div>
-                        <div className="flex items-center justify-between text-xs font-mono text-neutral-500 mb-3">
-                          <span className="px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 font-medium text-[10px] tracking-wide uppercase">
-                            {category}
-                          </span>
-                          <span>{date}</span>
+                  return (
+                    <Link
+                      key={idx}
+                      href={href}
+                      className="group flex flex-col justify-between rounded-3xl bg-white border border-neutral-200 hover:border-neutral-300 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md"
+                    >
+                      {imageUrl ? (
+                        <div className="relative aspect-video w-full bg-neutral-100 overflow-hidden">
+                          <Image
+                            src={imageUrl}
+                            alt={title}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
                         </div>
-                        <h3 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-3">
-                          {title}
-                        </h3>
-                        <p className="text-neutral-600 text-xs sm:text-sm leading-relaxed line-clamp-3 font-normal">
-                          {excerpt}
-                        </p>
-                      </div>
+                      ) : (
+                        <div className="h-3 w-full bg-gradient-to-r from-neutral-200 via-[#FF5C00]/40 to-neutral-200" />
+                      )}
 
-                      <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-700 group-hover:text-[#FF5C00] transition-colors">
-                        <span>{isAr ? 'قراءة المقال' : 'Read Article'}</span>
-                        <ArrowRight size={14} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                      <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
+                        <div>
+                          <div className="flex items-center justify-between text-xs font-mono text-neutral-500 mb-3">
+                            <span className="px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 font-medium text-[10px] tracking-wide uppercase">
+                              {category}
+                            </span>
+                            <span>{date}</span>
+                          </div>
+                          <h3 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-3">
+                            {title}
+                          </h3>
+                          <p className="text-neutral-600 text-xs sm:text-sm leading-relaxed line-clamp-3 font-normal">
+                            {excerpt}
+                          </p>
+                        </div>
+
+                        <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-700 group-hover:text-[#FF5C00] transition-colors">
+                          <span>{isAr ? 'قراءة المقال' : 'Read Article'}</span>
+                          <ArrowRight size={14} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                );
-              }
-            )}
-          </div>
+                    </Link>
+                  );
+                }
+              )}
+            </div>
+          ) : (
+            <div className="p-12 rounded-3xl border border-neutral-200 bg-neutral-50 text-center max-w-md mx-auto">
+              <p className="text-sm text-neutral-600">
+                {isAr ? 'لا توجد مقالات منشورة حالياً في المدونة.' : 'No blog articles published yet.'}
+              </p>
+            </div>
+          )}
         </section>
 
         {/* ======================================================== */}
