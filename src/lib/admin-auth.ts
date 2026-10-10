@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import nodemailer from 'nodemailer';
 import { Resend } from 'resend';
 import { cookies } from 'next/headers';
 import type { NextRequest } from 'next/server';
@@ -10,6 +11,25 @@ const ADMIN_PASS =
 const ADMIN_EMAIL = process.env.ADMIN_NOTIFICATION_EMAIL || 'contact@pontlook.com';
 const SESSION_COOKIE_NAME = 'pontlook_admin_session';
 const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || 'pontlook_super_secure_session_secret_2026_antigravity';
+
+// SMTP Configuration (Hostinger or custom)
+const SMTP_HOST = process.env.SMTP_HOST || 'smtp.hostinger.com';
+const SMTP_PORT = parseInt(process.env.SMTP_PORT || '465', 10);
+const SMTP_USER = process.env.SMTP_USER || process.env.ADMIN_NOTIFICATION_EMAIL || '';
+const SMTP_PASS = process.env.SMTP_PASS || '';
+
+function getSmtpTransporter() {
+  if (!SMTP_USER || !SMTP_PASS) return null;
+  return nodemailer.createTransport({
+    host: SMTP_HOST,
+    port: SMTP_PORT,
+    secure: SMTP_PORT === 465,
+    auth: {
+      user: SMTP_USER,
+      pass: SMTP_PASS,
+    },
+  });
+}
 
 // In-memory OTP storage
 interface OtpRecord {
@@ -90,88 +110,47 @@ export async function generateAndSendOtp(
   let sentToEmail = false;
   let emailError: string | undefined;
 
-  // 1. Primary: Send via Web3Forms directly to recipient email
-  const reqOrigin = origin || 'https://pontlook.com';
-  const web3Payload = {
-    access_key: WEB3FORMS_ACCESS_KEY,
-    name: 'PontLook Admin Security',
-    from_name: 'PontLook Admin Security',
-    email: targetEmail,
-    subject: `PontLook Admin Verification Code: ${code}`,
-    verification_code: code,
-    purpose: 'PontLook Resources CMS Admin Login',
-    message: `Your PontLook Admin Verification Code is: ${code}\n\nRecipient: ${targetEmail}\n\nUse this 6-digit code to complete sign-in to the PontLook Resources Admin Dashboard.\n\nThis verification code expires in 10 minutes.\nIf you did not initiate this login attempt, please ignore this email.`,
-  };
-
-  // 1a. Try curl (bypasses TLS/Cloudflare bot challenges from node)
-  try {
-    const { execFileSync } = await import('child_process');
-    const out = execFileSync(
-      'curl',
-      [
-        '-s',
-        '-X',
-        'POST',
-        'https://api.web3forms.com/submit',
-        '-H',
-        'Content-Type: application/json',
-        '-H',
-        'Accept: application/json',
-        '-H',
-        'Origin: https://pontlook.com',
-        '-H',
-        'Referer: https://pontlook.com/admin/login',
-        '-H',
-        'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-        '-d',
-        JSON.stringify(web3Payload),
-      ],
-      { encoding: 'utf-8', timeout: 10000 }
-    );
-
-    const parsed = JSON.parse(out);
-    if (parsed && parsed.success !== false) {
-      sentToEmail = true;
-      console.log(`[PontLook Admin Security] OTP email successfully dispatched via Web3Forms (curl) to ${targetEmail}`);
-    } else {
-      console.warn('[PontLook Admin Security] curl returned non-success:', parsed);
-    }
-  } catch (curlErr: any) {
-    console.warn('[PontLook Admin Security] curl dispatch failed, falling back to fetch:', curlErr?.message);
-  }
-
-  // 1b. Fallback to fetch if curl was unavailable or failed
-  if (!sentToEmail) {
+  // 1. Primary: SMTP (Hostinger or custom mail server)
+  const transporter = getSmtpTransporter();
+  if (transporter) {
     try {
-      const web3Res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          Origin: reqOrigin,
-          Referer: `${reqOrigin}/admin/login`,
-          'User-Agent':
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-        },
-        body: JSON.stringify(web3Payload),
+      const info = await transporter.sendMail({
+        from: `PontLook Admin Security <${SMTP_USER}>`,
+        to: targetEmail,
+        subject: `Your PontLook Admin Verification Code: ${code}`,
+        text: `Your PontLook Admin Verification Code is: ${code}\n\nRecipient: ${targetEmail}\n\nUse this 6-digit code to complete sign-in to the PontLook Resources Admin Dashboard.\n\nThis verification code expires in 10 minutes.\nIf you did not initiate this login attempt, please ignore this email.`,
+        html: `
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 560px; margin: 0 auto; padding: 32px 24px; background: #000000; color: #ffffff; border-radius: 16px; border: 1px solid #333333;">
+            <div style="margin-bottom: 24px; text-align: center;">
+              <span style="display: inline-block; padding: 6px 14px; background: #1a1a1a; border: 1px solid #444444; border-radius: 9999px; font-size: 11px; font-weight: 700; color: #ffffff; letter-spacing: 0.1em; text-transform: uppercase;">
+                PontLook Admin Security
+              </span>
+            </div>
+            <h1 style="font-size: 22px; font-weight: 800; text-align: center; margin-bottom: 12px; color: #ffffff;">
+              Sign-in Verification Code
+            </h1>
+            <p style="font-size: 14px; line-height: 1.6; color: #a1a1aa; text-align: center; margin-bottom: 28px;">
+              A sign-in attempt was initiated for the PontLook Resources Admin Dashboard for <strong>${targetEmail}</strong>. Use the 6-digit one-time code below to complete authentication:
+            </p>
+            <div style="background: #111111; border: 1px solid #333333; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 28px;">
+              <span style="font-family: monospace; font-size: 36px; font-weight: 800; letter-spacing: 8px; color: #ffffff;">
+                ${code}
+              </span>
+            </div>
+            <p style="font-size: 12px; line-height: 1.5; color: #71717a; text-align: center; margin-bottom: 0;">
+              This code will expire in <strong>10 minutes</strong>. If you did not request this login code, please ignore this email.
+            </p>
+          </div>
+        `,
       });
-
-      const web3Data = await web3Res.json().catch(() => null);
-
-      if (web3Res.ok && web3Data?.success !== false) {
-        sentToEmail = true;
-        console.log(`[PontLook Admin Security] OTP email successfully dispatched via Web3Forms (fetch) to ${targetEmail}`);
-      } else {
-        emailError = web3Data?.message || `Web3Forms returned status ${web3Res.status}`;
-        console.warn('[PontLook Admin Security] Web3Forms fetch dispatch error:', emailError);
-      }
-    } catch (err: any) {
-      emailError = err?.message || 'Web3Forms network dispatch failed';
-      console.warn('[PontLook Admin Security] Web3Forms fetch exception:', err);
+      sentToEmail = true;
+      console.log(`[PontLook Admin Security] OTP email successfully dispatched via SMTP (${SMTP_HOST}) to ${targetEmail} (ID: ${info.messageId})`);
+    } catch (smtpErr: any) {
+      console.warn('[PontLook Admin Security] SMTP dispatch failed:', smtpErr?.message);
     }
   }
 
-  // 2. Secondary fallback: Resend (if configured and Web3Forms failed)
+  // 2. Secondary fallback: Resend (if configured)
   if (!sentToEmail && resend) {
     try {
       const fromEmail =
@@ -213,6 +192,87 @@ export async function generateAndSendOtp(
       }
     } catch (err: any) {
       console.warn('[PontLook Admin Security] Resend fallback failed:', err);
+    }
+  }
+
+  // 3. Tertiary fallback: Web3Forms
+  if (!sentToEmail) {
+    const reqOrigin = origin || 'https://pontlook.com';
+    const web3Payload = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      name: 'PontLook Admin Security',
+      from_name: 'PontLook Admin Security',
+      email: targetEmail,
+      subject: `PontLook Admin Verification Code: ${code}`,
+      verification_code: code,
+      purpose: 'PontLook Resources CMS Admin Login',
+      message: `Your PontLook Admin Verification Code is: ${code}\n\nRecipient: ${targetEmail}\n\nUse this 6-digit code to complete sign-in to the PontLook Resources Admin Dashboard.\n\nThis verification code expires in 10 minutes.\nIf you did not initiate this login attempt, please ignore this email.`,
+    };
+
+    // 3a. Try curl
+    try {
+      const { execFileSync } = await import('child_process');
+      const out = execFileSync(
+        'curl',
+        [
+          '-s',
+          '-X',
+          'POST',
+          'https://api.web3forms.com/submit',
+          '-H',
+          'Content-Type: application/json',
+          '-H',
+          'Accept: application/json',
+          '-H',
+          'Origin: https://pontlook.com',
+          '-H',
+          'Referer: https://pontlook.com/admin/login',
+          '-H',
+          'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+          '-d',
+          JSON.stringify(web3Payload),
+        ],
+        { encoding: 'utf-8', timeout: 10000 }
+      );
+
+      const parsed = JSON.parse(out);
+      if (parsed && parsed.success !== false) {
+        sentToEmail = true;
+        console.log(`[PontLook Admin Security] OTP email successfully dispatched via Web3Forms (curl) to ${targetEmail}`);
+      } else {
+        console.warn('[PontLook Admin Security] curl returned non-success:', parsed);
+      }
+    } catch (curlErr: any) {
+      console.warn('[PontLook Admin Security] curl dispatch failed, falling back to fetch:', curlErr?.message);
+    }
+
+    // 3b. Fallback to fetch
+    if (!sentToEmail) {
+      try {
+        const web3Res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Origin: reqOrigin,
+            Referer: `${reqOrigin}/admin/login`,
+            'User-Agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+          },
+          body: JSON.stringify(web3Payload),
+        });
+
+        const web3Data = await web3Res.json().catch(() => null);
+
+        if (web3Res.ok && web3Data?.success !== false) {
+          sentToEmail = true;
+          console.log(`[PontLook Admin Security] OTP email successfully dispatched via Web3Forms (fetch) to ${targetEmail}`);
+        } else {
+          emailError = web3Data?.message || `Web3Forms returned status ${web3Res.status}`;
+        }
+      } catch (err: any) {
+        emailError = err?.message || 'Web3Forms network dispatch failed';
+      }
     }
   }
 
