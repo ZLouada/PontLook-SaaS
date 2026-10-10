@@ -29,7 +29,7 @@ Only the following three email addresses are authorized to access the Admin CMS:
 2. `contact@pontlook.com`
 3. `s.belahmidi@pontlook.com`
 
-Any other email address is rejected immediately with a descriptive authorization error.
+Any other email address is rejected immediately with an "Access restricted" error.
 
 ### 2. Passwordless Email Code Authentication
 * **Step 1 (Authorized Email):** The administrator enters their authorized PontLook email address (no password required).

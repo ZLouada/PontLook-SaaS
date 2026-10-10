@@ -26,8 +26,7 @@ export async function POST(req: NextRequest) {
     if (!isAllowed) {
       return NextResponse.json(
         {
-          error:
-            'Access restricted: Only authorized administrative accounts (a.touikrou@pontlook.com, contact@pontlook.com, s.belahmidi@pontlook.com) may sign in.',
+          error: 'Access restricted: This email is not authorized to sign in.',
         },
         { status: 401 }
       );

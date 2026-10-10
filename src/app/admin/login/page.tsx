@@ -180,7 +180,7 @@ export default function AdminLoginPage() {
                     onChange={(e) => setUsername(e.target.value)}
                     required
                     autoFocus
-                    placeholder="e.g. contact@pontlook.com"
+                    placeholder="Enter admin email"
                     className="w-full bg-[#141416] border border-white/10 focus:border-white rounded-2xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors"
                   />
                   <div className="absolute end-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
@@ -280,7 +280,7 @@ export default function AdminLoginPage() {
 
         {/* Security disclaimer */}
         <p className="text-center text-[11px] text-neutral-500 mt-6">
-          Authorized PontLook accounts: a.touikrou@pontlook.com · contact@pontlook.com · s.belahmidi@pontlook.com
+          Authorized PontLook administrators only. All access attempts are logged.
         </p>
       </div>
     </div>
