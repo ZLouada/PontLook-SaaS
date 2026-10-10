@@ -108,16 +108,16 @@ export default async function EventsPage({
   ];
 
   const store = getResourcesStore();
-  const dynamicEvents = store.events && store.events.length > 0
+  const dynamicEvents = Array.isArray(store.events)
     ? store.events.map((evt) => ({
         id: evt.id,
-        title: isAr ? evt.titleAr : evt.titleEn,
-        date: isAr ? evt.dateAr : evt.dateEn,
+        title: (isAr ? evt.titleAr : evt.titleEn) || evt.titleEn || evt.titleAr,
+        date: (isAr ? evt.dateAr : evt.dateEn) || evt.dateEn || evt.dateAr,
         time: evt.time,
-        location: isAr ? evt.locationAr : evt.locationEn,
-        type: isAr ? evt.typeAr : evt.typeEn,
-        desc: isAr ? evt.descAr : evt.descEn,
-        spotsLeft: isAr ? evt.spotsLeftAr : evt.spotsLeftEn,
+        location: (isAr ? evt.locationAr : evt.locationEn) || evt.locationEn || evt.locationAr,
+        type: (isAr ? evt.typeAr : evt.typeEn) || evt.typeEn || evt.typeAr,
+        desc: (isAr ? evt.descAr : evt.descEn) || evt.descEn || evt.descAr,
+        spotsLeft: (isAr ? evt.spotsLeftAr : evt.spotsLeftEn) || evt.spotsLeftEn || evt.spotsLeftAr,
       }))
     : upcomingEvents;
 
@@ -158,54 +158,76 @@ export default async function EventsPage({
 
         {/* Events List */}
         <div className="space-y-6">
-          {dynamicEvents.map((evt, idx) => (
-            <Reveal key={evt.id} delay={0.1 * (idx + 1)}>
-              <div className="p-8 rounded-3xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 shadow-sm hover:shadow-md">
-                <div className="flex-1">
-                  <div className="flex flex-wrap items-center gap-2.5 text-xs text-neutral-500 mb-3">
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/20 text-[#FF5C00] font-medium">
-                      {evt.type}
-                    </span>
-                    <span className="text-neutral-400">•</span>
-                    <span className="font-mono text-neutral-800 font-semibold">{evt.spotsLeft}</span>
+          {dynamicEvents.length > 0 ? (
+            dynamicEvents.map((evt, idx) => (
+              <Reveal key={evt.id} delay={0.1 * (idx + 1)}>
+                <div className="p-8 rounded-3xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 shadow-sm hover:shadow-md">
+                  <div className="flex-1">
+                    <div className="flex flex-wrap items-center gap-2.5 text-xs text-neutral-500 mb-3">
+                      {evt.type && (
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/20 text-[#FF5C00] font-medium">
+                          {evt.type}
+                        </span>
+                      )}
+                      {evt.spotsLeft && (
+                        <>
+                          <span className="text-neutral-400">•</span>
+                          <span className="font-mono text-neutral-800 font-semibold">{evt.spotsLeft}</span>
+                        </>
+                      )}
+                    </div>
+
+                    <h2 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 mb-3">
+                      {evt.title}
+                    </h2>
+
+                    <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-600 mb-4">
+                      {evt.date && (
+                        <div className="flex items-center gap-1.5 font-mono text-neutral-800">
+                          <Calendar size={13} className="text-[#FF5C00]" />
+                          <span>{evt.date}</span>
+                        </div>
+                      )}
+                      {evt.time && (
+                        <div className="flex items-center gap-1.5 font-mono">
+                          <Clock size={13} />
+                          <span>{evt.time}</span>
+                        </div>
+                      )}
+                      {evt.location && (
+                        <div className="flex items-center gap-1.5">
+                          <MapPin size={13} />
+                          <span>{evt.location}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {evt.desc && (
+                      <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-3xl">
+                        {evt.desc}
+                      </p>
+                    )}
                   </div>
 
-                  <h2 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 mb-3">
-                    {evt.title}
-                  </h2>
-
-                  <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-600 mb-4">
-                    <div className="flex items-center gap-1.5 font-mono text-neutral-800">
-                      <Calendar size={13} className="text-[#FF5C00]" />
-                      <span>{evt.date}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 font-mono">
-                      <Clock size={13} />
-                      <span>{evt.time}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <MapPin size={13} />
-                      <span>{evt.location}</span>
-                    </div>
+                  <div className="w-full lg:w-auto shrink-0">
+                    <Link
+                      href={`/${lang}/contact?event=${encodeURIComponent(evt.id)}`}
+                      className="w-full lg:w-auto inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all active:scale-95 shadow-sm"
+                    >
+                      <span>{isAr ? 'حجز مقعد / استفسار' : 'Request Invitation'}</span>
+                      <ArrowRight size={14} className="rtl:-scale-x-100" />
+                    </Link>
                   </div>
-
-                  <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-3xl">
-                    {evt.desc}
-                  </p>
                 </div>
-
-                <div className="w-full lg:w-auto shrink-0">
-                  <Link
-                    href={`/${lang}/contact?event=${encodeURIComponent(evt.id)}`}
-                    className="w-full lg:w-auto inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all active:scale-95 shadow-sm"
-                  >
-                    <span>{isAr ? 'حجز مقعد / استفسار' : 'Request Invitation'}</span>
-                    <ArrowRight size={14} className="rtl:-scale-x-100" />
-                  </Link>
-                </div>
-              </div>
-            </Reveal>
-          ))}
+              </Reveal>
+            ))
+          ) : (
+            <div className="p-12 rounded-3xl border border-dashed border-neutral-300 bg-neutral-50 text-center">
+              <p className="text-base text-neutral-600 font-medium">
+                {isAr ? 'لا توجد فعاليات مجدولة حالياً. يرجى المتابعة لاحقاً.' : 'No upcoming events scheduled at this moment. Please check back soon.'}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

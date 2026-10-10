@@ -108,13 +108,13 @@ export default async function DownloadsPage({
   ];
 
   const store = getResourcesStore();
-  const dynamicToolkits = store.downloads && store.downloads.length > 0
+  const dynamicToolkits = Array.isArray(store.downloads)
     ? store.downloads.map((dl) => ({
         id: dl.id,
-        title: isAr ? dl.titleAr : dl.titleEn,
-        format: dl.format,
-        fileSize: dl.fileSize,
-        desc: isAr ? dl.descAr : dl.descEn,
+        title: (isAr ? dl.titleAr : dl.titleEn) || dl.titleEn || dl.titleAr,
+        format: dl.format || 'PDF',
+        fileSize: dl.fileSize || '1.0 MB',
+        desc: (isAr ? dl.descAr : dl.descEn) || dl.descEn || dl.descAr,
         features: (isAr ? dl.featuresAr : dl.featuresEn) || [],
       }))
     : toolkits;
@@ -155,52 +155,60 @@ export default async function DownloadsPage({
         </div>
 
         {/* Grid of Toolkits */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-          {dynamicToolkits.map((tool, idx) => (
-            <Reveal key={tool.id} delay={0.1 * (idx + 1)}>
-              <div className="h-full flex flex-col justify-between p-8 rounded-3xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md">
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="h-12 w-12 rounded-2xl bg-[#FF5C00]/10 border border-[#FF5C00]/20 flex items-center justify-center text-[#FF5C00]">
-                      <FileText size={22} />
-                    </div>
-                    <div className="flex items-center gap-2 text-[11px] font-mono text-neutral-500">
-                      <span className="px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 font-medium">{tool.format}</span>
-                      <span>{tool.fileSize}</span>
-                    </div>
-                  </div>
-
-                  <h2 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 mb-3">
-                    {tool.title}
-                  </h2>
-
-                  <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-6">
-                    {tool.desc}
-                  </p>
-
-                  <div className="space-y-2 mb-8 pt-4 border-t border-neutral-200">
-                    {tool.features.map((feat, fIdx) => (
-                      <div key={fIdx} className="flex items-start gap-2 text-xs text-neutral-700">
-                        <CheckCircle2 size={14} className="text-[#FF5C00] shrink-0 mt-0.5" />
-                        <span>{feat}</span>
+        {dynamicToolkits.length > 0 ? (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+            {dynamicToolkits.map((tool, idx) => (
+              <Reveal key={tool.id} delay={0.1 * (idx + 1)}>
+                <div className="h-full flex flex-col justify-between p-8 rounded-3xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md">
+                  <div>
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="h-12 w-12 rounded-2xl bg-[#FF5C00]/10 border border-[#FF5C00]/20 flex items-center justify-center text-[#FF5C00]">
+                        <FileText size={22} />
                       </div>
-                    ))}
+                      <div className="flex items-center gap-2 text-[11px] font-mono text-neutral-500">
+                        <span className="px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 font-medium">{tool.format}</span>
+                        <span>{tool.fileSize}</span>
+                      </div>
+                    </div>
+
+                    <h2 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 mb-3">
+                      {tool.title}
+                    </h2>
+
+                    <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-6">
+                      {tool.desc}
+                    </p>
+
+                    <div className="space-y-2 mb-8 pt-4 border-t border-neutral-200">
+                      {tool.features.map((feat, fIdx) => (
+                        <div key={fIdx} className="flex items-start gap-2 text-xs text-neutral-700">
+                          <CheckCircle2 size={14} className="text-[#FF5C00] shrink-0 mt-0.5" />
+                          <span>{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <Link
+                      href={`/${lang}/contact?interest=${encodeURIComponent(tool.id)}`}
+                      className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all active:scale-95 shadow-sm"
+                    >
+                      <Download size={14} />
+                      <span>{isAr ? 'طلب التحميل مجاناً' : 'Download Toolkit Free'}</span>
+                    </Link>
                   </div>
                 </div>
-
-                <div>
-                  <Link
-                    href={`/${lang}/contact?interest=${encodeURIComponent(tool.id)}`}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all active:scale-95 shadow-sm"
-                  >
-                    <Download size={14} />
-                    <span>{isAr ? 'طلب التحميل مجاناً' : 'Download Toolkit Free'}</span>
-                  </Link>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+              </Reveal>
+            ))}
+          </div>
+        ) : (
+          <div className="p-12 rounded-3xl border border-dashed border-neutral-300 bg-neutral-50 text-center">
+            <p className="text-base text-neutral-600 font-medium">
+              {isAr ? 'لا توجد أدلة أو قوالب متاحة للتحميل حالياً.' : 'No downloadable toolkits available at this moment. Please check back soon.'}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
