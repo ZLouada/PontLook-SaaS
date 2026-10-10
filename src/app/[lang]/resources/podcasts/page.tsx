@@ -62,48 +62,6 @@ export default async function PodcastsPage({
   const { lang } = await params;
   const isAr = lang === 'ar';
 
-  const episodes = [
-    {
-      id: 'ep-01',
-      title: isAr
-        ? 'قياس العائد على الاستثمار التدريبي في قطاع البنوك والتقنية'
-        : 'Demystifying Training ROI: How Top GCC Banks Evaluate Provider Impact',
-      guest: isAr ? 'فهد القحطاني — رئيس تطوير الكفاءات' : 'Fahad Al-Qahtani — Head of Talent & Learning',
-      duration: '42 min',
-      date: isAr ? 'أكتوبر 2026' : 'October 2026',
-      desc: isAr
-        ? 'كيف تنتقل من قياس رضا المتدربين إلى قياس الأثر المالي والتشغيلي المباشر للبرامج التدريبية.'
-        : 'Moving beyond smile sheets to measurable business KPIs and executive board reporting.',
-      tag: isAr ? 'استراتيجية وتأهيل' : 'Strategy & Metrics',
-    },
-    {
-      id: 'ep-02',
-      title: isAr
-        ? 'التوطين وتحديات تدريب المهارات القيادية الشابة'
-        : 'Saudization & Emiratization: Accelerating Young Leadership Pipelines',
-      guest: isAr ? 'سارة المنصوري — مستشارة رأس المال البشري' : 'Sarah Al-Mansoor — Human Capital Advisory Director',
-      duration: '38 min',
-      date: isAr ? 'سبتمبر 2026' : 'September 2026',
-      desc: isAr
-        ? 'أفضل الممارسات لتأهيل القيادات الشابة ومواءمة البرامج مع متطلبات رؤية 2030.'
-        : 'Designing immersive, cohort-based leadership programs that retain high-potential regional talent.',
-      tag: isAr ? 'القيادة والتوطين' : 'Leadership & Nationalization',
-    },
-    {
-      id: 'ep-03',
-      title: isAr
-        ? 'كيف تختار الشركات مزود التدريب المناسب دون عناء الوسطاء؟'
-        : 'The Provider Selection Playbook: Avoiding Procurement Traps in B2B L&D',
-      guest: isAr ? 'ماجد العتيبي — مدير المشتريات المؤسسية' : 'Majed Al-Otaibi — Senior Corporate Procurement Lead',
-      duration: '45 min',
-      date: isAr ? 'سبتمبر 2026' : 'September 2026',
-      desc: isAr
-        ? 'معايير فحص العروض، التدقيق في اعتمادات المدربين، وتجنب الهدر المالي في المناقصات التقليدية.'
-        : 'Behind-the-scenes procurement criteria, verifying trainer track records, and structuring performance SLAs.',
-      tag: isAr ? 'المشتريات والحوكمة' : 'Procurement & Governance',
-    },
-  ];
-
   const store = getResourcesStore();
   const dynamicEpisodes = Array.isArray(store.podcasts)
     ? store.podcasts.map((ep) => ({
@@ -115,7 +73,7 @@ export default async function PodcastsPage({
         desc: (isAr ? ep.descAr : ep.descEn) || ep.descEn || ep.descAr || '',
         tag: (isAr ? ep.tagAr : ep.tagEn) || ep.tagEn || ep.tagAr || '',
       }))
-    : episodes;
+    : [];
 
   return (
     <div

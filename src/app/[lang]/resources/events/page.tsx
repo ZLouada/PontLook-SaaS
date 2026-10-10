@@ -62,51 +62,6 @@ export default async function EventsPage({
   const { lang } = await params;
   const isAr = lang === 'ar';
 
-  const upcomingEvents = [
-    {
-      id: 'event-riyadh-roundtable',
-      title: isAr
-        ? 'طاولة مستديرة تنفيذية: استراتيجيات سد فجوات المهارات في الرياض'
-        : 'Executive Roundtable: Closing Critical Skill Gaps in Riyadh Enterprise',
-      date: isAr ? '28 أكتوبر 2026' : 'October 28, 2026',
-      time: '10:00 AM - 12:30 PM (AST)',
-      location: isAr ? 'الرياض، المملكة العربية السعودية (حضور شخصي)' : 'Riyadh, Saudi Arabia (In-Person)',
-      type: isAr ? 'مائدة مستديرة مغلقة' : 'Chatham House Roundtable',
-      desc: isAr
-        ? 'جلسة حوارية خاصة تجمع 18 من مديري التعلم والتطوير في القطاع المصرفي والصناعي لمناقشة التحديات التدريبية ومعايير الاعتماد.'
-        : 'An intimate, invitation-only briefing for 18 enterprise HR deciders discussing provider qualification, retention, and 2027 skill targets.',
-      spotsLeft: isAr ? 'باقي 4 مقاعد' : '4 Seats Remaining',
-    },
-    {
-      id: 'event-dubai-webinar',
-      title: isAr
-        ? 'ندوة افتراضية: كيف تصيغ كراسة شروط (RFP) تحقق نتائج تدريبية حقيقية؟'
-        : 'Virtual Masterclass: Writing Bulletproof RFPs for Corporate Training',
-      date: isAr ? '12 نوفمبر 2026' : 'November 12, 2026',
-      time: '02:00 PM - 03:15 PM (GST)',
-      location: isAr ? 'عبر الإنترنت (جلسة تفاعلية)' : 'Live Interactive Webinar',
-      type: isAr ? 'ندوة افتراضية' : 'Digital Briefing',
-      desc: isAr
-        ? 'خطوات عملية لتحويل المتطلبات التدريبية الغامضة إلى نطاق عمل محدد وواضح يقضي على عروض البيع العشوائية.'
-        : 'Frameworks to translate vague department requests into clear, scoped briefs that attract top-tier verified providers.',
-      spotsLeft: isAr ? 'التسجيل متاح' : 'Open Registration',
-    },
-    {
-      id: 'event-summit-2027',
-      title: isAr
-        ? 'قمة التوفيق بين مزودي التدريب والشركات الخليجية 2027'
-        : 'GCC Corporate Training Matchmaking Summit 2027',
-      date: isAr ? '15-16 ديسمبر 2026' : 'December 15-16, 2026',
-      time: 'Full Day Summit',
-      location: isAr ? 'دبي، الإمارات العربية المتحدة' : 'Dubai, United Arab Emirates',
-      type: isAr ? 'قمة سنوية' : 'Annual Summit',
-      desc: isAr
-        ? 'الحدث الإقليمي الأكبر الذي يربط أكثر من 120 مشتري تدريب مؤسسي بأكثر من 40 جهة تدريبية معتمدة عبر اجتماعات عمل مباشرة وموجهة.'
-        : 'Pre-scheduled 1-on-1 matchmaking meetings between enterprise HR executives and accredited specialist training academies.',
-      spotsLeft: isAr ? 'الحجز المبكر متاح' : 'Early Registration Open',
-    },
-  ];
-
   const store = getResourcesStore();
   const dynamicEvents = Array.isArray(store.events)
     ? store.events.map((evt) => ({
@@ -119,7 +74,7 @@ export default async function EventsPage({
         desc: (isAr ? evt.descAr : evt.descEn) || evt.descEn || evt.descAr,
         spotsLeft: (isAr ? evt.spotsLeftAr : evt.spotsLeftEn) || evt.spotsLeftEn || evt.spotsLeftAr,
       }))
-    : upcomingEvents;
+    : [];
 
   return (
     <div

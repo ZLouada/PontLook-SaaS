@@ -689,25 +689,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                           <span className="text-xs font-semibold">{dict.nav.downloads}</span>
                         </Link>
 
-                        {/* Case Studies */}
-                        <Link
-                          href={`/${lang}/resources#case-studies`}
-                          onClick={() => setActiveDropdown(null)}
-                          className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 ${
-                            isLightSection
-                              ? 'hover:bg-neutral-100 text-neutral-800 hover:text-black'
-                              : 'hover:bg-white/[0.08] text-neutral-300 hover:text-white'
-                          }`}
-                        >
-                          <div className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
-                            isLightSection
-                              ? 'bg-neutral-100 text-neutral-700 group-hover:bg-neutral-200 group-hover:text-black'
-                              : 'bg-white/[0.06] text-neutral-300 border border-white/10 group-hover:bg-white/[0.12] group-hover:text-white'
-                          }`}>
-                            <RefreshCw size={15} />
-                          </div>
-                          <span className="text-xs font-semibold">{isRtl ? 'دراسات الحالة والأبحاث' : 'Case Studies'}</span>
-                        </Link>
+
 
                         {/* Podcasts */}
                         <Link

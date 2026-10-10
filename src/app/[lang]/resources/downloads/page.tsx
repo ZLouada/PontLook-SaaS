@@ -62,51 +62,6 @@ export default async function DownloadsPage({
   const { lang } = await params;
   const isAr = lang === 'ar';
 
-  const toolkits = [
-    {
-      id: 'toolkit-tna',
-      title: isAr
-        ? 'نموذج تحديد الاحتياجات التدريبية المؤسسية (TNA Matrix)'
-        : 'Enterprise Training Needs Analysis (TNA) Diagnostic Matrix',
-      format: 'XLSX + PDF',
-      fileSize: '2.4 MB',
-      desc: isAr
-        ? 'أداة تشخيص شاملة لفرز الفجوات المهارية عبر الأقسام، وتحديد البرامج التدريبية الحرجة بناءً على أولويات العمل.'
-        : 'Structured diagnostic matrix to identify department-level skill gaps, map competency deficits, and prioritize high-impact training.',
-      features: isAr
-        ? ['مصفوفة جدارة لـ 14 وظيفة رئيسية', 'حساب تلقائي لدرجة الأولوية', 'متوافق مع تقارير القيادة']
-        : ['Competency benchmarks across 14 job roles', 'Automated criticality scoring', 'Executive-ready summary dashboard'],
-    },
-    {
-      id: 'toolkit-rfp',
-      title: isAr
-        ? 'مصفوفة تقييم ومقارنة عروض مزودي التدريب (Provider Scorecard)'
-        : 'Corporate Training Provider RFP Evaluation Scorecard',
-      format: 'XLSX Template',
-      fileSize: '1.8 MB',
-      desc: isAr
-        ? 'معايير علمية لفحص عروض التدريب، تقييم سيرة المدربين، ومقارنة التكاليف والمخرجات دون تحيز.'
-        : 'Objective evaluation rubric to compare provider proposals, audit trainer credentials, and verify track records with SLA clauses.',
-      features: isAr
-        ? ['وزن نسبي لجودة المدرب والمحتوى', 'مقارنة التكاليف بالساعة والشخص', 'بنود حوكمة وضمان الأداء']
-        : ['Weighted scoring for trainer pedagogy', 'Per-seat & hourly cost normalization', 'Performance guarantee contract clauses'],
-    },
-    {
-      id: 'toolkit-budget',
-      title: isAr
-        ? 'حاسبة العائد الاستثماري لمبادرات التدريب والتوطين'
-        : 'GCC Workforce Nationalization & Training ROI Calculator',
-      format: 'Interactive Sheet',
-      fileSize: '3.1 MB',
-      desc: isAr
-        ? 'نموذج مالي لحساب التكاليف الحقيقية، أثر تقليل دوران الموظفين، والعائد على الاستثمار التدريبي لبرامج التوطين.'
-        : 'Financial model to project training payback, retention gains, and net ROI for Saudization and Emiratization talent cohorts.',
-      features: isAr
-        ? ['حساب تكلفة الاستبدال والدوران', 'معادلات معتمدة لحساب الـ ROI', 'قوالب عرض لمديري المالية']
-        : ['Turnover reduction modeling', 'Standardized Phillips/Kirkpatrick ROI formulas', 'CFO-ready business case slide template'],
-    },
-  ];
-
   const store = getResourcesStore();
   const dynamicToolkits = Array.isArray(store.downloads)
     ? store.downloads.map((dl) => ({
@@ -117,7 +72,7 @@ export default async function DownloadsPage({
         desc: (isAr ? dl.descAr : dl.descEn) || dl.descEn || dl.descAr,
         features: (isAr ? dl.featuresAr : dl.featuresEn) || [],
       }))
-    : toolkits;
+    : [];
 
   return (
     <div

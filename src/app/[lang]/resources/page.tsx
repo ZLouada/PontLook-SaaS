@@ -101,45 +101,7 @@ export default async function ResourcesPage({
   const editorPickEvent = store.editorPickEvent;
   const editorPickToolkit = store.editorPickToolkit;
 
-  // Curated fallback articles for rich presentation
-  const fallbackArticles = [
-    {
-      title: isAr
-        ? 'بناء المهارات القيادية في عصر الذكاء الاصطناعي: ٥ كفاءات غير قابلة للتفاوض'
-        : 'Human Skills in the Age of AI: 5 Non-Negotiable Leadership Capabilities',
-      category: isAr ? 'استراتيجيات التدريب' : 'L&D STRATEGIES',
-      readTime: isAr ? '٦ دقائق قراءة' : '6 min read',
-      date: isAr ? '٢٥ سبتمبر ٢٠٢٦' : 'Sep 25, 2026',
-      excerpt: isAr
-        ? 'كيف توازن المنشآت الرائدة بين الأتمتة التقنية وتطوير التفكير النقدي، والتواصل التنفيذي، والذكاء العاطفي لفرق العمل.'
-        : 'How leading enterprises balance technical automation with critical thinking, executive communication, and emotional resilience.',
-      slug: 'human-skills-in-the-age-of-ai',
-    },
-    {
-      title: isAr
-        ? 'مواءمة التدريب مع مستهدفات التوطين (نطاقات ونافس): دليل الموارد البشرية'
-        : 'Saudization & Emiratization ROI: Aligning L&D With National Quotas',
-      category: isAr ? 'حوكمة وتوطين' : 'NATIONAL TALENT',
-      readTime: isAr ? '٨ دقائق قراءة' : '8 min read',
-      date: isAr ? '١٨ سبتمبر ٢٠٢٦' : 'Sep 18, 2026',
-      excerpt: isAr
-        ? 'تحويل متطلبات التوطين من مجرد أرقام امتثال إلى برامج تطوير وظيفي مستدامة تعزز الإنتاجية والولاء المؤسسي.'
-        : 'Transforming compliance quotas into high-retention talent pipelines through accredited vocational and corporate academies.',
-      slug: 'saudization-emiratization-roi-framework',
-    },
-    {
-      title: isAr
-        ? 'كيف تحسب العائد الفعلي على الاستثمار التدريبي (ROI) لفرق المبيعات والعمليات؟'
-        : 'How to Calculate True Corporate Training ROI for Enterprise Teams',
-      category: isAr ? 'قياس الأثر' : 'IMPACT & METRICS',
-      readTime: isAr ? '٥ دقائق قراءة' : '5 min read',
-      date: isAr ? '١٢ سبتمبر ٢٠٢٦' : 'Sep 12, 2026',
-      excerpt: isAr
-        ? 'صيغ عملية ومؤشرات أداء واضحة لعزل أثر البرامج التدريبية وقياس مساهمتها المباشرة في الإيرادات وتقليل الأخطاء.'
-        : 'Actionable equations and KPI matrices to isolate training effects and quantify operational improvements for executive boards.',
-      slug: 'calculate-true-corporate-training-roi',
-    },
-  ];
+
 
   const dynamicArticles = Array.isArray(store.articles)
     ? store.articles.map((art) => ({
@@ -158,7 +120,6 @@ export default async function ResourcesPage({
     { label: isAr ? 'المدونة' : 'Blog', href: `/${lang}/resources/blog` },
     { label: isAr ? 'الفعاليات' : 'Events', href: `/${lang}/resources/events` },
     { label: isAr ? 'التحميلات' : 'Downloads', href: `/${lang}/resources/downloads` },
-    { label: isAr ? 'دراسات الحالة' : 'Case Studies', href: '#case-studies' },
     { label: isAr ? 'البودكاست' : 'Podcasts', href: `/${lang}/resources/podcasts` },
   ];
 
@@ -487,93 +448,7 @@ export default async function ResourcesPage({
           </section>
         )}
 
-        {/* ======================================================== */}
-        {/* 6. CASE STUDIES SECTION (#case-studies)                  */}
-        {/* ======================================================== */}
-        <section id="case-studies" className="mb-20 sm:mb-28 pt-10 border-t border-neutral-200 scroll-mt-28 lg:scroll-mt-36">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase bg-neutral-100 text-neutral-800 border border-neutral-200 mb-3">
-                <Sparkles size={12} className="text-[#FF5C00]" />
-                <span>{isAr ? 'دراسات الحالة الإقليمية' : 'REGIONAL CASE STUDIES'}</span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-neutral-950">
-                {isAr ? 'كيف حققت كبرى المنشآت نتائج استثنائية مع PontLook' : 'Real Workforce Outcomes Across Saudi Arabia & UAE'}
-              </h2>
-            </div>
-            <Link
-              href={`/${lang}/find-training`}
-              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-600 hover:text-black transition-colors shrink-0"
-            >
-              <span>{isAr ? 'ابدأ تشخيص احتياجك' : 'Start workforce assessment'}</span>
-              <ArrowRight size={14} className="rtl:-scale-x-100" />
-            </Link>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Case 1 */}
-            <div className="p-7 sm:p-8 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between space-y-6 group">
-              <div>
-                <div className="flex items-center justify-between gap-3 mb-5">
-                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-white text-neutral-800 border border-neutral-200 shadow-2xs">
-                    {isAr ? 'قطاع البنوك والمالية · الرياض' : 'Financial Services · Riyadh'}
-                  </span>
-                  <span className="text-xs font-mono text-[#FF5C00] font-bold px-2.5 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25">
-                    {isAr ? '٨٥٠ موظف مدرب' : '850+ Participants'}
-                  </span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-black leading-snug mb-3">
-                  {isAr
-                    ? 'تدريب ٨٥٠ موظفاً بنكياً على التحول الرقمي بمعدل رضا ٩٦٪'
-                    : 'Upskilling 850 Bank Officers on Digital Product Management with 96% Satisfaction'}
-                </h3>
-                <p className="text-sm text-neutral-600 leading-relaxed font-normal">
-                  {isAr
-                    ? 'قامت PontLook بتشخيص الاحتياج الدقيق وربط المصرف بثلاثة مراكز تدريب معتمدة خلال 48 ساعة فقط، مما وفّر ٤ أسابيع من البحث التقليدي وخفّض تكلفة المشتريات بنسبة ٢٨٪.'
-                    : 'PontLook matched the bank with 3 TVTC-accredited fintech academies within 48 hours, saving 4 weeks of procurement delays and eliminating all agency broker markups.'}
-                </p>
-              </div>
-              <div className="pt-4 border-t border-neutral-200 flex items-center justify-between text-xs text-neutral-500">
-                <span className="flex items-center gap-1.5 text-neutral-700">
-                  <CheckCircle2 size={13} className="text-[#FF5C00]" />
-                  {isAr ? 'النتيجة: ٩٢٪ وصول للاجتماعات' : 'Outcome: 92% Meeting Completion'}
-                </span>
-                <span className="text-neutral-900 font-semibold px-2.5 py-0.5 rounded-md bg-white border border-neutral-200 shadow-2xs">{isAr ? 'صفر رسوم وساطة' : '$0 Retainer Cost'}</span>
-              </div>
-            </div>
-
-            {/* Case 2 */}
-            <div className="p-7 sm:p-8 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between space-y-6 group">
-              <div>
-                <div className="flex items-center justify-between gap-3 mb-5">
-                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase bg-white text-neutral-800 border border-neutral-200 shadow-2xs">
-                    {isAr ? 'اللوجستيات وسلاسل الإمداد · دبي' : 'Logistics Conglomerate · Dubai'}
-                  </span>
-                  <span className="text-xs font-mono text-[#FF5C00] font-bold px-2.5 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25">
-                    {isAr ? '٣٢٠ مهندساً' : '320 Engineers'}
-                  </span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-black leading-snug mb-3">
-                  {isAr
-                    ? 'برنامج تدريب هندسي معتمد لبرنامج نافس في زمن قياسي'
-                    : 'Rapid Delivery of a Nafis-Compliant Technical Engineering Cohort'}
-                </h3>
-                <p className="text-sm text-neutral-600 leading-relaxed font-normal">
-                  {isAr
-                    ? 'ربط مباشر مع معهد تدريب فني متخصص في دبي لتصميم منهج عملي مخصص لسلاسل الإمداد وتأهيل الكوادر الوطنية خلال مهلة تعاقدية تقل عن أسبوعين.'
-                    : 'Direct bilateral matchmaking delivered a customized syllabus from a KHDA-certified institute, achieving 100% on-time deployment under a strict 14-day SLA.'}
-                </p>
-              </div>
-              <div className="pt-4 border-t border-neutral-200 flex items-center justify-between text-xs text-neutral-500">
-                <span className="flex items-center gap-1.5 text-neutral-700">
-                  <CheckCircle2 size={13} className="text-[#FF5C00]" />
-                  {isAr ? 'النتيجة: اعتماد كامل للميزانية' : 'Outcome: Confirmed Budget Delivery'}
-                </span>
-                <span className="text-neutral-900 font-semibold px-2.5 py-0.5 rounded-md bg-white border border-neutral-200 shadow-2xs">{isAr ? 'فحص كامل للاعتمادات' : '100% Verified'}</span>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* ======================================================== */}
         {/* 7. NEWSLETTER SUBSCRIPTION BLOCK                         */}
