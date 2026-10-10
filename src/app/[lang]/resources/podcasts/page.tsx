@@ -64,15 +64,18 @@ export default async function PodcastsPage({
 
   const store = getResourcesStore();
   const dynamicEpisodes = Array.isArray(store.podcasts)
-    ? store.podcasts.map((ep) => ({
-        id: ep.id,
-        title: (isAr ? ep.titleAr : ep.titleEn) || ep.titleEn || ep.titleAr,
-        guest: (isAr ? ep.guestAr : ep.guestEn) || ep.guestEn || ep.guestAr || '',
-        duration: ep.duration || '',
-        date: (isAr ? ep.dateAr : ep.dateEn) || ep.dateEn || ep.dateAr || '',
-        desc: (isAr ? ep.descAr : ep.descEn) || ep.descEn || ep.descAr || '',
-        tag: (isAr ? ep.tagAr : ep.tagEn) || ep.tagEn || ep.tagAr || '',
-      }))
+    ? store.podcasts
+        .filter((ep) => ep.status !== 'draft')
+        .map((ep) => ({
+          id: ep.id,
+          title: (isAr ? ep.titleAr || ep.title_ar : ep.titleEn || ep.title_en) || ep.titleEn || ep.title_en || (isAr ? 'بودكاست' : 'Podcast'),
+          guest: (isAr ? ep.guestAr || ep.guest_ar : ep.guestEn || ep.guest_en) || '',
+          duration: ep.duration || ep.dur || '',
+          date: (isAr ? ep.dateAr || ep.date_ar : ep.dateEn || ep.date_en) || '',
+          desc: (isAr ? ep.descAr || ep.desc_ar : ep.descEn || ep.desc_en) || '',
+          tag: (isAr ? ep.tagAr || ep.topic_ar : ep.tagEn || ep.topic_en) || ep.topic_en || ep.topic_ar || '',
+          audioUrl: ep.audioUrl || ep.audio || '',
+        }))
     : [];
 
   return (
@@ -160,13 +163,25 @@ export default async function PodcastsPage({
                   </div>
 
                   <div className="w-full md:w-auto shrink-0 flex items-center gap-3">
-                    <button
-                      type="button"
-                      className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all shadow-sm active:scale-95"
-                    >
-                      <Headphones size={14} />
-                      <span>{isAr ? 'استمع للحلقة' : 'Listen Episode'}</span>
-                    </button>
+                    {ep.audioUrl ? (
+                      <a
+                        href={ep.audioUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all shadow-sm active:scale-95"
+                      >
+                        <Headphones size={14} />
+                        <span>{isAr ? 'استمع للحلقة' : 'Listen Episode'}</span>
+                      </a>
+                    ) : (
+                      <button
+                        type="button"
+                        className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all shadow-sm active:scale-95"
+                      >
+                        <Headphones size={14} />
+                        <span>{isAr ? 'استمع للحلقة' : 'Listen Episode'}</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               </Reveal>

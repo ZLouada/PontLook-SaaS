@@ -388,7 +388,7 @@ export default async function ResourcesPage({
         {/* ======================================================== */}
         {/* 5. EXECUTIVE EVENTS & WEBINARS SECTION                   */}
         {/* ======================================================== */}
-        {Array.isArray(store.events) && store.events.length > 0 && (
+        {Array.isArray(store.events) && store.events.filter((e) => e.status !== 'draft').length > 0 && (
           <section className="mb-20 sm:mb-28 pt-10 border-t border-neutral-200">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
               <div>
@@ -409,41 +409,44 @@ export default async function ResourcesPage({
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-              {store.events.slice(0, 3).map((evt) => {
-                const title = (isAr ? evt.titleAr : evt.titleEn) || evt.titleEn || evt.titleAr;
-                const date = (isAr ? evt.dateAr : evt.dateEn) || evt.dateEn || evt.dateAr;
-                const type = (isAr ? evt.typeAr : evt.typeEn) || evt.typeEn || evt.typeAr || (isAr ? 'فعالية' : 'Event');
-                const desc = (isAr ? evt.descAr : evt.descEn) || evt.descEn || evt.descAr;
-                return (
-                  <div
-                    key={evt.id}
-                    className="p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 flex flex-col justify-between space-y-6 shadow-sm"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between text-xs font-mono text-neutral-500 mb-4">
-                        <span className="px-2.5 py-0.5 rounded-full bg-neutral-200 text-neutral-800 font-bold text-[10px] uppercase">
-                          {type}
-                        </span>
-                        {date && <span className="text-[#FF5C00] font-bold">{date}</span>}
-                      </div>
-                      <h3 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 leading-snug mb-2">
-                        {title}
-                      </h3>
-                      {desc && (
-                        <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
-                          {desc}
-                        </p>
-                      )}
-                    </div>
-                    <Link
-                      href={`/${lang}/resources/events`}
-                      className="w-full py-2.5 px-4 rounded-xl border border-neutral-300 bg-white hover:bg-neutral-950 text-neutral-900 hover:text-white font-semibold text-xs text-center transition-all shadow-xs"
+              {store.events
+                .filter((e) => e.status !== 'draft')
+                .slice(0, 3)
+                .map((evt) => {
+                  const title = (isAr ? evt.titleAr || evt.title_ar : evt.titleEn || evt.title_en) || evt.titleEn || evt.title_en || (isAr ? 'فعالية' : 'Event');
+                  const date = (isAr ? evt.dateAr || evt.date_ar : evt.dateEn || evt.date_en) || evt.when || '';
+                  const type = (isAr ? evt.typeAr || evt.type_ar : evt.typeEn || evt.type_en) || (isAr ? 'فعالية' : 'Event');
+                  const desc = (isAr ? evt.descAr || evt.desc_ar : evt.descEn || evt.desc_en) || '';
+                  return (
+                    <div
+                      key={evt.id}
+                      className="p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 flex flex-col justify-between space-y-6 shadow-sm"
                     >
-                      {isAr ? 'تسجيل مقعد مجاني' : 'Register for Free'}
-                    </Link>
-                  </div>
-                );
-              })}
+                      <div>
+                        <div className="flex items-center justify-between text-xs font-mono text-neutral-500 mb-4">
+                          <span className="px-2.5 py-0.5 rounded-full bg-neutral-200 text-neutral-800 font-bold text-[10px] uppercase">
+                            {type}
+                          </span>
+                          {date && <span className="text-[#FF5C00] font-bold">{date}</span>}
+                        </div>
+                        <h3 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 leading-snug mb-2">
+                          {title}
+                        </h3>
+                        {desc && (
+                          <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
+                            {desc}
+                          </p>
+                        )}
+                      </div>
+                      <Link
+                        href={`/${lang}/resources/events`}
+                        className="w-full py-2.5 px-4 rounded-xl border border-neutral-300 bg-white hover:bg-neutral-950 text-neutral-900 hover:text-white font-semibold text-xs text-center transition-all shadow-xs"
+                      >
+                        {isAr ? 'تسجيل مقعد مجاني' : 'Register for Free'}
+                      </Link>
+                    </div>
+                  );
+                })}
             </div>
           </section>
         )}

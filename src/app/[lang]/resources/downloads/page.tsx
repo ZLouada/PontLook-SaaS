@@ -64,14 +64,17 @@ export default async function DownloadsPage({
 
   const store = getResourcesStore();
   const dynamicToolkits = Array.isArray(store.downloads)
-    ? store.downloads.map((dl) => ({
-        id: dl.id,
-        title: (isAr ? dl.titleAr : dl.titleEn) || dl.titleEn || dl.titleAr,
-        format: dl.format || 'PDF',
-        fileSize: dl.fileSize || '1.0 MB',
-        desc: (isAr ? dl.descAr : dl.descEn) || dl.descEn || dl.descAr,
-        features: (isAr ? dl.featuresAr : dl.featuresEn) || [],
-      }))
+    ? store.downloads
+        .filter((dl) => dl.status !== 'draft')
+        .map((dl) => ({
+          id: dl.id,
+          title: (isAr ? dl.titleAr || dl.title_ar : dl.titleEn || dl.title_en) || dl.titleEn || dl.title_en || (isAr ? 'أداة عمل' : 'Toolkit'),
+          format: dl.format || 'PDF',
+          fileSize: dl.fileSize || dl.size || '1.0 MB',
+          desc: (isAr ? dl.descAr || dl.desc_ar : dl.descEn || dl.desc_en) || '',
+          features: (isAr ? (dl.featuresAr?.length ? dl.featuresAr : dl.feat_ar) : (dl.featuresEn?.length ? dl.featuresEn : dl.feat_en)) || [],
+          fileUrl: dl.fileUrl || dl.url || '',
+        }))
     : [];
 
   return (
@@ -146,7 +149,9 @@ export default async function DownloadsPage({
 
                   <div>
                     <Link
-                      href={`/${lang}/contact?interest=${encodeURIComponent(tool.id)}`}
+                      href={tool.fileUrl ? tool.fileUrl : `/${lang}/contact?interest=${encodeURIComponent(tool.id)}`}
+                      target={tool.fileUrl && tool.fileUrl.startsWith('http') ? '_blank' : undefined}
+                      rel={tool.fileUrl && tool.fileUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
                       className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all active:scale-95 shadow-sm"
                     >
                       <Download size={14} />

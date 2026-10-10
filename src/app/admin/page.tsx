@@ -243,7 +243,7 @@ export default function AdminPage() {
       articles: {
         one: 'article',
         add: 'Add Article (New Blog)',
-        sum: (o: any) => o.title_en || o.titleEn || 'Untitled article',
+        sum: (o: any) => o.title_en || o.titleEn || o.title_ar || o.titleAr || 'Untitled article',
         sub: (o: any) => (o.slug ? '/resources/blog/' + o.slug : 'no slug yet'),
         F: [
           ['title', 'Title', 'text', 1],
@@ -259,8 +259,8 @@ export default function AdminPage() {
       downloads: {
         one: 'toolkit',
         add: 'Add Toolkit',
-        sum: (o: any) => o.title_en || o.titleEn || 'Untitled toolkit',
-        sub: (o: any) => o.format || '',
+        sum: (o: any) => o.title_en || o.titleEn || o.title_ar || o.titleAr || 'Untitled toolkit',
+        sub: (o: any) => [o.format || 'PDF', o.size || o.fileSize].filter(Boolean).join(' · ') || 'PDF document',
         F: [
           ...T,
           ['format', 'Document format tag', 'text', 0, 'XLSX + PDF', 0, 1],
@@ -273,8 +273,8 @@ export default function AdminPage() {
       events: {
         one: 'event',
         add: 'Add Event',
-        sum: (o: any) => o.title_en || o.titleEn || 'Untitled event',
-        sub: (o: any) => o.when || '',
+        sum: (o: any) => o.title_en || o.titleEn || o.title_ar || o.titleAr || 'Untitled event',
+        sub: (o: any) => o.when || o.dateEn || o.date_en || '',
         F: [
           ...T,
           ['when', 'Date & time', 'text', 0, 'October 28, 2026, 10:00 AM - 12:30 PM (AST)'],
@@ -288,8 +288,8 @@ export default function AdminPage() {
       podcasts: {
         one: 'episode',
         add: 'Add Episode',
-        sum: (o: any) => o.title_en || o.titleEn || 'Untitled episode',
-        sub: (o: any) => o.dur || o.duration || '',
+        sum: (o: any) => o.title_en || o.titleEn || o.title_ar || o.titleAr || 'Untitled episode',
+        sub: (o: any) => [o.dur || o.duration, o.guest_en || o.guestEn].filter(Boolean).join(' · ') || 'Audio briefing',
         F: [
           ...T,
           ['guest', 'Featured guest (name & title)', 'text', 1, 'Sarah Al-Mansoor, Human Capital Advisory Director'],
@@ -316,7 +316,7 @@ export default function AdminPage() {
           o[k + '_ar'] = '';
         } else o[k] = '';
       });
-      o.status = 'draft';
+      o.status = 'published';
       o.seo = { en: {}, ar: {} };
       return o;
     };
@@ -380,15 +380,129 @@ export default function AdminPage() {
       d.pick1 = d.pick1 || d.editorPickEvent || mk(PK1);
       d.pick2 = d.pick2 || d.editorPickToolkit || mk(PK2);
 
-      ['articles', 'downloads', 'events', 'podcasts'].forEach((n) => {
-        d[n] = d[n] || [];
-        d[n].forEach((o: any) => {
-          o.status = o.status || 'published';
-          o.seo = o.seo || {};
-          o.seo.en = o.seo.en || {};
-          o.seo.ar = o.seo.ar || {};
-        });
+      d.articles = d.articles || [];
+      d.articles.forEach((o: any) => {
+        o.title_en = o.title_en ?? o.titleEn ?? '';
+        o.title_ar = o.title_ar ?? o.titleAr ?? '';
+        o.titleEn = o.title_en;
+        o.titleAr = o.title_ar;
+        o.slug = o.slug || '';
+        o.cat_en = o.cat_en ?? o.categoryEn ?? '';
+        o.cat_ar = o.cat_ar ?? o.categoryAr ?? '';
+        o.categoryEn = o.cat_en;
+        o.categoryAr = o.cat_ar;
+        o.read_en = o.read_en ?? o.readTimeEn ?? '';
+        o.read_ar = o.read_ar ?? o.readTimeAr ?? '';
+        o.readTimeEn = o.read_en;
+        o.readTimeAr = o.read_ar;
+        o.date_en = o.date_en ?? o.dateEn ?? '';
+        o.date_ar = o.date_ar ?? o.dateAr ?? '';
+        o.dateEn = o.date_en;
+        o.dateAr = o.date_ar;
+        o.excerpt_en = o.excerpt_en ?? o.excerptEn ?? '';
+        o.excerpt_ar = o.excerpt_ar ?? o.excerptAr ?? '';
+        o.excerptEn = o.excerpt_en;
+        o.excerptAr = o.excerpt_ar;
+        o.body_en = o.body_en ?? o.contentEn ?? '';
+        o.body_ar = o.body_ar ?? o.contentAr ?? '';
+        o.contentEn = o.body_en;
+        o.contentAr = o.body_ar;
+        o.img = o.img ?? o.image ?? '';
+        o.image = o.img;
+        o.status = o.status || 'published';
+        o.seo = o.seo || { en: {}, ar: {} };
       });
+
+      d.downloads = d.downloads || [];
+      d.downloads.forEach((o: any) => {
+        o.title_en = o.title_en ?? o.titleEn ?? '';
+        o.title_ar = o.title_ar ?? o.titleAr ?? '';
+        o.titleEn = o.title_en;
+        o.titleAr = o.title_ar;
+        o.desc_en = o.desc_en ?? o.descEn ?? '';
+        o.desc_ar = o.desc_ar ?? o.descAr ?? '';
+        o.descEn = o.desc_en;
+        o.descAr = o.desc_ar;
+        o.format = o.format || 'PDF';
+        o.size = o.size ?? o.fileSize ?? '';
+        o.fileSize = o.size;
+        o.url = o.url ?? o.fileUrl ?? '';
+        o.fileUrl = o.url;
+        o.img = o.img ?? o.image ?? '';
+        o.image = o.img;
+        o.feat_en = Array.isArray(o.feat_en) ? o.feat_en : (Array.isArray(o.featuresEn) ? o.featuresEn : []);
+        o.feat_ar = Array.isArray(o.feat_ar) ? o.feat_ar : (Array.isArray(o.featuresAr) ? o.featuresAr : []);
+        o.featuresEn = o.feat_en;
+        o.featuresAr = o.feat_ar;
+        o.status = o.status || 'published';
+        o.seo = o.seo || { en: {}, ar: {} };
+      });
+
+      d.events = d.events || [];
+      d.events.forEach((o: any) => {
+        o.title_en = o.title_en ?? o.titleEn ?? '';
+        o.title_ar = o.title_ar ?? o.titleAr ?? '';
+        o.titleEn = o.title_en;
+        o.titleAr = o.title_ar;
+        o.desc_en = o.desc_en ?? o.descEn ?? '';
+        o.desc_ar = o.desc_ar ?? o.descAr ?? '';
+        o.descEn = o.desc_en;
+        o.descAr = o.desc_ar;
+        o.when = o.when ?? (o.dateEn ? (o.dateEn + (o.time ? ', ' + o.time : '')) : '');
+        o.dateEn = o.dateEn || o.when;
+        o.dateAr = o.dateAr || o.when;
+        o.loc_en = o.loc_en ?? o.locationEn ?? '';
+        o.loc_ar = o.loc_ar ?? o.locationAr ?? '';
+        o.locationEn = o.loc_en;
+        o.locationAr = o.loc_ar;
+        o.type_en = o.type_en ?? o.typeEn ?? '';
+        o.type_ar = o.type_ar ?? o.typeAr ?? '';
+        o.typeEn = o.type_en;
+        o.typeAr = o.type_ar;
+        o.seats_en = o.seats_en ?? o.spotsLeftEn ?? '';
+        o.seats_ar = o.seats_ar ?? o.spotsLeftAr ?? '';
+        o.spotsLeftEn = o.seats_en;
+        o.spotsLeftAr = o.seats_ar;
+        o.img = o.img ?? o.image ?? '';
+        o.image = o.img;
+        o.rsvp = o.rsvp ?? o.link ?? '';
+        o.link = o.rsvp;
+        o.status = o.status || 'published';
+        o.seo = o.seo || { en: {}, ar: {} };
+      });
+
+      d.podcasts = d.podcasts || [];
+      d.podcasts.forEach((o: any) => {
+        o.title_en = o.title_en ?? o.titleEn ?? '';
+        o.title_ar = o.title_ar ?? o.titleAr ?? '';
+        o.titleEn = o.title_en;
+        o.titleAr = o.title_ar;
+        o.desc_en = o.desc_en ?? o.descEn ?? '';
+        o.desc_ar = o.desc_ar ?? o.descAr ?? '';
+        o.descEn = o.desc_en;
+        o.descAr = o.desc_ar;
+        o.guest_en = o.guest_en ?? o.guestEn ?? '';
+        o.guest_ar = o.guest_ar ?? o.guestAr ?? '';
+        o.guestEn = o.guest_en;
+        o.guestAr = o.guest_ar;
+        o.dur = o.dur ?? o.duration ?? '';
+        o.duration = o.dur;
+        o.date_en = o.date_en ?? o.dateEn ?? '';
+        o.date_ar = o.date_ar ?? o.dateAr ?? '';
+        o.dateEn = o.date_en;
+        o.dateAr = o.date_ar;
+        o.topic_en = o.topic_en ?? o.tagEn ?? '';
+        o.topic_ar = o.topic_ar ?? o.tagAr ?? '';
+        o.tagEn = o.topic_en;
+        o.tagAr = o.topic_ar;
+        o.img = o.img ?? o.image ?? '';
+        o.image = o.img;
+        o.audio = o.audio ?? o.audioUrl ?? '';
+        o.audioUrl = o.audio;
+        o.status = o.status || 'published';
+        o.seo = o.seo || { en: {}, ar: {} };
+      });
+
       return d;
     };
 
@@ -1022,6 +1136,67 @@ export default function AdminPage() {
       setP(p, t.value);
       mark(p);
 
+      // Automatic property bridging for bidirectional compatibility
+      if (p.startsWith('events.')) {
+        const parts = p.split('.');
+        const idx = parts[1];
+        if (p.endsWith('.when')) setP(`events.${idx}.dateEn`, t.value);
+        if (p.endsWith('.loc_en')) setP(`events.${idx}.locationEn`, t.value);
+        if (p.endsWith('.loc_ar')) setP(`events.${idx}.locationAr`, t.value);
+        if (p.endsWith('.type_en')) setP(`events.${idx}.typeEn`, t.value);
+        if (p.endsWith('.type_ar')) setP(`events.${idx}.typeAr`, t.value);
+        if (p.endsWith('.seats_en')) setP(`events.${idx}.spotsLeftEn`, t.value);
+        if (p.endsWith('.seats_ar')) setP(`events.${idx}.spotsLeftAr`, t.value);
+        if (p.endsWith('.rsvp')) setP(`events.${idx}.link`, t.value);
+        if (p.endsWith('.img')) setP(`events.${idx}.image`, t.value);
+        if (p.endsWith('.title_en')) setP(`events.${idx}.titleEn`, t.value);
+        if (p.endsWith('.title_ar')) setP(`events.${idx}.titleAr`, t.value);
+        if (p.endsWith('.desc_en')) setP(`events.${idx}.descEn`, t.value);
+        if (p.endsWith('.desc_ar')) setP(`events.${idx}.descAr`, t.value);
+      } else if (p.startsWith('podcasts.')) {
+        const parts = p.split('.');
+        const idx = parts[1];
+        if (p.endsWith('.dur')) setP(`podcasts.${idx}.duration`, t.value);
+        if (p.endsWith('.topic_en')) setP(`podcasts.${idx}.tagEn`, t.value);
+        if (p.endsWith('.topic_ar')) setP(`podcasts.${idx}.tagAr`, t.value);
+        if (p.endsWith('.guest_en')) setP(`podcasts.${idx}.guestEn`, t.value);
+        if (p.endsWith('.guest_ar')) setP(`podcasts.${idx}.guestAr`, t.value);
+        if (p.endsWith('.date_en')) setP(`podcasts.${idx}.dateEn`, t.value);
+        if (p.endsWith('.date_ar')) setP(`podcasts.${idx}.dateAr`, t.value);
+        if (p.endsWith('.audio')) setP(`podcasts.${idx}.audioUrl`, t.value);
+        if (p.endsWith('.img')) setP(`podcasts.${idx}.image`, t.value);
+        if (p.endsWith('.title_en')) setP(`podcasts.${idx}.titleEn`, t.value);
+        if (p.endsWith('.title_ar')) setP(`podcasts.${idx}.titleAr`, t.value);
+        if (p.endsWith('.desc_en')) setP(`podcasts.${idx}.descEn`, t.value);
+        if (p.endsWith('.desc_ar')) setP(`podcasts.${idx}.descAr`, t.value);
+      } else if (p.startsWith('downloads.')) {
+        const parts = p.split('.');
+        const idx = parts[1];
+        if (p.endsWith('.size')) setP(`downloads.${idx}.fileSize`, t.value);
+        if (p.endsWith('.url')) setP(`downloads.${idx}.fileUrl`, t.value);
+        if (p.endsWith('.img')) setP(`downloads.${idx}.image`, t.value);
+        if (p.endsWith('.title_en')) setP(`downloads.${idx}.titleEn`, t.value);
+        if (p.endsWith('.title_ar')) setP(`downloads.${idx}.titleAr`, t.value);
+        if (p.endsWith('.desc_en')) setP(`downloads.${idx}.descEn`, t.value);
+        if (p.endsWith('.desc_ar')) setP(`downloads.${idx}.descAr`, t.value);
+      } else if (p.startsWith('articles.')) {
+        const parts = p.split('.');
+        const idx = parts[1];
+        if (p.endsWith('.cat_en')) setP(`articles.${idx}.categoryEn`, t.value);
+        if (p.endsWith('.cat_ar')) setP(`articles.${idx}.categoryAr`, t.value);
+        if (p.endsWith('.read_en')) setP(`articles.${idx}.readTimeEn`, t.value);
+        if (p.endsWith('.read_ar')) setP(`articles.${idx}.readTimeAr`, t.value);
+        if (p.endsWith('.date_en')) setP(`articles.${idx}.dateEn`, t.value);
+        if (p.endsWith('.date_ar')) setP(`articles.${idx}.dateAr`, t.value);
+        if (p.endsWith('.excerpt_en')) setP(`articles.${idx}.excerptEn`, t.value);
+        if (p.endsWith('.excerpt_ar')) setP(`articles.${idx}.excerptAr`, t.value);
+        if (p.endsWith('.body_en')) setP(`articles.${idx}.contentEn`, t.value);
+        if (p.endsWith('.body_ar')) setP(`articles.${idx}.contentAr`, t.value);
+        if (p.endsWith('.img')) setP(`articles.${idx}.image`, t.value);
+        if (p.endsWith('.title_en')) setP(`articles.${idx}.titleEn`, t.value);
+        if (p.endsWith('.title_ar')) setP(`articles.${idx}.titleAr`, t.value);
+      }
+
       if (p.includes('.seo.')) {
         const c = document.querySelector(`[data-c="${p}"]`);
         if (c) c.textContent = t.value.length + ' characters';
@@ -1031,6 +1206,10 @@ export default function AdminPage() {
       if (/^\w+\.\d+\.title_en$/.test(p)) {
         const s = t.closest('.it')?.querySelector('.sm b');
         if (s) s.textContent = t.value || 'Untitled';
+      }
+      if (/^\w+\.\d+\.(when|dur|format|size|slug)$/.test(p)) {
+        const s = t.closest('.it')?.querySelector('.sm em');
+        if (s) s.textContent = t.value || '';
       }
     };
 
@@ -1273,16 +1452,28 @@ export default function AdminPage() {
         mark(d.p);
         render();
       } else if (a === 'addb' && d.p) {
-        const arr = getP(d.p);
-        if (Array.isArray(arr)) {
-          arr.push('');
-          mark(d.p);
-          render();
+        let arr = getP(d.p);
+        if (!Array.isArray(arr)) {
+          arr = [];
+          setP(d.p, arr);
         }
+        arr.push('');
+        if (d.p.includes('.feat_en')) {
+          setP(d.p.replace('.feat_en', '.featuresEn'), arr);
+        } else if (d.p.includes('.feat_ar')) {
+          setP(d.p.replace('.feat_ar', '.featuresAr'), arr);
+        }
+        mark(d.p);
+        render();
       } else if (a === 'delb' && d.p && d.i !== undefined) {
-        const arr = getP(d.p);
+        let arr = getP(d.p);
         if (Array.isArray(arr)) {
           arr.splice(+d.i, 1);
+          if (d.p.includes('.feat_en')) {
+            setP(d.p.replace('.feat_en', '.featuresEn'), arr);
+          } else if (d.p.includes('.feat_ar')) {
+            setP(d.p.replace('.feat_ar', '.featuresAr'), arr);
+          }
           mark(d.p);
           render();
         }

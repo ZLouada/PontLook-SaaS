@@ -64,16 +64,19 @@ export default async function EventsPage({
 
   const store = getResourcesStore();
   const dynamicEvents = Array.isArray(store.events)
-    ? store.events.map((evt) => ({
-        id: evt.id,
-        title: (isAr ? evt.titleAr : evt.titleEn) || evt.titleEn || evt.titleAr,
-        date: (isAr ? evt.dateAr : evt.dateEn) || evt.dateEn || evt.dateAr,
-        time: evt.time,
-        location: (isAr ? evt.locationAr : evt.locationEn) || evt.locationEn || evt.locationAr,
-        type: (isAr ? evt.typeAr : evt.typeEn) || evt.typeEn || evt.typeAr,
-        desc: (isAr ? evt.descAr : evt.descEn) || evt.descEn || evt.descAr,
-        spotsLeft: (isAr ? evt.spotsLeftAr : evt.spotsLeftEn) || evt.spotsLeftEn || evt.spotsLeftAr,
-      }))
+    ? store.events
+        .filter((evt) => evt.status !== 'draft')
+        .map((evt) => ({
+          id: evt.id,
+          title: (isAr ? evt.titleAr || evt.title_ar : evt.titleEn || evt.title_en) || evt.titleEn || evt.title_en || (isAr ? 'فعالية' : 'Event'),
+          date: (isAr ? evt.dateAr || evt.date_ar : evt.dateEn || evt.date_en) || evt.when || '',
+          time: evt.time || '',
+          location: (isAr ? evt.locationAr || evt.loc_ar : evt.locationEn || evt.loc_en) || '',
+          type: (isAr ? evt.typeAr || evt.type_ar : evt.typeEn || evt.type_en) || (isAr ? 'فعالية' : 'Event'),
+          desc: (isAr ? evt.descAr || evt.desc_ar : evt.descEn || evt.desc_en) || '',
+          spotsLeft: (isAr ? evt.spotsLeftAr || evt.seats_ar : evt.spotsLeftEn || evt.seats_en) || '',
+          link: evt.link || evt.rsvp || '',
+        }))
     : [];
 
   return (
@@ -166,8 +169,10 @@ export default async function EventsPage({
 
                   <div className="w-full lg:w-auto shrink-0">
                     <Link
-                      href={`/${lang}/contact?event=${encodeURIComponent(evt.id)}`}
+                      href={evt.link ? evt.link : `/${lang}/contact?event=${encodeURIComponent(evt.id)}`}
                       className="w-full lg:w-auto inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all active:scale-95 shadow-sm"
+                      target={evt.link && evt.link.startsWith('http') ? '_blank' : undefined}
+                      rel={evt.link && evt.link.startsWith('http') ? 'noopener noreferrer' : undefined}
                     >
                       <span>{isAr ? 'حجز مقعد / استفسار' : 'Request Invitation'}</span>
                       <ArrowRight size={14} className="rtl:-scale-x-100" />
