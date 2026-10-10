@@ -19,6 +19,13 @@ export default function AdminLoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
 
+  React.useEffect(() => {
+    // Ensure inputs are strictly empty on mount and clear any browser memory
+    setUsername('');
+    setPassword('');
+    setOtpCode('');
+  }, []);
+
   const handleCredentialsSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -42,7 +49,7 @@ export default function AdminLoginPage() {
         setDevCode(data.devCode);
         setOtpCode(data.devCode);
         setInfoMessage(
-          'Email delivery is not active (missing RESEND_API_KEY in .env.local). Temporary code provided below:'
+          'Email dispatch issue detected. Temporary emergency code provided below:'
         );
       } else {
         setDevCode(null);
@@ -156,7 +163,25 @@ export default function AdminLoginPage() {
 
           {step === 'credentials' ? (
             /* STEP 1: CREDENTIALS */
-            <form onSubmit={handleCredentialsSubmit} className="space-y-5">
+            <form onSubmit={handleCredentialsSubmit} autoComplete="off" className="space-y-5">
+              {/* Anti-autofill decoys to absorb browser credential autofill */}
+              <input
+                type="text"
+                name="fake_user_decoy"
+                style={{ position: 'absolute', opacity: 0, height: 0, width: 0, pointerEvents: 'none', zIndex: -1 }}
+                tabIndex={-1}
+                autoComplete="off"
+                readOnly
+              />
+              <input
+                type="password"
+                name="fake_pass_decoy"
+                style={{ position: 'absolute', opacity: 0, height: 0, width: 0, pointerEvents: 'none', zIndex: -1 }}
+                tabIndex={-1}
+                autoComplete="new-password"
+                readOnly
+              />
+
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-2">
                   Admin Username
@@ -164,8 +189,14 @@ export default function AdminLoginPage() {
                 <div className="relative">
                   <input
                     type="text"
-                    name="admin_username"
+                    name="pontlook_admin_usr"
+                    id="pontlook_admin_usr"
                     autoComplete="off"
+                    autoCorrect="off"
+                    autoCapitalize="none"
+                    spellCheck={false}
+                    data-lpignore="true"
+                    data-form-type="other"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
@@ -185,8 +216,14 @@ export default function AdminLoginPage() {
                 <div className="relative">
                   <input
                     type="password"
-                    name="admin_password"
+                    name="pontlook_admin_pwd"
+                    id="pontlook_admin_pwd"
                     autoComplete="new-password"
+                    autoCorrect="off"
+                    autoCapitalize="none"
+                    spellCheck={false}
+                    data-lpignore="true"
+                    data-form-type="other"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -236,9 +273,7 @@ export default function AdminLoginPage() {
               {devCode && (
                 <div className="p-4 rounded-2xl bg-[#FF5C00]/15 border border-[#FF5C00]/40 text-center my-2">
                   <p className="text-[11px] text-[#FF9E66] font-medium mb-1.5">
-                    Email service not configured in .env.local yet.
-                    <br />
-                    Use this temporary verification code:
+                    Email dispatch fallback code:
                   </p>
                   <div className="font-mono text-2xl font-extrabold text-[#FF5C00] tracking-[0.25em] bg-black/60 py-2 px-5 rounded-xl inline-block border border-[#FF5C00]/30 shadow-inner">
                     {devCode}

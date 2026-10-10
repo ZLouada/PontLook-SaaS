@@ -23,14 +23,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const otpResult = await generateAndSendOtp();
+    const origin = req.headers.get('origin') || req.headers.get('referer') || 'https://pontlook.com';
+    const otpResult = await generateAndSendOtp(origin);
 
     return NextResponse.json({
       success: true,
       sentToEmail: otpResult.sentToEmail,
       message: otpResult.sentToEmail
         ? 'Verification code sent to contact@pontlook.com'
-        : 'Email service is not configured yet (missing RESEND_API_KEY). Your verification code is provided below.',
+        : 'Failed to deliver verification email. Your fallback code is provided below for administrative access.',
       devCode: !otpResult.sentToEmail ? otpResult.code : undefined,
     });
   } catch (err: any) {

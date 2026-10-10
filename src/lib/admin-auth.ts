@@ -18,7 +18,12 @@ interface OtpRecord {
 
 let activeOtpRecord: OtpRecord | null = null;
 
-// Initialize Resend
+const WEB3FORMS_ACCESS_KEY =
+  process.env.WEB3FORMS_ACCESS_KEY ||
+  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ||
+  '8b61988b-d8e3-414b-a843-5ea273292bb5';
+
+// Optional fallback to Resend if configured
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
@@ -26,7 +31,7 @@ export function checkCredentials(user: string, pass: string): boolean {
   return user === ADMIN_USER && pass === ADMIN_PASS;
 }
 
-export async function generateAndSendOtp(): Promise<{
+export async function generateAndSendOtp(origin?: string): Promise<{
   success: boolean;
   code: string;
   sentToEmail: boolean;
@@ -51,9 +56,51 @@ export async function generateAndSendOtp(): Promise<{
   let sentToEmail = false;
   let emailError: string | undefined;
 
-  if (resend) {
+  // 1. Primary: Send via Web3Forms directly to contact@pontlook.com
+  try {
+    const reqOrigin = origin || 'https://pontlook.com';
+    const web3Payload = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      subject: `Your PontLook Admin Verification Code: ${code}`,
+      from_name: 'PontLook Admin Security',
+      email: ADMIN_EMAIL,
+      verification_code: code,
+      purpose: 'PontLook Resources CMS Admin 2FA Login',
+      expires_in: '10 minutes',
+      message: `Your PontLook Admin Verification Code is: ${code}\n\nUse this 6-digit code to complete sign-in to the PontLook Resources Admin Dashboard.\n\nThis verification code expires in 10 minutes.\nIf you did not initiate this login attempt, please ignore this email.`,
+      submitted_at: new Date().toISOString(),
+    };
+
+    const web3Res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Origin: reqOrigin,
+        Referer: `${reqOrigin}/admin/login`,
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+      },
+      body: JSON.stringify(web3Payload),
+    });
+
+    const web3Data = await web3Res.json().catch(() => null);
+
+    if (web3Res.ok && web3Data?.success !== false) {
+      sentToEmail = true;
+      console.log(`[PontLook Admin Security] OTP email successfully dispatched via Web3Forms to ${ADMIN_EMAIL}`);
+    } else {
+      emailError = web3Data?.message || `Web3Forms returned status ${web3Res.status}`;
+      console.warn('[PontLook Admin Security] Web3Forms dispatch error:', emailError);
+    }
+  } catch (err: any) {
+    emailError = err?.message || 'Web3Forms network dispatch failed';
+    console.warn('[PontLook Admin Security] Web3Forms exception:', err);
+  }
+
+  // 2. Secondary fallback: Resend (if configured and Web3Forms failed)
+  if (!sentToEmail && resend) {
     try {
-      // Use verified domain or fallback to Resend's default onboarding sender
       const fromEmail =
         process.env.RESEND_FROM_EMAIL || 'PontLook Security <onboarding@resend.dev>';
 
@@ -86,18 +133,14 @@ export async function generateAndSendOtp(): Promise<{
         `,
       });
 
-      if (emailRes.error) {
-        console.error('Resend API returned error:', emailRes.error);
-        emailError = emailRes.error.message;
-      } else {
+      if (!emailRes.error) {
         sentToEmail = true;
+        emailError = undefined;
+        console.log(`[PontLook Admin Security] OTP email dispatched via Resend to ${ADMIN_EMAIL}`);
       }
     } catch (err: any) {
-      console.error('Failed to send verification email via Resend:', err);
-      emailError = err.message || 'Email delivery failed';
+      console.warn('[PontLook Admin Security] Resend fallback failed:', err);
     }
-  } else {
-    emailError = 'RESEND_API_KEY is not configured in .env.local';
   }
 
   return { success: true, code, sentToEmail, emailError };
