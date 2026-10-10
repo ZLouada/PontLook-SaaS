@@ -3,9 +3,23 @@ import {
   verifyOtpCode,
   signToken,
   getAdminSessionCookieName,
+  isCurrentRequestAdmin,
+  isRequestAdmin,
 } from '@/lib/admin-auth';
 
 export const dynamic = 'force-dynamic';
+
+export async function GET(req: NextRequest) {
+  try {
+    const isAuthed = (await isCurrentRequestAdmin()) || isRequestAdmin(req);
+    if (isAuthed) {
+      return NextResponse.json({ authenticated: true });
+    }
+    return NextResponse.json({ authenticated: false }, { status: 401 });
+  } catch {
+    return NextResponse.json({ authenticated: false }, { status: 401 });
+  }
+}
 
 export async function POST(req: NextRequest) {
   try {

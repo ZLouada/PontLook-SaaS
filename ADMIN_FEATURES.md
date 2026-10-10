@@ -1,229 +1,188 @@
-# PontLook L&D Hub — Admin Panel Documentation & Features Guide
+# PontLook SaaS — Admin CMS Features & Architectural Documentation
 
-Comprehensive overview of all features, architecture, endpoints, and management capabilities available in the **PontLook SaaS Admin Dashboard**.
-
----
-
-## 📑 Table of Contents
-1. [Overview & Access](#-overview--access)
-2. [Authentication & Security](#-authentication--security)
-3. [Dashboard Layout & Controls](#-dashboard-layout--controls)
-4. [Content Management Modules (Tabs)](#-content-management-modules-tabs)
-   - [1. Hero Section](#1-hero-section)
-   - [2. Featured Spotlight & Editor's Picks](#2-featured-spotlight--editors-picks)
-   - [3. Articles & Blog Posts (Knowledge Base)](#3-articles--blog-posts-knowledge-base)
-   - [4. Diagnostic Toolkits & Downloads](#4-diagnostic-toolkits--downloads)
-   - [5. Executive Events & Roundtables](#5-executive-events--roundtables)
-   - [6. Podcasts & Executive Audio](#6-podcasts--executive-audio)
-   - [7. Media Library & Asset Manager](#7-media-library--asset-manager)
-5. [Media Upload & Dynamic Asset Delivery](#-media-upload--dynamic-asset-delivery)
-6. [Data Persistence & Cache Invalidation](#-data-persistence--cache-invalidation)
-7. [API Routes Reference](#-api-routes-reference)
+Welcome to the **PontLook SaaS Admin CMS** documentation. This document provides a complete inventory of features, architecture, authentication mechanisms, and workflows implemented within the administration portal.
 
 ---
 
-## 🔐 Overview & Access
+## 🎨 Design Philosophy & User Interface
 
-The PontLook Admin Panel is a standalone, code-free Content Management System built directly into the Next.js application. It allows administrators to update marketing copy, manage long-form blog articles, configure downloadable tools, schedule events, publish podcasts, and upload media without touching code or redeploying the app.
+The Admin CMS is built with an **ultra-sleek, minimalist monochrome aesthetic** adhering strictly to PontLook’s corporate executive identity:
 
-* **Admin URL:** `/admin`
-* **Login URL:** `/admin/login`
-* **Default Language Support:** Full bilingual content management (**English & Arabic**) with native Right-to-Left (RTL) input fields.
-* **Design Philosophy:** Clean, distraction-free monochrome dark mode (`#000000`, `#0E0E11`, `#141416`, crisp borders, and subtle contrast).
-
----
-
-## 🛡️ Authentication & Security
-
-* **Direct 1-Step Authentication:** Streamlined login flow without SMS/email 2FA friction.
-* **Secure Cookie Sessions:** Authenticated sessions issue an HTTP-only, secure, `SameSite=Lax` cookie (`pontlook_admin_session`) valid for 7 days.
-* **Route Protection:** All administrative endpoints under `/api/admin/*` and the `/admin` view require an active authenticated session.
-* **Automatic Expiration & Redirects:** Unauthenticated requests automatically redirect to `/admin/login`.
-* **Quick Logout:** Instant session invalidation from the top navigation bar.
+* **Monochrome Palette:** Pure black (`#000000`), deep charcoal panels (`#0E0E11`, `#141416`), crisp borders (`#2B2B30`), and stark white accents (`#FFFFFF`).
+* **Typography:** Clean, legible `Inter` typography with tight tracking, subtle letter-spacing, and clear hierarchy.
+* **Layout Structure:**
+  * **Sticky Header:** Features the PontLook brand logo, live system pulse indicator, global search shortcut (`Ctrl+K`), API log drawer toggle (`Ctrl+L`), and logout action.
+  * **Sticky Sidebar Navigation:** Quick navigation across 10 functional modules with active state highlighting.
+  * **Main Content Stage:** Responsive grid cards and collapsible accordions.
+  * **Floating Save Dock:** Dynamically slides up whenever unsaved modifications are made (`Ctrl+S` / `Cmd+S`).
+  * **Slide-out API Console:** Real-time log drawer capturing client-server payloads and response statuses.
 
 ---
 
-## 🖥️ Dashboard Layout & Controls
+## 🔒 Authentication & Access Control
 
-* **Top Navigation Bar:**
-  * **Brand Header:** Displays PontLook branding with real-time `ADMIN CMS` status badge.
-  * **Live Site Quick Links:** Instant buttons to view the live English (`/en/resources`) and Arabic (`/ar/resources`) resource hubs in a new tab.
-  * **Global Save Button:** Primary header action to save all unsaved modifications.
-  * **Logout Button:** Secure one-click session sign-out.
-* **Floating Save Dock:**
-  * Automatically slides into view at the bottom of the screen whenever changes are detected.
-  * Alerts: *"You have unsaved changes across your resources."*
-  * One-click **"Save Changes Now"** button with real-time loading spinner and feedback.
-* **Unsaved Changes Warning:** Protects against accidental navigation or tab closure while editing.
-* **Tab-Based Navigation:** 7 dedicated tabs for distinct content areas with active indicator badges.
+Access to the admin portal is protected by **strict email whitelisting** and **HMAC-SHA256 session tokens**:
 
----
+### 1. Authorized Executive Accounts
+Only the following three email addresses are authorized to access the Admin CMS:
+1. `a.touikrou@pontlook.com`
+2. `contact@pontlook.com`
+3. `s.belahmidi@pontlook.com`
 
-## 📦 Content Management Modules (Tabs)
+Any other email address is rejected immediately with a descriptive authorization error.
 
-### 1. Hero Section
-Manages the primary header copy at the top of the Resources Hub.
-* **Hero Title (EN & AR):** Main headline introducing the corporate training and L&D resource hub.
-* **Hero Subtitle (EN & AR):** Detailed supporting paragraph explaining the value proposition.
+### 2. Session Security
+* **Cookie:** `pontlook_admin_session`
+* **Attributes:** `httpOnly: true`, `secure: true` (in production), `sameSite: "lax"`, `path: "/"`.
+* **Validity:** 7 days rolling validity with HMAC signature validation.
+* **Verification Route:** `/api/admin/auth/verify` dynamically checks session state without leaking sensitive keys.
 
 ---
 
-### 2. Featured Spotlight & Editor's Picks
-Manages the prominent top-of-page featured story and side cards.
+## 📦 Functional Modules Breakdown
 
-* **Spotlight Featured Guide:**
-  * **Badge (EN & AR):** (e.g., `FEATURED GUIDE · 2026`)
-  * **Category (EN & AR):** (e.g., `L&D STRATEGIES`)
-  * **Read Time (EN & AR):** (e.g., `12 min read` / `١٢ دقيقة قراءة`)
-  * **Publication Date (EN & AR):** (e.g., `October 2026` / `أكتوبر ٢٠٢٦`)
-  * **Title (EN & AR):** Full prominent headline.
-  * **Excerpt (EN & AR):** Executive summary of the study/report.
-  * **CTA Button Label (EN & AR):** (e.g., `Read Full Guide`)
-  * **Destination Link:** Target slug or URL (defaults to `/resources/blog`).
-  * **Spotlight Cover Picture:** Image uploader or custom URL.
-
-* **Editor's Pick 1 — Upcoming Event Card:**
-  * **Badge, Date & Title (EN & AR)**
-  * **Description (EN & AR)**
-  * **CTA Label & Link:** Target URL (defaults to `/resources/events`).
-
-* **Editor's Pick 2 — Downloadable Diagnostic Toolkit Card:**
-  * **Badge & Title (EN & AR)**
-  * **Description (EN & AR)**
-  * **CTA Label & Link:** Target URL (defaults to `/resources/downloads`).
+### 1. Executive Dashboard & System Health
+* **KPI Metrics Bar:** Instant count of total articles, published diagnostic toolkits, upcoming executive roundtables, and media assets.
+* **Live Activity Feed:** Chronological log of recent publishing events, updates, and uploads.
+* **System Status & Storage:** Health checks for storage capacity, memory consumption, and cache readiness.
 
 ---
 
-### 3. Articles & Blog Posts (Knowledge Base)
-Full CRUD (Create, Read, Update, Delete) management for articles displayed across the site.
-
-* **New Article Creation:**
-  * Clicking **"Add Article (New Blog)"** inserts a new article with **clean, empty input fields** ready for drafting.
-* **Auto-Slug Generator:**
-  * Clicking the **"Auto-slug"** wand button automatically converts English titles into URL-friendly slugs (e.g., `Human Skills in AI` → `human-skills-in-ai`).
-* **Bilingual Fields (English & Arabic):**
-  * **Title (EN & AR)**
-  * **Category (EN & AR)** (e.g., `NATIONAL TALENT`, `IMPACT & METRICS`)
-  * **Read Time (EN & AR)** (e.g., `5 min read`)
-  * **Publication Date (EN & AR)** (e.g., `Sep 25, 2026`)
-  * **Excerpt / Summary (EN & AR):** Short summary for cards and search snippets.
-* **Full Article Content (Markdown / Long-form Text):**
-  * Separate multiline editors for English and Arabic full-length article bodies.
-  * Formatted with paragraph spacing, headings, and bullet points.
-* **Featured Picture:**
-  * File uploader with instant thumbnail preview and "View Full" external link.
-  * **Card Display Rule:** Pictures are **not shown on listing cards** to keep the grid uniform, sleek, and high-contrast.
-  * **Detail Page Rule:** The picture is displayed prominently at the top of the individual article content page (`/resources/blog/[slug]`).
-* **Direct Actions:**
-  * **Per-Article Save Button:** Save changes immediately without scrolling to the bottom.
-  * **Delete Button:** Instant article deletion with automatic store re-sync.
+### 2. Hero & Intro Editor
+Configures the prominent landing section of the Resources directory (`/[lang]/resources`):
+* **Bilingual Headlines (EN & AR):** Prominent header typography.
+* **Sub-tagline (EN & AR):** Executive mission statement.
+* **Primary Call-to-Action:** Button text (EN/AR) and target route.
+* **Secondary Call-to-Action:** Button text (EN/AR) and target route.
 
 ---
 
-### 4. Diagnostic Toolkits & Downloads
-Manages downloadable templates, assessment spreadsheets, and executive PDFs.
+### 3. Featured Spotlight & Editor's Picks
+Manages prominent cards at the top of the Resources hub:
+* **Primary Spotlight Feature:**
+  * Bilingual Title & Executive Excerpt.
+  * Call-to-Action button label and destination URL.
+  * Spotlight Cover Image (uploader or URL).
+* **Editor's Pick 1 (Executive Event):**
+  * Bilingual Category Badge, Date, Title, and Description.
+  * RSVP destination URL.
+* **Editor's Pick 2 (Diagnostic Toolkit):**
+  * Bilingual Category Badge, Title, and Description.
+  * Download destination URL.
 
-* **Create & Delete Downloads:** Add new toolkits or remove obsolete templates.
+---
+
+### 4. Articles & Knowledge Base (Blog)
+Full CRUD management for thought-leadership articles:
+* **Empty New Article Drafting:** Clicking *"Add Article (New Blog)"* creates a fresh, empty draft ready for authoring.
+* **Interactive Accordion:** Collapsible card layout allowing focused editing per article.
+* **Auto-Slug Generator:** One-click wand tool (`🪄 Auto-slug`) that converts English headlines into clean, URL-safe slugs.
+* **Bilingual Metadata:**
+  * Title (EN & AR)
+  * Category / Tag (EN & AR) (e.g., `NATIONAL TALENT`, `IMPACT & METRICS`)
+  * Read Time (EN & AR) (e.g., `5 min read`)
+  * Publication Date (EN & AR)
+  * Short Summary / Excerpt (EN & AR)
+* **Long-Form Markdown Article Body:**
+  * Dedicated English and Arabic content editors supporting markdown, headings, bullet lists, and paragraphs.
+* **Featured Picture & Presentation Rules:**
+  * Picture uploader with instant thumbnail preview and "View Full" external link.
+  * **Card Display Rule:** Images are intentionally suppressed on listing cards for a sleek, content-focused executive look.
+  * **Detail View Rule:** The featured image is displayed prominently inside the full article reader (`/[lang]/resources/blog/[slug]`).
+* **Direct Actions:** Per-article Save and Delete buttons.
+
+---
+
+### 5. Diagnostic Toolkits & Downloads
+Configures downloadable spreadsheets, assessment guides, and frameworks:
 * **Title & Description (EN & AR)**
 * **Document Format Tag:** (e.g., `XLSX + PDF`, `Interactive Sheet`, `PDF Guide`)
 * **File Size Label:** (e.g., `2.4 MB`, `1.8 MB`)
-* **Download URL:** Direct link to the hosted file or intake form.
-* **Cover / Preview Picture:** Upload or URL field with preview.
-* **Key Features Bullet Points:**
-  * Interactive feature list builder for both English and Arabic.
-  * Add or remove individual bullet points dynamically.
+* **Direct Download URL:** Hosted file path or intake gate.
+* **Dynamic Feature Bullet Points:** Add and remove bullet points for key features in both English and Arabic.
 
 ---
 
-### 5. Executive Events & Roundtables
-Manages in-person roundtables, digital summits, and webinars.
-
-* **Create & Delete Events:** Schedule new corporate sessions or remove past events.
+### 6. Executive Events & Roundtables
+Manages executive roundtables, strategy forums, and webinars:
 * **Title & Description (EN & AR)**
-* **Date & Time:** Time-zone specific schedule string (e.g., `October 28, 2026`, `10:00 AM - 12:30 PM (AST)`).
-* **Location (EN & AR):** (e.g., `Riyadh, Saudi Arabia (In-Person)` or `Live Interactive Webinar`).
+* **Date & Time:** Timezone-specific scheduling (e.g., `October 28, 2026`, `10:00 AM AST`).
+* **Location (EN & AR):** (e.g., `Riyadh, Saudi Arabia (In-Person)` or `Virtual Executive Briefing`).
 * **Event Type Badge (EN & AR):** (e.g., `Chatham House Roundtable`, `Digital Briefing`).
-* **Available Seats Badge (EN & AR):** (e.g., `4 Seats Remaining`, `Open Registration`).
-* **Event Banner / Thumbnail Picture:** Upload or URL field.
-* **Registration / RSVP Link:** Target registration page or form.
+* **Seat Capacity Counter:** (e.g., `4 Seats Remaining`, `Open Registration`).
+* **RSVP Link:** Direct registration destination.
 
 ---
 
-### 6. Podcasts & Executive Audio
-Manages podcast episodes and audio briefings.
-
-* **Create & Delete Episodes:** Add new episodes or remove archived recordings.
+### 7. Podcasts & Audio Briefings
+Manages audio interviews, leadership talks, and corporate podcasts:
 * **Episode Title & Description (EN & AR)**
-* **Featured Guest Details (EN & AR):** Name and executive title (e.g., `Sarah Al-Mansoor — Human Capital Advisory Director`).
+* **Featured Guest Details (EN & AR):** Name and executive title.
 * **Episode Duration:** (e.g., `42 min`).
-* **Publication Date (EN & AR)**
-* **Topic Category Tag (EN & AR):** (e.g., `Strategy & Metrics`, `Leadership & Nationalization`).
-* **Episode Cover Artwork:** Upload or URL field.
-* **Audio Stream URL:** Link to the hosted audio file or podcast platform.
+* **Publication Date & Topic Category (EN & AR)**
+* **Audio Stream URL:** Link to audio host or embed.
 
 ---
 
-### 7. Media Library & Asset Manager
-Centralized media manager for managing images and visual assets.
-
-* **Direct Upload Drag & Drop:**
-  * Supports `PNG`, `JPG`, `JPEG`, `WebP`, `GIF`, `SVG`, and `AVIF`.
-  * Upload file size limit up to **15 MB**.
-* **Dual-Storage Persistence:** Automatically writes uploaded assets to both `public/uploads` and `/tmp/pontlook-uploads` to ensure images persist across container restarts.
-* **Dynamic Media Serving:** Serves assets via `/uploads/[...file]` route handler with immutable caching headers.
-* **Asset Gallery Grid:**
-  * Visual thumbnail previews with aspect ratio preservation.
-  * File metadata: File name, file size (formatted in KB/MB), and upload timestamp.
-  * **"Copy URL" Button:** One-click copy of `/uploads/filename.ext` to clipboard for quick pasting into any module.
-  * **"View" Button:** Opens the asset in a new browser tab.
-  * **"Delete" Button:** Safely removes the file from both primary and backup storage.
+### 8. Media Library & Asset Manager
+Centralized asset repository with drag-and-drop uploading:
+* **Supported Formats:** PNG, JPG, JPEG, WebP, GIF, SVG, AVIF.
+* **Maximum File Size:** 15 MB.
+* **Dual-Storage Persistence:** Saves concurrently to `public/uploads` and `/tmp/pontlook-uploads` to ensure images persist across rebuilds or container restarts.
+* **Asset Grid View:**
+  * Thumbnail preview with aspect ratio preservation.
+  * File metadata (filename, formatted size, upload date).
+  * **"Copy URL":** One-click copy of `/uploads/filename.ext` to clipboard.
+  * **"View":** Opens media asset in a new tab.
+  * **"Delete":** Permanently deletes file from disk storage.
 
 ---
 
-## ⚡ Media Upload & Dynamic Asset Delivery
-
-| Component | Path | Responsibility |
-| :--- | :--- | :--- |
-| **Upload API** | `POST /api/admin/upload` | Validates file type, size, sanitizes filename, and writes to disk storage. |
-| **Media Library API** | `GET, DELETE /api/admin/media` | Lists all stored assets sorted by newest first; deletes selected files. |
-| **Media Delivery** | `GET /uploads/[...file]` | Streams binary buffers with appropriate MIME type headers and 1-year cache control. |
-| **Remote Pattern** | `next.config.mjs` | Configured to support both local `/uploads/*` and any HTTPS external images without breakage. |
-
----
-
-## 💾 Data Persistence & Cache Invalidation
-
-1. **Dual Storage Engine (`src/lib/resources-store.ts`):**
-   * Primary: `src/data/resources.json`
-   * Redundant Backup: `/tmp/pontlook-resources.json`
-   * In-Memory Cache: Serves requests with zero disk latency; reloads automatically on file modification.
-2. **On-Demand Cache Revalidation:**
-   * Saving through `/api/admin/resources` triggers Next.js `revalidatePath` across all resource routes:
-     * `/[lang]/resources`
-     * `/[lang]/resources/blog`
-     * `/[lang]/resources/blog/[slug]`
-     * `/[lang]/resources/downloads`
-     * `/[lang]/resources/events`
-     * `/[lang]/resources/podcasts`
-3. **Dynamic Route Rendering:**
-   * Resource pages use `force-dynamic` rendering (`revalidate = 0`), guaranteeing that newly added or edited articles appear live immediately without rebuilding the application.
+### 9. Real-Time SEO Content Auditor
+Interactive content optimization tool:
+* **Dynamic Score Ring:** Visual SVG ring calculating an SEO score from `0` to `100%` in real time.
+* **Audited Metrics:**
+  * Meta Title length (recommended 40–65 characters).
+  * Meta Description length (recommended 120–160 characters).
+  * Focus keyword density in title, excerpt, and article body.
+  * URL slug hyphenation and length.
+  * Body copy word count (recommending > 300 words).
+* **Live Action Checklist:** Visual checkmarks dynamically toggle between completed and pending tasks.
 
 ---
 
-## 🔌 API Routes Reference
+### 10. Users & Roles Permissions Matrix
+Executive governance and team access overview:
+* **Role Tiers:** `Super Admin`, `Editor`, `Contributor`.
+* **Permissions Matrix:** Read, write, and delete permissions mapped across Articles, Events, Downloads, Media, and System Settings.
 
-| Method | Endpoint | Description | Auth Required |
+---
+
+## ⚡ Keyboard Shortcuts & Productivity Features
+
+| Shortcut | Action |
+| :--- | :--- |
+| `Ctrl + S` / `Cmd + S` | Immediately saves all modified resources to the store. |
+| `Ctrl + K` / `Cmd + K` | Focuses the global search input. |
+| `Ctrl + L` / `Cmd + L` | Toggles the real-time API request log drawer. |
+| `Esc` | Closes search results or open modal drawers. |
+
+---
+
+## 🌐 API & Persistence Reference
+
+| Endpoint | Method | Purpose | Authentication |
 | :--- | :--- | :--- | :---: |
-| `POST` | `/api/admin/auth/login` | Validates credentials and sets HTTP-only session cookie. | No |
-| `POST` | `/api/admin/auth/logout` | Clears admin session cookie. | Yes |
-| `GET` | `/api/admin/auth/verify` | Checks if current session is authenticated. | No |
-| `GET` | `/api/admin/resources` | Retrieves full JSON resources payload for admin editing. | Yes |
-| `POST` | `/api/admin/resources` | Validates and persists updated resources JSON + invalidates cache. | Yes |
-| `POST` | `/api/admin/upload` | Uploads an image file to disk (`/uploads/...`). | Yes |
-| `GET` | `/api/admin/media` | Returns array of all uploaded media files with metadata. | Yes |
-| `DELETE` | `/api/admin/media?filename=...` | Deletes a media file from disk storage. | Yes |
-| `GET` | `/uploads/[...file]` | Public streaming endpoint for uploaded images and assets. | No |
+| `/api/admin/auth/login` | `POST` | Validates credentials against allowed emails and sets HTTP-only cookie. | Public |
+| `/api/admin/auth/verify` | `GET` | Validates current session status. | Public |
+| `/api/admin/auth/logout` | `POST` | Invalidates and removes the session cookie. | Authenticated |
+| `/api/admin/resources` | `GET` | Fetches complete resources JSON data. | Authenticated |
+| `/api/admin/resources` | `POST` | Persists resources data, writes to dual storage, and triggers cache revalidation. | Authenticated |
+| `/api/admin/upload` | `POST` | Receives multipart form data and saves image to disk. | Authenticated |
+| `/api/admin/media` | `GET` | Returns an array of uploaded files with metadata. | Authenticated |
+| `/api/admin/media?filename=...` | `DELETE` | Deletes the specified file from storage. | Authenticated |
+| `/uploads/[...file]` | `GET` | Public streaming route delivering uploaded media with caching headers. | Public |
 
 ---
 
-*Documentation generated for PontLook SaaS — October 2026.*
+*PontLook SaaS Documentation — October 2026*

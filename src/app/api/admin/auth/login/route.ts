@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { checkCredentials, signToken, getAdminSessionCookieName } from '@/lib/admin-auth';
+import { checkCredentials, signToken, getAdminSessionCookieName, ALLOWED_ADMIN_EMAILS } from '@/lib/admin-auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,10 +15,22 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const isValid = checkCredentials(username.trim(), password.trim());
+    const email = (username || '').trim().toLowerCase();
+    const isAllowed = ALLOWED_ADMIN_EMAILS.includes(email);
+    if (!isAllowed) {
+      return NextResponse.json(
+        {
+          error:
+            'Access restricted: Only authorized administrative accounts (a.touikrou@pontlook.com, contact@pontlook.com, s.belahmidi@pontlook.com) may sign in.',
+        },
+        { status: 401 }
+      );
+    }
+
+    const isValid = checkCredentials(email, password.trim());
     if (!isValid) {
       return NextResponse.json(
-        { error: 'Invalid username or password' },
+        { error: 'Invalid password. Please check your credentials and try again.' },
         { status: 401 }
       );
     }

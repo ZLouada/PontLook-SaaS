@@ -29,16 +29,21 @@ const WEB3FORMS_ACCESS_KEY =
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
+export const ALLOWED_ADMIN_EMAILS = [
+  'a.touikrou@pontlook.com',
+  'contact@pontlook.com',
+  's.belahmidi@pontlook.com',
+];
+
 export function checkCredentials(user: string, pass: string): boolean {
-  const normalizedUser = user.trim();
+  const normalizedUser = user.trim().toLowerCase();
   const normalizedPass = pass.trim();
 
-  const validUsers = [
-    ADMIN_USER,
-    'anty_palantir',
-    'amty_palantir',
-    'uehc2983hsbh9h!#EY&yiuhdicgdgvugvb8v9-(*GuigDGiag7gwegdcvbeyv937bchbwygf74gfvdbocb',
-  ];
+  // Strictly enforce allowed admin emails
+  const isEmailAllowed = ALLOWED_ADMIN_EMAILS.includes(normalizedUser);
+  if (!isEmailAllowed) {
+    return false;
+  }
 
   const validPasswords = [
     ADMIN_PASS,
@@ -47,7 +52,7 @@ export function checkCredentials(user: string, pass: string): boolean {
     'amty_palantir',
   ];
 
-  return validUsers.includes(normalizedUser) && validPasswords.includes(normalizedPass);
+  return validPasswords.includes(normalizedPass);
 }
 
 export async function generateAndSendOtp(origin?: string): Promise<{

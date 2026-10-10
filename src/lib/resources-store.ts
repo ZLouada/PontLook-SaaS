@@ -233,9 +233,261 @@ export function getResourcesStore(): ResourcesContent {
   };
 }
 
-export function saveResourcesStore(data: ResourcesContent): boolean {
+export function normalizeResourcesData(data: any): any {
+  if (!data || typeof data !== 'object') return data;
+
+  const result = { ...data };
+
+  // 1. Hero
+  const hero = { ...(result.hero || {}) };
+  hero.titleEn = hero.titleEn || hero.title_en || '';
+  hero.titleAr = hero.titleAr || hero.title_ar || '';
+  hero.subtitleEn = hero.subtitleEn || hero.sub_en || '';
+  hero.subtitleAr = hero.subtitleAr || hero.sub_ar || '';
+  hero.title_en = hero.title_en || hero.titleEn;
+  hero.title_ar = hero.title_ar || hero.titleAr;
+  hero.sub_en = hero.sub_en || hero.subtitleEn;
+  hero.sub_ar = hero.sub_ar || hero.subtitleAr;
+  result.hero = hero;
+
+  // 2. Spotlight
+  const spot = { ...(result.spotlight || result.spot || {}) };
+  spot.badgeEn = spot.badgeEn || spot.badge_en || '';
+  spot.badgeAr = spot.badgeAr || spot.badge_ar || '';
+  spot.categoryEn = spot.categoryEn || spot.cat_en || '';
+  spot.categoryAr = spot.categoryAr || spot.cat_ar || '';
+  spot.readTimeEn = spot.readTimeEn || spot.read_en || '';
+  spot.readTimeAr = spot.readTimeAr || spot.read_ar || '';
+  spot.dateEn = spot.dateEn || spot.date_en || '';
+  spot.dateAr = spot.dateAr || spot.date_ar || '';
+  spot.titleEn = spot.titleEn || spot.title_en || '';
+  spot.titleAr = spot.titleAr || spot.title_ar || '';
+  spot.excerptEn = spot.excerptEn || spot.excerpt_en || '';
+  spot.excerptAr = spot.excerptAr || spot.excerpt_ar || '';
+  spot.ctaEn = spot.ctaEn || spot.cta_en || '';
+  spot.ctaAr = spot.ctaAr || spot.cta_ar || '';
+  spot.image = spot.image || spot.img || '';
+  spot.link = spot.link || '/resources/blog';
+
+  spot.badge_en = spot.badgeEn;
+  spot.badge_ar = spot.badgeAr;
+  spot.cat_en = spot.categoryEn;
+  spot.cat_ar = spot.categoryAr;
+  spot.read_en = spot.readTimeEn;
+  spot.read_ar = spot.readTimeAr;
+  spot.date_en = spot.dateEn;
+  spot.date_ar = spot.dateAr;
+  spot.title_en = spot.titleEn;
+  spot.title_ar = spot.titleAr;
+  spot.excerpt_en = spot.excerptEn;
+  spot.excerpt_ar = spot.excerptAr;
+  spot.cta_en = spot.ctaEn;
+  spot.cta_ar = spot.ctaAr;
+  spot.img = spot.image;
+  result.spotlight = spot;
+  result.spot = spot;
+
+  // 3. Editor Picks
+  const p1 = { ...(result.editorPickEvent || result.pick1 || {}) };
+  p1.badgeEn = p1.badgeEn || p1.badge_en || '';
+  p1.badgeAr = p1.badgeAr || p1.badge_ar || '';
+  p1.dateEn = p1.dateEn || p1.date_en || '';
+  p1.dateAr = p1.dateAr || p1.date_ar || '';
+  p1.titleEn = p1.titleEn || p1.title_en || '';
+  p1.titleAr = p1.titleAr || p1.title_ar || '';
+  p1.descEn = p1.descEn || p1.desc_en || '';
+  p1.descAr = p1.descAr || p1.desc_ar || '';
+  p1.ctaEn = p1.ctaEn || p1.cta_en || '';
+  p1.ctaAr = p1.ctaAr || p1.cta_ar || '';
+  p1.link = p1.link || '/resources/events';
+  p1.badge_en = p1.badgeEn;
+  p1.badge_ar = p1.badgeAr;
+  p1.date_en = p1.dateEn;
+  p1.date_ar = p1.dateAr;
+  p1.title_en = p1.titleEn;
+  p1.title_ar = p1.titleAr;
+  p1.desc_en = p1.descEn;
+  p1.desc_ar = p1.descAr;
+  p1.cta_en = p1.ctaEn;
+  p1.cta_ar = p1.ctaAr;
+  result.editorPickEvent = p1;
+  result.pick1 = p1;
+
+  const p2 = { ...(result.editorPickToolkit || result.pick2 || {}) };
+  p2.badgeEn = p2.badgeEn || p2.badge_en || '';
+  p2.badgeAr = p2.badgeAr || p2.badge_ar || '';
+  p2.titleEn = p2.titleEn || p2.title_en || '';
+  p2.titleAr = p2.titleAr || p2.title_ar || '';
+  p2.descEn = p2.descEn || p2.desc_en || '';
+  p2.descAr = p2.descAr || p2.desc_ar || '';
+  p2.ctaEn = p2.ctaEn || p2.cta_en || '';
+  p2.ctaAr = p2.ctaAr || p2.cta_ar || '';
+  p2.link = p2.link || '/resources/downloads';
+  p2.badge_en = p2.badgeEn;
+  p2.badge_ar = p2.badgeAr;
+  p2.title_en = p2.titleEn;
+  p2.title_ar = p2.titleAr;
+  p2.desc_en = p2.descEn;
+  p2.desc_ar = p2.descAr;
+  p2.cta_en = p2.ctaEn;
+  p2.cta_ar = p2.ctaAr;
+  result.editorPickToolkit = p2;
+  result.pick2 = p2;
+
+  // 4. Articles
+  result.articles = (result.articles || []).map((art: any, i: number) => {
+    const a = { ...art };
+    a.id = a.id || `art-${Date.now()}-${i}`;
+    a.titleEn = a.titleEn || a.title_en || '';
+    a.titleAr = a.titleAr || a.title_ar || '';
+    a.slug = a.slug || '';
+    a.categoryEn = a.categoryEn || a.cat_en || '';
+    a.categoryAr = a.categoryAr || a.cat_ar || '';
+    a.readTimeEn = a.readTimeEn || a.read_en || '';
+    a.readTimeAr = a.readTimeAr || a.read_ar || '';
+    a.dateEn = a.dateEn || a.date_en || '';
+    a.dateAr = a.dateAr || a.date_ar || '';
+    a.excerptEn = a.excerptEn || a.excerpt_en || '';
+    a.excerptAr = a.excerptAr || a.excerpt_ar || '';
+    a.contentEn = a.contentEn || a.body_en || '';
+    a.contentAr = a.contentAr || a.body_ar || '';
+    a.image = a.image || a.img || '';
+    a.status = a.status || 'published';
+    a.seo = a.seo || { en: {}, ar: {} };
+
+    a.title_en = a.titleEn;
+    a.title_ar = a.titleAr;
+    a.cat_en = a.categoryEn;
+    a.cat_ar = a.categoryAr;
+    a.read_en = a.readTimeEn;
+    a.read_ar = a.readTimeAr;
+    a.date_en = a.dateEn;
+    a.date_ar = a.dateAr;
+    a.excerpt_en = a.excerptEn;
+    a.excerpt_ar = a.excerptAr;
+    a.body_en = a.contentEn;
+    a.body_ar = a.contentAr;
+    a.img = a.image;
+    return a;
+  });
+
+  // 5. Downloads
+  result.downloads = (result.downloads || []).map((dl: any, i: number) => {
+    const d = { ...dl };
+    d.id = d.id || `toolkit-${Date.now()}-${i}`;
+    d.titleEn = d.titleEn || d.title_en || '';
+    d.titleAr = d.titleAr || d.title_ar || '';
+    d.descEn = d.descEn || d.desc_en || '';
+    d.descAr = d.descAr || d.desc_ar || '';
+    d.format = d.format || '';
+    d.fileSize = d.fileSize || d.size || '';
+    d.fileUrl = d.fileUrl || d.url || '';
+    d.image = d.image || d.img || '';
+    d.featuresEn = d.featuresEn || d.feat_en || [];
+    d.featuresAr = d.featuresAr || d.feat_ar || [];
+    d.status = d.status || 'published';
+
+    d.title_en = d.titleEn;
+    d.title_ar = d.titleAr;
+    d.desc_en = d.descEn;
+    d.desc_ar = d.descAr;
+    d.size = d.fileSize;
+    d.url = d.fileUrl;
+    d.img = d.image;
+    d.feat_en = d.featuresEn;
+    d.feat_ar = d.featuresAr;
+    return d;
+  });
+
+  // 6. Events
+  result.events = (result.events || []).map((ev: any, i: number) => {
+    const e = { ...ev };
+    e.id = e.id || `event-${Date.now()}-${i}`;
+    e.titleEn = e.titleEn || e.title_en || '';
+    e.titleAr = e.titleAr || e.title_ar || '';
+    e.descEn = e.descEn || e.desc_en || '';
+    e.descAr = e.descAr || e.desc_ar || '';
+    e.when = e.when || (e.dateEn + (e.time ? ', ' + e.time : ''));
+    e.dateEn = e.dateEn || e.when || '';
+    e.dateAr = e.dateAr || '';
+    e.locationEn = e.locationEn || e.loc_en || '';
+    e.locationAr = e.locationAr || e.loc_ar || '';
+    e.typeEn = e.typeEn || e.type_en || '';
+    e.typeAr = e.typeAr || e.type_ar || '';
+    e.spotsLeftEn = e.spotsLeftEn || e.seats_en || '';
+    e.spotsLeftAr = e.spotsLeftAr || e.seats_ar || '';
+    e.image = e.image || e.img || '';
+    e.link = e.link || e.rsvp || '';
+    e.status = e.status || 'published';
+
+    e.title_en = e.titleEn;
+    e.title_ar = e.titleAr;
+    e.desc_en = e.descEn;
+    e.desc_ar = e.descAr;
+    e.loc_en = e.locationEn;
+    e.loc_ar = e.locationAr;
+    e.type_en = e.typeEn;
+    e.type_ar = e.typeAr;
+    e.seats_en = e.spotsLeftEn;
+    e.seats_ar = e.spotsLeftAr;
+    e.img = e.image;
+    e.rsvp = e.link;
+    return e;
+  });
+
+  // 7. Podcasts
+  result.podcasts = (result.podcasts || []).map((po: any, i: number) => {
+    const p = { ...po };
+    p.id = p.id || `pod-${Date.now()}-${i}`;
+    p.titleEn = p.titleEn || p.title_en || '';
+    p.titleAr = p.titleAr || p.title_ar || '';
+    p.descEn = p.descEn || p.desc_en || '';
+    p.descAr = p.descAr || p.desc_ar || '';
+    p.guestEn = p.guestEn || p.guest_en || '';
+    p.guestAr = p.guestAr || p.guest_ar || '';
+    p.duration = p.duration || p.dur || '';
+    p.dateEn = p.dateEn || p.date_en || '';
+    p.dateAr = p.dateAr || p.date_ar || '';
+    p.tagEn = p.tagEn || p.topic_en || '';
+    p.tagAr = p.tagAr || p.topic_ar || '';
+    p.image = p.image || p.img || '';
+    p.audioUrl = p.audioUrl || p.audio || '';
+    p.status = p.status || 'published';
+
+    p.title_en = p.titleEn;
+    p.title_ar = p.titleAr;
+    p.desc_en = p.descEn;
+    p.desc_ar = p.descAr;
+    p.guest_en = p.guestEn;
+    p.guest_ar = p.guestAr;
+    p.dur = p.duration;
+    p.date_en = p.dateEn;
+    p.date_ar = p.dateAr;
+    p.topic_en = p.tagEn;
+    p.topic_ar = p.tagAr;
+    p.img = p.image;
+    p.audio = p.audioUrl;
+    return p;
+  });
+
+  // 8. Roles
+  result.roles = result.roles || {
+    users: [
+      { id: 'u1', name: 'Ayoub Touikrou', email: 'a.touikrou@pontlook.com', role: 'admin' },
+      { id: 'u2', name: 'PontLook Admin', email: 'contact@pontlook.com', role: 'admin' },
+      { id: 'u3', name: 'Saad Belahmidi', email: 's.belahmidi@pontlook.com', role: 'admin' },
+    ],
+    perms: { edit: 1, publish: 1, delete: 1, users: 1, seo: 1 },
+  };
+
+  return result;
+}
+
+export function saveResourcesStore(data: any): boolean {
+  const normalized = normalizeResourcesData(data);
+
   // Always update memory cache immediately
-  memoryCache = JSON.parse(JSON.stringify(data));
+  memoryCache = normalized;
   lastLoadedMtime = Date.now();
 
   let savedPrimary = false;
@@ -246,7 +498,7 @@ export function saveResourcesStore(data: ResourcesContent): boolean {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
-    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
+    fs.writeFileSync(DATA_FILE, JSON.stringify(normalized, null, 2), 'utf-8');
     savedPrimary = true;
   } catch (err) {
     console.warn('[PontLook Store] Warning: Could not save to primary path, writing to backup:', err);
@@ -254,7 +506,7 @@ export function saveResourcesStore(data: ResourcesContent): boolean {
 
   // 2. Try writing to backup DATA_FILE
   try {
-    fs.writeFileSync(BACKUP_DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
+    fs.writeFileSync(BACKUP_DATA_FILE, JSON.stringify(normalized, null, 2), 'utf-8');
   } catch (err) {
     // backup write warning
   }
