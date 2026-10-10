@@ -139,47 +139,45 @@ export default async function ResourcesPage({
   ];
 
   return (
-    <div
-      data-nav-light="true"
-      data-nav-theme="light"
-      className="min-h-screen bg-white text-neutral-900 transition-colors duration-200"
-    >
-      <div className="relative pt-28 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        {/* Background ambient lighting */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-b from-orange-500/[0.04] via-neutral-100/60 to-transparent blur-3xl pointer-events-none -z-10" />
+    <div className="min-h-screen bg-white text-neutral-900 transition-colors duration-200">
+      {/* ======================================================== */}
+      {/* 1. ORANGE HERO WINDOW (GoodHabitz Inspired Style)         */}
+      {/* ======================================================== */}
+      <section className="relative w-full bg-[#FF5C00] text-white rounded-b-[2.5rem] sm:rounded-b-[3.5rem] lg:rounded-b-[48px] overflow-hidden pt-36 sm:pt-40 lg:pt-44 pb-16 sm:pb-20 lg:pb-24 px-4 sm:px-6 lg:px-8 text-center shadow-lg">
+        {/* Subtle ambient highlight for high-end polish */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/15 via-transparent to-black/10 pointer-events-none" />
 
-        {/* ======================================================== */}
-        {/* 1. HERO HEADER                                           */}
-        {/* ======================================================== */}
-        <div className="max-w-4xl mb-10 sm:mb-12">
+        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
           <Reveal>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 bg-neutral-100/80 text-xs font-mono uppercase tracking-wider text-neutral-700 mb-5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00]" />
-              {isAr ? 'مركز المعرفة والتدريب المؤسسي' : 'PONTLOOK RESOURCE HUB'}
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.08}>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold text-neutral-950 tracking-tight leading-[1.08] mb-5">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-heading font-extrabold text-white tracking-tight leading-[1.08] mb-5 sm:mb-6 max-w-3xl">
               {isAr
-                ? 'المرجع المعرفي لقادة الموارد البشرية وتطوير الكفاءات في الخليج'
-                : 'The Resource Hub to Power Your Corporate L&D Strategy'}
+                ? 'مركز موارد التدريب والتطوير في PontLook'
+                : 'The PontLook L&D resource hub'}
             </h1>
           </Reveal>
 
-          <Reveal delay={0.16}>
-            <p className="text-neutral-600 text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl font-normal">
+          <Reveal delay={0.1}>
+            <p className="text-white/95 text-base sm:text-lg md:text-xl font-normal leading-relaxed max-w-2xl sm:max-w-3xl">
               {isAr
-                ? 'أدلة بحثية مجانية، دراسات حالة معمقة، قوالب تشخيصية جاهزة، وفعاليات حصرية صممت خصيصاً لمساعدة منشآت السعودية والإمارات على بناء فرق عمل استثنائية.'
-                : 'Actionable benchmarks, executive podcasts, free diagnostic toolkits, and curated summits designed for HR and talent executives across the GCC.'}
+                ? 'اكتشف نصائح عملية، وتوجهات السوق، وآراء الخبراء للارتقاء بالتدريب والتطوير في منشأتك.'
+                : 'Discover practical tips, industry trends, and expert advice to level up L&D across your organisation.'}
             </p>
           </Reveal>
         </div>
+      </section>
 
+      {/* ======================================================== */}
+      {/* WHITE CONTENT BODY (Triggers light theme navbar on scroll)*/}
+      {/* ======================================================== */}
+      <div
+        data-nav-light="true"
+        data-nav-theme="light"
+        className="relative pt-10 sm:pt-14 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+      >
         {/* ======================================================== */}
         {/* 2. CATEGORY PILL FILTER NAVIGATION TABS                  */}
         {/* ======================================================== */}
-        <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-4 mb-12 sm:mb-16 border-b border-neutral-200 no-scrollbar">
+        <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-4 mb-10 sm:mb-14 border-b border-neutral-200 no-scrollbar">
           {categoryPills.map((pill, idx) => (
             <Link
               key={idx}
@@ -201,7 +199,10 @@ export default async function ResourcesPage({
         <section className="mb-20 sm:mb-28">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             {/* Main Large Spotlight Card (8 Cols) */}
-            <div className="lg:col-span-7 xl:col-span-8">
+            <div className="lg:col-span-7 xl:col-span-8 flex flex-col">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 mb-3 block">
+                {isAr ? 'محتوى مميز' : 'FEATURED'}
+              </span>
               <Link
                 href={`/${lang}/resources/blog`}
                 className="group relative flex flex-col justify-between h-full rounded-3xl bg-white border border-neutral-200 hover:border-neutral-400 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl"
@@ -253,7 +254,11 @@ export default async function ResourcesPage({
             </div>
 
             {/* Right 2-Card Stack (4 Cols) */}
-            <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-6 sm:gap-8 justify-between">
+            <div className="lg:col-span-5 xl:col-span-4 flex flex-col">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 mb-3 block">
+                {isAr ? 'اختيار المحرر' : "EDITOR'S PICK"}
+              </span>
+              <div className="flex flex-col gap-6 sm:gap-8 justify-between flex-1">
               {/* Card A: Upcoming Event */}
               <Link
                 href={`/${lang}/resources/events`}
@@ -315,6 +320,7 @@ export default async function ResourcesPage({
                   <Download size={15} />
                 </div>
               </Link>
+              </div>
             </div>
           </div>
         </section>
