@@ -860,7 +860,7 @@ export default function AdminPage() {
 
     const login = () => {
       if (loginStep === 'otp') {
-        return `<div class="lo"><form id="lf-otp" autocomplete="off"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px"><img src="/images/brand/pontlook-icon-white.png" alt="PontLook" width="28" height="28" style="object-fit:contain"><span style="font-weight:600;font-size:22px;letter-spacing:-0.02em">PontLook</span></div><div class="lb">[ 2FA_SECURITY // STEP 02 ]</div><h1 style="font-size:clamp(2rem,6vw,3.2rem);margin-bottom:12px">Enter Code</h1><p style="color:var(--mu);margin-bottom:24px;font-size:13px;line-height:1.6">A 6-digit verification code has been dispatched to <strong style="color:#fff">${loginEmail}</strong>.<br>Enter the security code below to complete sign-in.</p><div class="f"><label for="otp">Security Verification Code</label><input id="otp" type="text" autocomplete="one-time-code" placeholder="000000" style="font-family:ui-monospace,Menlo,monospace;letter-spacing:0.25em;font-size:20px;text-align:center" required autofocus></div><button class="b s" type="submit" style="width:100%;margin-top:8px"><i class="sp"></i>Verify & Enter Dashboard</button><div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:12px"><button type="button" class="b d" id="otp-back" style="padding:6px 12px">← Back to Email</button><button type="button" class="b d" id="otp-resend" style="padding:6px 12px">Resend Code</button></div><div class="er" id="er-otp" role="alert" style="margin-top:12px;color:#fff;font-size:12px"></div><small style="margin-top:20px;display:block;color:var(--mu);font-size:11px">Verification codes expire in 10 minutes.</small></form></div>`;
+        return `<div class="lo"><form id="lf-otp" autocomplete="off"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px"><img src="/images/brand/pontlook-icon-white.png" alt="PontLook" width="28" height="28" style="object-fit:contain"><span style="font-weight:600;font-size:22px;letter-spacing:-0.02em">PontLook</span></div><div class="lb">[ 2FA_SECURITY // STEP 02 ]</div><h1 style="font-size:clamp(2rem,6vw,3.2rem);margin-bottom:12px">Enter Code</h1><p style="color:var(--mu);margin-bottom:24px;font-size:13px;line-height:1.6">Enter the security code below to complete sign-in.</p><div class="f"><label for="otp">Security Verification Code</label><input id="otp" type="text" autocomplete="one-time-code" placeholder="000000" style="font-family:ui-monospace,Menlo,monospace;letter-spacing:0.25em;font-size:20px;text-align:center" required autofocus></div><button class="b s" type="submit" style="width:100%;margin-top:8px"><i class="sp"></i>Verify & Enter Dashboard</button><div style="display:flex;justify-content:flex-start;align-items:center;margin-top:16px;font-size:12px"><button type="button" class="b d" id="otp-back" style="padding:6px 12px">← Back to Email</button></div><div class="er" id="er-otp" role="alert" style="margin-top:12px;color:#fff;font-size:12px"></div></form></div>`;
       }
       return `<div class="lo"><form id="lf" autocomplete="off"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px"><img src="/images/brand/pontlook-icon-white.png" alt="PontLook" width="28" height="28" style="object-fit:contain"><span style="font-weight:600;font-size:22px;letter-spacing:-0.02em">PontLook</span></div><div class="lb">[ ADMIN_LOGIN // STEP 01 ]</div><h1>Sign in</h1><div class="f"><label for="u">Admin Email</label><input id="u" type="email" autocomplete="email" placeholder="Enter admin email" value="${loginEmail}" required autofocus></div><button class="b s" type="submit"><i class="sp"></i>Send Verification Code</button><div class="er" id="er" role="alert"></div><small>Authorized PontLook administrators only.</small></form></div>`;
     };
@@ -1109,18 +1109,6 @@ export default function AdminPage() {
       if (el.id === 'otp-back' || el.closest('#otp-back')) {
         loginStep = 'credentials';
         render();
-        return;
-      }
-
-      if (el.id === 'otp-resend' || el.closest('#otp-resend')) {
-        const er = $('#er-otp');
-        if (er) er.textContent = '';
-        try {
-          await api.login(loginEmail);
-          toast('New verification code sent to ' + loginEmail);
-        } catch (x: any) {
-          if (er) er.textContent = x.message || 'Failed to resend code';
-        }
         return;
       }
 

@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
       if (data.requireOtp) {
         setStep('otp');
         setOtpCode('');
-        setInfoMessage(`A 6-digit verification code has been dispatched to ${email}.`);
+        setInfoMessage(null);
       } else {
         router.push('/admin');
         router.refresh();
@@ -80,28 +80,6 @@ export default function AdminLoginPage() {
       router.refresh();
     } catch (err: any) {
       setError(err.message || 'Verification failed');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResendCode = async () => {
-    setError(null);
-    setLoading(true);
-    try {
-      const email = username.trim().toLowerCase();
-      const res = await fetch('/api/admin/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: email }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to resend verification code');
-      setOtpCode('');
-      setInfoMessage(`A new verification code was dispatched to ${email}.`);
-    } catch (err: any) {
-      setError(err.message || 'Failed to resend code');
     } finally {
       setLoading(false);
     }
@@ -220,8 +198,7 @@ export default function AdminLoginPage() {
                   Security Code Verification
                 </h3>
                 <p className="text-xs text-neutral-400 max-w-xs mx-auto leading-relaxed">
-                  Enter the 6-digit security code dispatched to{' '}
-                  <span className="text-white font-medium">{username}</span>
+                  Enter the 6-digit security code below to complete sign-in.
                 </p>
               </div>
 
@@ -238,9 +215,6 @@ export default function AdminLoginPage() {
                   placeholder="000000"
                   className="w-full text-center font-mono text-xl tracking-[0.25em] bg-[#141416] border border-white/15 focus:border-white rounded-2xl py-3.5 px-3 text-white placeholder-neutral-600 focus:outline-none transition-colors"
                 />
-                <p className="text-[11px] text-neutral-500 text-center mt-2">
-                  Check your spam/junk folder if the code doesn&apos;t arrive within 1 minute.
-                </p>
               </div>
 
               <button
@@ -261,21 +235,13 @@ export default function AdminLoginPage() {
                 )}
               </button>
 
-              <div className="flex items-center justify-between text-xs pt-2">
+              <div className="flex items-center justify-start text-xs pt-2">
                 <button
                   type="button"
                   onClick={() => setStep('credentials')}
                   className="text-neutral-400 hover:text-white transition-colors"
                 >
                   ← Back to Email
-                </button>
-                <button
-                  type="button"
-                  onClick={handleResendCode}
-                  disabled={loading}
-                  className="text-white hover:underline font-medium"
-                >
-                  Resend Code
                 </button>
               </div>
             </form>
