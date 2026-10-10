@@ -66,7 +66,7 @@ export default function AdminPage() {
     const api = {
       async login(u: string, otpCode?: string) {
         const email = (u || '').trim().toLowerCase();
-        const allowed = ['a.touikrou@pontlook.com', 'contact@pontlook.com', 's.belahmidi@pontlook.com'];
+        const allowed = ['contact@pontlook.com'];
 
         if (!allowed.includes(email)) {
           throw new Error('Access restricted: This email is not authorized to sign in.');
@@ -90,9 +90,7 @@ export default function AdminPage() {
         }
 
         ST.set('sess', { email, exp: Date.now() + 7 * 864e5 });
-        if (email.startsWith('a.touikrou')) meId = 'u1';
-        else if (email.startsWith('contact')) meId = 'u2';
-        else if (email.startsWith('s.belahmidi')) meId = 'u3';
+        meId = 'u1';
         ST.set('me', meId);
         return json;
       },
@@ -325,9 +323,7 @@ export default function AdminPage() {
 
     const SEED_ROLES = {
       users: [
-        { id: 'u1', name: 'Ayoub Touikrou', email: 'a.touikrou@pontlook.com', role: 'admin' },
-        { id: 'u2', name: 'PontLook Admin', email: 'contact@pontlook.com', role: 'admin' },
-        { id: 'u3', name: 'Saad Belahmidi', email: 's.belahmidi@pontlook.com', role: 'admin' },
+        { id: 'u1', name: 'PontLook Admin', email: 'contact@pontlook.com', role: 'admin' },
       ],
       perms: { edit: 1, publish: 1, delete: 1, users: 1, seo: 1 },
     };
@@ -373,6 +369,12 @@ export default function AdminPage() {
     const norm = (d: any) => {
       d = d || {};
       d.roles = d.roles || JSON.parse(JSON.stringify(SEED_ROLES));
+      if (d.roles && Array.isArray(d.roles.users)) {
+        d.roles.users = d.roles.users.filter((u: any) => u.email === 'contact@pontlook.com');
+        if (d.roles.users.length === 0) {
+          d.roles.users = [{ id: 'u1', name: 'PontLook Admin', email: 'contact@pontlook.com', role: 'admin' }];
+        }
+      }
       d.hero = d.hero || {};
       d.spot = d.spot || d.spotlight || mk(SPOT);
       d.pick1 = d.pick1 || d.editorPickEvent || mk(PK1);
@@ -842,16 +844,14 @@ export default function AdminPage() {
         );
       }).join('');
 
-      return `<header><div class="lg"><svg width="24" height="24" viewBox="0 0 26 26" fill="currentColor"><path d="M3 23C10 21 14 13 13 3c5 5 8 12 10 20z"/></svg>PontLook<span class="bd"><i></i>ADMIN CMS</span></div><div class="gs"><input id="gs" class="keep" placeholder="Search content…" autocomplete="off" aria-label="Search content"><div id="gsr"></div></div><div class="hr"><a class="b d" target="_blank" rel="noopener" href="/en/resources">EN ↗</a><a class="b d" target="_blank" rel="noopener" href="/ar/resources">AR ↗</a><button class="b d" data-a="log">API log</button><button class="b s" data-a="save" id="hs"><i class="sp"></i><span>Save</span></button><label class="me"><span class="av">${ini(
+      return `<header><div class="lg"><img src="/images/brand/pontlook-icon-white.png" alt="PontLook" width="22" height="22" style="object-fit:contain;display:block">PontLook<span class="bd"><i></i>ADMIN CMS</span></div><div class="gs"><input id="gs" class="keep" placeholder="Search content…" autocomplete="off" aria-label="Search content"><div id="gsr"></div></div><div class="hr"><button class="b d" data-a="log">API log</button><button class="b s" data-a="save" id="hs"><i class="sp"></i><span>Save</span></button><div class="me"><span class="av">${ini(
         me.name
-      )}</span><select id="me" aria-label="View as user">${D.roles.users
-        .map((u: any) => `<option value="${u.id}"${u.id === meId ? ' selected' : ''}>${esc(u.name)} · ${u.role}</option>`)
-        .join('')}</select></label><button class="b" data-a="out">Logout</button></div></header>
+      )}</span><span style="font-size:13px;font-weight:500;padding:0 6px 0 2px">${esc(me.name)}</span><select id="me" style="display:none"><option value="${me.id}" selected>${esc(me.name)} · ${me.role}</option></select></div><button class="b" data-a="out">Logout</button></div></header>
 <div class="shell"><nav class="sb" aria-label="Sections">${nav}</nav><main>${
         RO
           ? `<div class="em rob">Read-only: the ${me.role} role cannot ${
               tab === 'seo' ? 'edit SEO settings' : tab === 'roles' ? 'manage users and roles' : 'edit content'
-            }. Switch to an admin in the top bar to make changes.</div>`
+            }. Contact PontLook administrator for elevated permissions.</div>`
           : ''
       }<div class="hd"><div class="k">[ ${String(i + 1).padStart(2, '0')}_${t[1].toUpperCase().replace(/ & | /g, '_')} ]</div><h1>${
         t[1] === 'Hero' ? 'Hero section' : t[1]
@@ -860,9 +860,9 @@ export default function AdminPage() {
 
     const login = () => {
       if (loginStep === 'otp') {
-        return `<div class="lo"><form id="lf-otp" autocomplete="off"><div class="lb">[ 2FA_SECURITY // STEP 02 ]</div><h1 style="font-size:clamp(2rem,6vw,3.2rem);margin-bottom:12px">Enter Code</h1><p style="color:var(--mu);margin-bottom:24px;font-size:13px;line-height:1.6">A 6-digit verification code has been dispatched to <strong style="color:#fff">${loginEmail}</strong>.<br>Enter the security code below to complete sign-in.</p><div class="f"><label for="otp">Security Verification Code</label><input id="otp" type="text" autocomplete="one-time-code" placeholder="000000" style="font-family:ui-monospace,Menlo,monospace;letter-spacing:0.25em;font-size:20px;text-align:center" required autofocus></div><button class="b s" type="submit" style="width:100%;margin-top:8px"><i class="sp"></i>Verify & Enter Dashboard</button><div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:12px"><button type="button" class="b d" id="otp-back" style="padding:6px 12px">← Back to Email</button><button type="button" class="b d" id="otp-resend" style="padding:6px 12px">Resend Code</button></div><div class="er" id="er-otp" role="alert" style="margin-top:12px;color:#fff;font-size:12px"></div><small style="margin-top:20px;display:block;color:var(--mu);font-size:11px">Verification codes expire in 10 minutes.</small></form></div>`;
+        return `<div class="lo"><form id="lf-otp" autocomplete="off"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px"><img src="/images/brand/pontlook-icon-white.png" alt="PontLook" width="28" height="28" style="object-fit:contain"><span style="font-weight:600;font-size:22px;letter-spacing:-0.02em">PontLook</span></div><div class="lb">[ 2FA_SECURITY // STEP 02 ]</div><h1 style="font-size:clamp(2rem,6vw,3.2rem);margin-bottom:12px">Enter Code</h1><p style="color:var(--mu);margin-bottom:24px;font-size:13px;line-height:1.6">A 6-digit verification code has been dispatched to <strong style="color:#fff">${loginEmail}</strong>.<br>Enter the security code below to complete sign-in.</p><div class="f"><label for="otp">Security Verification Code</label><input id="otp" type="text" autocomplete="one-time-code" placeholder="000000" style="font-family:ui-monospace,Menlo,monospace;letter-spacing:0.25em;font-size:20px;text-align:center" required autofocus></div><button class="b s" type="submit" style="width:100%;margin-top:8px"><i class="sp"></i>Verify & Enter Dashboard</button><div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:12px"><button type="button" class="b d" id="otp-back" style="padding:6px 12px">← Back to Email</button><button type="button" class="b d" id="otp-resend" style="padding:6px 12px">Resend Code</button></div><div class="er" id="er-otp" role="alert" style="margin-top:12px;color:#fff;font-size:12px"></div><small style="margin-top:20px;display:block;color:var(--mu);font-size:11px">Verification codes expire in 10 minutes.</small></form></div>`;
       }
-      return `<div class="lo"><form id="lf" autocomplete="off"><div class="lb">[ ADMIN_LOGIN // STEP 01 ]</div><h1>Sign in</h1><div class="f"><label for="u">Admin Email</label><input id="u" type="email" autocomplete="email" placeholder="Enter admin email" value="${loginEmail}" required autofocus></div><button class="b s" type="submit"><i class="sp"></i>Send Verification Code</button><div class="er" id="er" role="alert"></div><small>Authorized PontLook administrators only.</small></form></div>`;
+      return `<div class="lo"><form id="lf" autocomplete="off"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px"><img src="/images/brand/pontlook-icon-white.png" alt="PontLook" width="28" height="28" style="object-fit:contain"><span style="font-weight:600;font-size:22px;letter-spacing:-0.02em">PontLook</span></div><div class="lb">[ ADMIN_LOGIN // STEP 01 ]</div><h1>Sign in</h1><div class="f"><label for="u">Admin Email</label><input id="u" type="email" autocomplete="email" placeholder="Enter admin email" value="${loginEmail}" required autofocus></div><button class="b s" type="submit"><i class="sp"></i>Send Verification Code</button><div class="er" id="er" role="alert"></div><small>Authorized PontLook administrators only.</small></form></div>`;
     };
 
     function render() {

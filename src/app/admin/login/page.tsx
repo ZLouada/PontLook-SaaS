@@ -239,7 +239,7 @@ export default function AdminLoginPage() {
                   className="w-full text-center font-mono text-xl tracking-[0.25em] bg-[#141416] border border-white/15 focus:border-white rounded-2xl py-3.5 px-3 text-white placeholder-neutral-600 focus:outline-none transition-colors"
                 />
                 <p className="text-[11px] text-neutral-500 text-center mt-2">
-                  Check spam/junk folder. Or enter master admin PIN / code.
+                  Check your spam/junk folder if the code doesn&apos;t arrive within 1 minute.
                 </p>
               </div>
 

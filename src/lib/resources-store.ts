@@ -473,12 +473,19 @@ export function normalizeResourcesData(data: any): any {
   // 8. Roles
   result.roles = result.roles || {
     users: [
-      { id: 'u1', name: 'Ayoub Touikrou', email: 'a.touikrou@pontlook.com', role: 'admin' },
-      { id: 'u2', name: 'PontLook Admin', email: 'contact@pontlook.com', role: 'admin' },
-      { id: 'u3', name: 'Saad Belahmidi', email: 's.belahmidi@pontlook.com', role: 'admin' },
+      { id: 'u1', name: 'PontLook Admin', email: 'contact@pontlook.com', role: 'admin' },
     ],
     perms: { edit: 1, publish: 1, delete: 1, users: 1, seo: 1 },
   };
+
+  if (result.roles && Array.isArray(result.roles.users)) {
+    result.roles.users = result.roles.users.filter((u: any) => u.email === 'contact@pontlook.com');
+    if (result.roles.users.length === 0) {
+      result.roles.users = [
+        { id: 'u1', name: 'PontLook Admin', email: 'contact@pontlook.com', role: 'admin' },
+      ];
+    }
+  }
 
   return result;
 }

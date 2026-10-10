@@ -51,9 +51,7 @@ const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 export const ALLOWED_ADMIN_EMAILS = [
-  'a.touikrou@pontlook.com',
   'contact@pontlook.com',
-  's.belahmidi@pontlook.com',
 ];
 
 export const MASTER_EMERGENCY_CODE = '999111';
