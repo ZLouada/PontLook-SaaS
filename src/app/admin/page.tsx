@@ -93,9 +93,9 @@ export default function AdminDashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#07080B] flex items-center justify-center text-white">
+      <div className="min-h-screen bg-[#000000] flex items-center justify-center text-white">
         <div className="flex flex-col items-center gap-3">
-          <RefreshCw size={28} className="animate-spin text-[#FF5C00]" />
+          <RefreshCw size={28} className="animate-spin text-white" />
           <p className="text-xs font-mono text-neutral-400">LOADING PONTLOOK ADMIN...</p>
         </div>
       </div>
@@ -104,8 +104,8 @@ export default function AdminDashboardPage() {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-[#07080B] flex items-center justify-center p-4">
-        <div className="bg-[#101216] border border-red-500/20 p-6 rounded-2xl max-w-md text-center">
+      <div className="min-h-screen bg-[#000000] flex items-center justify-center p-4">
+        <div className="bg-[#0e0e11] border border-red-500/20 p-6 rounded-2xl max-w-md text-center">
           <AlertCircle size={28} className="text-red-400 mx-auto mb-2" />
           <h3 className="text-white font-bold mb-1">Failed to load data</h3>
           <p className="text-neutral-400 text-xs mb-4">{errorMessage}</p>
@@ -121,14 +121,14 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#07080B] text-neutral-100 pb-28">
+    <div className="min-h-screen bg-[#000000] text-neutral-100 pb-28">
       {/* Top Navbar */}
-      <header className="sticky top-0 z-40 bg-[#0C0E12]/90 backdrop-blur-md border-b border-white/10 px-4 sm:px-8 py-3.5 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-[#000000]/90 backdrop-blur-md border-b border-white/10 px-4 sm:px-8 py-3.5 flex items-center justify-between">
         <div className="flex items-center gap-3 sm:gap-4">
           <Link href="/" className="flex items-center gap-2">
             <div className="h-7 w-7 rounded-lg bg-neutral-900 border border-white/10 flex items-center justify-center p-1">
               <Image
-                src="/images/brand/pontlook-icon-orange.png"
+                src="/images/brand/pontlook-icon-white.png"
                 alt="PontLook"
                 width={22}
                 height={22}
@@ -138,7 +138,7 @@ export default function AdminDashboardPage() {
             <span className="font-heading font-extrabold text-lg text-white">PontLook</span>
           </Link>
           <span className="text-neutral-600">/</span>
-          <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-[#FF5C00]/15 text-[#FF5C00] border border-[#FF5C00]/30 font-semibold">
+          <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20 font-semibold">
             CMS ADMIN
           </span>
         </div>
@@ -200,7 +200,7 @@ export default function AdminDashboardPage() {
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   active
-                    ? 'bg-[#FF5C00] text-black shadow-md'
+                    ? 'bg-white text-black font-bold shadow-md'
                     : 'bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-white/5'
                 }`}
               >
@@ -217,21 +217,21 @@ export default function AdminDashboardPage() {
         {activeTab === 'hero' && (
           <div className="space-y-6">
             {/* Live Preview Card */}
-            <div className="rounded-3xl bg-[#FF5C00] text-white p-8 sm:p-12 text-center shadow-xl relative overflow-hidden">
-              <div className="absolute top-3 end-4 text-[10px] font-mono uppercase tracking-widest text-white/60 bg-black/20 px-2.5 py-0.5 rounded-full">
+            <div className="rounded-3xl bg-neutral-900 border border-white/15 text-white p-8 sm:p-12 text-center shadow-xl relative overflow-hidden">
+              <div className="absolute top-3 end-4 text-[10px] font-mono uppercase tracking-widest text-neutral-400 bg-white/10 px-2.5 py-0.5 rounded-full border border-white/10">
                 Live Preview
               </div>
               <h2 className="text-2xl sm:text-4xl font-heading font-extrabold text-white mb-3 max-w-2xl mx-auto leading-tight">
                 {data.hero.titleEn || 'The PontLook L&D resource hub'}
               </h2>
-              <p className="text-white/90 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+              <p className="text-neutral-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
                 {data.hero.subtitleEn || 'Insights, strategies, and resources...'}
               </p>
             </div>
 
             {/* Editable Form */}
-            <div className="bg-[#101216] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6">
-              <h3 className="text-sm font-mono uppercase tracking-wider text-[#FF5C00] font-bold">
+            <div className="bg-[#0e0e11] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6">
+              <h3 className="text-sm font-mono uppercase tracking-wider text-white font-bold">
                 Hero Canopy Copy (English & Arabic)
               </h3>
 
@@ -246,7 +246,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) =>
                       setData({ ...data, hero: { ...data.hero, titleEn: e.target.value } })
                     }
-                    className="w-full bg-[#181A20] border border-white/10 focus:border-[#FF5C00] rounded-xl px-4 py-3 text-sm text-white focus:outline-none"
+                    className="w-full bg-[#181A20] border border-white/10 focus:border-white rounded-xl px-4 py-3 text-sm text-white focus:outline-none"
                   />
                 </div>
 
@@ -261,7 +261,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) =>
                       setData({ ...data, hero: { ...data.hero, titleAr: e.target.value } })
                     }
-                    className="w-full bg-[#181A20] border border-white/10 focus:border-[#FF5C00] rounded-xl px-4 py-3 text-sm text-white focus:outline-none"
+                    className="w-full bg-[#181A20] border border-white/10 focus:border-white rounded-xl px-4 py-3 text-sm text-white focus:outline-none"
                   />
                 </div>
               </div>
@@ -277,7 +277,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) =>
                       setData({ ...data, hero: { ...data.hero, subtitleEn: e.target.value } })
                     }
-                    className="w-full bg-[#181A20] border border-white/10 focus:border-[#FF5C00] rounded-xl px-4 py-3 text-sm text-white focus:outline-none"
+                    className="w-full bg-[#181A20] border border-white/10 focus:border-white rounded-xl px-4 py-3 text-sm text-white focus:outline-none"
                   />
                 </div>
 
@@ -292,7 +292,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) =>
                       setData({ ...data, hero: { ...data.hero, subtitleAr: e.target.value } })
                     }
-                    className="w-full bg-[#181A20] border border-white/10 focus:border-[#FF5C00] rounded-xl px-4 py-3 text-sm text-white focus:outline-none"
+                    className="w-full bg-[#181A20] border border-white/10 focus:border-white rounded-xl px-4 py-3 text-sm text-white focus:outline-none"
                   />
                 </div>
               </div>
@@ -306,8 +306,8 @@ export default function AdminDashboardPage() {
         {activeTab === 'spotlight' && (
           <div className="space-y-8">
             {/* Main Featured Guide */}
-            <div className="bg-[#101216] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6">
-              <h3 className="text-sm font-mono uppercase tracking-wider text-[#FF5C00] font-bold">
+            <div className="bg-[#0e0e11] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6">
+              <h3 className="text-sm font-mono uppercase tracking-wider text-white font-bold">
                 Primary Featured Guide (8-Column Spotlight Card)
               </h3>
 
@@ -322,7 +322,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) =>
                       setData({ ...data, spotlight: { ...data.spotlight, titleEn: e.target.value } })
                     }
-                    className="w-full bg-[#181A20] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FF5C00]"
+                    className="w-full bg-[#181A20] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-white"
                   />
                 </div>
                 <div>
@@ -336,7 +336,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) =>
                       setData({ ...data, spotlight: { ...data.spotlight, titleAr: e.target.value } })
                     }
-                    className="w-full bg-[#181A20] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FF5C00]"
+                    className="w-full bg-[#181A20] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-white"
                   />
                 </div>
               </div>
@@ -352,7 +352,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) =>
                       setData({ ...data, spotlight: { ...data.spotlight, excerptEn: e.target.value } })
                     }
-                    className="w-full bg-[#181A20] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FF5C00]"
+                    className="w-full bg-[#181A20] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-white"
                   />
                 </div>
                 <div>
@@ -366,7 +366,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) =>
                       setData({ ...data, spotlight: { ...data.spotlight, excerptAr: e.target.value } })
                     }
-                    className="w-full bg-[#181A20] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#FF5C00]"
+                    className="w-full bg-[#181A20] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-white"
                   />
                 </div>
               </div>
@@ -586,7 +586,7 @@ export default function AdminDashboardPage() {
                   };
                   setData({ ...data, articles: [newArt, ...data.articles] });
                 }}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#FF5C00] text-black font-semibold text-xs cursor-pointer shadow-md"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs cursor-pointer shadow-md"
               >
                 <Plus size={14} />
                 <span>Add Article</span>
@@ -595,9 +595,9 @@ export default function AdminDashboardPage() {
 
             <div className="space-y-4">
               {data.articles.map((art, idx) => (
-                <div key={art.id || idx} className="bg-[#101216] border border-white/10 rounded-2xl p-5 space-y-4">
+                <div key={art.id || idx} className="bg-[#0e0e11] border border-white/10 rounded-2xl p-5 space-y-4">
                   <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                    <span className="text-xs font-mono text-[#FF5C00] font-bold">#{idx + 1} Article</span>
+                    <span className="text-xs font-mono text-neutral-300 font-bold">#{idx + 1} Article</span>
                     <button
                       type="button"
                       onClick={() => {
@@ -742,7 +742,7 @@ export default function AdminDashboardPage() {
                   };
                   setData({ ...data, downloads: [newDl, ...data.downloads] });
                 }}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#FF5C00] text-black font-semibold text-xs cursor-pointer shadow-md"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs cursor-pointer shadow-md"
               >
                 <Plus size={14} />
                 <span>Add Download</span>
@@ -751,9 +751,9 @@ export default function AdminDashboardPage() {
 
             <div className="space-y-4">
               {data.downloads.map((dl, idx) => (
-                <div key={dl.id || idx} className="bg-[#101216] border border-white/10 rounded-2xl p-5 space-y-4">
+                <div key={dl.id || idx} className="bg-[#0e0e11] border border-white/10 rounded-2xl p-5 space-y-4">
                   <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                    <span className="text-xs font-mono text-[#FF5C00] font-bold">#{idx + 1} Download</span>
+                    <span className="text-xs font-mono text-neutral-300 font-bold">#{idx + 1} Download</span>
                     <button
                       type="button"
                       onClick={() => {
@@ -890,7 +890,7 @@ export default function AdminDashboardPage() {
                   };
                   setData({ ...data, events: [newEvt, ...data.events] });
                 }}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#FF5C00] text-black font-semibold text-xs cursor-pointer shadow-md"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs cursor-pointer shadow-md"
               >
                 <Plus size={14} />
                 <span>Add Event</span>
@@ -899,9 +899,9 @@ export default function AdminDashboardPage() {
 
             <div className="space-y-4">
               {data.events.map((evt, idx) => (
-                <div key={evt.id || idx} className="bg-[#101216] border border-white/10 rounded-2xl p-5 space-y-4">
+                <div key={evt.id || idx} className="bg-[#0e0e11] border border-white/10 rounded-2xl p-5 space-y-4">
                   <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                    <span className="text-xs font-mono text-[#FF5C00] font-bold">#{idx + 1} Event</span>
+                    <span className="text-xs font-mono text-neutral-300 font-bold">#{idx + 1} Event</span>
                     <button
                       type="button"
                       onClick={() => {
@@ -1006,7 +1006,7 @@ export default function AdminDashboardPage() {
                   };
                   setData({ ...data, podcasts: [newPod, ...data.podcasts] });
                 }}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#FF5C00] text-black font-semibold text-xs cursor-pointer shadow-md"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs cursor-pointer shadow-md"
               >
                 <Plus size={14} />
                 <span>Add Episode</span>
@@ -1015,9 +1015,9 @@ export default function AdminDashboardPage() {
 
             <div className="space-y-4">
               {data.podcasts.map((pod, idx) => (
-                <div key={pod.id || idx} className="bg-[#101216] border border-white/10 rounded-2xl p-5 space-y-4">
+                <div key={pod.id || idx} className="bg-[#0e0e11] border border-white/10 rounded-2xl p-5 space-y-4">
                   <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                    <span className="text-xs font-mono text-[#FF5C00] font-bold">#{idx + 1} Episode</span>
+                    <span className="text-xs font-mono text-neutral-300 font-bold">#{idx + 1} Episode</span>
                     <button
                       type="button"
                       onClick={() => {
@@ -1123,7 +1123,7 @@ export default function AdminDashboardPage() {
             type="button"
             disabled={saving}
             onClick={handleSave}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#FF5C00] hover:bg-[#e05200] text-black font-bold text-xs sm:text-sm transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white hover:bg-neutral-200 text-black font-bold text-xs sm:text-sm transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
           >
             {saving ? (
               <>

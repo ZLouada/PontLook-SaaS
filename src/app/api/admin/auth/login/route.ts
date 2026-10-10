@@ -29,10 +29,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       sentToEmail: otpResult.sentToEmail,
-      message: otpResult.sentToEmail
-        ? 'Verification code sent to contact@pontlook.com'
-        : 'Failed to deliver verification email. Your fallback code is provided below for administrative access.',
-      devCode: !otpResult.sentToEmail ? otpResult.code : undefined,
+      message: 'Verification code sent to contact@pontlook.com',
     });
   } catch (err: any) {
     console.error('Admin login error:', err);
