@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { checkCredentials, generateAndSendOtp } from '@/lib/admin-auth';
+import { checkCredentials, signToken, getAdminSessionCookieName } from '@/lib/admin-auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,14 +23,23 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const origin = req.headers.get('origin') || req.headers.get('referer') || 'https://pontlook.com';
-    const otpResult = await generateAndSendOtp(origin);
-
-    return NextResponse.json({
+    const token = signToken(username.trim());
+    const response = NextResponse.json({
       success: true,
-      sentToEmail: otpResult.sentToEmail,
-      message: 'Verification code sent to contact@pontlook.com',
+      message: 'Logged in successfully',
     });
+
+    response.cookies.set({
+      name: getAdminSessionCookieName(),
+      value: token,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60, // 7 days
+    });
+
+    return response;
   } catch (err: any) {
     console.error('Admin login error:', err);
     return NextResponse.json(

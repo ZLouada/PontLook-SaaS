@@ -4,28 +4,23 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Lock, ShieldCheck, ArrowRight, RefreshCw, KeyRound, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Lock, ArrowRight, RefreshCw, KeyRound, AlertCircle } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const router = useRouter();
 
-  // Step 1: credentials, Step 2: otp
-  const [step, setStep] = useState<'credentials' | 'otp'>('credentials');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [otpCode, setOtpCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [infoMessage, setInfoMessage] = useState<string | null>(null);
 
   React.useEffect(() => {
-    // Ensure inputs are strictly empty on mount and clear any browser memory
+    // Ensure inputs start strictly empty
     setUsername('');
     setPassword('');
-    setOtpCode('');
   }, []);
 
-  const handleCredentialsSubmit = async (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
@@ -40,61 +35,13 @@ export default function AdminLoginPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Failed to authenticate');
-      }
-
-      setStep('otp');
-      setInfoMessage('A 6-digit verification code was sent to contact@pontlook.com');
-    } catch (err: any) {
-      setError(err.message || 'Authentication failed');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleOtpSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-
-    try {
-      const res = await fetch('/api/admin/auth/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: otpCode }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Invalid verification code');
+        throw new Error(data.error || 'Invalid credentials');
       }
 
       router.push('/admin');
       router.refresh();
     } catch (err: any) {
-      setError(err.message || 'Verification failed');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResendCode = async () => {
-    setError(null);
-    setLoading(true);
-    try {
-      const res = await fetch('/api/admin/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
-
-      setInfoMessage('New verification code sent to contact@pontlook.com');
-    } catch (err: any) {
-      setError(err.message || 'Failed to resend code');
+      setError(err.message || 'Login failed');
     } finally {
       setLoading(false);
     }
@@ -137,175 +84,97 @@ export default function AdminLoginPage() {
             </div>
           )}
 
-          {infoMessage && !error && (
-            <div className="mb-6 p-4 rounded-2xl bg-white/5 border border-white/15 text-neutral-200 text-xs flex items-start gap-3">
-              <CheckCircle2 size={16} className="shrink-0 mt-0.5 text-white" />
-              <span>{infoMessage}</span>
-            </div>
-          )}
+          <form onSubmit={handleLoginSubmit} autoComplete="off" className="space-y-5">
+            {/* Anti-autofill decoys to absorb browser credential autofill */}
+            <input
+              type="text"
+              name="fake_user_decoy"
+              style={{ position: 'absolute', opacity: 0, height: 0, width: 0, pointerEvents: 'none', zIndex: -1 }}
+              tabIndex={-1}
+              autoComplete="off"
+              readOnly
+            />
+            <input
+              type="password"
+              name="fake_pass_decoy"
+              style={{ position: 'absolute', opacity: 0, height: 0, width: 0, pointerEvents: 'none', zIndex: -1 }}
+              tabIndex={-1}
+              autoComplete="new-password"
+              readOnly
+            />
 
-          {step === 'credentials' ? (
-            /* STEP 1: CREDENTIALS */
-            <form onSubmit={handleCredentialsSubmit} autoComplete="off" className="space-y-5">
-              {/* Anti-autofill decoys to absorb browser credential autofill */}
-              <input
-                type="text"
-                name="fake_user_decoy"
-                style={{ position: 'absolute', opacity: 0, height: 0, width: 0, pointerEvents: 'none', zIndex: -1 }}
-                tabIndex={-1}
-                autoComplete="off"
-                readOnly
-              />
-              <input
-                type="password"
-                name="fake_pass_decoy"
-                style={{ position: 'absolute', opacity: 0, height: 0, width: 0, pointerEvents: 'none', zIndex: -1 }}
-                tabIndex={-1}
-                autoComplete="new-password"
-                readOnly
-              />
-
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
-                  Admin Username
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    name="pontlook_admin_usr"
-                    id="pontlook_admin_usr"
-                    autoComplete="off"
-                    autoCorrect="off"
-                    autoCapitalize="none"
-                    spellCheck={false}
-                    data-lpignore="true"
-                    data-form-type="other"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                    placeholder="Enter username"
-                    className="w-full bg-[#141416] border border-white/10 focus:border-white rounded-2xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors"
-                  />
-                  <div className="absolute end-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
-                    <KeyRound size={16} />
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    type="password"
-                    name="pontlook_admin_pwd"
-                    id="pontlook_admin_pwd"
-                    autoComplete="new-password"
-                    autoCorrect="off"
-                    autoCapitalize="none"
-                    spellCheck={false}
-                    data-lpignore="true"
-                    data-form-type="other"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    placeholder="Enter password"
-                    className="w-full bg-[#141416] border border-white/10 focus:border-white rounded-2xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors"
-                  />
-                  <div className="absolute end-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
-                    <Lock size={16} />
-                  </div>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full mt-2 py-3.5 px-6 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-98 disabled:opacity-50"
-              >
-                {loading ? (
-                  <>
-                    <RefreshCw size={16} className="animate-spin" />
-                    <span>Verifying Credentials...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Continue to 2FA</span>
-                    <ArrowRight size={16} />
-                  </>
-                )}
-              </button>
-            </form>
-          ) : (
-            /* STEP 2: 2FA OTP */
-            <form onSubmit={handleOtpSubmit} className="space-y-5">
-              <div className="text-center py-2">
-                <div className="h-12 w-12 rounded-2xl bg-white/10 border border-white/20 text-white flex items-center justify-center mx-auto mb-3">
-                  <ShieldCheck size={26} />
-                </div>
-                <h3 className="font-heading font-bold text-lg text-white mb-1">
-                  Two-Factor Verification
-                </h3>
-                <p className="text-xs text-neutral-400 max-w-xs mx-auto leading-relaxed">
-                  Enter the 6-digit security code dispatched to{' '}
-                  <span className="text-white font-medium">contact@pontlook.com</span>
-                </p>
-              </div>
-
-              <div>
-                <label className="block text-center text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">
-                  Security Code
-                </label>
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
+                Admin Username
+              </label>
+              <div className="relative">
                 <input
                   type="text"
-                  maxLength={6}
-                  value={otpCode}
-                  onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))}
-                  autoFocus
+                  name="pontlook_admin_usr"
+                  id="pontlook_admin_usr"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="none"
+                  spellCheck={false}
+                  data-lpignore="true"
+                  data-form-type="other"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   required
-                  placeholder="000000"
-                  className="w-full text-center font-mono text-2xl tracking-[0.5em] bg-[#141416] border border-white/15 focus:border-white rounded-2xl py-3.5 text-white placeholder-neutral-600 focus:outline-none transition-colors"
+                  placeholder="Enter username"
+                  className="w-full bg-[#141416] border border-white/10 focus:border-white rounded-2xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors"
                 />
+                <div className="absolute end-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
+                  <KeyRound size={16} />
+                </div>
               </div>
+            </div>
 
-              <button
-                type="submit"
-                disabled={loading || otpCode.length < 6}
-                className="w-full py-3.5 px-6 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-98 disabled:opacity-50"
-              >
-                {loading ? (
-                  <>
-                    <RefreshCw size={16} className="animate-spin" />
-                    <span>Verifying Code...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Verify & Enter Dashboard</span>
-                    <ArrowRight size={16} />
-                  </>
-                )}
-              </button>
-
-              <div className="flex items-center justify-between text-xs pt-2">
-                <button
-                  type="button"
-                  onClick={() => setStep('credentials')}
-                  className="text-neutral-400 hover:text-white transition-colors"
-                >
-                  ← Back to login
-                </button>
-                <button
-                  type="button"
-                  onClick={handleResendCode}
-                  disabled={loading}
-                  className="text-white hover:underline font-medium"
-                >
-                  Resend Code
-                </button>
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type="password"
+                  name="pontlook_admin_pwd"
+                  id="pontlook_admin_pwd"
+                  autoComplete="new-password"
+                  autoCorrect="off"
+                  autoCapitalize="none"
+                  spellCheck={false}
+                  data-lpignore="true"
+                  data-form-type="other"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  placeholder="Enter password"
+                  className="w-full bg-[#141416] border border-white/10 focus:border-white rounded-2xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors"
+                />
+                <div className="absolute end-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
+                  <Lock size={16} />
+                </div>
               </div>
-            </form>
-          )}
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full mt-2 py-3.5 px-6 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-98 disabled:opacity-50"
+            >
+              {loading ? (
+                <>
+                  <RefreshCw size={16} className="animate-spin" />
+                  <span>Logging in...</span>
+                </>
+              ) : (
+                <>
+                  <span>Log In to Dashboard</span>
+                  <ArrowRight size={16} />
+                </>
+              )}
+            </button>
+          </form>
         </div>
 
         {/* Security disclaimer */}
