@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
+import { getResourcesStore } from '@/lib/resources-store';
 import { Headphones, ArrowRight, Calendar, Clock, Globe } from '@/components/icons';
 
 export async function generateMetadata({
@@ -100,6 +101,19 @@ export default async function PodcastsPage({
     },
   ];
 
+  const store = getResourcesStore();
+  const dynamicEpisodes = store.podcasts && store.podcasts.length > 0
+    ? store.podcasts.map((ep) => ({
+        id: ep.id,
+        title: isAr ? ep.titleAr : ep.titleEn,
+        guest: isAr ? ep.guestAr : ep.guestEn,
+        duration: ep.duration,
+        date: isAr ? ep.dateAr : ep.dateEn,
+        desc: isAr ? ep.descAr : ep.descEn,
+        tag: isAr ? ep.tagAr : ep.tagEn,
+      }))
+    : episodes;
+
   return (
     <div
       data-nav-light="true"
@@ -137,7 +151,7 @@ export default async function PodcastsPage({
 
         {/* Episodes list */}
         <div className="space-y-6">
-          {episodes.map((ep, idx) => (
+          {dynamicEpisodes.map((ep, idx) => (
             <Reveal key={ep.id} delay={0.1 * (idx + 1)}>
               <div className="p-8 rounded-3xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm hover:shadow-md">
                 <div className="flex items-start gap-4 flex-1">

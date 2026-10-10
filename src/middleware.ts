@@ -91,6 +91,15 @@ function getSafeHost(rawHost: string): { host: string; protocol: string } {
     }
   }
 
+  // 6. Admin Portal Protection
+  if (targetPath === '/admin' || (targetPath.startsWith('/admin/') && targetPath !== '/admin/login')) {
+    const sessionCookie = request.cookies.get('pontlook_admin_session')?.value;
+    if (!sessionCookie) {
+      const loginUrl = new URL(request.url);
+      loginUrl.pathname = '/admin/login';
+      return NextResponse.redirect(loginUrl);
+    }
+  }
 
   return NextResponse.next();
 }

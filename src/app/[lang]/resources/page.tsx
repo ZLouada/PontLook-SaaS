@@ -8,6 +8,7 @@ import Reveal from '@/components/shared/Reveal';
 import { sanityFetch } from '@/sanity/lib/live';
 import { POSTS_QUERY } from '@/sanity/lib/queries';
 import { urlForImage } from '@/sanity/lib/image';
+import { getResourcesStore } from '@/lib/resources-store';
 import {
   BookOpen,
   Headphones,
@@ -89,6 +90,14 @@ export default async function ResourcesPage({
     sanityPosts = [];
   }
 
+  // Load dynamic content from JSON store (managed via /admin CMS)
+  const store = getResourcesStore();
+  const heroTitle = (isAr ? store.hero.titleAr : store.hero.titleEn) || (isAr ? 'مركز موارد التدريب والتطوير في PontLook' : 'The PontLook L&D resource hub');
+  const heroSubtitle = (isAr ? store.hero.subtitleAr : store.hero.subtitleEn) || (isAr ? 'رؤى واستراتيجيات وموارد لمساعدة المنشآت على بناء كوادر أقوى من خلال قرارات تدريبية أفضل.' : 'Insights, strategies, and resources to help organisations build stronger workforces through better training decisions.');
+  const spotlight = store.spotlight;
+  const editorPickEvent = store.editorPickEvent;
+  const editorPickToolkit = store.editorPickToolkit;
+
   // Curated fallback articles for rich presentation
   const fallbackArticles = [
     {
@@ -129,6 +138,17 @@ export default async function ResourcesPage({
     },
   ];
 
+  const dynamicArticles = store.articles && store.articles.length > 0
+    ? store.articles.map((art) => ({
+        title: isAr ? art.titleAr : art.titleEn,
+        category: isAr ? art.categoryAr : art.categoryEn,
+        readTime: isAr ? art.readTimeAr : art.readTimeEn,
+        date: isAr ? art.dateAr : art.dateEn,
+        excerpt: isAr ? art.excerptAr : art.excerptEn,
+        slug: art.slug,
+      }))
+    : fallbackArticles;
+
   const categoryPills = [
     { label: isAr ? 'كافة الموارد' : 'All Resources', href: `/${lang}/resources`, active: true },
     { label: isAr ? 'المدونة' : 'Blog', href: `/${lang}/resources/blog` },
@@ -150,17 +170,13 @@ export default async function ResourcesPage({
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
           <Reveal>
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-heading font-extrabold text-white tracking-tight leading-[1.08] mb-5 sm:mb-6 max-w-3xl">
-              {isAr
-                ? 'مركز موارد التدريب والتطوير في PontLook'
-                : 'The PontLook L&D resource hub'}
+              {heroTitle}
             </h1>
           </Reveal>
 
           <Reveal delay={0.1}>
             <p className="text-white/95 text-base sm:text-lg md:text-xl font-normal leading-relaxed max-w-2xl sm:max-w-3xl">
-              {isAr
-                ? 'رؤى واستراتيجيات وموارد لمساعدة المنشآت على بناء كوادر أقوى من خلال قرارات تدريبية أفضل.'
-                : 'Insights, strategies, and resources to help organisations build stronger workforces through better training decisions.'}
+              {heroSubtitle}
             </p>
           </Reveal>
         </div>
@@ -209,7 +225,7 @@ export default async function ResourcesPage({
               >
                 <div className="relative aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/9] w-full bg-neutral-100 overflow-hidden">
                   <Image
-                    src="/executive_training_room.jpg"
+                    src={spotlight.image || '/executive_training_room.jpg'}
                     alt="GCC Corporate Training Benchmark"
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -218,10 +234,10 @@ export default async function ResourcesPage({
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute top-4 start-4 sm:top-6 sm:start-6 flex items-center gap-2">
                     <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-white/20 text-white backdrop-blur-md border border-white/30">
-                      {isAr ? 'تقرير مميز · ٢٠٢٦' : 'FEATURED GUIDE · 2026'}
+                      {isAr ? spotlight.badgeAr : spotlight.badgeEn}
                     </span>
                     <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#FF5C00] text-white">
-                      {isAr ? 'استراتيجيات التدريب' : 'L&D STRATEGIES'}
+                      {isAr ? spotlight.categoryAr : spotlight.categoryEn}
                     </span>
                   </div>
                 </div>
@@ -229,24 +245,20 @@ export default async function ResourcesPage({
                 <div className="p-6 sm:p-8 lg:p-10 flex-1 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-3 text-xs font-mono text-neutral-500 mb-3">
-                      <span>{isAr ? '١٢ دقيقة قراءة' : '12 min read'}</span>
+                      <span>{isAr ? spotlight.readTimeAr : spotlight.readTimeEn}</span>
                       <span>•</span>
-                      <span>{isAr ? 'أكتوبر ٢٠٢٦' : 'October 2026'}</span>
+                      <span>{isAr ? spotlight.dateAr : spotlight.dateEn}</span>
                     </div>
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-neutral-950 group-hover:text-black transition-colors leading-tight mb-4">
-                      {isAr
-                        ? 'دليل معايير تدريب الشركات في الخليج ٢٠٢٦: سد فجوات المهارات ومواءمة التوطين'
-                        : 'The 2026 GCC Corporate Training Benchmark: Closing Workforce Skill Gaps'}
+                      {isAr ? spotlight.titleAr : spotlight.titleEn}
                     </h2>
                     <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-normal">
-                      {isAr
-                        ? 'دراسة واقعية وشاملة تستند إلى مقابلات مع أكثر من ٤٥٠ قائداً تنفيذياً في الرياض ودبي حول قياس الاحتياج التدريبي الحقيقي، التعامل مع تراخيص TVTC، وبناء كوادر وطنية عالية الأداء.'
-                        : 'A comprehensive study of 450+ enterprise HR leaders in Riyadh and Dubai navigating diagnostic TNA methods, TVTC accreditations, and high-impact corporate cohorts.'}
+                      {isAr ? spotlight.excerptAr : spotlight.excerptEn}
                     </p>
                   </div>
 
                   <div className="mt-8 pt-6 border-t border-neutral-200 flex items-center justify-between text-sm font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
-                    <span>{isAr ? 'قراءة الدليل بالكامل' : 'Read Full Guide'}</span>
+                    <span>{isAr ? spotlight.ctaAr : spotlight.ctaEn}</span>
                     <ArrowRight size={18} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                   </div>
                 </div>
@@ -267,25 +279,23 @@ export default async function ResourcesPage({
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-neutral-200 text-neutral-800 border border-neutral-300">
-                      {isAr ? 'حدث افتراضي مباشر' : '3-DAY VIRTUAL EVENT'}
+                      {isAr ? editorPickEvent.badgeAr : editorPickEvent.badgeEn}
                     </span>
                     <span className="text-xs font-mono text-neutral-500">
-                      {isAr ? '٧ – ٩ أكتوبر' : '7 – 9 Oct'}
+                      {isAr ? editorPickEvent.dateAr : editorPickEvent.dateEn}
                     </span>
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
-                    {isAr ? 'قمة مهارات المستقبل الخليجية \'٢٦' : 'Human Skills Fest \'26'}
+                    {isAr ? editorPickEvent.titleAr : editorPickEvent.titleEn}
                   </h3>
                   <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
-                    {isAr
-                      ? 'جلسات تفاعلية مع قادة الموارد البشرية والتدريب في كبرى المنشآت لمناقشة القيادة، المهارات البشرية، واستدامة التدريب.'
-                      : 'Ten expert sessions, three days, one unmissable online summit. Join HR and L&D professionals to future-proof workforce capability.'}
+                    {isAr ? editorPickEvent.descAr : editorPickEvent.descEn}
                   </p>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
-                  <span>{isAr ? 'حجز مقعد مجاني' : 'Secure your spot'}</span>
+                  <span>{isAr ? editorPickEvent.ctaAr : editorPickEvent.ctaEn}</span>
                   <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                 </div>
               </Link>
@@ -298,7 +308,7 @@ export default async function ResourcesPage({
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-[#FF5C00]/10 text-[#FF5C00] border border-[#FF5C00]/25 font-bold">
-                      {isAr ? 'قالب إكسل مجاني' : 'FREE TOOLKIT'}
+                      {isAr ? editorPickToolkit.badgeAr : editorPickToolkit.badgeEn}
                     </span>
                     <span className="text-xs font-mono text-neutral-500">
                       {isAr ? 'جاهز للتطبيق' : 'Instant Download'}
@@ -306,17 +316,15 @@ export default async function ResourcesPage({
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
-                    {isAr ? 'مصفوفة تشخيص الاحتياج التدريبي (TNA)' : 'Complete Enterprise TNA Excel Framework'}
+                    {isAr ? editorPickToolkit.titleAr : editorPickToolkit.titleEn}
                   </h3>
                   <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
-                    {isAr
-                      ? 'جداول ومعادلات جاهزة لحساب فجوات المهارات، تصنيف الميزانيات، ومقارنة عروض المعاهد التدريبية.'
-                      : 'Pre-built formulas, departmental skill gap matrices, and RFP vendor comparison scorecards.'}
+                    {isAr ? editorPickToolkit.descAr : editorPickToolkit.descEn}
                   </p>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
-                  <span>{isAr ? 'تحميل القالب مجاناً' : 'Download Template'}</span>
+                  <span>{isAr ? editorPickToolkit.ctaAr : editorPickToolkit.ctaEn}</span>
                   <Download size={15} />
                 </div>
               </Link>
@@ -349,7 +357,7 @@ export default async function ResourcesPage({
 
           {/* Articles Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            {(sanityPosts && sanityPosts.length > 0 ? sanityPosts.slice(0, 3) : fallbackArticles).map(
+            {(sanityPosts && sanityPosts.length > 0 ? sanityPosts.slice(0, 3) : dynamicArticles).map(
               (article: any, idx: number) => {
                 const isSanity = Boolean(article._id);
                 const title = article.title;

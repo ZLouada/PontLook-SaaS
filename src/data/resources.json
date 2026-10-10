@@ -1,0 +1,247 @@
+{
+  "hero": {
+    "titleEn": "The PontLook L&D resource hub",
+    "titleAr": "مركز موارد التدريب والتطوير في PontLook",
+    "subtitleEn": "Insights, strategies, and resources to help organisations build stronger workforces through better training decisions.",
+    "subtitleAr": "رؤى واستراتيجيات وموارد لمساعدة المنشآت على بناء كوادر أقوى من خلال قرارات تدريبية أفضل."
+  },
+  "spotlight": {
+    "badgeEn": "FEATURED GUIDE · 2026",
+    "badgeAr": "تقرير مميز · ٢٠٢٦",
+    "categoryEn": "L&D STRATEGIES",
+    "categoryAr": "استراتيجيات التدريب",
+    "readTimeEn": "12 min read",
+    "readTimeAr": "١٢ دقيقة قراءة",
+    "dateEn": "October 2026",
+    "dateAr": "أكتوبر ٢٠٢٦",
+    "titleEn": "The 2026 GCC Corporate Training Benchmark: Closing Workforce Skill Gaps",
+    "titleAr": "دليل معايير تدريب الشركات في الخليج ٢٠٢٦: سد فجوات المهارات ومواءمة التوطين",
+    "excerptEn": "A comprehensive study of 450+ enterprise HR leaders in Riyadh and Dubai navigating diagnostic TNA methods, TVTC accreditations, and high-impact corporate cohorts.",
+    "excerptAr": "دراسة واقعية وشاملة تستند إلى مقابلات مع أكثر من ٤٥٠ قائداً تنفيذياً في الرياض ودبي حول قياس الاحتياج التدريبي الحقيقي، التعامل مع تراخيص TVTC، وبناء كوادر وطنية عالية الأداء.",
+    "ctaEn": "Read Full Guide",
+    "ctaAr": "قراءة الدليل بالكامل",
+    "image": "/executive_training_room.jpg",
+    "link": "/resources/blog"
+  },
+  "editorPickEvent": {
+    "badgeEn": "3-DAY VIRTUAL EVENT",
+    "badgeAr": "حدث افتراضي مباشر",
+    "dateEn": "7 – 9 Oct",
+    "dateAr": "٧ – ٩ أكتوبر",
+    "titleEn": "Human Skills Fest '26",
+    "titleAr": "قمة مهارات المستقبل الخليجية '٢٦",
+    "descEn": "Ten expert sessions, three days, one unmissable online summit. Join HR and L&D professionals to future-proof workforce capability.",
+    "descAr": "جلسات تفاعلية مع قادة الموارد البشرية والتدريب في كبرى المنشآت لمناقشة القيادة، المهارات البشرية، واستدامة التدريب.",
+    "ctaEn": "Secure your spot",
+    "ctaAr": "حجز مقعد مجاني",
+    "link": "/resources/events"
+  },
+  "editorPickToolkit": {
+    "badgeEn": "DOWNLOADABLE GUIDE",
+    "badgeAr": "دليل تشخيصي قابل للتحميل",
+    "titleEn": "TNA Diagnostic Framework 2026",
+    "titleAr": "مصفوفة تشخيص الاحتياجات التدريبية (TNA)",
+    "descEn": "Pre-built scoring matrix to isolate core capability gaps before signing provider scopes.",
+    "descAr": "نموذج عملي لتقييم كفاءة الفرق وتحديد الاحتياجات الفعلية بدقة قبل التعاقد مع مزودي التدريب.",
+    "ctaEn": "Download Template",
+    "ctaAr": "تحميل القالب مجاناً",
+    "link": "/resources/downloads"
+  },
+  "articles": [
+    {
+      "id": "art-1",
+      "slug": "human-skills-in-the-age-of-ai",
+      "titleEn": "Human Skills in the Age of AI: 5 Non-Negotiable Leadership Capabilities",
+      "titleAr": "بناء المهارات القيادية في عصر الذكاء الاصطناعي: ٥ كفاءات غير قابلة للتفاوض",
+      "categoryEn": "L&D STRATEGIES",
+      "categoryAr": "استراتيجيات التدريب",
+      "readTimeEn": "6 min read",
+      "readTimeAr": "٦ دقائق قراءة",
+      "dateEn": "Sep 25, 2026",
+      "dateAr": "٢٥ سبتمبر ٢٠٢٦",
+      "excerptEn": "How leading enterprises balance technical automation with critical thinking, executive communication, and emotional resilience.",
+      "excerptAr": "كيف توازن المنشآت الرائدة بين الأتمتة التقنية وتطوير التفكير النقدي، والتواصل التنفيذي، والذكاء العاطفي لفرق العمل."
+    },
+    {
+      "id": "art-2",
+      "slug": "saudization-emiratization-roi-framework",
+      "titleEn": "Saudization & Emiratization ROI: Aligning L&D With National Quotas",
+      "titleAr": "مواءمة التدريب مع مستهدفات التوطين (نطاقات ونافس): دليل الموارد البشرية",
+      "categoryEn": "NATIONAL TALENT",
+      "categoryAr": "حوكمة وتوطين",
+      "readTimeEn": "8 min read",
+      "readTimeAr": "٨ دقائق قراءة",
+      "dateEn": "Sep 18, 2026",
+      "dateAr": "١٨ سبتمبر ٢٠٢٦",
+      "excerptEn": "Transforming compliance quotas into high-retention talent pipelines through accredited vocational and corporate academies.",
+      "excerptAr": "تحويل متطلبات التوطين من مجرد أرقام امتثال إلى برامج تطوير وظيفي مستدامة تعزز الإنتاجية والولاء المؤسسي."
+    },
+    {
+      "id": "art-3",
+      "slug": "calculate-true-corporate-training-roi",
+      "titleEn": "How to Calculate True Corporate Training ROI for Enterprise Teams",
+      "titleAr": "كيف تحسب العائد الفعلي على الاستثمار التدريبي (ROI) لفرق المبيعات والعمليات؟",
+      "categoryEn": "IMPACT & METRICS",
+      "categoryAr": "قياس الأثر",
+      "readTimeEn": "5 min read",
+      "readTimeAr": "٥ دقائق قراءة",
+      "dateEn": "Sep 12, 2026",
+      "dateAr": "١٢ سبتمبر ٢٠٢٦",
+      "excerptEn": "Actionable equations and KPI matrices to isolate training effects and quantify operational improvements for executive boards.",
+      "excerptAr": "صيغ عملية ومؤشرات أداء واضحة لعزل أثر البرامج التدريبية وقياس مساهمتها المباشرة في الإيرادات وتقليل الأخطاء."
+    }
+  ],
+  "downloads": [
+    {
+      "id": "toolkit-tna",
+      "titleEn": "Enterprise Training Needs Analysis (TNA) Diagnostic Matrix",
+      "titleAr": "نموذج تحديد الاحتياجات التدريبية المؤسسية (TNA Matrix)",
+      "format": "XLSX + PDF",
+      "fileSize": "2.4 MB",
+      "descEn": "Structured diagnostic matrix to identify department-level skill gaps, map competency deficits, and prioritize high-impact training.",
+      "descAr": "أداة تشخيص شاملة لفرز الفجوات المهارية عبر الأقسام، وتحديد البرامج التدريبية الحرجة بناءً على أولويات العمل.",
+      "featuresEn": [
+        "Competency benchmarks across 14 job roles",
+        "Automated criticality scoring",
+        "Executive-ready summary dashboard"
+      ],
+      "featuresAr": [
+        "مصفوفة جدارة لـ 14 وظيفة رئيسية",
+        "حساب تلقائي لدرجة الأولوية",
+        "متوافق مع تقارير القيادة"
+      ]
+    },
+    {
+      "id": "toolkit-rfp",
+      "titleEn": "Corporate Training Provider RFP Evaluation Scorecard",
+      "titleAr": "مصفوفة تقييم ومقارنة عروض مزودي التدريب (Provider Scorecard)",
+      "format": "XLSX Template",
+      "fileSize": "1.8 MB",
+      "descEn": "Objective evaluation rubric to compare provider proposals, audit trainer credentials, and verify track records with SLA clauses.",
+      "descAr": "معايير علمية لفحص عروض التدريب، تقييم سيرة المدربين، ومقارنة التكاليف والمخرجات دون تحيز.",
+      "featuresEn": [
+        "Weighted scoring for trainer pedagogy",
+        "Per-seat & hourly cost normalization",
+        "Performance guarantee contract clauses"
+      ],
+      "featuresAr": [
+        "وزن نسبي لجودة المدرب والمحتوى",
+        "مقارنة التكاليف بالساعة والشخص",
+        "بنود حوكمة وضمان الأداء"
+      ]
+    },
+    {
+      "id": "toolkit-budget",
+      "titleEn": "GCC Workforce Nationalization & Training ROI Calculator",
+      "titleAr": "حاسبة العائد الاستثماري لمبادرات التدريب والتوطين",
+      "format": "Interactive Sheet",
+      "fileSize": "3.1 MB",
+      "descEn": "Financial model to project training payback, retention gains, and net ROI for Saudization and Emiratization talent cohorts.",
+      "descAr": "نموذج مالي لحساب التكاليف الحقيقية، أثر تقليل دوران الموظفين، والعائد على الاستثمار التدريبي لبرامج التوطين.",
+      "featuresEn": [
+        "Retention payback horizon projections",
+        "Nitaqat / Nafis subsidy offset calculations",
+        "Board-level visual ROI sensitivity charts"
+      ],
+      "featuresAr": [
+        "توقعات أفق استرداد تكلفة التدريب",
+        "احتساب أثر الدعم الحكومي والبدلات",
+        "رسوم بيانية تنفيذية جاهزة للعرض على مجلس الإدارة"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "event-riyadh-roundtable",
+      "titleEn": "Executive Roundtable: Closing Critical Skill Gaps in Riyadh Enterprise",
+      "titleAr": "طاولة مستديرة تنفيذية: استراتيجيات سد فجوات المهارات في الرياض",
+      "dateEn": "October 28, 2026",
+      "dateAr": "28 أكتوبر 2026",
+      "time": "10:00 AM - 12:30 PM (AST)",
+      "locationEn": "Riyadh, Saudi Arabia (In-Person)",
+      "locationAr": "الرياض، المملكة العربية السعودية (حضور شخصي)",
+      "typeEn": "Chatham House Roundtable",
+      "typeAr": "مائدة مستديرة مغلقة",
+      "descEn": "An intimate, invitation-only briefing for 18 enterprise HR deciders discussing provider qualification, retention, and 2027 skill targets.",
+      "descAr": "جلسة حوارية خاصة تجمع 18 من مديري التعلم والتطوير في القطاع المصرفي والصناعي لمناقشة التحديات التدريبية ومعايير الاعتماد.",
+      "spotsLeftEn": "4 Seats Remaining",
+      "spotsLeftAr": "باقي 4 مقاعد"
+    },
+    {
+      "id": "event-dubai-webinar",
+      "titleEn": "Virtual Masterclass: Writing Bulletproof RFPs for Corporate Training",
+      "titleAr": "ندوة افتراضية: كيف تصيغ كراسة شروط (RFP) تحقق نتائج تدريبية حقيقية؟",
+      "dateEn": "November 12, 2026",
+      "dateAr": "12 نوفمبر 2026",
+      "time": "02:00 PM - 03:15 PM (GST)",
+      "locationEn": "Live Interactive Webinar",
+      "locationAr": "عبر الإنترنت (جلسة تفاعلية)",
+      "typeEn": "Digital Briefing",
+      "typeAr": "ندوة افتراضية",
+      "descEn": "Frameworks to translate vague department requests into clear, scoped briefs that attract top-tier verified providers.",
+      "descAr": "خطوات عملية لتحويل المتطلبات التدريبية الغامضة إلى نطاق عمل محدد وواضح يقضي على عروض البيع العشوائية.",
+      "spotsLeftEn": "Open Registration",
+      "spotsLeftAr": "التسجيل متاح"
+    },
+    {
+      "id": "event-summit-2027",
+      "titleEn": "GCC Corporate Training Matchmaking Summit 2027",
+      "titleAr": "قمة التوفيق بين مزودي التدريب والشركات الخليجية 2027",
+      "dateEn": "December 15-16, 2026",
+      "dateAr": "15-16 ديسمبر 2026",
+      "time": "Full Day Summit",
+      "locationEn": "Dubai, United Arab Emirates",
+      "locationAr": "دبي، الإمارات العربية المتحدة",
+      "typeEn": "Annual Summit",
+      "typeAr": "قمة سنوية",
+      "descEn": "Pre-scheduled 1-on-1 matchmaking meetings between enterprise HR executives and accredited specialist training academies.",
+      "descAr": "الحدث الإقليمي الأكبر الذي يربط أكثر من 120 مشتري تدريب مؤسسي بأكثر من 40 جهة تدريبية معتمدة عبر اجتماعات عمل مباشرة وموجهة.",
+      "spotsLeftEn": "Early Registration Open",
+      "spotsLeftAr": "الحجز المبكر متاح"
+    }
+  ],
+  "podcasts": [
+    {
+      "id": "ep-01",
+      "titleEn": "Demystifying Training ROI: How Top GCC Banks Evaluate Provider Impact",
+      "titleAr": "قياس العائد على الاستثمار التدريبي في قطاع البنوك والتقنية",
+      "guestEn": "Fahad Al-Qahtani — Head of Talent & Learning",
+      "guestAr": "فهد القحطاني — رئيس تطوير الكفاءات",
+      "duration": "42 min",
+      "dateEn": "October 2026",
+      "dateAr": "أكتوبر 2026",
+      "descEn": "Moving beyond smile sheets to measurable business KPIs and executive board reporting.",
+      "descAr": "كيف تنتقل من قياس رضا المتدربين إلى قياس الأثر المالي والتشغيلي المباشر للبرامج التدريبية.",
+      "tagEn": "Strategy & Metrics",
+      "tagAr": "استراتيجية وتأهيل"
+    },
+    {
+      "id": "ep-02",
+      "titleEn": "Saudization & Emiratization: Accelerating Young Leadership Pipelines",
+      "titleAr": "التوطين وتحديات تدريب المهارات القيادية الشابة",
+      "guestEn": "Sarah Al-Mansoor — Human Capital Advisory Director",
+      "guestAr": "سارة المنصوري — مستشارة رأس المال البشري",
+      "duration": "38 min",
+      "dateEn": "September 2026",
+      "dateAr": "سبتمبر 2026",
+      "descEn": "Designing immersive, cohort-based leadership programs that retain high-potential regional talent.",
+      "descAr": "أفضل الممارسات لتأهيل القيادات الشابة ومواءمة البرامج مع متطلبات رؤية 2030.",
+      "tagEn": "Leadership & Nationalization",
+      "tagAr": "القيادة والتوطين"
+    },
+    {
+      "id": "ep-03",
+      "titleEn": "The Provider Selection Playbook: Avoiding Procurement Traps in B2B L&D",
+      "titleAr": "كيف تختار الشركات مزود التدريب المناسب دون عناء الوسطاء؟",
+      "guestEn": "Majed Al-Otaibi — Senior Corporate Procurement Lead",
+      "guestAr": "ماجد العتيبي — مدير المشتريات المؤسسية",
+      "duration": "45 min",
+      "dateEn": "September 2026",
+      "dateAr": "سبتمبر 2026",
+      "descEn": "Behind-the-scenes procurement criteria, verifying trainer track records, and structuring performance SLAs.",
+      "descAr": "معايير فحص العروض، التدقيق في اعتمادات المدربين، وتجنب الهدر المالي في المناقصات التقليدية.",
+      "tagEn": "Procurement & Governance",
+      "tagAr": "المشتريات والحوكمة"
+    }
+  ]
+}

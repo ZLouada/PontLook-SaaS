@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
+import { getResourcesStore } from '@/lib/resources-store';
 import { Calendar, MapPin, Clock, ArrowRight, ArrowUpRight } from '@/components/icons';
 
 export async function generateMetadata({
@@ -103,6 +104,20 @@ export default async function EventsPage({
     },
   ];
 
+  const store = getResourcesStore();
+  const dynamicEvents = store.events && store.events.length > 0
+    ? store.events.map((evt) => ({
+        id: evt.id,
+        title: isAr ? evt.titleAr : evt.titleEn,
+        date: isAr ? evt.dateAr : evt.dateEn,
+        time: evt.time,
+        location: isAr ? evt.locationAr : evt.locationEn,
+        type: isAr ? evt.typeAr : evt.typeEn,
+        desc: isAr ? evt.descAr : evt.descEn,
+        spotsLeft: isAr ? evt.spotsLeftAr : evt.spotsLeftEn,
+      }))
+    : upcomingEvents;
+
   return (
     <div
       data-nav-light="true"
@@ -140,7 +155,7 @@ export default async function EventsPage({
 
         {/* Events List */}
         <div className="space-y-6">
-          {upcomingEvents.map((evt, idx) => (
+          {dynamicEvents.map((evt, idx) => (
             <Reveal key={evt.id} delay={0.1 * (idx + 1)}>
               <div className="p-8 rounded-3xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 shadow-sm hover:shadow-md">
                 <div className="flex-1">

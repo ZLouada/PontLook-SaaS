@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
+import { getResourcesStore } from '@/lib/resources-store';
 import { Download, ArrowRight, FileText, CheckCircle2 } from '@/components/icons';
 
 export async function generateMetadata({
@@ -103,6 +104,18 @@ export default async function DownloadsPage({
     },
   ];
 
+  const store = getResourcesStore();
+  const dynamicToolkits = store.downloads && store.downloads.length > 0
+    ? store.downloads.map((dl) => ({
+        id: dl.id,
+        title: isAr ? dl.titleAr : dl.titleEn,
+        format: dl.format,
+        fileSize: dl.fileSize,
+        desc: isAr ? dl.descAr : dl.descEn,
+        features: (isAr ? dl.featuresAr : dl.featuresEn) || [],
+      }))
+    : toolkits;
+
   return (
     <div
       data-nav-light="true"
@@ -140,7 +153,7 @@ export default async function DownloadsPage({
 
         {/* Grid of Toolkits */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-          {toolkits.map((tool, idx) => (
+          {dynamicToolkits.map((tool, idx) => (
             <Reveal key={tool.id} delay={0.1 * (idx + 1)}>
               <div className="h-full flex flex-col justify-between p-8 rounded-3xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md">
                 <div>

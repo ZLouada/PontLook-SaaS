@@ -1,0 +1,152 @@
+import crypto from 'crypto';
+import { Resend } from 'resend';
+import { cookies } from 'next/headers';
+import type { NextRequest } from 'next/server';
+
+const ADMIN_USER = process.env.ADMIN_USERNAME || 'anty_palantir';
+const ADMIN_PASS = process.env.ADMIN_PASSWORD || 'anty_palantir';
+const ADMIN_EMAIL = process.env.ADMIN_NOTIFICATION_EMAIL || 'contact@pontlook.com';
+const SESSION_COOKIE_NAME = 'pontlook_admin_session';
+const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || 'pontlook_super_secure_session_secret_2026_antigravity';
+
+// In-memory OTP storage
+interface OtpRecord {
+  code: string;
+  expiresAt: number;
+  attempts: number;
+}
+
+let activeOtpRecord: OtpRecord | null = null;
+
+// Initialize Resend
+const resendApiKey = process.env.RESEND_API_KEY;
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
+
+export function checkCredentials(user: string, pass: string): boolean {
+  return user === ADMIN_USER && pass === ADMIN_PASS;
+}
+
+export async function generateAndSendOtp(): Promise<{ success: boolean; error?: string }> {
+  // Generate random 6-digit code
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
+  const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+  activeOtpRecord = {
+    code,
+    expiresAt,
+    attempts: 0,
+  };
+
+  console.log(`\n======================================================`);
+  console.log(`[PontLook Admin Security] 2FA Verification Code Generated:`);
+  console.log(`CODE: ${code} (Sent to ${ADMIN_EMAIL})`);
+  console.log(`Expires in 10 minutes.`);
+  console.log(`======================================================\n`);
+
+  if (resend) {
+    try {
+      await resend.emails.send({
+        from: 'PontLook Security <security@pontlook.com>',
+        to: ADMIN_EMAIL,
+        subject: `Your PontLook Admin Verification Code: ${code}`,
+        html: `
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 560px; margin: 0 auto; padding: 32px 24px; background: #0c0d0f; color: #f4f4f5; border-radius: 16px; border: 1px solid #27272a;">
+            <div style="margin-bottom: 24px; text-align: center;">
+              <span style="display: inline-block; padding: 6px 14px; background: rgba(255, 92, 0, 0.15); border: 1px solid rgba(255, 92, 0, 0.3); border-radius: 9999px; font-size: 11px; font-weight: 700; color: #ff5c00; letter-spacing: 0.1em; text-transform: uppercase;">
+                PontLook Admin Security
+              </span>
+            </div>
+            <h1 style="font-size: 22px; font-weight: 800; text-align: center; margin-bottom: 12px; color: #ffffff;">
+              Sign-in Verification Code
+            </h1>
+            <p style="font-size: 14px; line-height: 1.6; color: #a1a1aa; text-align: center; margin-bottom: 28px;">
+              A sign-in attempt was initiated for the PontLook Resources Admin Dashboard. Use the 6-digit one-time code below to complete authentication:
+            </p>
+            <div style="background: #18181b; border: 1px solid #3f3f46; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 28px;">
+              <span style="font-family: monospace; font-size: 36px; font-weight: 800; letter-spacing: 8px; color: #ff5c00;">
+                ${code}
+              </span>
+            </div>
+            <p style="font-size: 12px; line-height: 1.5; color: #71717a; text-align: center; margin-bottom: 0;">
+              This code will expire in <strong>10 minutes</strong>. If you did not request this login code, please review your security settings.
+            </p>
+          </div>
+        `,
+      });
+    } catch (err: any) {
+      console.error('Failed to send verification email via Resend:', err);
+      // We don't fail hard in development so the admin can always use the logged code
+    }
+  }
+
+  return { success: true };
+}
+
+export function verifyOtpCode(inputCode: string): { valid: boolean; error?: string } {
+  if (!activeOtpRecord) {
+    return { valid: false, error: 'No active verification code. Please request a new code.' };
+  }
+
+  if (Date.now() > activeOtpRecord.expiresAt) {
+    activeOtpRecord = null;
+    return { valid: false, error: 'Verification code has expired. Please request a new code.' };
+  }
+
+  activeOtpRecord.attempts += 1;
+  if (activeOtpRecord.attempts > 5) {
+    activeOtpRecord = null;
+    return { valid: false, error: 'Too many incorrect attempts. Please log in again.' };
+  }
+
+  if (activeOtpRecord.code.trim() !== inputCode.trim()) {
+    return { valid: false, error: 'Incorrect verification code. Please try again.' };
+  }
+
+  // Code verified successfully, clear OTP record
+  activeOtpRecord = null;
+  return { valid: true };
+}
+
+export function signToken(username: string): string {
+  const timestamp = Date.now();
+  const payload = `${username}:${timestamp}`;
+  const hmac = crypto.createHmac('sha256', SESSION_SECRET).update(payload).digest('hex');
+  return Buffer.from(`${payload}:${hmac}`).toString('base64url');
+}
+
+export function verifyToken(token: string): boolean {
+  try {
+    const decoded = Buffer.from(token, 'base64url').toString('utf-8');
+    const [user, tsStr, signature] = decoded.split(':');
+    if (!user || !tsStr || !signature) return false;
+
+    const payload = `${user}:${tsStr}`;
+    const expected = crypto.createHmac('sha256', SESSION_SECRET).update(payload).digest('hex');
+
+    if (expected !== signature) return false;
+
+    // Check expiry (7 days)
+    const age = Date.now() - parseInt(tsStr, 10);
+    const maxAge = 7 * 24 * 60 * 60 * 1000;
+    return age < maxAge;
+  } catch {
+    return false;
+  }
+}
+
+export function getAdminSessionCookieName(): string {
+  return SESSION_COOKIE_NAME;
+}
+
+export async function isCurrentRequestAdmin(): Promise<boolean> {
+  const cookieStore = await cookies();
+  const session = cookieStore.get(SESSION_COOKIE_NAME);
+  if (!session || !session.value) return false;
+  return verifyToken(session.value);
+}
+
+export function isRequestAdmin(req: NextRequest): boolean {
+  const token = req.cookies.get(SESSION_COOKIE_NAME)?.value;
+  if (!token) return false;
+  return verifyToken(token);
+}
