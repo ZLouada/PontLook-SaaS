@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
-  checkCredentials,
   signToken,
   getAdminSessionCookieName,
   ALLOWED_ADMIN_EMAILS,
@@ -67,17 +66,6 @@ export async function POST(req: NextRequest) {
     }
 
     // Step 1: Send verification code to the authorized email
-    // If password was provided, verify it first
-    if (password && typeof password === 'string' && password.trim()) {
-      const isValid = checkCredentials(email, password.trim());
-      if (!isValid) {
-        return NextResponse.json(
-          { error: 'Invalid password. Please check your credentials and try again.' },
-          { status: 401 }
-        );
-      }
-    }
-
     const origin =
       req.headers.get('origin') || req.headers.get('referer') || 'https://pontlook.com';
     const otpResult = await generateAndSendOtp(email, origin);

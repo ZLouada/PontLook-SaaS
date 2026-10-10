@@ -4,14 +4,13 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Lock, ArrowRight, RefreshCw, KeyRound, AlertCircle, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, RefreshCw, KeyRound, AlertCircle, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const router = useRouter();
 
   const [step, setStep] = useState<'credentials' | 'otp'>('credentials');
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [otpCode, setOtpCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +19,6 @@ export default function AdminLoginPage() {
   React.useEffect(() => {
     // Ensure inputs start strictly empty
     setUsername('');
-    setPassword('');
     setOtpCode('');
   }, []);
 
@@ -35,13 +33,13 @@ export default function AdminLoginPage() {
       const res = await fetch('/api/admin/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: email, password }),
+        body: JSON.stringify({ username: email }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Invalid credentials');
+        throw new Error(data.error || 'Authentication failed');
       }
 
       if (data.requireOtp) {
@@ -152,7 +150,7 @@ export default function AdminLoginPage() {
           )}
 
           {step === 'credentials' ? (
-            /* STEP 1: CREDENTIALS */
+            /* STEP 1: EMAIL ENTRY */
             <form onSubmit={handleCredentialsSubmit} autoComplete="off" className="space-y-5">
               <input
                 type="text"
@@ -160,14 +158,6 @@ export default function AdminLoginPage() {
                 style={{ position: 'absolute', opacity: 0, height: 0, width: 0, pointerEvents: 'none', zIndex: -1 }}
                 tabIndex={-1}
                 autoComplete="off"
-                readOnly
-              />
-              <input
-                type="password"
-                name="fake_pass_decoy"
-                style={{ position: 'absolute', opacity: 0, height: 0, width: 0, pointerEvents: 'none', zIndex: -1 }}
-                tabIndex={-1}
-                autoComplete="new-password"
                 readOnly
               />
 
@@ -189,37 +179,12 @@ export default function AdminLoginPage() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
+                    autoFocus
                     placeholder="e.g. contact@pontlook.com"
                     className="w-full bg-[#141416] border border-white/10 focus:border-white rounded-2xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors"
                   />
                   <div className="absolute end-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
                     <KeyRound size={16} />
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    type="password"
-                    name="pontlook_admin_pwd"
-                    id="pontlook_admin_pwd"
-                    autoComplete="new-password"
-                    autoCorrect="off"
-                    autoCapitalize="none"
-                    spellCheck={false}
-                    data-lpignore="true"
-                    data-form-type="other"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter password"
-                    className="w-full bg-[#141416] border border-white/10 focus:border-white rounded-2xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors"
-                  />
-                  <div className="absolute end-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
-                    <Lock size={16} />
                   </div>
                 </div>
               </div>
@@ -232,11 +197,11 @@ export default function AdminLoginPage() {
                 {loading ? (
                   <>
                     <RefreshCw size={16} className="animate-spin" />
-                    <span>Verifying & Sending Code...</span>
+                    <span>Sending Code...</span>
                   </>
                 ) : (
                   <>
-                    <span>Continue to Verification</span>
+                    <span>Send Verification Code</span>
                     <ArrowRight size={16} />
                   </>
                 )}
@@ -250,7 +215,7 @@ export default function AdminLoginPage() {
                   <ShieldCheck size={26} />
                 </div>
                 <h3 className="font-heading font-bold text-lg text-white mb-1">
-                  Two-Factor Verification
+                  Security Code Verification
                 </h3>
                 <p className="text-xs text-neutral-400 max-w-xs mx-auto leading-relaxed">
                   Enter the 6-digit security code dispatched to{' '}
@@ -298,7 +263,7 @@ export default function AdminLoginPage() {
                   onClick={() => setStep('credentials')}
                   className="text-neutral-400 hover:text-white transition-colors"
                 >
-                  ← Back to login
+                  ← Back to Email
                 </button>
                 <button
                   type="button"
