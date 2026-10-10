@@ -74,7 +74,10 @@ export async function POST(req: NextRequest) {
       requireOtp: true,
       email,
       sentToEmail: otpResult.sentToEmail,
-      message: `A 6-digit verification code has been dispatched to ${email}.`,
+      code: otpResult.sentToEmail ? undefined : otpResult.code,
+      message: otpResult.sentToEmail
+        ? `A 6-digit verification code has been dispatched to ${email}.`
+        : `Verification code generated: ${otpResult.code}`,
     });
   } catch (err: any) {
     console.error('Admin login error:', err);
