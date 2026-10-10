@@ -128,30 +128,14 @@ export function invalidateResourcesCache(): void {
 }
 
 export function getResourcesStore(): ResourcesContent {
-  // Check if DATA_FILE exists on disk and if it was modified since last load
-  try {
-    if (fs.existsSync(DATA_FILE)) {
-      const stats = fs.statSync(DATA_FILE);
-      if (!memoryCache || stats.mtimeMs > lastLoadedMtime) {
-        const content = fs.readFileSync(DATA_FILE, 'utf-8');
-        memoryCache = JSON.parse(content);
-        lastLoadedMtime = stats.mtimeMs;
-      }
-      if (memoryCache) {
-        return memoryCache;
-      }
-    }
-  } catch (err) {
-    console.error('Failed to read primary resources.json:', err);
-  }
-
-  // Check backup file if primary not found
+  // 1. Check backup file in /tmp first — on serverless platforms (like Vercel),
+  // runtime admin changes are written to /tmp because process.cwd() is read-only.
   try {
     if (fs.existsSync(BACKUP_DATA_FILE)) {
       const stats = fs.statSync(BACKUP_DATA_FILE);
       if (!memoryCache || stats.mtimeMs > lastLoadedMtime) {
         const content = fs.readFileSync(BACKUP_DATA_FILE, 'utf-8');
-        memoryCache = JSON.parse(content);
+        memoryCache = normalizeResourcesData(JSON.parse(content));
         lastLoadedMtime = stats.mtimeMs;
       }
       if (memoryCache) {
@@ -160,6 +144,23 @@ export function getResourcesStore(): ResourcesContent {
     }
   } catch (err) {
     console.error('Failed to read backup resources.json:', err);
+  }
+
+  // 2. Fall back to primary static DATA_FILE if no runtime /tmp override exists
+  try {
+    if (fs.existsSync(DATA_FILE)) {
+      const stats = fs.statSync(DATA_FILE);
+      if (!memoryCache || stats.mtimeMs > lastLoadedMtime) {
+        const content = fs.readFileSync(DATA_FILE, 'utf-8');
+        memoryCache = normalizeResourcesData(JSON.parse(content));
+        lastLoadedMtime = stats.mtimeMs;
+      }
+      if (memoryCache) {
+        return memoryCache;
+      }
+    }
+  } catch (err) {
+    console.error('Failed to read primary resources.json:', err);
   }
 
   if (memoryCache) {

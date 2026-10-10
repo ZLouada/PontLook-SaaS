@@ -926,9 +926,15 @@ export default function AdminPage() {
       try {
         const r = await api.save(D);
         dirty.clear();
+        try {
+          localStorage.setItem('pl_admin_resources_cache', JSON.stringify({
+            data: D,
+            savedAt: Date.now(),
+          }));
+        } catch {}
         toast(`Saved · cache revalidated for ${r.length} routes`);
-      } catch {
-        toast('Save failed. Try again.');
+      } catch (err: any) {
+        toast('Save failed: ' + (err.message || 'Try again.'));
       }
       saving = false;
       if (view === 'admin') render();
@@ -1171,21 +1177,12 @@ export default function AdminPage() {
           toast('Keep at least one admin.');
           return;
         }
-        if (!b.dataset.armed) {
-          b.dataset.armed = '1';
-          b.textContent = 'Confirm';
-          setTimeout(() => {
-            if (b.isConnected) {
-              delete b.dataset.armed;
-              b.textContent = 'Remove';
-            }
-          }, 3000);
-        } else {
-          D.roles.users.splice(+d.i, 1);
-          dirty.add('roles');
-          render();
-          toast('Removed ' + u.name);
-        }
+        if (!window.confirm(`Are you sure you want to remove user "${u.name}"?`)) return;
+        D.roles.users.splice(+d.i, 1);
+        dirty.add('roles');
+        render();
+        toast('Removed ' + u.name);
+        await save();
       } else if (a === 'perm' && d.k) {
         D.roles.perms[d.k] = D.roles.perms[d.k] ? 0 : 1;
         dirty.add('roles');
@@ -1229,21 +1226,30 @@ export default function AdminPage() {
         dirty.add(d.n);
         render();
       } else if (a === 'del' && d.n && d.i !== undefined) {
-        if (!b.dataset.armed) {
-          b.dataset.armed = '1';
-          b.textContent = 'Confirm delete';
-          setTimeout(() => {
-            if (b.isConnected) {
-              delete b.dataset.armed;
-              b.textContent = 'Delete';
-            }
-          }, 3000);
-        } else {
-          D[d.n].splice(+d.i, 1);
-          dirty.add(d.n);
-          render();
-          toast('Deleted. Save to publish the change.');
+        const idx = Number(d.i);
+        const list = D[d.n];
+        if (!Array.isArray(list) || !list[idx]) return;
+        const itemToDelete = list[idx];
+        const title =
+          itemToDelete.title_en ||
+          itemToDelete.titleEn ||
+          itemToDelete.title_ar ||
+          itemToDelete.titleAr ||
+          itemToDelete.name ||
+          'this item';
+
+        if (!window.confirm(`Are you sure you want to delete "${title}"? This cannot be undone.`)) {
+          return;
         }
+
+        list.splice(idx, 1);
+        if (itemToDelete.id) {
+          OPEN.delete(itemToDelete.id);
+        }
+        dirty.add(d.n);
+        render();
+        toast('Deleting and publishing changes...');
+        await save();
       } else if (a === 'slug' && d.p && d.from) {
         const s = (getP(d.from) || '')
           .toLowerCase()
@@ -1287,19 +1293,15 @@ export default function AdminPage() {
         const m = MEDIA.find((item) => item.name === d.n);
         if (m) window.open(m.blob, '_blank', 'noopener');
       } else if (a === 'mdel' && d.n) {
-        if (!b.dataset.armed) {
-          b.dataset.armed = '1';
-          b.textContent = 'Confirm';
-          setTimeout(() => {
-            if (b.isConnected) {
-              delete b.dataset.armed;
-              b.textContent = 'Delete';
-            }
-          }, 3000);
-        } else {
+        if (!window.confirm(`Are you sure you want to delete image "${d.n}" permanently?`)) {
+          return;
+        }
+        try {
           await api.removeMedia(d.n);
           render();
           toast('Deleted ' + d.n);
+        } catch (e: any) {
+          toast('Failed to delete media: ' + (e.message || 'Error'));
         }
       }
     };
@@ -1376,7 +1378,14 @@ export default function AdminPage() {
       try {
         const isAuthed = await api.verify();
         if (isAuthed) {
-          D = norm(await api.get());
+          const serverData = await api.get();
+          D = norm(serverData);
+          try {
+            localStorage.setItem('pl_admin_resources_cache', JSON.stringify({
+              data: D,
+              savedAt: Date.now(),
+            }));
+          } catch {}
           meId = ST.get('me') || 'u1';
           view = 'admin';
         } else {
