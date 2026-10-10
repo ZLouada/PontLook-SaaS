@@ -23,11 +23,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await generateAndSendOtp();
+    const otpResult = await generateAndSendOtp();
 
     return NextResponse.json({
       success: true,
-      message: 'Verification code sent to contact@pontlook.com',
+      sentToEmail: otpResult.sentToEmail,
+      message: otpResult.sentToEmail
+        ? 'Verification code sent to contact@pontlook.com'
+        : 'Email service is not configured yet (missing RESEND_API_KEY). Your verification code is provided below.',
+      devCode: !otpResult.sentToEmail ? otpResult.code : undefined,
     });
   } catch (err: any) {
     console.error('Admin login error:', err);

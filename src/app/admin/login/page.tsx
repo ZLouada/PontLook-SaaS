@@ -11,9 +11,10 @@ export default function AdminLoginPage() {
 
   // Step 1: credentials, Step 2: otp
   const [step, setStep] = useState<'credentials' | 'otp'>('credentials');
-  const [username, setUsername] = useState('anty_palantir');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [otpCode, setOtpCode] = useState('');
+  const [devCode, setDevCode] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
@@ -37,7 +38,16 @@ export default function AdminLoginPage() {
       }
 
       setStep('otp');
-      setInfoMessage('A 6-digit verification code was sent to contact@pontlook.com');
+      if (data.devCode) {
+        setDevCode(data.devCode);
+        setOtpCode(data.devCode);
+        setInfoMessage(
+          'Email delivery is not active (missing RESEND_API_KEY in .env.local). Temporary code provided below:'
+        );
+      } else {
+        setDevCode(null);
+        setInfoMessage('A 6-digit verification code was sent to contact@pontlook.com');
+      }
     } catch (err: any) {
       setError(err.message || 'Authentication failed');
     } finally {
@@ -85,7 +95,14 @@ export default function AdminLoginPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
-      setInfoMessage('New verification code sent to contact@pontlook.com');
+      if (data.devCode) {
+        setDevCode(data.devCode);
+        setOtpCode(data.devCode);
+        setInfoMessage('New code generated (shown below):');
+      } else {
+        setDevCode(null);
+        setInfoMessage('New verification code sent to contact@pontlook.com');
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to resend code');
     } finally {
@@ -147,10 +164,12 @@ export default function AdminLoginPage() {
                 <div className="relative">
                   <input
                     type="text"
+                    name="admin_username"
+                    autoComplete="off"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
-                    placeholder="anty_palantir"
+                    placeholder="Enter username"
                     className="w-full bg-[#181A20] border border-white/10 focus:border-[#FF5C00] rounded-2xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors"
                   />
                   <div className="absolute end-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
@@ -166,10 +185,12 @@ export default function AdminLoginPage() {
                 <div className="relative">
                   <input
                     type="password"
+                    name="admin_password"
+                    autoComplete="new-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    placeholder="••••••••••••"
+                    placeholder="Enter password"
                     className="w-full bg-[#181A20] border border-white/10 focus:border-[#FF5C00] rounded-2xl px-4 py-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors"
                   />
                   <div className="absolute end-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
@@ -211,6 +232,19 @@ export default function AdminLoginPage() {
                   <span className="text-white font-medium">contact@pontlook.com</span>
                 </p>
               </div>
+
+              {devCode && (
+                <div className="p-4 rounded-2xl bg-[#FF5C00]/15 border border-[#FF5C00]/40 text-center my-2">
+                  <p className="text-[11px] text-[#FF9E66] font-medium mb-1.5">
+                    Email service not configured in .env.local yet.
+                    <br />
+                    Use this temporary verification code:
+                  </p>
+                  <div className="font-mono text-2xl font-extrabold text-[#FF5C00] tracking-[0.25em] bg-black/60 py-2 px-5 rounded-xl inline-block border border-[#FF5C00]/30 shadow-inner">
+                    {devCode}
+                  </div>
+                </div>
+              )}
 
               <div>
                 <label className="block text-center text-xs font-mono uppercase tracking-wider text-neutral-400 mb-2">

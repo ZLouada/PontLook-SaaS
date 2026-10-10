@@ -26,7 +26,12 @@ export function checkCredentials(user: string, pass: string): boolean {
   return user === ADMIN_USER && pass === ADMIN_PASS;
 }
 
-export async function generateAndSendOtp(): Promise<{ success: boolean; error?: string }> {
+export async function generateAndSendOtp(): Promise<{
+  success: boolean;
+  code: string;
+  sentToEmail: boolean;
+  emailError?: string;
+}> {
   // Generate random 6-digit code
   const code = Math.floor(100000 + Math.random() * 900000).toString();
   const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
@@ -39,14 +44,21 @@ export async function generateAndSendOtp(): Promise<{ success: boolean; error?: 
 
   console.log(`\n======================================================`);
   console.log(`[PontLook Admin Security] 2FA Verification Code Generated:`);
-  console.log(`CODE: ${code} (Sent to ${ADMIN_EMAIL})`);
+  console.log(`CODE: ${code} (Recipient: ${ADMIN_EMAIL})`);
   console.log(`Expires in 10 minutes.`);
   console.log(`======================================================\n`);
 
+  let sentToEmail = false;
+  let emailError: string | undefined;
+
   if (resend) {
     try {
-      await resend.emails.send({
-        from: 'PontLook Security <security@pontlook.com>',
+      // Use verified domain or fallback to Resend's default onboarding sender
+      const fromEmail =
+        process.env.RESEND_FROM_EMAIL || 'PontLook Security <onboarding@resend.dev>';
+
+      const emailRes = await resend.emails.send({
+        from: fromEmail,
         to: ADMIN_EMAIL,
         subject: `Your PontLook Admin Verification Code: ${code}`,
         html: `
@@ -68,18 +80,27 @@ export async function generateAndSendOtp(): Promise<{ success: boolean; error?: 
               </span>
             </div>
             <p style="font-size: 12px; line-height: 1.5; color: #71717a; text-align: center; margin-bottom: 0;">
-              This code will expire in <strong>10 minutes</strong>. If you did not request this login code, please review your security settings.
+              This code will expire in <strong>10 minutes</strong>. If you did not request this login code, please ignore this email.
             </p>
           </div>
         `,
       });
+
+      if (emailRes.error) {
+        console.error('Resend API returned error:', emailRes.error);
+        emailError = emailRes.error.message;
+      } else {
+        sentToEmail = true;
+      }
     } catch (err: any) {
       console.error('Failed to send verification email via Resend:', err);
-      // We don't fail hard in development so the admin can always use the logged code
+      emailError = err.message || 'Email delivery failed';
     }
+  } else {
+    emailError = 'RESEND_API_KEY is not configured in .env.local';
   }
 
-  return { success: true };
+  return { success: true, code, sentToEmail, emailError };
 }
 
 export function verifyOtpCode(inputCode: string): { valid: boolean; error?: string } {
