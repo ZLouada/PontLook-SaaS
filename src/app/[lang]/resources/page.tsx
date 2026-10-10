@@ -159,8 +159,8 @@ export default async function ResourcesPage({
           <Reveal delay={0.1}>
             <p className="text-white/95 text-base sm:text-lg md:text-xl font-normal leading-relaxed max-w-2xl sm:max-w-3xl">
               {isAr
-                ? 'اكتشف نصائح عملية، وتوجهات السوق، وآراء الخبراء للارتقاء بالتدريب والتطوير في منشأتك.'
-                : 'Discover practical tips, industry trends, and expert advice to level up L&D across your organisation.'}
+                ? 'رؤى واستراتيجيات وموارد لمساعدة المنشآت على بناء كوادر أقوى من خلال قرارات تدريبية أفضل.'
+                : 'Insights, strategies, and resources to help organisations build stronger workforces through better training decisions.'}
             </p>
           </Reveal>
         </div>
