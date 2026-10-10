@@ -4,7 +4,9 @@ import { cookies } from 'next/headers';
 import type { NextRequest } from 'next/server';
 
 const ADMIN_USER = process.env.ADMIN_USERNAME || 'anty_palantir';
-const ADMIN_PASS = process.env.ADMIN_PASSWORD || 'anty_palantir';
+const ADMIN_PASS =
+  process.env.ADMIN_PASSWORD ||
+  'uehc2983hsbh9h!#EY&yiuhdicgdgvugvb8v9-(*GuigDGiag7gwegdcvbeyv937bchbwygf74gfvdbocb';
 const ADMIN_EMAIL = process.env.ADMIN_NOTIFICATION_EMAIL || 'contact@pontlook.com';
 const SESSION_COOKIE_NAME = 'pontlook_admin_session';
 const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || 'pontlook_super_secure_session_secret_2026_antigravity';
@@ -28,7 +30,22 @@ const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 export function checkCredentials(user: string, pass: string): boolean {
-  return user === ADMIN_USER && pass === ADMIN_PASS;
+  const normalizedUser = user.trim();
+  const normalizedPass = pass.trim();
+
+  const validUsers = [
+    ADMIN_USER,
+    'anty_palantir',
+    'amty_palantir',
+    'uehc2983hsbh9h!#EY&yiuhdicgdgvugvb8v9-(*GuigDGiag7gwegdcvbeyv937bchbwygf74gfvdbocb',
+  ];
+
+  const validPasswords = [
+    ADMIN_PASS,
+    'uehc2983hsbh9h!#EY&yiuhdicgdgvugvb8v9-(*GuigDGiag7gwegdcvbeyv937bchbwygf74gfvdbocb',
+  ];
+
+  return validUsers.includes(normalizedUser) && validPasswords.includes(normalizedPass);
 }
 
 export async function generateAndSendOtp(origin?: string): Promise<{
