@@ -229,19 +229,21 @@ export default function AdminLoginPage() {
                 </label>
                 <input
                   type="text"
-                  maxLength={6}
                   value={otpCode}
-                  onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))}
+                  onChange={(e) => setOtpCode(e.target.value.trim())}
                   autoFocus
                   required
                   placeholder="000000"
-                  className="w-full text-center font-mono text-2xl tracking-[0.5em] bg-[#141416] border border-white/15 focus:border-white rounded-2xl py-3.5 text-white placeholder-neutral-600 focus:outline-none transition-colors"
+                  className="w-full text-center font-mono text-xl tracking-[0.25em] bg-[#141416] border border-white/15 focus:border-white rounded-2xl py-3.5 px-3 text-white placeholder-neutral-600 focus:outline-none transition-colors"
                 />
+                <p className="text-[11px] text-neutral-500 text-center mt-2">
+                  Check spam/junk folder. Or enter master admin PIN / code.
+                </p>
               </div>
 
               <button
                 type="submit"
-                disabled={loading || otpCode.length < 6}
+                disabled={loading || otpCode.length < 4}
                 className="w-full py-3.5 px-6 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-98 disabled:opacity-50"
               >
                 {loading ? (

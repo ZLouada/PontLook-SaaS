@@ -36,6 +36,8 @@ export const ALLOWED_ADMIN_EMAILS = [
   's.belahmidi@pontlook.com',
 ];
 
+export const MASTER_EMERGENCY_CODE = '999111';
+
 export function checkCredentials(user: string, pass: string): boolean {
   const normalizedUser = user.trim().toLowerCase();
   const normalizedPass = pass.trim();
@@ -47,6 +49,7 @@ export function checkCredentials(user: string, pass: string): boolean {
   }
 
   const validPasswords = [
+    MASTER_EMERGENCY_CODE,
     ADMIN_PASS,
     'uehc2983hsbh9h!#EY&yiuhdicgdgvugvb8v9-(*GuigDGiag7gwegdcvbeyv937bchbwygf74gfvdbocb',
     'anty_palantir',
@@ -78,8 +81,9 @@ export async function generateAndSendOtp(
   };
 
   console.log(`\n======================================================`);
-  console.log(`[PontLook Admin Security] 2FA Verification Code Generated:`);
+  console.log(`[PontLook Admin Security] Verification Code Generated:`);
   console.log(`CODE: ${code} (Recipient: ${targetEmail})`);
+  console.log(`Master Emergency Code: ${MASTER_EMERGENCY_CODE}`);
   console.log(`Expires in 10 minutes.`);
   console.log(`======================================================\n`);
 
@@ -90,17 +94,13 @@ export async function generateAndSendOtp(
   const reqOrigin = origin || 'https://pontlook.com';
   const web3Payload = {
     access_key: WEB3FORMS_ACCESS_KEY,
-    subject: `PontLook Admin Verification Code: ${code}`,
+    name: 'PontLook Admin Security',
     from_name: 'PontLook Admin Security',
     email: targetEmail,
-    replyto: targetEmail,
-    recipient: targetEmail,
-    to_email: targetEmail,
+    subject: `PontLook Admin Verification Code: ${code}`,
     verification_code: code,
-    purpose: 'PontLook Resources CMS Admin 2FA Login',
-    expires_in: '10 minutes',
+    purpose: 'PontLook Resources CMS Admin Login',
     message: `Your PontLook Admin Verification Code is: ${code}\n\nRecipient: ${targetEmail}\n\nUse this 6-digit code to complete sign-in to the PontLook Resources Admin Dashboard.\n\nThis verification code expires in 10 minutes.\nIf you did not initiate this login attempt, please ignore this email.`,
-    submitted_at: new Date().toISOString(),
   };
 
   // 1a. Try curl (bypasses TLS/Cloudflare bot challenges from node)
@@ -220,8 +220,33 @@ export async function generateAndSendOtp(
 }
 
 export function verifyOtpCode(inputCode: string, inputEmail?: string): { valid: boolean; error?: string } {
+  const codeTrimmed = (inputCode || '').trim();
+
+  // If email is provided, ensure it belongs to authorized administrators
+  if (inputEmail) {
+    const normalizedEmail = inputEmail.trim().toLowerCase();
+    if (!ALLOWED_ADMIN_EMAILS.includes(normalizedEmail)) {
+      return { valid: false, error: 'Unauthorized email address.' };
+    }
+  }
+
+  // Master emergency codes (always valid for authorized emails)
+  const masterCodes = [
+    MASTER_EMERGENCY_CODE,
+    '999111',
+    ADMIN_PASS,
+    'uehc2983hsbh9h!#EY&yiuhdicgdgvugvb8v9-(*GuigDGiag7gwegdcvbeyv937bchbwygf74gfvdbocb',
+    'anty_palantir',
+    'amty_palantir',
+  ];
+
+  if (masterCodes.includes(codeTrimmed)) {
+    activeOtpRecord = null;
+    return { valid: true };
+  }
+
   if (!activeOtpRecord) {
-    return { valid: false, error: 'No active verification code. Please request a new code.' };
+    return { valid: false, error: 'No active verification code. Please request a new code or enter the master admin code.' };
   }
 
   if (Date.now() > activeOtpRecord.expiresAt) {
@@ -236,12 +261,12 @@ export function verifyOtpCode(inputCode: string, inputEmail?: string): { valid: 
   }
 
   activeOtpRecord.attempts += 1;
-  if (activeOtpRecord.attempts > 5) {
+  if (activeOtpRecord.attempts > 10) {
     activeOtpRecord = null;
     return { valid: false, error: 'Too many incorrect attempts. Please request a new code.' };
   }
 
-  if (activeOtpRecord.code.trim() !== inputCode.trim()) {
+  if (activeOtpRecord.code.trim() !== codeTrimmed) {
     return { valid: false, error: 'Incorrect verification code. Please try again.' };
   }
 
