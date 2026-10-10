@@ -31,11 +31,15 @@ Only the following three email addresses are authorized to access the Admin CMS:
 
 Any other email address is rejected immediately with a descriptive authorization error.
 
-### 2. Session Security
-* **Cookie:** `pontlook_admin_session`
-* **Attributes:** `httpOnly: true`, `secure: true` (in production), `sameSite: "lax"`, `path: "/"`.
-* **Validity:** 7 days rolling validity with HMAC signature validation.
-* **Verification Route:** `/api/admin/auth/verify` dynamically checks session state without leaking sensitive keys.
+### 2. Two-Step Email Code Verification
+* **Step 1 (Credential & Email Check):** The administrator enters their authorized PontLook email and password.
+* **Code Dispatch:** A random 6-digit verification code is generated with a 10-minute expiry and dispatched directly to the administrator's specific email address via Web3Forms (with Resend fallback).
+* **Step 2 (Code Entry):** The administrator enters the 6-digit security code received in their inbox.
+* **Session Security:**
+  * **Cookie:** `pontlook_admin_session`
+  * **Attributes:** `httpOnly: true`, `secure: true` (in production), `sameSite: "lax"`, `path: "/"`.
+  * **Validity:** 7 days rolling validity with HMAC-SHA256 signature validation.
+  * **Verification Route:** `/api/admin/auth/verify` dynamically checks session state.
 
 ---
 

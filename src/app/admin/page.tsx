@@ -64,7 +64,7 @@ export default function AdminPage() {
 
     // Real API integration
     const api = {
-      async login(u: string, p: string) {
+      async login(u: string, p?: string, otpCode?: string) {
         const email = (u || '').trim().toLowerCase();
         const allowed = ['a.touikrou@pontlook.com', 'contact@pontlook.com', 's.belahmidi@pontlook.com'];
 
@@ -78,14 +78,18 @@ export default function AdminPage() {
         const res = await fetch('/api/admin/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: email, password: p }),
+          body: JSON.stringify({ username: email, password: p, otpCode }),
         });
 
         const json = await res.json().catch(() => ({}));
         log('POST', '/api/admin/auth/login', res.status);
 
         if (!res.ok) {
-          throw new Error(json.error || 'Invalid credentials.');
+          throw new Error(json.error || 'Invalid credentials or verification code.');
+        }
+
+        if (json.requireOtp) {
+          return json;
         }
 
         ST.set('sess', { email, exp: Date.now() + 7 * 864e5 });
@@ -93,6 +97,7 @@ export default function AdminPage() {
         else if (email.startsWith('contact')) meId = 'u2';
         else if (email.startsWith('s.belahmidi')) meId = 'u3';
         ST.set('me', meId);
+        return json;
       },
 
       async verify() {
@@ -354,6 +359,8 @@ export default function AdminPage() {
     // State
     let D: any = null;
     let view = 'login';
+    let loginStep: 'credentials' | 'otp' = 'credentials';
+    let loginEmail = '';
     let tab = 'dash';
     const dirty = new Set<string>();
     const OPEN = new Set<string>();
@@ -854,8 +861,12 @@ export default function AdminPage() {
       }</h1><p>${t[2]}</p></div>${body()}</main></div>`;
     }
 
-    const login = () =>
-      `<div class="lo"><form id="lf"><div class="lb">[ ADMIN_LOGIN ]</div><h1>Sign in</h1><div class="f"><label for="u">Admin Email</label><input id="u" type="email" autocomplete="email" placeholder="a.touikrou@pontlook.com, contact@pontlook.com, s.belahmidi@pontlook.com" required></div><div class="f"><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" placeholder="Enter administrative password" required></div><button class="b s" type="submit"><i class="sp"></i>Sign in</button><div class="er" id="er" role="alert"></div><small>Authorized PontLook administrators only. Access is strictly restricted to designated accounts.</small></form></div>`;
+    const login = () => {
+      if (loginStep === 'otp') {
+        return `<div class="lo"><form id="lf-otp" autocomplete="off"><div class="lb">[ 2FA_SECURITY // STEP 02 ]</div><h1 style="font-size:clamp(2rem,6vw,3.2rem);margin-bottom:12px">Enter Code</h1><p style="color:var(--mu);margin-bottom:24px;font-size:13px;line-height:1.6">A 6-digit verification code has been dispatched to <strong style="color:#fff">${loginEmail}</strong>.<br>Enter the security code below to complete sign-in.</p><div class="f"><label for="otp">6-Digit Verification Code</label><input id="otp" type="text" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" placeholder="000000" style="font-family:ui-monospace,Menlo,monospace;letter-spacing:0.4em;font-size:22px;text-align:center" required autofocus></div><button class="b s" type="submit" style="width:100%;margin-top:8px"><i class="sp"></i>Verify & Enter Dashboard</button><div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:12px"><button type="button" class="b d" id="otp-back" style="padding:6px 12px">← Back to Email</button><button type="button" class="b d" id="otp-resend" style="padding:6px 12px">Resend Code</button></div><div class="er" id="er-otp" role="alert" style="margin-top:12px;color:#fff;font-size:12px"></div><small style="margin-top:20px;display:block;color:var(--mu);font-size:11px">Verification codes expire in 10 minutes. Check spam folder if delayed.</small></form></div>`;
+      }
+      return `<div class="lo"><form id="lf" autocomplete="off"><div class="lb">[ ADMIN_LOGIN // STEP 01 ]</div><h1>Sign in</h1><div class="f"><label for="u">Admin Email</label><input id="u" type="email" autocomplete="email" placeholder="a.touikrou@pontlook.com, contact@pontlook.com, s.belahmidi@pontlook.com" value="${loginEmail}" required></div><div class="f"><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" placeholder="Enter administrative password"></div><button class="b s" type="submit"><i class="sp"></i>Continue & Send Code</button><div class="er" id="er" role="alert"></div><small>Authorized PontLook administrators only: a.touikrou@pontlook.com · contact@pontlook.com · s.belahmidi@pontlook.com</small></form></div>`;
+    };
 
     function render() {
       if (!active) return;
@@ -1044,28 +1055,79 @@ export default function AdminPage() {
 
     const handleSubmit = async (e: Event) => {
       const target = e.target as HTMLFormElement;
-      if (target.id !== 'lf') return;
-      e.preventDefault();
 
-      const b = target.querySelector('.b') as HTMLButtonElement | null;
-      if (b) b.classList.add('busy');
-      const er = $('#er');
+      if (target.id === 'lf') {
+        e.preventDefault();
+        const b = target.querySelector('.b') as HTMLButtonElement | null;
+        if (b) b.classList.add('busy');
+        const er = $('#er');
+        if (er) er.textContent = '';
 
-      try {
-        const u = ($('#u') as HTMLInputElement).value.trim();
-        const pw = ($('#pw') as HTMLInputElement).value;
-        await api.login(u, pw);
-        D = norm(await api.get());
-        view = 'admin';
-        render();
-      } catch (x: any) {
-        if (er) er.textContent = x.message;
-        if (b) b.classList.remove('busy');
+        try {
+          const u = ($('#u') as HTMLInputElement).value.trim();
+          const pw = ($('#pw') as HTMLInputElement).value;
+          loginEmail = u;
+          const res = await api.login(u, pw);
+          if (res && res.requireOtp) {
+            loginStep = 'otp';
+            render();
+            toast('Verification code sent to ' + u);
+          } else {
+            D = norm(await api.get());
+            view = 'admin';
+            render();
+          }
+        } catch (x: any) {
+          if (er) er.textContent = x.message;
+          if (b) b.classList.remove('busy');
+        }
+        return;
+      }
+
+      if (target.id === 'lf-otp') {
+        e.preventDefault();
+        const b = target.querySelector('.b') as HTMLButtonElement | null;
+        if (b) b.classList.add('busy');
+        const er = $('#er-otp');
+        if (er) er.textContent = '';
+
+        try {
+          const code = ($('#otp') as HTMLInputElement).value.trim();
+          await api.login(loginEmail, undefined, code);
+          D = norm(await api.get());
+          loginStep = 'credentials';
+          view = 'admin';
+          render();
+          toast('Signed in successfully');
+        } catch (x: any) {
+          if (er) er.textContent = x.message;
+          if (b) b.classList.remove('busy');
+        }
+        return;
       }
     };
 
     const handleClick = async (e: MouseEvent) => {
       const el = e.target as HTMLElement;
+
+      if (el.id === 'otp-back' || el.closest('#otp-back')) {
+        loginStep = 'credentials';
+        render();
+        return;
+      }
+
+      if (el.id === 'otp-resend' || el.closest('#otp-resend')) {
+        const er = $('#er-otp');
+        if (er) er.textContent = '';
+        try {
+          await api.login(loginEmail, undefined);
+          toast('New verification code sent to ' + loginEmail);
+        } catch (x: any) {
+          if (er) er.textContent = x.message || 'Failed to resend code';
+        }
+        return;
+      }
+
       const b = el.closest('[data-a]') as HTMLElement | null;
       const dz = el.closest('#dz');
 
@@ -1167,6 +1229,7 @@ export default function AdminPage() {
         save();
       } else if (a === 'out') {
         await api.logout();
+        loginStep = 'credentials';
         view = 'login';
         render();
       } else if (a === 'log') {
@@ -1333,9 +1396,11 @@ export default function AdminPage() {
           meId = ST.get('me') || 'u1';
           view = 'admin';
         } else {
+          loginStep = 'credentials';
           view = 'login';
         }
       } catch {
+        loginStep = 'credentials';
         view = 'login';
       }
       render();
