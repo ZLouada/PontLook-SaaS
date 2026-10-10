@@ -63,6 +63,9 @@ export interface ResourcesContent {
     dateAr: string;
     excerptEn: string;
     excerptAr: string;
+    image?: string;
+    contentEn?: string;
+    contentAr?: string;
   }>;
   downloads: Array<{
     id: string;
@@ -72,6 +75,8 @@ export interface ResourcesContent {
     fileSize: string;
     descEn: string;
     descAr: string;
+    image?: string;
+    fileUrl?: string;
     featuresEn: string[];
     featuresAr: string[];
   }>;
@@ -90,6 +95,8 @@ export interface ResourcesContent {
     descAr: string;
     spotsLeftEn: string;
     spotsLeftAr: string;
+    image?: string;
+    link?: string;
   }>;
   podcasts: Array<{
     id: string;
@@ -104,6 +111,8 @@ export interface ResourcesContent {
     descAr: string;
     tagEn: string;
     tagAr: string;
+    image?: string;
+    audioUrl?: string;
   }>;
 }
 

@@ -8,6 +8,7 @@ import { sanityFetch } from '@/sanity/lib/live';
 import { POSTS_QUERY } from '@/sanity/lib/queries';
 import { urlForImage } from '@/sanity/lib/image';
 import { ArrowRight, BookOpen, Calendar, User } from '@/components/icons';
+import { getResourcesStore } from '@/lib/resources-store';
 
 export async function generateMetadata({
   params,
@@ -63,9 +64,39 @@ export default async function BlogPage({
   const isAr = lang === 'ar';
 
   // Fetch posts from Sanity with live content caching
-  const { data: posts } = await sanityFetch({
-    query: POSTS_QUERY,
-  });
+  let sanityPosts: any[] = [];
+  try {
+    const { data } = await sanityFetch({
+      query: POSTS_QUERY,
+    });
+    if (data && Array.isArray(data)) {
+      sanityPosts = data;
+    }
+  } catch (err) {
+    sanityPosts = [];
+  }
+
+  // Load articles authored via Admin CMS
+  const store = getResourcesStore();
+  const localArticles = (store.articles || []).map((art) => ({
+    _id: art.id,
+    title: isAr ? art.titleAr || art.titleEn : art.titleEn,
+    slug: { current: art.slug },
+    excerpt: isAr ? art.excerptAr || art.excerptEn : art.excerptEn,
+    publishedAt: null,
+    displayDate: isAr ? art.dateAr || art.dateEn : art.dateEn,
+    categories: (isAr ? art.categoryAr || art.categoryEn : art.categoryEn)
+      ? [{ _id: art.id, title: isAr ? art.categoryAr || art.categoryEn : art.categoryEn }]
+      : [],
+    customImage: art.image || null,
+    author: { name: 'PontLook Research', image: null, bio: null },
+  }));
+
+  const seenSlugs = new Set(sanityPosts.map((p) => p.slug?.current).filter(Boolean));
+  const posts = [
+    ...sanityPosts,
+    ...localArticles.filter((art) => !seenSlugs.has(art.slug.current)),
+  ];
 
   return (
     <div
@@ -106,12 +137,20 @@ export default async function BlogPage({
         {posts && posts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {posts.map((post, idx) => {
-              const imageUrl = post.mainImage ? urlForImage(post.mainImage).width(800).height(500).url() : null;
-              const postDate = post.publishedAt ? new Date(post.publishedAt).toLocaleDateString(isAr ? 'ar-SA' : 'en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-              }) : null;
+              const imageUrl = post.customImage
+                ? post.customImage
+                : post.mainImage
+                ? urlForImage(post.mainImage).width(800).height(500).url()
+                : null;
+              const postDate = post.displayDate
+                ? post.displayDate
+                : post.publishedAt
+                ? new Date(post.publishedAt).toLocaleDateString(isAr ? 'ar-SA' : 'en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })
+                : null;
 
               return (
                 <Reveal key={post._id} delay={0.08 * (idx + 1)}>

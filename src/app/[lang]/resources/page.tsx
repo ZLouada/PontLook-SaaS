@@ -374,8 +374,10 @@ export default async function ResourcesPage({
                   : article.category || (isAr ? 'تدريب مؤسسي' : 'L&D STRATEGIES');
                 const href = isSanity
                   ? `/${lang}/resources/blog/${article.slug?.current || article.slug}`
-                  : `/${lang}/resources/blog`;
-                const imageUrl = isSanity && article.mainImage ? urlForImage(article.mainImage).width(700).height(420).url() : null;
+                  : (article.slug ? `/${lang}/resources/blog/${article.slug}` : `/${lang}/resources/blog`);
+                const imageUrl = isSanity && article.mainImage
+                  ? urlForImage(article.mainImage).width(700).height(420).url()
+                  : (article.image || null);
 
                 return (
                   <Link
