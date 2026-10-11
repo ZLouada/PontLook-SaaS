@@ -79,7 +79,7 @@ export default async function BlogPage({
     sanityPosts = [];
   }
 
-  // Load articles from resources store
+  // Load articles authored via Admin CMS
   const store = getResourcesStore();
   const localArticles = (store.articles || []).map((art) => ({
     _id: art.id,
