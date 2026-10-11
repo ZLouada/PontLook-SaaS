@@ -123,13 +123,42 @@ export default function RaceBridgeCanvas({
     resize();
     window.addEventListener('resize', resize);
 
+    let isRunning = false;
+    const startLoop = () => {
+      if (!isRunning && vis && !document.hidden) {
+        isRunning = true;
+        animId = requestAnimationFrame(frame);
+      }
+    };
+    const stopLoop = () => {
+      isRunning = false;
+      cancelAnimationFrame(animId);
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
-        vis = entries[0].isIntersecting;
+        const nextVis = entries[0]?.isIntersecting ?? false;
+        if (nextVis !== vis) {
+          vis = nextVis;
+          if (vis) {
+            startLoop();
+          } else {
+            stopLoop();
+          }
+        }
       },
       { threshold: 0.1 }
     );
     observer.observe(cv);
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        stopLoop();
+      } else if (vis) {
+        startLoop();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
 
     const resetRace = () => {
       t0 = performance.now();
@@ -156,8 +185,11 @@ export default function RaceBridgeCanvas({
     };
 
     const frame = (now: number) => {
+      if (!vis || document.hidden) {
+        isRunning = false;
+        return;
+      }
       animId = requestAnimationFrame(frame);
-      if (!vis) return;
 
       // Smooth loop timeline
       const elapsed = (now - t0) / 1000;
@@ -485,10 +517,11 @@ export default function RaceBridgeCanvas({
       }
     };
 
-    animId = requestAnimationFrame(frame);
+    startLoop();
 
     return () => {
-      cancelAnimationFrame(animId);
+      stopLoop();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('resize', resize);
       observer.disconnect();
       mediaDark.removeEventListener('change', updateColors);

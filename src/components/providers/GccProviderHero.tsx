@@ -101,17 +101,46 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
     let pulses: { i: number; t: number; s: number }[] = [];
     let lastP = 0;
     const t0 = performance.now();
-    let animId: number;
+    let animId = 0;
     let isVisible = true;
+    let isRunning = false;
+
+    const startLoop = () => {
+      if (!isRunning && isVisible && !document.hidden) {
+        isRunning = true;
+        animId = requestAnimationFrame(frame);
+      }
+    };
+    const stopLoop = () => {
+      isRunning = false;
+      cancelAnimationFrame(animId);
+    };
 
     // Pause canvas execution completely when out of viewport
     const observer = new IntersectionObserver(
       (entries) => {
-        isVisible = entries[0].isIntersecting;
+        const nextVis = entries[0]?.isIntersecting ?? true;
+        if (nextVis !== isVisible) {
+          isVisible = nextVis;
+          if (isVisible) {
+            startLoop();
+          } else {
+            stopLoop();
+          }
+        }
       },
       { threshold: 0 }
     );
     if (heroRef.current) observer.observe(heroRef.current);
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        stopLoop();
+      } else if (isVisible) {
+        startLoop();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
 
     const onPointerMove = (e: PointerEvent) => {
       if (isMobile) return; // Skip pointer parallax on mobile touch screens
@@ -176,8 +205,11 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
     onScroll();
 
     const frame = (now: number) => {
+      if (!isVisible || document.hidden) {
+        isRunning = false;
+        return;
+      }
       animId = requestAnimationFrame(frame);
-      if (!isVisible) return;
 
       // Mobile responds instantly to touch scroll (0.12), desktop smoothly glides (0.045)
       const scrollLerp = isMobile ? 0.12 : 0.045;
@@ -392,10 +424,11 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       ctx.globalAlpha = 1;
     };
 
-    animId = requestAnimationFrame(frame);
+    startLoop();
 
     return () => {
-      cancelAnimationFrame(animId);
+      stopLoop();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       observer.disconnect();
       window.removeEventListener('resize', resize);
       window.removeEventListener('scroll', onScroll);
