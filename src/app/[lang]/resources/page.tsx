@@ -177,6 +177,7 @@ export default async function ResourcesPage({
                     src={spotlight.image || '/executive_training_room.jpg'}
                     alt="GCC Corporate Training Benchmark"
                     fill
+                    sizes="(max-width: 1024px) 100vw, 66vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                     priority
                   />
