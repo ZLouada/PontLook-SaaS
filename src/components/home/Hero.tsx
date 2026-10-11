@@ -769,9 +769,9 @@ export default function Hero() {
             {['P', 'o', 'n', 't', 'L', 'o', 'o', 'k'].map((char, idx) => (
               <b
                 key={idx}
-                className="inline-block animate-[in_1.2s_cubic-bezier(0.2,0.8,0.2,1)_forwards] shrink-0"
+                className="inline-block animate-[in_0.5s_cubic-bezier(0.2,0.8,0.2,1)_forwards] shrink-0"
                 style={{
-                  animationDelay: `calc(1.8s + ${idx} * 0.08s)`,
+                  animationDelay: `${idx * 0.04}s`,
                 }}
               >
                 <i className="inline-block not-italic will-change-transform">
