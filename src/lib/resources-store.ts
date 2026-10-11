@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { cache } from 'react';
 
 export interface ResourcesContent {
   hero: {
@@ -183,7 +184,7 @@ export function invalidateResourcesCache(): void {
   lastLoadedMtime = 0;
 }
 
-export function getResourcesStore(): ResourcesContent {
+export const getResourcesStore: () => ResourcesContent = cache((): ResourcesContent => {
   // 1. Check backup file in /tmp first — on serverless platforms (like Vercel),
   // runtime admin changes are written to /tmp because process.cwd() is read-only.
   try {
@@ -288,7 +289,7 @@ export function getResourcesStore(): ResourcesContent {
     events: [],
     podcasts: [],
   };
-}
+});
 
 export function normalizeResourcesData(data: any): any {
   if (!data || typeof data !== 'object') return data;

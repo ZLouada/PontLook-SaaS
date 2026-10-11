@@ -7,8 +7,7 @@ import Reveal from '@/components/shared/Reveal';
 import { ArrowRight, BookOpen, Calendar, User } from '@/components/icons';
 import { getResourcesStore } from '@/lib/resources-store';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,

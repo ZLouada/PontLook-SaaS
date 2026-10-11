@@ -22,8 +22,7 @@ import {
   RefreshCw,
 } from '@/components/icons';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,
