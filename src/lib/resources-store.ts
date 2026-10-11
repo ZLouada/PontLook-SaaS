@@ -185,7 +185,7 @@ export function invalidateResourcesCache(): void {
 
 export function getResourcesStore(): ResourcesContent {
   // 1. Check backup file in /tmp first — on serverless platforms (like Vercel),
-  // runtime admin changes are written to /tmp because process.cwd() is read-only.
+  // runtime data overrides can be read from /tmp if present.
   try {
     if (fs.existsSync(BACKUP_DATA_FILE)) {
       const stats = fs.statSync(BACKUP_DATA_FILE);
@@ -584,23 +584,6 @@ export function normalizeResourcesData(data: any): any {
     p.status = status;
     return p;
   });
-
-  // 8. Roles
-  result.roles = result.roles || {
-    users: [
-      { id: 'u1', name: 'PontLook Admin', email: 'contact@pontlook.com', role: 'admin' },
-    ],
-    perms: { edit: 1, publish: 1, delete: 1, users: 1, seo: 1 },
-  };
-
-  if (result.roles && Array.isArray(result.roles.users)) {
-    result.roles.users = result.roles.users.filter((u: any) => u.email === 'contact@pontlook.com');
-    if (result.roles.users.length === 0) {
-      result.roles.users = [
-        { id: 'u1', name: 'PontLook Admin', email: 'contact@pontlook.com', role: 'admin' },
-      ];
-    }
-  }
 
   return result;
 }

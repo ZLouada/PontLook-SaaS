@@ -60,7 +60,7 @@ export async function generateMetadata({
     };
   }
 
-  // Check admin resources store
+  // Check resources store
   const store = getResourcesStore();
   const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase();
   const localArticle = (store.articles || []).find(

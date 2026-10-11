@@ -93,7 +93,7 @@ export default async function ResourcesPage({
     sanityPosts = [];
   }
 
-  // Load dynamic content from JSON store (managed via /admin CMS)
+  // Load dynamic content from JSON resources store
   const store = getResourcesStore();
   const heroTitle = (isAr ? store.hero.titleAr : store.hero.titleEn) || (isAr ? 'مركز موارد التدريب والتطوير في PontLook' : 'The PontLook L&D resource hub');
   const heroSubtitle = (isAr ? store.hero.subtitleAr : store.hero.subtitleEn) || (isAr ? 'رؤى واستراتيجيات وموارد لمساعدة المنشآت على بناء كوادر أقوى من خلال قرارات تدريبية أفضل.' : 'Insights, strategies, and resources to help organisations build stronger workforces through better training decisions.');
