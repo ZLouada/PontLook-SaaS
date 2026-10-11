@@ -67,16 +67,26 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    'payload-kv': PayloadKv;
+    articles: Article;
+    downloads: Download;
+    events: Event;
+    podcasts: Podcast;
+    media: Media;
     users: User;
+    'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {};
   collectionsSelect: {
-    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
+    articles: ArticlesSelect<false> | ArticlesSelect<true>;
+    downloads: DownloadsSelect<false> | DownloadsSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    podcasts: PodcastsSelect<false> | PodcastsSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -85,8 +95,14 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'ar') | ('en' | 'ar')[];
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'resources-hero': ResourcesHero;
+    'resources-featured': ResourcesFeatured;
+  };
+  globalsSelect: {
+    'resources-hero': ResourcesHeroSelect<false> | ResourcesHeroSelect<true>;
+    'resources-featured': ResourcesFeaturedSelect<false> | ResourcesFeaturedSelect<true>;
+  };
   locale: 'en' | 'ar';
   widgets: {
     collections: CollectionsWidget;
@@ -117,20 +133,210 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-kv".
+ * via the `definition` "articles".
  */
-export interface PayloadKv {
+export interface Article {
   id: number;
-  key: string;
-  data:
-    | {
+  title: string;
+  /**
+   * URL-friendly identifier for the article
+   */
+  slug: string;
+  /**
+   * Category name (e.g. L&D STRATEGIES)
+   */
+  category?: string | null;
+  /**
+   * Estimated read time (e.g. 12 min read)
+   */
+  readTime?: string | null;
+  publishedAt?: string | null;
+  /**
+   * Summary of the article displayed in cards and previews
+   */
+  excerpt?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
         [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  featuredImage?: (number | null) | Media;
+  status: 'draft' | 'published';
+  meta?: {
+    /**
+     * Custom browser tab & OG title
+     */
+    title?: string | null;
+    /**
+     * Search engine description
+     */
+    description?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  /**
+   * Descriptive alt text for accessibility and SEO
+   */
+  alt?: string | null;
+  caption?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    feature?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "downloads".
+ */
+export interface Download {
+  id: number;
+  title: string;
+  /**
+   * Unique slug for the downloadable resource
+   */
+  slug: string;
+  /**
+   * Document format (e.g. XLSX, PDF, DOCX)
+   */
+  format?: string | null;
+  /**
+   * File size label (e.g. 1.8 MB)
+   */
+  fileSize?: string | null;
+  description?: string | null;
+  /**
+   * List of key features or included tools
+   */
+  features?:
+    | {
+        item: string;
+        id?: string | null;
+      }[]
     | null;
+  file?: (number | null) | Media;
+  status: 'draft' | 'published';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  title: string;
+  /**
+   * Unique slug for the event
+   */
+  slug: string;
+  date: string;
+  /**
+   * Formatted time display (e.g. 10:00 AM AST)
+   */
+  time?: string | null;
+  /**
+   * Location or virtual venue (e.g. Riyadh & Online)
+   */
+  location?: string | null;
+  /**
+   * Event format badge (e.g. Executive Roundtable, Webinar)
+   */
+  type?: string | null;
+  description?: string | null;
+  /**
+   * Available seats counter (optional)
+   */
+  spotsLeft?: number | null;
+  /**
+   * External or internal registration URL
+   */
+  rsvpLink?: string | null;
+  status: 'draft' | 'published';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "podcasts".
+ */
+export interface Podcast {
+  id: number;
+  title: string;
+  /**
+   * Unique slug for the podcast episode
+   */
+  slug: string;
+  /**
+   * Interview guest name and title
+   */
+  guest?: string | null;
+  /**
+   * Episode duration (e.g. 42 mins)
+   */
+  duration?: string | null;
+  date?: string | null;
+  description?: string | null;
+  /**
+   * Topic badge or tag (e.g. Leadership, L&D Strategy)
+   */
+  tag?: string | null;
+  /**
+   * Streaming audio URL (e.g. Spotify, Apple Podcasts, or MP3 stream)
+   */
+  audioUrl?: string | null;
+  status: 'draft' | 'published';
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -138,6 +344,7 @@ export interface PayloadKv {
  */
 export interface User {
   id: number;
+  role: 'admin' | 'editor';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -160,14 +367,52 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv".
+ */
+export interface PayloadKv {
+  id: number;
+  key: string;
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
   id: number;
-  document?: {
-    relationTo: 'users';
-    value: number | User;
-  } | null;
+  document?:
+    | ({
+        relationTo: 'articles';
+        value: number | Article;
+      } | null)
+    | ({
+        relationTo: 'downloads';
+        value: number | Download;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'podcasts';
+        value: number | Podcast;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
+      } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
@@ -212,17 +457,142 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-kv_select".
+ * via the `definition` "articles_select".
  */
-export interface PayloadKvSelect<T extends boolean = true> {
-  key?: T;
-  data?: T;
+export interface ArticlesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  category?: T;
+  readTime?: T;
+  publishedAt?: T;
+  excerpt?: T;
+  content?: T;
+  featuredImage?: T;
+  status?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "downloads_select".
+ */
+export interface DownloadsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  format?: T;
+  fileSize?: T;
+  description?: T;
+  features?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  file?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  date?: T;
+  time?: T;
+  location?: T;
+  type?: T;
+  description?: T;
+  spotsLeft?: T;
+  rsvpLink?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "podcasts_select".
+ */
+export interface PodcastsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  guest?: T;
+  duration?: T;
+  date?: T;
+  description?: T;
+  tag?: T;
+  audioUrl?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  caption?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        feature?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -240,6 +610,14 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-kv_select".
+ */
+export interface PayloadKvSelect<T extends boolean = true> {
+  key?: T;
+  data?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -272,6 +650,77 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources-hero".
+ */
+export interface ResourcesHero {
+  id: number;
+  /**
+   * Small badge or category eyebrow above the main headline
+   */
+  eyebrow?: string | null;
+  /**
+   * Main hero headline (e.g. The PontLook L&D resource hub)
+   */
+  title: string;
+  /**
+   * Hero subtitle or value proposition paragraph
+   */
+  description?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources-featured".
+ */
+export interface ResourcesFeatured {
+  id: number;
+  /**
+   * Main spotlight article highlighted at the top of the Resources hub
+   */
+  spotlightArticle?: (number | null) | Article;
+  /**
+   * Featured event highlighted in the editor's pick section
+   */
+  featuredEvent?: (number | null) | Event;
+  /**
+   * Featured download toolkit highlighted in the editor's pick section
+   */
+  featuredDownload?: (number | null) | Download;
+  /**
+   * Featured podcast episode
+   */
+  featuredPodcast?: (number | null) | Podcast;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources-hero_select".
+ */
+export interface ResourcesHeroSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resources-featured_select".
+ */
+export interface ResourcesFeaturedSelect<T extends boolean = true> {
+  spotlightArticle?: T;
+  featuredEvent?: T;
+  featuredDownload?: T;
+  featuredPodcast?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
