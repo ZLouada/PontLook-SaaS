@@ -198,13 +198,43 @@ export default function Hero() {
     rs();
     window.addEventListener('resize', rs, { passive: true });
 
+    let isRunning = false;
+    let animId = 0;
+    const startLoop = () => {
+      if (!isRunning && vis && !document.hidden) {
+        isRunning = true;
+        animId = requestAnimationFrame(frame);
+      }
+    };
+    const stopLoop = () => {
+      isRunning = false;
+      cancelAnimationFrame(animId);
+    };
+
     let observer: IntersectionObserver | null = null;
     if (heroRef.current) {
       observer = new IntersectionObserver((entries) => {
-        vis = entries[0]?.isIntersecting ?? true;
+        const nextVis = entries[0]?.isIntersecting ?? true;
+        if (nextVis !== vis) {
+          vis = nextVis;
+          if (vis) {
+            startLoop();
+          } else {
+            stopLoop();
+          }
+        }
       });
       observer.observe(heroRef.current);
     }
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        stopLoop();
+      } else if (vis) {
+        startLoop();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
 
     const P3 = (
       X: number,
@@ -299,11 +329,12 @@ export default function Hero() {
 
     const BA = [0.12, 0.28, 0.5, 0.75, 1];
     const BS = [0.9, 1.1, 1.4, 1.7, 2];
-    let animId: number;
-
     const frame = (now: number) => {
+      if (!vis || document.hidden) {
+        isRunning = false;
+        return;
+      }
       animId = requestAnimationFrame(frame);
-      if (!vis) return;
 
       const t = (now - t0) / 1000;
       const k = RM ? 1 : ez(cl(t / 5.2));
@@ -517,7 +548,7 @@ export default function Hero() {
       ctx.globalAlpha = 1;
     };
 
-    requestAnimationFrame(frame);
+    startLoop();
 
     // Cache DOM references for scroll animations
     const letterNodes = bigWordRef.current
@@ -576,7 +607,8 @@ export default function Hero() {
     onScroll();
 
     return () => {
-      cancelAnimationFrame(animId);
+      stopLoop();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('resize', rs);
       window.removeEventListener('scroll', onScroll);
       cv.removeEventListener('pointerdown', onPointerDown);
@@ -737,9 +769,9 @@ export default function Hero() {
             {['P', 'o', 'n', 't', 'L', 'o', 'o', 'k'].map((char, idx) => (
               <b
                 key={idx}
-                className="inline-block animate-[in_1.2s_cubic-bezier(0.2,0.8,0.2,1)_forwards] shrink-0"
+                className="inline-block animate-[in_0.5s_cubic-bezier(0.2,0.8,0.2,1)_forwards] shrink-0"
                 style={{
-                  animationDelay: `calc(1.8s + ${idx} * 0.08s)`,
+                  animationDelay: `${idx * 0.04}s`,
                 }}
               >
                 <i className="inline-block not-italic will-change-transform">

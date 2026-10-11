@@ -4,6 +4,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import {
   Menu,
@@ -32,9 +33,12 @@ import { Locale } from '@/i18n';
 import Button from '@/components/shared/Button';
 import Signal from '@/components/shared/Signal';
 import ScrollProgress from '@/components/shared/ScrollProgress';
-import CommandMenu from '@/components/shared/CommandMenu';
 import Magnetic from '@/components/shared/Magnetic';
 import { staggerContainer, staggerItemMobile } from '@/lib/motion';
+
+const CommandMenu = dynamic(() => import('@/components/shared/CommandMenu'), {
+  ssr: false,
+});
 
 type DropdownKey = 'solutions' | 'about' | 'resources' | null;
 
@@ -729,6 +733,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                               src="/executive_training_room.jpg"
                               alt="Human Skills Fest"
                               fill
+                              sizes="320px"
                               className="object-cover group-hover:scale-105 transition-transform duration-500"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />

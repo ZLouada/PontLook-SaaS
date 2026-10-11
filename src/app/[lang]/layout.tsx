@@ -6,7 +6,6 @@ import '../globals.css';
 import { getDictionary, Locale } from '@/i18n';
 import { DictionaryProvider } from '@/components/providers/DictionaryProvider';
 import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
-import { SanityLive } from '@/sanity/lib/live';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -19,7 +18,7 @@ const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-arabic',
-  preload: true,
+  preload: false,
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -215,7 +214,6 @@ export default async function RootLayout({
             <Navbar lang={lang} />
             <main className="min-h-screen">{children}</main>
             <Footer />
-            <SanityLive />
           </FramerMotionProvider>
         </DictionaryProvider>
       </body>

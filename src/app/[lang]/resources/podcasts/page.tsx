@@ -6,8 +6,7 @@ import Reveal from '@/components/shared/Reveal';
 import { getResourcesStore } from '@/lib/resources-store';
 import { Headphones, ArrowRight, Calendar, Clock, Globe } from '@/components/icons';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 interface BurjSkylineCanvasProps {
   isAr?: boolean;
@@ -40,8 +40,8 @@ const LABELS_AR = [
  */
 export default function BurjSkylineCanvas({ isAr = false, className = '' }: BurjSkylineCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [hudText, setHudText] = useState(isAr ? 'جاري مسح الشركات الخليجية 0%' : 'SCANNING GCC COMPANIES 0%');
+  const hudRef = useRef<HTMLSpanElement>(null);
+  const initialHud = isAr ? 'جاري مسح الشركات الخليجية 0%' : 'SCANNING GCC COMPANIES 0%';
 
   useEffect(() => {
     const cv = canvasRef.current;
@@ -147,10 +147,39 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
     resize();
     window.addEventListener('resize', resize);
 
+    let isRunning = false;
+    const startLoop = () => {
+      if (!isRunning && vis && !document.hidden) {
+        isRunning = true;
+        animId = requestAnimationFrame(frame);
+      }
+    };
+    const stopLoop = () => {
+      isRunning = false;
+      cancelAnimationFrame(animId);
+    };
+
     const observer = new IntersectionObserver((entries) => {
-      vis = entries[0].isIntersecting;
+      const isIntersecting = entries[0]?.isIntersecting ?? false;
+      if (isIntersecting !== vis) {
+        vis = isIntersecting;
+        if (vis) {
+          startLoop();
+        } else {
+          stopLoop();
+        }
+      }
     });
     observer.observe(cv);
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        stopLoop();
+      } else if (vis) {
+        startLoop();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
 
     const onPointerMove = (e: PointerEvent) => {
       const r = cv.getBoundingClientRect();
@@ -250,8 +279,11 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
     };
 
     const frame = (now: number) => {
+      if (!vis || document.hidden) {
+        isRunning = false;
+        return;
+      }
       animId = requestAnimationFrame(frame);
-      if (!vis) return;
 
       const t = (now - t0) / 1000;
       const rv = RM ? 1 : ez(cl(t / 2.2));
@@ -387,13 +419,16 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
           ? `تم التوفيق: ${matchCount} · انقر لإطلاق مسار تدريب`
           : `MATCHES MADE ${matchCount} · CLICK TO SEND A BEAM`;
 
-      setHudText(nextHud);
+      if (hudRef.current && hudRef.current.textContent !== nextHud) {
+        hudRef.current.textContent = nextHud;
+      }
     };
 
-    animId = requestAnimationFrame(frame);
+    startLoop();
 
     return () => {
-      cancelAnimationFrame(animId);
+      stopLoop();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('resize', resize);
       observer.disconnect();
       cv.removeEventListener('pointermove', onPointerMove);
@@ -403,7 +438,6 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
 
   return (
     <div
-      ref={containerRef}
       className={`relative w-full h-full min-h-[460px] sm:min-h-[560px] lg:min-h-[640px] bg-black select-none ${className}`}
     >
       <canvas
@@ -423,7 +457,7 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
         className="absolute start-4 top-4 font-mono font-medium text-[11px] sm:text-[12px] tracking-wider text-white bg-black/70 border border-white/20 px-3 py-1 rounded-sm backdrop-blur-xs pointer-events-none z-10"
       >
         <span className="inline-block w-1.5 h-1.5 rounded-full bg-white me-2 animate-ping" />
-        {hudText}
+        <span ref={hudRef}>{initialHud}</span>
       </div>
     </div>
   );

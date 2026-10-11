@@ -5,9 +5,6 @@ import Image from 'next/image';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
-import { sanityFetch } from '@/sanity/lib/live';
-import { POSTS_QUERY } from '@/sanity/lib/queries';
-import { urlForImage } from '@/sanity/lib/image';
 import { getResourcesStore } from '@/lib/resources-store';
 import {
   BookOpen,
@@ -25,8 +22,7 @@ import {
   RefreshCw,
 } from '@/components/icons';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,
@@ -81,19 +77,7 @@ export default async function ResourcesPage({
   const { lang } = await params;
   const isAr = lang === 'ar';
 
-  // Fetch real posts from Sanity if available
-  let sanityPosts: any[] = [];
-  try {
-    const { data } = await sanityFetch({ query: POSTS_QUERY });
-    if (data && Array.isArray(data)) {
-      sanityPosts = data;
-    }
-  } catch (err) {
-    // Graceful fallback if studio is offline or empty
-    sanityPosts = [];
-  }
-
-  // Load dynamic content from JSON resources store
+  // Load dynamic content from JSON store (managed via /admin CMS)
   const store = getResourcesStore();
   const heroTitle = (isAr ? store.hero.titleAr : store.hero.titleEn) || (isAr ? 'مركز موارد التدريب والتطوير في PontLook' : 'The PontLook L&D resource hub');
   const heroSubtitle = (isAr ? store.hero.subtitleAr : store.hero.subtitleEn) || (isAr ? 'رؤى واستراتيجيات وموارد لمساعدة المنشآت على بناء كوادر أقوى من خلال قرارات تدريبية أفضل.' : 'Insights, strategies, and resources to help organisations build stronger workforces through better training decisions.');
@@ -193,6 +177,7 @@ export default async function ResourcesPage({
                     src={spotlight.image || '/executive_training_room.jpg'}
                     alt="GCC Corporate Training Benchmark"
                     fill
+                    sizes="(max-width: 1024px) 100vw, 66vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                     priority
                   />
@@ -321,26 +306,14 @@ export default async function ResourcesPage({
           </div>
 
           {/* Articles Grid */}
-          {(sanityPosts && sanityPosts.length > 0) || (dynamicArticles && dynamicArticles.length > 0) ? (
+          {dynamicArticles && dynamicArticles.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-              {(sanityPosts && sanityPosts.length > 0 ? sanityPosts.slice(0, 3) : dynamicArticles).map(
-                (article: any, idx: number) => {
-                  const isSanity = Boolean(article._id);
-                  const title = article.title;
-                  const excerpt = article.excerpt || article.title;
-                  const date = isSanity && article.publishedAt
-                    ? new Date(article.publishedAt).toLocaleDateString(isAr ? 'ar-SA' : 'en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      })
-                    : article.date || 'Oct 2026';
-                  const category = isSanity && article.categories?.[0]
-                    ? article.categories[0].title
-                    : article.category || (isAr ? 'تدريب مؤسسي' : 'L&D STRATEGIES');
-                  const href = isSanity
-                    ? `/${lang}/resources/blog/${article.slug?.current || article.slug}`
-                    : (article.slug ? `/${lang}/resources/blog/${article.slug}` : `/${lang}/resources/blog`);
+              {dynamicArticles.slice(0, 3).map((article: any, idx: number) => {
+                const title = article.title;
+                const excerpt = article.excerpt || article.title;
+                const date = article.date || 'Oct 2026';
+                const category = article.category || (isAr ? 'تدريب مؤسسي' : 'L&D STRATEGIES');
+                const href = article.slug ? `/${lang}/resources/blog/${article.slug}` : `/${lang}/resources/blog`;
 
                   return (
                     <Link
