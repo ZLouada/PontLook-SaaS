@@ -51,3 +51,5 @@ scripts/
 /site.webmanifest
 /robots.txt
 Documents/
+perf/
+backups/
