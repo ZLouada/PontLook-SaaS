@@ -22,7 +22,9 @@ sitemap.xml
 .claude/
 
 # Environment
-.env*.local
+.env
+.env.*
+!.env.example
 .vercel
 
 # Auto-generated

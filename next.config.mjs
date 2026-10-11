@@ -1,3 +1,5 @@
+import { withPayload } from '@payloadcms/next/withPayload';
+
 const securityHeaders = [
   {
     key: 'X-DNS-Prefetch-Control',
@@ -131,4 +133,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig);

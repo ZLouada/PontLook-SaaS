@@ -82,6 +82,11 @@ function getSafeHost(rawHost: string): { host: string; protocol: string } {
     return NextResponse.redirect(targetUrl, 301);
   }
 
+  // Payload Admin Route Bypass
+  if (targetPath === '/payload-admin' || targetPath.startsWith('/payload-admin/')) {
+    return NextResponse.next();
+  }
+
   // 5. Legacy Regional & Solutions clean redirects
   for (const [prefix, destination] of Object.entries(LEGACY_REGIONAL_REDIRECTS)) {
     if (targetPath === prefix || targetPath.startsWith(`${prefix}/`)) {
