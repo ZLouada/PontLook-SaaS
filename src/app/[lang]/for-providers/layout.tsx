@@ -10,7 +10,7 @@ export default function ForProvidersLayout({
   children,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: Locale }> | { lang: Locale };
+  params: Promise<{ lang: Locale }>;
 }) {
   return <>{children}</>;
 }

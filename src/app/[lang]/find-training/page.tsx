@@ -9,7 +9,7 @@ import { constructAlternates } from '@/lib/seo';
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ lang: Locale }> | { lang: Locale };
+  params: Promise<{ lang: Locale }>;
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
@@ -56,7 +56,7 @@ export async function generateStaticParams() {
 export default async function FindTrainingPage({
   params,
 }: {
-  params: Promise<{ lang: Locale }> | { lang: Locale };
+  params: Promise<{ lang: Locale }>;
 }) {
   const resolvedParams = await params;
   const lang = resolvedParams?.lang || 'en';

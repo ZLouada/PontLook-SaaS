@@ -11,7 +11,7 @@ export const revalidate = 60;
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ lang: Locale }> | { lang: Locale };
+  params: Promise<{ lang: Locale }>;
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
