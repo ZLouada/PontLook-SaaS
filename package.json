@@ -13,10 +13,8 @@
     "@hookform/resolvers": "^3.9.0",
     "@sanity/image-url": "^2.1.1",
     "framer-motion": "^11.11.0",
-    "gray-matter": "^4.0.3",
     "lucide-react": "^0.454.0",
     "next": "^14.2.15",
-    "next-mdx-remote": "^6.0.0",
     "next-sanity": "^9.12.3",
     "nodemailer": "^10.1.0",
     "react": "^18.3.1",
@@ -35,7 +33,6 @@
     "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.15",
     "postcss": "^8.4.47",
-    "serve": "^14.2.6",
     "tailwindcss": "^3.4.13",
     "typescript": "^5.6.2"
   }
