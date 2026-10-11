@@ -82,8 +82,13 @@ function getSafeHost(rawHost: string): { host: string; protocol: string } {
     return NextResponse.redirect(targetUrl, 301);
   }
 
-  // Payload Admin Route Bypass
-  if (targetPath === '/payload-admin' || targetPath.startsWith('/payload-admin/')) {
+  // Payload Routes Bypass (Admin & API)
+  if (
+    targetPath === '/payload-admin' ||
+    targetPath.startsWith('/payload-admin/') ||
+    targetPath === '/payload-api' ||
+    targetPath.startsWith('/payload-api/')
+  ) {
     return NextResponse.next();
   }
 
@@ -118,7 +123,7 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico, robots.txt, sitemap.xml, manifest, images and assets with extensions
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|site.webmanifest|.*\\..*).*)',
+    '/((?!api|payload-api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|site.webmanifest|.*\\..*).*)',
     '/',
   ],
 };

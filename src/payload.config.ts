@@ -15,6 +15,8 @@ export default buildConfig({
   },
   routes: {
     admin: '/payload-admin',
+    api: '/payload-api',
+    graphQL: '/payload-api/graphql',
   },
   collections: [],
   globals: [],
