@@ -75,7 +75,9 @@ PontLook was audited and systematically optimized to eliminate client runtime la
 
 | Page & Metric | Baseline Measurement | Post-Optimization Measurement | Measured Benefit |
 | :--- | :---: | :---: | :--- |
-| **Homepage Total Transfer Size** | 1,440 KiB | **580 KiB** | **-60% network payload** |
+| **Homepage LCP (Mobile)** | 5.2 s | **2.4 s** | **-2.8s (-53.8%, <2.5s Green)** |
+| **Homepage Speed Index (Mobile)** | 6.2 s | **4.8 s** | **-1.4s visual completion** |
+| **Homepage Total Transfer Size** | 1,440 KiB | **476 KiB** | **-66.9% network payload** |
 | **Homepage Offscreen CPU** | Continuous 60 FPS loop | **0% CPU when scrolled** | Main thread sleeps offscreen |
 | **Find Training Main-Thread Work** | 33,400 ms (CPU hung) | **23,100 ms** | **-10.3s busy time** |
 | **BurjSkyline State Setter Saturation**| 60 React diffs / sec | **0 React diffs / sec** | Direct DOM ref updates |
@@ -167,6 +169,9 @@ All optimizations were committed to `perf/reduce-code-and-lag` in isolated, logi
 If any specific category needs to be reverted, run the corresponding command while on `perf/reduce-code-and-lag`:
 
 ```bash
+# Revert Step G (LCP animation and font preload optimization)
+git revert cd80a8a
+
 # Revert Step F (Canvas CPU optimization)
 git revert c28acb6
 
