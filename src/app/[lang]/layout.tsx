@@ -6,7 +6,6 @@ import '../globals.css';
 import { getDictionary, Locale } from '@/i18n';
 import { DictionaryProvider } from '@/components/providers/DictionaryProvider';
 import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
-import { SanityLive } from '@/sanity/lib/live';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -215,7 +214,6 @@ export default async function RootLayout({
             <Navbar lang={lang} />
             <main className="min-h-screen">{children}</main>
             <Footer />
-            <SanityLive />
           </FramerMotionProvider>
         </DictionaryProvider>
       </body>

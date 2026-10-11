@@ -63,6 +63,3 @@ export { Workflow } from './Workflow';
 export { X } from './X';
 export { XCircle } from './XCircle';
 export { Zap } from './Zap';
-
-export { Icon } from './Icon';
-export type { IconName } from './Icon';

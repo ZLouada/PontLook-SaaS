@@ -4,9 +4,6 @@ import Image from 'next/image';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
-import { sanityFetch } from '@/sanity/lib/live';
-import { POSTS_QUERY } from '@/sanity/lib/queries';
-import { urlForImage } from '@/sanity/lib/image';
 import { ArrowRight, BookOpen, Calendar, User } from '@/components/icons';
 import { getResourcesStore } from '@/lib/resources-store';
 
@@ -66,22 +63,9 @@ export default async function BlogPage({
   const { lang } = await params;
   const isAr = lang === 'ar';
 
-  // Fetch posts from Sanity with live content caching
-  let sanityPosts: any[] = [];
-  try {
-    const { data } = await sanityFetch({
-      query: POSTS_QUERY,
-    });
-    if (data && Array.isArray(data)) {
-      sanityPosts = data;
-    }
-  } catch (err) {
-    sanityPosts = [];
-  }
-
   // Load articles authored via Admin CMS
   const store = getResourcesStore();
-  const localArticles = (store.articles || []).map((art) => ({
+  const posts = (store.articles || []).map((art) => ({
     _id: art.id,
     title: isAr ? art.titleAr || art.titleEn : art.titleEn,
     slug: { current: art.slug },
@@ -94,12 +78,6 @@ export default async function BlogPage({
     customImage: art.image || null,
     author: { name: 'PontLook Research', image: null, bio: null },
   }));
-
-  const seenSlugs = new Set(sanityPosts.map((p) => p.slug?.current).filter(Boolean));
-  const posts = [
-    ...sanityPosts,
-    ...localArticles.filter((art) => !seenSlugs.has(art.slug.current)),
-  ];
 
   return (
     <div
@@ -186,26 +164,12 @@ export default async function BlogPage({
                       </div>
 
                       <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between">
-                        {post.author ? (
-                          <div className="flex items-center gap-2">
-                            {post.author.image ? (
-                              <Image
-                                src={urlForImage(post.author.image).width(48).height(48).url()}
-                                alt={post.author.name || 'Author'}
-                                width={24}
-                                height={24}
-                                className="rounded-full object-cover"
-                              />
-                            ) : (
-                              <div className="h-6 w-6 rounded-full bg-neutral-200 flex items-center justify-center text-neutral-600 text-xs">
-                                <User size={12} />
-                              </div>
-                            )}
-                            <span className="text-xs text-neutral-700 font-medium">{post.author.name}</span>
+                        <div className="flex items-center gap-2">
+                          <div className="h-6 w-6 rounded-full bg-neutral-200 flex items-center justify-center text-neutral-600 text-xs">
+                            <User size={12} />
                           </div>
-                        ) : (
-                          <span className="text-xs text-neutral-500 font-mono">PontLook Research</span>
-                        )}
+                          <span className="text-xs text-neutral-700 font-medium">{post.author?.name || 'PontLook Research'}</span>
+                        </div>
 
                         <Link
                           href={`/${lang}/resources/blog/${post.slug?.current}`}
