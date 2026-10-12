@@ -1,27 +1,16 @@
-'use client';
-
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Linkedin, Mail, MapPin, ShieldCheck, ArrowRight } from '@/components/icons';
-import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { m } from 'framer-motion';
+import { Linkedin, Mail, MapPin, ShieldCheck } from '@/components/icons';
 import IconFrame from '@/components/shared/IconFrame';
-import BorderBeam from '@/components/shared/BorderBeam';
-import CardTilt3D from '@/components/shared/CardTilt3D';
-import Magnetic from '@/components/shared/Magnetic';
-import Press from '@/components/shared/Press';
-import { staggerContainer, staggerItem, viewportOnce } from '@/lib/motion';
+import FooterCtaCard from './FooterCtaCard';
+import { getDictionary, Locale } from '@/i18n';
 
-export default function Footer() {
-  const dict = useDictionary();
-  const pathname = usePathname() || '/en';
-  const lang = pathname.split('/')[1] === 'ar' ? 'ar' : 'en';
-  const [year, setYear] = useState(2026);
+interface FooterProps {
+  lang?: Locale;
+}
 
-  useEffect(() => {
-    setYear(new Date().getFullYear());
-  }, []);
+export default async function Footer({ lang = 'en' }: FooterProps) {
+  const dict = await getDictionary(lang);
+  const year = new Date().getFullYear();
 
   return (
     <footer data-nav-dark="true" className="relative bg-black text-neutral-400 overflow-hidden">
@@ -33,12 +22,9 @@ export default function Footer() {
         {/* Top shadow gradient overlay blending into the horizon line */}
         <div className="absolute top-0 inset-x-0 h-6 sm:h-10 bg-gradient-to-b from-black via-black/60 to-transparent pointer-events-none z-10" />
 
-        {/* Horizon Wordmark Lockup (subtle negative margin clipping so it emerges beneath horizon border) */}
+        {/* Horizon Wordmark Lockup */}
         <div className="relative -mt-2 sm:-mt-3 md:-mt-4 lg:-mt-5 overflow-hidden select-none pointer-events-none transform-gpu flex items-center justify-center">
           <div className="flex items-center justify-center px-4">
-            {/* Giant Metallic Gradient Wordmark — it has to span the horizon on a
-                phone too, so the mobile sizes are set to fill 375px rather than
-                shrinking to a caption. */}
             <span className="text-[3rem] 2xs:text-[3.5rem] xs:text-[4.25rem] sm:text-8xl md:text-9xl lg:text-[10.5rem] font-bold tracking-[-0.03em] text-transparent bg-clip-text bg-gradient-to-b from-white/90 via-white/30 to-white/0 leading-none font-sans">
               PontLook
             </span>
@@ -47,49 +33,23 @@ export default function Footer() {
 
         {/* Centered Floating Consultation Card Over Horizon */}
         <div className="container-site relative z-20 px-3.5 xs:px-4 sm:px-8 lg:px-12 mx-auto">
-          <CardTilt3D maxTilt={4} glareOpacity={0.12} className="max-w-2xl mx-auto -mt-10">
-            <div className="relative z-10 w-full rounded-2xl sm:rounded-3xl border border-[#26282D] hover:border-white/30 bg-[#0F1013]/95 backdrop-blur-2xl p-4 xs:p-6 sm:p-8 md:p-10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_20px_50px_-10px_rgba(0,0,0,0.8)] text-center flex flex-col items-center gap-4 xs:gap-5 sm:gap-6 transform-gpu transition-all duration-300 overflow-hidden">
-              <BorderBeam size={260} duration={14} colorFrom="#FF5C00" colorTo="#4D7CFF" />
-              {/* Subtle top inner sheen */}
-              <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
-
-              <div className="relative z-10 space-y-2.5 sm:space-y-3 max-w-xl">
-                <h3 className="text-xl xs:text-[1.375rem] sm:text-2xl lg:text-3xl font-semibold text-white tracking-tight font-heading">
-                  {dict.final_cta?.card_title || 'Ready to discuss your training objectives?'}
-                </h3>
-                <p className="text-sm sm:text-base text-neutral-400 font-normal leading-relaxed font-sans">
-                  {dict.final_cta?.card_subtitle ||
-                    'Connect directly with our enterprise advisory team to explore verified provider matching or discuss partnership opportunities across the region.'}
-                </p>
-              </div>
-
-              <Magnetic strength={0.25} activeDistance={45} className="w-full sm:w-auto">
-                <Press className="w-full sm:w-auto" strength={0.4} vibrate>
-                  <Link
-                    href={`/${lang}/contact`}
-                    className="relative z-10 inline-flex items-center justify-center gap-2.5 bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10 hover:border-white/30 font-medium px-5 xs:px-8 py-3.5 rounded-xl text-sm sm:text-base min-h-[48px] backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(255,255,255,0.08)] hover:scale-[1.02] active:scale-[0.98] touch-manipulation transition-all group w-full sm:w-auto"
-                  >
-                    <span>{dict.final_cta?.btn_call || (lang === 'ar' ? 'احجز استشارة' : 'Book a consultation')}</span>
-                    <ArrowRight size={17} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
-                  </Link>
-                </Press>
-              </Magnetic>
-            </div>
-          </CardTilt3D>
+          <FooterCtaCard
+            lang={lang}
+            cardTitle={dict.final_cta?.card_title || 'Ready to discuss your training objectives?'}
+            cardSubtitle={
+              dict.final_cta?.card_subtitle ||
+              'Connect directly with our enterprise advisory team to explore verified provider matching or discuss partnership opportunities across the region.'
+            }
+            btnCall={dict.final_cta?.btn_call || (lang === 'ar' ? 'احجز استشارة' : 'Book a consultation')}
+          />
         </div>
       </div>
 
       {/* 2. UNIVERSAL 4-COLUMN FOOTER LAYOUT */}
       <div className="bg-black text-neutral-400 pt-12 sm:pt-16 pb-12 px-4 sm:px-6 lg:px-12">
-        <m.div
-          variants={staggerContainer(0.08)}
-          initial="hidden"
-          whileInView="show"
-          viewport={viewportOnce}
-          className="container-site relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mx-auto"
-        >
+        <div className="container-site relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mx-auto">
           {/* Column 1: Mission & Registered Entity */}
-          <m.div variants={staggerItem} className="space-y-4">
+          <div className="space-y-4">
             <p className="text-[0.8125rem] sm:text-sm leading-relaxed text-neutral-400 font-normal">
               {dict.footer?.about ||
                 'We identify enterprise organizations experiencing verified workforce challenges and connect them with the right corporate training providers. Qualified opportunities only, no retainers, no cold outreach.'}
@@ -100,13 +60,11 @@ export default function Footer() {
               </IconFrame>
               <span className="pt-1">31 Continental Dr, Newark, Delaware 19713, US</span>
             </div>
-          </m.div>
+          </div>
 
           {/* Column 2: Platform */}
-          <m.nav variants={staggerItem} aria-label="Footer: platform" className="space-y-3 sm:space-y-4">
+          <nav aria-label="Footer: platform" className="space-y-3 sm:space-y-4">
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-neutral-200">PLATFORM</p>
-            {/* Rows are a full 44px tall rather than text-height with padding, so
-                adjacent links never need overlapping hit areas to be tappable. */}
             <ul className="space-y-1 text-sm font-medium text-neutral-400">
               <li>
                 <Link href={`/${lang}/who-we-are`} className="inline-flex min-h-[44px] items-center hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
@@ -134,10 +92,10 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-          </m.nav>
+          </nav>
 
           {/* Column 3: Legal & Compliance */}
-          <m.div variants={staggerItem} className="space-y-3 sm:space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-neutral-200">
               LEGAL &amp; COMPLIANCE
             </p>
@@ -161,10 +119,10 @@ export default function Footer() {
                 Firstnestcare, LLC · Delaware DE
               </li>
             </ul>
-          </m.div>
+          </div>
 
           {/* Column 4: Get In Touch */}
-          <m.div variants={staggerItem} className="space-y-3 sm:space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-neutral-200">GET IN TOUCH</p>
             <ul className="space-y-2 text-sm font-medium text-neutral-400">
               <li>
@@ -187,8 +145,8 @@ export default function Footer() {
                 {lang === 'ar' ? 'الرياض · دبي · نيوارك ديلاوير' : 'Riyadh · Dubai · Newark DE'}
               </li>
             </ul>
-          </m.div>
-        </m.div>
+          </div>
+        </div>
 
         {/* Bottom Copyright Line */}
         <div className="container-site border-t border-[#26282D] mt-12 pt-8 pb-safe mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-[0.8125rem] font-medium text-neutral-400 text-center sm:text-start">

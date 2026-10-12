@@ -6,7 +6,7 @@ import { constructAlternates } from '@/lib/seo';
 
 const HowItWorks = dynamic(() => import('@/components/home/HowItWorks'));
 const WhyDifferent = dynamic(() => import('@/components/home/WhyDifferent'));
-const ProviderTeaser = dynamic(() => import('@/components/home/ProviderTeaser'));
+import ProviderTeaser from '@/components/home/ProviderTeaser';
 
 export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
@@ -64,13 +64,20 @@ export async function generateMetadata({
   };
 }
 
-export default function HomePage() {
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ lang: Locale }>;
+}) {
+  const resolvedParams = await params;
+  const lang = (resolvedParams?.lang as Locale) || 'en';
+
   return (
     <>
       <Hero />
       <HowItWorks />
       <WhyDifferent />
-      <ProviderTeaser />
+      <ProviderTeaser lang={lang} />
     </>
   );
 }

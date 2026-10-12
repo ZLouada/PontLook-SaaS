@@ -221,7 +221,7 @@ export default async function RootLayout({
           <FramerMotionProvider>
             <Navbar lang={lang} />
             <main className="min-h-screen">{children}</main>
-            <Footer />
+            <Footer lang={lang} />
           </FramerMotionProvider>
         </DictionaryProvider>
       </body>

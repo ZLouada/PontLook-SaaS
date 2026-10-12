@@ -1,0 +1,303 @@
+'use client';
+
+import React from 'react';
+import { createPortal } from 'react-dom';
+import Link from 'next/link';
+import Image from 'next/image';
+import {
+  X,
+  ArrowUpRight,
+  Globe,
+  Building2,
+  Briefcase,
+  Users,
+  Mail,
+  BookOpen,
+  Headphones,
+  Download,
+  Calendar,
+  Folder,
+} from '@/components/icons';
+import Signal from '@/components/shared/Signal';
+import { Locale } from '@/i18n';
+
+interface NavbarMobileDrawerProps {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  lang: Locale;
+  dict: any;
+  isForProviders: boolean;
+  switchHref: string;
+}
+
+export default function NavbarMobileDrawer({
+  open,
+  setOpen,
+  lang,
+  dict,
+  isForProviders,
+  switchHref,
+}: NavbarMobileDrawerProps) {
+  if (!open || typeof document === 'undefined') return null;
+
+  const isRtl = lang === 'ar';
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 md:p-6"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile Navigation Menu"
+    >
+      {/* Dark Blurred Backdrop */}
+      <div
+        onClick={() => setOpen(false)}
+        className="fixed inset-0 bg-black/80 backdrop-blur-xl transition-opacity animate-in fade-in duration-200"
+        aria-hidden="true"
+      />
+
+      {/* Floating Centered Interactive Capsule Container */}
+      <div
+        className="relative z-[9999] w-full max-w-md max-h-[calc(100dvh-2rem)] flex flex-col justify-between rounded-3xl border border-white/15 bg-[#0C0D11]/95 backdrop-blur-2xl px-5 sm:px-6 py-5 pb-safe shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] overflow-y-auto overscroll-contain animate-in zoom-in-95 duration-200"
+        role="document"
+        aria-label="Mobile navigation"
+      >
+        <div>
+          {/* Floating Panel Header */}
+          <div className="flex items-center justify-between pb-3.5 border-b border-white/10">
+            <Link
+              href={`/${lang}`}
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2"
+              aria-label="PontLook home"
+            >
+              <div className="relative h-7 w-7 flex items-center justify-center">
+                <Image
+                  src={
+                    isForProviders
+                      ? '/images/brand/pontlook-icon-orange.png'
+                      : '/images/brand/pontlook-icon-white.png'
+                  }
+                  alt="PontLook Logo"
+                  width={28}
+                  height={28}
+                  className="h-7 w-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+              <span
+                className={`font-heading font-extrabold tracking-tight text-xl transition-colors duration-200 ${
+                  isForProviders ? 'text-[#FF5C00]' : 'text-white'
+                }`}
+              >
+                PontLook
+              </span>
+            </Link>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="tap-target flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white transition-colors active:scale-90 border border-white/15 cursor-pointer"
+              aria-label="Close menu"
+            >
+              <X size={17} />
+            </button>
+          </div>
+
+          {/* Live Network Status in Mobile Panel */}
+          <div className="mt-3.5 flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border border-white/10 bg-white/[0.04] text-neutral-300 w-fit">
+            <Signal />
+            <span className="text-xs text-neutral-300">
+              {lang === 'ar' ? 'المطابقة المباشرة نشطة' : 'Live Matchmaking Active'}
+            </span>
+          </div>
+
+          {/* Grouped Mobile Navigation */}
+          <div className="mt-4 space-y-3.5">
+            {/* Solutions Section */}
+            <div>
+              <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
+                {dict.nav.solutions}
+              </span>
+              <div className="space-y-1.5">
+                <Link
+                  href={`/${lang}/find-training`}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
+                >
+                  <div className="h-9 w-9 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                    <Building2 size={17} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-semibold text-white">{dict.nav.enterprise_opt}</div>
+                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.enterprise_opt_desc}</div>
+                  </div>
+                </Link>
+
+                <Link
+                  href={`/${lang}/for-providers`}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
+                >
+                  <div className="h-9 w-9 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                    <Briefcase size={17} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-semibold text-white">{dict.nav.provider_opt}</div>
+                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.provider_opt_desc}</div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+
+            {/* About Section */}
+            <div>
+              <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
+                {dict.nav.about}
+              </span>
+              <div className="space-y-1.5">
+                <Link
+                  href={`/${lang}/who-we-are`}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
+                >
+                  <div className="h-9 w-9 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                    <Users size={17} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-semibold text-white">{dict.nav.who_we_are}</div>
+                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.who_we_are_desc}</div>
+                  </div>
+                </Link>
+
+                <Link
+                  href={`/${lang}/contact`}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
+                >
+                  <div className="h-9 w-9 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                    <Mail size={17} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-semibold text-white">{dict.nav.contact}</div>
+                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.contact_desc}</div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+
+            {/* Resources Section */}
+            <div>
+              <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
+                {dict.nav.resources}
+              </span>
+              <div className="space-y-1.5">
+                <Link
+                  href={`/${lang}/resources`}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.08] hover:bg-white/[0.12] border border-white/20 text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
+                >
+                  <div className="h-9 w-9 rounded-xl bg-white text-black border border-white flex items-center justify-center shrink-0">
+                    <Folder size={17} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-semibold text-white">
+                      {dict.nav.resources}
+                    </div>
+                    <div className="text-[11px] text-neutral-300 truncate">
+                      {isRtl ? 'استعراض كافة الموارد والأدلة' : 'Browse all L&D resources & guides'}
+                    </div>
+                  </div>
+                </Link>
+
+                <Link
+                  href={`/${lang}/resources/blog`}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
+                >
+                  <div className="h-9 w-9 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                    <BookOpen size={17} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-semibold text-white">{dict.nav.blog}</div>
+                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.blog_desc}</div>
+                  </div>
+                </Link>
+
+                <Link
+                  href={`/${lang}/resources/podcasts`}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
+                >
+                  <div className="h-9 w-9 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                    <Headphones size={17} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-semibold text-white">{dict.nav.podcasts}</div>
+                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.podcasts_desc}</div>
+                  </div>
+                </Link>
+
+                <Link
+                  href={`/${lang}/resources/downloads`}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
+                >
+                  <div className="h-9 w-9 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                    <Download size={17} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-semibold text-white">{dict.nav.downloads}</div>
+                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.downloads_desc}</div>
+                  </div>
+                </Link>
+
+                <Link
+                  href={`/${lang}/resources/events`}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
+                >
+                  <div className="h-9 w-9 rounded-xl bg-white/10 text-white border border-white/20 flex items-center justify-center shrink-0">
+                    <Calendar size={17} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-semibold text-white">{dict.nav.events}</div>
+                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.events_desc}</div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Floating Menu Footer Actions */}
+        <div className="mt-5 pt-4 border-t border-white/10 space-y-2.5">
+          <Link
+            href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
+            onClick={() => setOpen(false)}
+            className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-sm w-full shadow-lg active:scale-95 transition-all min-h-[48px] touch-manipulation"
+          >
+            <span>{dict.nav.lets_talk}</span>
+            <ArrowUpRight size={16} className="rtl:-scale-x-100" />
+          </Link>
+
+          <div className="flex items-center justify-between pt-1 px-1">
+            <span className="text-xs font-medium text-neutral-400">
+              {lang === 'ar' ? 'اللغة / Language:' : 'Language / اللغة:'}
+            </span>
+            <Link
+              href={switchHref}
+              onClick={() => setOpen(false)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full font-medium text-xs text-neutral-300 bg-white/[0.05] hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95 min-h-[44px] touch-manipulation"
+            >
+              <Globe size={13} className="text-neutral-400" />
+              <span className={lang === 'en' ? 'font-arabic [letter-spacing:0!important]' : ''} dir={lang === 'en' ? 'rtl' : 'ltr'}>
+                {lang === 'en' ? 'العربية' : 'English'}
+              </span>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}

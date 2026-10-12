@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useCallback } from 'react';
-import { m, useReducedMotion } from 'framer-motion';
 import {
   SlidersHorizontal,
   BadgeCheck,
@@ -12,7 +11,6 @@ import {
   FileText,
   Clock,
 } from '@/components/icons';
-import TextReveal from '@/components/shared/TextReveal';
 
 interface MetricItem {
   valueEn: string;
@@ -136,11 +134,9 @@ function Cube3D({
 function KineticCubesVisual({
   type,
   isHovered,
-  reduce,
 }: {
   type: 'scoping' | 'vetting' | 'comparison';
   isHovered: boolean;
-  reduce: boolean | null;
 }) {
   return (
     <div
@@ -157,52 +153,24 @@ function KineticCubesVisual({
 
       {/* 01: RAPID SCOPING -> Main Core Cube + Orbiting Satellite Cube */}
       {type === 'scoping' && (
-        <div className="relative flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
+        <div className="relative flex items-center justify-center animate-kinetic-bob" style={{ transformStyle: 'preserve-3d' }}>
           {/* Main Core 3D Cube */}
-          <m.div
-            animate={
-              reduce
-                ? undefined
-                : {
-                    rotateY: [0, 360],
-                    rotateX: [-18, -32, -18],
-                    y: [-6, 6, -6],
-                    scale: isHovered ? 1.08 : 1,
-                  }
-            }
-            transition={{
-              rotateY: { duration: isHovered ? 6 : 10, repeat: Infinity, ease: 'linear' },
-              rotateX: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
-              y: { duration: 3.5, repeat: Infinity, ease: 'easeInOut' },
-              scale: { duration: 0.3 },
-            }}
+          <div
             style={{ transformStyle: 'preserve-3d' }}
-            className="relative"
+            className={`relative animate-kinetic-spin transition-transform duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}
           >
             <Cube3D size={36} color="#FFFFFF" isHovered={isHovered} />
-          </m.div>
+          </div>
 
           {/* Orbiting Satellite Micro-Cube */}
-          <m.div
-            animate={
-              reduce
-                ? undefined
-                : {
-                    rotateY: [0, -360],
-                    y: [6, -6, 6],
-                  }
-            }
-            transition={{
-              rotateY: { duration: isHovered ? 4.5 : 7, repeat: Infinity, ease: 'linear' },
-              y: { duration: 3.5, repeat: Infinity, ease: 'easeInOut' },
-            }}
+          <div
             style={{
               position: 'absolute',
               width: '90px',
               height: '90px',
               transformStyle: 'preserve-3d',
             }}
-            className="flex items-center justify-center"
+            className="flex items-center justify-center animate-kinetic-orbit"
           >
             <div
               style={{
@@ -212,7 +180,7 @@ function KineticCubesVisual({
             >
               <Cube3D size={16} color="#FFFFFF" isHovered={isHovered} />
             </div>
-          </m.div>
+          </div>
         </div>
       )}
 
@@ -223,82 +191,36 @@ function KineticCubesVisual({
           style={{ transformStyle: 'preserve-3d' }}
         >
           {/* Lower Left Cube */}
-          <m.div
-            animate={
-              reduce
-                ? undefined
-                : {
-                    rotateY: [25, 385],
-                    rotateX: [-20, -10, -20],
-                    y: [-7, 7, -7],
-                    scale: isHovered ? 1.06 : 1,
-                  }
-            }
-            transition={{
-              rotateY: { duration: isHovered ? 6.5 : 10.5, repeat: Infinity, ease: 'linear' },
-              rotateX: { duration: 4.5, repeat: Infinity, ease: 'easeInOut' },
-              y: { duration: 3.6, repeat: Infinity, ease: 'easeInOut' },
-              scale: { duration: 0.3 },
-            }}
+          <div
             style={{ transformStyle: 'preserve-3d' }}
+            className={`animate-kinetic-spin animate-kinetic-bob transition-transform duration-300 ${isHovered ? 'scale-105' : 'scale-100'}`}
           >
             <Cube3D size={30} color="#FFFFFF" isHovered={isHovered} />
-          </m.div>
+          </div>
 
           {/* Upper Right Cube (Anti-phase floating) */}
-          <m.div
-            animate={
-              reduce
-                ? undefined
-                : {
-                    rotateY: [55, 415],
-                    rotateX: [-10, -24, -10],
-                    y: [7, -7, 7],
-                    scale: isHovered ? 1.06 : 1,
-                  }
-            }
-            transition={{
-              rotateY: { duration: isHovered ? 6.5 : 10.5, repeat: Infinity, ease: 'linear' },
-              rotateX: { duration: 4.5, repeat: Infinity, ease: 'easeInOut' },
-              y: { duration: 3.6, repeat: Infinity, ease: 'easeInOut' },
-              scale: { duration: 0.3 },
-            }}
+          <div
             style={{
               transformStyle: 'preserve-3d',
               transform: 'translateY(-14px)',
             }}
+            className={`animate-kinetic-spin animate-kinetic-bob-rev transition-transform duration-300 ${isHovered ? 'scale-105' : 'scale-100'}`}
           >
             <Cube3D size={30} color="#FFFFFF" isHovered={isHovered} />
-          </m.div>
+          </div>
         </div>
       )}
 
       {/* 03: PROPOSAL AUDIT -> Revolving Tri-Cube Constellation */}
       {type === 'comparison' && (
-        <div className="relative flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
-          <m.div
-            animate={
-              reduce
-                ? undefined
-                : {
-                    rotateY: [0, 360],
-                    rotateX: [-16, -28, -16],
-                    y: [-5, 5, -5],
-                    scale: isHovered ? 1.08 : 1,
-                  }
-            }
-            transition={{
-              rotateY: { duration: isHovered ? 8 : 13, repeat: Infinity, ease: 'linear' },
-              rotateX: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
-              y: { duration: 3.8, repeat: Infinity, ease: 'easeInOut' },
-              scale: { duration: 0.3 },
-            }}
+        <div className="relative flex items-center justify-center animate-kinetic-bob" style={{ transformStyle: 'preserve-3d' }}>
+          <div
             style={{
               transformStyle: 'preserve-3d',
               width: '84px',
               height: '84px',
             }}
-            className="relative flex items-center justify-center"
+            className={`relative flex items-center justify-center animate-kinetic-spin transition-transform duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}
           >
             {/* Top Apex Cube */}
             <div
@@ -332,7 +254,7 @@ function KineticCubesVisual({
             >
               <Cube3D size={24} color="#FFFFFF" isHovered={isHovered} />
             </div>
-          </m.div>
+          </div>
         </div>
       )}
     </div>
@@ -341,7 +263,6 @@ function KineticCubesVisual({
 
 export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsProps) {
   const isAr = lang === 'ar';
-  const reduce = useReducedMotion();
 
   // Track flipped state for each card independently
   const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
@@ -557,11 +478,9 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
           <span>{isAr ? 'مسار المطابقة // خارطة الطريق التنفيذية' : 'MATCHING ROADMAP // WORKFLOW'}</span>
         </div>
 
-        <TextReveal
-          as="h2"
-          text={isAr ? '3 خطوات بسيطة لتدريب معتمد وموثوق' : '3 Simple Steps to Proven Training'}
-          className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-tight"
-        />
+        <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-tight">
+          {isAr ? '3 خطوات بسيطة لتدريب معتمد وموثوق' : '3 Simple Steps to Proven Training'}
+        </h2>
 
         <p className="text-xs sm:text-sm md:text-base text-neutral-400 font-sans max-w-2xl mx-auto leading-relaxed">
           {isAr
@@ -585,14 +504,12 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
               onMouseLeave={() => setHoveredCard(null)}
             >
               {/* 3D Flipping Card Container */}
-              <m.div
-                animate={{
-                  rotateY: reduce ? 0 : isFlipped ? 180 : 0,
-                  opacity: reduce && isFlipped ? 0.95 : 1,
+              <div
+                style={{
+                  transformStyle: 'preserve-3d',
+                  transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
                 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-                style={{ transformStyle: 'preserve-3d' }}
-                className="relative w-full h-full"
+                className="relative w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu"
               >
                 {/* ======================================================== */}
                 {/* FRONT FACE: Palantir Clean Tech Card with Isometric Cube */}
@@ -678,7 +595,6 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                       <KineticCubesVisual
                         type={step.cubeType}
                         isHovered={isHovered}
-                        reduce={reduce}
                       />
                     </div>
 
@@ -836,7 +752,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                     </div>
                   </div>
                 </div>
-              </m.div>
+              </div>
             </div>
           );
         })}

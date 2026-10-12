@@ -1,19 +1,9 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight } from '@/components/icons';
-import { m } from 'framer-motion';
-import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { useParams } from 'next/navigation';
 import Signal from '@/components/shared/Signal';
 import Spotlight from '@/components/shared/Spotlight';
-import TextReveal from '@/components/shared/TextReveal';
 import BorderBeam from '@/components/shared/BorderBeam';
-import CardTilt3D from '@/components/shared/CardTilt3D';
-import Magnetic from '@/components/shared/Magnetic';
-import BorderGlow from '@/components/shared/BorderGlow';
-import { dur, ease, viewportOnce } from '@/lib/motion';
 
 interface TierData {
   step: string;
@@ -462,10 +452,8 @@ export default function LeadTiers(_props?: {
   showSignals?: boolean;
   mode?: 'providers' | 'experience';
 }) {
-  const contextDict = useDictionary();
-  const params = useParams();
-  const dict = _props?.dict || contextDict;
-  const lang = _props?.lang || (params?.lang as string) || 'en';
+  const dict = _props?.dict;
+  const lang = _props?.lang || 'en';
   const isAr = lang === 'ar';
   const mode = _props?.mode || 'experience';
 
@@ -485,11 +473,9 @@ export default function LeadTiers(_props?: {
               <span className="h-1.5 w-1.5 rounded-full bg-white" />
               <span>{isAr ? 'مستويات التأهيل والمطابقة' : 'QUALIFICATION TIERS'}</span>
             </div>
-            <TextReveal
-              as="h2"
-              text={isAr ? 'تدفق متوقع لفرص الشركات والمؤسسات' : 'A predictable pipeline of enterprise opportunities'}
-              className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight font-heading"
-            />
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight font-heading">
+              {isAr ? 'تدفق متوقع لفرص الشركات والمؤسسات' : 'A predictable pipeline of enterprise opportunities'}
+            </h2>
             <p className="mt-3 xs:mt-4 text-sm xs:text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-sans">
               {isAr
                 ? 'يتم تقييم كل فرصة بناءً على التحقق من صانع القرار، وحجم الشركة، والميزانية، والجدول الزمني، وعمق الاحتياج لتكون على دراية تامة بتفاصيل كل فرصة.'
@@ -505,21 +491,14 @@ export default function LeadTiers(_props?: {
                   key={tier.step}
                   className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass}`}
                 >
-                  <m.div
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    transition={{ duration: dur.base, delay: idx * 0.05, ease: ease.out }}
-                  >
-                    <CardTilt3D maxTilt={4} glareOpacity={0.12} className="w-full">
-                      <Spotlight
-                        radius={340}
-                        className={`relative overflow-hidden bg-[#0F1013] border border-[#26282D] hover:border-orange-500/40 text-white rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-7 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
-                      >
-                        <BorderGlow glowColor="rgba(255, 92, 0, 0.22)" size={320} opacity={0.6} />
-                        {idx === 0 && (
-                          <BorderBeam size={260} duration={10} colorFrom="#FF5C00" colorTo="#FFA066" />
-                        )}
+                  <div className="w-full">
+                    <Spotlight
+                      radius={340}
+                      className={`relative overflow-hidden bg-[#0F1013] border border-[#26282D] hover:border-orange-500/40 text-white rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-7 lg:p-10 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]`}
+                    >
+                      {idx === 0 && (
+                        <BorderBeam size={260} duration={10} colorFrom="#FF5C00" colorTo="#FFA066" />
+                      )}
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 xs:gap-5 sm:gap-8 items-center relative z-10">
                           {/* Left Details */}
                           <div className="lg:col-span-7 space-y-2.5 xs:space-y-3 sm:space-y-4">
@@ -543,15 +522,13 @@ export default function LeadTiers(_props?: {
 
                             {tier.isCtaCard && (
                               <div className="pt-2">
-                                <Magnetic strength={0.22} activeDistance={35}>
-                                  <Link
-                                    href={`/${lang}/for-providers/apply`}
-                                    className="w-full xs:w-auto inline-flex items-center justify-center px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-xs xs:text-sm shadow-lg shadow-orange-500/25 active:scale-95 transition-all"
-                                  >
-                                    <span>{isAr ? 'قدم كشريك تدريب معتمد' : 'Apply as Verified Provider'}</span>
-                                    <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
-                                  </Link>
-                                </Magnetic>
+                                <Link
+                                  href={`/${lang}/for-providers/apply`}
+                                  className="w-full xs:w-auto inline-flex items-center justify-center px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-xs xs:text-sm shadow-lg shadow-orange-500/25 active:scale-95 transition-all"
+                                >
+                                  <span>{isAr ? 'قدم كشريك تدريب معتمد' : 'Apply as Verified Provider'}</span>
+                                  <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
+                                </Link>
                               </div>
                             )}
                           </div>
@@ -585,8 +562,7 @@ export default function LeadTiers(_props?: {
                           </div>
                         </div>
                       </Spotlight>
-                    </CardTilt3D>
-                  </m.div>
+                    </div>
                 </div>
               );
             })}
@@ -617,11 +593,9 @@ export default function LeadTiers(_props?: {
             <span>{isAr ? 'خيارات الشراكة والتعاون' : 'COLLABORATION PATHWAYS'}</span>
           </div>
 
-          <TextReveal
-            as="h2"
-            text={exp?.title || (isAr ? 'ابدأ برؤى وأبحاث مدروسة. اعقد شراكات تثمر أثراً حقيقياً.' : 'Start with Our Insights. Partner for Real Impact.')}
-            className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-neutral-950 tracking-[-0.03em] leading-tight font-heading"
-          />
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-neutral-950 tracking-[-0.03em] leading-tight font-heading">
+            {exp?.title || (isAr ? 'ابدأ برؤى وأبحاث مدروسة. اعقد شراكات تثمر أثراً حقيقياً.' : 'Start with Our Insights. Partner for Real Impact.')}
+          </h2>
           <p className="mt-3 xs:mt-4 text-sm xs:text-base sm:text-lg text-neutral-600 leading-relaxed max-w-2xl mx-auto font-sans">
             {exp?.subtitle ||
               (isAr
@@ -631,25 +605,21 @@ export default function LeadTiers(_props?: {
 
           {/* Top Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 xs:gap-3.5 sm:gap-4 mt-6 xs:mt-8">
-            <Magnetic strength={0.22} activeDistance={35}>
-              <Link
-                href={`/${lang}/resources`}
-                className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-300 font-medium text-xs xs:text-sm shadow-xs active:scale-[0.98] transition-all"
-              >
-                <span>{exp?.btn_blog || (isAr ? 'استكشف المدونة والموارد' : 'Explore the Blog & Resources')}</span>
-                <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
-              </Link>
-            </Magnetic>
+            <Link
+              href={`/${lang}/resources`}
+              className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-300 font-medium text-xs xs:text-sm shadow-xs active:scale-[0.98] transition-all"
+            >
+              <span>{exp?.btn_blog || (isAr ? 'استكشف المدونة والموارد' : 'Explore the Blog & Resources')}</span>
+              <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
+            </Link>
 
-            <Magnetic strength={0.22} activeDistance={35}>
-              <Link
-                href={`/${lang}/find-training`}
-                className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-neutral-950 hover:bg-black text-white font-medium text-xs xs:text-sm shadow-lg shadow-neutral-900/10 active:scale-[0.98] transition-all"
-              >
-                <span>{exp?.btn_match || (isAr ? 'ابدأ الربط للتدريب' : 'Get Matched for Training')}</span>
-                <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
-              </Link>
-            </Magnetic>
+            <Link
+              href={`/${lang}/find-training`}
+              className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-neutral-950 hover:bg-black text-white font-medium text-xs xs:text-sm shadow-lg shadow-neutral-900/10 active:scale-[0.98] transition-all"
+            >
+              <span>{exp?.btn_match || (isAr ? 'ابدأ الربط للتدريب' : 'Get Matched for Training')}</span>
+              <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
+            </Link>
           </div>
         </div>
 
@@ -679,19 +649,12 @@ export default function LeadTiers(_props?: {
                 key={card.id}
                 className={`sticky ${config.topClass} ${config.zIndexClass} ${config.spacingClass}`}
               >
-                <m.div
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  transition={{ duration: dur.base, delay: idx * 0.05, ease: ease.out }}
-                >
-                  <CardTilt3D maxTilt={4} glareOpacity={0.06} className="w-full">
-                    <Spotlight
-                      radius={340}
-                      className={`relative overflow-hidden ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300`}
-                    >
-                      <BorderGlow glowColor="rgba(255, 92, 0, 0.15)" size={320} opacity={0.35} />
-                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center relative z-10">
+                <div className="w-full">
+                  <Spotlight
+                    radius={340}
+                    className={`relative overflow-hidden ${theme.bgClass} ${theme.borderClass} border rounded-2xl sm:rounded-3xl p-4 xs:p-5 sm:p-7 ${config.shadowClass} backdrop-blur-xl transition-[border-color,box-shadow] duration-300`}
+                  >
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-center relative z-10">
                       {/* Left Details */}
                       <div className="lg:col-span-7 space-y-3 xs:space-y-4">
                         {/* Layered Rounded Pill Badges */}
@@ -713,27 +676,25 @@ export default function LeadTiers(_props?: {
                         </p>
 
                         <div className="pt-1">
-                          <Magnetic strength={0.2} activeDistance={30}>
-                            {isExternal ? (
-                              <a
-                                href={href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`w-full xs:w-auto inline-flex items-center justify-center min-h-[44px] px-4 xs:px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all touch-manipulation active:scale-[0.98]`}
-                              >
-                                <span>{cta}</span>
-                                <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
-                              </a>
-                            ) : (
-                              <Link
-                                href={href.startsWith('http') ? href : `/${lang}${href}`}
-                                className={`w-full xs:w-auto inline-flex items-center justify-center min-h-[44px] px-4 xs:px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all touch-manipulation active:scale-[0.98]`}
-                              >
-                                <span>{cta}</span>
-                                <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
-                              </Link>
-                            )}
-                          </Magnetic>
+                          {isExternal ? (
+                            <a
+                              href={href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={`w-full xs:w-auto inline-flex items-center justify-center min-h-[44px] px-4 xs:px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all touch-manipulation active:scale-[0.98]`}
+                            >
+                              <span>{cta}</span>
+                              <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
+                            </a>
+                          ) : (
+                            <Link
+                              href={href.startsWith('http') ? href : `/${lang}${href}`}
+                              className={`w-full xs:w-auto inline-flex items-center justify-center min-h-[44px] px-4 xs:px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all touch-manipulation active:scale-[0.98]`}
+                            >
+                              <span>{cta}</span>
+                              <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
+                            </Link>
+                          )}
                         </div>
                       </div>
 
@@ -766,11 +727,10 @@ export default function LeadTiers(_props?: {
                       </div>
                     </div>
                   </Spotlight>
-                </CardTilt3D>
-              </m.div>
-            </div>
-          );
-        })}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

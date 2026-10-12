@@ -597,3 +597,50 @@
     transform: none;
   }
 }
+
+/* 3D Kinetic Cubes GPU keyframes */
+@keyframes kinetic-spin-slow {
+  from { transform: rotateY(0deg) rotateX(-25deg); }
+  to   { transform: rotateY(360deg) rotateX(-25deg); }
+}
+
+@keyframes kinetic-orbit-reverse {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(-360deg); }
+}
+
+@keyframes kinetic-float-bob {
+  0%, 100% { transform: translateY(-6px); }
+  50%      { transform: translateY(6px); }
+}
+
+@keyframes kinetic-float-bob-rev {
+  0%, 100% { transform: translateY(6px); }
+  50%      { transform: translateY(-6px); }
+}
+
+.animate-kinetic-spin {
+  animation: kinetic-spin-slow 10s linear infinite;
+}
+
+.animate-kinetic-orbit {
+  animation: kinetic-orbit-reverse 7s linear infinite;
+}
+
+.animate-kinetic-bob {
+  animation: kinetic-float-bob 3.5s ease-in-out infinite;
+}
+
+.animate-kinetic-bob-rev {
+  animation: kinetic-float-bob-rev 3.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-kinetic-spin,
+  .animate-kinetic-orbit,
+  .animate-kinetic-bob,
+  .animate-kinetic-bob-rev {
+    animation: none !important;
+  }
+}
+
