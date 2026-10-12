@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, IBM_Plex_Sans_Arabic, JetBrains_Mono } from 'next/font/google';
+import { notFound } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import '../globals.css';
-import { getDictionary, Locale } from '@/i18n';
+import { getDictionary, Locale, locales } from '@/i18n';
 import { DictionaryProvider } from '@/components/providers/DictionaryProvider';
 import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
 
@@ -42,7 +43,11 @@ export async function generateMetadata({
   params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const resolvedParams = await params;
-  const isAr = resolvedParams?.lang === 'ar';
+  const rawLang = resolvedParams?.lang;
+  if (!rawLang || !(locales as readonly string[]).includes(rawLang)) {
+    return {};
+  }
+  const isAr = rawLang === 'ar';
 
   return {
     metadataBase: new URL('https://pontlook.com'),
@@ -130,8 +135,11 @@ export default async function RootLayout({
   params: Promise<{ lang: string }>;
 }>) {
   const resolvedParams = await params;
-  const rawLang = resolvedParams.lang || 'en';
-  const lang = (rawLang as Locale) || 'en';
+  const rawLang = resolvedParams.lang;
+  if (!rawLang || !(locales as readonly string[]).includes(rawLang)) {
+    notFound();
+  }
+  const lang = rawLang as Locale;
   const dictionary = await getDictionary(lang);
   const dir = rawLang === 'ar' ? 'rtl' : 'ltr';
 
