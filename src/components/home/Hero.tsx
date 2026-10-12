@@ -207,8 +207,16 @@ export default function Hero() {
       f: rnd(0, 6),
     }));
 
+    let cachedTotal = 0;
+    const updateScrollBounds = () => {
+      if (heroRef.current) {
+        cachedTotal = Math.max(0, heroRef.current.offsetHeight - window.innerHeight);
+      }
+    };
+
     const rs = () => {
       if (!cv) return;
+      updateScrollBounds();
       const mobile = window.innerWidth < 768;
       D = mobile ? Math.min(window.devicePixelRatio || 1, 1.33) : Math.min(window.devicePixelRatio || 1, 2);
       W = cv.clientWidth;
@@ -600,9 +608,13 @@ export default function Hero() {
       animId = requestAnimationFrame(frame);
     };
 
-    const startRaf = requestAnimationFrame(() => {
-      startLoop();
-    });
+    // Start canvas rendering after initial DOM paint settling to protect critical LCP typography
+    let startTimer: any = null;
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      startTimer = (window as any).requestIdleCallback(() => startLoop(), { timeout: 150 });
+    } else {
+      startTimer = setTimeout(() => startLoop(), 80);
+    }
 
     // Cache DOM references for scroll animations
     const letterNodes = bigWordRef.current
@@ -613,10 +625,10 @@ export default function Hero() {
       : [];
 
     let scrollTicking = false;
-    const prevLetterProgress: number[] = new Array(letterNodes.length).fill(-1);
-    let prevLeadOpacity = -1;
-    let prevN = -1;
-    let prevSubProgress = -1;
+    const prevLetterProgress: number[] = new Array(letterNodes.length).fill(0);
+    let prevLeadOpacity = 0;
+    let prevN = 0;
+    let prevSubProgress = 0;
 
     const onScroll = () => {
       if (scrollTicking) return;
@@ -624,9 +636,9 @@ export default function Hero() {
       requestAnimationFrame(() => {
         scrollTicking = false;
         if (!heroRef.current) return;
-        const total = heroRef.current.offsetHeight - window.innerHeight;
-        if (total <= 0) return;
-        p = cl(window.scrollY / total);
+        if (cachedTotal <= 0) updateScrollBounds();
+        if (cachedTotal <= 0) return;
+        p = cl(window.scrollY / cachedTotal);
         startLoop();
 
         // 1. Scrub big word "PontLook" letters (compositor-friendly transform/opacity without dynamic filter rasterization)
@@ -680,12 +692,16 @@ export default function Hero() {
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    requestAnimationFrame(() => {
+    if (window.scrollY > 0) {
       onScroll();
-    });
+    }
 
     return () => {
-      cancelAnimationFrame(startRaf);
+      if (typeof window !== 'undefined' && 'cancelIdleCallback' in window && startTimer !== null) {
+        (window as any).cancelIdleCallback(startTimer);
+      } else if (startTimer !== null) {
+        clearTimeout(startTimer);
+      }
       stopLoop();
       document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('resize', rs);
@@ -853,7 +869,10 @@ export default function Hero() {
                   animationDelay: `${idx * 0.04}s`,
                 }}
               >
-                <i className="inline-block not-italic will-change-transform">
+                <i
+                  className="inline-block not-italic will-change-transform"
+                  style={{ opacity: 1, transform: 'translateY(0px) scale(1)' }}
+                >
                   {char}
                 </i>
               </b>

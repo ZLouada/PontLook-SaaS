@@ -121,6 +121,7 @@ export default function NavbarMobileDrawer({
               <div className="space-y-1.5">
                 <Link
                   href={`/${lang}/find-training`}
+                  prefetch={false}
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
                 >
@@ -135,6 +136,7 @@ export default function NavbarMobileDrawer({
 
                 <Link
                   href={`/${lang}/for-providers`}
+                  prefetch={false}
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
                 >
@@ -157,6 +159,7 @@ export default function NavbarMobileDrawer({
               <div className="space-y-1.5">
                 <Link
                   href={`/${lang}/who-we-are`}
+                  prefetch={false}
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
                 >
@@ -171,6 +174,7 @@ export default function NavbarMobileDrawer({
 
                 <Link
                   href={`/${lang}/contact`}
+                  prefetch={false}
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
                 >
@@ -193,6 +197,7 @@ export default function NavbarMobileDrawer({
               <div className="space-y-1.5">
                 <Link
                   href={`/${lang}/resources`}
+                  prefetch={false}
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.08] hover:bg-white/[0.12] border border-white/20 text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
                 >
@@ -211,6 +216,7 @@ export default function NavbarMobileDrawer({
 
                 <Link
                   href={`/${lang}/resources/blog`}
+                  prefetch={false}
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
                 >
@@ -225,6 +231,7 @@ export default function NavbarMobileDrawer({
 
                 <Link
                   href={`/${lang}/resources/podcasts`}
+                  prefetch={false}
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
                 >
@@ -239,6 +246,7 @@ export default function NavbarMobileDrawer({
 
                 <Link
                   href={`/${lang}/resources/downloads`}
+                  prefetch={false}
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
                 >
@@ -253,6 +261,7 @@ export default function NavbarMobileDrawer({
 
                 <Link
                   href={`/${lang}/resources/events`}
+                  prefetch={false}
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-3 px-3 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-neutral-200 hover:text-white transition-all active:scale-[0.98]"
                 >
@@ -273,6 +282,7 @@ export default function NavbarMobileDrawer({
         <div className="mt-5 pt-4 border-t border-white/10 space-y-2.5">
           <Link
             href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
+            prefetch={false}
             onClick={() => setOpen(false)}
             className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-sm w-full shadow-lg active:scale-95 transition-all min-h-[48px] touch-manipulation"
           >

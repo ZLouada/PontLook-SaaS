@@ -146,6 +146,10 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
       if (e.key === 'Escape') {
         setActiveDropdown(null);
       }
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setCommandOpen((prev) => !prev);
+      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
@@ -288,6 +292,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   {/* Looking for training */}
                   <Link
                     href={`/${lang}/find-training`}
+                    prefetch={false}
                     onClick={() => setActiveDropdown(null)}
                     className={`group flex items-start gap-3 p-2.5 rounded-xl transition-all duration-200 ${
                       isLightSection
@@ -333,6 +338,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   {/* Training provider */}
                   <Link
                     href={`/${lang}/for-providers`}
+                    prefetch={false}
                     onClick={() => setActiveDropdown(null)}
                     className={`group flex items-start gap-3 p-2.5 rounded-xl transition-all duration-200 ${
                       isLightSection
@@ -425,6 +431,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   {/* Who We Are */}
                   <Link
                     href={`/${lang}/who-we-are`}
+                    prefetch={false}
                     onClick={() => setActiveDropdown(null)}
                     className={`group flex items-start gap-3 p-2.5 rounded-xl transition-all duration-200 ${
                       isLightSection
@@ -470,6 +477,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   {/* Contact */}
                   <Link
                     href={`/${lang}/contact`}
+                    prefetch={false}
                     onClick={() => setActiveDropdown(null)}
                     className={`group flex items-start gap-3 p-2.5 rounded-xl transition-all duration-200 ${
                       isLightSection
@@ -563,6 +571,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   <div className="col-span-4 ltr:border-r rtl:border-l border-neutral-200/70 dark:border-white/10 ltr:pr-4 rtl:pl-4 flex flex-col justify-between">
                     <Link
                       href={`/${lang}/resources`}
+                      prefetch={false}
                       onClick={() => setActiveDropdown(null)}
                       className={`group p-4 rounded-2xl transition-all duration-200 h-full flex flex-col justify-between ${
                         isLightSection
@@ -605,6 +614,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   <div className="col-span-4 space-y-1 flex flex-col justify-center">
                     <Link
                       href={`/${lang}/resources/blog`}
+                      prefetch={false}
                       onClick={() => setActiveDropdown(null)}
                       className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 ${
                         isLightSection
@@ -624,6 +634,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
                     <Link
                       href={`/${lang}/resources/events`}
+                      prefetch={false}
                       onClick={() => setActiveDropdown(null)}
                       className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 ${
                         isLightSection
@@ -643,6 +654,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
                     <Link
                       href={`/${lang}/resources/downloads`}
+                      prefetch={false}
                       onClick={() => setActiveDropdown(null)}
                       className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 ${
                         isLightSection
@@ -662,6 +674,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
 
                     <Link
                       href={`/${lang}/resources/podcasts`}
+                      prefetch={false}
                       onClick={() => setActiveDropdown(null)}
                       className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 ${
                         isLightSection
@@ -684,6 +697,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                   <div className="col-span-4">
                     <Link
                       href={`/${lang}/resources/events`}
+                      prefetch={false}
                       onClick={() => setActiveDropdown(null)}
                       className={`group relative flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl ${
                         isLightSection
@@ -764,6 +778,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             <Magnetic strength={0.18} activeDistance={30} className="hidden sm:inline-flex shrink-0">
               <Link
                 href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
+                prefetch={false}
                 className={`inline-flex items-center gap-1.5 px-3 xl:px-4 py-1.5 rounded-full text-xs font-semibold active:scale-95 transition-all shrink-0 whitespace-nowrap ${
                   isLightSection
                     ? 'bg-neutral-950 hover:bg-black text-white shadow-xs hover:shadow-md hover:shadow-black/20'
@@ -827,7 +842,9 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
         />
       )}
 
-      <CommandMenu open={commandOpen} onOpenChange={setCommandOpen} lang={lang} />
+      {commandOpen && (
+        <CommandMenu open={commandOpen} onOpenChange={setCommandOpen} lang={lang} />
+      )}
     </>
   );
 }

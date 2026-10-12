@@ -64,29 +64,33 @@ export default function Rail({
     const el = railRef.current;
     if (!el) return;
 
+    // Phase A: Batch all DOM layout reads
     const slides = Array.from(el.children) as HTMLElement[];
     const isScrollable = el.scrollWidth - el.clientWidth > 8;
 
-    setSlideCount(slides.length);
-    setScrollable(isScrollable);
-
-    // Grid mode (desktop) — hand every slide back untouched.
     if (!isScrollable) {
-      slides.forEach((slide) => {
-        const node = depthNode(slide);
+      // Desktop / grid mode — reset inline styles
+      for (let i = 0; i < slides.length; i++) {
+        const node = depthNode(slides[i]);
         node.style.transform = '';
         node.style.opacity = '';
-      });
+      }
+      setSlideCount(slides.length);
+      setScrollable(false);
       return;
     }
 
     const railBox = el.getBoundingClientRect();
+    const slideBoxes = slides.map((s) => s.getBoundingClientRect());
+
+    // Phase B: Compute all values without DOM writes
     const railCenter = railBox.left + railBox.width / 2;
     let nearest = 0;
     let nearestDistance = Infinity;
+    const updates: { node: HTMLElement; transform: string; opacity: string }[] = [];
 
-    slides.forEach((slide, i) => {
-      const box = slide.getBoundingClientRect();
+    for (let i = 0; i < slides.length; i++) {
+      const box = slideBoxes[i];
       const offset = box.left + box.width / 2 - railCenter;
       const distance = Math.abs(offset);
 
@@ -95,16 +99,26 @@ export default function Rail({
         nearest = i;
       }
 
-      if (reduce) return;
+      if (reduce) {
+        updates.push({ node: depthNode(slides[i]), transform: '', opacity: '' });
+      } else {
+        const d = Math.min(distance / Math.max(box.width, 1), 1);
+        updates.push({
+          node: depthNode(slides[i]),
+          transform: `scale(${(1 - 0.055 * d).toFixed(4)}) translate3d(0, ${(7 * d).toFixed(2)}px, 0)`,
+          opacity: `${(1 - 0.32 * d).toFixed(3)}`,
+        });
+      }
+    }
 
-      // Normalise against the slide's own width so the falloff feels the same
-      // whether a slide is 74vw or 88vw.
-      const d = Math.min(Math.abs(offset) / Math.max(box.width, 1), 1);
-      const node = depthNode(slide);
-      node.style.transform = `scale(${(1 - 0.055 * d).toFixed(4)}) translate3d(0, ${(7 * d).toFixed(2)}px, 0)`;
-      node.style.opacity = `${(1 - 0.32 * d).toFixed(3)}`;
-    });
+    // Phase C: Batch all DOM style writes
+    for (let i = 0; i < updates.length; i++) {
+      updates[i].node.style.transform = updates[i].transform;
+      updates[i].node.style.opacity = updates[i].opacity;
+    }
 
+    setSlideCount(slides.length);
+    setScrollable(isScrollable);
     setActive(nearest);
   }, [reduce]);
 
@@ -128,9 +142,14 @@ export default function Rail({
 
     measure();
 
-    const ro = new ResizeObserver(() => measure());
+    const ro = new ResizeObserver(() => {
+      if (frame.current !== null) return;
+      frame.current = requestAnimationFrame(() => {
+        frame.current = null;
+        measure();
+      });
+    });
     ro.observe(el);
-    Array.from(el.children).forEach((child) => ro.observe(child));
 
     return () => {
       ro.disconnect();
