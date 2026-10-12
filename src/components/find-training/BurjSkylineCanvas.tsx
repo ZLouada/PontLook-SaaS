@@ -150,11 +150,9 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       cv.height = H * D;
       ctx.setTransform(D, 0, 0, D, 0, 0);
       buildSkyline();
-      startLoop();
     };
 
     resize();
-    window.addEventListener('resize', resize);
 
     let isRunning = false;
     const startLoop = () => {
@@ -167,6 +165,12 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       isRunning = false;
       cancelAnimationFrame(animId);
     };
+
+    const onResize = () => {
+      resize();
+      startLoop();
+    };
+    window.addEventListener('resize', onResize);
 
     const observer = new IntersectionObserver((entries) => {
       const isIntersecting = entries[0]?.isIntersecting ?? false;
@@ -462,7 +466,7 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
     return () => {
       stopLoop();
       document.removeEventListener('visibilitychange', onVisibilityChange);
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', onResize);
       observer.disconnect();
       cv.removeEventListener('pointermove', onPointerMove);
       cv.removeEventListener('pointerdown', onPointerDown);
