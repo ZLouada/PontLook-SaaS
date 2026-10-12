@@ -262,7 +262,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                 height={32}
                 className="h-full w-full object-contain"
                 priority
-                unoptimized
               />
             </div>
 
@@ -754,8 +753,8 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                               src="/executive_training_room.jpg"
                               alt={isRtl ? 'مؤتمر جمعية تطوير المواهب السعودية ٢٠٢٦' : 'ATD Saudi Arabia Conference 2026'}
                               fill
-                              unoptimized
                               sizes="320px"
+                              loading="lazy"
                               className="object-cover group-hover:scale-105 transition-transform duration-500"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -933,7 +932,6 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                             height={28}
                             className="h-7 w-auto object-contain"
                             loading="lazy"
-                            unoptimized
                           />
                         </div>
                         <span

@@ -134,7 +134,6 @@ export default function ProviderConnectionFlow({ lang }: ProviderConnectionFlowP
                               width={24}
                               height={24}
                               className="object-contain"
-                              unoptimized
                             />
                           </div>
                         ) : (
