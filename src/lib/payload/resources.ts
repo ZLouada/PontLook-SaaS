@@ -8,13 +8,63 @@ import type { Locale } from '@/i18n/config'
 // Helper: Extract image URL from Payload Media relation or string
 export function getMediaUrl(media: any): string | null {
   if (!media) return null
-  if (typeof media === 'string') return media
-  if (media.filename) {
-    return `/payload-media/${media.filename}`
+
+  // If already a string
+  if (typeof media === 'string') {
+    const trimmed = media.trim()
+    if (!trimmed) return null
+    if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+      return trimmed
+    }
+    if (trimmed.startsWith('/payload-api/media/file/')) {
+      return `/payload-media/${trimmed.slice('/payload-api/media/file/'.length)}`
+    }
+    if (trimmed.startsWith('/media/')) {
+      return `/payload-media/${trimmed.slice('/media/'.length)}`
+    }
+    if (trimmed.startsWith('/payload-media/')) {
+      return trimmed
+    }
+    if (trimmed.startsWith('/')) {
+      return trimmed
+    }
+    return `/payload-media/${trimmed}`
   }
-  if (media.url) {
-    return media.url
+
+  // If Media document object
+  if (typeof media === 'object') {
+    if (media.filename && typeof media.filename === 'string') {
+      return `/payload-media/${media.filename}`
+    }
+    if (media.url && typeof media.url === 'string') {
+      const u = media.url.trim()
+      if (u.startsWith('/payload-api/media/file/')) {
+        return `/payload-media/${u.slice('/payload-api/media/file/'.length)}`
+      }
+      if (u.startsWith('/media/')) {
+        return `/payload-media/${u.slice('/media/'.length)}`
+      }
+      return u
+    }
+    // Fallback to generated sizes if original filename missing
+    if (media.sizes && typeof media.sizes === 'object') {
+      const sizeObj = media.sizes.feature || media.sizes.card || media.sizes.thumbnail
+      if (sizeObj?.filename && typeof sizeObj.filename === 'string') {
+        return `/payload-media/${sizeObj.filename}`
+      }
+      if (sizeObj?.url && typeof sizeObj.url === 'string') {
+        const su = sizeObj.url.trim()
+        if (su.startsWith('/payload-api/media/file/')) {
+          return `/payload-media/${su.slice('/payload-api/media/file/'.length)}`
+        }
+        if (su.startsWith('/media/')) {
+          return `/payload-media/${su.slice('/media/'.length)}`
+        }
+        return su
+      }
+    }
   }
+
   return null
 }
 
@@ -158,6 +208,25 @@ export interface AdaptedFeatured {
   editorPickToolkit: AdaptedEditorPickToolkit
 }
 
+// Helper: Resolve Media document if stored as unpopulated ID
+async function resolveMediaDoc(payload: any, media: any): Promise<any> {
+  if (typeof media === 'number' || (typeof media === 'string' && /^\d+$/.test(media))) {
+    try {
+      const mediaDoc = await payload.findByID({
+        collection: 'media',
+        id: Number(media),
+        depth: 0,
+      })
+      if (mediaDoc) {
+        return mediaDoc
+      }
+    } catch (err) {
+      console.warn(`[Payload Data Layer] Could not populate media ID ${media}:`, err)
+    }
+  }
+  return media
+}
+
 // 1. Get Published Articles
 export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedArticle[]> => {
   try {
@@ -176,34 +245,37 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
       overrideAccess: false,
     })
 
-    return result.docs.map((art: any) => {
-      const imageUrl = getMediaUrl(art.featuredImage)
-      const displayDate = formatDisplayDate(art.publishedAt, locale)
-      const contentText = extractTextFromLexical(art.content)
+    return await Promise.all(
+      result.docs.map(async (art: any) => {
+        const resolvedImage = await resolveMediaDoc(payload, art.featuredImage)
+        const imageUrl = getMediaUrl(resolvedImage)
+        const displayDate = formatDisplayDate(art.publishedAt, locale)
+        const contentText = extractTextFromLexical(art.content)
 
-      return {
-        id: String(art.id),
-        slug: art.slug,
-        title: art.title || '',
-        category: art.category || (locale === 'ar' ? 'استراتيجيات التدريب' : 'L&D STRATEGIES'),
-        readTime: art.readTime || '6 min read',
-        date: displayDate,
-        publishedAt: art.publishedAt || null,
-        excerpt: art.excerpt || '',
-        content: contentText,
-        image: imageUrl,
-        status: art.status || 'published',
-        author: {
-          name: 'PontLook Research',
-          image: null,
-          bio: null,
-        },
-        seo: {
-          title: art.meta?.title,
-          description: art.meta?.description,
-        },
-      }
-    })
+        return {
+          id: String(art.id),
+          slug: art.slug,
+          title: art.title || '',
+          category: art.category || (locale === 'ar' ? 'استراتيجيات التدريب' : 'L&D STRATEGIES'),
+          readTime: art.readTime || '6 min read',
+          date: displayDate,
+          publishedAt: art.publishedAt || null,
+          excerpt: art.excerpt || '',
+          content: contentText,
+          image: imageUrl,
+          status: art.status || 'published',
+          author: {
+            name: 'PontLook Research',
+            image: null,
+            bio: null,
+          },
+          seo: {
+            title: art.meta?.title,
+            description: art.meta?.description,
+          },
+        }
+      })
+    )
   } catch (error) {
     console.error('[Payload Data Layer] Failed to get articles:', error)
     return []
@@ -243,7 +315,8 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
     }
 
     const art: any = result.docs[0]
-    const imageUrl = getMediaUrl(art.featuredImage)
+    const featuredImage = await resolveMediaDoc(payload, art.featuredImage)
+    const imageUrl = getMediaUrl(featuredImage)
     const displayDate = formatDisplayDate(art.publishedAt, locale)
     const contentText = extractTextFromLexical(art.content)
 
@@ -513,7 +586,8 @@ export const getResourcesFeatured = cache(async (locale: Locale = 'en'): Promise
     // Resolve Spotlight Article relation
     if (featured?.spotlightArticle && typeof featured.spotlightArticle === 'object') {
       const art: any = featured.spotlightArticle
-      const imageUrl = getMediaUrl(art.featuredImage) || defaultSpotlight.image
+      const featuredImage = await resolveMediaDoc(payload, art.featuredImage)
+      const imageUrl = getMediaUrl(featuredImage) || defaultSpotlight.image
       const displayDate = formatDisplayDate(art.publishedAt, locale)
 
       spotlight = {

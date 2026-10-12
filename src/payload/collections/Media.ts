@@ -24,7 +24,7 @@ export const Media: CollectionConfig = {
     afterDelete: [revalidateMediaDelete],
   },
   upload: {
-    staticDir: path.resolve(dirname, '../../../public/payload-media'),
+    staticDir: path.resolve(process.cwd(), 'public/payload-media'),
     adminThumbnail: 'thumbnail',
     imageSizes: [
       {

@@ -41,9 +41,12 @@ export async function GET(
     // Candidate directories to search
     const candidatePaths = [
       path.join(process.cwd(), 'public', 'uploads', relativePath),
+      path.join(process.cwd(), 'public', 'payload-media', relativePath),
       path.join('/tmp', 'pontlook-uploads', relativePath),
       path.join(process.cwd(), '.next', 'standalone', 'public', 'uploads', relativePath),
+      path.join(process.cwd(), '.next', 'standalone', 'public', 'payload-media', relativePath),
       path.join(process.cwd(), 'public', 'uploads', safeBaseName),
+      path.join(process.cwd(), 'public', 'payload-media', safeBaseName),
       path.join('/tmp', 'pontlook-uploads', safeBaseName),
       path.join(process.cwd(), 'public', relativePath),
     ];
