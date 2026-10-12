@@ -117,7 +117,8 @@ export interface AdaptedArticle {
   date: string
   publishedAt: string | null
   excerpt: string
-  content: string
+  content: any
+  plainContent?: string
   image: string | null
   status: string
   author: {
@@ -261,7 +262,8 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
           date: displayDate,
           publishedAt: art.publishedAt || null,
           excerpt: art.excerpt || '',
-          content: contentText,
+          content: art.content || contentText,
+          plainContent: contentText,
           image: imageUrl,
           status: art.status || 'published',
           author: {
@@ -329,7 +331,8 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
       date: displayDate,
       publishedAt: art.publishedAt || null,
       excerpt: art.excerpt || '',
-      content: contentText,
+      content: art.content || contentText,
+      plainContent: contentText,
       image: imageUrl,
       status: art.status || 'published',
       author: {

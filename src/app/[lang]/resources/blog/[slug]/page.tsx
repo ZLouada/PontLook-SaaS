@@ -7,6 +7,7 @@ import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
 import { ArrowLeft, Calendar, User } from '@/components/icons';
 import { getArticleBySlug, getAllArticleSlugs } from '@/lib/payload/resources';
+import { RichText } from '@/components/resources/RichText';
 
 export const revalidate = 60;
 export const dynamicParams = true;
@@ -167,9 +168,9 @@ export default async function BlogPostDetailPage({
 
         {/* Body Content */}
         {content ? (
-          <div className="prose prose-neutral max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:text-neutral-950 prose-p:text-neutral-700 prose-p:leading-relaxed prose-a:text-[#FF5C00] prose-a:no-underline hover:prose-a:underline prose-li:text-neutral-700 prose-strong:text-neutral-950 text-base sm:text-lg leading-relaxed whitespace-pre-line text-neutral-800">
-            {content}
-          </div>
+          <Reveal delay={0.3}>
+            <RichText data={content} isAr={isAr} />
+          </Reveal>
         ) : (
           <p className="text-neutral-600 text-sm leading-relaxed">
             {isAr
