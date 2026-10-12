@@ -165,9 +165,11 @@ export default function RaceBridgeCanvas({
     };
     cv.addEventListener('click', resetRace);
 
+    const fontFam = isAr ? 'Cairo, system-ui, sans-serif' : 'Inter, system-ui, sans-serif';
+
     const drawLabel = (s: string, X: number, Y: number) => {
       const fontSize = Math.max(8.5, Math.round(11 * sc));
-      ctx.font = `500 ${fontSize}px Inter, system-ui, sans-serif`;
+      ctx.font = `500 ${fontSize}px ${fontFam}`;
       const w = ctx.measureText(s).width + 10 * sc;
       const h = 17 * sc;
       ctx.save();
@@ -184,12 +186,19 @@ export default function RaceBridgeCanvas({
       ctx.restore();
     };
 
+    let lastRender = 0;
     const frame = (now: number) => {
       if (!vis || document.hidden) {
         isRunning = false;
         return;
       }
-      animId = requestAnimationFrame(frame);
+
+      const isMobile = W < 768;
+      if (isMobile && now - lastRender < 32) {
+        animId = requestAnimationFrame(frame);
+        return;
+      }
+      lastRender = now;
 
       // Smooth loop timeline
       const elapsed = (now - t0) / 1000;
@@ -212,7 +221,7 @@ export default function RaceBridgeCanvas({
       ctx.fillRect(0, 0, towerW, H);
       ctx.fillStyle = BG;
       const towerFontSize = Math.max(8.5, Math.round(11 * sc));
-      ctx.font = `600 ${towerFontSize}px Inter, system-ui, sans-serif`;
+      ctx.font = `600 ${towerFontSize}px ${fontFam}`;
       ctx.save();
       ctx.translate(towerW / 2, H / 2);
       ctx.rotate(-Math.PI / 2);
@@ -239,7 +248,7 @@ export default function RaceBridgeCanvas({
       const trackHeaderY = Math.max(14, H * 0.09);
       const trackFontSize = Math.max(9, Math.round(12 * sc));
       ctx.fillStyle = FG;
-      ctx.font = `500 ${trackFontSize}px Inter, system-ui, sans-serif`;
+      ctx.font = `500 ${trackFontSize}px ${fontFam}`;
 
       // Title on left
       ctx.textAlign = 'left';
@@ -310,7 +319,7 @@ export default function RaceBridgeCanvas({
       const ly = yP - hh - 12 * sc;
 
       ctx.fillStyle = FG;
-      ctx.font = `500 ${trackFontSize}px Inter, system-ui, sans-serif`;
+      ctx.font = `500 ${trackFontSize}px ${fontFam}`;
       ctx.textAlign = 'left';
       ctx.fillText(
         isAr ? 'عبر منصة PONTLOCK' : 'WITH PONTLOOK',
@@ -515,11 +524,19 @@ export default function RaceBridgeCanvas({
         ctx.stroke();
         ctx.globalAlpha = 1;
       }
+      if (RM) {
+        isRunning = false;
+        return;
+      }
+      animId = requestAnimationFrame(frame);
     };
 
-    startLoop();
+    const startRaf = requestAnimationFrame(() => {
+      startLoop();
+    });
 
     return () => {
+      cancelAnimationFrame(startRaf);
       stopLoop();
       document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('resize', resize);

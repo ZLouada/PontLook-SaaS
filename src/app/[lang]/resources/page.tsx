@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
-import Reveal from '@/components/shared/Reveal';
 import {
   getResourcesHero,
   getResourcesFeatured,
@@ -133,17 +132,13 @@ export default async function ResourcesPage({
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/15 via-transparent to-black/10 pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-          <Reveal>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-heading font-extrabold text-white tracking-tight leading-[1.08] mb-5 sm:mb-6 max-w-3xl">
-              {heroTitle}
-            </h1>
-          </Reveal>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-heading font-extrabold text-white tracking-tight leading-[1.08] mb-5 sm:mb-6 max-w-3xl">
+            {heroTitle}
+          </h1>
 
-          <Reveal delay={0.1}>
-            <p className="text-white/95 text-base sm:text-lg md:text-xl font-normal leading-relaxed max-w-2xl sm:max-w-3xl">
-              {heroSubtitle}
-            </p>
-          </Reveal>
+          <p className="text-white/95 text-base sm:text-lg md:text-xl font-normal leading-relaxed max-w-2xl sm:max-w-3xl">
+            {heroSubtitle}
+          </p>
         </div>
       </section>
 

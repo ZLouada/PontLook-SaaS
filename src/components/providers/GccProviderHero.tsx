@@ -244,7 +244,9 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    requestAnimationFrame(() => {
+      onScroll();
+    });
 
     const frame = (now: number) => {
       if (!isVisible || document.hidden) {
@@ -493,9 +495,12 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       animId = requestAnimationFrame(frame);
     };
 
-    startLoop();
+    const startRaf = requestAnimationFrame(() => {
+      startLoop();
+    });
 
     return () => {
+      cancelAnimationFrame(startRaf);
       stopLoop();
       document.removeEventListener('visibilitychange', onVisibilityChange);
       observer.disconnect();

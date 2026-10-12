@@ -461,9 +461,12 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       animId = requestAnimationFrame(frame);
     };
 
-    startLoop();
+    const startRaf = requestAnimationFrame(() => {
+      startLoop();
+    });
 
     return () => {
+      cancelAnimationFrame(startRaf);
       stopLoop();
       document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('resize', onResize);

@@ -17,6 +17,63 @@ const ez = (t: number) =>
 const sm = (v: number, a: number, b: number) => ez(cl((v - a) / (b - a)));
 const rnd = (a: number, b: number) => a + Math.random() * (b - a);
 
+interface LandPoints {
+  N: number;
+  FX: Float32Array;
+  FY: Float32Array;
+  FZ: Float32Array;
+}
+
+let cachedDesktopLand: LandPoints | null = null;
+let cachedMobileLand: LandPoints | null = null;
+
+function getLandPoints(smallScreen: boolean): LandPoints {
+  if (smallScreen && cachedMobileLand) return cachedMobileLand;
+  if (!smallScreen && cachedDesktopLand) return cachedDesktopLand;
+
+  const XC: number[] = [];
+  const YS: number[] = [];
+  const SP: number[] = [];
+
+  const b = atob(LAND_DATA);
+  let pos = 0;
+  for (let r = 0; r < RW; r++) {
+    let c = 0;
+    let land = false;
+    const lat = (90 - (r + 0.5) * 0.75) * DR;
+    const cl_ = Math.cos(lat);
+    const sl = Math.sin(lat);
+    while (c < CW && pos < b.length) {
+      const n = b.charCodeAt(pos++);
+      if (land && lat > -60 * DR) {
+        for (let k = c; k < c + n; k++) {
+          if (smallScreen && (k + r) % 3 !== 0) continue;
+          const lo = (-180 + (k + 0.5) * 0.75) * DR;
+          XC.push(cl_ * Math.cos(lo));
+          YS.push(cl_ * Math.sin(lo));
+          SP.push(sl);
+        }
+      }
+      c += n;
+      land = !land;
+    }
+  }
+
+  const result: LandPoints = {
+    N: XC.length,
+    FX: Float32Array.from(XC),
+    FY: Float32Array.from(YS),
+    FZ: Float32Array.from(SP),
+  };
+
+  if (smallScreen) {
+    cachedMobileLand = result;
+  } else {
+    cachedDesktopLand = result;
+  }
+  return result;
+}
+
 interface CityNode {
   n: string;
   X: number;
@@ -62,39 +119,7 @@ export default function Hero() {
     const isMobile = window.innerWidth < 768;
     const smallScreen = window.innerWidth < 700;
 
-    // Decode run-length land mask (optimized stride on mobile for 3x math reduction)
-    const XC: number[] = [];
-    const YS: number[] = [];
-    const SP: number[] = [];
-
-    const b = atob(LAND_DATA);
-    let pos = 0;
-    for (let r = 0; r < RW; r++) {
-      let c = 0;
-      let land = false;
-      const lat = (90 - (r + 0.5) * 0.75) * DR;
-      const cl_ = Math.cos(lat);
-      const sl = Math.sin(lat);
-      while (c < CW && pos < b.length) {
-        const n = b.charCodeAt(pos++);
-        if (land && lat > -60 * DR) {
-          for (let k = c; k < c + n; k++) {
-            if (smallScreen && (k + r) % 3 !== 0) continue;
-            const lo = (-180 + (k + 0.5) * 0.75) * DR;
-            XC.push(cl_ * Math.cos(lo));
-            YS.push(cl_ * Math.sin(lo));
-            SP.push(sl);
-          }
-        }
-        c += n;
-        land = !land;
-      }
-    }
-
-    const N = XC.length;
-    const FX = Float32Array.from(XC);
-    const FY = Float32Array.from(YS);
-    const FZ = Float32Array.from(SP);
+    const { N, FX, FY, FZ } = getLandPoints(smallScreen);
     const BK = [0, 1, 2, 3, 4].map(() => new Float32Array(N * 2));
     const BC = [0, 0, 0, 0, 0];
 
@@ -349,7 +374,7 @@ export default function Hero() {
       const isInteracting = dn || Math.abs(drag) > 0.05;
       if (isMobile && !isInteracting) {
         const elapsed = now - lastRenderTime;
-        if (elapsed < 32) {
+        if (elapsed < 36) {
           animId = requestAnimationFrame(frame);
           return;
         }
@@ -575,7 +600,9 @@ export default function Hero() {
       animId = requestAnimationFrame(frame);
     };
 
-    startLoop();
+    const startRaf = requestAnimationFrame(() => {
+      startLoop();
+    });
 
     // Cache DOM references for scroll animations
     const letterNodes = bigWordRef.current
@@ -653,9 +680,12 @@ export default function Hero() {
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    requestAnimationFrame(() => {
+      onScroll();
+    });
 
     return () => {
+      cancelAnimationFrame(startRaf);
       stopLoop();
       document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('resize', rs);

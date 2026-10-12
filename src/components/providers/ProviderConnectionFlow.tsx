@@ -88,14 +88,8 @@ export default function ProviderConnectionFlow({ lang }: ProviderConnectionFlowP
           <div className="py-8 sm:py-10 relative">
             {/* Visual connector line behind nodes (Desktop) - z-0 with cards at z-10 */}
             <div className="hidden lg:block absolute top-[39%] left-[10%] right-[10%] h-[2px] bg-gradient-to-r from-[#FF5C00]/30 via-[#FF5C00] to-[#3B82F6]/50 z-0 pointer-events-none">
-              {/* Animated Light Pulse traveling across the line */}
-              {!reduce && (
-                <m.div
-                  className="w-14 h-[3px] bg-white rounded-full shadow-[0_0_12px_#ffffff] -translate-y-[0.5px]"
-                  animate={{ x: isAr ? ['600%', '0%'] : ['0%', '600%'] }}
-                  transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-                />
-              )}
+              {/* Animated Light Pulse traveling across the line (pure CSS GPU animation) */}
+              <div className="w-14 h-[3px] bg-white rounded-full shadow-[0_0_12px_#ffffff] -translate-y-[0.5px] rail-pulse" />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10">

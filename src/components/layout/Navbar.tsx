@@ -72,71 +72,55 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
     setOpen(false);
   }, [pathname]);
 
-  // Window scroll & light section intersection detection
+  // Window scroll & light section intersection detection (zero forced reflow)
   useEffect(() => {
-    let rafId: number | null = null;
-    let cachedLightBounds: { top: number; bottom: number }[] = [];
+    const lightElements = document.querySelectorAll(
+      '[data-nav-light="true"], [data-nav-theme="light"]'
+    );
+    const activeLightElements = new Set<Element>();
 
-    const measureLightBounds = () => {
-      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-      const lightElements = document.querySelectorAll(
-        '[data-nav-light="true"], [data-nav-theme="light"]'
-      );
-      cachedLightBounds = Array.from(lightElements).map((el) => {
-        const rect = el.getBoundingClientRect();
-        return {
-          top: rect.top + scrollY,
-          bottom: rect.bottom + scrollY,
-        };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activeLightElements.add(entry.target);
+          } else {
+            activeLightElements.delete(entry.target);
+          }
+        });
+        setIsLightSection(activeLightElements.size > 0);
+      },
+      {
+        rootMargin: '-50px 0px -75% 0px',
+        threshold: 0,
+      }
+    );
+
+    lightElements.forEach((el) => observer.observe(el));
+
+    let prevScrolled = false;
+    let scrollRaf: number | null = null;
+
+    const onScroll = () => {
+      if (scrollRaf !== null) return;
+      scrollRaf = requestAnimationFrame(() => {
+        scrollRaf = null;
+        const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+        const nextScrolled = scrollY > 20;
+        if (nextScrolled !== prevScrolled) {
+          prevScrolled = nextScrolled;
+          setScrolled(nextScrolled);
+        }
       });
     };
 
-    measureLightBounds();
-    const timer1 = setTimeout(measureLightBounds, 250);
-    const timer2 = setTimeout(measureLightBounds, 1000);
-
-    let prevScrolled = false;
-    let prevLight = false;
-
-    const checkNavTheme = () => {
-      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-      const nextScrolled = prevScrolled ? scrollY > 8 : scrollY > 24;
-      if (nextScrolled !== prevScrolled) {
-        prevScrolled = nextScrolled;
-        setScrolled(nextScrolled);
-      }
-
-      const checkY = scrollY + 40;
-      const foundLight = cachedLightBounds.some(
-        (b) => b.top <= checkY && b.bottom >= checkY
-      );
-
-      if (foundLight !== prevLight) {
-        prevLight = foundLight;
-        setIsLightSection(foundLight);
-      }
-    };
-
-    const onScroll = () => {
-      if (rafId !== null) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(checkNavTheme);
-    };
-
-    const onResize = () => {
-      measureLightBounds();
-      checkNavTheme();
-    };
-
-    checkNavTheme();
-
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onResize, { passive: true });
+    onScroll();
+
     return () => {
-      if (rafId !== null) cancelAnimationFrame(rafId);
-      clearTimeout(timer1);
-      clearTimeout(timer2);
+      observer.disconnect();
+      if (scrollRaf !== null) cancelAnimationFrame(scrollRaf);
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onResize);
     };
   }, [pathname]);
 

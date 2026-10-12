@@ -6,7 +6,7 @@ import { constructAlternates } from '@/lib/seo';
 
 const HowItWorks = dynamic(() => import('@/components/home/HowItWorks'));
 const WhyDifferent = dynamic(() => import('@/components/home/WhyDifferent'));
-import ProviderTeaser from '@/components/home/ProviderTeaser';
+const ProviderTeaser = dynamic(() => import('@/components/home/ProviderTeaser'));
 
 export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
