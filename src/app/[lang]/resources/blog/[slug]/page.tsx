@@ -144,12 +144,13 @@ export default async function BlogPostDetailPage({
         {/* Main Feature Image */}
         {imageUrl && (
           <Reveal delay={0.2}>
-            <div className="relative aspect-video w-full rounded-3xl overflow-hidden mb-10 border border-neutral-200 bg-neutral-100 shadow-sm">
+            <div className="relative aspect-video w-full min-h-[220px] sm:min-h-[320px] shrink-0 rounded-3xl overflow-hidden mb-10 border border-neutral-200 bg-neutral-100 shadow-sm">
               <Image
                 src={imageUrl}
                 alt={title}
                 fill
                 priority
+                unoptimized
                 sizes="(max-width: 896px) 100vw, 896px"
                 className="object-cover"
               />

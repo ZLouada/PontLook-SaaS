@@ -94,7 +94,26 @@ export default async function ResourcesPage({
   const heroSubtitle = hero.subtitle;
   const spotlight = featured.spotlight;
   const editorPickEvent = featured.editorPickEvent;
-  const editorPickToolkit = featured.editorPickToolkit;
+
+  // Real upcoming events from the web for the featured panel
+  const cardEventA = {
+    badge: editorPickEvent?.badge || (isAr ? 'مؤتمر تطوير المواهب · الرياض' : 'L&D CONFERENCE · RIYADH'),
+    date: editorPickEvent?.date || (isAr ? '٧ – ٨ ديسمبر ٢٠٢٦' : '7 – 8 Dec 2026'),
+    title: editorPickEvent?.title || (isAr ? 'مؤتمر جمعية تطوير المواهب (ATD) السعودية ٢٠٢٦' : 'ATD Saudi Arabia Conference 2026'),
+    desc: editorPickEvent?.desc || '',
+    cta: editorPickEvent?.cta || (isAr ? 'الموقع الرسمي والتسجيل' : 'Official Event & Agenda'),
+    link: editorPickEvent?.link || 'https://atdksa.com',
+  };
+
+  const secondEvent = eventsList && eventsList.length > 1 ? eventsList[1] : null;
+  const cardEventB = {
+    badge: secondEvent?.type || featured.editorPickEventB?.badge || (isAr ? 'قمة تنفيذية · الرياض' : 'EXECUTIVE SUMMIT · RIYADH'),
+    date: secondEvent?.date || featured.editorPickEventB?.date || (isAr ? '١٦ – ١٧ نوفمبر ٢٠٢٦' : '16 – 17 Nov 2026'),
+    title: secondEvent?.title || featured.editorPickEventB?.title || (isAr ? 'قمة تقنيات الموارد البشرية والتدريب في السعودية ٢٠٢٦' : 'HR Tech Saudi Summit 2026'),
+    desc: secondEvent?.desc || featured.editorPickEventB?.desc || '',
+    cta: featured.editorPickEventB?.cta || (isAr ? 'الموقع الرسمي والتسجيل' : 'Official Summit & RSVP'),
+    link: secondEvent?.link || featured.editorPickEventB?.link || 'https://hrtechsaudi.com',
+  };
 
   const categoryPills = [
     { label: isAr ? 'كافة الموارد' : 'All Resources', href: `/${lang}/resources`, active: true },
@@ -169,11 +188,12 @@ export default async function ResourcesPage({
                 href={`/${lang}/resources/blog`}
                 className="group relative flex flex-col justify-between h-full rounded-3xl bg-white border border-neutral-200 hover:border-neutral-400 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl"
               >
-                <div className="relative aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/9] w-full bg-neutral-100 overflow-hidden">
+                <div className="relative aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/9] w-full shrink-0 min-h-[220px] sm:min-h-[280px] bg-neutral-100 overflow-hidden">
                   <Image
                     src={spotlight.image || '/executive_training_room.jpg'}
                     alt="GCC Corporate Training Benchmark"
                     fill
+                    unoptimized
                     sizes="(max-width: 1024px) 100vw, 66vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                     priority
@@ -215,64 +235,76 @@ export default async function ResourcesPage({
             {/* Right 2-Card Stack (4 Cols) */}
             <div className="lg:col-span-5 xl:col-span-4 flex flex-col">
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 mb-3 block">
-                {isAr ? 'اختيار المحرر' : "EDITOR'S PICK"}
+                {isAr ? 'أبرز الفعاليات القادمة' : "FEATURED UPCOMING EVENTS"}
               </span>
               <div className="flex flex-col gap-6 sm:gap-8 justify-between flex-1">
-              {/* Card A: Upcoming Event */}
+              {/* Card A: Real Event 1 from Web */}
               <Link
-                href={editorPickEvent.link || `/${lang}/resources/events`}
+                href={cardEventA.link || `/${lang}/resources/events`}
+                target={cardEventA.link?.startsWith('http') ? '_blank' : undefined}
+                rel={cardEventA.link?.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex-1"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-neutral-200 text-neutral-800 border border-neutral-300">
-                      {editorPickEvent.badge}
+                      {cardEventA.badge}
                     </span>
                     <span className="text-xs font-mono text-neutral-500">
-                      {editorPickEvent.date}
+                      {cardEventA.date}
                     </span>
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
-                    {editorPickEvent.title}
+                    {cardEventA.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
-                    {editorPickEvent.desc}
+                    {cardEventA.desc}
                   </p>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
-                  <span>{editorPickEvent.cta}</span>
-                  <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                  <span>{cardEventA.cta}</span>
+                  {cardEventA.link?.startsWith('http') ? (
+                    <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  ) : (
+                    <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                  )}
                 </div>
               </Link>
 
-              {/* Card B: Downloadable Toolkit */}
+              {/* Card B: Real Event 2 from Web */}
               <Link
-                href={editorPickToolkit.link || `/${lang}/resources/downloads`}
+                href={cardEventB.link || `/${lang}/resources/events`}
+                target={cardEventB.link?.startsWith('http') ? '_blank' : undefined}
+                rel={cardEventB.link?.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex-1"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-[#FF5C00]/10 text-[#FF5C00] border border-[#FF5C00]/25 font-bold">
-                      {editorPickToolkit.badge}
+                      {cardEventB.badge}
                     </span>
                     <span className="text-xs font-mono text-neutral-500">
-                      {isAr ? 'جاهز للتطبيق' : 'Instant Download'}
+                      {cardEventB.date}
                     </span>
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
-                    {editorPickToolkit.title}
+                    {cardEventB.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
-                    {editorPickToolkit.desc}
+                    {cardEventB.desc}
                   </p>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
-                  <span>{editorPickToolkit.cta}</span>
-                  <Download size={15} />
+                  <span>{cardEventB.cta}</span>
+                  {cardEventB.link?.startsWith('http') ? (
+                    <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  ) : (
+                    <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                  )}
                 </div>
               </Link>
               </div>
@@ -408,10 +440,21 @@ export default async function ResourcesPage({
                         )}
                       </div>
                       <Link
-                        href={`/${lang}/resources/events`}
-                        className="w-full py-2.5 px-4 rounded-xl border border-neutral-300 bg-white hover:bg-neutral-950 text-neutral-900 hover:text-white font-semibold text-xs text-center transition-all shadow-xs"
+                        href={evt.link || `/${lang}/resources/events`}
+                        target={evt.link?.startsWith('http') ? '_blank' : undefined}
+                        rel={evt.link?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className="w-full py-2.5 px-4 rounded-xl border border-neutral-300 bg-white hover:bg-neutral-950 text-neutral-900 hover:text-white font-semibold text-xs text-center transition-all shadow-xs inline-flex items-center justify-center gap-1.5"
                       >
-                        {isAr ? 'تسجيل مقعد مجاني' : 'Register for Free'}
+                        <span>
+                          {evt.link?.startsWith('http')
+                            ? (isAr ? 'الموقع الرسمي والتسجيل' : 'Official Site & RSVP')
+                            : (isAr ? 'تسجيل مقعد مجاني' : 'Register for Free')}
+                        </span>
+                        {evt.link?.startsWith('http') ? (
+                          <ArrowUpRight size={13} />
+                        ) : (
+                          <ArrowRight size={13} className="rtl:-scale-x-100" />
+                        )}
                       </Link>
                     </div>
                   );

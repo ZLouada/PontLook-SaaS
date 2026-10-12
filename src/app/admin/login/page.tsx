@@ -101,6 +101,7 @@ export default function AdminLoginPage() {
                 width={28}
                 height={28}
                 className="object-contain"
+                unoptimized
               />
             </div>
             <span className="font-heading font-extrabold text-2xl text-white tracking-tight">

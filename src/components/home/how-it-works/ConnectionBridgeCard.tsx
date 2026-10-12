@@ -93,6 +93,7 @@ export default function ConnectionBridgeCard({ isAr = false }: ConnectionBridgeC
                     width={22}
                     height={22}
                     className="object-contain"
+                    unoptimized
                   />
                 </div>
               </div>

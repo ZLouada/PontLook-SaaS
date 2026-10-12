@@ -158,8 +158,16 @@ export default async function EventsPage({
                       target={evt.link && evt.link.startsWith('http') ? '_blank' : undefined}
                       rel={evt.link && evt.link.startsWith('http') ? 'noopener noreferrer' : undefined}
                     >
-                      <span>{isAr ? 'حجز مقعد / استفسار' : 'Request Invitation'}</span>
-                      <ArrowRight size={14} className="rtl:-scale-x-100" />
+                      <span>
+                        {evt.link && evt.link.startsWith('http')
+                          ? (isAr ? 'الموقع الرسمي والتسجيل' : 'Official Website & RSVP')
+                          : (isAr ? 'حجز مقعد / استفسار' : 'Request Invitation')}
+                      </span>
+                      {evt.link && evt.link.startsWith('http') ? (
+                        <ArrowUpRight size={14} />
+                      ) : (
+                        <ArrowRight size={14} className="rtl:-scale-x-100" />
+                      )}
                     </Link>
                   </div>
                 </div>

@@ -731,15 +731,16 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                           <div className="relative h-28 w-full bg-neutral-900 overflow-hidden">
                             <Image
                               src="/executive_training_room.jpg"
-                              alt="Human Skills Fest"
+                              alt={isRtl ? 'مؤتمر جمعية تطوير المواهب السعودية ٢٠٢٦' : 'ATD Saudi Arabia Conference 2026'}
                               fill
+                              unoptimized
                               sizes="320px"
                               className="object-cover group-hover:scale-105 transition-transform duration-500"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                             <div className="absolute top-2.5 start-2.5">
                               <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-wider bg-black/60 text-white backdrop-blur-md border border-white/20">
-                                {isRtl ? "قمة المهارات '٢٦" : "Skills Fest '26"}
+                                {isRtl ? 'مؤتمر الرياض · ٢٠٢٦' : 'RIYADH · DEC 2026'}
                               </span>
                             </div>
                           </div>
@@ -752,17 +753,17 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
                           }`}>
                             <div>
                               <h5 className="text-xs font-bold text-white group-hover:text-[#FF5C00] transition-colors leading-snug">
-                                {isRtl ? 'قمة مهارات المستقبل | ٧ – ٩ أكتوبر' : 'Human Skills Fest | 7 – 9 Oct'}
+                                {isRtl ? 'مؤتمر ATD السعودية | ٧ – ٨ ديسمبر' : 'ATD Saudi Arabia Conference | 7 – 8 Dec'}
                               </h5>
                               <p className="text-[11px] text-neutral-300 line-clamp-2 mt-1 leading-normal font-normal">
                                 {isRtl
-                                  ? 'انضم إلى قادة الموارد البشرية والتدريب في هذا الحدث الافتراضي لمدة ٣ أيام'
-                                  : 'Join HR and L&D professionals for this 3-day virtual event'}
+                                  ? 'الحدث السنوي الأبرز لتطوير المواهب والكفاءات المؤسسية في الرياض بمشاركة قادة التدريب'
+                                  : 'The premier corporate talent and L&D gathering in Riyadh for enterprise HR leaders'}
                               </p>
                             </div>
 
                             <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between text-[11px] font-semibold text-neutral-300 group-hover:text-white">
-                              <span>{isRtl ? 'سجل حضورك الآن' : 'Reserve your spot'}</span>
+                              <span>{isRtl ? 'استعراض الفعالية' : 'View Event Details'}</span>
                               <ArrowRight size={12} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                             </div>
                           </div>
