@@ -5,7 +5,7 @@ import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
 import { ArrowRight, BookOpen, Calendar, User } from '@/components/icons';
-import { getResourcesStore } from '@/lib/resources-store';
+import { getArticles } from '@/lib/payload/resources';
 
 export const revalidate = 60;
 
@@ -62,20 +62,20 @@ export default async function BlogPage({
   const { lang } = await params;
   const isAr = lang === 'ar';
 
-  // Load articles authored via Admin CMS
-  const store = getResourcesStore();
-  const posts = (store.articles || []).map((art) => ({
+  // Load published articles from Payload Local API
+  const articles = await getArticles(lang);
+  const posts = articles.map((art) => ({
     _id: art.id,
-    title: isAr ? art.titleAr || art.titleEn : art.titleEn,
+    title: art.title,
     slug: { current: art.slug },
-    excerpt: isAr ? art.excerptAr || art.excerptEn : art.excerptEn,
-    publishedAt: null,
-    displayDate: isAr ? art.dateAr || art.dateEn : art.dateEn,
-    categories: (isAr ? art.categoryAr || art.categoryEn : art.categoryEn)
-      ? [{ _id: art.id, title: isAr ? art.categoryAr || art.categoryEn : art.categoryEn }]
+    excerpt: art.excerpt,
+    publishedAt: art.publishedAt,
+    displayDate: art.date,
+    categories: art.category
+      ? [{ _id: art.id, title: art.category }]
       : [],
     customImage: art.image || null,
-    author: { name: 'PontLook Research', image: null, bio: null },
+    author: art.author,
   }));
 
   return (

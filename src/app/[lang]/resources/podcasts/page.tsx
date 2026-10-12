@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
-import { getResourcesStore } from '@/lib/resources-store';
+import { getPodcasts } from '@/lib/payload/resources';
 import { Headphones, ArrowRight, Calendar, Clock, Globe } from '@/components/icons';
 
 export const revalidate = 60;
@@ -61,21 +61,7 @@ export default async function PodcastsPage({
   const { lang } = await params;
   const isAr = lang === 'ar';
 
-  const store = getResourcesStore();
-  const dynamicEpisodes = Array.isArray(store.podcasts)
-    ? store.podcasts
-        .filter((ep) => ep.status !== 'draft')
-        .map((ep) => ({
-          id: ep.id,
-          title: (isAr ? ep.titleAr || ep.title_ar : ep.titleEn || ep.title_en) || ep.titleEn || ep.title_en || (isAr ? 'بودكاست' : 'Podcast'),
-          guest: (isAr ? ep.guestAr || ep.guest_ar : ep.guestEn || ep.guest_en) || '',
-          duration: ep.duration || ep.dur || '',
-          date: (isAr ? ep.dateAr || ep.date_ar : ep.dateEn || ep.date_en) || '',
-          desc: (isAr ? ep.descAr || ep.desc_ar : ep.descEn || ep.desc_en) || '',
-          tag: (isAr ? ep.tagAr || ep.topic_ar : ep.tagEn || ep.topic_en) || ep.topic_en || ep.topic_ar || '',
-          audioUrl: ep.audioUrl || ep.audio || '',
-        }))
-    : [];
+  const dynamicEpisodes = await getPodcasts(lang);
 
   return (
     <div

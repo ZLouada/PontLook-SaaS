@@ -6,7 +6,7 @@ import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
 import { ArrowLeft, Calendar, User } from '@/components/icons';
-import { getResourcesStore } from '@/lib/resources-store';
+import { getArticleBySlug, getAllArticleSlugs } from '@/lib/payload/resources';
 
 export const revalidate = 60;
 export const dynamicParams = true;
@@ -19,16 +19,12 @@ export async function generateMetadata({
   const { lang, slug } = await params;
   const isAr = lang === 'ar';
 
-  const store = getResourcesStore();
-  const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase();
-  const localArticle = (store.articles || []).find(
-    (a) => (a.slug || '').trim().toLowerCase() === normalizedSlug || a.id === slug
-  );
+  const article = await getArticleBySlug(slug, lang);
 
-  if (localArticle) {
-    const title = isAr ? localArticle.titleAr || localArticle.titleEn : localArticle.titleEn;
-    const description = isAr ? localArticle.excerptAr || localArticle.excerptEn : localArticle.excerptEn;
-    const imageUrl = localArticle.image || 'https://pontlook.com/images/brand/og-main.png';
+  if (article) {
+    const title = article.title;
+    const description = article.excerpt;
+    const imageUrl = article.image || 'https://pontlook.com/images/brand/og-main.png';
 
     return {
       title: {
@@ -62,16 +58,11 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   const paths: { lang: Locale; slug: string }[] = [];
-  const addedSlugs = new Set<string>();
+  const slugs = await getAllArticleSlugs();
 
-  const store = getResourcesStore();
   for (const locale of i18n.locales) {
-    for (const article of store.articles || []) {
-      const slugVal = article.slug || article.id;
-      if (slugVal && !addedSlugs.has(`${locale}:${slugVal}`)) {
-        paths.push({ lang: locale, slug: slugVal });
-        addedSlugs.add(`${locale}:${slugVal}`);
-      }
+    for (const slug of slugs) {
+      paths.push({ lang: locale, slug });
     }
   }
 
@@ -86,22 +77,13 @@ export default async function BlogPostDetailPage({
   const { lang, slug } = await params;
   const isAr = lang === 'ar';
 
-  const store = getResourcesStore();
-  const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase();
-  const localArticle = (store.articles || []).find(
-    (a) => (a.slug || '').trim().toLowerCase() === normalizedSlug || a.id === slug
-  );
+  const article = await getArticleBySlug(slug, lang);
 
-  if (!localArticle) {
+  if (!article) {
     notFound();
   }
 
-  const title = isAr ? localArticle.titleAr || localArticle.titleEn : localArticle.titleEn;
-  const category = isAr ? localArticle.categoryAr || localArticle.categoryEn : localArticle.categoryEn;
-  const date = isAr ? localArticle.dateAr || localArticle.dateEn : localArticle.dateEn;
-  const excerpt = isAr ? localArticle.excerptAr || localArticle.excerptEn : localArticle.excerptEn;
-  const content = isAr ? localArticle.contentAr || localArticle.contentEn : localArticle.contentEn;
-  const imageUrl = localArticle.image?.trim() || null;
+  const { title, category, date, excerpt, content, image: imageUrl } = article;
 
   return (
     <div

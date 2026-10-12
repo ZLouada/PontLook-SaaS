@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
-import { getResourcesStore } from '@/lib/resources-store';
+import { getEvents } from '@/lib/payload/resources';
 import { Calendar, MapPin, Clock, ArrowRight, ArrowUpRight } from '@/components/icons';
 
 export const revalidate = 60;
@@ -61,22 +61,7 @@ export default async function EventsPage({
   const { lang } = await params;
   const isAr = lang === 'ar';
 
-  const store = getResourcesStore();
-  const dynamicEvents = Array.isArray(store.events)
-    ? store.events
-        .filter((evt) => evt.status !== 'draft')
-        .map((evt) => ({
-          id: evt.id,
-          title: (isAr ? evt.titleAr || evt.title_ar : evt.titleEn || evt.title_en) || evt.titleEn || evt.title_en || (isAr ? 'فعالية' : 'Event'),
-          date: (isAr ? evt.dateAr || evt.date_ar : evt.dateEn || evt.date_en) || evt.when || '',
-          time: evt.time || '',
-          location: (isAr ? evt.locationAr || evt.loc_ar : evt.locationEn || evt.loc_en) || '',
-          type: (isAr ? evt.typeAr || evt.type_ar : evt.typeEn || evt.type_en) || (isAr ? 'فعالية' : 'Event'),
-          desc: (isAr ? evt.descAr || evt.desc_ar : evt.descEn || evt.desc_en) || '',
-          spotsLeft: (isAr ? evt.spotsLeftAr || evt.seats_ar : evt.spotsLeftEn || evt.seats_en) || '',
-          link: evt.link || evt.rsvp || '',
-        }))
-    : [];
+  const dynamicEvents = await getEvents(lang);
 
   return (
     <div

@@ -5,7 +5,12 @@ import Image from 'next/image';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
-import { getResourcesStore } from '@/lib/resources-store';
+import {
+  getResourcesHero,
+  getResourcesFeatured,
+  getArticles,
+  getEvents,
+} from '@/lib/payload/resources';
 import {
   BookOpen,
   Headphones,
@@ -77,27 +82,19 @@ export default async function ResourcesPage({
   const { lang } = await params;
   const isAr = lang === 'ar';
 
-  // Load dynamic content from JSON store (managed via /admin CMS)
-  const store = getResourcesStore();
-  const heroTitle = (isAr ? store.hero.titleAr : store.hero.titleEn) || (isAr ? 'مركز موارد التدريب والتطوير في PontLook' : 'The PontLook L&D resource hub');
-  const heroSubtitle = (isAr ? store.hero.subtitleAr : store.hero.subtitleEn) || (isAr ? 'رؤى واستراتيجيات وموارد لمساعدة المنشآت على بناء كوادر أقوى من خلال قرارات تدريبية أفضل.' : 'Insights, strategies, and resources to help organisations build stronger workforces through better training decisions.');
-  const spotlight = store.spotlight;
-  const editorPickEvent = store.editorPickEvent;
-  const editorPickToolkit = store.editorPickToolkit;
+  // Load published content from Payload CMS Local API
+  const [hero, featured, dynamicArticles, eventsList] = await Promise.all([
+    getResourcesHero(lang),
+    getResourcesFeatured(lang),
+    getArticles(lang),
+    getEvents(lang),
+  ]);
 
-
-
-  const dynamicArticles = Array.isArray(store.articles)
-    ? store.articles.map((art) => ({
-        title: isAr ? art.titleAr : art.titleEn,
-        category: isAr ? art.categoryAr : art.categoryEn,
-        readTime: isAr ? art.readTimeAr : art.readTimeEn,
-        date: isAr ? art.dateAr : art.dateEn,
-        excerpt: isAr ? art.excerptAr : art.excerptEn,
-        slug: art.slug,
-        image: art.image,
-      }))
-    : [];
+  const heroTitle = hero.title;
+  const heroSubtitle = hero.subtitle;
+  const spotlight = featured.spotlight;
+  const editorPickEvent = featured.editorPickEvent;
+  const editorPickToolkit = featured.editorPickToolkit;
 
   const categoryPills = [
     { label: isAr ? 'كافة الموارد' : 'All Resources', href: `/${lang}/resources`, active: true },
@@ -184,10 +181,10 @@ export default async function ResourcesPage({
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute top-4 start-4 sm:top-6 sm:start-6 flex items-center gap-2">
                     <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-white/20 text-white backdrop-blur-md border border-white/30">
-                      {isAr ? spotlight.badgeAr : spotlight.badgeEn}
+                      {spotlight.badge}
                     </span>
                     <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#FF5C00] text-white">
-                      {isAr ? spotlight.categoryAr : spotlight.categoryEn}
+                      {spotlight.category}
                     </span>
                   </div>
                 </div>
@@ -195,20 +192,20 @@ export default async function ResourcesPage({
                 <div className="p-6 sm:p-8 lg:p-10 flex-1 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-3 text-xs font-mono text-neutral-500 mb-3">
-                      <span>{isAr ? spotlight.readTimeAr : spotlight.readTimeEn}</span>
+                      <span>{spotlight.readTime}</span>
                       <span>•</span>
-                      <span>{isAr ? spotlight.dateAr : spotlight.dateEn}</span>
+                      <span>{spotlight.date}</span>
                     </div>
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-neutral-950 group-hover:text-black transition-colors leading-tight mb-4">
-                      {isAr ? spotlight.titleAr : spotlight.titleEn}
+                      {spotlight.title}
                     </h2>
                     <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-normal">
-                      {isAr ? spotlight.excerptAr : spotlight.excerptEn}
+                      {spotlight.excerpt}
                     </p>
                   </div>
 
                   <div className="mt-8 pt-6 border-t border-neutral-200 flex items-center justify-between text-sm font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
-                    <span>{isAr ? spotlight.ctaAr : spotlight.ctaEn}</span>
+                    <span>{spotlight.cta}</span>
                     <ArrowRight size={18} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                   </div>
                 </div>
@@ -223,42 +220,42 @@ export default async function ResourcesPage({
               <div className="flex flex-col gap-6 sm:gap-8 justify-between flex-1">
               {/* Card A: Upcoming Event */}
               <Link
-                href={`/${lang}/resources/events`}
+                href={editorPickEvent.link || `/${lang}/resources/events`}
                 className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex-1"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-neutral-200 text-neutral-800 border border-neutral-300">
-                      {isAr ? editorPickEvent.badgeAr : editorPickEvent.badgeEn}
+                      {editorPickEvent.badge}
                     </span>
                     <span className="text-xs font-mono text-neutral-500">
-                      {isAr ? editorPickEvent.dateAr : editorPickEvent.dateEn}
+                      {editorPickEvent.date}
                     </span>
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
-                    {isAr ? editorPickEvent.titleAr : editorPickEvent.titleEn}
+                    {editorPickEvent.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
-                    {isAr ? editorPickEvent.descAr : editorPickEvent.descEn}
+                    {editorPickEvent.desc}
                   </p>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
-                  <span>{isAr ? editorPickEvent.ctaAr : editorPickEvent.ctaEn}</span>
+                  <span>{editorPickEvent.cta}</span>
                   <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                 </div>
               </Link>
 
               {/* Card B: Downloadable Toolkit */}
               <Link
-                href={`/${lang}/resources/downloads`}
+                href={editorPickToolkit.link || `/${lang}/resources/downloads`}
                 className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex-1"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-[#FF5C00]/10 text-[#FF5C00] border border-[#FF5C00]/25 font-bold">
-                      {isAr ? editorPickToolkit.badgeAr : editorPickToolkit.badgeEn}
+                      {editorPickToolkit.badge}
                     </span>
                     <span className="text-xs font-mono text-neutral-500">
                       {isAr ? 'جاهز للتطبيق' : 'Instant Download'}
@@ -266,15 +263,15 @@ export default async function ResourcesPage({
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
-                    {isAr ? editorPickToolkit.titleAr : editorPickToolkit.titleEn}
+                    {editorPickToolkit.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
-                    {isAr ? editorPickToolkit.descAr : editorPickToolkit.descEn}
+                    {editorPickToolkit.desc}
                   </p>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
-                  <span>{isAr ? editorPickToolkit.ctaAr : editorPickToolkit.ctaEn}</span>
+                  <span>{editorPickToolkit.cta}</span>
                   <Download size={15} />
                 </div>
               </Link>
@@ -361,7 +358,7 @@ export default async function ResourcesPage({
         {/* ======================================================== */}
         {/* 5. EXECUTIVE EVENTS & WEBINARS SECTION                   */}
         {/* ======================================================== */}
-        {Array.isArray(store.events) && store.events.filter((e) => e.status !== 'draft').length > 0 && (
+        {eventsList && eventsList.length > 0 && (
           <section className="mb-20 sm:mb-28 pt-10 border-t border-neutral-200">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
               <div>
@@ -382,14 +379,13 @@ export default async function ResourcesPage({
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-              {store.events
-                .filter((e) => e.status !== 'draft')
+              {eventsList
                 .slice(0, 3)
                 .map((evt) => {
-                  const title = (isAr ? evt.titleAr || evt.title_ar : evt.titleEn || evt.title_en) || evt.titleEn || evt.title_en || (isAr ? 'فعالية' : 'Event');
-                  const date = (isAr ? evt.dateAr || evt.date_ar : evt.dateEn || evt.date_en) || evt.when || '';
-                  const type = (isAr ? evt.typeAr || evt.type_ar : evt.typeEn || evt.type_en) || (isAr ? 'فعالية' : 'Event');
-                  const desc = (isAr ? evt.descAr || evt.desc_ar : evt.descEn || evt.desc_en) || '';
+                  const title = evt.title || (isAr ? 'فعالية' : 'Event');
+                  const date = evt.date || '';
+                  const type = evt.type || (isAr ? 'فعالية' : 'Event');
+                  const desc = evt.desc || '';
                   return (
                     <div
                       key={evt.id}

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
-import { getResourcesStore } from '@/lib/resources-store';
+import { getDownloads } from '@/lib/payload/resources';
 import { Download, ArrowRight, FileText, CheckCircle2 } from '@/components/icons';
 
 export const revalidate = 60;
@@ -61,20 +61,7 @@ export default async function DownloadsPage({
   const { lang } = await params;
   const isAr = lang === 'ar';
 
-  const store = getResourcesStore();
-  const dynamicToolkits = Array.isArray(store.downloads)
-    ? store.downloads
-        .filter((dl) => dl.status !== 'draft')
-        .map((dl) => ({
-          id: dl.id,
-          title: (isAr ? dl.titleAr || dl.title_ar : dl.titleEn || dl.title_en) || dl.titleEn || dl.title_en || (isAr ? 'أداة عمل' : 'Toolkit'),
-          format: dl.format || 'PDF',
-          fileSize: dl.fileSize || dl.size || '1.0 MB',
-          desc: (isAr ? dl.descAr || dl.desc_ar : dl.descEn || dl.desc_en) || '',
-          features: (isAr ? (dl.featuresAr?.length ? dl.featuresAr : dl.feat_ar) : (dl.featuresEn?.length ? dl.featuresEn : dl.feat_en)) || [],
-          fileUrl: dl.fileUrl || dl.url || '',
-        }))
-    : [];
+  const dynamicToolkits = await getDownloads(lang);
 
   return (
     <div
