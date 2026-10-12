@@ -50,10 +50,13 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
     let W = 0;
     let H = 0;
     let D = 1;
+    let lastRender = 0;
 
     const resize = () => {
       const mobile = window.innerWidth < 768;
-      D = mobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+      D = mobile
+        ? Math.min(window.devicePixelRatio || 1, 1.25)
+        : Math.min(window.devicePixelRatio || 1, 2);
       W = cv.clientWidth;
       H = cv.clientHeight;
       cv.width = W * D;
@@ -79,6 +82,20 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         P.push({ s, i, a: rnd(-1, 1), b: rnd(-1, 1), c: rnd(-1, 1) });
       }
     }
+
+    // Preallocated node buffer to eliminate per-frame GC allocations
+    interface HelixNode {
+      sx: number;
+      sy: number;
+      Z: number;
+      f: number;
+      e: number;
+      bright: number;
+    }
+    const A: [HelixNode[], HelixNode[]] = [
+      Array.from({ length: K }, () => ({ sx: 0, sy: 0, Z: 0, f: 0, e: 0, bright: 0 })),
+      Array.from({ length: K }, () => ({ sx: 0, sy: 0, Z: 0, f: 0, e: 0, bright: 0 })),
+    ];
 
     // Ambient floating dust particles (disabled on mobile to eliminate draw call overhead)
     const dust = isMobile
@@ -173,6 +190,10 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       : [];
 
     let scrollTicking = false;
+    const prevLetterK: number[] = new Array(letterNodes.length).fill(-1);
+    let prevLeadOpacity = -1;
+    let prevLeadY = -1;
+
     const onScroll = () => {
       if (scrollTicking) return;
       scrollTicking = true;
@@ -187,16 +208,30 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         if (letterNodes.length > 0) {
           letterNodes.forEach((l, idx) => {
             const k = cl(p * 5 - idx * 0.14);
-            l.style.opacity = `${1 - k}`;
-            l.style.transform = `translateY(${-k * 26}px)`;
+            if (
+              Math.abs(k - prevLetterK[idx]) > 0.008 ||
+              (k === 0 && prevLetterK[idx] !== 0) ||
+              (k === 1 && prevLetterK[idx] !== 1)
+            ) {
+              prevLetterK[idx] = k;
+              l.style.opacity = `${1 - k}`;
+              l.style.transform = `translateY(${-k * 26}px)`;
+            }
           });
         }
 
         if (leadRef.current) {
           const leadOpacity = sm(p, 0.45, 0.65) * (1 - sm(p, 0.9, 0.99));
           const leadY = (1 - sm(p, 0.45, 0.7)) * 40;
-          leadRef.current.style.opacity = `${leadOpacity}`;
-          leadRef.current.style.transform = `translateY(${leadY}px)`;
+          if (
+            Math.abs(leadOpacity - prevLeadOpacity) > 0.008 ||
+            Math.abs(leadY - prevLeadY) > 0.5
+          ) {
+            prevLeadOpacity = leadOpacity;
+            prevLeadY = leadY;
+            leadRef.current.style.opacity = `${leadOpacity}`;
+            leadRef.current.style.transform = `translateY(${leadY}px)`;
+          }
         }
       });
     };
@@ -210,6 +245,13 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         return;
       }
       animId = requestAnimationFrame(frame);
+
+      const isInteracting = blast > 0.05 || shock !== null;
+      const targetInterval = isMobile && !isInteracting ? 32 : 0;
+      if (targetInterval > 0 && now - lastRender < targetInterval) {
+        return;
+      }
+      lastRender = now;
 
       // Mobile responds instantly to touch scroll (0.12), desktop smoothly glides (0.045)
       const scrollLerp = isMobile ? 0.12 : 0.045;
@@ -258,7 +300,6 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         if (shock.t > 1.4) shock = null;
       }
 
-      const A: { sx: number; sy: number; Z: number; f: number; e: number; bright: number }[][] = [[], []];
       const bl = blast * W * 0.4;
 
       for (const q of P) {
@@ -295,7 +336,13 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
           }
         }
 
-        A[q.s][q.i] = { sx, sy, Z, f, e, bright };
+        const node = A[q.s][q.i];
+        node.sx = sx;
+        node.sy = sy;
+        node.Z = Z;
+        node.f = f;
+        node.e = e;
+        node.bright = bright;
       }
 
       // Base pair rungs connecting matching nodes
@@ -340,7 +387,8 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       ctx.globalAlpha = 1;
 
       // Traveling energy pulses
-      if (asm >= 1 && now - lastP > 150) {
+      const pulseInterval = isMobile ? 320 : 150;
+      if (asm >= 1 && now - lastP > pulseInterval) {
         lastP = now;
         pulses.push({ i: Math.floor(rnd(0, K / 3)) * 3, t: 0, s: rnd(0.014, 0.028) });
       }

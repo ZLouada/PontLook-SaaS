@@ -95,9 +95,12 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
     let mx = 0;
     let tx = 0;
     let asm = 0;
+    let lastInteractTime = 0;
+    let lastRender = 0;
     const t0 = performance.now();
 
-    const seaLines = Array.from({ length: 60 }, () => ({
+    const initialMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const seaLines = Array.from({ length: initialMobile ? 30 : 60 }, () => ({
       u: Math.random(),
       x: Math.random(),
       w: rnd(10, 70),
@@ -114,6 +117,8 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       let px = -10;
       const bCenter = bx();
       const bScale = S();
+      const isMobile = W < 768;
+      const densityDivisor = isMobile ? 1400 : 900;
 
       while (px < W + 20) {
         const w = rnd(26, 64);
@@ -121,7 +126,7 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
         const h = rnd(H * 0.05, H * 0.22) * (near ? 0.3 : 1);
         buildings.push({ x: px, w, h });
 
-        const count = Math.floor((w * h) / 900);
+        const count = Math.floor((w * h) / densityDivisor);
         for (let k = 0; k < count; k++) {
           windows.push({
             x: px + rnd(5, w - 5),
@@ -135,7 +140,10 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
     };
 
     const resize = () => {
-      D = Math.min(window.devicePixelRatio || 1, 2);
+      const isMobile = window.innerWidth < 768;
+      D = isMobile
+        ? Math.min(window.devicePixelRatio || 1, 1.25)
+        : Math.min(window.devicePixelRatio || 1, 2);
       W = cv.clientWidth;
       H = cv.clientHeight;
       cv.width = W * D;
@@ -182,6 +190,7 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
     document.addEventListener('visibilitychange', onVisibilityChange);
 
     const onPointerMove = (e: PointerEvent) => {
+      lastInteractTime = performance.now();
       const r = cv.getBoundingClientRect();
       tx = ((e.clientX - r.left) / r.width) * 2 - 1;
     };
@@ -212,6 +221,7 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
     };
 
     const onPointerDown = (e: PointerEvent) => {
+      lastInteractTime = performance.now();
       const r = cv.getBoundingClientRect();
       fireBeam(e.clientX - r.left - mx * -10, e.clientY - r.top);
     };
@@ -285,6 +295,15 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       }
       animId = requestAnimationFrame(frame);
 
+      const isMobile = W < 768;
+      const isInteracting = now - lastInteractTime < 600;
+      const targetInterval = isMobile && !isInteracting ? 32 : 0;
+
+      if (targetInterval > 0 && now - lastRender < targetInterval) {
+        return;
+      }
+      lastRender = now;
+
       const t = (now - t0) / 1000;
       const rv = RM ? 1 : ez(cl(t / 2.2));
       asm = RM ? 1 : ez(cl((t - 0.8) / 3));
@@ -353,7 +372,8 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       drawTower(1, t, rv);
 
       // Auto fire beams
-      if (asm >= 1 && !RM && now - lastAutoBeam > 2200) {
+      const autoInterval = isMobile ? 3200 : 2200;
+      if (asm >= 1 && !RM && now - lastAutoBeam > autoInterval) {
         lastAutoBeam = now;
         fireBeam();
       }
@@ -363,6 +383,7 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       beams = beams.filter((o) => o.k < 80);
 
       // Render beams and company match popups
+      const beamSteps = isMobile ? 18 : 30;
       for (const o of beams) {
         o.t = Math.min(1, o.t + 0.025);
         o.k = o.t >= 1 ? o.k + 1 : 0;
@@ -375,10 +396,11 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
         ctx.strokeStyle = FG;
         ctx.lineWidth = 1.4;
         ctx.beginPath();
-        for (let i = 0; i <= 30; i++) {
-          const u = (i / 30) * o.t;
-          const px = Math.pow(1 - u, 2) * T[0] + 2 * (1 - u) * u * cx + u * u * X;
-          const py = Math.pow(1 - u, 2) * T[1] + 2 * (1 - u) * u * cy + u * u * Y;
+        for (let i = 0; i <= beamSteps; i++) {
+          const u = (i / beamSteps) * o.t;
+          const invU = 1 - u;
+          const px = invU * invU * T[0] + 2 * invU * u * cx + u * u * X;
+          const py = invU * invU * T[1] + 2 * invU * u * cy + u * u * Y;
           if (i === 0) ctx.moveTo(px, py);
           else ctx.lineTo(px, py);
         }

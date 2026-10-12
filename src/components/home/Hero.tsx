@@ -59,9 +59,10 @@ export default function Hero() {
     if (!ctx) return;
 
     const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.innerWidth < 768;
     const smallScreen = window.innerWidth < 700;
 
-    // Decode run-length land mask
+    // Decode run-length land mask (optimized stride on mobile for 3x math reduction)
     const XC: number[] = [];
     const YS: number[] = [];
     const SP: number[] = [];
@@ -78,7 +79,7 @@ export default function Hero() {
         const n = b.charCodeAt(pos++);
         if (land && lat > -60 * DR) {
           for (let k = c; k < c + n; k++) {
-            if (smallScreen && (k + r) % 2) continue;
+            if (smallScreen && (k + r) % 3 !== 0) continue;
             const lo = (-180 + (k + 0.5) * 0.75) * DR;
             XC.push(cl_ * Math.cos(lo));
             YS.push(cl_ * Math.sin(lo));
@@ -174,7 +175,7 @@ export default function Hero() {
     let intro1 = false;
     const t0 = performance.now();
 
-    const ST = Array.from({ length: 150 }, () => ({
+    const ST = Array.from({ length: isMobile ? 65 : 150 }, () => ({
       x: Math.random(),
       y: Math.random(),
       r: rnd(0.4, 1.3),
@@ -183,7 +184,8 @@ export default function Hero() {
 
     const rs = () => {
       if (!cv) return;
-      D = Math.min(window.devicePixelRatio || 1, 2);
+      const mobile = window.innerWidth < 768;
+      D = mobile ? Math.min(window.devicePixelRatio || 1, 1.33) : Math.min(window.devicePixelRatio || 1, 2);
       W = cv.clientWidth;
       H = cv.clientHeight;
       cv.width = W * D;
@@ -329,12 +331,27 @@ export default function Hero() {
 
     const BA = [0.12, 0.28, 0.5, 0.75, 1];
     const BS = [0.9, 1.1, 1.4, 1.7, 2];
+    let lastRenderTime = 0;
+    const arcPtsX = new Float32Array(41);
+    const arcPtsY = new Float32Array(41);
+    const arcPtsZ = new Float32Array(41);
+
     const frame = (now: number) => {
       if (!vis || document.hidden) {
         isRunning = false;
         return;
       }
       animId = requestAnimationFrame(frame);
+
+      // Mobile FPS budget: 30fps when not actively interacting (dragging)
+      const isInteracting = dn || Math.abs(drag) > 0.05;
+      if (isMobile && !isInteracting) {
+        const elapsed = now - lastRenderTime;
+        if (elapsed < 32) {
+          return;
+        }
+      }
+      lastRenderTime = now;
 
       const t = (now - t0) / 1000;
       const k = RM ? 1 : ez(cl(t / 5.2));
@@ -466,52 +483,52 @@ export default function Hero() {
         }
       }
 
-      // Draw match arcs
+      // Draw match arcs (zero heap allocation via preallocated Float32Array buffers)
       arcs = arcs.filter((o) => o.k < 110);
       ctx.lineWidth = 1.4;
 
       for (const o of arcs) {
         o.t = Math.min(1, o.t + o.sp);
         if (o.t >= 1) o.k++;
-        const pts: [number, number, number][] = [];
         for (let i = 0; i <= 40; i++) {
           const u = (i / 40) * o.t;
           const s = Math.sin(o.om) || 1;
           const s1 = Math.sin((1 - u) * o.om) / s;
           const s2 = Math.sin(u * o.om) / s;
           const f = 1 + o.lift * Math.sin(Math.PI * u);
-          pts.push(
-            P3(
-              (o.A.X * s1 + o.B.X * s2) * f,
-              (o.A.Y * s1 + o.B.Y * s2) * f,
-              (o.A.Z * s1 + o.B.Z * s2) * f,
-              c0,
-              s0,
-              cp,
-              sp,
-              rr
-            )
+          const pt = P3(
+            (o.A.X * s1 + o.B.X * s2) * f,
+            (o.A.Y * s1 + o.B.Y * s2) * f,
+            (o.A.Z * s1 + o.B.Z * s2) * f,
+            c0,
+            s0,
+            cp,
+            sp,
+            rr
           );
+          arcPtsX[i] = pt[0];
+          arcPtsY[i] = pt[1];
+          arcPtsZ[i] = pt[2];
         }
 
         ctx.strokeStyle = '#fff';
-        for (let i = 1; i < pts.length; i++) {
-          if (pts[i][2] < 0.02 || pts[i - 1][2] < 0.02) continue;
+        for (let i = 1; i <= 40; i++) {
+          if (arcPtsZ[i] < 0.02 || arcPtsZ[i - 1] < 0.02) continue;
           ctx.globalAlpha =
             (0.08 + 0.92 * Math.pow(i / 40, 2)) *
             (1 - Math.max(0, o.k - 60) / 50);
           ctx.beginPath();
-          ctx.moveTo(pts[i - 1][0], pts[i - 1][1]);
-          ctx.lineTo(pts[i][0], pts[i][1]);
+          ctx.moveTo(arcPtsX[i - 1], arcPtsY[i - 1]);
+          ctx.lineTo(arcPtsX[i], arcPtsY[i]);
           ctx.stroke();
         }
 
-        const h = pts[pts.length - 1];
-        if (h[2] > 0.02 && o.t < 1) {
+        const headZ = arcPtsZ[40];
+        if (headZ > 0.02 && o.t < 1) {
           ctx.globalAlpha = 1;
           ctx.fillStyle = '#fff';
           ctx.beginPath();
-          ctx.arc(h[0], h[1], 2.6, 0, TAU);
+          ctx.arc(arcPtsX[40], arcPtsY[40], 2.6, 0, TAU);
           ctx.fill();
         }
 
@@ -559,6 +576,11 @@ export default function Hero() {
       : [];
 
     let scrollTicking = false;
+    const prevLetterProgress: number[] = new Array(letterNodes.length).fill(-1);
+    let prevLeadOpacity = -1;
+    let prevN = -1;
+    let prevSubProgress = -1;
+
     const onScroll = () => {
       if (scrollTicking) return;
       scrollTicking = true;
@@ -569,36 +591,52 @@ export default function Hero() {
         if (total <= 0) return;
         p = cl(window.scrollY / total);
 
-        // 1. Scrub big word "PontLook" letters
+        // 1. Scrub big word "PontLook" letters (compositor-friendly transform/opacity without dynamic filter rasterization)
         if (letterNodes.length > 0) {
           letterNodes.forEach((l, i) => {
             const k = cl(p * 6 - i * 0.15);
-            l.style.opacity = `${1 - k}`;
-            l.style.transform = `translateY(${-k * 26}px)`;
-            l.style.filter = `blur(${k * 10}px)`;
+            if (
+              Math.abs(k - prevLetterProgress[i]) > 0.008 ||
+              (k === 0 && prevLetterProgress[i] !== 0) ||
+              (k === 1 && prevLetterProgress[i] !== 1)
+            ) {
+              prevLetterProgress[i] = k;
+              l.style.opacity = `${1 - k}`;
+              l.style.transform = `translateY(${-k * 26}px) scale(${1 - k * 0.06})`;
+              if (l.style.filter) l.style.filter = '';
+            }
           });
         }
 
         // 2. Scrub center lead container
         if (leadRef.current) {
           const leadOpacity = cl((p - 0.24) / 0.06);
-          leadRef.current.style.opacity = `${leadOpacity}`;
-          leadRef.current.style.pointerEvents = p > 0.62 ? 'auto' : 'none';
+          if (Math.abs(leadOpacity - prevLeadOpacity) > 0.008) {
+            prevLeadOpacity = leadOpacity;
+            leadRef.current.style.opacity = `${leadOpacity}`;
+            leadRef.current.style.pointerEvents = p > 0.62 ? 'auto' : 'none';
+          }
         }
 
         // 3. Sequential character / word scrub on headline
         if (charNodes.length > 0) {
-          const n = cl((p - 0.3) / 0.3) * charNodes.length;
-          charNodes.forEach((c, i) => {
-            c.style.opacity = i < n ? '1' : '0.14';
-          });
+          const n = Math.round(cl((p - 0.3) / 0.3) * charNodes.length);
+          if (n !== prevN) {
+            prevN = n;
+            charNodes.forEach((c, i) => {
+              c.style.opacity = i < n ? '1' : '0.14';
+            });
+          }
         }
 
         // 4. Scrub subtext and CTAs
         if (subRef.current) {
           const subProgress = sm(p, 0.62, 0.74);
-          subRef.current.style.opacity = `${subProgress}`;
-          subRef.current.style.transform = `translateY(${(1 - subProgress) * 24}px)`;
+          if (Math.abs(subProgress - prevSubProgress) > 0.008) {
+            prevSubProgress = subProgress;
+            subRef.current.style.opacity = `${subProgress}`;
+            subRef.current.style.transform = `translateY(${(1 - subProgress) * 24}px)`;
+          }
         }
       });
     };

@@ -84,50 +84,71 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
     setMounted(true);
   }, []);
 
-  // Window scroll & light section intersection detection
+  // Window scroll & light section intersection detection (zero layout thrashing on scroll)
   useEffect(() => {
     let rafId: number | null = null;
+    let cachedLightBounds: { top: number; bottom: number }[] = [];
 
-    const checkNavTheme = () => {
+    const measureLightBounds = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-      setScrolled((prev) => (prev ? scrollY > 8 : scrollY > 24));
-
-      const navEl = headerRef.current;
-      const navRect = navEl?.getBoundingClientRect();
-      const checkY = navRect ? navRect.top + navRect.height / 2 : 40;
-
       const lightElements = document.querySelectorAll(
         '[data-nav-light="true"], [data-nav-theme="light"]'
       );
-
-      let foundLight = false;
-      for (let i = 0; i < lightElements.length; i++) {
-        const el = lightElements[i];
+      cachedLightBounds = Array.from(lightElements).map((el) => {
         const rect = el.getBoundingClientRect();
-        if (rect.top <= checkY && rect.bottom >= checkY) {
-          foundLight = true;
-          break;
-        }
-      }
-
-      setIsLightSection(foundLight);
+        return {
+          top: rect.top + scrollY,
+          bottom: rect.bottom + scrollY,
+        };
+      });
     };
 
-    const onScrollOrResize = () => {
+    measureLightBounds();
+    const timer1 = setTimeout(measureLightBounds, 250);
+    const timer2 = setTimeout(measureLightBounds, 1000);
+
+    let prevScrolled = false;
+    let prevLight = false;
+
+    const checkNavTheme = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      const nextScrolled = prevScrolled ? scrollY > 8 : scrollY > 24;
+      if (nextScrolled !== prevScrolled) {
+        prevScrolled = nextScrolled;
+        setScrolled(nextScrolled);
+      }
+
+      const checkY = scrollY + 40;
+      const foundLight = cachedLightBounds.some(
+        (b) => b.top <= checkY && b.bottom >= checkY
+      );
+
+      if (foundLight !== prevLight) {
+        prevLight = foundLight;
+        setIsLightSection(foundLight);
+      }
+    };
+
+    const onScroll = () => {
       if (rafId !== null) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(checkNavTheme);
     };
 
-    checkNavTheme();
-    const timer = setTimeout(checkNavTheme, 150);
+    const onResize = () => {
+      measureLightBounds();
+      checkNavTheme();
+    };
 
-    window.addEventListener('scroll', onScrollOrResize, { passive: true });
-    window.addEventListener('resize', onScrollOrResize, { passive: true });
+    checkNavTheme();
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
     return () => {
       if (rafId !== null) cancelAnimationFrame(rafId);
-      clearTimeout(timer);
-      window.removeEventListener('scroll', onScrollOrResize);
-      window.removeEventListener('resize', onScrollOrResize);
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
     };
   }, [pathname]);
 
