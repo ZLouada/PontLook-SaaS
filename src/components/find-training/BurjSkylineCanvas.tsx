@@ -150,6 +150,7 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       cv.height = H * D;
       ctx.setTransform(D, 0, 0, D, 0, 0);
       buildSkyline();
+      startLoop();
     };
 
     resize();
@@ -193,6 +194,7 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       lastInteractTime = performance.now();
       const r = cv.getBoundingClientRect();
       tx = ((e.clientX - r.left) / r.width) * 2 - 1;
+      startLoop();
     };
 
     const fireBeam = (px?: number, py?: number) => {
@@ -218,12 +220,14 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
         l: labels[matchCount % labels.length],
       });
       matchCount++;
+      startLoop();
     };
 
     const onPointerDown = (e: PointerEvent) => {
       lastInteractTime = performance.now();
       const r = cv.getBoundingClientRect();
       fireBeam(e.clientX - r.left - mx * -10, e.clientY - r.top);
+      startLoop();
     };
 
     cv.addEventListener('pointermove', onPointerMove);
@@ -248,7 +252,7 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       ctx.lineWidth = 0.006;
 
       for (let i = 0; i < 22; i++) {
-        ctx.globalAlpha = cl(0.15 + 0.7 * Math.pow(Math.sin(t * 1.6 - i * 0.4), 2) + glow * 0.4);
+        ctx.globalAlpha = cl((RM ? 0.45 : 0.15 + 0.7 * Math.pow(Math.sin(t * 1.6 - i * 0.4), 2)) + glow * 0.4);
         ctx.beginPath();
         ctx.moveTo(0.02 * i, 0);
         ctx.lineTo(0.02 * i, -1);
@@ -293,13 +297,13 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
         isRunning = false;
         return;
       }
-      animId = requestAnimationFrame(frame);
 
       const isMobile = W < 768;
       const isInteracting = now - lastInteractTime < 600;
       const targetInterval = isMobile && !isInteracting ? 32 : 0;
 
       if (targetInterval > 0 && now - lastRender < targetInterval) {
+        animId = requestAnimationFrame(frame);
         return;
       }
       lastRender = now;
@@ -339,7 +343,7 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       ctx.fillStyle = FG;
       for (const w of windows) {
         if (w.o > asm) continue;
-        const a = 0.45 + 0.55 * Math.pow(Math.sin(t * 1.3 + w.ph), 2);
+        const a = RM ? 0.75 : 0.45 + 0.55 * Math.pow(Math.sin(t * 1.3 + w.ph), 2);
         ctx.globalAlpha = a;
         ctx.fillRect(w.x, w.y, 2.5, 3.5);
 
@@ -360,7 +364,7 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
 
       // Water surface ripples
       for (const s of seaLines) {
-        ctx.globalAlpha = 0.1 + 0.25 * Math.pow(Math.sin(t * 2 + s.f), 2);
+        ctx.globalAlpha = RM ? 0.2 : 0.1 + 0.25 * Math.pow(Math.sin(t * 2 + s.f), 2);
         ctx.fillStyle = FG;
         ctx.fillRect(s.x * W, h + 8 + s.u * s.u * (H - h - 10), s.w, 1);
       }
@@ -444,6 +448,13 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       if (hudRef.current && hudRef.current.textContent !== nextHud) {
         hudRef.current.textContent = nextHud;
       }
+
+      // When reduced motion is active, pause continuous rAF loop once idle
+      if (RM && asm >= 1 && beams.length === 0 && !isInteracting && Math.abs(tx - mx) < 0.005) {
+        isRunning = false;
+        return;
+      }
+      animId = requestAnimationFrame(frame);
     };
 
     startLoop();

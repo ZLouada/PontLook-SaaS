@@ -65,7 +65,11 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
     };
 
     resize();
-    window.addEventListener('resize', resize);
+    const onResize = () => {
+      resize();
+      startLoop();
+    };
+    window.addEventListener('resize', onResize);
 
     const rnd = (a: number, b: number) => a + Math.random() * (b - a);
     const cl = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -163,6 +167,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       if (isMobile) return; // Skip pointer parallax on mobile touch screens
       tx = (e.clientX / window.innerWidth) * 2 - 1;
       ty = (e.clientY / window.innerHeight) * 2 - 1;
+      startLoop();
     };
 
     // Strict tap detector: guarantees scrolling swipes never trigger explosions on mobile!
@@ -177,6 +182,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       if (dist < 10 && duration < 320) {
         blast = 1;
         shock = { x: e.clientX, y: e.clientY, t: 0 };
+        startLoop();
       }
     };
 
@@ -204,6 +210,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         if (hh <= 0) return;
         const p = cl(window.scrollY / hh);
         targetScrollP = p;
+        startLoop();
 
         if (letterNodes.length > 0) {
           letterNodes.forEach((l, idx) => {
@@ -244,11 +251,11 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
         isRunning = false;
         return;
       }
-      animId = requestAnimationFrame(frame);
 
       const isInteracting = blast > 0.05 || shock !== null;
       const targetInterval = isMobile && !isInteracting ? 32 : 0;
       if (targetInterval > 0 && now - lastRender < targetInterval) {
+        animId = requestAnimationFrame(frame);
         return;
       }
       lastRender = now;
@@ -284,7 +291,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       const len = H * 1.65;
       const zoom = 1 + smoothScrollP * 0.24;
 
-      const baseSpin = t * 0.22;
+      const baseSpin = RM ? 0 : t * 0.22;
       const scrollSpin = smoothScrollP * 0.55;
       const spin = baseSpin + scrollSpin + mx * 0.3;
 
@@ -388,7 +395,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
 
       // Traveling energy pulses
       const pulseInterval = isMobile ? 320 : 150;
-      if (asm >= 1 && now - lastP > pulseInterval) {
+      if (!RM && asm >= 1 && now - lastP > pulseInterval) {
         lastP = now;
         pulses.push({ i: Math.floor(rnd(0, K / 3)) * 3, t: 0, s: rnd(0.014, 0.028) });
       }
@@ -443,7 +450,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       }
 
       // Ambient dust particles (desktop only)
-      if (!isMobile && dust.length > 0) {
+      if (!isMobile && !RM && dust.length > 0) {
         ctx.globalAlpha = 1;
         ctx.fillStyle = '#FFA048';
         for (const d of dust) {
@@ -470,6 +477,20 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       }
 
       ctx.globalAlpha = 1;
+
+      // When reduced motion is requested, pause continuous loop once idle
+      if (
+        RM &&
+        asm >= 1 &&
+        blast < 0.005 &&
+        shock === null &&
+        pulses.length === 0 &&
+        Math.abs(targetScrollP - smoothScrollP) < 0.005
+      ) {
+        isRunning = false;
+        return;
+      }
+      animId = requestAnimationFrame(frame);
     };
 
     startLoop();
@@ -478,7 +499,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       stopLoop();
       document.removeEventListener('visibilitychange', onVisibilityChange);
       observer.disconnect();
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', onResize);
       window.removeEventListener('scroll', onScroll);
       cv.removeEventListener('pointermove', onPointerMove);
       cv.removeEventListener('pointerdown', onPointerDown);

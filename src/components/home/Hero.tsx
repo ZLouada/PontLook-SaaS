@@ -287,6 +287,7 @@ export default function Hero() {
       try {
         cv.setPointerCapture(e.pointerId);
       } catch {}
+      startLoop();
     };
 
     const onPointerMove = (e: PointerEvent) => {
@@ -295,10 +296,12 @@ export default function Hero() {
       lx = e.clientX;
       mv += Math.abs(dx);
       drag -= dx * 0.22;
+      startLoop();
     };
 
     const onPointerUp = (e: PointerEvent) => {
       dn = false;
+      startLoop();
       if (mv < 5) {
         const r = cv.getBoundingClientRect();
         const px = e.clientX - r.left;
@@ -341,13 +344,13 @@ export default function Hero() {
         isRunning = false;
         return;
       }
-      animId = requestAnimationFrame(frame);
 
       // Mobile FPS budget: 30fps when not actively interacting (dragging)
       const isInteracting = dn || Math.abs(drag) > 0.05;
       if (isMobile && !isInteracting) {
         const elapsed = now - lastRenderTime;
         if (elapsed < 32) {
+          animId = requestAnimationFrame(frame);
           return;
         }
       }
@@ -358,7 +361,7 @@ export default function Hero() {
       if (!dn) drag *= 0.985;
 
       const l0 =
-        (lp(-75.7, 49, k) + (k >= 1 ? Math.sin(t * 0.12) * 5 : 0) + drag) * DR;
+        (lp(-75.7, 49, k) + (k >= 1 && !RM ? Math.sin(t * 0.12) * 5 : 0) + drag) * DR;
       const ph = (lp(40, -26, k) + p * 17) * DR;
       const c0 = Math.cos(l0);
       const s0 = Math.sin(l0);
@@ -456,7 +459,7 @@ export default function Hero() {
         c.z = q[2];
         if (q[2] < 0.04) continue;
         const a = cl(q[2] * 1.6);
-        const pu = (t * 0.7 + c.ph) % 1;
+        const pu = RM ? 0 : (t * 0.7 + c.ph) % 1;
         ctx.globalAlpha = a;
         ctx.strokeStyle = '#fff';
         ctx.lineWidth = 1;
@@ -563,6 +566,13 @@ export default function Hero() {
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, W, H);
       ctx.globalAlpha = 1;
+
+      // When reduced motion is requested, pause continuous loop once idle
+      if (RM && !dn && Math.abs(drag) < 0.001 && arcs.length === 0) {
+        isRunning = false;
+        return;
+      }
+      animId = requestAnimationFrame(frame);
     };
 
     startLoop();
@@ -590,6 +600,7 @@ export default function Hero() {
         const total = heroRef.current.offsetHeight - window.innerHeight;
         if (total <= 0) return;
         p = cl(window.scrollY / total);
+        startLoop();
 
         // 1. Scrub big word "PontLook" letters (compositor-friendly transform/opacity without dynamic filter rasterization)
         if (letterNodes.length > 0) {
