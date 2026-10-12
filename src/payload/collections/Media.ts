@@ -2,6 +2,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isEditorOrAdmin } from '../access'
+import { revalidateMediaChange, revalidateMediaDelete } from '../hooks/revalidate'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -17,6 +18,10 @@ export const Media: CollectionConfig = {
     create: isEditorOrAdmin,
     update: isEditorOrAdmin,
     delete: isAdmin,
+  },
+  hooks: {
+    afterChange: [revalidateMediaChange],
+    afterDelete: [revalidateMediaDelete],
   },
   upload: {
     staticDir: path.resolve(dirname, '../../../public/payload-media'),

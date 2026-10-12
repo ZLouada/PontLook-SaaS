@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isEditorOrAdmin, isPublishedOrAuthenticated } from '../access'
+import { revalidateDownloadChange, revalidateDownloadDelete } from '../hooks/revalidate'
 
 export const Downloads: CollectionConfig = {
   slug: 'downloads',
@@ -12,6 +13,10 @@ export const Downloads: CollectionConfig = {
     create: isEditorOrAdmin,
     update: isEditorOrAdmin,
     delete: isAdmin,
+  },
+  hooks: {
+    afterChange: [revalidateDownloadChange],
+    afterDelete: [revalidateDownloadDelete],
   },
   fields: [
     {

@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { isEditorOrAdmin } from '../access'
+import { revalidateResourcesFeatured } from '../hooks/revalidate'
 
 export const ResourcesFeatured: GlobalConfig = {
   slug: 'resources-featured',
@@ -7,6 +8,9 @@ export const ResourcesFeatured: GlobalConfig = {
   access: {
     read: () => true,
     update: isEditorOrAdmin,
+  },
+  hooks: {
+    afterChange: [revalidateResourcesFeatured],
   },
   fields: [
     {

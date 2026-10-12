@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isEditorOrAdmin, isPublishedOrAuthenticated } from '../access'
+import { revalidateArticleChange, revalidateArticleDelete } from '../hooks/revalidate'
 
 export const Articles: CollectionConfig = {
   slug: 'articles',
@@ -12,6 +13,10 @@ export const Articles: CollectionConfig = {
     create: isEditorOrAdmin,
     update: isEditorOrAdmin,
     delete: isAdmin,
+  },
+  hooks: {
+    afterChange: [revalidateArticleChange],
+    afterDelete: [revalidateArticleDelete],
   },
   fields: [
     {
