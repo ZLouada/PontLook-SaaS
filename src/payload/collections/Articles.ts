@@ -106,6 +106,7 @@ export const Articles: CollectionConfig = {
       name: 'seoEditor',
       type: 'ui',
       admin: {
+        disableListColumn: true,
         components: {
           Field: '@/components/payload/SEOEditor/SEOEditor#SEOEditor',
         },
