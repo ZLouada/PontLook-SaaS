@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useFormFields, useLocale } from '@payloadcms/ui'
+import { useDocumentInfo, useForm, useFormFields, useLocale } from '@payloadcms/ui'
 import type { SEOAnalysisResult, SEOData } from './types'
 import { analyzeArticleSEO, calculateSEOScore } from './SEOAnalysis'
 import { SEOScore } from './SEOScore'
@@ -300,12 +300,25 @@ const SEOEditorInner: React.FC = () => {
   )
 }
 
+const SEOEditorGuard: React.FC = () => {
+  const form = useForm()
+  const docInfo = useDocumentInfo()
+
+  // Guard against rendering outside a document FormContext (e.g. List View, Table Column, or uninitialized transitions)
+  if (!docInfo?.collectionSlug || !form || typeof form.getData !== 'function') {
+    return null
+  }
+
+  return <SEOEditorInner />
+}
+
 export const SEOEditor: React.FC = () => {
   return (
     <SEOErrorBoundary>
-      <SEOEditorInner />
+      <SEOEditorGuard />
     </SEOErrorBoundary>
   )
 }
 
 export default SEOEditor
+
