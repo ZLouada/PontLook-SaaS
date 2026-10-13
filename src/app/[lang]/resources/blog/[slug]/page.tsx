@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Locale, i18n } from '@/i18n/config';
-import { constructAlternates, SITE_URL } from '@/lib/seo';
+import { constructAlternates, SITE_URL, buildBlogPostingSchema, buildBreadcrumbSchema } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
 import { ArrowLeft, Calendar, User } from '@/components/icons';
 import { getArticleBySlug, getAllArticleSlugs } from '@/lib/payload/resources';
@@ -30,7 +30,7 @@ export async function generateMetadata({
     const imageUrl = article.seo?.ogImage || article.image || 'https://pontlook.com/images/brand/og-main.png';
 
     const defaultAlternates = constructAlternates(lang, `resources/blog/${slug}`);
-    const canonical = article.seo?.canonicalUrl || `${SITE_URL}/${lang}/resources/blog/${slug}`;
+    const canonical = article.seo?.canonicalUrl || (defaultAlternates?.canonical as string) || `${SITE_URL}/${lang}/resources/blog/${slug}`;
 
     return {
       title: {
@@ -48,7 +48,7 @@ export async function generateMetadata({
       openGraph: {
         title: ogTitle,
         description: ogDescription,
-        url: `${SITE_URL}/${lang}/resources/blog/${slug}`,
+        url: canonical,
         siteName: 'PontLook',
         locale: isAr ? 'ar_SA' : 'en_US',
         type: 'article',
@@ -57,7 +57,7 @@ export async function generateMetadata({
             url: imageUrl,
             width: 1200,
             height: 630,
-            alt: ogTitle,
+            alt: article.imageAlt || ogTitle,
           },
         ],
       },
@@ -102,7 +102,50 @@ export default async function BlogPostDetailPage({
     notFound();
   }
 
-  const { title, category, date, excerpt, content, image: imageUrl } = article;
+  const {
+    title,
+    category,
+    date,
+    excerpt,
+    content,
+    image: imageUrl,
+    imageAlt,
+    updatedAt,
+    publishedAt,
+  } = article;
+
+  const canonicalUrl = article.seo?.canonicalUrl || `${SITE_URL}/${lang}/resources/blog/${slug}`;
+  const absoluteImageUrl = imageUrl
+    ? imageUrl.startsWith('http')
+      ? imageUrl
+      : `${SITE_URL}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`
+    : null;
+
+  const breadcrumbs = [
+    { name: isAr ? 'الرئيسية' : 'Home', url: `${SITE_URL}/${lang}` },
+    { name: isAr ? 'الموارد' : 'Resources', url: `${SITE_URL}/${lang}/resources` },
+    { name: isAr ? 'المدونة' : 'Blog', url: `${SITE_URL}/${lang}/resources/blog` },
+    { name: title, url: canonicalUrl },
+  ];
+
+  const jsonLdGraph = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      buildBreadcrumbSchema(breadcrumbs),
+      buildBlogPostingSchema({
+        url: canonicalUrl,
+        headline: article.seo?.title || title,
+        description: article.seo?.description || excerpt || undefined,
+        image: absoluteImageUrl,
+        datePublished: publishedAt || undefined,
+        dateModified: updatedAt || publishedAt || undefined,
+        authorName: article.author?.name || 'PontLook Research',
+        lang,
+      }),
+    ],
+  };
+
+  const jsonLdString = JSON.stringify(jsonLdGraph).replace(/</g, '\\u003c');
 
   return (
     <div
@@ -111,6 +154,12 @@ export default async function BlogPostDetailPage({
       className="min-h-screen bg-white text-neutral-900 transition-colors duration-200"
     >
       <article className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        {/* Schema.org BlogPosting & BreadcrumbList JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdString }}
+        />
+
         {/* Back button */}
         <Reveal>
           <Link
@@ -165,7 +214,7 @@ export default async function BlogPostDetailPage({
             <div className="relative aspect-video w-full min-h-[220px] sm:min-h-[320px] shrink-0 rounded-3xl overflow-hidden mb-10 border border-neutral-200 bg-neutral-100 shadow-sm">
               <Image
                 src={imageUrl}
-                alt={title}
+                alt={imageAlt || title}
                 fill
                 priority
                 sizes="(max-width: 896px) 100vw, 896px"

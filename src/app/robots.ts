@@ -10,7 +10,9 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: [
           '/api/',
-          '/_next/',
+          '/payload-admin/',
+          '/payload-api/',
+          '/admin/',
           '/preview/',
           '/staging/',
         ],

@@ -116,10 +116,12 @@ export interface AdaptedArticle {
   readTime: string
   date: string
   publishedAt: string | null
+  updatedAt?: string | null
   excerpt: string
   content: any
   plainContent?: string
   image: string | null
+  imageAlt?: string | null
   status: string
   author: {
     name: string
@@ -218,13 +220,14 @@ export interface AdaptedFeatured {
 }
 
 // Helper: Resolve Media document if stored as unpopulated ID
-async function resolveMediaDoc(payload: any, media: any): Promise<any> {
+async function resolveMediaDoc(payload: any, media: any, locale?: Locale): Promise<any> {
   if (typeof media === 'number' || (typeof media === 'string' && /^\d+$/.test(media))) {
     try {
       const mediaDoc = await payload.findByID({
         collection: 'media',
         id: Number(media),
         depth: 0,
+        locale,
       })
       if (mediaDoc) {
         return mediaDoc
@@ -256,8 +259,14 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
 
     return await Promise.all(
       result.docs.map(async (art: any) => {
-        const resolvedImage = await resolveMediaDoc(payload, art.featuredImage)
+        const resolvedImage = await resolveMediaDoc(payload, art.featuredImage, locale)
         const imageUrl = getMediaUrl(resolvedImage)
+        const imageAlt =
+          typeof resolvedImage === 'object' && resolvedImage?.alt
+            ? typeof resolvedImage.alt === 'string'
+              ? resolvedImage.alt.trim()
+              : resolvedImage.alt?.[locale] || null
+            : null
         const displayDate = formatDisplayDate(art.publishedAt, locale)
         const contentText = extractTextFromLexical(art.content)
 
@@ -269,10 +278,12 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
           readTime: art.readTime || '6 min read',
           date: displayDate,
           publishedAt: art.publishedAt || null,
+          updatedAt: art.updatedAt || null,
           excerpt: art.excerpt || '',
           content: art.content || contentText,
           plainContent: contentText,
           image: imageUrl,
+          imageAlt: imageAlt || null,
           status: art.status || 'published',
           author: {
             name: 'PontLook Research',
@@ -288,7 +299,7 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
             noFollow: art.meta?.noFollow || undefined,
             ogTitle: art.meta?.ogTitle || undefined,
             ogDescription: art.meta?.ogDescription || undefined,
-            ogImage: art.meta?.ogImage ? getMediaUrl(await resolveMediaDoc(payload, art.meta.ogImage)) : undefined,
+            ogImage: art.meta?.ogImage ? getMediaUrl(await resolveMediaDoc(payload, art.meta.ogImage, locale)) : undefined,
           },
         }
       })
@@ -332,8 +343,14 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
     }
 
     const art: any = result.docs[0]
-    const featuredImage = await resolveMediaDoc(payload, art.featuredImage)
+    const featuredImage = await resolveMediaDoc(payload, art.featuredImage, locale)
     const imageUrl = getMediaUrl(featuredImage)
+    const imageAlt =
+      typeof featuredImage === 'object' && featuredImage?.alt
+        ? typeof featuredImage.alt === 'string'
+          ? featuredImage.alt.trim()
+          : featuredImage.alt?.[locale] || null
+        : null
     const displayDate = formatDisplayDate(art.publishedAt, locale)
     const contentText = extractTextFromLexical(art.content)
 
@@ -345,10 +362,12 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
       readTime: art.readTime || '6 min read',
       date: displayDate,
       publishedAt: art.publishedAt || null,
+      updatedAt: art.updatedAt || null,
       excerpt: art.excerpt || '',
       content: art.content || contentText,
       plainContent: contentText,
       image: imageUrl,
+      imageAlt: imageAlt || null,
       status: art.status || 'published',
       author: {
         name: 'PontLook Research',
@@ -364,12 +383,117 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
         noFollow: art.meta?.noFollow || undefined,
         ogTitle: art.meta?.ogTitle || undefined,
         ogDescription: art.meta?.ogDescription || undefined,
-        ogImage: art.meta?.ogImage ? getMediaUrl(await resolveMediaDoc(payload, art.meta.ogImage)) : undefined,
+        ogImage: art.meta?.ogImage ? getMediaUrl(await resolveMediaDoc(payload, art.meta.ogImage, locale)) : undefined,
       },
     }
   } catch (error) {
     console.error(`[Payload Data Layer] Failed to get article by slug "${slug}":`, error)
     return null
+  }
+})
+
+export interface SitemapArticleEntry {
+  slug: string
+  updatedAt?: string | null
+  publishedAt?: string | null
+  hasEn: boolean
+  hasAr: boolean
+}
+
+// Helper: Get Published Articles for Dynamic Sitemap
+export const getSitemapArticles = cache(async (): Promise<SitemapArticleEntry[]> => {
+  try {
+    const payload = await getPayloadClient()
+    const [enResult, arResult] = await Promise.all([
+      payload.find({
+        collection: 'articles',
+        where: {
+          status: {
+            equals: 'published',
+          },
+        },
+        locale: 'en',
+        fallbackLocale: false,
+        depth: 0,
+        limit: 500,
+        select: {
+          slug: true,
+          title: true,
+          updatedAt: true,
+          publishedAt: true,
+          meta: true,
+        },
+        overrideAccess: false,
+      }),
+      payload.find({
+        collection: 'articles',
+        where: {
+          status: {
+            equals: 'published',
+          },
+        },
+        locale: 'ar',
+        fallbackLocale: false,
+        depth: 0,
+        limit: 500,
+        select: {
+          slug: true,
+          title: true,
+          updatedAt: true,
+          publishedAt: true,
+          meta: true,
+        },
+        overrideAccess: false,
+      }),
+    ])
+
+    const arMap = new Map<string, any>()
+    for (const doc of arResult.docs) {
+      if (doc.slug) {
+        arMap.set(doc.slug, doc)
+      }
+    }
+
+    const processedSlugs = new Set<string>()
+    const entries: SitemapArticleEntry[] = []
+
+    for (const enDoc of enResult.docs) {
+      if (!enDoc.slug) continue
+      processedSlugs.add(enDoc.slug)
+      const arDoc = arMap.get(enDoc.slug)
+
+      const hasEn = Boolean(enDoc.title && String(enDoc.title).trim()) && !enDoc.meta?.noIndex
+      const hasAr = Boolean(arDoc?.title && String(arDoc.title).trim()) && !arDoc?.meta?.noIndex
+
+      if (hasEn || hasAr) {
+        entries.push({
+          slug: enDoc.slug,
+          updatedAt: enDoc.updatedAt || arDoc?.updatedAt || null,
+          publishedAt: enDoc.publishedAt || arDoc?.publishedAt || null,
+          hasEn,
+          hasAr,
+        })
+      }
+    }
+
+    for (const arDoc of arResult.docs) {
+      if (!arDoc.slug || processedSlugs.has(arDoc.slug)) continue
+      const hasAr = Boolean(arDoc.title && String(arDoc.title).trim()) && !arDoc.meta?.noIndex
+      if (hasAr) {
+        entries.push({
+          slug: arDoc.slug,
+          updatedAt: arDoc.updatedAt || null,
+          publishedAt: arDoc.publishedAt || null,
+          hasEn: false,
+          hasAr: true,
+        })
+      }
+    }
+
+    return entries
+  } catch (error) {
+    console.error('[Payload Data Layer] Failed to get sitemap articles:', error)
+    return []
   }
 })
 

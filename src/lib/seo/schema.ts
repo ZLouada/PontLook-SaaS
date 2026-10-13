@@ -110,3 +110,79 @@ export function buildProviderNetworkSchema({
     ],
   };
 }
+
+/**
+ * 7. BlogPosting Schema
+ */
+export interface BlogPostingSchemaOptions {
+  url: string;
+  headline: string;
+  description?: string;
+  image?: string | null;
+  datePublished?: string | null;
+  dateModified?: string | null;
+  authorName?: string;
+  lang?: 'en' | 'ar';
+}
+
+export function buildBlogPostingSchema({
+  url,
+  headline,
+  description,
+  image,
+  datePublished,
+  dateModified,
+  authorName = 'PontLook Research',
+  lang = 'en',
+}: BlogPostingSchemaOptions) {
+  const schema: Record<string, any> = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    url,
+    headline,
+    inLanguage: lang === 'ar' ? 'ar' : 'en',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url,
+    },
+    author: {
+      '@type': 'Organization',
+      name: authorName,
+      url: SITE_URL,
+    },
+    publisher: {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'PontLook',
+      url: SITE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/images/brand/pontlook-logo-orange.png`,
+        width: 400,
+        height: 100,
+      },
+    },
+  };
+
+  if (description) {
+    schema.description = description;
+  }
+
+  if (image) {
+    schema.image = [image];
+  }
+
+  if (datePublished) {
+    schema.datePublished = datePublished;
+  }
+
+  if (dateModified) {
+    schema.dateModified = dateModified;
+  } else if (datePublished) {
+    schema.dateModified = datePublished;
+  }
+
+  return schema;
+}
+

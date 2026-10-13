@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next';
+import { getSitemapArticles } from '@/lib/payload/resources';
 
-export const dynamic = 'force-static';
+export const revalidate = 3600;
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://pontlook.com';
   const now = new Date();
 
@@ -65,5 +66,48 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
+  // Fetch published articles dynamically from Payload CMS
+  const articles = await getSitemapArticles();
+
+  for (const article of articles) {
+    const enUrl = `${baseUrl}/en/resources/blog/${article.slug}`;
+    const arUrl = `${baseUrl}/ar/resources/blog/${article.slug}`;
+
+    const rawDate = article.updatedAt || article.publishedAt;
+    const lastModDate = rawDate ? new Date(rawDate) : undefined;
+    const validLastMod = lastModDate && !isNaN(lastModDate.getTime()) ? lastModDate : undefined;
+
+    // Language alternates based on actual content availability
+    const languages: Record<string, string> = {};
+    if (article.hasEn) languages.en = enUrl;
+    if (article.hasAr) languages.ar = arUrl;
+    if (article.hasEn) {
+      languages['x-default'] = enUrl;
+    } else if (article.hasAr) {
+      languages['x-default'] = arUrl;
+    }
+
+    const hasMultipleLangs = Object.keys(languages).filter((k) => k !== 'x-default').length > 1;
+    const alternates = hasMultipleLangs ? { languages } : undefined;
+
+    // Only emit URLs for locales where the article actually exists and is not noindex
+    if (article.hasEn) {
+      routes.push({
+        url: enUrl,
+        lastModified: validLastMod,
+        alternates,
+      });
+    }
+
+    if (article.hasAr) {
+      routes.push({
+        url: arUrl,
+        lastModified: validLastMod,
+        alternates,
+      });
+    }
+  }
+
   return routes;
 }
+
