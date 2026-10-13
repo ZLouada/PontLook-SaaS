@@ -62,20 +62,6 @@ export default function HowItWorksStatic({ lang, dict }: HowItWorksStaticProps) 
     >
       {/* Viewport Stage */}
       <div className="relative lg:sticky top-0 w-full min-h-0 lg:min-h-[100dvh] h-auto lg:h-[100dvh] flex flex-col justify-center items-center z-20 pt-16 sm:pt-20 lg:pt-20 xl:pt-24 pb-4 lg:pb-6 overflow-visible lg:overflow-hidden bg-white">
-        {/* Subtle Grid dots */}
-        <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle at 1px 1px, #000 1px, transparent 0)',
-            backgroundSize: '24px 24px',
-          }}
-          aria-hidden="true"
-        />
-
-        {/* Ambient subtle backlight glow */}
-        <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-neutral-900/[0.02] blur-[150px] pointer-events-none rounded-full" />
-
         {/* The White Content */}
         <div className="container-site relative z-20 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl w-full flex flex-col justify-center">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -182,15 +168,7 @@ export default function HowItWorksStatic({ lang, dict }: HowItWorksStaticProps) 
 
                     {/* Step 01 Console Mockup (Diagnostic Box) */}
                     <div className="w-full pt-0.5">
-                      <div className="relative w-full rounded-2xl bg-gradient-to-b from-neutral-50/90 via-white to-neutral-50/80 border border-neutral-200/80 p-3 sm:p-5 overflow-hidden font-sans shadow-inner">
-                        <div
-                          className="absolute inset-0 opacity-[0.035] pointer-events-none"
-                          style={{
-                            backgroundImage: 'radial-gradient(circle at 1px 1px, #000 1px, transparent 0)',
-                            backgroundSize: '16px 16px',
-                          }}
-                        />
-
+                      <div className="relative w-full rounded-2xl bg-white border border-neutral-200/90 p-3 sm:p-5 overflow-hidden font-sans shadow-xs">
                         {/* Top HUD Diagnostics Header */}
                         <div className="relative z-10 flex items-center justify-between pb-2 mb-2 border-b border-neutral-200/70 text-xs">
                           <div className="flex items-center gap-1.5 text-neutral-700">

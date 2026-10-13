@@ -189,6 +189,9 @@ export default function Hero() {
     let cx = 0;
     let cy = 0;
     let p = 0;
+    let targetP = 0;
+    let isScrolling = false;
+    let scrollTimeout: any = null;
     let vis = true;
     let drag = 0;
     let dn = false;
@@ -387,8 +390,11 @@ export default function Hero() {
         return;
       }
 
-      // Mobile FPS budget: 30fps when not actively interacting (dragging)
-      const isInteracting = dn || Math.abs(drag) > 0.05;
+      // Smoothly interpolate current p towards targetP for jitter-free 60fps Earth rotation & scale
+      p = lp(p, targetP, 0.16);
+
+      // Mobile FPS budget: 30fps when not actively interacting or scrolling
+      const isInteracting = dn || Math.abs(drag) > 0.05 || isScrolling || Math.abs(targetP - p) > 0.002;
       if (isMobile && !isInteracting) {
         const elapsed = now - lastRenderTime;
         if (elapsed < 36) {
@@ -399,17 +405,18 @@ export default function Hero() {
       lastRenderTime = now;
 
       const t = (now - t0) / 1000;
-      const k = RM ? 1 : ez(cl(t / 5.2));
+      // Fast-forward initial flyover to GCC if user immediately scrolls
+      const k = RM ? 1 : ez(cl(Math.max(t / 2.8, targetP * 2.5)));
       if (!dn) drag *= 0.985;
 
       const l0 =
-        (lp(-75.7, 49, k) + (k >= 1 && !RM ? Math.sin(t * 0.12) * 5 : 0) + drag) * DR;
-      const ph = (lp(40, -26, k) + p * 17) * DR;
+        (lp(-75.7, 49, k) + (k >= 1 && !RM ? Math.sin(t * 0.12) * 5 : 0) + drag + p * 36) * DR;
+      const ph = (lp(40, -26, k) + p * 20) * DR;
       const c0 = Math.cos(l0);
       const s0 = Math.sin(l0);
       const cp = Math.cos(ph);
       const sp = Math.sin(ph);
-      const rr = R * (1 + p * 0.3);
+      const rr = R * (1 + p * 0.32);
 
       ctx.globalAlpha = 1;
       ctx.fillStyle = '#000';
@@ -604,7 +611,7 @@ export default function Hero() {
       }
 
       // Scroll vignette layer for high text readability
-      ctx.globalAlpha = sm(p, 0.28, 0.7) * 0.5;
+      ctx.globalAlpha = sm(p, 0.22, 0.65) * 0.5;
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, W, H);
       ctx.globalAlpha = 1;
@@ -654,13 +661,18 @@ export default function Hero() {
         if (!heroRef.current) return;
         if (cachedTotal <= 0) updateScrollBounds();
         if (cachedTotal <= 0) return;
-        p = cl(window.scrollY / cachedTotal);
+        targetP = cl(window.scrollY / cachedTotal);
+        isScrolling = true;
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          isScrolling = false;
+        }, 250);
         startLoop();
 
         // 1. Scrub big word "PontLook" letters (compositor-friendly transform/opacity without dynamic filter rasterization)
         if (letterNodes.length > 0) {
           letterNodes.forEach((l, i) => {
-            const k = cl(p * 6 - i * 0.15);
+            const k = cl(targetP * 5 - i * 0.12);
             if (
               Math.abs(k - prevLetterProgress[i]) > 0.008 ||
               (k === 0 && prevLetterProgress[i] !== 0) ||
@@ -676,17 +688,17 @@ export default function Hero() {
 
         // 2. Scrub center lead container
         if (leadRef.current) {
-          const leadOpacity = cl((p - 0.24) / 0.06);
+          const leadOpacity = cl((targetP - 0.18) / 0.08);
           if (Math.abs(leadOpacity - prevLeadOpacity) > 0.008) {
             prevLeadOpacity = leadOpacity;
             leadRef.current.style.opacity = `${leadOpacity}`;
-            leadRef.current.style.pointerEvents = p > 0.62 ? 'auto' : 'none';
+            leadRef.current.style.pointerEvents = targetP > 0.58 ? 'auto' : 'none';
           }
         }
 
         // 3. Sequential character / word scrub on headline
         if (charNodes.length > 0) {
-          const n = Math.round(cl((p - 0.3) / 0.3) * charNodes.length);
+          const n = Math.round(cl((targetP - 0.24) / 0.36) * charNodes.length);
           if (n !== prevN) {
             prevN = n;
             charNodes.forEach((c, i) => {
@@ -697,7 +709,7 @@ export default function Hero() {
 
         // 4. Scrub subtext and CTAs
         if (subRef.current) {
-          const subProgress = sm(p, 0.62, 0.74);
+          const subProgress = sm(targetP, 0.58, 0.74);
           if (Math.abs(subProgress - prevSubProgress) > 0.008) {
             prevSubProgress = subProgress;
             subRef.current.style.opacity = `${subProgress}`;
@@ -718,6 +730,7 @@ export default function Hero() {
       } else if (startTimer !== null) {
         clearTimeout(startTimer);
       }
+      if (scrollTimeout) clearTimeout(scrollTimeout);
       stopLoop();
       document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('resize', rs);
@@ -734,7 +747,7 @@ export default function Hero() {
       ref={heroRef}
       id="hero"
       data-nav-dark="true"
-      className="relative h-[320vh] md:h-[430vh] select-none bg-black touch-pan-y"
+      className="relative h-[220vh] md:h-[260vh] select-none bg-black touch-pan-y"
     >
       {/* Sticky Pinned 100svh Viewport */}
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-black touch-pan-y">
@@ -768,7 +781,7 @@ export default function Hero() {
                     (word, wIdx) => (
                       <span
                         key={wIdx}
-                        className="char-node inline-block px-[0.16em] transition-opacity duration-150"
+                        className="char-node inline-block px-[0.16em] transition-opacity duration-75"
                         style={{ opacity: 0.14 }}
                       >
                         {word}
@@ -782,7 +795,7 @@ export default function Hero() {
                     (word, wIdx) => (
                       <span
                         key={wIdx}
-                        className="char-node inline-block px-[0.16em] transition-opacity duration-150"
+                        className="char-node inline-block px-[0.16em] transition-opacity duration-75"
                         style={{ opacity: 0.14 }}
                       >
                         {word}
@@ -802,7 +815,7 @@ export default function Hero() {
                       {word.split('').map((char, cIdx) => (
                         <span
                           key={cIdx}
-                          className="char-node inline-block transition-opacity duration-150"
+                          className="char-node inline-block transition-opacity duration-75"
                           style={{ opacity: 0.14 }}
                         >
                           {char}
@@ -822,7 +835,7 @@ export default function Hero() {
                         {word.split('').map((char, cIdx) => (
                           <span
                             key={cIdx}
-                            className="char-node inline-block transition-opacity duration-150"
+                            className="char-node inline-block transition-opacity duration-75"
                             style={{ opacity: 0.14 }}
                           >
                             {char}

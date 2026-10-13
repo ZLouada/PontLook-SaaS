@@ -14,16 +14,7 @@ interface ScoopMatchesCardProps {
  */
 export default function ScoopMatchesCard({ isAr = false }: ScoopMatchesCardProps) {
   return (
-    <div className="relative w-full rounded-2xl bg-gradient-to-b from-neutral-50/90 via-white to-neutral-50/80 border border-neutral-200/80 p-3 sm:p-5 overflow-hidden font-sans shadow-inner">
-      {/* Blueprint Grid Background */}
-      <div
-        className="absolute inset-0 opacity-[0.035] pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, #000 1px, transparent 0)',
-          backgroundSize: '16px 16px',
-        }}
-      />
-
+    <div className="relative w-full rounded-2xl bg-white border border-neutral-200/90 p-3 sm:p-5 overflow-hidden font-sans shadow-xs">
       {/* Top HUD Matching Header */}
       <div className="relative z-10 flex items-center justify-between pb-2 mb-2 border-b border-neutral-200/70 text-xs">
         <div className="flex items-center gap-1.5 text-neutral-700">

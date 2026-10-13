@@ -166,21 +166,6 @@ export default function HowItWorks() {
     >
       {/* Viewport Stage: Pinned during the garage door opening on desktop; natural flow on mobile */}
       <div className="relative lg:sticky top-0 w-full min-h-0 lg:min-h-[100dvh] h-auto lg:h-[100dvh] flex flex-col justify-center items-center z-20 pt-16 sm:pt-20 lg:pt-20 xl:pt-24 pb-4 lg:pb-6 overflow-visible lg:overflow-hidden bg-white">
-        
-        {/* Attio-Style Subtle Grid dots on the white floor */}
-        <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle at 1px 1px, #000 1px, transparent 0)',
-            backgroundSize: '24px 24px',
-          }}
-          aria-hidden="true"
-        />
-
-        {/* Ambient subtle backlight glow on the white showroom floor */}
-        <div className="absolute top-1/3 start-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-neutral-900/[0.02] blur-[150px] pointer-events-none rounded-full" />
-
         {/* ================================================================
             THE WHITE CONTENT
             Reveals and pops up as the garage door rolls open upwards on desktop;
