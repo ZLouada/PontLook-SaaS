@@ -12,16 +12,17 @@ interface GooglePreviewProps {
 export const GooglePreview: React.FC<GooglePreviewProps> = ({ data, locale }) => {
   const [device, setDevice] = useState<'desktop' | 'mobile'>('desktop')
   const isArabic = locale === 'ar'
+  const safeData = data || {}
 
-  const title = (data.metaTitle || data.title || (isArabic ? 'عنوان المقال التجريبي' : 'Untitled Article')).trim()
+  const title = (safeData.metaTitle || safeData.title || (isArabic ? 'عنوان المقال التجريبي' : 'Untitled Article')).trim()
   const description = (
-    data.metaDescription ||
-    data.excerpt ||
+    safeData.metaDescription ||
+    safeData.excerpt ||
     (isArabic
       ? 'استكشف أهم الاستراتيجيات والرؤى الإدارية في تدريب وتطوير الكوادر المؤسسية عبر منصة PontLook.'
       : 'Explore comprehensive corporate learning insights and talent benchmark strategies on PontLook.')
   ).trim()
-  const slug = (data.slug || 'sample-article-slug').trim()
+  const slug = (safeData.slug || 'sample-article-slug').trim()
 
   const fullUrl = `https://pontlook.com/${locale}/resources/blog/${slug}`
   const breadcrumb = `pontlook.com › ${locale} › resources › blog › ${slug}`

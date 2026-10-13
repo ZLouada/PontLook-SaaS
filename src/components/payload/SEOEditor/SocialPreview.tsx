@@ -18,17 +18,18 @@ export const SocialPreview: React.FC<SocialPreviewProps> = ({
   const [network, setNetwork] = useState<'linkedin' | 'twitter'>('linkedin')
   const isArabic = locale === 'ar'
 
+  const safeData = data || {}
   const title = (
-    data.ogTitle ||
-    data.metaTitle ||
-    data.title ||
+    safeData.ogTitle ||
+    safeData.metaTitle ||
+    safeData.title ||
     (isArabic ? 'عنوان المقال للمشاركة الاجتماعية' : 'Article Social Share Title')
   ).trim()
 
   const description = (
-    data.ogDescription ||
-    data.metaDescription ||
-    data.excerpt ||
+    safeData.ogDescription ||
+    safeData.metaDescription ||
+    safeData.excerpt ||
     (isArabic
       ? 'ملخص مقال تدريب وتطوير الكوادر القيادية على منصة PontLook.'
       : 'Executive corporate training benchmark summary on the PontLook platform.')
@@ -36,13 +37,13 @@ export const SocialPreview: React.FC<SocialPreviewProps> = ({
 
   // Resolve preview image URL
   let imageUrl = resolvedImageUrl || null
-  if (!imageUrl && data.featuredImage) {
-    if (typeof data.featuredImage === 'string') {
-      imageUrl = data.featuredImage
-    } else if (typeof data.featuredImage === 'object') {
+  if (!imageUrl && safeData.featuredImage) {
+    if (typeof safeData.featuredImage === 'string') {
+      imageUrl = safeData.featuredImage
+    } else if (typeof safeData.featuredImage === 'object') {
       imageUrl =
-        data.featuredImage.url ||
-        (data.featuredImage.filename ? `/payload-media/${data.featuredImage.filename}` : null)
+        safeData.featuredImage.url ||
+        (safeData.featuredImage.filename ? `/payload-media/${safeData.featuredImage.filename}` : null)
     }
   }
 

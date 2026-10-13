@@ -10,7 +10,7 @@ interface SEOScoreProps {
 }
 
 export const SEOScore: React.FC<SEOScoreProps> = ({ analysis, isArabic }) => {
-  const { score, status, statusLabel, categories } = analysis
+  const { score = 0, status = 'poor', statusLabel = '', categories = {} as any } = analysis || {}
 
   // Determine status color theme
   let statusClass = styles.statusPoor

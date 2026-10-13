@@ -3,15 +3,16 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useFormFields, useLocale } from '@payloadcms/ui'
 import type { SEOAnalysisResult, SEOData } from './types'
-import { analyzeArticleSEO } from './SEOAnalysis'
+import { analyzeArticleSEO, calculateSEOScore } from './SEOAnalysis'
 import { SEOScore } from './SEOScore'
 import { SEORecommendations } from './SEORecommendations'
 import { GooglePreview } from './GooglePreview'
 import { SocialPreview } from './SocialPreview'
 import { SEOFields } from './SEOFields'
+import { SEOErrorBoundary } from './SEOErrorBoundary'
 import styles from './SEOEditor.module.css'
 
-export const SEOEditor: React.FC = () => {
+const SEOEditorInner: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'score' | 'google' | 'social' | 'fields' | 'insights'>('score')
   const [resolvedMedia, setResolvedMedia] = useState<{ id: any; alt?: string; url?: string } | null>(null)
   const mediaCache = useRef<Map<string | number, any>>(new Map())
@@ -21,27 +22,30 @@ export const SEOEditor: React.FC = () => {
   const currentLocale = typeof localeContext === 'string' ? localeContext : localeContext?.code || 'en'
   const isArabic = currentLocale === 'ar'
 
-  // Subscribe in real-time to relevant form fields
-  const formState = useFormFields(([fields]) => ({
-    title: fields.title?.value as string | undefined,
-    slug: fields.slug?.value as string | undefined,
-    excerpt: fields.excerpt?.value as string | undefined,
-    content: fields.content?.value,
-    featuredImage: fields.featuredImage?.value,
-    metaTitle: fields['meta.title']?.value as string | undefined,
-    metaDescription: fields['meta.description']?.value as string | undefined,
-    focusKeyword: fields['meta.focusKeyword']?.value as string | undefined,
-    secondaryKeywords: fields['meta.secondaryKeywords']?.value as string | undefined,
-    canonicalUrl: fields['meta.canonicalUrl']?.value as string | undefined,
-    noIndex: fields['meta.noIndex']?.value as boolean | undefined,
-    noFollow: fields['meta.noFollow']?.value as boolean | undefined,
-    ogTitle: fields['meta.ogTitle']?.value as string | undefined,
-    ogDescription: fields['meta.ogDescription']?.value as string | undefined,
-    ogImage: fields['meta.ogImage']?.value,
-  }))
+  // Subscribe in real-time to relevant form fields with defensive fallbacks for uninitialized forms
+  const formState = useFormFields(([fields]) => {
+    const f = fields || {}
+    return {
+      title: (f.title?.value as string | undefined) || '',
+      slug: (f.slug?.value as string | undefined) || '',
+      excerpt: (f.excerpt?.value as string | undefined) || '',
+      content: f.content?.value,
+      featuredImage: f.featuredImage?.value,
+      metaTitle: (f['meta.title']?.value as string | undefined) || '',
+      metaDescription: (f['meta.description']?.value as string | undefined) || '',
+      focusKeyword: (f['meta.focusKeyword']?.value as string | undefined) || '',
+      secondaryKeywords: (f['meta.secondaryKeywords']?.value as string | undefined) || '',
+      canonicalUrl: (f['meta.canonicalUrl']?.value as string | undefined) || '',
+      noIndex: Boolean(f['meta.noIndex']?.value),
+      noFollow: Boolean(f['meta.noFollow']?.value),
+      ogTitle: (f['meta.ogTitle']?.value as string | undefined) || '',
+      ogDescription: (f['meta.ogDescription']?.value as string | undefined) || '',
+      ogImage: f['meta.ogImage']?.value,
+    }
+  })
 
   // Resolve featured image details if only an ID was provided
-  const rawFeaturedImage = formState.featuredImage
+  const rawFeaturedImage = formState?.featuredImage
   useEffect(() => {
     let isCancelled = false
 
@@ -103,32 +107,40 @@ export const SEOEditor: React.FC = () => {
   // Build complete SEO data payload
   const seoData: SEOData = useMemo(() => {
     return {
-      title: formState.title,
-      slug: formState.slug,
-      excerpt: formState.excerpt,
-      content: formState.content,
-      featuredImage: resolvedMedia || formState.featuredImage,
-      metaTitle: formState.metaTitle,
-      metaDescription: formState.metaDescription,
-      focusKeyword: formState.focusKeyword,
-      secondaryKeywords: formState.secondaryKeywords,
-      canonicalUrl: formState.canonicalUrl,
-      noIndex: formState.noIndex,
-      noFollow: formState.noFollow,
-      ogTitle: formState.ogTitle,
-      ogDescription: formState.ogDescription,
-      ogImage: formState.ogImage,
+      title: formState?.title || '',
+      slug: formState?.slug || '',
+      excerpt: formState?.excerpt || '',
+      content: formState?.content,
+      featuredImage: resolvedMedia || formState?.featuredImage,
+      metaTitle: formState?.metaTitle || '',
+      metaDescription: formState?.metaDescription || '',
+      focusKeyword: formState?.focusKeyword || '',
+      secondaryKeywords: formState?.secondaryKeywords || '',
+      canonicalUrl: formState?.canonicalUrl || '',
+      noIndex: formState?.noIndex || false,
+      noFollow: formState?.noFollow || false,
+      ogTitle: formState?.ogTitle || '',
+      ogDescription: formState?.ogDescription || '',
+      ogImage: formState?.ogImage,
     }
   }, [formState, resolvedMedia])
 
   // Debounced real-time analysis
-  const [analysis, setAnalysis] = useState<SEOAnalysisResult>(() =>
-    analyzeArticleSEO(seoData, currentLocale),
-  )
+  const [analysis, setAnalysis] = useState<SEOAnalysisResult>(() => {
+    try {
+      return analyzeArticleSEO(seoData, currentLocale)
+    } catch {
+      return calculateSEOScore(seoData, currentLocale)
+    }
+  })
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setAnalysis(analyzeArticleSEO(seoData, currentLocale))
+      try {
+        setAnalysis(analyzeArticleSEO(seoData, currentLocale))
+      } catch (err) {
+        console.warn('[SEOEditor] Analysis error:', err)
+      }
     }, 150)
 
     return () => clearTimeout(timer)
@@ -285,6 +297,14 @@ export const SEOEditor: React.FC = () => {
         </div>
       )}
     </div>
+  )
+}
+
+export const SEOEditor: React.FC = () => {
+  return (
+    <SEOErrorBoundary>
+      <SEOEditorInner />
+    </SEOErrorBoundary>
   )
 }
 

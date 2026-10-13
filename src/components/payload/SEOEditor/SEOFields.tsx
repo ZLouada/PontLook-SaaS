@@ -3,6 +3,7 @@
 import React from 'react'
 import { useField } from '@payloadcms/ui'
 import type { SEOMetrics } from './types'
+import { getEmptySEOMetrics } from './SEOScorer'
 import styles from './SEOEditor.module.css'
 
 interface SEOFieldsProps {
@@ -11,6 +12,8 @@ interface SEOFieldsProps {
 }
 
 export const SEOFields: React.FC<SEOFieldsProps> = ({ metrics, isArabic }) => {
+  const safeMetrics = metrics || getEmptySEOMetrics(isArabic)
+
   // Bind directly to Payload form fields
   const metaTitleField = useField<string>({ path: 'meta.title' })
   const metaDescField = useField<string>({ path: 'meta.description' })
@@ -20,11 +23,11 @@ export const SEOFields: React.FC<SEOFieldsProps> = ({ metrics, isArabic }) => {
   const noIndexField = useField<boolean>({ path: 'meta.noIndex' })
   const noFollowField = useField<boolean>({ path: 'meta.noFollow' })
 
-  const metaTitleVal = metaTitleField?.value || ''
-  const metaDescVal = metaDescField?.value || ''
-  const focusKeywordVal = focusKeywordField?.value || ''
-  const secondaryKeywordsVal = secondaryKeywordsField?.value || ''
-  const canonicalUrlVal = canonicalUrlField?.value || ''
+  const metaTitleVal = (metaTitleField?.value as string) || ''
+  const metaDescVal = (metaDescField?.value as string) || ''
+  const focusKeywordVal = (focusKeywordField?.value as string) || ''
+  const secondaryKeywordsVal = (secondaryKeywordsField?.value as string) || ''
+  const canonicalUrlVal = (canonicalUrlField?.value as string) || ''
   const noIndexVal = Boolean(noIndexField?.value)
   const noFollowVal = Boolean(noFollowField?.value)
 
@@ -97,7 +100,7 @@ export const SEOFields: React.FC<SEOFieldsProps> = ({ metrics, isArabic }) => {
         <input
           type="text"
           value={metaTitleVal}
-          onChange={(e) => metaTitleField?.setValue(e.target.value)}
+          onChange={(e) => metaTitleField?.setValue?.(e.target.value)}
           placeholder={isArabic ? 'اتركه فارغاً لاستخدام عنوان المقال الأصلي' : 'Leave empty to use article title'}
           style={inputStyle}
           aria-label={isArabic ? 'عنوان SEO' : 'SEO Title'}
@@ -130,7 +133,7 @@ export const SEOFields: React.FC<SEOFieldsProps> = ({ metrics, isArabic }) => {
         <textarea
           rows={3}
           value={metaDescVal}
-          onChange={(e) => metaDescField?.setValue(e.target.value)}
+          onChange={(e) => metaDescField?.setValue?.(e.target.value)}
           placeholder={isArabic ? 'اتركه فارغاً لاستخدام مقتطف المقال الأصلي' : 'Leave empty to use article excerpt'}
           style={{ ...inputStyle, resize: 'vertical' }}
           aria-label={isArabic ? 'الوصف التعريفي' : 'Meta Description'}
@@ -157,7 +160,7 @@ export const SEOFields: React.FC<SEOFieldsProps> = ({ metrics, isArabic }) => {
         <input
           type="text"
           value={focusKeywordVal}
-          onChange={(e) => focusKeywordField?.setValue(e.target.value)}
+          onChange={(e) => focusKeywordField?.setValue?.(e.target.value)}
           placeholder={isArabic ? 'مثال: تدريب الشركات في السعودية' : 'e.g. corporate training GCC'}
           style={inputStyle}
           aria-label={isArabic ? 'الكلمة المفتاحية المستهدفة' : 'Focus Keyword'}
@@ -177,56 +180,56 @@ export const SEOFields: React.FC<SEOFieldsProps> = ({ metrics, isArabic }) => {
               style={{
                 padding: '0.2rem 0.5rem',
                 borderRadius: '4px',
-                backgroundColor: metrics.focusKeywordInTitle ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
-                color: metrics.focusKeywordInTitle ? '#10B981' : '#EF4444',
+                backgroundColor: safeMetrics.focusKeywordInTitle ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+                color: safeMetrics.focusKeywordInTitle ? '#10B981' : '#EF4444',
                 fontWeight: 600,
               }}
             >
-              {metrics.focusKeywordInTitle ? '✓' : '✕'} {isArabic ? 'العنوان' : 'In Title'}
+              {safeMetrics.focusKeywordInTitle ? '✓' : '✕'} {isArabic ? 'العنوان' : 'In Title'}
             </span>
             <span
               style={{
                 padding: '0.2rem 0.5rem',
                 borderRadius: '4px',
-                backgroundColor: metrics.focusKeywordInMetaDesc ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
-                color: metrics.focusKeywordInMetaDesc ? '#10B981' : '#EF4444',
+                backgroundColor: safeMetrics.focusKeywordInMetaDesc ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+                color: safeMetrics.focusKeywordInMetaDesc ? '#10B981' : '#EF4444',
                 fontWeight: 600,
               }}
             >
-              {metrics.focusKeywordInMetaDesc ? '✓' : '✕'} {isArabic ? 'الوصف' : 'In Description'}
+              {safeMetrics.focusKeywordInMetaDesc ? '✓' : '✕'} {isArabic ? 'الوصف' : 'In Description'}
             </span>
             <span
               style={{
                 padding: '0.2rem 0.5rem',
                 borderRadius: '4px',
-                backgroundColor: metrics.focusKeywordInSlug ? 'rgba(16, 185, 129, 0.15)' : 'rgba(14, 165, 233, 0.15)',
-                color: metrics.focusKeywordInSlug ? '#10B981' : '#0EA5E9',
+                backgroundColor: safeMetrics.focusKeywordInSlug ? 'rgba(16, 185, 129, 0.15)' : 'rgba(14, 165, 233, 0.15)',
+                color: safeMetrics.focusKeywordInSlug ? '#10B981' : '#0EA5E9',
                 fontWeight: 600,
               }}
             >
-              {metrics.focusKeywordInSlug ? '✓' : '○'} {isArabic ? 'الرابط' : 'In Slug'}
+              {safeMetrics.focusKeywordInSlug ? '✓' : '○'} {isArabic ? 'الرابط' : 'In Slug'}
             </span>
             <span
               style={{
                 padding: '0.2rem 0.5rem',
                 borderRadius: '4px',
-                backgroundColor: metrics.focusKeywordInFirstParagraph ? 'rgba(16, 185, 129, 0.15)' : 'rgba(245, 158, 11, 0.15)',
-                color: metrics.focusKeywordInFirstParagraph ? '#10B981' : '#F59E0B',
+                backgroundColor: safeMetrics.focusKeywordInFirstParagraph ? 'rgba(16, 185, 129, 0.15)' : 'rgba(245, 158, 11, 0.15)',
+                color: safeMetrics.focusKeywordInFirstParagraph ? '#10B981' : '#F59E0B',
                 fontWeight: 600,
               }}
             >
-              {metrics.focusKeywordInFirstParagraph ? '✓' : '⚠'} {isArabic ? 'المقدمة' : 'First Paragraph'}
+              {safeMetrics.focusKeywordInFirstParagraph ? '✓' : '⚠'} {isArabic ? 'المقدمة' : 'First Paragraph'}
             </span>
             <span
               style={{
                 padding: '0.2rem 0.5rem',
                 borderRadius: '4px',
-                backgroundColor: metrics.focusKeywordInHeadings ? 'rgba(16, 185, 129, 0.15)' : 'rgba(14, 165, 233, 0.15)',
-                color: metrics.focusKeywordInHeadings ? '#10B981' : '#0EA5E9',
+                backgroundColor: safeMetrics.focusKeywordInHeadings ? 'rgba(16, 185, 129, 0.15)' : 'rgba(14, 165, 233, 0.15)',
+                color: safeMetrics.focusKeywordInHeadings ? '#10B981' : '#0EA5E9',
                 fontWeight: 600,
               }}
             >
-              {metrics.focusKeywordInHeadings ? '✓' : '○'} {isArabic ? 'العناوين الفرعية' : 'Headings'}
+              {safeMetrics.focusKeywordInHeadings ? '✓' : '○'} {isArabic ? 'العناوين الفرعية' : 'Headings'}
             </span>
             <span
               style={{
@@ -237,7 +240,7 @@ export const SEOFields: React.FC<SEOFieldsProps> = ({ metrics, isArabic }) => {
                 fontWeight: 600,
               }}
             >
-              {isArabic ? 'الكثافة:' : 'Density:'} {metrics.focusKeywordDensity}% ({metrics.focusKeywordOccurrences}x)
+              {isArabic ? 'الكثافة:' : 'Density:'} {safeMetrics.focusKeywordDensity}% ({safeMetrics.focusKeywordOccurrences}x)
             </span>
           </div>
         )}
@@ -251,7 +254,7 @@ export const SEOFields: React.FC<SEOFieldsProps> = ({ metrics, isArabic }) => {
         <input
           type="text"
           value={secondaryKeywordsVal}
-          onChange={(e) => secondaryKeywordsField?.setValue(e.target.value)}
+          onChange={(e) => secondaryKeywordsField?.setValue?.(e.target.value)}
           placeholder={isArabic ? 'افصل بين الكلمات بفواصل، مثال: قيادة الموارد البشرية، رؤية 2030' : 'Separate with commas, e.g. HR leadership, talent development, GCC'}
           style={inputStyle}
           aria-label={isArabic ? 'كلمات مفتاحية ثانوية' : 'Secondary Keywords'}
@@ -280,7 +283,7 @@ export const SEOFields: React.FC<SEOFieldsProps> = ({ metrics, isArabic }) => {
           <input
             type="url"
             value={canonicalUrlVal}
-            onChange={(e) => canonicalUrlField?.setValue(e.target.value)}
+            onChange={(e) => canonicalUrlField?.setValue?.(e.target.value)}
             placeholder="https://pontlook.com/en/resources/blog/original-post"
             style={{ ...inputStyle, fontSize: '0.8125rem' }}
           />
@@ -292,7 +295,7 @@ export const SEOFields: React.FC<SEOFieldsProps> = ({ metrics, isArabic }) => {
             <input
               type="checkbox"
               checked={noIndexVal}
-              onChange={(e) => noIndexField?.setValue(e.target.checked)}
+              onChange={(e) => noIndexField?.setValue?.(e.target.checked)}
               style={{ cursor: 'pointer' }}
             />
             <span>
@@ -304,7 +307,7 @@ export const SEOFields: React.FC<SEOFieldsProps> = ({ metrics, isArabic }) => {
             <input
               type="checkbox"
               checked={noFollowVal}
-              onChange={(e) => noFollowField?.setValue(e.target.checked)}
+              onChange={(e) => noFollowField?.setValue?.(e.target.checked)}
               style={{ cursor: 'pointer' }}
             />
             <span>

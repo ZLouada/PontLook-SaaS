@@ -103,19 +103,19 @@ export const Articles: CollectionConfig = {
       },
     },
     {
+      name: 'seoEditor',
+      type: 'ui',
+      admin: {
+        components: {
+          Field: '@/components/payload/SEOEditor/SEOEditor#SEOEditor',
+        },
+      },
+    },
+    {
       name: 'meta',
       type: 'group',
       label: 'SEO Metadata',
       fields: [
-        {
-          name: 'seoEditor',
-          type: 'ui',
-          admin: {
-            components: {
-              Field: '@/components/payload/SEOEditor/SEOEditor#SEOEditor',
-            },
-          },
-        },
         {
           name: 'title',
           type: 'text',

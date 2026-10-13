@@ -11,12 +11,13 @@ interface SEORecommendationsProps {
 
 export const SEORecommendations: React.FC<SEORecommendationsProps> = ({ checks, isArabic }) => {
   const [filter, setFilter] = useState<'all' | 'error' | 'warning' | 'pass'>('all')
+  const safeChecks = checks || []
 
-  const errorChecks = checks.filter((c) => c.status === 'error')
-  const warningChecks = checks.filter((c) => c.status === 'warning')
-  const passChecks = checks.filter((c) => c.status === 'pass')
+  const errorChecks = safeChecks.filter((c) => c.status === 'error')
+  const warningChecks = safeChecks.filter((c) => c.status === 'warning')
+  const passChecks = safeChecks.filter((c) => c.status === 'pass')
 
-  const filteredChecks = checks.filter((c) => {
+  const filteredChecks = safeChecks.filter((c) => {
     if (filter === 'all') return true
     return c.status === filter
   })

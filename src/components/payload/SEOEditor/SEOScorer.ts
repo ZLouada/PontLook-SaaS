@@ -21,19 +21,57 @@ import {
   parseSecondaryKeywords,
 } from './KeywordAnalyzer'
 
+export function getEmptySEOMetrics(isArabic: boolean = false): SEOMetrics {
+  return {
+    titleLength: 0,
+    metaTitleLength: 0,
+    effectiveTitleLength: 0,
+    metaDescriptionLength: 0,
+    effectiveDescriptionLength: 0,
+    slugLength: 0,
+    isSlugValid: false,
+    wordCount: 0,
+    readingTimeMinutes: 0,
+    paragraphCount: 0,
+    headingCount: 0,
+    h2Count: 0,
+    hasH1InBody: false,
+    internalLinkCount: 0,
+    externalLinkCount: 0,
+    inlineImageCount: 0,
+    inlineImagesMissingAlt: 0,
+    featuredImageExists: false,
+    featuredImageAltExists: false,
+    featuredImageAlt: '',
+    focusKeyword: '',
+    focusKeywordDensity: 0,
+    focusKeywordOccurrences: 0,
+    focusKeywordInTitle: false,
+    focusKeywordInMetaDesc: false,
+    focusKeywordInSlug: false,
+    focusKeywordInFirstParagraph: false,
+    focusKeywordInHeadings: false,
+    secondaryKeywordsList: [],
+    secondaryKeywordsFound: [],
+    isArabic,
+  }
+}
+
 export function calculateSEOScore(data: SEOData, locale: string = 'en'): SEOAnalysisResult {
   const isArabic = locale === 'ar'
-  const checks: SEOCheck[] = []
+  try {
+    const safeData = data || {}
+    const checks: SEOCheck[] = []
 
-  // Resolve effective values
-  const effectiveTitle = (data.metaTitle || data.title || '').trim()
-  const effectiveDescription = (data.metaDescription || data.excerpt || '').trim()
-  const rawSlug = (data.slug || '').trim()
-  const focusKeyword = (data.focusKeyword || '').trim()
-  const secondaryKeywords = parseSecondaryKeywords(data.secondaryKeywords)
+    // Resolve effective values
+    const effectiveTitle = (safeData.metaTitle || safeData.title || '').trim()
+    const effectiveDescription = (safeData.metaDescription || safeData.excerpt || '').trim()
+    const rawSlug = (safeData.slug || '').trim()
+    const focusKeyword = (safeData.focusKeyword || '').trim()
+    const secondaryKeywords = parseSecondaryKeywords(safeData.secondaryKeywords)
 
-  // 1. Analyze Content
-  const contentAnalysis = analyzeLexicalContent(data.content, isArabic)
+    // 1. Analyze Content
+    const contentAnalysis = analyzeLexicalContent(safeData.content, isArabic)
 
   // 2. Keyword presence checks
   const focusKeywordWordCount = focusKeyword ? focusKeyword.split(/\s+/).length : 0
@@ -70,10 +108,10 @@ export function calculateSEOScore(data: SEOData, locale: string = 'en'): SEOAnal
   )
 
   // 3. Featured Image details
-  const featuredImageExists = Boolean(data.featuredImage)
+  const featuredImageExists = Boolean(safeData.featuredImage)
   let featuredImageAlt = ''
-  if (data.featuredImage && typeof data.featuredImage === 'object') {
-    featuredImageAlt = (data.featuredImage.alt || '').trim()
+  if (safeData.featuredImage && typeof safeData.featuredImage === 'object') {
+    featuredImageAlt = (safeData.featuredImage.alt || '').trim()
   }
   const featuredImageAltExists = Boolean(featuredImageAlt.length > 0)
 
@@ -789,9 +827,9 @@ export function calculateSEOScore(data: SEOData, locale: string = 'en'): SEOAnal
   // ----------------------------------------------------
   let socialPoints = 0
 
-  const ogTitle = (data.ogTitle || data.metaTitle || data.title || '').trim()
-  const ogDescription = (data.ogDescription || data.metaDescription || data.excerpt || '').trim()
-  const ogImageExists = Boolean(data.ogImage || data.featuredImage)
+  const ogTitle = (safeData.ogTitle || safeData.metaTitle || safeData.title || '').trim()
+  const ogDescription = (safeData.ogDescription || safeData.metaDescription || safeData.excerpt || '').trim()
+  const ogImageExists = Boolean(safeData.ogImage || safeData.featuredImage)
 
   // OG Title (5 pts)
   if (ogTitle.length > 0) {
@@ -958,10 +996,10 @@ export function calculateSEOScore(data: SEOData, locale: string = 'en'): SEOAnal
   }
 
   const metrics: SEOMetrics = {
-    titleLength: (data.title || '').length,
-    metaTitleLength: (data.metaTitle || '').length,
+    titleLength: (safeData.title || '').length,
+    metaTitleLength: (safeData.metaTitle || '').length,
     effectiveTitleLength: effectiveTitle.length,
-    metaDescriptionLength: (data.metaDescription || '').length,
+    metaDescriptionLength: (safeData.metaDescription || '').length,
     effectiveDescriptionLength: effectiveDescription.length,
     slugLength: rawSlug.length,
     isSlugValid,
@@ -999,4 +1037,21 @@ export function calculateSEOScore(data: SEOData, locale: string = 'en'): SEOAnal
     checks,
     metrics,
   }
+} catch (err) {
+  console.warn('[SEOScorer] calculateSEOScore caught error:', err)
+  return {
+    score: 0,
+    status: 'poor',
+    statusLabel: isArabic ? 'يحتاج تحسين' : 'Needs Improvement',
+    categories: {
+      technical: { category: 'technical', label: isArabic ? 'السيو التقني' : 'Technical SEO', score: 0, maxScore: 25, passedCount: 0, warningCount: 0, errorCount: 0 },
+      content: { category: 'content', label: isArabic ? 'جودة المحتوى' : 'Content Quality', score: 0, maxScore: 25, passedCount: 0, warningCount: 0, errorCount: 0 },
+      keyword: { category: 'keyword', label: isArabic ? 'الكلمات المفتاحية' : 'Keywords', score: 0, maxScore: 25, passedCount: 0, warningCount: 0, errorCount: 0 },
+      image: { category: 'image', label: isArabic ? 'الصور والوسائط' : 'Image SEO', score: 0, maxScore: 15, passedCount: 0, warningCount: 0, errorCount: 0 },
+      social: { category: 'social', label: isArabic ? 'مشاركة التواصل' : 'Social Cards', score: 0, maxScore: 10, passedCount: 0, warningCount: 0, errorCount: 0 },
+    },
+    checks: [],
+    metrics: getEmptySEOMetrics(isArabic),
+  }
+}
 }
