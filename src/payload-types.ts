@@ -174,13 +174,45 @@ export interface Article {
   status: 'draft' | 'published';
   meta?: {
     /**
-     * Custom browser tab & OG title
+     * Custom browser tab & OG title (leave empty to use article title)
      */
     title?: string | null;
     /**
-     * Search engine description
+     * Search engine description (leave empty to use excerpt)
      */
     description?: string | null;
+    /**
+     * Primary target search phrase for real-time SEO scoring
+     */
+    focusKeyword?: string | null;
+    /**
+     * Secondary keywords separated by commas
+     */
+    secondaryKeywords?: string | null;
+    /**
+     * Canonical URL if this article was originally published elsewhere
+     */
+    canonicalUrl?: string | null;
+    /**
+     * Disallow search engines from indexing this article (robots: noindex)
+     */
+    noIndex?: boolean | null;
+    /**
+     * Disallow search engines from following links on this article (robots: nofollow)
+     */
+    noFollow?: boolean | null;
+    /**
+     * Custom Open Graph social title (leave empty to use SEO title)
+     */
+    ogTitle?: string | null;
+    /**
+     * Custom Open Graph social description (leave empty to use SEO description)
+     */
+    ogDescription?: string | null;
+    /**
+     * Custom social share card image (leave empty to use featured image)
+     */
+    ogImage?: (number | null) | Media;
   };
   updatedAt: string;
   createdAt: string;
@@ -474,6 +506,14 @@ export interface ArticlesSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
+        focusKeyword?: T;
+        secondaryKeywords?: T;
+        canonicalUrl?: T;
+        noIndex?: T;
+        noFollow?: T;
+        ogTitle?: T;
+        ogDescription?: T;
+        ogImage?: T;
       };
   updatedAt?: T;
   createdAt?: T;

@@ -108,12 +108,21 @@ export const Articles: CollectionConfig = {
       label: 'SEO Metadata',
       fields: [
         {
+          name: 'seoEditor',
+          type: 'ui',
+          admin: {
+            components: {
+              Field: '@/components/payload/SEOEditor/SEOEditor#SEOEditor',
+            },
+          },
+        },
+        {
           name: 'title',
           type: 'text',
           localized: true,
           required: false,
           admin: {
-            description: 'Custom browser tab & OG title',
+            description: 'Custom browser tab & OG title (leave empty to use article title)',
           },
         },
         {
@@ -122,7 +131,76 @@ export const Articles: CollectionConfig = {
           localized: true,
           required: false,
           admin: {
-            description: 'Search engine description',
+            description: 'Search engine description (leave empty to use excerpt)',
+          },
+        },
+        {
+          name: 'focusKeyword',
+          type: 'text',
+          localized: true,
+          required: false,
+          admin: {
+            description: 'Primary target search phrase for real-time SEO scoring',
+          },
+        },
+        {
+          name: 'secondaryKeywords',
+          type: 'text',
+          localized: true,
+          required: false,
+          admin: {
+            description: 'Secondary keywords separated by commas',
+          },
+        },
+        {
+          name: 'canonicalUrl',
+          type: 'text',
+          required: false,
+          admin: {
+            description: 'Canonical URL if this article was originally published elsewhere',
+          },
+        },
+        {
+          name: 'noIndex',
+          type: 'checkbox',
+          defaultValue: false,
+          admin: {
+            description: 'Disallow search engines from indexing this article (robots: noindex)',
+          },
+        },
+        {
+          name: 'noFollow',
+          type: 'checkbox',
+          defaultValue: false,
+          admin: {
+            description: 'Disallow search engines from following links on this article (robots: nofollow)',
+          },
+        },
+        {
+          name: 'ogTitle',
+          type: 'text',
+          localized: true,
+          required: false,
+          admin: {
+            description: 'Custom Open Graph social title (leave empty to use SEO title)',
+          },
+        },
+        {
+          name: 'ogDescription',
+          type: 'textarea',
+          localized: true,
+          required: false,
+          admin: {
+            description: 'Custom Open Graph social description (leave empty to use SEO description)',
+          },
+        },
+        {
+          name: 'ogImage',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          admin: {
+            description: 'Custom social share card image (leave empty to use featured image)',
           },
         },
       ],

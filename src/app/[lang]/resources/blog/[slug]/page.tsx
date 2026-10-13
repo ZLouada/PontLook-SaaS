@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Locale, i18n } from '@/i18n/config';
-import { constructAlternates } from '@/lib/seo';
+import { constructAlternates, SITE_URL } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
 import { ArrowLeft, Calendar, User } from '@/components/icons';
 import { getArticleBySlug, getAllArticleSlugs } from '@/lib/payload/resources';
@@ -23,20 +23,32 @@ export async function generateMetadata({
   const article = await getArticleBySlug(slug, lang);
 
   if (article) {
-    const title = article.title;
-    const description = article.excerpt;
-    const imageUrl = article.image || 'https://pontlook.com/images/brand/og-main.png';
+    const title = article.seo?.title || article.title;
+    const description = article.seo?.description || article.excerpt;
+    const ogTitle = article.seo?.ogTitle || title;
+    const ogDescription = article.seo?.ogDescription || description;
+    const imageUrl = article.seo?.ogImage || article.image || 'https://pontlook.com/images/brand/og-main.png';
+
+    const defaultAlternates = constructAlternates(lang, `resources/blog/${slug}`);
+    const canonical = article.seo?.canonicalUrl || `${SITE_URL}/${lang}/resources/blog/${slug}`;
 
     return {
       title: {
         absolute: `${title} | PontLook`,
       },
       description,
-      alternates: constructAlternates(lang, `resources/blog/${slug}`),
+      alternates: {
+        canonical,
+        languages: defaultAlternates?.languages,
+      },
+      robots: {
+        index: !article.seo?.noIndex,
+        follow: !article.seo?.noFollow,
+      },
       openGraph: {
-        title,
-        description,
-        url: `https://pontlook.com/${lang}/resources/blog/${slug}`,
+        title: ogTitle,
+        description: ogDescription,
+        url: `${SITE_URL}/${lang}/resources/blog/${slug}`,
         siteName: 'PontLook',
         locale: isAr ? 'ar_SA' : 'en_US',
         type: 'article',
@@ -45,9 +57,15 @@ export async function generateMetadata({
             url: imageUrl,
             width: 1200,
             height: 630,
-            alt: title,
+            alt: ogTitle,
           },
         ],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: ogTitle,
+        description: ogDescription,
+        images: [imageUrl],
       },
     };
   }

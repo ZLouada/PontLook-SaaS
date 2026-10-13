@@ -129,6 +129,13 @@ export interface AdaptedArticle {
   seo?: {
     title?: string
     description?: string
+    focusKeyword?: string
+    canonicalUrl?: string
+    noIndex?: boolean
+    noFollow?: boolean
+    ogTitle?: string
+    ogDescription?: string
+    ogImage?: string | null
   }
 }
 
@@ -273,8 +280,15 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
             bio: null,
           },
           seo: {
-            title: art.meta?.title,
-            description: art.meta?.description,
+            title: art.meta?.title || undefined,
+            description: art.meta?.description || undefined,
+            focusKeyword: art.meta?.focusKeyword || undefined,
+            canonicalUrl: art.meta?.canonicalUrl || undefined,
+            noIndex: art.meta?.noIndex || undefined,
+            noFollow: art.meta?.noFollow || undefined,
+            ogTitle: art.meta?.ogTitle || undefined,
+            ogDescription: art.meta?.ogDescription || undefined,
+            ogImage: art.meta?.ogImage ? getMediaUrl(await resolveMediaDoc(payload, art.meta.ogImage)) : undefined,
           },
         }
       })
@@ -342,8 +356,15 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
         bio: null,
       },
       seo: {
-        title: art.meta?.title,
-        description: art.meta?.description,
+        title: art.meta?.title || undefined,
+        description: art.meta?.description || undefined,
+        focusKeyword: art.meta?.focusKeyword || undefined,
+        canonicalUrl: art.meta?.canonicalUrl || undefined,
+        noIndex: art.meta?.noIndex || undefined,
+        noFollow: art.meta?.noFollow || undefined,
+        ogTitle: art.meta?.ogTitle || undefined,
+        ogDescription: art.meta?.ogDescription || undefined,
+        ogImage: art.meta?.ogImage ? getMediaUrl(await resolveMediaDoc(payload, art.meta.ogImage)) : undefined,
       },
     }
   } catch (error) {
