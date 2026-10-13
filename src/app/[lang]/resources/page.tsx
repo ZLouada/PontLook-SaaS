@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ResourceImage } from '@/components/resources/ResourceImage';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import {
@@ -184,7 +185,7 @@ export default async function ResourcesPage({
                 className="group relative flex flex-col justify-between h-full rounded-3xl bg-white border border-neutral-200 hover:border-neutral-400 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl"
               >
                 <div className="relative aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/9] w-full shrink-0 min-h-[220px] sm:min-h-[280px] bg-neutral-100 overflow-hidden">
-                  <Image
+                  <ResourceImage
                     src={spotlight.image || '/executive_training_room.jpg'}
                     alt="GCC Corporate Training Benchmark"
                     fill

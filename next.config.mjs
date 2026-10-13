@@ -58,11 +58,54 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'pontlook.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.pontlook.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.supabase.co',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'http',
+        hostname: '127.0.0.1',
+      },
+      {
+        protocol: 'https',
         hostname: 'cdn.sanity.io',
       },
       {
         protocol: 'https',
         hostname: '**',
+      },
+    ],
+    localPatterns: [
+      {
+        pathname: '/media/**',
+      },
+      {
+        pathname: '/payload-media/**',
+      },
+      {
+        pathname: '/api/media/**',
+      },
+      {
+        pathname: '/payload-api/media/**',
+      },
+      {
+        pathname: '/images/**',
+      },
+      {
+        pathname: '/uploads/**',
+      },
+      {
+        pathname: '/**',
       },
     ],
   },

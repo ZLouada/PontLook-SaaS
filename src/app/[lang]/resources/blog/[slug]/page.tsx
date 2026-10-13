@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ResourceImage } from '@/components/resources/ResourceImage';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates, SITE_URL, buildBlogPostingSchema, buildBreadcrumbSchema } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
@@ -212,7 +213,7 @@ export default async function BlogPostDetailPage({
         {imageUrl && (
           <Reveal delay={0.2}>
             <div className="relative aspect-video w-full min-h-[220px] sm:min-h-[320px] shrink-0 rounded-3xl overflow-hidden mb-10 border border-neutral-200 bg-neutral-100 shadow-sm">
-              <Image
+              <ResourceImage
                 src={imageUrl}
                 alt={imageAlt || title}
                 fill

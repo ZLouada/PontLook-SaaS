@@ -20,6 +20,23 @@ export function middleware(request: NextRequest) {
   const isWww = host.startsWith('www.');
   const { pathname, search } = request.nextUrl;
 
+  // 0. Explicit bypass for APIs, Payload admin, media, and uploads
+  if (
+    pathname === '/payload-admin' ||
+    pathname.startsWith('/payload-admin/') ||
+    pathname === '/payload-api' ||
+    pathname.startsWith('/payload-api/') ||
+    pathname.startsWith('/api/') ||
+    pathname === '/media' ||
+    pathname.startsWith('/media/') ||
+    pathname === '/payload-media' ||
+    pathname.startsWith('/payload-media/') ||
+    pathname === '/uploads' ||
+    pathname.startsWith('/uploads/')
+  ) {
+    return NextResponse.next();
+  }
+
   // 1. Internal redirect for legacy /blog paths to /resources/blog
   if (
     pathname === '/blog' ||
@@ -108,12 +125,13 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except:
-     * - api routes
+     * - api & payload routes
+     * - media, payload-media, uploads routes
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico, robots.txt, sitemap.xml, manifest, images and assets with extensions
      */
-    '/((?!api|payload-api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|site.webmanifest|.*\\..*).*)',
+    '/((?!api|payload-api|payload-admin|media|payload-media|uploads|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|site.webmanifest|.*\\..*).*)',
     '/',
   ],
 };

@@ -44,8 +44,6 @@ scripts/*
 .agents/
 .remote_theme_backup/
 .wordpress_theme_staging/
-public/payload-media/*
-!public/payload-media/.gitkeep
 
 # Misplaced root-level static assets (belong in /public)
 /PontlookIcon.png

@@ -11,8 +11,12 @@ export function getMediaUrl(media: any): string | null {
 
   // If already a string
   if (typeof media === 'string') {
-    const trimmed = media.trim()
+    let trimmed = media.trim()
     if (!trimmed) return null
+
+    // Strip localhost, 127.0.0.1, pontlook.com, www.pontlook.com
+    trimmed = trimmed.replace(/^https?:\/\/(?:localhost(?::\d+)?|127\.0\.0\.1(?::\d+)?|(?:www\.)?pontlook\.com)/i, '')
+
     if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
       return trimmed
     }
@@ -37,7 +41,11 @@ export function getMediaUrl(media: any): string | null {
       return `/payload-media/${media.filename}`
     }
     if (media.url && typeof media.url === 'string') {
-      const u = media.url.trim()
+      let u = media.url.trim()
+      u = u.replace(/^https?:\/\/(?:localhost(?::\d+)?|127\.0\.0\.1(?::\d+)?|(?:www\.)?pontlook\.com)/i, '')
+      if (u.startsWith('http://') || u.startsWith('https://')) {
+        return u
+      }
       if (u.startsWith('/payload-api/media/file/')) {
         return `/payload-media/${u.slice('/payload-api/media/file/'.length)}`
       }
@@ -53,7 +61,11 @@ export function getMediaUrl(media: any): string | null {
         return `/payload-media/${sizeObj.filename}`
       }
       if (sizeObj?.url && typeof sizeObj.url === 'string') {
-        const su = sizeObj.url.trim()
+        let su = sizeObj.url.trim()
+        su = su.replace(/^https?:\/\/(?:localhost(?::\d+)?|127\.0\.0\.1(?::\d+)?|(?:www\.)?pontlook\.com)/i, '')
+        if (su.startsWith('http://') || su.startsWith('https://')) {
+          return su
+        }
         if (su.startsWith('/payload-api/media/file/')) {
           return `/payload-media/${su.slice('/payload-api/media/file/'.length)}`
         }
@@ -865,7 +877,7 @@ export const getResourcesFeatured = cache(async (locale: Locale = 'en'): Promise
     // Resolve Spotlight Article relation
     if (featured?.spotlightArticle && typeof featured.spotlightArticle === 'object') {
       const art: any = featured.spotlightArticle
-      const featuredImage = await resolveMediaDoc(payload, art.featuredImage)
+      const featuredImage = await resolveMediaDoc(payload, art.featuredImage, locale)
       const imageUrl = getMediaUrl(featuredImage) || defaultSpotlight.image
       const displayDate = formatDisplayDate(art.publishedAt, locale)
 
