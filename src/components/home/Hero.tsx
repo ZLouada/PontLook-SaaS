@@ -235,7 +235,16 @@ export default function Hero() {
 
     let isRunning = false;
     let animId = 0;
+    let startTimer: any = null;
     const startLoop = () => {
+      if (startTimer !== null) {
+        if (typeof window !== 'undefined' && 'cancelIdleCallback' in window) {
+          (window as any).cancelIdleCallback(startTimer);
+        } else {
+          clearTimeout(startTimer);
+        }
+        startTimer = null;
+      }
       if (!isRunning && vis && !document.hidden) {
         isRunning = true;
         animId = requestAnimationFrame(frame);
@@ -608,12 +617,19 @@ export default function Hero() {
       animId = requestAnimationFrame(frame);
     };
 
-    // Start canvas rendering after initial DOM paint settling to protect critical LCP typography
-    let startTimer: any = null;
+    // Defer continuous canvas rendering loop until after critical DOM hydration settles.
+    // User touch, drag, or scroll awakens startLoop() immediately.
     if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      startTimer = (window as any).requestIdleCallback(() => startLoop(), { timeout: 150 });
+      startTimer = (window as any).requestIdleCallback(
+        () => {
+          requestAnimationFrame(() => startLoop());
+        },
+        { timeout: 2000 }
+      );
     } else {
-      startTimer = setTimeout(() => startLoop(), 80);
+      startTimer = setTimeout(() => {
+        requestAnimationFrame(() => startLoop());
+      }, 1200);
     }
 
     // Cache DOM references for scroll animations
@@ -833,12 +849,14 @@ export default function Hero() {
             <div className="flex gap-3 justify-center items-center flex-wrap">
               <Link
                 href={`/${lang}/find-training`}
+                prefetch={false}
                 className="inline-flex items-center justify-center border border-white px-6 py-3 font-sans font-medium text-[15px] bg-white text-black hover:bg-black hover:text-white transition-colors duration-200"
               >
                 {isAr ? 'ابحث عن شريك تدريب' : 'Find a Training Partner'}
               </Link>
               <Link
                 href={`/${lang}/for-providers`}
+                prefetch={false}
                 className="inline-flex items-center justify-center border border-white px-6 py-3 font-sans font-medium text-[15px] text-white bg-black/40 hover:bg-white hover:text-black transition-colors duration-200 backdrop-blur-sm"
               >
                 {isAr ? 'انضم كمزود تدريب' : 'Join as a Training Provider'}

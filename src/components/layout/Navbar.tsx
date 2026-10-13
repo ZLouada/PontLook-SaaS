@@ -755,6 +755,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             <Magnetic strength={0.16} activeDistance={25} className="hidden lg:inline-flex shrink-0">
               <Link
                 href={switchHref}
+                prefetch={false}
                 className={`inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 shrink-0 whitespace-nowrap ${
                   isLightSection
                     ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
@@ -794,6 +795,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
             <div className="flex items-center gap-1.5 xs:gap-2 lg:hidden">
               <Link
                 href={switchHref}
+                prefetch={false}
                 className={`tap-target inline-flex items-center gap-1 xs:gap-1.5 px-2.5 xs:px-3 py-2 min-h-[44px] rounded-full text-xs font-medium active:scale-95 transition-all duration-200 touch-manipulation whitespace-nowrap shrink-0 ${
                   isLightSection
                     ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'

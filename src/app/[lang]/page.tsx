@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
-import dynamic from 'next/dynamic';
 import Hero from '@/components/home/Hero';
 import { Locale, i18n } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 
-const HowItWorks = dynamic(() => import('@/components/home/HowItWorks'));
-const WhyDifferent = dynamic(() => import('@/components/home/WhyDifferent'));
-const ProviderTeaser = dynamic(() => import('@/components/home/ProviderTeaser'));
+import DeferredHowItWorks from '@/components/home/DeferredHowItWorks';
+import HowItWorksStatic from '@/components/home/HowItWorksStatic';
+import DeferredWhyDifferent from '@/components/home/DeferredWhyDifferent';
+import WhyDifferentStatic from '@/components/home/WhyDifferentStatic';
+import ProviderTeaser from '@/components/home/ProviderTeaser';
+import { getDictionary } from '@/i18n';
 
 export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
@@ -71,13 +73,14 @@ export default async function HomePage({
 }) {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
+  const dict = await getDictionary(lang);
 
   return (
     <>
       <Hero />
-      <HowItWorks />
-      <WhyDifferent />
-      <ProviderTeaser lang={lang} />
+      <DeferredHowItWorks fallback={<HowItWorksStatic lang={lang} dict={dict} />} />
+      <DeferredWhyDifferent fallback={<WhyDifferentStatic lang={lang} dict={dict} />} />
+      <ProviderTeaser lang={lang} dict={dict} />
     </>
   );
 }
