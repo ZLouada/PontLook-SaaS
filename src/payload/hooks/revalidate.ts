@@ -216,3 +216,14 @@ export const revalidateResourcesFeatured: GlobalAfterChangeHook = ({ doc }) => {
   ])
   return doc
 }
+
+export const revalidateNavbar: GlobalAfterChangeHook = ({ doc }) => {
+  revalidatePaths([
+    { path: '/', type: 'layout' },
+    '/en',
+    '/ar',
+    '/en/resources',
+    '/ar/resources',
+  ])
+  return doc
+}

@@ -98,10 +98,12 @@ export interface Config {
   globals: {
     'resources-hero': ResourcesHero;
     'resources-featured': ResourcesFeatured;
+    'navbar-resources-card': NavbarResourcesCard;
   };
   globalsSelect: {
     'resources-hero': ResourcesHeroSelect<false> | ResourcesHeroSelect<true>;
     'resources-featured': ResourcesFeaturedSelect<false> | ResourcesFeaturedSelect<true>;
+    'navbar-resources-card': NavbarResourcesCardSelect<false> | NavbarResourcesCardSelect<true>;
   };
   locale: 'en' | 'ar';
   widgets: {
@@ -739,6 +741,47 @@ export interface ResourcesFeatured {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navbar-resources-card".
+ */
+export interface NavbarResourcesCard {
+  id: number;
+  /**
+   * Toggle this card on or off in the navbar. When unchecked, the card is removed from the dropdown and the remaining links expand cleanly.
+   */
+  enabled?: boolean | null;
+  /**
+   * Small badge overlaid on the image (e.g. "RIYADH · DEC 2026" or "مؤتمر الرياض · ٢٠٢٦")
+   */
+  badge?: string | null;
+  /**
+   * Main title of the featured card (e.g. "ATD Saudi Arabia Conference | 7 – 8 Dec")
+   */
+  title: string;
+  /**
+   * Short teaser text under the title (e.g. "Premier annual talent development & executive conference in Riyadh")
+   */
+  description?: string | null;
+  /**
+   * Uploaded image file from the Media library. If left empty, the fallback image URL or default conference image will be used.
+   */
+  image?: (number | null) | Media;
+  /**
+   * Optional path or external image URL (e.g. /executive_training_room.jpg) if no media upload is selected.
+   */
+  imageUrl?: string | null;
+  /**
+   * Destination URL (e.g. "/resources/events" or an external link like "https://atdksa.com"). Defaults to "/resources/events".
+   */
+  link?: string | null;
+  /**
+   * Label on the bottom link (e.g. "Conference details" or "تفاصيل المؤتمر").
+   */
+  linkText?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "resources-hero_select".
  */
 export interface ResourcesHeroSelect<T extends boolean = true> {
@@ -758,6 +801,23 @@ export interface ResourcesFeaturedSelect<T extends boolean = true> {
   featuredEvent?: T;
   featuredDownload?: T;
   featuredPodcast?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navbar-resources-card_select".
+ */
+export interface NavbarResourcesCardSelect<T extends boolean = true> {
+  enabled?: T;
+  badge?: T;
+  title?: T;
+  description?: T;
+  image?: T;
+  imageUrl?: T;
+  link?: T;
+  linkText?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

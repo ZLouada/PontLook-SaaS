@@ -36,7 +36,22 @@ const NavbarMobileDrawer = dynamic(() => import('./NavbarMobileDrawer'), {
 
 type DropdownKey = 'solutions' | 'about' | 'resources' | null;
 
-export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
+export interface NavbarResourcesCardData {
+  enabled: boolean;
+  badge: string;
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+  linkText: string;
+}
+
+interface NavbarProps {
+  lang: Locale;
+  resourcesCard?: NavbarResourcesCardData | null;
+}
+
+export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<DropdownKey>(null);
@@ -578,197 +593,262 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
               </button>
 
               {/* Resources Popover Dropdown */}
-              <div
-                className={`absolute top-full mt-2.5 ltr:right-0 xl:ltr:end-[-60px] rtl:left-0 xl:rtl:start-[-60px] w-[min(690px,calc(100vw-2.5rem))] rounded-3xl p-5 z-50 shadow-2xl transition-all duration-200 ease-out ${
-                  activeDropdown === 'resources'
-                    ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto visible'
-                    : 'opacity-0 translate-y-2 scale-95 pointer-events-none invisible'
-                } ${
-                  isLightSection
-                    ? 'bg-white border border-neutral-200 text-neutral-900 shadow-[0_25px_60px_rgba(0,0,0,0.14)]'
-                    : 'bg-[#000000] border border-white/15 text-white shadow-[0_30px_70px_rgba(0,0,0,0.95)]'
-                }`}
-              >
-                <div className="grid grid-cols-12 gap-5 items-stretch">
-                  {/* Column 1: Resources Hub Overview */}
-                  <div className="col-span-4 ltr:border-r rtl:border-l border-neutral-200/70 dark:border-white/10 ltr:pr-4 rtl:pl-4 flex flex-col justify-between">
-                    <Link
-                      href={`/${lang}/resources`}
-                      prefetch={false}
-                      onClick={() => setActiveDropdown(null)}
-                      className={`group p-4 rounded-2xl transition-all duration-200 h-full flex flex-col justify-between ${
-                        isLightSection
-                          ? 'bg-neutral-50 hover:bg-neutral-100 border border-neutral-200/80'
-                          : 'bg-white/[0.04] hover:bg-white/[0.08] border border-white/10'
-                      }`}
+              {(() => {
+                const showCard = resourcesCard ? resourcesCard.enabled : true;
+                const card = resourcesCard || {
+                  enabled: true,
+                  badge: isRtl ? 'مؤتمر الرياض · ٢٠٢٦' : 'RIYADH · DEC 2026',
+                  title: isRtl ? 'مؤتمر ATD السعودية | ٧ – ٨ ديسمبر' : 'ATD Saudi Arabia Conference | 7 – 8 Dec',
+                  description: isRtl
+                    ? 'الحدث السنوي الأبرز لتطوير المواهب والكفاءات المؤسسية في الرياض بمشاركة قادة التدريب'
+                    : 'Premier annual talent development & executive conference in Riyadh',
+                  image: '/executive_training_room.jpg',
+                  link: `/${lang}/resources/events`,
+                  linkText: isRtl ? 'تفاصيل المؤتمر' : 'Conference details',
+                };
+                const isExternal = card.link?.startsWith('http://') || card.link?.startsWith('https://');
+
+                return (
+                  <div
+                    className={`absolute top-full mt-2.5 ltr:right-0 xl:ltr:end-[-60px] rtl:left-0 xl:rtl:start-[-60px] ${
+                      showCard
+                        ? 'w-[min(690px,calc(100vw-2.5rem))]'
+                        : 'w-[min(480px,calc(100vw-2.5rem))]'
+                    } rounded-3xl p-5 z-50 shadow-2xl transition-all duration-200 ease-out ${
+                      activeDropdown === 'resources'
+                        ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto visible'
+                        : 'opacity-0 translate-y-2 scale-95 pointer-events-none invisible'
+                    } ${
+                      isLightSection
+                        ? 'bg-white border border-neutral-200 text-neutral-900 shadow-[0_25px_60px_rgba(0,0,0,0.14)]'
+                        : 'bg-[#000000] border border-white/15 text-white shadow-[0_30px_70px_rgba(0,0,0,0.95)]'
+                    }`}
+                  >
+                    <div
+                      className={
+                        showCard
+                          ? 'grid grid-cols-12 gap-5 items-stretch'
+                          : 'grid grid-cols-2 gap-4 items-stretch'
+                      }
                     >
-                      <div>
-                        <div
-                          className={`h-10 w-10 rounded-2xl flex items-center justify-center mb-4 transition-transform group-hover:scale-105 ${
+                      {/* Column 1: Resources Hub Overview */}
+                      <div
+                        className={`${
+                          showCard ? 'col-span-4' : 'col-span-1'
+                        } ltr:border-r rtl:border-l border-neutral-200/70 dark:border-white/10 ltr:pr-4 rtl:pl-4 flex flex-col justify-between`}
+                      >
+                        <Link
+                          href={`/${lang}/resources`}
+                          prefetch={false}
+                          onClick={() => setActiveDropdown(null)}
+                          className={`group p-4 rounded-2xl transition-all duration-200 h-full flex flex-col justify-between ${
                             isLightSection
-                              ? 'bg-neutral-200/80 text-neutral-950 border border-neutral-300'
-                              : 'bg-white/10 text-white border border-white/20'
+                              ? 'bg-neutral-50 hover:bg-neutral-100 border border-neutral-200/80'
+                              : 'bg-white/[0.04] hover:bg-white/[0.08] border border-white/10'
                           }`}
                         >
-                          <Folder size={20} />
-                        </div>
-                        <h4
-                          className={`text-sm font-bold font-heading transition-colors ${
-                            isLightSection ? 'text-neutral-950' : 'text-white'
+                          <div>
+                            <div
+                              className={`h-10 w-10 rounded-2xl flex items-center justify-center mb-4 transition-transform group-hover:scale-105 ${
+                                isLightSection
+                                  ? 'bg-neutral-200/80 text-neutral-950 border border-neutral-300'
+                                  : 'bg-white/10 text-white border border-white/20'
+                              }`}
+                            >
+                              <Folder size={20} />
+                            </div>
+                            <h4
+                              className={`text-sm font-bold font-heading transition-colors ${
+                                isLightSection ? 'text-neutral-950' : 'text-white'
+                              }`}
+                            >
+                              {dict.nav.resources}
+                            </h4>
+                            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-2 leading-relaxed font-normal">
+                              {isRtl
+                                ? 'تصفح كافة مواردنا لتطوير استراتيجيات التدريب وبناء الكفاءات المؤسسية.'
+                                : 'Browse all our resources to boost your L&D strategy.'}
+                            </p>
+                          </div>
+
+                          <div className="mt-4 pt-3 border-t border-neutral-200/50 dark:border-white/10 flex items-center justify-between text-xs font-semibold text-neutral-500 dark:text-neutral-400 group-hover:text-black dark:group-hover:text-white transition-colors">
+                            <span>{isRtl ? 'استعراض الكل' : 'Explore all'}</span>
+                            <ArrowRight
+                              size={13}
+                              className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform"
+                            />
+                          </div>
+                        </Link>
+                      </div>
+
+                      {/* Column 2: Resources List */}
+                      <div
+                        className={`${
+                          showCard ? 'col-span-4' : 'col-span-1'
+                        } space-y-1 flex flex-col justify-center`}
+                      >
+                        <Link
+                          href={`/${lang}/resources/blog`}
+                          prefetch={false}
+                          onClick={() => setActiveDropdown(null)}
+                          className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 ${
+                            isLightSection
+                              ? 'hover:bg-neutral-100 text-neutral-800 hover:text-black'
+                              : 'hover:bg-white/[0.08] text-neutral-300 hover:text-white'
                           }`}
                         >
-                          {dict.nav.resources}
-                        </h4>
-                        <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-2 leading-relaxed font-normal">
-                          {isRtl
-                            ? 'تصفح كافة مواردنا لتطوير استراتيجيات التدريب وبناء الكفاءات المؤسسية.'
-                            : 'Browse all our resources to boost your L&D strategy.'}
-                        </p>
+                          <div
+                            className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+                              isLightSection
+                                ? 'bg-neutral-100 text-neutral-700 group-hover:bg-neutral-200 group-hover:text-black'
+                                : 'bg-white/[0.06] text-neutral-300 border border-white/10 group-hover:bg-white/[0.12] group-hover:text-white'
+                            }`}
+                          >
+                            <BookOpen size={15} />
+                          </div>
+                          <span className="text-xs font-semibold">{dict.nav.blog}</span>
+                        </Link>
+
+                        <Link
+                          href={`/${lang}/resources/events`}
+                          prefetch={false}
+                          onClick={() => setActiveDropdown(null)}
+                          className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 ${
+                            isLightSection
+                              ? 'hover:bg-neutral-100 text-neutral-800 hover:text-black'
+                              : 'hover:bg-white/[0.08] text-neutral-300 hover:text-white'
+                          }`}
+                        >
+                          <div
+                            className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+                              isLightSection
+                                ? 'bg-neutral-100 text-neutral-700 group-hover:bg-neutral-200 group-hover:text-black'
+                                : 'bg-white/[0.06] text-neutral-300 border border-white/10 group-hover:bg-white/[0.12] group-hover:text-white'
+                            }`}
+                          >
+                            <Calendar size={15} />
+                          </div>
+                          <span className="text-xs font-semibold">{dict.nav.events}</span>
+                        </Link>
+
+                        <Link
+                          href={`/${lang}/resources/downloads`}
+                          prefetch={false}
+                          onClick={() => setActiveDropdown(null)}
+                          className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 ${
+                            isLightSection
+                              ? 'hover:bg-neutral-100 text-neutral-800 hover:text-black'
+                              : 'hover:bg-white/[0.08] text-neutral-300 hover:text-white'
+                          }`}
+                        >
+                          <div
+                            className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+                              isLightSection
+                                ? 'bg-neutral-100 text-neutral-700 group-hover:bg-neutral-200 group-hover:text-black'
+                                : 'bg-white/[0.06] text-neutral-300 border border-white/10 group-hover:bg-white/[0.12] group-hover:text-white'
+                            }`}
+                          >
+                            <Download size={15} />
+                          </div>
+                          <span className="text-xs font-semibold">{dict.nav.downloads}</span>
+                        </Link>
+
+                        <Link
+                          href={`/${lang}/resources/podcasts`}
+                          prefetch={false}
+                          onClick={() => setActiveDropdown(null)}
+                          className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 ${
+                            isLightSection
+                              ? 'hover:bg-neutral-100 text-neutral-800 hover:text-black'
+                              : 'hover:bg-white/[0.08] text-neutral-300 hover:text-white'
+                          }`}
+                        >
+                          <div
+                            className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+                              isLightSection
+                                ? 'bg-neutral-100 text-neutral-700 group-hover:bg-neutral-200 group-hover:text-black'
+                                : 'bg-white/[0.06] text-neutral-300 border border-white/10 group-hover:bg-white/[0.12] group-hover:text-white'
+                            }`}
+                          >
+                            <Headphones size={15} />
+                          </div>
+                          <span className="text-xs font-semibold">{dict.nav.podcasts}</span>
+                        </Link>
                       </div>
 
-                      <div className="mt-4 pt-3 border-t border-neutral-200/50 dark:border-white/10 flex items-center justify-between text-xs font-semibold text-neutral-500 dark:text-neutral-400 group-hover:text-black dark:group-hover:text-white transition-colors">
-                        <span>{isRtl ? 'استعراض الكل' : 'Explore all'}</span>
-                        <ArrowRight size={13} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
-                      </div>
-                    </Link>
-                  </div>
+                      {/* Column 3: Featured Visual Card (Only rendered when enabled) */}
+                      {showCard && (
+                        <div className="col-span-4">
+                          <Link
+                            href={card.link || `/${lang}/resources/events`}
+                            target={isExternal ? '_blank' : undefined}
+                            rel={isExternal ? 'noopener noreferrer' : undefined}
+                            prefetch={isExternal ? undefined : false}
+                            onClick={() => setActiveDropdown(null)}
+                            className={`group relative flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl ${
+                              isLightSection
+                                ? 'border border-neutral-200 hover:border-neutral-400 bg-neutral-900 text-white'
+                                : 'border border-white/15 hover:border-white/30 bg-[#090A0D] text-white'
+                            }`}
+                          >
+                            <div className="relative h-28 w-full bg-neutral-900 overflow-hidden">
+                              <Image
+                                src={card.image || '/executive_training_room.jpg'}
+                                alt={card.title || ''}
+                                fill
+                                sizes="320px"
+                                loading="lazy"
+                                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                              {card.badge && (
+                                <div className="absolute top-2.5 start-2.5">
+                                  <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-wider bg-black/60 text-white backdrop-blur-md border border-white/20">
+                                    {card.badge}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
 
-                  {/* Column 2: Resources List */}
-                  <div className="col-span-4 space-y-1 flex flex-col justify-center">
-                    <Link
-                      href={`/${lang}/resources/blog`}
-                      prefetch={false}
-                      onClick={() => setActiveDropdown(null)}
-                      className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 ${
-                        isLightSection
-                          ? 'hover:bg-neutral-100 text-neutral-800 hover:text-black'
-                          : 'hover:bg-white/[0.08] text-neutral-300 hover:text-white'
-                      }`}
-                    >
-                      <div className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
-                        isLightSection
-                          ? 'bg-neutral-100 text-neutral-700 group-hover:bg-neutral-200 group-hover:text-black'
-                          : 'bg-white/[0.06] text-neutral-300 border border-white/10 group-hover:bg-white/[0.12] group-hover:text-white'
-                      }`}>
-                        <BookOpen size={15} />
-                      </div>
-                      <span className="text-xs font-semibold">{dict.nav.blog}</span>
-                    </Link>
-
-                    <Link
-                      href={`/${lang}/resources/events`}
-                      prefetch={false}
-                      onClick={() => setActiveDropdown(null)}
-                      className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 ${
-                        isLightSection
-                          ? 'hover:bg-neutral-100 text-neutral-800 hover:text-black'
-                          : 'hover:bg-white/[0.08] text-neutral-300 hover:text-white'
-                      }`}
-                    >
-                      <div className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
-                        isLightSection
-                          ? 'bg-neutral-100 text-neutral-700 group-hover:bg-neutral-200 group-hover:text-black'
-                          : 'bg-white/[0.06] text-neutral-300 border border-white/10 group-hover:bg-white/[0.12] group-hover:text-white'
-                      }`}>
-                        <Calendar size={15} />
-                      </div>
-                      <span className="text-xs font-semibold">{dict.nav.events}</span>
-                    </Link>
-
-                    <Link
-                      href={`/${lang}/resources/downloads`}
-                      prefetch={false}
-                      onClick={() => setActiveDropdown(null)}
-                      className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 ${
-                        isLightSection
-                          ? 'hover:bg-neutral-100 text-neutral-800 hover:text-black'
-                          : 'hover:bg-white/[0.08] text-neutral-300 hover:text-white'
-                      }`}
-                    >
-                      <div className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
-                        isLightSection
-                          ? 'bg-neutral-100 text-neutral-700 group-hover:bg-neutral-200 group-hover:text-black'
-                          : 'bg-white/[0.06] text-neutral-300 border border-white/10 group-hover:bg-white/[0.12] group-hover:text-white'
-                      }`}>
-                        <Download size={15} />
-                      </div>
-                      <span className="text-xs font-semibold">{dict.nav.downloads}</span>
-                    </Link>
-
-                    <Link
-                      href={`/${lang}/resources/podcasts`}
-                      prefetch={false}
-                      onClick={() => setActiveDropdown(null)}
-                      className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 ${
-                        isLightSection
-                          ? 'hover:bg-neutral-100 text-neutral-800 hover:text-black'
-                          : 'hover:bg-white/[0.08] text-neutral-300 hover:text-white'
-                      }`}
-                    >
-                      <div className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
-                        isLightSection
-                          ? 'bg-neutral-100 text-neutral-700 group-hover:bg-neutral-200 group-hover:text-black'
-                          : 'bg-white/[0.06] text-neutral-300 border border-white/10 group-hover:bg-white/[0.12] group-hover:text-white'
-                      }`}>
-                        <Headphones size={15} />
-                      </div>
-                      <span className="text-xs font-semibold">{dict.nav.podcasts}</span>
-                    </Link>
-                  </div>
-
-                  {/* Column 3: Featured Visual Card */}
-                  <div className="col-span-4">
-                    <Link
-                      href={`/${lang}/resources/events`}
-                      prefetch={false}
-                      onClick={() => setActiveDropdown(null)}
-                      className={`group relative flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl ${
-                        isLightSection
-                          ? 'border border-neutral-200 hover:border-neutral-400 bg-neutral-900 text-white'
-                          : 'border border-white/15 hover:border-white/30 bg-[#090A0D] text-white'
-                      }`}
-                    >
-                      <div className="relative h-28 w-full bg-neutral-900 overflow-hidden">
-                        <Image
-                          src="/executive_training_room.jpg"
-                          alt={isRtl ? 'مؤتمر جمعية تطوير المواهب السعودية ٢٠٢٦' : 'ATD Saudi Arabia Conference 2026'}
-                          fill
-                          sizes="320px"
-                          loading="lazy"
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                        <div className="absolute top-2.5 start-2.5">
-                          <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-wider bg-black/60 text-white backdrop-blur-md border border-white/20">
-                            {isRtl ? 'مؤتمر الرياض · ٢٠٢٦' : 'RIYADH · DEC 2026'}
-                          </span>
+                            <div
+                              className={`p-3.5 flex-1 flex flex-col justify-between ${
+                                isLightSection
+                                  ? 'bg-neutral-900 text-white'
+                                  : 'bg-[#090A0D] text-white'
+                              }`}
+                            >
+                              <div>
+                                <h5 className="text-xs font-bold text-white group-hover:text-[#FF5C00] transition-colors leading-snug">
+                                  {card.title}
+                                </h5>
+                                {card.description && (
+                                  <p className="text-[11px] text-neutral-300 line-clamp-2 mt-1 leading-normal font-normal">
+                                    {card.description}
+                                  </p>
+                                )}
+                              </div>
+                              <div className="mt-3 flex items-center justify-between text-[11px] font-semibold text-[#FF5C00] pt-2 border-t border-white/10">
+                                <span>{card.linkText || (isRtl ? 'تفاصيل المؤتمر' : 'Conference details')}</span>
+                                {isExternal ? (
+                                  <ArrowUpRight
+                                    size={12}
+                                    className="rtl:-scale-x-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                                  />
+                                ) : (
+                                  <ArrowRight
+                                    size={12}
+                                    className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform"
+                                  />
+                                )}
+                              </div>
+                            </div>
+                          </Link>
                         </div>
-                      </div>
-
-                      <div className={`p-3.5 flex-1 flex flex-col justify-between ${
-                        isLightSection
-                          ? 'bg-neutral-900 text-white'
-                          : 'bg-[#090A0D] text-white'
-                      }`}>
-                        <div>
-                          <h5 className="text-xs font-bold text-white group-hover:text-[#FF5C00] transition-colors leading-snug">
-                            {isRtl ? 'مؤتمر ATD السعودية | ٧ – ٨ ديسمبر' : 'ATD Saudi Arabia Conference | 7 – 8 Dec'}
-                          </h5>
-                          <p className="text-[11px] text-neutral-300 line-clamp-2 mt-1 leading-normal font-normal">
-                            {isRtl
-                              ? 'الحدث السنوي الأبرز لتطوير المواهب والكفاءات المؤسسية في الرياض بمشاركة قادة التدريب'
-                              : 'Premier annual talent development & executive conference in Riyadh'}
-                          </p>
-                        </div>
-                        <div className="mt-3 flex items-center justify-between text-[11px] font-semibold text-[#FF5C00] pt-2 border-t border-white/10">
-                          <span>{isRtl ? 'تفاصيل المؤتمر' : 'Conference details'}</span>
-                          <ArrowRight size={12} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
-                        </div>
-                      </div>
-                    </Link>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </div>
+                );
+              })()}
             </li>
           </ul>
 
@@ -864,6 +944,7 @@ export default function Navbar({ lang }: Readonly<{ lang: Locale }>) {
           dict={dict}
           isForProviders={isForProviders}
           switchHref={switchHref}
+          resourcesCard={resourcesCard}
         />
       )}
 

@@ -11,6 +11,7 @@ import { Events } from './payload/collections/Events'
 import { Media } from './payload/collections/Media'
 import { Podcasts } from './payload/collections/Podcasts'
 import { Users } from './payload/collections/Users'
+import { NavbarResourcesCard } from './payload/globals/NavbarResourcesCard'
 import { ResourcesFeatured } from './payload/globals/ResourcesFeatured'
 import { ResourcesHero } from './payload/globals/ResourcesHero'
 
@@ -40,6 +41,7 @@ export default buildConfig({
   globals: [
     ResourcesHero,
     ResourcesFeatured,
+    NavbarResourcesCard,
   ],
   localization: {
     locales: [
@@ -70,5 +72,6 @@ export default buildConfig({
         : undefined,
       max: 5,
     },
+    push: true,
   }),
 })

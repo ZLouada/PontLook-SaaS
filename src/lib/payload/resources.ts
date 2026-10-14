@@ -231,6 +231,16 @@ export interface AdaptedFeatured {
   editorPickEventB?: AdaptedEditorPickEvent
 }
 
+export interface AdaptedNavbarResourcesCard {
+  enabled: boolean
+  badge: string
+  title: string
+  description: string
+  image: string
+  link: string
+  linkText: string
+}
+
 // Helper: Resolve Media document if stored as unpopulated ID
 async function resolveMediaDoc(payload: any, media: any, locale?: Locale): Promise<any> {
   if (typeof media === 'number' || (typeof media === 'string' && /^\d+$/.test(media))) {
@@ -938,3 +948,67 @@ export const getResourcesFeatured = cache(async (locale: Locale = 'en'): Promise
     }
   }
 })
+
+// 9. Get Navbar Resources Card Global
+export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promise<AdaptedNavbarResourcesCard> => {
+  const isAr = locale === 'ar'
+
+  const defaultCard: AdaptedNavbarResourcesCard = {
+    enabled: true,
+    badge: isAr ? 'مؤتمر الرياض · ٢٠٢٦' : 'RIYADH · DEC 2026',
+    title: isAr ? 'مؤتمر ATD السعودية | ٧ – ٨ ديسمبر' : 'ATD Saudi Arabia Conference | 7 – 8 Dec',
+    description: isAr
+      ? 'الحدث السنوي الأبرز لتطوير المواهب والكفاءات المؤسسية في الرياض بمشاركة قادة التدريب'
+      : 'Premier annual talent development & executive conference in Riyadh',
+    image: '/executive_training_room.jpg',
+    link: `/${locale}/resources/events`,
+    linkText: isAr ? 'تفاصيل المؤتمر' : 'Conference details',
+  }
+
+  try {
+    const payload = await getPayloadClient()
+    const card = await payload.findGlobal({
+      slug: 'navbar-resources-card',
+      locale,
+      depth: 1,
+      overrideAccess: false,
+    })
+
+    if (!card) {
+      return defaultCard
+    }
+
+    const enabled = card.enabled !== undefined && card.enabled !== null ? Boolean(card.enabled) : true
+
+    // Resolve Image: check upload relation first, then custom imageUrl, fallback to default
+    let resolvedImageUrl: string | null = null
+    if (card.image) {
+      const resolvedMedia = await resolveMediaDoc(payload, card.image, locale)
+      resolvedImageUrl = getMediaUrl(resolvedMedia)
+    }
+    if (!resolvedImageUrl && card.imageUrl) {
+      resolvedImageUrl = getMediaUrl(card.imageUrl)
+    }
+    const image = resolvedImageUrl || defaultCard.image
+
+    // Normalize link
+    let link = card.link?.trim() || defaultCard.link
+    if (link.startsWith('/resources') && !link.startsWith(`/${locale}`)) {
+      link = `/${locale}${link}`
+    }
+
+    return {
+      enabled,
+      badge: card.badge?.trim() || (isAr ? 'مؤتمر الرياض · ٢٠٢٦' : 'RIYADH · DEC 2026'),
+      title: card.title?.trim() || defaultCard.title,
+      description: card.description?.trim() || defaultCard.description,
+      image,
+      link,
+      linkText: card.linkText?.trim() || defaultCard.linkText,
+    }
+  } catch (error) {
+    console.error('[Payload Data Layer] Failed to get navbar resources card:', error)
+    return defaultCard
+  }
+})
+

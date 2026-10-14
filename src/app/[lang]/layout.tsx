@@ -5,6 +5,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import '../globals.css';
 import { getDictionary, Locale, locales } from '@/i18n';
+import { getNavbarResourcesCard } from '@/lib/payload/resources';
 import { DictionaryProvider } from '@/components/providers/DictionaryProvider';
 import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
 
@@ -140,7 +141,10 @@ export default async function RootLayout({
     notFound();
   }
   const lang = rawLang as Locale;
-  const dictionary = await getDictionary(lang);
+  const [dictionary, resourcesCard] = await Promise.all([
+    getDictionary(lang),
+    getNavbarResourcesCard(lang),
+  ]);
   const dir = rawLang === 'ar' ? 'rtl' : 'ltr';
 
   const jsonLdGraph = {
@@ -219,7 +223,7 @@ export default async function RootLayout({
       <body className={`bg-black text-neutral-300 antialiased selection:bg-white/20 selection:text-white ${lang === 'ar' ? 'font-arabic' : ''}`}>
         <DictionaryProvider dictionary={dictionary}>
           <FramerMotionProvider>
-            <Navbar lang={lang} />
+            <Navbar lang={lang} resourcesCard={resourcesCard} />
             <main className="min-h-screen">{children}</main>
             <Footer lang={lang} />
           </FramerMotionProvider>

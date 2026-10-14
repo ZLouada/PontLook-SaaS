@@ -7,6 +7,7 @@ import Image from 'next/image';
 import {
   X,
   ArrowUpRight,
+  ArrowRight,
   Globe,
   Building2,
   Briefcase,
@@ -20,6 +21,7 @@ import {
 } from '@/components/icons';
 import Signal from '@/components/shared/Signal';
 import { Locale } from '@/i18n';
+import type { NavbarResourcesCardData } from './Navbar';
 
 interface NavbarMobileDrawerProps {
   open: boolean;
@@ -28,6 +30,7 @@ interface NavbarMobileDrawerProps {
   dict: any;
   isForProviders: boolean;
   switchHref: string;
+  resourcesCard?: NavbarResourcesCardData | null;
 }
 
 export default function NavbarMobileDrawer({
@@ -37,6 +40,7 @@ export default function NavbarMobileDrawer({
   dict,
   isForProviders,
   switchHref,
+  resourcesCard,
 }: NavbarMobileDrawerProps) {
   if (!open || typeof document === 'undefined') return null;
 
@@ -273,6 +277,55 @@ export default function NavbarMobileDrawer({
                     <div className="text-[11px] text-neutral-400 truncate">{dict.nav.events_desc}</div>
                   </div>
                 </Link>
+
+                {/* Dynamic featured card from Payload CMS */}
+                {resourcesCard && resourcesCard.enabled !== false && (
+                  <Link
+                    href={resourcesCard.link || `/${lang}/resources/events`}
+                    target={resourcesCard.link?.startsWith('http') ? '_blank' : undefined}
+                    rel={resourcesCard.link?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    prefetch={resourcesCard.link?.startsWith('http') ? undefined : false}
+                    onClick={() => setOpen(false)}
+                    className="group relative mt-2 flex flex-col rounded-2xl overflow-hidden border border-white/15 bg-[#090A0D] text-white transition-all active:scale-[0.98]"
+                  >
+                    <div className="relative h-24 w-full bg-neutral-900 overflow-hidden">
+                      <Image
+                        src={resourcesCard.image || '/executive_training_room.jpg'}
+                        alt={resourcesCard.title || ''}
+                        fill
+                        sizes="320px"
+                        loading="lazy"
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                      {resourcesCard.badge && (
+                        <div className="absolute top-2 start-2">
+                          <span className="px-2 py-0.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider bg-black/60 text-white backdrop-blur-md border border-white/20">
+                            {resourcesCard.badge}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-3 bg-[#090A0D]">
+                      <h5 className="text-xs font-bold text-white line-clamp-1 group-hover:text-[#FF5C00] transition-colors">
+                        {resourcesCard.title}
+                      </h5>
+                      {resourcesCard.description && (
+                        <p className="text-[10px] text-neutral-400 line-clamp-1 mt-0.5">
+                          {resourcesCard.description}
+                        </p>
+                      )}
+                      <div className="mt-2 flex items-center justify-between text-[11px] font-semibold text-[#FF5C00] pt-1.5 border-t border-white/10">
+                        <span>{resourcesCard.linkText || (isRtl ? 'تفاصيل المؤتمر' : 'Conference details')}</span>
+                        {resourcesCard.link?.startsWith('http') ? (
+                          <ArrowUpRight size={11} className="rtl:-scale-x-100" />
+                        ) : (
+                          <ArrowRight size={11} className="rtl:-scale-x-100" />
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
