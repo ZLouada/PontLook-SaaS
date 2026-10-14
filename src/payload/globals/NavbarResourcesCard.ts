@@ -23,71 +23,58 @@ export const NavbarResourcesCard: GlobalConfig = {
       },
     },
     {
-      name: 'badge',
+      name: 'postType',
+      type: 'select',
+      label: 'Post Type',
+      defaultValue: 'article',
+      options: [
+        { label: 'Article (Blog Post)', value: 'article' },
+        { label: 'Event / Conference', value: 'event' },
+      ],
+      admin: {
+        description: 'Choose whether you want to feature an Article (Blog Post) or an Event.',
+      },
+    },
+    {
+      name: 'selectedArticle',
+      type: 'relationship',
+      relationTo: 'articles',
+      label: 'Select Existing Article',
+      required: false,
+      admin: {
+        condition: (data) => !data?.postType || data?.postType === 'article',
+        description: 'Pick an existing article from your published posts. The title, excerpt, category badge, cover image, and link are all pulled automatically.',
+      },
+    },
+    {
+      name: 'selectedEvent',
+      type: 'relationship',
+      relationTo: 'events',
+      label: 'Select Existing Event',
+      required: false,
+      admin: {
+        condition: (data) => data?.postType === 'event',
+        description: 'Pick an existing event. The title, description, location/date badge, and RSVP link are pulled automatically.',
+      },
+    },
+    {
+      name: 'customBadge',
       type: 'text',
-      label: 'Date / Location Pill Badge',
+      label: 'Custom Badge (Optional Override)',
       localized: true,
       required: false,
       admin: {
-        description: 'Small badge overlaid on the image (e.g. "RIYADH · DEC 2026" or "مؤتمر الرياض · ٢٠٢٦")',
+        description: 'Leave empty to automatically use the post category or event date/location.',
       },
     },
     {
-      name: 'title',
-      type: 'text',
-      label: 'Card Title',
-      localized: true,
-      required: true,
-      admin: {
-        description: 'Main title of the featured card (e.g. "ATD Saudi Arabia Conference | 7 – 8 Dec")',
-      },
-    },
-    {
-      name: 'description',
-      type: 'textarea',
-      label: 'Description',
-      localized: true,
-      required: false,
-      admin: {
-        description: 'Short teaser text under the title (e.g. "Premier annual talent development & executive conference in Riyadh")',
-      },
-    },
-    {
-      name: 'image',
+      name: 'customImage',
       type: 'upload',
       relationTo: 'media',
-      label: 'Cover Image (Media Upload)',
+      label: 'Custom Cover Image (Optional Override)',
       required: false,
       admin: {
-        description: 'Uploaded image file from the Media library. If left empty, the fallback image URL or default conference image will be used.',
-      },
-    },
-    {
-      name: 'imageUrl',
-      type: 'text',
-      label: 'Custom Image URL / Path (Fallback)',
-      required: false,
-      admin: {
-        description: 'Optional path or external image URL (e.g. /executive_training_room.jpg) if no media upload is selected.',
-      },
-    },
-    {
-      name: 'link',
-      type: 'text',
-      label: 'Target Destination Link / URL',
-      required: false,
-      admin: {
-        description: 'Destination URL (e.g. "/resources/events" or an external link like "https://atdksa.com"). Defaults to "/resources/events".',
-      },
-    },
-    {
-      name: 'linkText',
-      type: 'text',
-      label: 'Link CTA Text',
-      localized: true,
-      required: false,
-      admin: {
-        description: 'Label on the bottom link (e.g. "Conference details" or "تفاصيل المؤتمر").',
+        description: 'Leave empty to automatically use the featured image from the selected post.',
       },
     },
   ],

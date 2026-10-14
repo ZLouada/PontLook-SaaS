@@ -970,7 +970,7 @@ export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promi
     const card = await payload.findGlobal({
       slug: 'navbar-resources-card',
       locale,
-      depth: 1,
+      depth: 2,
       overrideAccess: false,
     })
 
@@ -979,36 +979,105 @@ export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promi
     }
 
     const enabled = card.enabled !== undefined && card.enabled !== null ? Boolean(card.enabled) : true
+    const postType = (card as any).postType || 'article'
+    const customBadge = (card as any).customBadge?.trim()
 
-    // Resolve Image: check upload relation first, then custom imageUrl, fallback to default
-    let resolvedImageUrl: string | null = null
-    if (card.image) {
-      const resolvedMedia = await resolveMediaDoc(payload, card.image, locale)
-      resolvedImageUrl = getMediaUrl(resolvedMedia)
-    }
-    if (!resolvedImageUrl && card.imageUrl) {
-      resolvedImageUrl = getMediaUrl(card.imageUrl)
-    }
-    const image = resolvedImageUrl || defaultCard.image
-
-    // Normalize link
-    let link = card.link?.trim() || defaultCard.link
-    if (link.startsWith('/resources') && !link.startsWith(`/${locale}`)) {
-      link = `/${locale}${link}`
+    // 1. Resolve custom image override if provided
+    let customImageUrl: string | null = null
+    if ((card as any).customImage) {
+      const resolvedCustomMedia = await resolveMediaDoc(payload, (card as any).customImage, locale)
+      customImageUrl = getMediaUrl(resolvedCustomMedia)
     }
 
+    // 2. Resolve Selected Article
+    if (postType === 'article' && (card as any).selectedArticle) {
+      let artDoc = (card as any).selectedArticle
+      if (typeof artDoc === 'number' || (typeof artDoc === 'string' && /^\d+$/.test(artDoc))) {
+        try {
+          artDoc = await payload.findByID({
+            collection: 'articles',
+            id: Number(artDoc),
+            depth: 1,
+            locale,
+          })
+        } catch (err) {
+          console.warn('[Payload Data Layer] Could not fetch selectedArticle:', err)
+        }
+      }
+
+      if (artDoc && typeof artDoc === 'object' && artDoc.title) {
+        let imageUrl = customImageUrl
+        if (!imageUrl && artDoc.featuredImage) {
+          const resolvedMedia = await resolveMediaDoc(payload, artDoc.featuredImage, locale)
+          imageUrl = getMediaUrl(resolvedMedia)
+        }
+
+        return {
+          enabled,
+          badge: customBadge || artDoc.category || (isAr ? 'مقال مميز' : 'FEATURED ARTICLE'),
+          title: artDoc.title,
+          description:
+            artDoc.excerpt ||
+            (isAr
+              ? 'تصفح المقال بالكامل للاطلاع على أحدث الدراسات والاستراتيجيات.'
+              : 'Explore the full article for practical frameworks and actionable insights.'),
+          image: imageUrl || defaultCard.image,
+          link: `/${locale}/resources/blog/${artDoc.slug}`,
+          linkText: isAr ? 'قراءة المقال' : 'Read article',
+        }
+      }
+    }
+
+    // 3. Resolve Selected Event
+    if (postType === 'event' && (card as any).selectedEvent) {
+      let evDoc = (card as any).selectedEvent
+      if (typeof evDoc === 'number' || (typeof evDoc === 'string' && /^\d+$/.test(evDoc))) {
+        try {
+          evDoc = await payload.findByID({
+            collection: 'events',
+            id: Number(evDoc),
+            depth: 1,
+            locale,
+          })
+        } catch (err) {
+          console.warn('[Payload Data Layer] Could not fetch selectedEvent:', err)
+        }
+      }
+
+      if (evDoc && typeof evDoc === 'object' && evDoc.title) {
+        const displayDate = formatDisplayDate(evDoc.date, locale)
+        const eventBadge =
+          customBadge ||
+          (evDoc.location
+            ? `${evDoc.location.toUpperCase()} · ${displayDate}`
+            : evDoc.type || (isAr ? 'فعالية قادمة' : 'UPCOMING EVENT'))
+
+        let link = evDoc.rsvpLink?.trim() || `/${locale}/resources/events`
+        if (link.startsWith('/resources') && !link.startsWith(`/${locale}`)) {
+          link = `/${locale}${link}`
+        }
+
+        return {
+          enabled,
+          badge: eventBadge,
+          title: evDoc.title,
+          description: evDoc.description || defaultCard.description,
+          image: customImageUrl || defaultCard.image,
+          link,
+          linkText: isAr ? 'تفاصيل المؤتمر' : 'Conference details',
+        }
+      }
+    }
+
+    // Fallback: If neither was populated or selected yet, return default card with enabled toggle respected
     return {
+      ...defaultCard,
       enabled,
-      badge: card.badge?.trim() || (isAr ? 'مؤتمر الرياض · ٢٠٢٦' : 'RIYADH · DEC 2026'),
-      title: card.title?.trim() || defaultCard.title,
-      description: card.description?.trim() || defaultCard.description,
-      image,
-      link,
-      linkText: card.linkText?.trim() || defaultCard.linkText,
     }
   } catch (error) {
     console.error('[Payload Data Layer] Failed to get navbar resources card:', error)
     return defaultCard
   }
 })
+
 

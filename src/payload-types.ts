@@ -750,33 +750,25 @@ export interface NavbarResourcesCard {
    */
   enabled?: boolean | null;
   /**
-   * Small badge overlaid on the image (e.g. "RIYADH · DEC 2026" or "مؤتمر الرياض · ٢٠٢٦")
+   * Choose whether you want to feature an Article (Blog Post) or an Event.
    */
-  badge?: string | null;
+  postType?: ('article' | 'event') | null;
   /**
-   * Main title of the featured card (e.g. "ATD Saudi Arabia Conference | 7 – 8 Dec")
+   * Pick an existing article from your published posts. The title, excerpt, category badge, cover image, and link are all pulled automatically.
    */
-  title: string;
+  selectedArticle?: (number | null) | Article;
   /**
-   * Short teaser text under the title (e.g. "Premier annual talent development & executive conference in Riyadh")
+   * Pick an existing event. The title, description, location/date badge, and RSVP link are pulled automatically.
    */
-  description?: string | null;
+  selectedEvent?: (number | null) | Event;
   /**
-   * Uploaded image file from the Media library. If left empty, the fallback image URL or default conference image will be used.
+   * Leave empty to automatically use the post category or event date/location.
    */
-  image?: (number | null) | Media;
+  customBadge?: string | null;
   /**
-   * Optional path or external image URL (e.g. /executive_training_room.jpg) if no media upload is selected.
+   * Leave empty to automatically use the featured image from the selected post.
    */
-  imageUrl?: string | null;
-  /**
-   * Destination URL (e.g. "/resources/events" or an external link like "https://atdksa.com"). Defaults to "/resources/events".
-   */
-  link?: string | null;
-  /**
-   * Label on the bottom link (e.g. "Conference details" or "تفاصيل المؤتمر").
-   */
-  linkText?: string | null;
+  customImage?: (number | null) | Media;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -811,13 +803,11 @@ export interface ResourcesFeaturedSelect<T extends boolean = true> {
  */
 export interface NavbarResourcesCardSelect<T extends boolean = true> {
   enabled?: T;
-  badge?: T;
-  title?: T;
-  description?: T;
-  image?: T;
-  imageUrl?: T;
-  link?: T;
-  linkText?: T;
+  postType?: T;
+  selectedArticle?: T;
+  selectedEvent?: T;
+  customBadge?: T;
+  customImage?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
