@@ -999,13 +999,14 @@ export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promi
             id: Number(artDoc),
             depth: 1,
             locale,
+            fallbackLocale: 'en',
           })
         } catch (err) {
           console.warn('[Payload Data Layer] Could not fetch selectedArticle:', err)
         }
       }
 
-      if (artDoc && typeof artDoc === 'object' && artDoc.title) {
+      if (artDoc && typeof artDoc === 'object') {
         let imageUrl = customImageUrl
         if (!imageUrl && artDoc.featuredImage) {
           const resolvedMedia = await resolveMediaDoc(payload, artDoc.featuredImage, locale)
@@ -1015,14 +1016,14 @@ export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promi
         return {
           enabled,
           badge: customBadge || artDoc.category || (isAr ? 'مقال مميز' : 'FEATURED ARTICLE'),
-          title: artDoc.title,
+          title: artDoc.title || defaultCard.title,
           description:
             artDoc.excerpt ||
             (isAr
               ? 'تصفح المقال بالكامل للاطلاع على أحدث الدراسات والاستراتيجيات.'
               : 'Explore the full article for practical frameworks and actionable insights.'),
           image: imageUrl || defaultCard.image,
-          link: `/${locale}/resources/blog/${artDoc.slug}`,
+          link: `/${locale}/resources/blog/${artDoc.slug || 'renewable-energy-skills-gap'}`,
           linkText: isAr ? 'قراءة المقال' : 'Read article',
         }
       }
@@ -1038,13 +1039,14 @@ export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promi
             id: Number(evDoc),
             depth: 1,
             locale,
+            fallbackLocale: 'en',
           })
         } catch (err) {
           console.warn('[Payload Data Layer] Could not fetch selectedEvent:', err)
         }
       }
 
-      if (evDoc && typeof evDoc === 'object' && evDoc.title) {
+      if (evDoc && typeof evDoc === 'object') {
         const displayDate = formatDisplayDate(evDoc.date, locale)
         const eventBadge =
           customBadge ||
@@ -1060,7 +1062,7 @@ export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promi
         return {
           enabled,
           badge: eventBadge,
-          title: evDoc.title,
+          title: evDoc.title || defaultCard.title,
           description: evDoc.description || defaultCard.description,
           image: customImageUrl || defaultCard.image,
           link,

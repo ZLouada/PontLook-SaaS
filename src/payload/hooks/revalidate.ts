@@ -220,6 +220,7 @@ export const revalidateResourcesFeatured: GlobalAfterChangeHook = ({ doc }) => {
 export const revalidateNavbar: GlobalAfterChangeHook = ({ doc }) => {
   revalidatePaths([
     { path: '/', type: 'layout' },
+    { path: '/[lang]', type: 'layout' },
     '/en',
     '/ar',
     '/en/resources',
