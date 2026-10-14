@@ -72,6 +72,6 @@ export default buildConfig({
         : undefined,
       max: 5,
     },
-    push: true,
+    push: false,
   }),
 })
