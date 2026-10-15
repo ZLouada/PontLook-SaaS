@@ -1,6 +1,9 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
+import { useParams } from 'next/navigation';
+import { useDictionary } from '@/components/providers/DictionaryProvider';
+import { getCountryCode } from '@/i18n/config';
 
 interface GccProviderHeroProps {
   isAr?: boolean;
@@ -29,6 +32,11 @@ const PR_AR = [
 ];
 
 export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) {
+  const params = useParams();
+  const lang = (params?.lang as string) || 'en';
+  const countryCode = getCountryCode(lang);
+  const dict = useDictionary();
+
   const heroRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const bigWordRef = useRef<HTMLHeadingElement>(null);
@@ -533,25 +541,50 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
           id="lead"
           className="absolute inset-0 grid place-content-center text-center opacity-0 pointer-events-none px-[5vw] z-10 transition-transform duration-75 ease-out pb-[6vh]"
         >
-          <h2 className="font-heading font-light text-[clamp(2.2rem,6vw,5.6rem)] leading-[1.04] tracking-tight text-white max-w-5xl mx-auto md:drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
-            {isAr ? (
-              <>
-                توقف عن ملاحقة الشركات. <br />
-                ارتبط بالمنشآت التي تبحث عنك الآن.
-              </>
-            ) : (
-              <>
-                Stop chasing companies. <br />
-                Match with the ones that need you.
-              </>
+          {dict.forProviders?.badge && (
+            <div className="mb-4">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-semibold tracking-wider uppercase border border-[#FF5C00]/40 bg-[#FF5C00]/10 text-[#FF5C00] backdrop-blur-md">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00] animate-pulse" />
+                {dict.forProviders.badge}
+              </span>
+            </div>
+          )}
+
+          <h2 className="font-heading font-light text-[clamp(2.0rem,5.2vw,4.6rem)] leading-[1.08] tracking-tight text-white max-w-5xl mx-auto md:drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
+            {dict.forProviders?.headline || (
+              isAr ? (
+                <>
+                  توقف عن ملاحقة الشركات. <br />
+                  ارتبط بالمنشآت التي تبحث عنك الآن.
+                </>
+              ) : (
+                <>
+                  Stop chasing companies. <br />
+                  Match with the ones that need you.
+                </>
+              )
             )}
           </h2>
 
-          <p className="mt-7 text-neutral-300 text-sm sm:text-base font-sans md:drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
-            {isAr ? 'منظومة التشغيل والربط لـ' : 'Operating System for'}
-            <b className="block text-white font-medium mt-1">
-              {isAr ? 'مزودي تدريب الشركات في الخليج' : 'GCC Corporate Training Providers'}
-            </b>
+          <p className="mt-7 text-neutral-300 text-sm sm:text-base font-sans md:drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] max-w-2xl mx-auto">
+            {dict.forProviders?.subtitle || (
+              <>
+                {isAr ? 'منظومة التشغيل والربط لـ' : 'Operating System for'}{' '}
+                <b className="block text-white font-medium mt-1">
+                  {countryCode === 'sa'
+                    ? isAr
+                      ? 'مزودي تدريب الشركات المعتمدين من TVTC في السعودية'
+                      : 'TVTC-Accredited Training Providers in Saudi Arabia'
+                    : countryCode === 'ae'
+                    ? isAr
+                      ? 'معاهد ومراكز التدريب المعتمدة من KHDA و ACTVET في الإمارات'
+                      : 'KHDA & ACTVET Training Institutes in the UAE'
+                    : isAr
+                    ? 'مزودي تدريب الشركات في الخليج'
+                    : 'GCC Corporate Training Providers'}
+                </b>
+              </>
+            )}
           </p>
 
           <div className="mt-8 flex justify-center gap-3 pointer-events-auto">
@@ -559,8 +592,8 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
               href="#connection-bridge"
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF5C00] hover:bg-[#FF6A1A] text-white text-xs sm:text-sm font-sans font-semibold rounded-xl shadow-lg shadow-orange-500/25 transition-all duration-200"
             >
-              <span>{isAr ? 'انضم كشريك تدريب' : 'Apply as provider'}</span>
-              <span>→</span>
+              <span>{dict.forProviders?.applyBtn || (isAr ? 'انضم كشريك تدريب' : 'Apply as provider')}</span>
+              <span className="rtl:-scale-x-100">→</span>
             </a>
           </div>
         </div>

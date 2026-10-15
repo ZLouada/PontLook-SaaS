@@ -14,6 +14,7 @@ import {
   Loader2,
   Sparkles,
 } from '@/components/icons';
+import CountryFlag from '@/components/shared/CountryFlag';
 
 interface MarketTokens {
   countryName?: string;
@@ -412,28 +413,48 @@ export default function LocalizedIntakeForm({
               <label className="block text-xs font-mono text-neutral-400 mb-1">
                 {isAr ? 'الدولة *' : 'Country *'}
               </label>
-              <select
-                value={country}
-                onChange={(e) => {
-                  const c = e.target.value;
-                  setCountry(c);
-                  if (c === 'Saudi Arabia') {
-                    setPhonePrefix('+966');
-                    setCurrency('SAR');
-                  } else if (c === 'United Arab Emirates') {
-                    setPhonePrefix('+971');
-                    setCurrency('AED');
-                  }
-                }}
-                className="w-full px-4 py-3 rounded-xl border border-white/10 bg-black/50 text-sm text-white focus:outline-none focus:border-[#FF5C00]"
-              >
-                <option value="Saudi Arabia">Saudi Arabia (المملكة العربية السعودية)</option>
-                <option value="United Arab Emirates">United Arab Emirates (الإمارات العربية المتحدة)</option>
-                <option value="Qatar">Qatar (قطر)</option>
-                <option value="Kuwait">Kuwait (الكويت)</option>
-                <option value="Bahrain">Bahrain (البحرين)</option>
-                <option value="Oman">Oman (عُمان)</option>
-              </select>
+              {countryCode === 'sa' || countryCode === 'ae' ? (
+                <div className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/[0.06] text-sm text-white font-medium flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <CountryFlag code={countryCode === 'sa' ? 'SA' : 'AE'} className="w-4 h-3 rounded-xs" />
+                    <span>
+                      {countryCode === 'sa'
+                        ? isAr
+                          ? 'المملكة العربية السعودية'
+                          : 'Saudi Arabia'
+                        : isAr
+                        ? 'الإمارات العربية المتحدة'
+                        : 'United Arab Emirates'}
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#FF5C00]/20 text-[#FF5C00] uppercase tracking-wider">
+                    {countryCode.toUpperCase()}
+                  </span>
+                </div>
+              ) : (
+                <select
+                  value={country}
+                  onChange={(e) => {
+                    const c = e.target.value;
+                    setCountry(c);
+                    if (c === 'Saudi Arabia') {
+                      setPhonePrefix('+966');
+                      setCurrency('SAR');
+                    } else if (c === 'United Arab Emirates') {
+                      setPhonePrefix('+971');
+                      setCurrency('AED');
+                    }
+                  }}
+                  className="w-full px-4 py-3 rounded-xl border border-white/10 bg-black/50 text-sm text-white focus:outline-none focus:border-[#FF5C00]"
+                >
+                  <option value="Saudi Arabia">Saudi Arabia (المملكة العربية السعودية)</option>
+                  <option value="United Arab Emirates">United Arab Emirates (الإمارات العربية المتحدة)</option>
+                  <option value="Qatar">Qatar (قطر)</option>
+                  <option value="Kuwait">Kuwait (الكويت)</option>
+                  <option value="Bahrain">Bahrain (البحرين)</option>
+                  <option value="Oman">Oman (عُمان)</option>
+                </select>
+              )}
             </div>
 
             <div>
