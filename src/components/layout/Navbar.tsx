@@ -602,14 +602,14 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                 const showCard = resourcesCard ? resourcesCard.enabled : true;
                 const card = resourcesCard || {
                   enabled: true,
-                  badge: isRtl ? 'مؤتمر الرياض · ٢٠٢٦' : 'RIYADH · DEC 2026',
-                  title: isRtl ? 'مؤتمر ATD السعودية | ٧ – ٨ ديسمبر' : 'ATD Saudi Arabia Conference | 7 – 8 Dec',
+                  badge: isRtl ? 'تقرير تحليلي' : 'SPECIAL REPORT',
+                  title: isRtl ? 'فجوة الكفاءات في مشاريع الطاقة المتجددة' : 'Bridging the Clean Energy Skills Gap',
                   description: isRtl
-                    ? 'الحدث السنوي الأبرز لتطوير المواهب والكفاءات المؤسسية في الرياض بمشاركة قادة التدريب'
-                    : 'Premier annual talent development & executive conference in Riyadh',
+                    ? 'دراسة ميدانية حول تحديات استقطاب وتأهيل المهندسين في مشاريع الطاقة بالخليج'
+                    : 'An executive analysis on talent bottlenecks and engineering capability building',
                   image: '/executive_training_room.jpg',
-                  link: `/${lang}/resources/events`,
-                  linkText: isRtl ? 'تفاصيل المؤتمر' : 'Conference details',
+                  link: `/${lang}/resources/blog/renewable-energy-skills-gap`,
+                  linkText: isRtl ? 'قراءة التقرير' : 'Read report',
                 };
                 const isExternal = card.link?.startsWith('http://') || card.link?.startsWith('https://');
 

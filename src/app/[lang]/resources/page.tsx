@@ -94,26 +94,71 @@ export default async function ResourcesPage({
   const heroSubtitle = hero.subtitle;
   const spotlight = featured.spotlight;
   const editorPickEvent = featured.editorPickEvent;
+  const editorPickToolkit = featured.editorPickToolkit;
 
-  // Real upcoming events from the web for the featured panel
-  const cardEventA = {
-    badge: editorPickEvent?.badge || (isAr ? 'مؤتمر تطوير المواهب · الرياض' : 'L&D CONFERENCE · RIYADH'),
-    date: editorPickEvent?.date || (isAr ? '٧ – ٨ ديسمبر ٢٠٢٦' : '7 – 8 Dec 2026'),
-    title: editorPickEvent?.title || (isAr ? 'مؤتمر جمعية تطوير المواهب (ATD) السعودية ٢٠٢٦' : 'ATD Saudi Arabia Conference 2026'),
-    desc: editorPickEvent?.desc || '',
-    cta: editorPickEvent?.cta || (isAr ? 'الموقع الرسمي والتسجيل' : 'Official Event & Agenda'),
-    link: editorPickEvent?.link || 'https://atdksa.com',
+  // Derive cards for right stack: use Payload CMS published events if available, otherwise fallback to Toolkits & Podcasts
+  const hasPublishedEvents = eventsList && eventsList.length > 0;
+  const primaryEvent = editorPickEvent || (hasPublishedEvents ? {
+    badge: eventsList[0].type || (isAr ? 'فعالية معتمدة' : 'VERIFIED EVENT'),
+    date: eventsList[0].date,
+    title: eventsList[0].title,
+    desc: eventsList[0].desc,
+    cta: isAr ? 'الموقع الرسمي والتسجيل' : 'Official Event & Agenda',
+    link: eventsList[0].link,
+  } : null);
+
+  const secondaryEvent = featured.editorPickEventB || (eventsList && eventsList.length > 1 ? {
+    badge: eventsList[1].type || (isAr ? 'جلسة تنفيذية' : 'EXECUTIVE SESSION'),
+    date: eventsList[1].date,
+    title: eventsList[1].title,
+    desc: eventsList[1].desc,
+    cta: isAr ? 'الموقع الرسمي والتسجيل' : 'Official Summit & RSVP',
+    link: eventsList[1].link,
+  } : null);
+
+  const cardA = primaryEvent ? {
+    badge: primaryEvent.badge,
+    date: primaryEvent.date,
+    title: primaryEvent.title,
+    desc: primaryEvent.desc,
+    cta: primaryEvent.cta,
+    link: primaryEvent.link || `/${lang}/resources/events`,
+    isExternal: primaryEvent.link?.startsWith('http') || false,
+    badgeColor: 'bg-neutral-200 text-neutral-800 border-neutral-300',
+  } : {
+    badge: editorPickToolkit?.badge || (isAr ? 'أدوات ونماذج معتمدة' : 'ENTERPRISE TOOLKIT'),
+    date: isAr ? 'تحميل مباشر' : 'Instant Download',
+    title: editorPickToolkit?.title || (isAr ? 'دليل معايير اعتماد التدريب المؤسسي' : 'Enterprise Training Accreditation Guide'),
+    desc: editorPickToolkit?.desc || (isAr ? 'نماذج عملية وأطر متوافقة لتقييم الاحتياج التدريبي وبناء كوادر العمل.' : 'Practical frameworks for corporate training needs analysis and workforce onboarding.'),
+    cta: editorPickToolkit?.cta || (isAr ? 'استعراض النماذج' : 'Explore Toolkits'),
+    link: editorPickToolkit?.link || `/${lang}/resources/downloads`,
+    isExternal: false,
+    badgeColor: 'bg-[#FF5C00]/10 text-[#FF5C00] border-[#FF5C00]/25 font-bold',
   };
 
-  const secondEvent = eventsList && eventsList.length > 1 ? eventsList[1] : null;
-  const cardEventB = {
-    badge: secondEvent?.type || featured.editorPickEventB?.badge || (isAr ? 'قمة تنفيذية · الرياض' : 'EXECUTIVE SUMMIT · RIYADH'),
-    date: secondEvent?.date || featured.editorPickEventB?.date || (isAr ? '١٦ – ١٧ نوفمبر ٢٠٢٦' : '16 – 17 Nov 2026'),
-    title: secondEvent?.title || featured.editorPickEventB?.title || (isAr ? 'قمة تقنيات الموارد البشرية والتدريب في السعودية ٢٠٢٦' : 'HR Tech Saudi Summit 2026'),
-    desc: secondEvent?.desc || featured.editorPickEventB?.desc || '',
-    cta: featured.editorPickEventB?.cta || (isAr ? 'الموقع الرسمي والتسجيل' : 'Official Summit & RSVP'),
-    link: secondEvent?.link || featured.editorPickEventB?.link || 'https://hrtechsaudi.com',
+  const cardB = secondaryEvent ? {
+    badge: secondaryEvent.badge,
+    date: secondaryEvent.date,
+    title: secondaryEvent.title,
+    desc: secondaryEvent.desc,
+    cta: secondaryEvent.cta,
+    link: secondaryEvent.link || `/${lang}/resources/events`,
+    isExternal: secondaryEvent.link?.startsWith('http') || false,
+    badgeColor: 'bg-[#FF5C00]/10 text-[#FF5C00] border-[#FF5C00]/25 font-bold',
+  } : {
+    badge: isAr ? 'بودكاست التدريب' : 'EXECUTIVE PODCAST',
+    date: isAr ? 'حلقات صوتية' : 'Audio Briefings',
+    title: isAr ? 'حوارات صُنّاع القرار واستراتيجيات التدريب' : 'Executive Conversations on Workforce L&D',
+    desc: isAr ? 'لقاءات حصرية مع قادة الموارد البشرية والتدريب في الخليج لمناقشة تحديات توطين الكفاءات.' : 'Exclusive insights from GCC Chief People Officers navigating talent localization and upskilling.',
+    cta: isAr ? 'الاستماع للحلقات' : 'Listen to Episodes',
+    link: `/${lang}/resources/podcasts`,
+    isExternal: false,
+    badgeColor: 'bg-neutral-200 text-neutral-800 border-neutral-300',
   };
+
+  const stackHeader = (primaryEvent || secondaryEvent)
+    ? (isAr ? 'أبرز الفعاليات القادمة' : 'FEATURED UPCOMING EVENTS')
+    : (isAr ? 'أدوات ومحتوى تنفيذي' : 'EXECUTIVE TOOLKITS & MEDIA');
 
   const categoryPills = [
     { label: isAr ? 'كافة الموارد' : 'All Resources', href: `/${lang}/resources`, active: true },
@@ -230,37 +275,37 @@ export default async function ResourcesPage({
             {/* Right 2-Card Stack (4 Cols) */}
             <div className="lg:col-span-5 xl:col-span-4 flex flex-col">
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 mb-3 block">
-                {isAr ? 'أبرز الفعاليات القادمة' : "FEATURED UPCOMING EVENTS"}
+                {stackHeader}
               </span>
               <div className="flex flex-col gap-6 sm:gap-8 justify-between flex-1">
-              {/* Card A: Real Event 1 from Web */}
+              {/* Card A */}
               <Link
-                href={cardEventA.link || `/${lang}/resources/events`}
-                target={cardEventA.link?.startsWith('http') ? '_blank' : undefined}
-                rel={cardEventA.link?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                href={cardA.link || `/${lang}/resources/events`}
+                target={cardA.isExternal ? '_blank' : undefined}
+                rel={cardA.isExternal ? 'noopener noreferrer' : undefined}
                 className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex-1"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-neutral-200 text-neutral-800 border border-neutral-300">
-                      {cardEventA.badge}
+                    <span className={`px-2.5 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider border ${cardA.badgeColor}`}>
+                      {cardA.badge}
                     </span>
                     <span className="text-xs font-mono text-neutral-500">
-                      {cardEventA.date}
+                      {cardA.date}
                     </span>
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
-                    {cardEventA.title}
+                    {cardA.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
-                    {cardEventA.desc}
+                    {cardA.desc}
                   </p>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
-                  <span>{cardEventA.cta}</span>
-                  {cardEventA.link?.startsWith('http') ? (
+                  <span>{cardA.cta}</span>
+                  {cardA.isExternal ? (
                     <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   ) : (
                     <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
@@ -268,34 +313,34 @@ export default async function ResourcesPage({
                 </div>
               </Link>
 
-              {/* Card B: Real Event 2 from Web */}
+              {/* Card B */}
               <Link
-                href={cardEventB.link || `/${lang}/resources/events`}
-                target={cardEventB.link?.startsWith('http') ? '_blank' : undefined}
-                rel={cardEventB.link?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                href={cardB.link || `/${lang}/resources/events`}
+                target={cardB.isExternal ? '_blank' : undefined}
+                rel={cardB.isExternal ? 'noopener noreferrer' : undefined}
                 className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex-1"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-[#FF5C00]/10 text-[#FF5C00] border border-[#FF5C00]/25 font-bold">
-                      {cardEventB.badge}
+                    <span className={`px-2.5 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider border ${cardB.badgeColor}`}>
+                      {cardB.badge}
                     </span>
                     <span className="text-xs font-mono text-neutral-500">
-                      {cardEventB.date}
+                      {cardB.date}
                     </span>
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
-                    {cardEventB.title}
+                    {cardB.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
-                    {cardEventB.desc}
+                    {cardB.desc}
                   </p>
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
-                  <span>{cardEventB.cta}</span>
-                  {cardEventB.link?.startsWith('http') ? (
+                  <span>{cardB.cta}</span>
+                  {cardB.isExternal ? (
                     <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   ) : (
                     <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
