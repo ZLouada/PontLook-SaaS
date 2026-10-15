@@ -1,23 +1,30 @@
 import type { Metadata } from 'next';
+import type { Locale } from '@/i18n/config';
 
 export const SITE_URL = 'https://pontlook.com';
 
 /**
- * Standard alternates for main non-country routes.
+ * Construct 6-way hreflang alternates and self-referencing canonical URL
+ * for GCC regional and country-specific routes.
  */
-export function constructAlternates(lang: 'en' | 'ar', path: string = ''): Metadata['alternates'] {
+export function constructAlternates(lang: Locale | string, path: string = ''): Metadata['alternates'] {
   const normalizedPath = path ? `/${path.replace(/^\/+|\/+$/g, '')}` : '';
   const canonicalUrl = `${SITE_URL}/${lang}${normalizedPath}`;
 
   return {
     canonical: canonicalUrl,
     languages: {
+      'en-SA': `${SITE_URL}/en-sa${normalizedPath}`,
+      'ar-SA': `${SITE_URL}/ar-sa${normalizedPath}`,
+      'en-AE': `${SITE_URL}/en-ae${normalizedPath}`,
+      'ar-AE': `${SITE_URL}/ar-ae${normalizedPath}`,
       en: `${SITE_URL}/en${normalizedPath}`,
       ar: `${SITE_URL}/ar${normalizedPath}`,
       'x-default': `${SITE_URL}/en${normalizedPath}`,
     },
   };
 }
+
 
 /**
  * Dedicated icons and favicons for the For Providers section.

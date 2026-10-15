@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, ReactNode } from 'react';
-import { Dictionary } from '@/i18n';
+import type { Dictionary } from '@/i18n/dictionaries/en';
 
 const DictionaryContext = createContext<Dictionary | null>(null);
 

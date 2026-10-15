@@ -1,10 +1,17 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, IBM_Plex_Sans_Arabic, JetBrains_Mono } from 'next/font/google';
+import { Inter, Cairo, JetBrains_Mono } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import '../globals.css';
 import { getDictionary, Locale, locales } from '@/i18n';
+import {
+  isArabicLocale,
+  getLocaleDirection,
+  getHtmlLang,
+  getCountryCode,
+} from '@/i18n/config';
+import { constructAlternates } from '@/lib/seo';
 import { getNavbarResourcesCard } from '@/lib/payload/resources';
 import { DictionaryProvider } from '@/components/providers/DictionaryProvider';
 import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
@@ -15,9 +22,9 @@ const inter = Inter({
   variable: '--font-sans',
 });
 
-const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
-  subsets: ['arabic'],
-  weight: ['400', '600'],
+const cairo = Cairo({
+  subsets: ['arabic', 'latin'],
+  weight: ['400', '600', '700'],
   display: 'swap',
   variable: '--font-arabic',
   preload: false,
@@ -48,19 +55,40 @@ export async function generateMetadata({
   if (!rawLang || !(locales as readonly string[]).includes(rawLang)) {
     return {};
   }
-  const isAr = rawLang === 'ar';
+  const isAr = isArabicLocale(rawLang);
+  const country = getCountryCode(rawLang);
+  const dict = await getDictionary(rawLang);
+
+  const titleText = dict.hero?.headline
+    ? `${dict.hero.headline} | PontLook`
+    : isAr
+    ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات'
+    : 'PontLook: Corporate Training Matchmaking Platform';
+
+  const descText = dict.hero?.subtitle
+    ? dict.hero.subtitle
+    : isAr
+    ? 'منصة ربط مديري الموارد البشرية والشركات بأفضل مزودي التدريب المعتمدين في السعودية والإمارات. فرص معتمدة 100% بدون رسوم شهرية.'
+    : 'Connect corporate buyers with verified training providers across Saudi Arabia and UAE. Qualified leads only with zero monthly retainers or cold outreach.';
+
+  const ogLocale = isAr
+    ? country === 'ae'
+      ? 'ar_AE'
+      : 'ar_SA'
+    : country === 'ae'
+    ? 'en_AE'
+    : country === 'sa'
+    ? 'en_SA'
+    : 'en_US';
 
   return {
     metadataBase: new URL('https://pontlook.com'),
     title: {
-      default: isAr
-        ? 'PontLook: منصة التوفيق بين شركات التدريب والشركات'
-        : 'PontLook: Corporate Training Matchmaking Platform',
+      default: titleText,
       template: '%s | PontLook',
     },
-    description: isAr
-      ? 'منصة ربط مديري الموارد البشرية والشركات بأفضل مزودي التدريب المعتمدين في السعودية والإمارات. فرص معتمدة 100% بدون رسوم شهرية.'
-      : 'Connect corporate buyers with verified training providers across Saudi Arabia and UAE. Qualified leads only with zero monthly retainers or cold outreach.',
+    description: descText,
+    alternates: constructAlternates(rawLang, ''),
 
     icons: {
       icon: [
@@ -83,7 +111,7 @@ export async function generateMetadata({
       description: isAr
         ? 'منصة ربط مديري الموارد البشرية والشركات بأفضل مزودي التدريب المعتمدين في السعودية والإمارات. فرص معتمدة 100% بدون رسوم شهرية.'
         : 'Connect corporate buyers with verified training providers across Saudi Arabia and UAE. Qualified leads only with zero monthly retainers or cold outreach.',
-      url: `https://pontlook.com/${isAr ? 'ar' : 'en'}`,
+      url: `https://pontlook.com/${rawLang}`,
       siteName: 'PontLook',
       images: [
         {
@@ -107,7 +135,7 @@ export async function generateMetadata({
             : 'PontLook Corporate Training Matchmaking Logo',
         },
       ],
-      locale: isAr ? 'ar_SA' : 'en_US',
+      locale: ogLocale,
       type: 'website',
     },
     manifest: '/site.webmanifest',
@@ -125,7 +153,7 @@ export async function generateMetadata({
 }
 
 export function generateStaticParams() {
-  return [{ lang: 'en' }, { lang: 'ar' }];
+  return (locales as readonly string[]).map((lang) => ({ lang }));
 }
 
 export default async function RootLayout({
@@ -145,7 +173,9 @@ export default async function RootLayout({
     getDictionary(lang),
     getNavbarResourcesCard(lang),
   ]);
-  const dir = rawLang === 'ar' ? 'rtl' : 'ltr';
+  const isAr = isArabicLocale(lang);
+  const dir = getLocaleDirection(lang);
+  const htmlLang = getHtmlLang(lang);
 
   const jsonLdGraph = {
     "@context": "https://schema.org",
@@ -158,7 +188,7 @@ export default async function RootLayout({
         "alternateName": ["Pont Look", "pontlook", "PontLook SaaS"],
         "description": "B2B Corporate Training Matchmaking Platform & Pay-Per-Lead Engine",
         "image": "https://pontlook.com/images/brand/og-main.png",
-        "inLanguage": ["en", "ar"]
+        "inLanguage": ["en", "ar", "en-SA", "ar-SA", "en-AE", "ar-AE"]
       },
       {
         "@type": "Organization",
@@ -211,7 +241,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang={lang} dir={dir} className={`${inter.variable} ${ibmPlexSansArabic.variable} ${jetbrainsMono.variable}`}>
+    <html lang={htmlLang} dir={dir} className={`${inter.variable} ${cairo.variable} ${jetbrainsMono.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -220,7 +250,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`bg-black text-neutral-300 antialiased selection:bg-white/20 selection:text-white ${lang === 'ar' ? 'font-arabic' : ''}`}>
+      <body className={`bg-black text-neutral-300 antialiased selection:bg-white/20 selection:text-white ${isAr ? 'font-arabic' : ''}`}>
         <DictionaryProvider dictionary={dictionary}>
           <FramerMotionProvider>
             <Navbar lang={lang} resourcesCard={resourcesCard} />

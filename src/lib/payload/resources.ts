@@ -5,6 +5,11 @@ import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import type { Locale } from '@/i18n/config'
 
+export type PayloadLocale = 'en' | 'ar';
+export function toPayloadLocale(locale?: string | null): PayloadLocale {
+  return locale?.startsWith('ar') ? 'ar' : 'en';
+}
+
 // Helper: Extract image URL from Payload Media relation or string
 export function getMediaUrl(media: any): string | null {
   if (!media) return null
@@ -249,7 +254,7 @@ async function resolveMediaDoc(payload: any, media: any, locale?: Locale): Promi
         collection: 'media',
         id: Number(media),
         depth: 0,
-        locale,
+        locale: toPayloadLocale(locale),
       })
       if (mediaDoc) {
         return mediaDoc
@@ -272,7 +277,7 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
           equals: 'published',
         },
       },
-      locale,
+      locale: toPayloadLocale(locale),
       depth: 1,
       sort: '-publishedAt',
       limit: 100,
@@ -287,7 +292,7 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
           typeof resolvedImage === 'object' && resolvedImage?.alt
             ? typeof resolvedImage.alt === 'string'
               ? resolvedImage.alt.trim()
-              : resolvedImage.alt?.[locale] || null
+              : resolvedImage.alt?.[toPayloadLocale(locale)] || null
             : null
         const displayDate = formatDisplayDate(art.publishedAt, locale)
         const contentText = extractTextFromLexical(art.content)
@@ -296,7 +301,7 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
           id: String(art.id),
           slug: art.slug,
           title: art.title || '',
-          category: art.category || (locale === 'ar' ? 'استراتيجيات التدريب' : 'L&D STRATEGIES'),
+          category: art.category || (locale.startsWith('ar') ? 'استراتيجيات التدريب' : 'L&D STRATEGIES'),
           readTime: art.readTime || '6 min read',
           date: displayDate,
           publishedAt: art.publishedAt || null,
@@ -354,7 +359,7 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
           },
         ],
       },
-      locale,
+      locale: toPayloadLocale(locale),
       depth: 1,
       limit: 1,
       overrideAccess: false,
@@ -555,7 +560,7 @@ export const getDownloads = cache(async (locale: Locale = 'en'): Promise<Adapted
           equals: 'published',
         },
       },
-      locale,
+      locale: toPayloadLocale(locale),
       depth: 1,
       limit: 100,
       overrideAccess: false,
@@ -694,7 +699,7 @@ export const getEvents = cache(async (locale: Locale = 'en'): Promise<AdaptedEve
           equals: 'published',
         },
       },
-      locale,
+      locale: toPayloadLocale(locale),
       depth: 1,
       sort: 'date',
       limit: 100,
@@ -705,7 +710,7 @@ export const getEvents = cache(async (locale: Locale = 'en'): Promise<AdaptedEve
       return result.docs.map((ev: any) => {
         const displayDate = formatDisplayDate(ev.date, locale)
         const seatsStr = ev.spotsLeft
-          ? locale === 'ar'
+          ? locale.startsWith('ar')
             ? `باقي ${ev.spotsLeft} مقاعد`
             : `${ev.spotsLeft} Seats Remaining`
           : ''
@@ -717,7 +722,7 @@ export const getEvents = cache(async (locale: Locale = 'en'): Promise<AdaptedEve
           date: displayDate,
           time: ev.time || '',
           location: ev.location || '',
-          type: ev.type || (locale === 'ar' ? 'فعالية' : 'Event'),
+          type: ev.type || (locale.startsWith('ar') ? 'فعالية' : 'Event'),
           desc: ev.description || '',
           spotsLeft: seatsStr,
           link: ev.rsvpLink || '',
@@ -732,13 +737,13 @@ export const getEvents = cache(async (locale: Locale = 'en'): Promise<AdaptedEve
   return REAL_WEB_EVENTS.map((ev) => ({
     id: ev.id,
     slug: ev.slug,
-    title: locale === 'ar' ? ev.titleAr : ev.titleEn,
-    date: locale === 'ar' ? ev.dateAr : ev.dateEn,
-    time: locale === 'ar' ? ev.timeAr : ev.timeEn,
-    location: locale === 'ar' ? ev.locationAr : ev.locationEn,
-    type: locale === 'ar' ? ev.typeAr : ev.typeEn,
-    desc: locale === 'ar' ? ev.descAr : ev.descEn,
-    spotsLeft: locale === 'ar' ? ev.spotsLeftAr : ev.spotsLeftEn,
+    title: locale.startsWith('ar') ? ev.titleAr : ev.titleEn,
+    date: locale.startsWith('ar') ? ev.dateAr : ev.dateEn,
+    time: locale.startsWith('ar') ? ev.timeAr : ev.timeEn,
+    location: locale.startsWith('ar') ? ev.locationAr : ev.locationEn,
+    type: locale.startsWith('ar') ? ev.typeAr : ev.typeEn,
+    desc: locale.startsWith('ar') ? ev.descAr : ev.descEn,
+    spotsLeft: locale.startsWith('ar') ? ev.spotsLeftAr : ev.spotsLeftEn,
     link: ev.link,
   }))
 })
@@ -754,7 +759,7 @@ export const getPodcasts = cache(async (locale: Locale = 'en'): Promise<AdaptedP
           equals: 'published',
         },
       },
-      locale,
+      locale: toPayloadLocale(locale),
       depth: 1,
       sort: '-date',
       limit: 100,
@@ -784,19 +789,20 @@ export const getPodcasts = cache(async (locale: Locale = 'en'): Promise<AdaptedP
 
 // 7. Get Resources Hero Global
 export const getResourcesHero = cache(async (locale: Locale = 'en'): Promise<AdaptedHero> => {
+  const isAr = locale.startsWith('ar');
   try {
     const payload = await getPayloadClient()
     const hero = await payload.findGlobal({
       slug: 'resources-hero',
-      locale,
+      locale: toPayloadLocale(locale),
       overrideAccess: false,
     })
 
     return {
-      title: hero?.title || (locale === 'ar' ? 'مركز موارد التدريب والتطوير في PontLook' : 'The PontLook L&D resource hub'),
+      title: hero?.title || (isAr ? 'مركز موارد التدريب والتطوير في PontLook' : 'The PontLook L&D resource hub'),
       subtitle:
         hero?.description ||
-        (locale === 'ar'
+        (isAr
           ? 'رؤى واستراتيجيات وموارد لمساعدة المنشآت على بناء كوادر أقوى من خلال قرارات تدريبية أفضل.'
           : 'Insights, strategies, and resources to help organisations build stronger workforces through better training decisions.'),
       eyebrow: hero?.eyebrow || undefined,
@@ -804,9 +810,9 @@ export const getResourcesHero = cache(async (locale: Locale = 'en'): Promise<Ada
   } catch (error) {
     console.error('[Payload Data Layer] Failed to get resources hero:', error)
     return {
-      title: locale === 'ar' ? 'مركز موارد التدريب والتطوير في PontLook' : 'The PontLook L&D resource hub',
+      title: isAr ? 'مركز موارد التدريب والتطوير في PontLook' : 'The PontLook L&D resource hub',
       subtitle:
-        locale === 'ar'
+        isAr
           ? 'رؤى واستراتيجيات وموارد لمساعدة المنشآت على بناء كوادر أقوى من خلال قرارات تدريبية أفضل.'
           : 'Insights, strategies, and resources to help organisations build stronger workforces through better training decisions.',
     }
@@ -815,7 +821,7 @@ export const getResourcesHero = cache(async (locale: Locale = 'en'): Promise<Ada
 
 // 8. Get Resources Featured Global (with resolved relationships)
 export const getResourcesFeatured = cache(async (locale: Locale = 'en'): Promise<AdaptedFeatured> => {
-  const isAr = locale === 'ar'
+  const isAr = locale.startsWith('ar');
 
   // Sensible default fallbacks matching the exact design
   const defaultSpotlight: AdaptedSpotlight = {
@@ -874,7 +880,7 @@ export const getResourcesFeatured = cache(async (locale: Locale = 'en'): Promise
     const payload = await getPayloadClient()
     const featured = await payload.findGlobal({
       slug: 'resources-featured',
-      locale,
+      locale: toPayloadLocale(locale),
       depth: 2,
       overrideAccess: false,
     })
@@ -887,7 +893,7 @@ export const getResourcesFeatured = cache(async (locale: Locale = 'en'): Promise
     // Resolve Spotlight Article relation
     if (featured?.spotlightArticle && typeof featured.spotlightArticle === 'object') {
       const art: any = featured.spotlightArticle
-      const featuredImage = await resolveMediaDoc(payload, art.featuredImage, locale)
+      const featuredImage = await resolveMediaDoc(payload, art.featuredImage, toPayloadLocale(locale))
       const imageUrl = getMediaUrl(featuredImage) || defaultSpotlight.image
       const displayDate = formatDisplayDate(art.publishedAt, locale)
 
@@ -951,7 +957,7 @@ export const getResourcesFeatured = cache(async (locale: Locale = 'en'): Promise
 
 // 9. Get Navbar Resources Card Global
 export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promise<AdaptedNavbarResourcesCard> => {
-  const isAr = locale === 'ar'
+  const isAr = locale.startsWith('ar')
 
   const defaultCard: AdaptedNavbarResourcesCard = {
     enabled: true,
@@ -969,7 +975,7 @@ export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promi
     const payload = await getPayloadClient()
     const card = await payload.findGlobal({
       slug: 'navbar-resources-card',
-      locale,
+      locale: toPayloadLocale(locale),
       depth: 2,
       overrideAccess: false,
     })
@@ -985,7 +991,7 @@ export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promi
     // 1. Resolve custom image override if provided
     let customImageUrl: string | null = null
     if ((card as any).customImage) {
-      const resolvedCustomMedia = await resolveMediaDoc(payload, (card as any).customImage, locale)
+      const resolvedCustomMedia = await resolveMediaDoc(payload, (card as any).customImage, toPayloadLocale(locale))
       customImageUrl = getMediaUrl(resolvedCustomMedia)
     }
 
@@ -998,7 +1004,7 @@ export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promi
             collection: 'articles',
             id: Number(artDoc),
             depth: 1,
-            locale,
+            locale: toPayloadLocale(locale),
             fallbackLocale: 'en',
           })
         } catch (err) {
@@ -1009,7 +1015,7 @@ export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promi
       if (artDoc && typeof artDoc === 'object') {
         let imageUrl = customImageUrl
         if (!imageUrl && artDoc.featuredImage) {
-          const resolvedMedia = await resolveMediaDoc(payload, artDoc.featuredImage, locale)
+          const resolvedMedia = await resolveMediaDoc(payload, artDoc.featuredImage, toPayloadLocale(locale))
           imageUrl = getMediaUrl(resolvedMedia)
         }
 
@@ -1038,7 +1044,7 @@ export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promi
             collection: 'events',
             id: Number(evDoc),
             depth: 1,
-            locale,
+            locale: toPayloadLocale(locale),
             fallbackLocale: 'en',
           })
         } catch (err) {

@@ -20,7 +20,9 @@ import {
   Folder,
 } from '@/components/icons';
 import Signal from '@/components/shared/Signal';
-import { Locale } from '@/i18n';
+import type { Locale } from '@/i18n/config';
+import { isArabicLocale } from '@/i18n/config';
+import CountryFlag from '@/components/shared/CountryFlag';
 import type { NavbarResourcesCardData } from './Navbar';
 
 interface NavbarMobileDrawerProps {
@@ -31,6 +33,8 @@ interface NavbarMobileDrawerProps {
   isForProviders: boolean;
   switchHref: string;
   resourcesCard?: NavbarResourcesCardData | null;
+  currentCountry?: 'sa' | 'ae' | null;
+  getCountryHref?: (targetCountry: 'gcc' | 'sa' | 'ae') => string;
 }
 
 export default function NavbarMobileDrawer({
@@ -41,10 +45,12 @@ export default function NavbarMobileDrawer({
   isForProviders,
   switchHref,
   resourcesCard,
+  currentCountry,
+  getCountryHref,
 }: NavbarMobileDrawerProps) {
   if (!open || typeof document === 'undefined') return null;
 
-  const isRtl = lang === 'ar';
+  const isRtl = isArabicLocale(lang);
 
   return createPortal(
     <div
@@ -332,7 +338,7 @@ export default function NavbarMobileDrawer({
         </div>
 
         {/* Floating Menu Footer Actions */}
-        <div className="mt-5 pt-4 border-t border-white/10 space-y-2.5">
+        <div className="mt-5 pt-4 border-t border-white/10 space-y-3">
           <Link
             href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
             prefetch={false}
@@ -343,9 +349,59 @@ export default function NavbarMobileDrawer({
             <ArrowUpRight size={16} className="rtl:-scale-x-100" />
           </Link>
 
+          {/* Country Market Switcher */}
+          {getCountryHref && (
+            <div className="space-y-1.5 pt-1">
+              <span className="text-[11px] font-mono text-neutral-400 block px-1">
+                {isRtl ? 'السوق الإقليمي / Market:' : 'Regional Market / السوق:'}
+              </span>
+              <div className="grid grid-cols-3 gap-1.5">
+                <Link
+                  href={getCountryHref('sa')}
+                  onClick={() => setOpen(false)}
+                  className={`flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl text-xs font-medium border transition-all ${
+                    currentCountry === 'sa'
+                      ? 'border-[#FF5C00] bg-[#FF5C00]/15 text-[#FF5C00] font-semibold'
+                      : 'border-white/10 bg-white/[0.04] text-neutral-300 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  <CountryFlag code="SA" className="w-3.5 h-2.5 rounded-xs" />
+                  <span>{isRtl ? 'السعودية' : 'KSA'}</span>
+                </Link>
+
+                <Link
+                  href={getCountryHref('ae')}
+                  onClick={() => setOpen(false)}
+                  className={`flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl text-xs font-medium border transition-all ${
+                    currentCountry === 'ae'
+                      ? 'border-[#FF5C00] bg-[#FF5C00]/15 text-[#FF5C00] font-semibold'
+                      : 'border-white/10 bg-white/[0.04] text-neutral-300 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  <CountryFlag code="AE" className="w-3.5 h-2.5 rounded-xs" />
+                  <span>{isRtl ? 'الإمارات' : 'UAE'}</span>
+                </Link>
+
+                <Link
+                  href={getCountryHref('gcc')}
+                  onClick={() => setOpen(false)}
+                  className={`flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl text-xs font-medium border transition-all ${
+                    !currentCountry
+                      ? 'border-[#FF5C00] bg-[#FF5C00]/15 text-[#FF5C00] font-semibold'
+                      : 'border-white/10 bg-white/[0.04] text-neutral-300 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  <Globe size={12} className="text-neutral-400" />
+                  <span>{isRtl ? 'الخليج' : 'GCC'}</span>
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {/* Language Switcher */}
           <div className="flex items-center justify-between pt-1 px-1">
             <span className="text-xs font-medium text-neutral-400">
-              {lang === 'ar' ? 'اللغة / Language:' : 'Language / اللغة:'}
+              {isRtl ? 'اللغة / Language:' : 'Language / اللغة:'}
             </span>
             <Link
               href={switchHref}
@@ -353,8 +409,8 @@ export default function NavbarMobileDrawer({
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full font-medium text-xs text-neutral-300 bg-white/[0.05] hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95 min-h-[44px] touch-manipulation"
             >
               <Globe size={13} className="text-neutral-400" />
-              <span className={lang === 'en' ? 'font-arabic [letter-spacing:0!important]' : ''} dir={lang === 'en' ? 'rtl' : 'ltr'}>
-                {lang === 'en' ? 'العربية' : 'English'}
+              <span className={!isRtl ? 'font-arabic [letter-spacing:0!important]' : ''} dir={isRtl ? 'ltr' : 'rtl'}>
+                {isRtl ? 'English' : 'العربية'}
               </span>
             </Link>
           </div>

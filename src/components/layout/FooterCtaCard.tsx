@@ -7,7 +7,7 @@ import BorderBeam from '@/components/shared/BorderBeam';
 import CardTilt3D from '@/components/shared/CardTilt3D';
 import Magnetic from '@/components/shared/Magnetic';
 import Press from '@/components/shared/Press';
-import { Locale } from '@/i18n';
+import type { Locale } from '@/i18n/config';
 
 interface FooterCtaCardProps {
   lang: Locale;

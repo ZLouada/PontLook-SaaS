@@ -3,10 +3,8 @@ import type { NextRequest } from 'next/server';
 import { defaultLocale } from '@/i18n/config';
 
 const LEGACY_REGIONAL_REDIRECTS: Record<string, string> = {
-  '/ar-ae': '/ar',
-  '/sa': '/ar',
-  '/en-sa': '/en',
-  '/ae': '/en',
+  '/sa': '/ar-sa',
+  '/ae': '/en-ae',
   '/uk': '/en',
   '/us': '/en',
   '/au': '/en',
@@ -44,12 +42,16 @@ export function middleware(request: NextRequest) {
     pathname === '/en/blog' ||
     pathname === '/ar/blog' ||
     pathname.startsWith('/en/blog/') ||
-    pathname.startsWith('/ar/blog/')
+    pathname.startsWith('/ar/blog/') ||
+    pathname.startsWith('/en-sa/blog') ||
+    pathname.startsWith('/ar-sa/blog') ||
+    pathname.startsWith('/en-ae/blog') ||
+    pathname.startsWith('/ar-ae/blog')
   ) {
-    const localeMatch = pathname.match(/^\/(en|ar)/);
+    const localeMatch = pathname.match(/^\/(en-sa|ar-sa|en-ae|ar-ae|en|ar)/);
     const targetLang = localeMatch ? localeMatch[1] : defaultLocale;
     const subPath = pathname
-      .replace(/^\/(en|ar)\/blog/, '')
+      .replace(/^\/(en-sa|ar-sa|en-ae|ar-ae|en|ar)\/blog/, '')
       .replace(/^\/blog/, '');
     const targetUrl = new URL(request.url);
     targetUrl.pathname = `/${targetLang}/resources/blog${subPath}`;

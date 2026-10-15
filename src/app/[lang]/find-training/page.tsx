@@ -3,7 +3,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import FindTrainingStepsCards from '@/components/find-training/FindTrainingStepsCards';
 import BurjSkylineCanvas from '@/components/find-training/BurjSkylineCanvas';
-import { Locale, i18n } from '@/i18n/config';
+import MarketOfferingSection from '@/components/shared/MarketOfferingSection';
+import { Locale, locales, getDictionary } from '@/i18n';
+import { isArabicLocale, getCountryCode } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 
 export async function generateMetadata({
@@ -13,14 +15,31 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
+  const country = getCountryCode(lang);
+  const dict = await getDictionary(lang);
 
-  const title = isAr
+  const title = dict.findTraining?.headline
+    ? `${dict.findTraining.headline} | PontLook`
+    : isAr
     ? 'ابحث عن مزودي تدريب معتمدين لشركتك | PontLook'
     : 'Get 3 Curated Training Proposals | PontLook';
-  const description = isAr
+
+  const description = dict.findTraining?.subtitle
+    ? dict.findTraining.subtitle
+    : isAr
     ? 'اطرح متطلبات تدريب فريقك واستلم عروض أسعار تفصيلية من أفضل معاهد ومزودي التدريب المعتمدين بالخليج خلال 48 ساعة. خدمة مجانية 100% للشركات.'
     : 'Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds and receive curated offers matched to your domain and region.';
+
+  const ogLocale = isAr
+    ? country === 'ae'
+      ? 'ar_AE'
+      : 'ar_SA'
+    : country === 'ae'
+    ? 'en_AE'
+    : country === 'sa'
+    ? 'en_SA'
+    : 'en_US';
 
   return {
     title: {
@@ -33,7 +52,7 @@ export async function generateMetadata({
       description,
       url: `https://pontlook.com/${lang}/find-training`,
       siteName: 'PontLook',
-      locale: isAr ? 'ar_SA' : 'en_US',
+      locale: ogLocale,
       type: 'website',
       images: [
         {
@@ -50,7 +69,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  return i18n.locales.map((lang) => ({ lang }));
+  return (locales as readonly string[]).map((lang) => ({ lang }));
 }
 
 export default async function FindTrainingPage({
@@ -59,8 +78,9 @@ export default async function FindTrainingPage({
   params: Promise<{ lang: Locale }>;
 }) {
   const resolvedParams = await params;
-  const lang = resolvedParams?.lang || 'en';
-  const isAr = lang === 'ar';
+  const lang = (resolvedParams?.lang as Locale) || 'en';
+  const isAr = isArabicLocale(lang);
+  const dict = await getDictionary(lang);
 
   return (
     <div className="bg-black text-white min-h-screen selection:bg-white selection:text-black font-sans">
@@ -71,37 +91,37 @@ export default async function FindTrainingPage({
         {/* Left Column: Mission Briefing */}
         <div className="lg:col-span-6 xl:col-span-5 px-5 sm:px-8 md:px-12 lg:px-14 py-12 sm:py-16 lg:py-24 flex flex-col justify-center text-start z-10">
           <div className="inline-flex items-center gap-2 mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-            <span className="font-mono text-xs uppercase tracking-widest text-neutral-400">
-              {isAr ? 'منظومة تدريب الشركات الخليجية' : 'GCC ENTERPRISE TRAINING INTAKE'}
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00] animate-pulse" />
+            <span className="font-mono text-xs uppercase tracking-widest text-[#FF5C00]">
+              {dict.findTraining?.badge || (isAr ? 'منظومة تدريب الشركات الخليجية' : 'GCC ENTERPRISE TRAINING INTAKE')}
             </span>
           </div>
 
           <h1 className="font-heading font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl tracking-tight leading-[1.06] text-white">
-            {isAr
+            {dict.findTraining?.headline || (isAr
               ? 'احصل على 3 عروض تدريبية مخصصة لتطوير كوادر منشأتك'
-              : 'Get 3 curated training proposals for your workforce'}
+              : 'Get 3 curated training proposals for your workforce')}
           </h1>
 
           <p className="mt-6 sm:mt-8 text-neutral-300 text-base sm:text-lg leading-relaxed max-w-xl font-normal">
-            {isAr
+            {dict.findTraining?.subtitle || (isAr
               ? 'لا داعي للبحث اليدوي بين مئات الكتالوجات العامة. حدد متطلباتك التدريبية في 60 ثانية، وسنصلك بأفضل مزودي التدريب المعتمدين وفق متطلباتك الدقيقة وبدون أي التزام.'
-              : 'Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds and we introduce you only to proven providers matched to your domain and region.'}
+              : 'Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds and we introduce you only to proven providers matched to your domain and region.')}
           </p>
 
           <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-3.5 sm:gap-4">
             <Link
-              href={`/${lang}/find-training/request`}
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 bg-white text-black font-semibold text-xs sm:text-sm tracking-wide rounded-none border border-white hover:bg-black hover:text-white transition-all duration-200"
+              href={`/${lang}/intake`}
+              className="inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 bg-[#FF5C00] text-black font-semibold text-xs sm:text-sm tracking-wide rounded-none border border-[#FF5C00] hover:bg-black hover:text-white transition-all duration-200"
             >
-              <span>{isAr ? 'طلب عروض التدريب' : 'Request training proposals'}</span>
+              <span>{dict.findTraining?.ctaPrimary || (isAr ? 'طلب عروض التدريب' : 'Request training proposals')}</span>
             </Link>
 
             <a
               href="#how"
               className="inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 bg-transparent text-white font-medium text-xs sm:text-sm tracking-wide rounded-none border border-white/40 hover:border-white hover:bg-white/10 transition-all duration-200"
             >
-              <span>{isAr ? 'كيف تعمل المنصة' : 'How matchmaking works'}</span>
+              <span>{dict.findTraining?.ctaSecondary || (isAr ? 'كيف تعمل المنصة' : 'How matchmaking works')}</span>
             </a>
           </div>
 
@@ -176,11 +196,16 @@ export default async function FindTrainingPage({
       </section>
 
       {/* ======================================================== */}
-      {/* 4. CALL TO ACTION: Enterprise Up-skill Concierge         */}
+      {/* 4. GEO-LOCALIZED MARKET OFFERINGS & COMPLIANCE           */}
+      {/* ======================================================== */}
+      <MarketOfferingSection lang={lang} dictionary={dict} showProviderPricing={false} />
+
+      {/* ======================================================== */}
+      {/* 5. CALL TO ACTION: Enterprise Up-skill Concierge         */}
       {/* ======================================================== */}
       <section className="py-24 sm:py-32 lg:py-36 px-4 sm:px-8 text-center bg-black">
         <div className="max-w-4xl mx-auto">
-          <span className="font-mono text-xs uppercase tracking-widest text-neutral-400 px-3 py-1 border border-white/20 inline-block mb-6">
+          <span className="font-mono text-xs uppercase tracking-widest text-[#FF5C00] px-3 py-1 border border-[#FF5C00]/30 inline-block mb-6">
             {isAr ? 'تأهيل الكفاءات المؤسسية' : 'ENTERPRISE SCOPE'}
           </span>
 
@@ -196,10 +221,10 @@ export default async function FindTrainingPage({
 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
-              href={`/${lang}/find-training/request`}
-              className="inline-flex items-center justify-center px-8 py-4 bg-white text-black font-semibold text-sm tracking-wide rounded-none border border-white hover:bg-black hover:text-white transition-all duration-200"
+              href={`/${lang}/intake`}
+              className="inline-flex items-center justify-center px-8 py-4 bg-[#FF5C00] text-black font-semibold text-sm tracking-wide rounded-none border border-[#FF5C00] hover:bg-black hover:text-white transition-all duration-200"
             >
-              <span>{isAr ? 'طلب عروض التدريب' : 'Request training proposals'}</span>
+              <span>{dict.findTraining?.ctaPrimary || (isAr ? 'طلب عروض التدريب' : 'Request training proposals')}</span>
             </Link>
 
             <Link

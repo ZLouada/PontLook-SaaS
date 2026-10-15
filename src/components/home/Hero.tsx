@@ -100,7 +100,7 @@ interface Arc {
 export default function Hero() {
   const params = useParams();
   const lang = (params?.lang as string) || 'en';
-  const isAr = lang === 'ar';
+  const isAr = lang.startsWith('ar');
 
   const heroRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);

@@ -25,6 +25,11 @@ const intakePayloadSchema = z.object({
   timeline: z.enum(['immediate', 'within_30_days', 'next_quarter', 'planning']).optional().default('within_30_days'),
   budgetBand: z.enum(['under_10k', '10k_25k', '25k_50k', '50k_plus', 'pending_guidance']).optional().default('10k_25k'),
   additionalContext: z.string().optional().or(z.literal('')),
+  role: z.enum(['buyer', 'provider']).optional().default('buyer'),
+  regulators: z.array(z.string()).optional().default([]),
+  accreditationNumber: z.string().optional().or(z.literal('')),
+  currency: z.string().optional().default('USD'),
+  headcount: z.string().optional().or(z.literal('')),
   _gotcha: z.string().optional().or(z.literal('')),
 });
 
@@ -256,6 +261,10 @@ export async function POST(req: NextRequest) {
         organizationName: data.organizationName,
         country: data.country,
         phoneNumber: fullPhoneNumber,
+        role: data.role,
+        regulators: data.regulators,
+        currency: data.currency,
+        headcount: data.headcount,
       },
       scope: {
         domains: domainNames,

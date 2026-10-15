@@ -82,10 +82,10 @@ export function buildProviderNetworkSchema({
   lang = 'en',
   canonicalUrl = `${SITE_URL}/for-providers`,
 }: {
-  lang?: 'en' | 'ar';
+  lang?: string;
   canonicalUrl?: string;
 } = {}) {
-  const isAr = lang === 'ar';
+  const isAr = lang.startsWith('ar');
   return {
     '@context': 'https://schema.org',
     '@type': 'EducationalOrganization',
@@ -122,7 +122,7 @@ export interface BlogPostingSchemaOptions {
   datePublished?: string | null;
   dateModified?: string | null;
   authorName?: string;
-  lang?: 'en' | 'ar';
+  lang?: string;
 }
 
 export function buildBlogPostingSchema({
@@ -135,13 +135,14 @@ export function buildBlogPostingSchema({
   authorName = 'PontLook Research',
   lang = 'en',
 }: BlogPostingSchemaOptions) {
+  const isAr = lang.startsWith('ar');
   const schema: Record<string, any> = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     '@id': `${url}#article`,
     url,
     headline,
-    inLanguage: lang === 'ar' ? 'ar' : 'en',
+    inLanguage: isAr ? 'ar' : 'en',
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': url,

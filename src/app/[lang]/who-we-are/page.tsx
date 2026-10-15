@@ -1,7 +1,8 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Locale, i18n } from '@/i18n/config';
+import { Locale, locales } from '@/i18n';
+import { isArabicLocale, getCountryCode } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import RaceBridgeCanvas from '@/components/who-we-are/RaceBridgeCanvas';
 import BilateralCables from '@/components/who-we-are/BilateralCables';
@@ -14,7 +15,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
+  const country = getCountryCode(lang);
 
   const title = isAr
     ? 'من نحن | منصة PontLook للتوفيق والتدريب المؤسسي'
@@ -22,6 +24,16 @@ export async function generateMetadata({
   const description = isAr
     ? 'تعرف على PontLook، المنصة المتخصصة في ربط مديري الموارد البشرية والشركات بأفضل مزودي التدريب المعتمدين في الخليج بدون رسوم اشتراك شهرية.'
     : 'Learn how PontLook bridges enterprise corporate buyers with vetted training providers across Saudi Arabia and the UAE with zero monthly retainers.';
+
+  const ogLocale = isAr
+    ? country === 'ae'
+      ? 'ar_AE'
+      : 'ar_SA'
+    : country === 'ae'
+    ? 'en_AE'
+    : country === 'sa'
+    ? 'en_SA'
+    : 'en_US';
 
   return {
     title: {
@@ -34,7 +46,7 @@ export async function generateMetadata({
       description,
       url: `https://pontlook.com/${lang}/who-we-are`,
       siteName: 'PontLook',
-      locale: isAr ? 'ar_SA' : 'en_US',
+      locale: ogLocale,
       type: 'website',
       images: [
         {
@@ -51,7 +63,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  return i18n.locales.map((lang) => ({ lang }));
+  return (locales as readonly string[]).map((lang) => ({ lang }));
 }
 
 export default async function WhoWeArePage({
@@ -60,8 +72,8 @@ export default async function WhoWeArePage({
   params: Promise<{ lang: Locale }>;
 }) {
   const resolvedParams = await params;
-  const lang = resolvedParams?.lang || 'en';
-  const isAr = lang === 'ar';
+  const lang = (resolvedParams?.lang as Locale) || 'en';
+  const isAr = isArabicLocale(lang);
 
   return (
     <div

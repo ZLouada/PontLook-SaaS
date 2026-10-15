@@ -22,7 +22,15 @@ import {
   Folder,
 } from '@/components/icons';
 import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { Locale } from '@/i18n';
+import {
+  Locale,
+  locales,
+  isArabicLocale,
+  getOppositeLanguageLocale,
+  getCountryCode,
+  getBaseLanguage,
+} from '@/i18n/config';
+import CountryFlag from '@/components/shared/CountryFlag';
 import ScrollProgress from '@/components/shared/ScrollProgress';
 import Magnetic from '@/components/shared/Magnetic';
 
@@ -54,6 +62,7 @@ interface NavbarProps {
 export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [countryOpen, setCountryOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<DropdownKey>(null);
   const [commandOpen, setCommandOpen] = useState(false);
   const [isLightSection, setIsLightSection] = useState(false);
@@ -62,28 +71,54 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
   const pathname = usePathname() || `/${lang}`;
   const dict = useDictionary();
   const isForProviders = pathname?.includes('/for-providers') || pathname?.endsWith('/providers');
-  const isRtl = lang === 'ar';
+  const isRtl = isArabicLocale(lang);
+  const currentCountry = getCountryCode(lang);
+  const baseLang = getBaseLanguage(lang);
+  const oppositeLang = getOppositeLanguageLocale(lang);
 
-  const otherLang = lang === 'en' ? 'ar' : 'en';
   const switchHref = (() => {
-    if (!pathname) return `/${otherLang}`;
+    if (!pathname) return `/${oppositeLang}`;
     if (pathname === `/${lang}` || pathname === `/${lang}/`) {
-      return `/${otherLang}`;
+      return `/${oppositeLang}`;
     }
     if (pathname.startsWith(`/${lang}/`)) {
-      return pathname.replace(`/${lang}/`, `/${otherLang}/`);
+      return pathname.replace(`/${lang}/`, `/${oppositeLang}/`);
     }
     const segments = pathname.split('/').filter(Boolean);
-    if (segments[0] === 'en' || segments[0] === 'ar') {
-      segments[0] = otherLang;
+    if ((locales as readonly string[]).includes(segments[0])) {
+      segments[0] = oppositeLang;
       return `/${segments.join('/')}`;
     }
-    return `/${otherLang}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
+    return `/${oppositeLang}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
   })();
+
+  const getCountryHref = useCallback((targetCountry: 'gcc' | 'sa' | 'ae') => {
+    const targetLocale: Locale =
+      targetCountry === 'sa'
+        ? `${baseLang}-sa`
+        : targetCountry === 'ae'
+        ? `${baseLang}-ae`
+        : baseLang;
+
+    if (!pathname) return `/${targetLocale}`;
+    if (pathname === `/${lang}` || pathname === `/${lang}/`) {
+      return `/${targetLocale}`;
+    }
+    if (pathname.startsWith(`/${lang}/`)) {
+      return pathname.replace(`/${lang}/`, `/${targetLocale}/`);
+    }
+    const segments = pathname.split('/').filter(Boolean);
+    if ((locales as readonly string[]).includes(segments[0])) {
+      segments[0] = targetLocale;
+      return `/${segments.join('/')}`;
+    }
+    return `/${targetLocale}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
+  }, [baseLang, lang, pathname]);
 
   // Close dropdowns on route changes
   useEffect(() => {
     setActiveDropdown(null);
+    setCountryOpen(false);
     setOpen(false);
   }, [pathname]);
 
@@ -854,6 +889,82 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
 
           {/* Right Action Controls */}
           <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 shrink-0">
+            {/* Country Selector Dropdown (Desktop) */}
+            <div className="relative hidden lg:inline-flex shrink-0">
+              <button
+                type="button"
+                onClick={() => setCountryOpen((prev) => !prev)}
+                className={`inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 shrink-0 whitespace-nowrap cursor-pointer ${
+                  isLightSection
+                    ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
+                    : 'border border-white/20 bg-white/[0.08] text-neutral-200 hover:text-white hover:border-white/40 shadow-xs'
+                }`}
+                aria-expanded={countryOpen}
+                aria-label="Select Country Market"
+              >
+                {currentCountry === 'sa' ? (
+                  <CountryFlag code="SA" className="w-4 h-3 rounded-xs" />
+                ) : currentCountry === 'ae' ? (
+                  <CountryFlag code="AE" className="w-4 h-3 rounded-xs" />
+                ) : (
+                  <Globe size={13} className={isLightSection ? 'text-neutral-700' : 'text-neutral-300'} />
+                )}
+                <span className="font-mono text-xs">
+                  {currentCountry === 'sa'
+                    ? isRtl ? 'السعودية' : 'KSA'
+                    : currentCountry === 'ae'
+                    ? isRtl ? 'الإمارات' : 'UAE'
+                    : isRtl ? 'الخليج' : 'GCC'}
+                </span>
+                <ChevronDown size={11} className={`transition-transform duration-200 ${countryOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {countryOpen && (
+                <div
+                  className="absolute top-full mt-2 end-0 w-44 rounded-2xl border border-white/15 bg-[#0C0D11]/95 backdrop-blur-xl p-1.5 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-150"
+                >
+                  <Link
+                    href={getCountryHref('sa')}
+                    onClick={() => setCountryOpen(false)}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-colors ${
+                      currentCountry === 'sa'
+                        ? 'bg-[#FF5C00]/15 text-[#FF5C00] font-semibold'
+                        : 'text-neutral-300 hover:bg-white/10 hover:text-white'
+                    }`}
+                  >
+                    <CountryFlag code="SA" className="w-4 h-3 rounded-xs" />
+                    <span>{isRtl ? 'السعودية' : 'Saudi Arabia (KSA)'}</span>
+                  </Link>
+
+                  <Link
+                    href={getCountryHref('ae')}
+                    onClick={() => setCountryOpen(false)}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-colors ${
+                      currentCountry === 'ae'
+                        ? 'bg-[#FF5C00]/15 text-[#FF5C00] font-semibold'
+                        : 'text-neutral-300 hover:bg-white/10 hover:text-white'
+                    }`}
+                  >
+                    <CountryFlag code="AE" className="w-4 h-3 rounded-xs" />
+                    <span>{isRtl ? 'الإمارات' : 'UAE'}</span>
+                  </Link>
+
+                  <Link
+                    href={getCountryHref('gcc')}
+                    onClick={() => setCountryOpen(false)}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-colors ${
+                      !currentCountry
+                        ? 'bg-[#FF5C00]/15 text-[#FF5C00] font-semibold'
+                        : 'text-neutral-300 hover:bg-white/10 hover:text-white'
+                    }`}
+                  >
+                    <Globe size={13} className="text-neutral-400" />
+                    <span>{isRtl ? 'الخليج (عام)' : 'GCC (Default)'}</span>
+                  </Link>
+                </div>
+              )}
+            </div>
+
             {/* Language Switcher */}
             <Magnetic strength={0.16} activeDistance={25} className="hidden lg:inline-flex shrink-0">
               <Link
@@ -864,16 +975,16 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                     ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
                     : 'border border-white/20 bg-white/[0.08] text-neutral-200 hover:text-white hover:border-white/40 shadow-xs'
                 }`}
-                aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
+                aria-label={isRtl ? 'Switch to English' : 'التحويل إلى العربية'}
               >
                 <Globe size={13} className={`shrink-0 ${isLightSection ? 'text-neutral-700' : 'text-neutral-300'}`} />
                 <span
                   className={`whitespace-nowrap shrink-0 leading-none ${
-                    lang === 'en' ? 'font-arabic [letter-spacing:0!important]' : ''
+                    !isRtl ? 'font-arabic [letter-spacing:0!important]' : ''
                   }`}
-                  dir={lang === 'en' ? 'rtl' : 'ltr'}
+                  dir={isRtl ? 'ltr' : 'rtl'}
                 >
-                  {lang === 'en' ? 'العربية' : 'English'}
+                  {isRtl ? 'English' : 'العربية'}
                 </span>
               </Link>
             </Magnetic>
@@ -904,16 +1015,16 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                     ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
                     : 'border border-[#26282D] bg-[#16171B] text-neutral-300 hover:text-white hover:border-white/30'
                 }`}
-                aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
+                aria-label={isRtl ? 'Switch to English' : 'التحويل إلى العربية'}
               >
                 <Globe size={13} className={`shrink-0 ${isLightSection ? 'text-neutral-700' : 'text-neutral-400'}`} />
                 <span
                   className={`font-semibold text-[11px] xs:text-xs whitespace-nowrap shrink-0 leading-none ${
-                    lang === 'en' ? 'font-arabic [letter-spacing:0!important]' : ''
+                    !isRtl ? 'font-arabic [letter-spacing:0!important]' : ''
                   }`}
-                  dir={lang === 'en' ? 'rtl' : 'ltr'}
+                  dir={isRtl ? 'ltr' : 'rtl'}
                 >
-                  {lang === 'en' ? 'العربية' : 'EN'}
+                  {isRtl ? 'EN' : 'عربي'}
                 </span>
               </Link>
 
@@ -945,6 +1056,8 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
           isForProviders={isForProviders}
           switchHref={switchHref}
           resourcesCard={resourcesCard}
+          currentCountry={currentCountry}
+          getCountryHref={getCountryHref}
         />
       )}
 

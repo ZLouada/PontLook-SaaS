@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ResourceImage } from '@/components/resources/ResourceImage';
-import { Locale, i18n } from '@/i18n/config';
+import { Locale, i18n, isArabicLocale, getCountryCode } from '@/i18n/config';
 import { constructAlternates, SITE_URL, buildBlogPostingSchema, buildBreadcrumbSchema } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
 import { ArrowLeft, Calendar, User } from '@/components/icons';
@@ -19,7 +19,8 @@ export async function generateMetadata({
   params: Promise<{ lang: Locale; slug: string }>;
 }): Promise<Metadata> {
   const { lang, slug } = await params;
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
+  const country = getCountryCode(lang);
 
   const article = await getArticleBySlug(slug, lang);
 
@@ -51,7 +52,15 @@ export async function generateMetadata({
         description: ogDescription,
         url: canonical,
         siteName: 'PontLook',
-        locale: isAr ? 'ar_SA' : 'en_US',
+        locale: isAr
+          ? country === 'ae'
+            ? 'ar_AE'
+            : 'ar_SA'
+          : country === 'ae'
+          ? 'en_AE'
+          : country === 'sa'
+          ? 'en_SA'
+          : 'en_US',
         type: 'article',
         images: [
           {
@@ -95,7 +104,7 @@ export default async function BlogPostDetailPage({
   params: Promise<{ lang: Locale; slug: string }>;
 }) {
   const { lang, slug } = await params;
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
 
   const article = await getArticleBySlug(slug, lang);
 
