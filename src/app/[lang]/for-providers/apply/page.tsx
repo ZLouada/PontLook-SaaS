@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Locale, i18n } from '@/i18n/config';
+import { Locale, i18n, isArabicLocale } from '@/i18n/config';
 import { constructAlternates, providerIcons } from '@/lib/seo/metadata';
 import { buildProviderNetworkSchema } from '@/lib/seo/schema';
 import ProviderApplicationWizard from '@/components/providers/ProviderApplicationWizard';
@@ -11,7 +11,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
 
   const title = isAr
     ? 'طلب الانضمام لشبكة مزودي التدريب | PontLook'
@@ -63,7 +63,7 @@ export default async function ProviderApplyPage({
 }) {
   const resolvedParams = await params;
   const lang = resolvedParams?.lang || 'en';
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
 
   const providerSchema = buildProviderNetworkSchema({
     lang,

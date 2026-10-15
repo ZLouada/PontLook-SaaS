@@ -5,7 +5,7 @@ import ContactForm from '@/components/contact/ContactForm';
 import Signal from '@/components/shared/Signal';
 import { Mail, MapPin, Clock } from '@/components/icons';
 import { getDictionary } from '@/i18n';
-import { Locale, i18n } from '@/i18n/config';
+import { Locale, i18n, isArabicLocale } from '@/i18n/config';
 
 import { constructAlternates } from '@/lib/seo';
 
@@ -16,7 +16,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
 
   const title = isAr
     ? 'اتصل بنا | منصة PontLook لدعم وشراكات التدريب'

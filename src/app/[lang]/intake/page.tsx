@@ -102,8 +102,25 @@ export default async function IntakePage({
   const role = resolvedSearch?.role === 'provider' ? 'provider' : 'buyer';
   const isAr = isArabicLocale(lang);
   const country = getCountryCode(lang);
-  const dict = await getDictionary(lang);
-  const tokens = dict.marketTokens;
+  const tokens = {
+    countryName: country === 'sa'
+      ? (isAr ? 'المملكة العربية السعودية' : 'Saudi Arabia')
+      : country === 'ae'
+      ? (isAr ? 'الإمارات العربية المتحدة' : 'United Arab Emirates')
+      : (isAr ? 'منطقة الخليج' : 'GCC Region'),
+    countryCode: country ?? 'gcc',
+    hubCities: country === 'sa'
+      ? (isAr ? 'الرياض، جدة، الدمام' : 'Riyadh, Jeddah, Dammam')
+      : country === 'ae'
+      ? (isAr ? 'دبي، أبوظبي، الشارقة' : 'Dubai, Abu Dhabi, Sharjah')
+      : (isAr ? 'الرياض، دبي، أبوظبي' : 'Riyadh, Dubai, Abu Dhabi'),
+    mandatoryRegulators: country === 'sa'
+      ? 'TVTC, HRDF (Hadaf) & SCE'
+      : country === 'ae'
+      ? 'KHDA (Dubai) & ACTVET / OSHAD (Abu Dhabi)'
+      : 'TVTC, HRDF, KHDA, ACTVET',
+    buyerCurrency: country === 'sa' ? 'SAR' : country === 'ae' ? 'AED' : 'USD',
+  };
 
   return (
     <div className="bg-black text-white min-h-screen selection:bg-white selection:text-black font-sans pt-24 pb-28 px-4 sm:px-6 lg:px-8">

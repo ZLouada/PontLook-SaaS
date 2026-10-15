@@ -3,7 +3,7 @@ import Reveal from '@/components/shared/Reveal';
 import TextReveal from '@/components/shared/TextReveal';
 import FAQAccordion from '@/components/faq/FAQAccordion';
 import Link from 'next/link';
-import { Locale, i18n } from '@/i18n/config';
+import { Locale, i18n, isArabicLocale } from '@/i18n/config';
 
 import { constructAlternates } from '@/lib/seo';
 
@@ -14,7 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
 
   const title = isAr
     ? 'الأسئلة الشائعة | منصة PontLook للتدريب المؤسسي'
@@ -95,7 +95,7 @@ const faqsAr = [
 export default async function FAQPage({ params }: { params: Promise<{ lang: Locale }> }) {
   const resolvedParams = await params;
   const lang = resolvedParams?.lang || 'en';
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
   const faqs = isAr ? faqsAr : faqsEn;
 
   const faqSchema = {

@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getSitemapArticles } from '@/lib/payload/resources';
+import { locales } from '@/i18n/config';
 
 export const revalidate = 3600;
 
@@ -7,7 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://pontlook.com';
   const now = new Date();
 
-  // Core Platform Routes in English and Arabic
+  // Core Platform Routes
   const corePaths = [
     { path: '', changeFrequency: 'weekly' as const, priority: 1.0 },
     { path: 'who-we-are', changeFrequency: 'monthly' as const, priority: 0.8 },
@@ -32,38 +33,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const item of corePaths) {
     const sub = item.path ? '/' + item.path : '';
-    const enUrl = baseUrl + '/en' + sub;
-    const arUrl = baseUrl + '/ar' + sub;
+    const alternatesLanguages: Record<string, string> = {
+      en: `${baseUrl}/en${sub}`,
+      ar: `${baseUrl}/ar${sub}`,
+      'en-SA': `${baseUrl}/en-sa${sub}`,
+      'ar-SA': `${baseUrl}/ar-sa${sub}`,
+      'en-AE': `${baseUrl}/en-ae${sub}`,
+      'ar-AE': `${baseUrl}/ar-ae${sub}`,
+      'x-default': `${baseUrl}/en${sub}`,
+    };
 
-    // English version
-    routes.push({
-      url: enUrl,
-      lastModified: now,
-      changeFrequency: item.changeFrequency,
-      priority: item.priority,
-      alternates: {
-        languages: {
-          en: enUrl,
-          ar: arUrl,
-          'x-default': enUrl,
+    for (const locale of locales) {
+      routes.push({
+        url: `${baseUrl}/${locale}${sub}`,
+        lastModified: now,
+        changeFrequency: item.changeFrequency,
+        priority: item.priority,
+        alternates: {
+          languages: alternatesLanguages,
         },
-      },
-    });
-
-    // Arabic version
-    routes.push({
-      url: arUrl,
-      lastModified: now,
-      changeFrequency: item.changeFrequency,
-      priority: item.priority,
-      alternates: {
-        languages: {
-          en: enUrl,
-          ar: arUrl,
-          'x-default': enUrl,
-        },
-      },
-    });
+      });
+    }
   }
 
   // Fetch published articles dynamically from Payload CMS

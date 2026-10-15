@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ResourceImage } from '@/components/resources/ResourceImage';
-import { Locale, i18n } from '@/i18n/config';
+import { Locale, i18n, isArabicLocale } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import {
   getResourcesHero,
@@ -36,7 +36,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
 
   const title = isAr
     ? 'مركز الموارد والأبحاث | منصة PontLook للتدريب المؤسسي'
@@ -80,7 +80,7 @@ export default async function ResourcesPage({
   params: Promise<{ lang: Locale }>;
 }) {
   const { lang } = await params;
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
 
   // Load published content from Payload CMS Local API
   const [hero, featured, dynamicArticles, eventsList] = await Promise.all([

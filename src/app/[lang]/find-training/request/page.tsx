@@ -5,7 +5,7 @@ import { ArrowLeft, Building2, BadgeCheck, BadgeDollarSign, Clock } from '@/comp
 import MultiStepFunnel from '@/components/funnel/MultiStepFunnel';
 import TextReveal from '@/components/shared/TextReveal';
 import IconFrame from '@/components/shared/IconFrame';
-import { Locale, i18n } from '@/i18n/config';
+import { Locale, i18n, isArabicLocale } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 
 export async function generateMetadata({
@@ -15,7 +15,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
 
   const title = isAr
     ? 'طلب عروض تدريبية مخصصة للشركات | PontLook'
@@ -74,7 +74,7 @@ export default async function FindTrainingRequestPage({
 }) {
   const resolvedParams = await params;
   const lang = resolvedParams?.lang || 'en';
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
 
   return (
     <div className="min-h-screen bg-black pt-24 sm:pt-28 pb-16 relative overflow-hidden">

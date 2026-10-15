@@ -17,7 +17,7 @@ interface ProviderConnectionFlowProps {
 }
 
 export default function ProviderConnectionFlow({ lang }: ProviderConnectionFlowProps) {
-  const isAr = lang.startsWith('ar');
+  const isAr = lang === 'ar';
   const reduce = useReducedMotion();
 
   const nodes = [

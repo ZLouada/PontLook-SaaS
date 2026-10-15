@@ -3,8 +3,6 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useDictionary } from '@/components/providers/DictionaryProvider';
-import { getCountryCode } from '@/i18n/config';
 import { LAND_DATA } from './landData';
 
 const DR = Math.PI / 180;
@@ -102,9 +100,7 @@ interface Arc {
 export default function Hero() {
   const params = useParams();
   const lang = (params?.lang as string) || 'en';
-  const isAr = lang.startsWith('ar');
-  const dict = useDictionary();
-  const countryCode = getCountryCode(lang);
+  const isAr = lang === 'ar';
 
   const heroRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -138,133 +134,53 @@ export default function Hero() {
       z: -1,
     });
 
-    const cityData =
-      countryCode === 'sa'
-        ? isAr
-          ? [
-              ['الرياض', 24.7, 46.7],
-              ['جدة', 21.5, 39.2],
-              ['الدمام', 26.4, 50.1],
-              ['الخبر', 26.3, 50.2],
-              ['الجبيل', 27.0, 49.6],
-              ['ينبع', 24.1, 38.0],
-              ['نيوم · الطاقة', 28.0, 35.3],
-              ['نيوآرك · المقر', 39.7, -75.7],
-            ]
-          : [
-              ['RIYADH', 24.7, 46.7],
-              ['JEDDAH', 21.5, 39.2],
-              ['DAMMAM', 26.4, 50.1],
-              ['AL KHOBAR', 26.3, 50.2],
-              ['JUBAIL', 27.0, 49.6],
-              ['YANBU', 24.1, 38.0],
-              ['NEOM · CLEAN ENERGY', 28.0, 35.3],
-              ['NEWARK, DE · HQ', 39.7, -75.7],
-            ]
-        : countryCode === 'ae'
-        ? isAr
-          ? [
-              ['دبي', 25.2, 55.3],
-              ['أبوظبي', 24.45, 54.4],
-              ['الشارقة', 25.35, 55.4],
-              ['رأس الخيمة', 25.78, 55.94],
-              ['الفجيرة', 25.12, 56.32],
-              ['مصدر · الطاقة المتجددة', 24.43, 54.61],
-              ['نيوآرك · المقر', 39.7, -75.7],
-            ]
-          : [
-              ['DUBAI', 25.2, 55.3],
-              ['ABU DHABI', 24.45, 54.4],
-              ['SHARJAH', 25.35, 55.4],
-              ['RAS AL KHAIMAH', 25.78, 55.94],
-              ['FUJAIRAH', 25.12, 56.32],
-              ['MASDAR CITY · CLEAN ENERGY', 24.43, 54.61],
-              ['NEWARK, DE · HQ', 39.7, -75.7],
-            ]
-        : isAr
-        ? [
-            ['الرياض', 24.7, 46.7],
-            ['جدة', 21.5, 39.2],
-            ['دبي', 25.2, 55.3],
-            ['أبوظبي', 24.45, 54.4],
-            ['الدوحة', 25.3, 51.5],
-            ['مدينة الكويت', 29.4, 48],
-            ['المنامة', 26.2, 50.6],
-            ['مسقط', 23.6, 58.6],
-            ['نيوآرك · المقر', 39.7, -75.7],
-          ]
-        : [
-            ['RIYADH', 24.7, 46.7],
-            ['JEDDAH', 21.5, 39.2],
-            ['DUBAI', 25.2, 55.3],
-            ['ABU DHABI', 24.45, 54.4],
-            ['DOHA', 25.3, 51.5],
-            ['KUWAIT CITY', 29.4, 48],
-            ['MANAMA', 26.2, 50.6],
-            ['MUSCAT', 23.6, 58.6],
-            ['NEWARK, DE · HQ', 39.7, -75.7],
-          ];
+    const cityData = isAr
+      ? [
+          ['الرياض', 24.7, 46.7],
+          ['جدة', 21.5, 39.2],
+          ['دبي', 25.2, 55.3],
+          ['أبوظبي', 24.45, 54.4],
+          ['الدوحة', 25.3, 51.5],
+          ['مدينة الكويت', 29.4, 48],
+          ['المنامة', 26.2, 50.6],
+          ['مسقط', 23.6, 58.6],
+          ['نيوآرك · المقر', 39.7, -75.7],
+        ]
+      : [
+          ['RIYADH', 24.7, 46.7],
+          ['JEDDAH', 21.5, 39.2],
+          ['DUBAI', 25.2, 55.3],
+          ['ABU DHABI', 24.45, 54.4],
+          ['DOHA', 25.3, 51.5],
+          ['KUWAIT CITY', 29.4, 48],
+          ['MANAMA', 26.2, 50.6],
+          ['MUSCAT', 23.6, 58.6],
+          ['NEWARK, DE · HQ', 39.7, -75.7],
+        ];
 
     const CT: CityNode[] = cityData.map(([name, lat, lon]) =>
       mkC(name as string, lat as number, lon as number)
     );
 
-    const LB =
-      countryCode === 'sa'
-        ? isAr
-          ? [
-              'توطين المهن الهندسية 30% (قوى)',
-              'اعتمادات TVTC وبرامج هدف HRDF',
-              'السلامة الصناعية HCIS ومعايير مستدام',
-              'إدارة مطالبات فيديك FIDIC ومشاريع الطاقة',
-              'تأهيل المهندسين السعوديين الجدد',
-              'شهادات السلامة المهنية NEBOSH & ISO',
-            ]
-          : [
-              '30% Engineering Saudization (Qiwa)',
-              'TVTC & HRDF Cashback Approval',
-              'HCIS & Mostadam Site Compliance',
-              'FIDIC EPC Contracts & Primavera P6',
-              '60-Day Saudi Engineer Onboarding',
-              'NEBOSH & ISO 45001 Site Safety',
-            ]
-        : countryCode === 'ae'
-        ? isAr
-          ? [
-              'مستهدفات التوطين المهارية 10% (نافس)',
-              'تراخيص هيئة المعرفة KHDA ومركز ACTVET',
-              'سلامة المواقع OSHAD ومعايير السعفات واستدامة',
-              'عقود الطاقة المتجددة وإدارة مطالبات فيديك',
-              'تأهيل الكفاءات الإماراتية في المشاريع الحية',
-              'شهادات السلامة وتقارير الاستدامة ESG',
-            ]
-          : [
-              '10% Skilled Emiratization (Nafis)',
-              'KHDA (Dubai) & ACTVET (Abu Dhabi) Approved',
-              'OSHAD, Al Sa\'fat & Estidama Safety',
-              'Renewable EPC Delivery & FIDIC Claims',
-              '60-Day Emirati Talent Retention',
-              'NEBOSH & Scope 1-3 ESG Reporting',
-            ]
-        : isAr
-        ? [
-            'فجوة القيادة التنفيذية',
-            'تسريع مبيعات الشركات',
-            'التأهيل الرقمي والذكاء الاصطناعي',
-            'برامج التوطين والسعودة',
-            'التدريب على الامتثال والحوكمة',
-            'تطوير الإدارة الوسطى',
-            'رفع كفاءة خدمة العملاء',
-          ]
-        : [
-            'Executive leadership gap',
-            'B2B sales velocity lag',
-            'Digital & AI upskilling',
-            'Saudization programme',
-            'Compliance training',
-            'Middle-manager development',
-            'Customer service uplift',
-          ];
+    const LB = isAr
+      ? [
+          'فجوة القيادة التنفيذية',
+          'تسريع مبيعات الشركات',
+          'التأهيل الرقمي والذكاء الاصطناعي',
+          'برامج التوطين والسعودة',
+          'التدريب على الامتثال والحوكمة',
+          'تطوير الإدارة الوسطى',
+          'رفع كفاءة خدمة العملاء',
+        ]
+      : [
+          'Executive leadership gap',
+          'B2B sales velocity lag',
+          'Digital & AI upskilling',
+          'Saudization programme',
+          'Compliance training',
+          'Middle-manager development',
+          'Customer service uplift',
+        ];
 
     let W = 0;
     let H = 0;
@@ -824,21 +740,7 @@ export default function Hero() {
       cv.removeEventListener('pointerup', onPointerUp);
       if (observer) observer.disconnect();
     };
-  }, [isAr, countryCode]);
-
-  const heroEyebrow = dict.hero?.eyebrow;
-  const heroHeadline =
-    dict.hero?.headline ||
-    (isAr
-      ? 'اعثر على أفضل مدربي ومزودي التدريب المعتمدين. بدون عناء البحث أو عروض البيع المزعجة.'
-      : 'Find Vetted Corporate Trainers. Without the Search, Spam, or Guesswork.');
-  const heroSubtitle =
-    dict.hero?.subtitle ||
-    (isAr
-      ? 'نوفق بين المنشآت الخليجية التي تواجه تحديات مهارية ونخبة خبراء التدريب المعتمدين، مجاناً 100% للشركات.'
-      : 'We match GCC companies facing workforce challenges directly with verified training specialists, 100% free for organizations.');
-  const btnBuyer = dict.hero?.btn_buyer || (isAr ? 'ابحث عن شريك تدريب' : 'Find a Training Partner');
-  const btnProvider = dict.hero?.btn_provider || (isAr ? 'انضم كمزود تدريب' : 'Join as a Training Provider');
+  }, [isAr]);
 
   return (
     <section
@@ -863,47 +765,87 @@ export default function Hero() {
           id="lead"
           className="absolute inset-0 grid place-content-center text-center px-[5vw] opacity-0 pointer-events-none z-20"
         >
-          {heroEyebrow && (
-            <div className="mb-4 sm:mb-6">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-mono font-semibold tracking-wider uppercase border border-[#FF5C00]/40 bg-[#FF5C00]/10 text-[#FF5C00] backdrop-blur-md">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C00] animate-pulse" />
-                {heroEyebrow}
-              </span>
-            </div>
-          )}
-
           <h1
             ref={h1Ref}
-            className="font-heading font-light text-[clamp(1.9rem,4.4vw,4.4rem)] leading-[1.08] tracking-tight max-w-[1150px] mx-auto text-white"
-            aria-label={heroHeadline}
+            className="font-heading font-light text-[clamp(2.1rem,5.2vw,4.9rem)] leading-[1.06] tracking-tight max-w-[1100px] mx-auto text-white"
+            aria-label={
+              isAr
+                ? 'ابحث عن نخبة مدربي الشركات. دون إهدار وقت، أو عشوائية، أو تخمين.'
+                : 'Find Vetted Corporate Trainers. Without the Search, Spam, or Guesswork.'
+            }
           >
             {isAr ? (
-              heroHeadline.split(' ').map((word, wIdx) => (
-                <span
-                  key={wIdx}
-                  className="char-node inline-block px-[0.14em] transition-opacity duration-75"
-                  style={{ opacity: 0.14 }}
-                >
-                  {word}
+              <>
+                <span className="inline-block">
+                  {['ابحث', 'عن', 'نخبة', 'مدربي', 'الشركات.'].map(
+                    (word, wIdx) => (
+                      <span
+                        key={wIdx}
+                        className="char-node inline-block px-[0.16em] transition-opacity duration-75"
+                        style={{ opacity: 0.14 }}
+                      >
+                        {word}
+                      </span>
+                    )
+                  )}
                 </span>
-              ))
+                <br />
+                <span className="inline-block">
+                  {['دون', 'إهدار', 'وقت،', 'أو', 'عشوائية،', 'أو', 'تخمين.'].map(
+                    (word, wIdx) => (
+                      <span
+                        key={wIdx}
+                        className="char-node inline-block px-[0.16em] transition-opacity duration-75"
+                        style={{ opacity: 0.14 }}
+                      >
+                        {word}
+                      </span>
+                    )
+                  )}
+                </span>
+              </>
             ) : (
-              heroHeadline.split(' ').map((word, wIdx) => (
-                <span
-                  key={wIdx}
-                  className="inline-block mr-[0.24em] whitespace-nowrap"
-                >
-                  {word.split('').map((char, cIdx) => (
+              <>
+                <span className="inline-block">
+                  {'Find Vetted Corporate Trainers.'.split(' ').map((word, wIdx) => (
                     <span
-                      key={cIdx}
-                      className="char-node inline-block transition-opacity duration-75"
-                      style={{ opacity: 0.14 }}
+                      key={wIdx}
+                      className="inline-block mr-[0.28em] whitespace-nowrap"
                     >
-                      {char}
+                      {word.split('').map((char, cIdx) => (
+                        <span
+                          key={cIdx}
+                          className="char-node inline-block transition-opacity duration-75"
+                          style={{ opacity: 0.14 }}
+                        >
+                          {char}
+                        </span>
+                      ))}
                     </span>
                   ))}
                 </span>
-              ))
+                <br />
+                <span className="inline-block">
+                  {'Without the Search, Spam, or Guesswork.'.split(' ').map(
+                    (word, wIdx) => (
+                      <span
+                        key={wIdx}
+                        className="inline-block mr-[0.28em] whitespace-nowrap"
+                      >
+                        {word.split('').map((char, cIdx) => (
+                          <span
+                            key={cIdx}
+                            className="char-node inline-block transition-opacity duration-75"
+                            style={{ opacity: 0.14 }}
+                          >
+                            {char}
+                          </span>
+                        ))}
+                      </span>
+                    )
+                  )}
+                </span>
+              </>
             )}
           </h1>
 
@@ -912,23 +854,25 @@ export default function Hero() {
             id="sub"
             className="mt-[30px] opacity-0 transition-transform duration-75"
           >
-            <p className="max-w-[700px] mx-auto mb-7 text-neutral-300 text-sm sm:text-base md:text-[17px] font-sans leading-relaxed">
-              {heroSubtitle}
+            <p className="max-w-[600px] mx-auto mb-7 text-neutral-300 text-base sm:text-[17px] font-sans leading-relaxed">
+              {isAr
+                ? 'نربط الشركات في الخليج بنخبة خبراء التدريب المعتمدين والمناسبين لاحتياجات كفاءاتكم، مجاناً 100% للمنشآت.'
+                : 'We match GCC companies facing workforce challenges directly with verified training specialists, 100% free for organizations.'}
             </p>
             <div className="flex gap-3 justify-center items-center flex-wrap">
               <Link
                 href={`/${lang}/find-training`}
                 prefetch={false}
-                className="inline-flex items-center justify-center border border-[#FF5C00] px-6 py-3 font-sans font-semibold text-xs sm:text-sm bg-[#FF5C00] text-black hover:bg-black hover:text-white transition-colors duration-200 shadow-lg shadow-orange-500/20"
+                className="inline-flex items-center justify-center border border-white px-6 py-3 font-sans font-medium text-[15px] bg-white text-black hover:bg-black hover:text-white transition-colors duration-200"
               >
-                {btnBuyer}
+                {isAr ? 'ابحث عن شريك تدريب' : 'Find a Training Partner'}
               </Link>
               <Link
                 href={`/${lang}/for-providers`}
                 prefetch={false}
-                className="inline-flex items-center justify-center border border-white/40 px-6 py-3 font-sans font-medium text-xs sm:text-sm text-white bg-black/40 hover:bg-white hover:text-black transition-colors duration-200 backdrop-blur-sm"
+                className="inline-flex items-center justify-center border border-white px-6 py-3 font-sans font-medium text-[15px] text-white bg-black/40 hover:bg-white hover:text-black transition-colors duration-200 backdrop-blur-sm"
               >
-                {btnProvider}
+                {isAr ? 'انضم كمزود تدريب' : 'Join as a Training Provider'}
               </Link>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Locale, i18n, isArabicLocale, getCountryCode } from '@/i18n/config';
+import { Locale, i18n, isArabicLocale } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
 import { ArrowRight, BookOpen, Calendar, User } from '@/components/icons';
@@ -17,7 +17,6 @@ export async function generateMetadata({
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
   const isAr = isArabicLocale(lang);
-  const country = getCountryCode(lang);
 
   const title = isAr
     ? 'مدونة التدريب المؤسسي | منصة PontLook'
@@ -25,16 +24,6 @@ export async function generateMetadata({
   const description = isAr
     ? 'مقالات متخصصة، تحليلات مهارية، وأطر استراتيجية لتطوير الكفاءات البشرية في المملكة العربية السعودية والإمارات.'
     : 'In-depth articles, regional workforce benchmarks, and corporate L&D strategy guides across Saudi Arabia and the UAE.';
-
-  const ogLocale = isAr
-    ? country === 'ae'
-      ? 'ar_AE'
-      : 'ar_SA'
-    : country === 'ae'
-    ? 'en_AE'
-    : country === 'sa'
-    ? 'en_SA'
-    : 'en_US';
 
   return {
     title: {
@@ -47,7 +36,7 @@ export async function generateMetadata({
       description,
       url: `https://pontlook.com/${lang}/resources/blog`,
       siteName: 'PontLook',
-      locale: ogLocale,
+      locale: isAr ? 'ar_SA' : 'en_US',
       type: 'website',
       images: [
         {

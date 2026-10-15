@@ -3,7 +3,7 @@ import Reveal from '@/components/shared/Reveal';
 import Link from 'next/link';
 import { PackageCheck, Clock, RefreshCw, CreditCard, ShieldCheck, Mail } from '@/components/icons';
 
-import { Locale, i18n } from '@/i18n/config';
+import { Locale, i18n, isArabicLocale } from '@/i18n/config';
 
 import { constructAlternates } from '@/lib/seo';
 
@@ -14,7 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
 
   const title = isAr
     ? 'سياسة الاسترجاع والأسئلة الشائعة | PontLook'
@@ -103,7 +103,7 @@ const policyHighlightsAr = [
 export default async function ReturnsFAQPage({ params }: { params: Promise<{ lang: Locale }> }) {
   const resolvedParams = await params;
   const lang = resolvedParams?.lang || 'en';
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
   const policyHighlights = isAr ? policyHighlightsAr : policyHighlightsEn;
 
   const returnsFaqSchema = {

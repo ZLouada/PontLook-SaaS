@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Locale, i18n } from '@/i18n/config';
+import { Locale, i18n, isArabicLocale } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
 import { getPodcasts } from '@/lib/payload/resources';
@@ -15,7 +15,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
 
   const title = isAr
     ? 'بودكاست التدريب المؤسسي | منصة PontLook'
@@ -59,7 +59,7 @@ export default async function PodcastsPage({
   params: Promise<{ lang: Locale }>;
 }) {
   const { lang } = await params;
-  const isAr = lang === 'ar';
+  const isAr = isArabicLocale(lang);
 
   const dynamicEpisodes = await getPodcasts(lang);
 
