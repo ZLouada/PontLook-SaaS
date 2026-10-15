@@ -14,40 +14,65 @@ export const ResourcesFeatured: GlobalConfig = {
   },
   fields: [
     {
-      name: 'spotlightArticle',
-      type: 'relationship',
-      relationTo: 'articles',
-      required: false,
-      admin: {
-        description: 'Main spotlight article highlighted at the top of the Resources hub',
-      },
-    },
-    {
-      name: 'featuredEvent',
-      type: 'relationship',
-      relationTo: 'events',
-      required: false,
-      admin: {
-        description: "Featured event highlighted in the editor's pick section",
-      },
-    },
-    {
-      name: 'featuredDownload',
-      type: 'relationship',
-      relationTo: 'downloads',
-      required: false,
-      admin: {
-        description: "Featured download toolkit highlighted in the editor's pick section",
-      },
-    },
-    {
-      name: 'featuredPodcast',
-      type: 'relationship',
-      relationTo: 'podcasts',
-      required: false,
-      admin: {
-        description: 'Featured podcast episode',
-      },
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Featured Spotlight',
+          description: 'Main spotlight article highlighted at the top of the Resources hub',
+          fields: [
+            {
+              name: 'spotlightArticle',
+              type: 'relationship',
+              relationTo: 'articles',
+              label: 'Spotlight Article',
+              required: false,
+              admin: {
+                description:
+                  'Select a published article to feature as the main spotlight card on the left. The title, excerpt, category, read time, and featured image are loaded directly from Payload CMS. If none is selected, no mock content will be displayed.',
+              },
+            },
+          ],
+        },
+        {
+          label: 'Executive Toolkits & Media',
+          description: 'Featured resources displayed in the right-side cards of the Resources hub',
+          fields: [
+            {
+              name: 'featuredDownload',
+              type: 'relationship',
+              relationTo: 'downloads',
+              label: 'Featured Toolkit (Download)',
+              required: false,
+              admin: {
+                description:
+                  'Select an accredited downloadable toolkit from the Downloads collection to feature in Executive Toolkits & Media.',
+              },
+            },
+            {
+              name: 'featuredPodcast',
+              type: 'relationship',
+              relationTo: 'podcasts',
+              label: 'Featured Podcast / Audio Briefing',
+              required: false,
+              admin: {
+                description:
+                  'Select an executive podcast episode from the Podcasts collection to feature in Executive Toolkits & Media.',
+              },
+            },
+            {
+              name: 'featuredEvent',
+              type: 'relationship',
+              relationTo: 'events',
+              label: 'Featured Event (Optional Alternative)',
+              required: false,
+              admin: {
+                description:
+                  'Optionally select an upcoming verified event from the Events collection to feature in Executive Toolkits & Media.',
+              },
+            },
+          ],
+        },
+      ],
     },
   ],
 }

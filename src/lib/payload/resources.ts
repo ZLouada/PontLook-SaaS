@@ -208,32 +208,26 @@ export interface AdaptedSpotlight {
   title: string
   excerpt: string
   cta: string
-  image: string
+  image: string | null
   link: string
 }
 
-export interface AdaptedEditorPickEvent {
+export interface AdaptedFeaturedItem {
   badge: string
-  date: string
+  date?: string
   title: string
-  desc: string
+  desc?: string
   cta: string
   link: string
-}
-
-export interface AdaptedEditorPickToolkit {
-  badge: string
-  title: string
-  desc: string
-  cta: string
-  link: string
+  isExternal?: boolean
+  badgeColor?: string
 }
 
 export interface AdaptedFeatured {
-  spotlight: AdaptedSpotlight
-  editorPickEvent?: AdaptedEditorPickEvent | null
-  editorPickToolkit: AdaptedEditorPickToolkit
-  editorPickEventB?: AdaptedEditorPickEvent | null
+  spotlight: AdaptedSpotlight | null
+  editorPickToolkit?: AdaptedFeaturedItem | null
+  editorPickPodcast?: AdaptedFeaturedItem | null
+  editorPickEvent?: AdaptedFeaturedItem | null
 }
 
 export interface AdaptedNavbarResourcesCard {
@@ -707,34 +701,7 @@ export const getResourcesHero = cache(async (locale: Locale = 'en'): Promise<Ada
 
 // 8. Get Resources Featured Global (with resolved relationships)
 export const getResourcesFeatured = cache(async (locale: Locale = 'en'): Promise<AdaptedFeatured> => {
-  const isAr = locale.startsWith('ar');
-
-  // Sensible default fallbacks matching the exact design
-  const defaultSpotlight: AdaptedSpotlight = {
-    badge: isAr ? 'تقرير مميز · ٢٠٢٦' : 'FEATURED GUIDE · 2026',
-    category: isAr ? 'استراتيجيات التدريب' : 'L&D STRATEGIES',
-    readTime: isAr ? '١٢ دقيقة قراءة' : '12 min read',
-    date: isAr ? 'أكتوبر ٢٠٢٦' : 'October 2026',
-    title: isAr
-      ? 'دليل معايير تدريب الشركات في الخليج ٢٠٢٦: سد فجوات المهارات ومواءمة التوطين'
-      : 'The 2026 GCC Corporate Training Benchmark: Closing Workforce Skill Gaps',
-    excerpt: isAr
-      ? 'دراسة واقعية وشاملة تستند إلى مقابلات مع أكثر من ٤٥٠ قائداً تنفيذياً في الرياض ودبي حول قياس الاحتياج التدريبي الحقيقي، التعامل مع تراخيص TVTC، وبناء كوادر وطنية عالية الأداء.'
-      : 'A comprehensive study of 450+ enterprise HR leaders in Riyadh and Dubai navigating diagnostic TNA methods, TVTC accreditations, and high-impact corporate cohorts.',
-    cta: isAr ? 'قراءة الدليل بالكامل' : 'Read Full Guide',
-    image: '/executive_training_room.jpg',
-    link: `/${locale}/resources/blog`,
-  }
-
-  const defaultEditorPickToolkit: AdaptedEditorPickToolkit = {
-    badge: isAr ? 'دليل إرشادي معتمد' : 'PONTLOOK BENCHMARK GUIDE',
-    title: isAr ? 'دليل معايير اعتماد التدريب المؤسسي في السعودية' : 'Saudi Enterprise Training Accreditation Guide',
-    desc: isAr
-      ? 'إطار عملي لفهم متطلبات TVTC وتأهيل مزودي التدريب وبناء برامج الكوادر الوطنية المتوافقة مع رؤية 2030.'
-      : 'Strategic operational framework navigating TVTC accreditations, provider vetting criteria, and Vision 2030 talent localization standards.',
-    cta: isAr ? 'استعراض الموارد' : 'Explore Resources',
-    link: `/${locale}/resources/downloads`,
-  }
+  const isAr = locale.startsWith('ar')
 
   try {
     const payload = await getPayloadClient()
@@ -745,72 +712,158 @@ export const getResourcesFeatured = cache(async (locale: Locale = 'en'): Promise
       overrideAccess: false,
     })
 
-    let spotlight = defaultSpotlight
-    let editorPickEvent: AdaptedEditorPickEvent | null = null
-    let editorPickToolkit = defaultEditorPickToolkit
-    let editorPickEventB: AdaptedEditorPickEvent | null = null
+    let spotlight: AdaptedSpotlight | null = null
+    let editorPickToolkit: AdaptedFeaturedItem | null = null
+    let editorPickPodcast: AdaptedFeaturedItem | null = null
+    let editorPickEvent: AdaptedFeaturedItem | null = null
 
-    // Resolve Spotlight Article relation
+    // 1. Resolve Spotlight Article relation
+    let spotlightArt: any = null
     if (featured?.spotlightArticle && typeof featured.spotlightArticle === 'object') {
-      const art: any = featured.spotlightArticle
-      const featuredImage = await resolveMediaDoc(payload, art.featuredImage, toPayloadLocale(locale))
-      const imageUrl = getMediaUrl(featuredImage) || defaultSpotlight.image
-      const displayDate = formatDisplayDate(art.publishedAt, locale)
+      spotlightArt = featured.spotlightArticle
+    } else {
+      // If not explicitly set in global, check if any published article exists in Payload
+      const artRes = await payload.find({
+        collection: 'articles',
+        where: {
+          status: {
+            equals: 'published',
+          },
+        },
+        locale: toPayloadLocale(locale),
+        depth: 1,
+        sort: '-publishedAt',
+        limit: 1,
+        overrideAccess: false,
+      })
+      if (artRes.docs.length > 0) {
+        spotlightArt = artRes.docs[0]
+      }
+    }
+
+    if (spotlightArt) {
+      const featuredImage = await resolveMediaDoc(payload, spotlightArt.featuredImage, toPayloadLocale(locale))
+      const imageUrl = getMediaUrl(featuredImage)
+      const displayDate = formatDisplayDate(spotlightArt.publishedAt, locale)
 
       spotlight = {
-        badge: defaultSpotlight.badge,
-        category: art.category || defaultSpotlight.category,
-        readTime: art.readTime || defaultSpotlight.readTime,
-        date: displayDate || defaultSpotlight.date,
-        title: art.title || defaultSpotlight.title,
-        excerpt: art.excerpt || defaultSpotlight.excerpt,
-        cta: defaultSpotlight.cta,
+        badge: isAr ? 'محتوى مميز' : 'FEATURED',
+        category: spotlightArt.category || (isAr ? 'مقال تحليلي' : 'SPECIAL REPORT'),
+        readTime: spotlightArt.readTime || (isAr ? '٥ دقائق قراءة' : '5 min read'),
+        date: displayDate || '',
+        title: spotlightArt.title || '',
+        excerpt: spotlightArt.excerpt || extractTextFromLexical(spotlightArt.content).slice(0, 180),
+        cta: isAr ? 'قراءة المقال بالكامل' : 'Read Full Article',
         image: imageUrl,
-        link: `/${locale}/resources/blog/${art.slug}`,
+        link: `/${locale}/resources/blog/${spotlightArt.slug}`,
       }
     }
 
-    // Resolve Featured Event relation (only if explicitly set in Payload CMS)
-    if (featured?.featuredEvent && typeof featured.featuredEvent === 'object') {
-      const ev: any = featured.featuredEvent
-      const displayDate = formatDisplayDate(ev.date, locale)
-
-      editorPickEvent = {
-        badge: ev.type || (isAr ? 'فعالية معتمدة' : 'VERIFIED EVENT'),
-        date: displayDate || ev.time || '',
-        title: ev.title || '',
-        desc: ev.description || '',
-        cta: isAr ? 'الموقع الرسمي والتسجيل' : 'Official Event & Agenda',
-        link: ev.rsvpLink || `/${locale}/resources/events`,
-      }
-    }
-
-    // Resolve Featured Download relation
+    // 2. Resolve Featured Download (Toolkit)
+    let downloadDoc: any = null
     if (featured?.featuredDownload && typeof featured.featuredDownload === 'object') {
-      const dl: any = featured.featuredDownload
+      downloadDoc = featured.featuredDownload
+    } else {
+      const dlRes = await payload.find({
+        collection: 'downloads',
+        where: {
+          status: {
+            equals: 'published',
+          },
+        },
+        locale: toPayloadLocale(locale),
+        depth: 0,
+        sort: '-createdAt',
+        limit: 1,
+        overrideAccess: false,
+      })
+      if (dlRes.docs.length > 0) {
+        downloadDoc = dlRes.docs[0]
+      }
+    }
 
+    if (downloadDoc) {
       editorPickToolkit = {
-        badge: dl.format || defaultEditorPickToolkit.badge,
-        title: dl.title || defaultEditorPickToolkit.title,
-        desc: dl.description || defaultEditorPickToolkit.desc,
-        cta: defaultEditorPickToolkit.cta,
+        badge: downloadDoc.format || (isAr ? 'أدوات ونماذج' : 'TOOLKIT'),
+        date: downloadDoc.fileSize || (isAr ? 'تحميل مباشر' : 'Instant Download'),
+        title: downloadDoc.title || '',
+        desc: downloadDoc.description || '',
+        cta: isAr ? 'استعراض النماذج' : 'Explore Toolkits',
         link: `/${locale}/resources/downloads`,
+        isExternal: false,
+        badgeColor: 'bg-[#FF5C00]/10 text-[#FF5C00] border-[#FF5C00]/25 font-bold',
+      }
+    }
+
+    // 3. Resolve Featured Podcast
+    let podcastDoc: any = null
+    if (featured?.featuredPodcast && typeof featured.featuredPodcast === 'object') {
+      podcastDoc = featured.featuredPodcast
+    } else {
+      const podRes = await payload.find({
+        collection: 'podcasts',
+        where: {
+          status: {
+            equals: 'published',
+          },
+        },
+        locale: toPayloadLocale(locale),
+        depth: 0,
+        sort: '-createdAt',
+        limit: 1,
+        overrideAccess: false,
+      })
+      if (podRes.docs.length > 0) {
+        podcastDoc = podRes.docs[0]
+      }
+    }
+
+    if (podcastDoc) {
+      editorPickPodcast = {
+        badge: podcastDoc.tag || (isAr ? 'بودكاست' : 'EXECUTIVE PODCAST'),
+        date: podcastDoc.duration || (isAr ? 'حلقة صوتية' : 'Audio Briefing'),
+        title: podcastDoc.title || '',
+        desc: podcastDoc.description || (podcastDoc.guest ? `${isAr ? 'ضيف الحلقة: ' : 'Guest: '}${podcastDoc.guest}` : ''),
+        cta: isAr ? 'الاستماع للحلقات' : 'Listen to Episode',
+        link: podcastDoc.audioUrl || `/${locale}/resources/podcasts`,
+        isExternal: Boolean(podcastDoc.audioUrl && podcastDoc.audioUrl.startsWith('http')),
+        badgeColor: 'bg-neutral-200 text-neutral-800 border-neutral-300',
+      }
+    }
+
+    // 4. Resolve Featured Event (Optional in Toolkits & Media)
+    let eventDoc: any = null
+    if (featured?.featuredEvent && typeof featured.featuredEvent === 'object') {
+      eventDoc = featured.featuredEvent
+    }
+
+    if (eventDoc) {
+      const displayDate = formatDisplayDate(eventDoc.date, locale)
+      editorPickEvent = {
+        badge: eventDoc.type || (isAr ? 'فعالية معتمدة' : 'VERIFIED EVENT'),
+        date: displayDate || eventDoc.time || '',
+        title: eventDoc.title || '',
+        desc: eventDoc.description || '',
+        cta: isAr ? 'الموقع الرسمي والتسجيل' : 'Official Event & Agenda',
+        link: eventDoc.rsvpLink || `/${locale}/resources/events`,
+        isExternal: Boolean(eventDoc.rsvpLink && eventDoc.rsvpLink.startsWith('http')),
+        badgeColor: 'bg-neutral-200 text-neutral-800 border-neutral-300',
       }
     }
 
     return {
       spotlight,
-      editorPickEvent,
       editorPickToolkit,
-      editorPickEventB,
+      editorPickPodcast,
+      editorPickEvent,
     }
   } catch (error) {
     console.error('[Payload Data Layer] Failed to get resources featured:', error)
     return {
-      spotlight: defaultSpotlight,
+      spotlight: null,
+      editorPickToolkit: null,
+      editorPickPodcast: null,
       editorPickEvent: null,
-      editorPickToolkit: defaultEditorPickToolkit,
-      editorPickEventB: null,
     }
   }
 })

@@ -10,6 +10,7 @@ import {
   getResourcesFeatured,
   getArticles,
   getEvents,
+  AdaptedFeaturedItem,
 } from '@/lib/payload/resources';
 import {
   BookOpen,
@@ -93,72 +94,14 @@ export default async function ResourcesPage({
   const heroTitle = hero.title;
   const heroSubtitle = hero.subtitle;
   const spotlight = featured.spotlight;
-  const editorPickEvent = featured.editorPickEvent;
-  const editorPickToolkit = featured.editorPickToolkit;
 
-  // Derive cards for right stack: use Payload CMS published events if available, otherwise fallback to Toolkits & Podcasts
-  const hasPublishedEvents = eventsList && eventsList.length > 0;
-  const primaryEvent = editorPickEvent || (hasPublishedEvents ? {
-    badge: eventsList[0].type || (isAr ? 'فعالية معتمدة' : 'VERIFIED EVENT'),
-    date: eventsList[0].date,
-    title: eventsList[0].title,
-    desc: eventsList[0].desc,
-    cta: isAr ? 'الموقع الرسمي والتسجيل' : 'Official Event & Agenda',
-    link: eventsList[0].link,
-  } : null);
+  // Build Executive Toolkits & Media cards from Payload CMS
+  const mediaCards: AdaptedFeaturedItem[] = [];
+  if (featured.editorPickToolkit) mediaCards.push(featured.editorPickToolkit);
+  if (featured.editorPickPodcast) mediaCards.push(featured.editorPickPodcast);
+  if (featured.editorPickEvent) mediaCards.push(featured.editorPickEvent);
 
-  const secondaryEvent = featured.editorPickEventB || (eventsList && eventsList.length > 1 ? {
-    badge: eventsList[1].type || (isAr ? 'جلسة تنفيذية' : 'EXECUTIVE SESSION'),
-    date: eventsList[1].date,
-    title: eventsList[1].title,
-    desc: eventsList[1].desc,
-    cta: isAr ? 'الموقع الرسمي والتسجيل' : 'Official Summit & RSVP',
-    link: eventsList[1].link,
-  } : null);
-
-  const cardA = primaryEvent ? {
-    badge: primaryEvent.badge,
-    date: primaryEvent.date,
-    title: primaryEvent.title,
-    desc: primaryEvent.desc,
-    cta: primaryEvent.cta,
-    link: primaryEvent.link || `/${lang}/resources/events`,
-    isExternal: primaryEvent.link?.startsWith('http') || false,
-    badgeColor: 'bg-neutral-200 text-neutral-800 border-neutral-300',
-  } : {
-    badge: editorPickToolkit?.badge || (isAr ? 'أدوات ونماذج معتمدة' : 'ENTERPRISE TOOLKIT'),
-    date: isAr ? 'تحميل مباشر' : 'Instant Download',
-    title: editorPickToolkit?.title || (isAr ? 'دليل معايير اعتماد التدريب المؤسسي' : 'Enterprise Training Accreditation Guide'),
-    desc: editorPickToolkit?.desc || (isAr ? 'نماذج عملية وأطر متوافقة لتقييم الاحتياج التدريبي وبناء كوادر العمل.' : 'Practical frameworks for corporate training needs analysis and workforce onboarding.'),
-    cta: editorPickToolkit?.cta || (isAr ? 'استعراض النماذج' : 'Explore Toolkits'),
-    link: editorPickToolkit?.link || `/${lang}/resources/downloads`,
-    isExternal: false,
-    badgeColor: 'bg-[#FF5C00]/10 text-[#FF5C00] border-[#FF5C00]/25 font-bold',
-  };
-
-  const cardB = secondaryEvent ? {
-    badge: secondaryEvent.badge,
-    date: secondaryEvent.date,
-    title: secondaryEvent.title,
-    desc: secondaryEvent.desc,
-    cta: secondaryEvent.cta,
-    link: secondaryEvent.link || `/${lang}/resources/events`,
-    isExternal: secondaryEvent.link?.startsWith('http') || false,
-    badgeColor: 'bg-[#FF5C00]/10 text-[#FF5C00] border-[#FF5C00]/25 font-bold',
-  } : {
-    badge: isAr ? 'بودكاست التدريب' : 'EXECUTIVE PODCAST',
-    date: isAr ? 'حلقات صوتية' : 'Audio Briefings',
-    title: isAr ? 'حوارات صُنّاع القرار واستراتيجيات التدريب' : 'Executive Conversations on Workforce L&D',
-    desc: isAr ? 'لقاءات حصرية مع قادة الموارد البشرية والتدريب في الخليج لمناقشة تحديات توطين الكفاءات.' : 'Exclusive insights from GCC Chief People Officers navigating talent localization and upskilling.',
-    cta: isAr ? 'الاستماع للحلقات' : 'Listen to Episodes',
-    link: `/${lang}/resources/podcasts`,
-    isExternal: false,
-    badgeColor: 'bg-neutral-200 text-neutral-800 border-neutral-300',
-  };
-
-  const stackHeader = (primaryEvent || secondaryEvent)
-    ? (isAr ? 'أبرز الفعاليات القادمة' : 'FEATURED UPCOMING EVENTS')
-    : (isAr ? 'أدوات ومحتوى تنفيذي' : 'EXECUTIVE TOOLKITS & MEDIA');
+  const hasFeaturedSection = Boolean(spotlight || mediaCards.length > 0);
 
   const categoryPills = [
     { label: isAr ? 'كافة الموارد' : 'All Resources', href: `/${lang}/resources`, active: true },
@@ -216,141 +159,122 @@ export default async function ResourcesPage({
         </div>
 
         {/* ======================================================== */}
-        {/* 3. FEATURED SPOTLIGHT GRID (GoodHabitz Inspired Layout)   */}
+        {/* 3. FEATURED SPOTLIGHT GRID (Strictly Payload CMS Driven)  */}
         {/* ======================================================== */}
-        <section className="mb-20 sm:mb-28">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* Main Large Spotlight Card (8 Cols) */}
-            <div className="lg:col-span-7 xl:col-span-8 flex flex-col">
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 mb-3 block">
-                {isAr ? 'محتوى مميز' : 'FEATURED'}
-              </span>
-              <Link
-                href={`/${lang}/resources/blog`}
-                className="group relative flex flex-col justify-between h-full rounded-3xl bg-white border border-neutral-200 hover:border-neutral-400 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl"
-              >
-                <div className="relative aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/9] w-full shrink-0 min-h-[220px] sm:min-h-[280px] bg-neutral-100 overflow-hidden">
-                  <ResourceImage
-                    src={spotlight.image || '/executive_training_room.jpg'}
-                    alt="GCC Corporate Training Benchmark"
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 800px"
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                  <div className="absolute top-4 start-4 sm:top-6 sm:start-6 flex items-center gap-2">
-                    <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-white/20 text-white backdrop-blur-md border border-white/30">
-                      {spotlight.badge}
-                    </span>
-                    <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#FF5C00] text-white">
-                      {spotlight.category}
-                    </span>
-                  </div>
-                </div>
+        {hasFeaturedSection && (
+          <section className="mb-20 sm:mb-28">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+              {/* Main Large Spotlight Card */}
+              {spotlight && (
+                <div className={mediaCards.length > 0 ? "lg:col-span-7 xl:col-span-8 flex flex-col" : "lg:col-span-12 flex flex-col"}>
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 mb-3 block">
+                    {isAr ? 'محتوى مميز' : 'FEATURED'}
+                  </span>
+                  <Link
+                    href={spotlight.link}
+                    className="group relative flex flex-col justify-between h-full rounded-3xl bg-white border border-neutral-200 hover:border-neutral-400 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-xl"
+                  >
+                    {spotlight.image && (
+                      <div className="relative aspect-[16/9] sm:aspect-[21/9] lg:aspect-[16/9] w-full shrink-0 min-h-[220px] sm:min-h-[280px] bg-neutral-100 overflow-hidden">
+                        <ResourceImage
+                          src={spotlight.image}
+                          alt={spotlight.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 800px"
+                          className="object-cover group-hover:scale-105 transition-transform duration-700"
+                          priority
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                        <div className="absolute top-4 start-4 sm:top-6 sm:start-6 flex items-center gap-2">
+                          <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-white/20 text-white backdrop-blur-md border border-white/30">
+                            {spotlight.badge}
+                          </span>
+                          <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#FF5C00] text-white">
+                            {spotlight.category}
+                          </span>
+                        </div>
+                      </div>
+                    )}
 
-                <div className="p-6 sm:p-8 lg:p-10 flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center gap-3 text-xs font-mono text-neutral-500 mb-3">
-                      <span>{spotlight.readTime}</span>
-                      <span>•</span>
-                      <span>{spotlight.date}</span>
+                    <div className="p-6 sm:p-8 lg:p-10 flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center gap-3 text-xs font-mono text-neutral-500 mb-3">
+                          {spotlight.readTime && <span>{spotlight.readTime}</span>}
+                          {spotlight.readTime && spotlight.date && <span>•</span>}
+                          {spotlight.date && <span>{spotlight.date}</span>}
+                        </div>
+                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-neutral-950 group-hover:text-black transition-colors leading-tight mb-4">
+                          {spotlight.title}
+                        </h2>
+                        {spotlight.excerpt && (
+                          <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-normal">
+                            {spotlight.excerpt}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="mt-8 pt-6 border-t border-neutral-200 flex items-center justify-between text-sm font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
+                        <span>{spotlight.cta}</span>
+                        <ArrowRight size={18} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                      </div>
                     </div>
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-neutral-950 group-hover:text-black transition-colors leading-tight mb-4">
-                      {spotlight.title}
-                    </h2>
-                    <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-normal">
-                      {spotlight.excerpt}
-                    </p>
-                  </div>
+                  </Link>
+                </div>
+              )}
 
-                  <div className="mt-8 pt-6 border-t border-neutral-200 flex items-center justify-between text-sm font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
-                    <span>{spotlight.cta}</span>
-                    <ArrowRight size={18} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+              {/* Executive Toolkits & Media (Right Stack or Full Grid) */}
+              {mediaCards.length > 0 && (
+                <div className={spotlight ? "lg:col-span-5 xl:col-span-4 flex flex-col" : "lg:col-span-12 flex flex-col"}>
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 mb-3 block">
+                    {isAr ? 'أدوات ومحتوى تنفيذي' : 'EXECUTIVE TOOLKITS & MEDIA'}
+                  </span>
+                  <div className={spotlight ? "flex flex-col gap-6 sm:gap-8 justify-between flex-1" : "grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 flex-1"}>
+                    {mediaCards.slice(0, 2).map((card, idx) => (
+                      <Link
+                        key={idx}
+                        href={card.link}
+                        target={card.isExternal ? '_blank' : undefined}
+                        rel={card.isExternal ? 'noopener noreferrer' : undefined}
+                        className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex-1"
+                      >
+                        <div>
+                          <div className="flex items-center justify-between mb-4">
+                            <span className={`px-2.5 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider border ${card.badgeColor || 'bg-neutral-200 text-neutral-800 border-neutral-300'}`}>
+                              {card.badge}
+                            </span>
+                            {card.date && (
+                              <span className="text-xs font-mono text-neutral-500">
+                                {card.date}
+                              </span>
+                            )}
+                          </div>
+
+                          <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
+                            {card.title}
+                          </h3>
+                          {card.desc && (
+                            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
+                              {card.desc}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
+                          <span>{card.cta}</span>
+                          {card.isExternal ? (
+                            <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                          ) : (
+                            <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                          )}
+                        </div>
+                      </Link>
+                    ))}
                   </div>
                 </div>
-              </Link>
+              )}
             </div>
-
-            {/* Right 2-Card Stack (4 Cols) */}
-            <div className="lg:col-span-5 xl:col-span-4 flex flex-col">
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 mb-3 block">
-                {stackHeader}
-              </span>
-              <div className="flex flex-col gap-6 sm:gap-8 justify-between flex-1">
-              {/* Card A */}
-              <Link
-                href={cardA.link || `/${lang}/resources/events`}
-                target={cardA.isExternal ? '_blank' : undefined}
-                rel={cardA.isExternal ? 'noopener noreferrer' : undefined}
-                className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex-1"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className={`px-2.5 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider border ${cardA.badgeColor}`}>
-                      {cardA.badge}
-                    </span>
-                    <span className="text-xs font-mono text-neutral-500">
-                      {cardA.date}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
-                    {cardA.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
-                    {cardA.desc}
-                  </p>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
-                  <span>{cardA.cta}</span>
-                  {cardA.isExternal ? (
-                    <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  ) : (
-                    <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
-                  )}
-                </div>
-              </Link>
-
-              {/* Card B */}
-              <Link
-                href={cardB.link || `/${lang}/resources/events`}
-                target={cardB.isExternal ? '_blank' : undefined}
-                rel={cardB.isExternal ? 'noopener noreferrer' : undefined}
-                className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-neutral-50 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md flex-1"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className={`px-2.5 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider border ${cardB.badgeColor}`}>
-                      {cardB.badge}
-                    </span>
-                    <span className="text-xs font-mono text-neutral-500">
-                      {cardB.date}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
-                    {cardB.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
-                    {cardB.desc}
-                  </p>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
-                  <span>{cardB.cta}</span>
-                  {cardB.isExternal ? (
-                    <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  ) : (
-                    <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
-                  )}
-                </div>
-              </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* ======================================================== */}
         {/* 4. THE CORPORATE L&D BLOG SECTION                        */}
