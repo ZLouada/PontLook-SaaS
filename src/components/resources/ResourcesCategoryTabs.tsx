@@ -10,7 +10,7 @@ import {
   isValidCategorySlug,
 } from '@/constants/categories';
 import { ResourceImage } from '@/components/resources/ResourceImage';
-import { ArrowRight, Folder, ChevronRight } from '@/components/icons';
+import { ArrowRight, ChevronDown, Check } from '@/components/icons';
 
 export interface ResourceTabItem {
   id: string;
@@ -52,10 +52,8 @@ function ResourcesCategoryTabsInner({
   const pathname = usePathname();
   const isAr = isArabicLocale(lang);
 
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // Read ?category=... from URL
   const categoryParam = searchParams.get('category');
@@ -71,63 +69,37 @@ function ResourcesCategoryTabsInner({
 
   const [activeCategory, setActiveCategory] = useState<string>(resolvedInitialCategory);
 
-  // Scroll active tab into centered view
-  const scrollToTab = (categoryValue: string, smooth = true) => {
-    const tabEl = tabRefs.current[categoryValue];
-    if (tabEl && scrollContainerRef.current) {
-      tabEl.scrollIntoView({
-        behavior: smooth ? 'smooth' : 'auto',
-        block: 'nearest',
-        inline: 'center',
-      });
-    }
-  };
-
   // Synchronize when URL search parameters change externally
   useEffect(() => {
     if (categoryParam) {
       const normalized = categoryParam.trim().toLowerCase();
       if (normalized === 'all' || isValidCategorySlug(normalized)) {
         setActiveCategory(normalized);
-        scrollToTab(normalized, false);
       }
     } else {
       setActiveCategory('all');
     }
   }, [categoryParam]);
 
-  // Check scroll boundary state for left/right chevrons
-  const updateScrollButtons = () => {
-    const el = scrollContainerRef.current;
-    if (!el) return;
-    const { scrollLeft, scrollWidth, clientWidth } = el;
-    const hasOverflow = scrollWidth > clientWidth + 2;
-    if (!hasOverflow) {
-      setCanScrollLeft(false);
-      setCanScrollRight(false);
-      return;
-    }
-    const absScroll = Math.abs(scrollLeft);
-    setCanScrollLeft(absScroll > 10);
-    setCanScrollRight(scrollWidth - clientWidth - absScroll > 10);
-  };
-
+  // Close dropdown on click outside
   useEffect(() => {
-    updateScrollButtons();
-    const el = scrollContainerRef.current;
-    if (!el) return;
-    el.addEventListener('scroll', updateScrollButtons, { passive: true });
-    window.addEventListener('resize', updateScrollButtons);
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
     return () => {
-      el.removeEventListener('scroll', updateScrollButtons);
-      window.removeEventListener('resize', updateScrollButtons);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [items]);
+  }, [isDropdownOpen]);
 
-  // Handle Tab Click with auto-center and Shallow URL Sync
+  // Handle Tab Click with Shallow URL Sync
   const handleTabClick = (categoryValue: string) => {
     setActiveCategory(categoryValue);
-    scrollToTab(categoryValue, true);
+    setIsDropdownOpen(false);
 
     if (typeof window !== 'undefined') {
       const currentParams = new URLSearchParams(window.location.search);
@@ -140,15 +112,6 @@ function ResourcesCategoryTabsInner({
       const newUrl = qs ? `${pathname}?${qs}` : pathname;
       window.history.replaceState(null, '', newUrl);
     }
-  };
-
-  // Scroll manually via side chevron buttons
-  const scrollByAmount = (direction: 'left' | 'right') => {
-    const el = scrollContainerRef.current;
-    if (!el) return;
-    const factor = direction === 'left' ? -260 : 260;
-    const delta = isAr ? -factor : factor;
-    el.scrollBy({ left: delta, behavior: 'smooth' });
   };
 
   // Build the list of tabs: "All" + 8 Canonical Categories
@@ -166,16 +129,9 @@ function ResourcesCategoryTabsInner({
     return [allTab, ...categoryTabs];
   }, [isAr]);
 
-  // Compute resource item count per category
-  const countsByCategory = useMemo(() => {
-    const counts: Record<string, number> = {
-      all: items.length,
-    };
-    for (const cat of PONTLOOK_CATEGORIES) {
-      counts[cat.value] = items.filter((item) => item.categorySlug === cat.value).length;
-    }
-    return counts;
-  }, [items]);
+  const activeTabObj = useMemo(() => {
+    return tabs.find((t) => t.value === activeCategory) || tabs[0];
+  }, [tabs, activeCategory]);
 
   // Filter items based on activeCategory
   const filteredItems = useMemo(() => {
@@ -203,77 +159,97 @@ function ResourcesCategoryTabsInner({
         )}
       </div>
 
-      {/* 2. Horizontal Category Tab Strip + Bottom Hairline Rule */}
-      <div className="relative w-full border-b border-neutral-200 mb-10 sm:mb-12">
-        {/* Left Scroll Chevron (Desktop) */}
-        {canScrollLeft && (
-          <div className="hidden md:flex absolute start-0 top-0 bottom-0 z-20 items-center pe-3 bg-gradient-to-r rtl:bg-gradient-to-l from-white via-white/80 to-transparent">
-            <button
-              type="button"
-              onClick={() => scrollByAmount('left')}
-              aria-label={isAr ? 'التمرير لليمين' : 'Scroll left'}
-              className="w-8 h-8 rounded-full bg-white border border-neutral-300 shadow-sm flex items-center justify-center text-neutral-700 hover:text-neutral-950 hover:border-neutral-400 hover:scale-105 transition-all cursor-pointer"
-            >
-              <ChevronRight className="rotate-180" size={14} />
-            </button>
-          </div>
-        )}
+      {/* 2. CATEGORY FILTER (BOXED LIKE PAYLOAD CMS) */}
+      <div className="mb-10 sm:mb-12">
+        {/* A. Payload CMS Style Dropdown Select Box */}
+        <div className="max-w-md mx-auto mb-6 px-4 relative" ref={dropdownRef}>
+          <button
+            type="button"
+            id="category-select-button"
+            aria-haspopup="listbox"
+            aria-expanded={isDropdownOpen}
+            onClick={() => setIsDropdownOpen((prev) => !prev)}
+            className="w-full flex items-center justify-between gap-3 px-5 py-3.5 rounded-2xl bg-white border border-neutral-300 hover:border-neutral-900 focus:border-neutral-950 transition-all shadow-xs cursor-pointer select-none"
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#FF5C00] shrink-0" />
+              <div className="flex items-baseline gap-2 truncate">
+                <span className="text-xs font-mono uppercase tracking-wider text-neutral-500 shrink-0">
+                  {isAr ? 'التصنيف:' : 'Category:'}
+                </span>
+                <span className={`font-bold text-sm sm:text-base text-neutral-950 truncate ${isAr ? 'font-arabic' : 'font-heading'}`}>
+                  {activeTabObj.label}
+                </span>
+              </div>
+            </div>
+            <ChevronDown
+              size={18}
+              className={`text-neutral-500 shrink-0 transition-transform duration-200 ${
+                isDropdownOpen ? 'rotate-180 text-neutral-950' : ''
+              }`}
+            />
+          </button>
 
-        {/* Right Scroll Chevron (Desktop) */}
-        {canScrollRight && (
-          <div className="hidden md:flex absolute end-0 top-0 bottom-0 z-20 items-center ps-3 bg-gradient-to-l rtl:bg-gradient-to-r from-white via-white/80 to-transparent">
-            <button
-              type="button"
-              onClick={() => scrollByAmount('right')}
-              aria-label={isAr ? 'التمرير لليسار' : 'Scroll right'}
-              className="w-8 h-8 rounded-full bg-white border border-neutral-300 shadow-sm flex items-center justify-center text-neutral-700 hover:text-neutral-950 hover:border-neutral-400 hover:scale-105 transition-all cursor-pointer"
+          {/* Dropdown Menu */}
+          {isDropdownOpen && (
+            <div
+              role="listbox"
+              aria-labelledby="category-select-button"
+              className="absolute start-4 end-4 top-full mt-2 z-30 bg-white border border-neutral-200 rounded-2xl shadow-xl p-2 max-h-80 overflow-y-auto no-scrollbar animate-in fade-in duration-150"
             >
-              <ChevronRight size={14} />
-            </button>
-          </div>
-        )}
+              {tabs.map((tab) => {
+                const isSelected = activeCategory === tab.value;
+                return (
+                  <button
+                    key={tab.value}
+                    role="option"
+                    aria-selected={isSelected}
+                    type="button"
+                    onClick={() => handleTabClick(tab.value)}
+                    className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm transition-colors cursor-pointer select-none text-start ${
+                      isAr ? 'font-arabic' : 'font-heading'
+                    } ${
+                      isSelected
+                        ? 'bg-neutral-950 text-white font-semibold'
+                        : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950 font-medium'
+                    }`}
+                  >
+                    <span>{tab.label}</span>
+                    {isSelected && <Check size={16} className="text-white shrink-0" />}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
 
+        {/* B. Discrete Boxed Category Buttons (Complete 4-Sided Boxes) */}
         <div
-          ref={scrollContainerRef}
           role="tablist"
           aria-label={isAr ? 'تصنيفات الموارد المعرفية' : 'Resource Categories'}
-          className="flex items-end justify-start md:justify-center overflow-x-auto no-scrollbar gap-1.5 sm:gap-2 px-2 sm:px-6 scroll-smooth"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 px-2 sm:px-4"
         >
           {tabs.map((tab) => {
             const isSelected = activeCategory === tab.value;
-            const count = countsByCategory[tab.value] ?? 0;
 
             return (
               <button
                 key={tab.value}
-                ref={(el) => {
-                  tabRefs.current[tab.value] = el;
-                }}
                 role="tab"
                 type="button"
                 id={`tab-${tab.value}`}
                 aria-selected={isSelected}
                 aria-controls="featured-resources-panel"
                 onClick={() => handleTabClick(tab.value)}
-                className={`group inline-flex items-center gap-2 px-4.5 py-3 text-sm whitespace-nowrap transition-all duration-150 cursor-pointer select-none rounded-t-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5C00] ${
-                  isAr ? 'font-arabic text-[14px]' : 'font-heading'
+                className={`inline-flex items-center gap-2 px-4.5 py-2.5 text-xs sm:text-sm whitespace-nowrap transition-all duration-150 cursor-pointer select-none rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 ${
+                  isAr ? 'font-arabic' : 'font-heading'
                 } ${
                   isSelected
-                    ? 'bg-neutral-50/90 text-neutral-950 font-bold border-t border-l border-r border-neutral-300 border-b-[3px] border-b-[#FF5C00] shadow-2xs -mb-[1px] z-10'
-                    : 'border border-transparent border-b-[3px] border-b-transparent text-neutral-600 hover:text-neutral-950 hover:bg-neutral-100/70 font-medium -mb-[1px]'
+                    ? 'bg-neutral-950 text-white font-semibold border border-neutral-950 shadow-sm'
+                    : 'bg-white text-neutral-700 hover:text-neutral-950 hover:bg-neutral-50 hover:border-neutral-300 font-medium border border-neutral-200 shadow-2xs'
                 }`}
               >
                 <span>{tab.label}</span>
-                <span
-                  className={`text-[11px] px-2 py-0.5 rounded-full font-mono transition-colors ${
-                    isSelected
-                      ? 'bg-[#FF5C00]/15 text-[#FF5C00] font-bold'
-                      : 'bg-neutral-200/70 text-neutral-600 group-hover:bg-neutral-200 group-hover:text-neutral-900'
-                  }`}
-                >
-                  {count}
-                </span>
               </button>
             );
           })}
@@ -423,11 +399,11 @@ function ResourcesCategoryTabsSkeleton({
           {title || (isAr ? 'أبرز الموارد المعرفية' : 'Featured Resources')}
         </h2>
       </div>
-      <div className="w-full border-b border-neutral-200 mb-10 flex justify-center gap-2 animate-pulse">
-        <div className="h-11 w-20 bg-neutral-200 rounded-t-xl" />
-        <div className="h-11 w-28 bg-neutral-100 rounded-t-xl" />
-        <div className="h-11 w-32 bg-neutral-100 rounded-t-xl" />
-        <div className="h-11 w-28 bg-neutral-100 rounded-t-xl" />
+      <div className="w-full mb-10 flex justify-center gap-2 animate-pulse">
+        <div className="h-10 w-24 bg-neutral-200 rounded-xl" />
+        <div className="h-10 w-32 bg-neutral-100 rounded-xl" />
+        <div className="h-10 w-36 bg-neutral-100 rounded-xl" />
+        <div className="h-10 w-28 bg-neutral-100 rounded-xl" />
       </div>
     </section>
   );
