@@ -366,15 +366,12 @@ function ResourcesCategoryTabsInner({
             ))}
           </div>
         ) : (
-          /* Empty State when Category has no items */
-          <div className="p-10 sm:p-14 rounded-3xl border border-neutral-200 bg-neutral-50/80 text-center max-w-lg mx-auto shadow-xs">
-            <div className="h-14 w-14 rounded-2xl bg-[#FF5C00]/10 text-[#FF5C00] flex items-center justify-center mx-auto mb-4">
-              <Folder size={26} />
-            </div>
-            <h4 className="text-xl font-heading font-bold text-neutral-950 mb-2">
+          /* Original PontLook Empty State */
+          <div className="p-10 sm:p-12 rounded-3xl border border-dashed border-neutral-300 bg-neutral-50 text-center max-w-lg mx-auto">
+            <h4 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 mb-2">
               {isAr ? 'لا توجد موارد متوفرة في هذا التصنيف حالياً' : 'No resources in this category yet'}
             </h4>
-            <p className="text-sm text-neutral-600 leading-relaxed max-w-sm mx-auto mb-6 font-normal">
+            <p className="text-sm text-neutral-600 leading-relaxed max-w-md mx-auto mb-6">
               {isAr
                 ? 'نعمل حالياً على إعداد أحدث الأدلة والأبحاث التنفيذية لهذا المسار. يمكنك تصفح كافة الموارد المتاحة.'
                 : 'We are curating executive guides and research for this track. You can browse all available resources.'}
@@ -382,7 +379,7 @@ function ResourcesCategoryTabsInner({
             <button
               type="button"
               onClick={() => handleTabClick('all')}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-neutral-950 hover:bg-[#FF5C00] text-white text-xs sm:text-sm font-semibold transition-all shadow-sm cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-neutral-950 hover:bg-neutral-800 text-white text-xs sm:text-sm font-semibold transition-all shadow-xs cursor-pointer"
             >
               <span>{isAr ? 'عرض كافة الموارد' : 'View all resources'}</span>
               <ArrowRight size={14} className="rtl:-scale-x-100" />
