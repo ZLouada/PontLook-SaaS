@@ -222,38 +222,6 @@ function ResourcesCategoryTabsInner({
             </div>
           )}
         </div>
-
-        {/* B. Discrete Boxed Category Buttons (Complete 4-Sided Boxes) */}
-        <div
-          role="tablist"
-          aria-label={isAr ? 'تصنيفات الموارد المعرفية' : 'Resource Categories'}
-          className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 px-2 sm:px-4"
-        >
-          {tabs.map((tab) => {
-            const isSelected = activeCategory === tab.value;
-
-            return (
-              <button
-                key={tab.value}
-                role="tab"
-                type="button"
-                id={`tab-${tab.value}`}
-                aria-selected={isSelected}
-                aria-controls="featured-resources-panel"
-                onClick={() => handleTabClick(tab.value)}
-                className={`inline-flex items-center gap-2 px-4.5 py-2.5 text-xs sm:text-sm whitespace-nowrap transition-all duration-150 cursor-pointer select-none rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 ${
-                  isAr ? 'font-arabic' : 'font-heading'
-                } ${
-                  isSelected
-                    ? 'bg-neutral-950 text-white font-semibold border border-neutral-950 shadow-sm'
-                    : 'bg-white text-neutral-700 hover:text-neutral-950 hover:bg-neutral-50 hover:border-neutral-300 font-medium border border-neutral-200 shadow-2xs'
-                }`}
-              >
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
-        </div>
       </div>
 
       {/* 3. Filtered Resource Cards Grid */}
@@ -399,11 +367,8 @@ function ResourcesCategoryTabsSkeleton({
           {title || (isAr ? 'أبرز الموارد المعرفية' : 'Featured Resources')}
         </h2>
       </div>
-      <div className="w-full mb-10 flex justify-center gap-2 animate-pulse">
-        <div className="h-10 w-24 bg-neutral-200 rounded-xl" />
-        <div className="h-10 w-32 bg-neutral-100 rounded-xl" />
-        <div className="h-10 w-36 bg-neutral-100 rounded-xl" />
-        <div className="h-10 w-28 bg-neutral-100 rounded-xl" />
+      <div className="max-w-md mx-auto mb-10 px-4 animate-pulse">
+        <div className="h-14 w-full bg-neutral-100 rounded-2xl border border-neutral-200" />
       </div>
     </section>
   );
