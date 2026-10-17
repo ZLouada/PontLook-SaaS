@@ -110,6 +110,15 @@ export default async function DownloadsPage({
                         <FileText size={22} />
                       </div>
                       <div className="flex items-center gap-2 text-[11px] font-mono text-neutral-500">
+                        {tool.category && (
+                          <span
+                            className={`px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-800 font-semibold text-[11px] uppercase tracking-wider border border-neutral-200 ${
+                              isAr ? 'font-arabic' : 'font-mono'
+                            }`}
+                          >
+                            {tool.category}
+                          </span>
+                        )}
                         <span className="px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 font-medium">{tool.format}</span>
                         <span>{tool.fileSize}</span>
                       </div>

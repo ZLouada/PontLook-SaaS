@@ -137,7 +137,11 @@ export default async function BlogPage({
                         {/* Meta badges */}
                         <div className="flex items-center gap-3 text-xs text-neutral-500 mb-3">
                           {post.categories && post.categories[0] && (
-                            <span className="px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-800 font-medium text-[11px]">
+                            <span
+                              className={`px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-800 font-semibold text-[11px] uppercase tracking-wider border border-neutral-200 ${
+                                isAr ? 'font-arabic' : 'font-mono'
+                              }`}
+                            >
                               {post.categories[0].title}
                             </span>
                           )}

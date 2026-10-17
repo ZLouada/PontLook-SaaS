@@ -145,9 +145,17 @@ export interface Article {
    */
   slug: string;
   /**
-   * Category name (e.g. L&D STRATEGIES)
+   * Select the primary PontLook category for this resource/article.
    */
-  category?: string | null;
+  category:
+    | 'leadership'
+    | 'learning-and-development'
+    | 'workforce-development'
+    | 'ai-and-digital-skills'
+    | 'onboarding-and-retention'
+    | 'nationalization'
+    | 'training-roi'
+    | 'corporate-culture';
   /**
    * Estimated read time (e.g. 12 min read)
    */
@@ -279,6 +287,18 @@ export interface Download {
    * Unique slug for the downloadable resource
    */
   slug: string;
+  /**
+   * Select the primary PontLook category for this resource.
+   */
+  category:
+    | 'leadership'
+    | 'learning-and-development'
+    | 'workforce-development'
+    | 'ai-and-digital-skills'
+    | 'onboarding-and-retention'
+    | 'nationalization'
+    | 'training-roi'
+    | 'corporate-culture';
   /**
    * Document format (e.g. XLSX, PDF, DOCX)
    */
@@ -527,6 +547,7 @@ export interface ArticlesSelect<T extends boolean = true> {
 export interface DownloadsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  category?: T;
   format?: T;
   fileSize?: T;
   description?: T;
@@ -721,21 +742,21 @@ export interface ResourcesHero {
 export interface ResourcesFeatured {
   id: number;
   /**
-   * Main spotlight article highlighted at the top of the Resources hub
+   * Select a published article to feature as the main spotlight card on the left. The title, excerpt, category, read time, and featured image are loaded directly from Payload CMS. If none is selected, no mock content will be displayed.
    */
   spotlightArticle?: (number | null) | Article;
   /**
-   * Featured event highlighted in the editor's pick section
-   */
-  featuredEvent?: (number | null) | Event;
-  /**
-   * Featured download toolkit highlighted in the editor's pick section
+   * Select an accredited downloadable toolkit from the Downloads collection to feature in Executive Toolkits & Media.
    */
   featuredDownload?: (number | null) | Download;
   /**
-   * Featured podcast episode
+   * Select an executive podcast episode from the Podcasts collection to feature in Executive Toolkits & Media.
    */
   featuredPodcast?: (number | null) | Podcast;
+  /**
+   * Optionally select an upcoming verified event from the Events collection to feature in Executive Toolkits & Media.
+   */
+  featuredEvent?: (number | null) | Event;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -790,9 +811,9 @@ export interface ResourcesHeroSelect<T extends boolean = true> {
  */
 export interface ResourcesFeaturedSelect<T extends boolean = true> {
   spotlightArticle?: T;
-  featuredEvent?: T;
   featuredDownload?: T;
   featuredPodcast?: T;
+  featuredEvent?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -4,6 +4,11 @@ import { cache } from 'react'
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import type { Locale } from '@/i18n/config'
+import {
+  PontLookCategorySlug,
+  normalizeCategorySlug,
+  getCategoryLabel,
+} from '@/constants/categories'
 
 export type PayloadLocale = 'en' | 'ar';
 export function toPayloadLocale(locale?: string | null): PayloadLocale {
@@ -130,6 +135,7 @@ export interface AdaptedArticle {
   slug: string
   title: string
   category: string
+  categorySlug: PontLookCategorySlug
   readTime: string
   date: string
   publishedAt: string | null
@@ -162,6 +168,8 @@ export interface AdaptedDownload {
   id: string
   slug: string
   title: string
+  category: string
+  categorySlug: PontLookCategorySlug
   format: string
   fileSize: string
   desc: string
@@ -290,12 +298,15 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
             : null
         const displayDate = formatDisplayDate(art.publishedAt, locale)
         const contentText = extractTextFromLexical(art.content)
+        const categorySlug = normalizeCategorySlug(art.category)
+        const categoryLabel = getCategoryLabel(art.category, locale)
 
         return {
           id: String(art.id),
           slug: art.slug,
           title: art.title || '',
-          category: art.category || (locale.startsWith('ar') ? 'استراتيجيات التدريب' : 'L&D STRATEGIES'),
+          category: categoryLabel,
+          categorySlug,
           readTime: art.readTime || '6 min read',
           date: displayDate,
           publishedAt: art.publishedAt || null,
@@ -374,12 +385,15 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
         : null
     const displayDate = formatDisplayDate(art.publishedAt, locale)
     const contentText = extractTextFromLexical(art.content)
+    const categorySlug = normalizeCategorySlug(art.category)
+    const categoryLabel = getCategoryLabel(art.category, locale)
 
     return {
       id: String(art.id),
       slug: art.slug,
       title: art.title || '',
-      category: art.category || (locale === 'ar' ? 'استراتيجيات التدريب' : 'L&D STRATEGIES'),
+      category: categoryLabel,
+      categorySlug,
       readTime: art.readTime || '6 min read',
       date: displayDate,
       publishedAt: art.publishedAt || null,
@@ -565,11 +579,15 @@ export const getDownloads = cache(async (locale: Locale = 'en'): Promise<Adapted
       const features = Array.isArray(dl.features)
         ? dl.features.map((f: any) => (typeof f === 'string' ? f : f.item || '')).filter(Boolean)
         : []
+      const categorySlug = normalizeCategorySlug(dl.category)
+      const categoryLabel = getCategoryLabel(dl.category, locale)
 
       return {
         id: String(dl.id),
         slug: dl.slug,
         title: dl.title || '',
+        category: categoryLabel,
+        categorySlug,
         format: dl.format || 'PDF',
         fileSize: dl.fileSize || '1.8 MB',
         desc: dl.description || '',
@@ -748,7 +766,7 @@ export const getResourcesFeatured = cache(async (locale: Locale = 'en'): Promise
 
       spotlight = {
         badge: isAr ? 'محتوى مميز' : 'FEATURED',
-        category: spotlightArt.category || (isAr ? 'مقال تحليلي' : 'SPECIAL REPORT'),
+        category: getCategoryLabel(spotlightArt.category, locale),
         readTime: spotlightArt.readTime || (isAr ? '٥ دقائق قراءة' : '5 min read'),
         date: displayDate || '',
         title: spotlightArt.title || '',
@@ -934,7 +952,7 @@ export const getNavbarResourcesCard = cache(async (locale: Locale = 'en'): Promi
 
         return {
           enabled,
-          badge: customBadge || artDoc.category || (isAr ? 'مقال مميز' : 'FEATURED ARTICLE'),
+          badge: customBadge || (artDoc.category ? getCategoryLabel(artDoc.category, locale) : (isAr ? 'مقال مميز' : 'FEATURED ARTICLE')),
           title: artDoc.title || defaultCard.title,
           description:
             artDoc.excerpt ||

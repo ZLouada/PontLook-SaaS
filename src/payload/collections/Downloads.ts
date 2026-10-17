@@ -6,7 +6,7 @@ export const Downloads: CollectionConfig = {
   slug: 'downloads',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'format', 'fileSize', 'status', 'updatedAt'],
+    defaultColumns: ['title', 'category', 'format', 'fileSize', 'status', 'updatedAt'],
   },
   access: {
     read: isPublishedOrAuthenticated,
@@ -35,6 +35,28 @@ export const Downloads: CollectionConfig = {
         position: 'sidebar',
         description: 'Unique slug for the downloadable resource',
       },
+    },
+    {
+      name: 'category',
+      label: 'Category',
+      type: 'select',
+      required: true,
+      defaultValue: 'leadership',
+      index: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Select the primary PontLook category for this resource.',
+      },
+      options: [
+        { label: 'Leadership', value: 'leadership' },
+        { label: 'Learning & Development', value: 'learning-and-development' },
+        { label: 'Workforce Development', value: 'workforce-development' },
+        { label: 'AI & Digital Skills', value: 'ai-and-digital-skills' },
+        { label: 'Onboarding & Retention', value: 'onboarding-and-retention' },
+        { label: 'Nationalization', value: 'nationalization' },
+        { label: 'Training ROI', value: 'training-roi' },
+        { label: 'Corporate Culture', value: 'corporate-culture' },
+      ],
     },
     {
       name: 'format',

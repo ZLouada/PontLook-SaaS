@@ -9,9 +9,11 @@ import {
   getResourcesHero,
   getResourcesFeatured,
   getArticles,
+  getDownloads,
   getEvents,
   AdaptedFeaturedItem,
 } from '@/lib/payload/resources';
+import ResourcesCategoryTabs, { ResourceTabItem } from '@/components/resources/ResourcesCategoryTabs';
 import {
   BookOpen,
   Headphones,
@@ -84,16 +86,52 @@ export default async function ResourcesPage({
   const isAr = isArabicLocale(lang);
 
   // Load published content from Payload CMS Local API
-  const [hero, featured, dynamicArticles, eventsList] = await Promise.all([
+  const [hero, featured, dynamicArticles, downloadsList, eventsList] = await Promise.all([
     getResourcesHero(lang),
     getResourcesFeatured(lang),
     getArticles(lang),
+    getDownloads(lang),
     getEvents(lang),
   ]);
 
   const heroTitle = hero.title;
   const heroSubtitle = hero.subtitle;
   const spotlight = featured.spotlight;
+
+  // Build unified items for the Featured Resources category tabs
+  const resourceTabItems: ResourceTabItem[] = [
+    ...dynamicArticles.map((art) => ({
+      id: `art-${art.id}`,
+      slug: art.slug,
+      title: art.title,
+      categorySlug: art.categorySlug,
+      categoryLabel: art.category,
+      type: 'article' as const,
+      typeLabel: isAr ? 'مقال' : 'ARTICLE',
+      date: art.date,
+      readTime: art.readTime,
+      excerpt: art.excerpt,
+      image: art.image,
+      imageAlt: art.imageAlt,
+      href: `/${lang}/resources/blog/${art.slug}`,
+      ctaText: isAr ? 'قراءة المقال' : 'Read Article',
+    })),
+    ...downloadsList.map((dl) => ({
+      id: `dl-${dl.id}`,
+      slug: dl.slug,
+      title: dl.title,
+      categorySlug: dl.categorySlug,
+      categoryLabel: dl.category,
+      type: 'download' as const,
+      typeLabel: isAr ? 'دليل قابل للتحميل' : 'TOOLKIT',
+      format: dl.format,
+      readTime: dl.fileSize,
+      excerpt: dl.desc,
+      image: null,
+      href: `/${lang}/resources/downloads`,
+      ctaText: isAr ? 'تحميل الأداة' : 'Download Toolkit',
+    })),
+  ];
 
   // Build Executive Toolkits & Media cards from Payload CMS
   const mediaCards: AdaptedFeaturedItem[] = [];
@@ -277,79 +315,16 @@ export default async function ResourcesPage({
         )}
 
         {/* ======================================================== */}
-        {/* 4. THE CORPORATE L&D BLOG SECTION                        */}
+        {/* 4. FEATURED RESOURCES CATEGORY TAB FILTER                */}
         {/* ======================================================== */}
-        <section className="mb-20 sm:mb-28 pt-10 border-t border-neutral-200">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
-            <div>
-              <div className="font-mono text-xs uppercase tracking-widest text-neutral-500 mb-2">
-                {isAr ? 'المدونة ومقالات الخبراء' : 'THE CORPORATE L&D BLOG'}
-              </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-neutral-950">
-                {isAr ? 'أحدث المقالات والرؤى الميدانية' : 'Latest Articles & Practical Guides'}
-              </h2>
-            </div>
-            <Link
-              href={`/${lang}/resources/blog`}
-              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-600 hover:text-black transition-colors"
-            >
-              <span>{isAr ? 'تصفح كافة المقالات' : 'View all blog posts'}</span>
-              <ArrowRight size={14} className="rtl:-scale-x-100" />
-            </Link>
-          </div>
-
-          {/* Articles Grid */}
-          {dynamicArticles && dynamicArticles.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-              {dynamicArticles.slice(0, 3).map((article: any, idx: number) => {
-                const title = article.title;
-                const excerpt = article.excerpt || article.title;
-                const date = article.date || 'Oct 2026';
-                const category = article.category || (isAr ? 'تدريب مؤسسي' : 'L&D STRATEGIES');
-                const href = article.slug ? `/${lang}/resources/blog/${article.slug}` : `/${lang}/resources/blog`;
-
-                  return (
-                    <Link
-                      key={idx}
-                      href={href}
-                      className="group flex flex-col justify-between rounded-3xl bg-white border border-neutral-200 hover:border-neutral-300 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md"
-                    >
-                      <div className="h-2 w-full bg-gradient-to-r from-neutral-200 via-neutral-300 to-neutral-200 group-hover:from-neutral-900 group-hover:to-neutral-700 transition-colors" />
-
-                      <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
-                        <div>
-                          <div className="flex items-center justify-between text-xs font-mono text-neutral-500 mb-3">
-                            <span className="px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-800 font-medium text-[10px] tracking-wide uppercase">
-                              {category}
-                            </span>
-                            <span>{date}</span>
-                          </div>
-                          <h3 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-3">
-                            {title}
-                          </h3>
-                          <p className="text-neutral-600 text-xs sm:text-sm leading-relaxed line-clamp-3 font-normal">
-                            {excerpt}
-                          </p>
-                        </div>
-
-                        <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-700 group-hover:text-[#FF5C00] transition-colors">
-                          <span>{isAr ? 'قراءة المقال' : 'Read Article'}</span>
-                          <ArrowRight size={14} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
-                        </div>
-                      </div>
-                    </Link>
-                  );
-                }
-              )}
-            </div>
-          ) : (
-            <div className="p-12 rounded-3xl border border-neutral-200 bg-neutral-50 text-center max-w-md mx-auto">
-              <p className="text-sm text-neutral-600">
-                {isAr ? 'لا توجد مقالات منشورة حالياً في المدونة.' : 'No blog articles published yet.'}
-              </p>
-            </div>
-          )}
-        </section>
+        <ResourcesCategoryTabs
+          lang={lang}
+          items={resourceTabItems}
+          viewAllLink={{
+            href: `/${lang}/resources/blog`,
+            label: isAr ? 'تصفح كافة المقالات' : 'View all blog posts',
+          }}
+        />
 
         {/* ======================================================== */}
         {/* 5. EXECUTIVE EVENTS & WEBINARS SECTION                   */}

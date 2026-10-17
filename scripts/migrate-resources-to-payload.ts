@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { getPayload } from 'payload'
 import configPromise from '../src/payload.config'
+import { normalizeCategorySlug } from '../src/constants/categories'
 
 // Helper: Parse human dates into ISO strings
 function parseDateToISO(dateStr?: string): string | undefined {
@@ -296,7 +297,7 @@ async function run() {
         locale: 'en',
         data: {
           title: art.titleEn,
-          category: art.categoryEn,
+          category: normalizeCategorySlug(art.categoryEn),
           readTime: art.readTimeEn,
           publishedAt,
           excerpt: art.excerptEn,
@@ -318,7 +319,7 @@ async function run() {
         data: {
           title: art.titleEn,
           slug,
-          category: art.categoryEn,
+          category: normalizeCategorySlug(art.categoryEn),
           readTime: art.readTimeEn,
           publishedAt,
           excerpt: art.excerptEn,
@@ -343,7 +344,6 @@ async function run() {
       locale: 'ar',
       data: {
         title: art.titleAr,
-        category: art.categoryAr,
         excerpt: art.excerptAr,
         content: contentAr,
         meta: {
@@ -385,6 +385,7 @@ async function run() {
         locale: 'en',
         data: {
           title: dl.titleEn,
+          category: normalizeCategorySlug((dl as any).category || 'leadership'),
           format: dl.format,
           fileSize: dl.fileSize,
           description: dl.descEn,
@@ -402,6 +403,7 @@ async function run() {
         data: {
           title: dl.titleEn,
           slug,
+          category: normalizeCategorySlug((dl as any).category || 'leadership'),
           format: dl.format,
           fileSize: dl.fileSize,
           description: dl.descEn,

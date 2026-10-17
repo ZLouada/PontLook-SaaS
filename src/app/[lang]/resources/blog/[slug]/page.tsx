@@ -176,7 +176,11 @@ export default async function BlogPostDetailPage({
         <Reveal delay={0.05}>
           <div className="flex flex-wrap items-center gap-3 mb-4 text-xs">
             {category && (
-              <span className="px-3 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25 text-[#FF5C00] font-medium">
+              <span
+                className={`px-3 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25 text-[#FF5C00] font-semibold text-[11px] uppercase tracking-wider ${
+                  isAr ? 'font-arabic' : 'font-mono'
+                }`}
+              >
                 {category}
               </span>
             )}
