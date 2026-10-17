@@ -95,40 +95,62 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
   // Window scroll & light section intersection detection (zero forced reflow)
   useEffect(() => {
     let observer: IntersectionObserver | null = null;
+    let mutationObserver: MutationObserver | null = null;
     const activeLightElements = new Set<Element>();
+    const observedElements = new WeakSet<Element>();
 
-    const setupLightObserver = () => {
-      if (observer) return;
+    const updateLightObserver = () => {
       const lightElements = document.querySelectorAll(
         '[data-nav-light="true"], [data-nav-theme="light"]'
       );
       if (lightElements.length === 0) return;
 
-      const obs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              activeLightElements.add(entry.target);
-            } else {
-              activeLightElements.delete(entry.target);
+      if (!observer) {
+        observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                activeLightElements.add(entry.target);
+              } else {
+                activeLightElements.delete(entry.target);
+              }
+            });
+            // Clean up any unmounted elements that were deleted from DOM
+            for (const el of activeLightElements) {
+              if (!document.body.contains(el)) {
+                activeLightElements.delete(el);
+              }
             }
-          });
-          setIsLightSection(activeLightElements.size > 0);
-        },
-        {
-          rootMargin: '-50px 0px -75% 0px',
-          threshold: 0,
+            setIsLightSection(activeLightElements.size > 0);
+          },
+          {
+            rootMargin: '-50px 0px -75% 0px',
+            threshold: 0,
+          }
+        );
+      }
+
+      lightElements.forEach((el) => {
+        if (!observedElements.has(el)) {
+          observedElements.add(el);
+          observer?.observe(el);
         }
-      );
-      observer = obs;
-      lightElements.forEach((el) => obs.observe(el));
+      });
     };
+
+    // Watch for dynamic DOM insertions (e.g. deferred client components replacing SSR fallbacks)
+    if (typeof MutationObserver !== 'undefined') {
+      mutationObserver = new MutationObserver(() => {
+        updateLightObserver();
+      });
+      mutationObserver.observe(document.body, { childList: true, subtree: true });
+    }
 
     let prevScrolled = false;
     let scrollRaf: number | null = null;
 
     const onScroll = () => {
-      setupLightObserver();
+      updateLightObserver();
       if (scrollRaf !== null) return;
       scrollRaf = requestAnimationFrame(() => {
         scrollRaf = null;
@@ -143,27 +165,14 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
 
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    let idleTimer: any = null;
-    if (window.scrollY > 0) {
-      onScroll();
-      setupLightObserver();
-    } else {
-      idleTimer = typeof window.requestIdleCallback !== 'undefined'
-        ? window.requestIdleCallback(setupLightObserver, { timeout: 3000 })
-        : setTimeout(setupLightObserver, 1500);
-    }
+    // Initial setup on mount
+    updateLightObserver();
 
     return () => {
       if (observer) observer.disconnect();
+      if (mutationObserver) mutationObserver.disconnect();
       if (scrollRaf !== null) cancelAnimationFrame(scrollRaf);
       window.removeEventListener('scroll', onScroll);
-      if (idleTimer !== null) {
-        if (typeof window.cancelIdleCallback !== 'undefined') {
-          window.cancelIdleCallback(idleTimer);
-        } else {
-          clearTimeout(idleTimer);
-        }
-      }
     };
   }, [pathname]);
 

@@ -38,7 +38,7 @@ export default function DeferredHowItWorks({ fallback }: DeferredHowItWorksProps
   }, [inView]);
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} data-nav-light="true" data-nav-theme="light">
       {inView ? <DynamicHowItWorks /> : fallback}
     </div>
   );
