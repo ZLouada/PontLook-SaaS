@@ -384,23 +384,23 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
       <div className="rounded-2xl border border-[#26282D] bg-[#16171B] p-3.5 sm:p-6 shadow-sm">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="flex h-6 w-6 sm:h-7 sm:w-7 shrink-0 items-center justify-center rounded-lg bg-white text-xs font-semibold text-black">
+            <span className="flex h-6 w-6 sm:h-7 sm:w-7 shrink-0 items-center justify-center rounded-lg bg-white text-xs font-semibold text-black font-mono">
               {currentStep}
             </span>
-            <span className="text-xs sm:text-sm font-semibold text-white shrink-0">
+            <span className="font-mono text-xs sm:text-sm font-semibold uppercase tracking-wider text-white shrink-0">
               {lang === 'ar' ? `الخطوة ${currentStep}/4:` : `Step ${currentStep}/4:`}
             </span>
-            <span className="text-xs sm:text-sm font-medium text-neutral-400 truncate">
+            <span className="font-heading text-xs sm:text-sm font-semibold text-neutral-300 truncate">
               {lang === 'ar' ? STEP_TITLES[currentStep - 1]?.titleAr : STEP_TITLES[currentStep - 1]?.titleEn}
             </span>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-neutral-400">
+            <span className="inline-flex items-center gap-1 font-mono text-[11px] sm:text-xs font-semibold text-neutral-400">
               <Clock size={12} className="text-white shrink-0" />
               <span>{dict.scaffolding.estimatedTime}</span>
             </span>
-            <span className="hidden items-center gap-1 rounded-full bg-[#0F1013] border border-[#26282D] px-2.5 py-0.5 text-[11px] font-semibold text-emerald-400 sm:inline-flex">
+            <span className="hidden items-center gap-1 rounded-full bg-[#0F1013] border border-[#26282D] px-2.5 py-0.5 font-mono text-[11px] font-semibold text-emerald-400 sm:inline-flex">
               <ShieldCheck size={12} />
               <span>{dict.scaffolding.autoSaving}</span>
             </span>
@@ -424,7 +424,7 @@ export function MultiStepFunnel({ initialLang = 'en', className = '' }: MultiSte
                 </div>
                 <div className="hidden sm:block">
                   <span
-                    className={`text-[11px] font-semibold uppercase tracking-wider ${
+                    className={`font-mono text-[11px] font-semibold uppercase tracking-wider ${
                       isCurrent
                         ? 'text-white'
                         : isCompleted

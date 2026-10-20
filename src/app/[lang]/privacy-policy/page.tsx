@@ -64,7 +64,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-4 sm:px-6">
           <Reveal>
             <span className="chip mx-auto">{isAr ? 'الامتثال والخصوصية' : 'Legal & Compliance'}</span>
-            <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-white leading-tight font-heading tracking-[-0.03em]">
+            <h1 className="mt-6 font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-white">
               {isAr ? (
                 <>
                   سياسة <span className="text-white">الخصوصية</span>
@@ -75,7 +75,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 </>
               )}
             </h1>
-            <p className="mt-4 text-base sm:text-lg text-neutral-400 max-w-2xl mx-auto font-sans">
+            <p className="mt-4 font-sans text-base sm:text-lg font-normal leading-relaxed text-slate-400 max-w-2xl mx-auto">
               {isAr
                 ? 'تاريخ السريان: 3 أغسطس 2026 | تعمل تحت إدارة Firstnestcare, LLC'
                 : 'Effective Date: August 3, 2026 | Operates under Firstnestcare, LLC'}
@@ -89,7 +89,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
           <Reveal>
             <div className="prose prose-invert max-w-none space-y-12 text-neutral-300 leading-relaxed font-sans">
               <div className="bg-[#0F1013] p-5 xs:p-7 sm:p-8 rounded-2xl sm:rounded-3xl border border-[#26282D]">
-                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
+                <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight leading-[1.3] text-white mb-4">
                   1. Overview & Data Controller
                 </h2>
                 <p className="mb-4">
@@ -101,7 +101,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
               </div>
 
               <div>
-                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
+                <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight leading-[1.3] text-white mb-4">
                   2. Information Collection
                 </h2>
                 <p className="mb-4">
@@ -121,7 +121,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
               </div>
 
               <div>
-                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
+                <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight leading-[1.3] text-white mb-4">
                   3. How We Use Your Information
                 </h2>
                 <p className="mb-4">
@@ -138,7 +138,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
               </div>
 
               <div className="bg-[#0F1013] p-8 rounded-2xl sm:rounded-3xl border border-[#26282D]">
-                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
+                <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight leading-[1.3] text-white mb-4">
                   4. Third Party Disclosures & Service Partners
                 </h2>
                 <p className="mb-4">
@@ -161,7 +161,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
               </div>
 
               <div>
-                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
+                <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight leading-[1.3] text-white mb-4">
                   5. Cookies & Tracking Technologies
                 </h2>
                 <p className="mb-4">
@@ -181,7 +181,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
               </div>
 
               <div>
-                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
+                <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight leading-[1.3] text-white mb-4">
                   6. User Rights (California & EEA Residents)
                 </h2>
                 <p className="mb-4">
@@ -190,7 +190,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 
                 <div className="space-y-4">
                   <div className="p-6 bg-[#0F1013] border border-[#26282D] rounded-2xl">
-                    <h3 className="text-lg font-semibold text-white mb-2 font-heading">California Residents (CCPA / CPRA)</h3>
+                    <h3 className="font-heading text-base sm:text-lg font-semibold tracking-tight leading-snug text-white mb-2">California Residents (CCPA / CPRA)</h3>
                     <ul className="list-disc pl-6 space-y-1 text-neutral-400 text-sm">
                       <li>Right to know what personal data is collected, disclosed, or sold.</li>
                       <li>Right to request deletion of your personal information.</li>
@@ -201,7 +201,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                   </div>
 
                   <div className="p-6 bg-[#0F1013] border border-[#26282D] rounded-2xl">
-                    <h3 className="text-lg font-semibold text-white mb-2 font-heading">European Economic Area (EEA) Residents (GDPR)</h3>
+                    <h3 className="font-heading text-base sm:text-lg font-semibold tracking-tight leading-snug text-white mb-2">European Economic Area (EEA) Residents (GDPR)</h3>
                     <ul className="list-disc pl-6 space-y-1 text-neutral-400 text-sm">
                       <li>Right of access to your personal data held by us.</li>
                       <li>Right to rectification of incomplete or inaccurate data.</li>
@@ -215,7 +215,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
               </div>
 
               <div>
-                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
+                <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight leading-[1.3] text-white mb-4">
                   7. Data Retention & Security
                 </h2>
                 <p className="mb-4">
@@ -224,7 +224,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
               </div>
 
               <div className="bg-[#0F1013] p-8 rounded-2xl sm:rounded-3xl border border-[#26282D]">
-                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
+                <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight leading-[1.3] text-white mb-4">
                   8. Contact Us
                 </h2>
                 <p className="mb-4">

@@ -767,7 +767,7 @@ export default function Hero() {
         >
           <h1
             ref={h1Ref}
-            className="font-heading font-light text-[clamp(2.1rem,5.2vw,4.9rem)] leading-[1.06] tracking-tight max-w-[1100px] mx-auto text-white"
+            className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] max-w-[1100px] mx-auto text-white"
             aria-label={
               isAr
                 ? 'ابحث عن نخبة مدربي الشركات. دون إهدار وقت، أو عشوائية، أو تخمين.'
@@ -854,7 +854,7 @@ export default function Hero() {
             id="sub"
             className="mt-[30px] opacity-0 transition-transform duration-75"
           >
-            <p className="max-w-[600px] mx-auto mb-7 text-neutral-300 text-base sm:text-[17px] font-sans leading-relaxed">
+            <p className="max-w-[600px] mx-auto mb-7 text-neutral-300 text-base sm:text-lg font-sans font-normal leading-relaxed">
               {isAr
                 ? 'نربط الشركات في الخليج بنخبة خبراء التدريب المعتمدين والمناسبين لاحتياجات كفاءاتكم، مجاناً 100% للمنشآت.'
                 : 'We match GCC companies facing workforce challenges directly with verified training specialists, 100% free for organizations.'}
@@ -863,14 +863,14 @@ export default function Hero() {
               <Link
                 href={`/${lang}/find-training`}
                 prefetch={false}
-                className="inline-flex items-center justify-center border border-white px-6 py-3 font-sans font-medium text-[15px] bg-white text-black hover:bg-black hover:text-white transition-colors duration-200"
+                className="inline-flex items-center justify-center border border-white px-6 py-3 font-sans font-semibold tracking-tight text-sm bg-white text-black hover:bg-black hover:text-white transition-colors duration-200"
               >
                 {isAr ? 'ابحث عن شريك تدريب' : 'Find a Training Partner'}
               </Link>
               <Link
                 href={`/${lang}/for-providers`}
                 prefetch={false}
-                className="inline-flex items-center justify-center border border-white px-6 py-3 font-sans font-medium text-[15px] text-white bg-black/40 hover:bg-white hover:text-black transition-colors duration-200 backdrop-blur-sm"
+                className="inline-flex items-center justify-center border border-white px-6 py-3 font-sans font-semibold tracking-tight text-sm text-white bg-black/40 hover:bg-white hover:text-black transition-colors duration-200 backdrop-blur-sm"
               >
                 {isAr ? 'انضم كمزود تدريب' : 'Join as a Training Provider'}
               </Link>

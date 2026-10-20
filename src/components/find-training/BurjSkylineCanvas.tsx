@@ -423,7 +423,9 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
           ctx.arc(X, Y, 4 + o.k * 0.7, 0, TAU);
           ctx.stroke();
 
-          ctx.font = '500 11px Inter, system-ui, sans-serif';
+          ctx.font = isAr
+            ? '500 11px Cairo, system-ui, sans-serif'
+            : '500 11px Inter, system-ui, sans-serif';
           ctx.textAlign = 'center';
           const tw = ctx.measureText(o.l).width + 16;
           const lx = cl(X, tw / 2 + 6, W - tw / 2 - 6);

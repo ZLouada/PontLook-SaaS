@@ -120,7 +120,7 @@ export default function NavbarMobileDrawer({
           <div className="mt-4 space-y-3.5">
             {/* Solutions Section */}
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
+              <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-neutral-400 block mb-2 px-1">
                 {dict.nav.solutions}
               </span>
               <div className="space-y-1.5">
@@ -134,8 +134,8 @@ export default function NavbarMobileDrawer({
                     <Building2 size={17} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold text-white">{dict.nav.enterprise_opt}</div>
-                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.enterprise_opt_desc}</div>
+                    <div className="text-sm font-heading font-semibold tracking-tight text-white">{dict.nav.enterprise_opt}</div>
+                    <div className="text-[11px] font-sans text-neutral-400 truncate">{dict.nav.enterprise_opt_desc}</div>
                   </div>
                 </Link>
 
@@ -149,8 +149,8 @@ export default function NavbarMobileDrawer({
                     <Briefcase size={17} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold text-white">{dict.nav.provider_opt}</div>
-                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.provider_opt_desc}</div>
+                    <div className="text-sm font-heading font-semibold tracking-tight text-white">{dict.nav.provider_opt}</div>
+                    <div className="text-[11px] font-sans text-neutral-400 truncate">{dict.nav.provider_opt_desc}</div>
                   </div>
                 </Link>
               </div>
@@ -158,7 +158,7 @@ export default function NavbarMobileDrawer({
 
             {/* About Section */}
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
+              <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-neutral-400 block mb-2 px-1">
                 {dict.nav.about}
               </span>
               <div className="space-y-1.5">
@@ -172,8 +172,8 @@ export default function NavbarMobileDrawer({
                     <Users size={17} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold text-white">{dict.nav.who_we_are}</div>
-                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.who_we_are_desc}</div>
+                    <div className="text-sm font-heading font-semibold tracking-tight text-white">{dict.nav.who_we_are}</div>
+                    <div className="text-[11px] font-sans text-neutral-400 truncate">{dict.nav.who_we_are_desc}</div>
                   </div>
                 </Link>
 
@@ -187,8 +187,8 @@ export default function NavbarMobileDrawer({
                     <Mail size={17} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold text-white">{dict.nav.contact}</div>
-                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.contact_desc}</div>
+                    <div className="text-sm font-heading font-semibold tracking-tight text-white">{dict.nav.contact}</div>
+                    <div className="text-[11px] font-sans text-neutral-400 truncate">{dict.nav.contact_desc}</div>
                   </div>
                 </Link>
               </div>
@@ -196,7 +196,7 @@ export default function NavbarMobileDrawer({
 
             {/* Resources Section */}
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block mb-2 px-1">
+              <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-neutral-400 block mb-2 px-1">
                 {dict.nav.resources}
               </span>
               <div className="space-y-1.5">
@@ -210,10 +210,10 @@ export default function NavbarMobileDrawer({
                     <Folder size={17} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold text-white">
+                    <div className="text-sm font-heading font-semibold tracking-tight text-white">
                       {dict.nav.resources}
                     </div>
-                    <div className="text-[11px] text-neutral-300 truncate">
+                    <div className="text-[11px] font-sans text-neutral-300 truncate">
                       {isRtl ? 'استعراض كافة الموارد والأدلة' : 'Browse all L&D resources & guides'}
                     </div>
                   </div>
@@ -229,8 +229,8 @@ export default function NavbarMobileDrawer({
                     <BookOpen size={17} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold text-white">{dict.nav.blog}</div>
-                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.blog_desc}</div>
+                    <div className="text-sm font-heading font-semibold tracking-tight text-white">{dict.nav.blog}</div>
+                    <div className="text-[11px] font-sans text-neutral-400 truncate">{dict.nav.blog_desc}</div>
                   </div>
                 </Link>
 
@@ -244,8 +244,8 @@ export default function NavbarMobileDrawer({
                     <Headphones size={17} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold text-white">{dict.nav.podcasts}</div>
-                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.podcasts_desc}</div>
+                    <div className="text-sm font-heading font-semibold tracking-tight text-white">{dict.nav.podcasts}</div>
+                    <div className="text-[11px] font-sans text-neutral-400 truncate">{dict.nav.podcasts_desc}</div>
                   </div>
                 </Link>
 
@@ -259,8 +259,8 @@ export default function NavbarMobileDrawer({
                     <Download size={17} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold text-white">{dict.nav.downloads}</div>
-                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.downloads_desc}</div>
+                    <div className="text-sm font-heading font-semibold tracking-tight text-white">{dict.nav.downloads}</div>
+                    <div className="text-[11px] font-sans text-neutral-400 truncate">{dict.nav.downloads_desc}</div>
                   </div>
                 </Link>
 
@@ -274,8 +274,8 @@ export default function NavbarMobileDrawer({
                     <Calendar size={17} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold text-white">{dict.nav.events}</div>
-                    <div className="text-[11px] text-neutral-400 truncate">{dict.nav.events_desc}</div>
+                    <div className="text-sm font-heading font-semibold tracking-tight text-white">{dict.nav.events}</div>
+                    <div className="text-[11px] font-sans text-neutral-400 truncate">{dict.nav.events_desc}</div>
                   </div>
                 </Link>
 
@@ -308,15 +308,15 @@ export default function NavbarMobileDrawer({
                       )}
                     </div>
                     <div className="p-3 bg-[#090A0D]">
-                      <h5 className="text-xs font-bold text-white line-clamp-1 group-hover:text-[#FF5C00] transition-colors">
+                      <h5 className="font-heading text-xs font-semibold tracking-tight text-white line-clamp-1 group-hover:text-[#FF5C00] transition-colors">
                         {resourcesCard.title}
                       </h5>
                       {resourcesCard.description && (
-                        <p className="text-[10px] text-neutral-400 line-clamp-1 mt-0.5">
+                        <p className="font-sans text-[10px] text-neutral-400 line-clamp-1 mt-0.5">
                           {resourcesCard.description}
                         </p>
                       )}
-                      <div className="mt-2 flex items-center justify-between text-[11px] font-semibold text-[#FF5C00] pt-1.5 border-t border-white/10">
+                      <div className="mt-2 flex items-center justify-between font-sans text-[11px] font-semibold text-[#FF5C00] pt-1.5 border-t border-white/10">
                         <span>{resourcesCard.linkText || (isRtl ? 'تفاصيل المؤتمر' : 'Conference details')}</span>
                         {resourcesCard.link?.startsWith('http') ? (
                           <ArrowUpRight size={11} className="rtl:-scale-x-100" />
@@ -338,7 +338,7 @@ export default function NavbarMobileDrawer({
             href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
             prefetch={false}
             onClick={() => setOpen(false)}
-            className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-sm w-full shadow-lg active:scale-95 transition-all min-h-[48px] touch-manipulation"
+            className="inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-white hover:bg-neutral-200 text-black font-sans font-semibold tracking-tight text-sm w-full shadow-lg active:scale-95 transition-all min-h-[48px] touch-manipulation"
           >
             <span>{dict.nav.lets_talk}</span>
             <ArrowUpRight size={16} className="rtl:-scale-x-100" />
@@ -346,13 +346,13 @@ export default function NavbarMobileDrawer({
 
           {/* Language Switcher */}
           <div className="flex items-center justify-between pt-1 px-1">
-            <span className="text-xs font-medium text-neutral-400">
+            <span className="font-sans text-xs font-medium text-neutral-400">
               {isRtl ? 'اللغة / Language:' : 'Language / اللغة:'}
             </span>
             <Link
               href={switchHref}
               onClick={() => setOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full font-medium text-xs text-neutral-300 bg-white/[0.05] hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95 min-h-[44px] touch-manipulation"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full font-sans font-medium text-xs text-neutral-300 bg-white/[0.05] hover:bg-white/10 hover:text-white border border-white/10 transition-all active:scale-95 min-h-[44px] touch-manipulation"
             >
               <Globe size={13} className="text-neutral-400" />
               <span className={!isRtl ? 'font-arabic [letter-spacing:0!important]' : ''} dir={isRtl ? 'ltr' : 'rtl'}>

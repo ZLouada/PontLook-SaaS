@@ -504,7 +504,7 @@ export default function RaceBridgeCanvas({
           ctx.arc(X, yP, 4.5 * sc, 0, TAU);
           ctx.fill();
 
-          ctx.font = `500 ${Math.max(8.5, Math.round(11 * sc))}px Inter, system-ui, sans-serif`;
+          ctx.font = `500 ${Math.max(8.5, Math.round(11 * sc))}px ${fontFam}`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'top';
           // Stagger Y position to guarantee zero label collisions on mobile

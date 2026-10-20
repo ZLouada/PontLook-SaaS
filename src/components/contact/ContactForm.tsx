@@ -98,8 +98,8 @@ export default function ContactForm() {
         <div className="flex justify-center mb-6">
           <Seal size={56} />
         </div>
-        <h3 className="mt-2 text-2xl font-semibold text-white font-heading">{dict.contact.form.successTitle}</h3>
-        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-neutral-400">
+        <h3 className="mt-2 font-heading text-xl sm:text-2xl font-semibold tracking-tight text-white">{dict.contact.form.successTitle}</h3>
+        <p className="mx-auto mt-3 max-w-md font-sans text-sm leading-relaxed text-neutral-400">
           {dict.contact.form.successMessage}
         </p>
       </div>
@@ -150,7 +150,7 @@ export default function ContactForm() {
           {errorMsg}
         </p>
       )}
-      <button type="submit" disabled={isLoading} className="btn-primary mt-7 w-full sm:w-auto min-h-[48px] py-3.5 sm:py-3 text-base sm:text-sm font-semibold disabled:opacity-60 inline-flex items-center justify-center gap-2.5 active:scale-[0.98] touch-manipulation">
+      <button type="submit" disabled={isLoading} className="btn-primary mt-7 w-full sm:w-auto min-h-[48px] py-3.5 sm:py-3 font-sans text-sm font-semibold tracking-tight disabled:opacity-60 inline-flex items-center justify-center gap-2.5 active:scale-[0.98] touch-manipulation">
         {isLoading ? (
           <>
             <Signal />

@@ -215,12 +215,12 @@ export default function GccProviderStory({ isAr = false }: GccProviderStoryProps
               </div>
 
               {/* Main Headline */}
-              <h2 className="font-heading font-light text-[clamp(2rem,4.4vw,4.2rem)] leading-[1.08] tracking-tight text-white transition-opacity duration-200">
+              <h2 className="font-heading font-bold text-[clamp(2rem,4.4vw,4.2rem)] leading-[1.08] tracking-tight text-white transition-opacity duration-200">
                 {currentChapter.h}
               </h2>
 
               {/* Subtitle */}
-              <p className="mt-4 sm:mt-5 text-neutral-400 text-xs sm:text-sm md:text-base font-sans leading-relaxed">
+              <p className="mt-4 sm:mt-5 font-sans text-sm sm:text-base md:text-lg text-neutral-400 leading-relaxed font-normal">
                 {isAr ? 'منظومة التشغيل والربط لـ' : 'Operating System for'}{' '}
                 <b className="text-neutral-100 font-medium block sm:inline mt-1 sm:mt-0">
                   {currentChapter.s}
@@ -234,7 +234,7 @@ export default function GccProviderStory({ isAr = false }: GccProviderStoryProps
               <div className="flex items-center justify-between pb-3.5 border-b border-white/15">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#FF5C00] shadow-[0_0_8px_#FF5C00]" />
-                  <span className="text-[#FF5C00] font-mono text-xs sm:text-sm uppercase tracking-[0.14em] font-semibold">
+                  <span className="text-[#FF5C00] font-mono text-[11px] sm:text-xs uppercase tracking-[0.06em] font-semibold">
                     {currentChapter.t}
                   </span>
                 </div>

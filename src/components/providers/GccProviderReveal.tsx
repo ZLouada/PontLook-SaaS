@@ -242,7 +242,7 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
               <button
                 type="button"
                 onClick={() => setTabIdx(0)}
-                className={`py-2 px-4 sm:px-6 rounded-full font-sans sm:font-mono text-xs font-semibold tracking-wider cursor-pointer whitespace-nowrap transition-all duration-200 ${
+                className={`py-2 px-4 sm:px-6 rounded-full font-mono text-xs font-semibold tracking-wider cursor-pointer whitespace-nowrap transition-all duration-200 ${
                   tabIdx === 0
                     ? 'bg-[#FF5C00] text-white shadow-md shadow-orange-500/20'
                     : 'bg-transparent text-slate-600 hover:text-slate-900'
@@ -253,7 +253,7 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
               <button
                 type="button"
                 onClick={() => setTabIdx(1)}
-                className={`py-2 px-4 sm:px-6 rounded-full font-sans sm:font-mono text-xs font-semibold tracking-wider cursor-pointer whitespace-nowrap transition-all duration-200 ${
+                className={`py-2 px-4 sm:px-6 rounded-full font-mono text-xs font-semibold tracking-wider cursor-pointer whitespace-nowrap transition-all duration-200 ${
                   tabIdx === 1
                     ? 'bg-[#FF5C00] text-white shadow-md shadow-orange-500/20'
                     : 'bg-transparent text-slate-600 hover:text-slate-900'
@@ -275,13 +275,13 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
                     className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200/90 hover:border-slate-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between"
                   >
                     <div>
-                      <span className="text-[10px] font-mono font-bold text-[#FF5C00] tracking-widest block mb-2.5">
+                      <span className="text-[10px] sm:text-[11px] font-mono font-semibold uppercase text-[#FF5C00] tracking-wider block mb-2.5">
                         {item.step}
                       </span>
-                      <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2 font-heading">
+                      <h3 className="font-heading text-lg sm:text-xl font-semibold tracking-tight text-slate-900 mb-2">
                         {item.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+                      <p className="font-sans text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                         {item.desc}
                       </p>
                     </div>
@@ -298,14 +298,14 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
                   >
                     <div>
                       <span
-                        className={`inline-block px-2.5 py-0.5 rounded-full border text-[10px] font-mono font-bold tracking-wider mb-3 ${item.badgeColor}`}
+                        className={`inline-block px-2.5 py-0.5 rounded-full border font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider mb-3 ${item.badgeColor}`}
                       >
                         {item.grade}
                       </span>
-                      <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2 font-heading">
+                      <h3 className="font-heading text-lg sm:text-xl font-semibold tracking-tight text-slate-900 mb-2">
                         {item.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+                      <p className="font-sans text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                         {item.desc}
                       </p>
                     </div>
@@ -320,13 +320,13 @@ export default function GccProviderReveal({ isAr = false }: GccProviderRevealPro
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-16 sm:mt-24 pt-10 border-t border-slate-200">
           {features.map((feat, idx) => (
             <div key={idx} className="flex flex-col">
-              <span className="text-xs font-mono text-[#FF5C00] font-semibold mb-2">
+              <span className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] text-[#FF5C00] mb-2">
                 0{idx + 1}
               </span>
-              <h3 className="font-heading font-medium text-xl sm:text-2xl mb-2.5 text-slate-900">
+              <h3 className="font-heading font-semibold text-lg sm:text-xl tracking-tight mb-2.5 text-slate-900">
                 {feat.title}
               </h3>
-              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-sans">
+              <p className="font-sans text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                 {feat.desc}
               </p>
             </div>

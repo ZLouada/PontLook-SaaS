@@ -65,7 +65,7 @@ export default function FAQAccordion({ faqs, items }: FAQAccordionProps) {
                   >
                     <HelpCircle size={17} strokeWidth={2} />
                   </IconFrame>
-                  <h3 className={`text-base sm:text-lg font-semibold leading-snug font-heading transition-colors duration-200 ${isOpen ? 'text-white' : 'text-neutral-200 group-hover:text-white'}`}>
+                  <h3 className={`font-heading text-base sm:text-lg font-semibold tracking-tight leading-snug transition-colors duration-200 ${isOpen ? 'text-white' : 'text-neutral-200 group-hover:text-white'}`}>
                     {faq.question}
                   </h3>
                 </div>
@@ -94,7 +94,7 @@ export default function FAQAccordion({ faqs, items }: FAQAccordionProps) {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <div className="px-5 pb-6 pt-1 sm:px-6 sm:pb-6 text-neutral-300 font-sans leading-relaxed text-sm sm:text-base sm:ps-[4.25rem] border-t border-white/[0.04]">
+                  <div className="px-5 pb-6 pt-1 sm:px-6 sm:pb-6 font-sans text-sm sm:text-base font-normal leading-relaxed text-neutral-300 sm:ps-[4.25rem] border-t border-white/[0.04]">
                     {faq.answer}
                   </div>
                 </div>

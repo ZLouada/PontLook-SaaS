@@ -473,16 +473,16 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
     <div className="w-full">
       {/* Section Header: Minimalist Palantir Architectural Style */}
       <div className="mb-10 sm:mb-14 text-center max-w-4xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-neutral-300 text-xs font-mono font-medium tracking-wider">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-neutral-300 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em]">
           <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
           <span>{isAr ? 'مسار المطابقة // خارطة الطريق التنفيذية' : 'MATCHING ROADMAP // WORKFLOW'}</span>
         </div>
 
-        <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-heading tracking-tight leading-tight">
+        <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.18] text-white">
           {isAr ? '3 خطوات بسيطة لتدريب معتمد وموثوق' : '3 Simple Steps to Proven Training'}
         </h2>
 
-        <p className="text-xs sm:text-sm md:text-base text-neutral-400 font-sans max-w-2xl mx-auto leading-relaxed">
+        <p className="font-sans text-base sm:text-lg font-normal leading-relaxed text-neutral-400 max-w-2xl mx-auto">
           {isAr
             ? 'مواصفات تنفيذية فائقة الدقة. انقر على أي بطاقة لقلبها ومعاينة خطوات الاستيعاب والفحص ومقارنة العروض.'
             : 'Minimal words, verified precision. Click any card to flip and inspect scoping rubrics, faculty vetting, and itemized comparison.'}
@@ -601,7 +601,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                     {/* Middle: Clean Corporate Typography & Quote */}
                     <div className="space-y-3 my-auto">
                       <div>
-                        <h3 className="text-xl sm:text-2xl font-bold font-heading text-white tracking-tight leading-snug group-hover:text-neutral-100 transition-colors">
+                        <h3 className="font-heading text-lg sm:text-xl font-semibold text-white tracking-tight leading-[1.3] group-hover:text-neutral-100 transition-colors">
                           {isAr ? step.titleAr : step.titleEn}
                         </h3>
                         <p className="text-xs font-mono text-white mt-1 tracking-wide">
@@ -623,7 +623,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                             key={mIdx}
                             className="p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] group-hover:border-white/15 transition-colors"
                           >
-                            <div className="text-sm sm:text-base font-bold font-heading text-white">
+                            <div className="text-sm sm:text-base font-bold font-heading text-white tabular-nums">
                               {isAr ? m.valueAr : m.valueEn}
                             </div>
                             <div className="text-[9px] font-mono text-neutral-400 mt-0.5 uppercase tracking-wider truncate">
@@ -714,7 +714,7 @@ export default function FindTrainingStepsCards({ lang }: FindTrainingStepsCardsP
                     {/* Back Content Body */}
                     <div className="my-auto space-y-3">
                       <div>
-                        <h4 className="text-base font-bold font-heading text-white">
+                        <h4 className="font-heading text-base font-semibold tracking-tight leading-snug text-white">
                           {isAr ? step.backTitleAr : step.backTitleEn}
                         </h4>
                         <p className="text-[11px] text-neutral-400 font-sans mt-0.5">

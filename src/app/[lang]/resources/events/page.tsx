@@ -73,9 +73,9 @@ export default async function EventsPage({
         {/* Header */}
         <div className="max-w-3xl mb-14">
           <Reveal>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 bg-neutral-100/80 text-xs font-mono uppercase tracking-wider text-neutral-700 mb-5">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 bg-neutral-100/80 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] text-neutral-700 mb-5">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00]" />
-              <Link href={`/${lang}/resources`} className="hover:text-black transition-colors">
+              <Link href={`/${lang}/resources`} className="hover:text-black transition-colors font-medium">
                 {isAr ? 'الموارد' : 'Resources'}
               </Link>
               <span className="text-neutral-400">/</span>
@@ -84,13 +84,13 @@ export default async function EventsPage({
           </Reveal>
 
           <Reveal delay={0.1}>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-neutral-950 tracking-tight leading-tight mb-4">
+            <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-950 tracking-tight leading-[1.1] mb-4">
               {isAr ? 'فعاليات وموائد مستديرة تجمع صُنّاع القرار' : 'Executive Events, Summits & Briefings'}
             </h1>
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="text-neutral-600 text-sm sm:text-base leading-relaxed">
+            <p className="font-sans text-neutral-600 text-sm sm:text-base leading-relaxed">
               {isAr
                 ? 'لقاءات حضورية وافتراضية هادفة تركز على تبادل التجارب الحقيقية والربط المباشر بين قادة التدريب في منشآت الخليج والخبراء المعتمدين.'
                 : 'Curated peer discussions and direct matchmaking sessions designed to connect corporate training buyers with verified specialists.'}
@@ -107,37 +107,37 @@ export default async function EventsPage({
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center gap-2.5 text-xs text-neutral-500 mb-3">
                       {evt.type && (
-                        <span className="px-2.5 py-0.5 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/20 text-[#FF5C00] font-medium">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/20 text-[#FF5C00] font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider tabular-nums">
                           {evt.type}
                         </span>
                       )}
                       {evt.spotsLeft && (
                         <>
                           <span className="text-neutral-400">•</span>
-                          <span className="font-mono text-neutral-800 font-semibold">{evt.spotsLeft}</span>
+                          <span className="font-mono text-[11px] text-neutral-800 font-semibold tabular-nums">{evt.spotsLeft}</span>
                         </>
                       )}
                     </div>
 
-                    <h2 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 mb-3">
+                    <h2 className="font-heading text-xl sm:text-2xl font-semibold text-neutral-950 tracking-tight leading-[1.3] mb-3">
                       {evt.title}
                     </h2>
 
                     <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-600 mb-4">
                       {evt.date && (
-                        <div className="flex items-center gap-1.5 font-mono text-neutral-800">
+                        <div className="flex items-center gap-1.5 font-mono text-neutral-800 font-medium tabular-nums">
                           <Calendar size={13} className="text-[#FF5C00]" />
                           <span>{evt.date}</span>
                         </div>
                       )}
                       {evt.time && (
-                        <div className="flex items-center gap-1.5 font-mono">
+                        <div className="flex items-center gap-1.5 font-mono font-medium tabular-nums">
                           <Clock size={13} />
                           <span>{evt.time}</span>
                         </div>
                       )}
                       {evt.location && (
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-1.5 font-sans font-medium">
                           <MapPin size={13} />
                           <span>{evt.location}</span>
                         </div>
@@ -145,7 +145,7 @@ export default async function EventsPage({
                     </div>
 
                     {evt.desc && (
-                      <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-3xl">
+                      <p className="font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-3xl">
                         {evt.desc}
                       </p>
                     )}
@@ -154,7 +154,7 @@ export default async function EventsPage({
                   <div className="w-full lg:w-auto shrink-0">
                     <Link
                       href={evt.link ? evt.link : `/${lang}/contact?event=${encodeURIComponent(evt.id)}`}
-                      className="w-full lg:w-auto inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all active:scale-95 shadow-sm"
+                      className="w-full lg:w-auto inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-neutral-950 hover:bg-black text-white font-sans text-sm font-semibold tracking-tight transition-all active:scale-95 shadow-sm"
                       target={evt.link && evt.link.startsWith('http') ? '_blank' : undefined}
                       rel={evt.link && evt.link.startsWith('http') ? 'noopener noreferrer' : undefined}
                     >
@@ -175,7 +175,7 @@ export default async function EventsPage({
             ))
           ) : (
             <div className="p-12 rounded-3xl border border-dashed border-neutral-300 bg-neutral-50 text-center">
-              <p className="text-base text-neutral-600 font-medium">
+              <p className="font-sans text-sm sm:text-base text-neutral-600 font-normal">
                 {isAr ? 'لا توجد فعاليات مجدولة حالياً. يرجى المتابعة لاحقاً.' : 'No upcoming events scheduled at this moment. Please check back soon.'}
               </p>
             </div>

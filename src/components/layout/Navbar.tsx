@@ -364,7 +364,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between">
                         <span
-                          className={`text-xs font-semibold transition-colors ${
+                          className={`text-xs font-heading font-semibold tracking-tight transition-colors ${
                             isLightSection
                               ? 'text-neutral-900 group-hover:text-black'
                               : 'text-white group-hover:text-white'
@@ -381,7 +381,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                           }`}
                         />
                       </div>
-                      <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
+                      <p className="text-[11px] font-sans text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
                         {dict.nav.enterprise_opt_desc}
                       </p>
                     </div>
@@ -410,7 +410,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between">
                         <span
-                          className={`text-xs font-semibold transition-colors ${
+                          className={`text-xs font-heading font-semibold tracking-tight transition-colors ${
                             isLightSection
                               ? 'text-neutral-900 group-hover:text-black'
                               : 'text-white group-hover:text-white'
@@ -427,7 +427,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                           }`}
                         />
                       </div>
-                      <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
+                      <p className="text-[11px] font-sans text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
                         {dict.nav.provider_opt_desc}
                       </p>
                     </div>
@@ -503,7 +503,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between">
                         <span
-                          className={`text-xs font-semibold transition-colors ${
+                          className={`text-xs font-heading font-semibold tracking-tight transition-colors ${
                             isLightSection
                               ? 'text-neutral-900 group-hover:text-black'
                               : 'text-white group-hover:text-white'
@@ -520,7 +520,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                           }`}
                         />
                       </div>
-                      <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
+                      <p className="text-[11px] font-sans text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
                         {dict.nav.who_we_are_desc}
                       </p>
                     </div>
@@ -549,7 +549,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between">
                         <span
-                          className={`text-xs font-semibold transition-colors ${
+                          className={`text-xs font-heading font-semibold tracking-tight transition-colors ${
                             isLightSection
                               ? 'text-neutral-900 group-hover:text-black'
                               : 'text-white group-hover:text-white'
@@ -566,7 +566,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                           }`}
                         />
                       </div>
-                      <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
+                      <p className="text-[11px] font-sans text-neutral-500 dark:text-neutral-400 line-clamp-1 mt-0.5 leading-normal">
                         {dict.nav.contact_desc}
                       </p>
                     </div>
@@ -672,20 +672,20 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                               <Folder size={20} />
                             </div>
                             <h4
-                              className={`text-sm font-bold font-heading transition-colors ${
+                              className={`text-sm font-bold font-heading tracking-tight transition-colors ${
                                 isLightSection ? 'text-neutral-950' : 'text-white'
                               }`}
                             >
                               {dict.nav.resources}
                             </h4>
-                            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-2 leading-relaxed font-normal">
+                            <p className="text-xs font-sans text-neutral-500 dark:text-neutral-400 mt-2 leading-relaxed font-normal">
                               {isRtl
                                 ? 'تصفح كافة مواردنا لتطوير استراتيجيات التدريب وبناء الكفاءات المؤسسية.'
                                 : 'Browse all our resources to boost your L&D strategy.'}
                             </p>
                           </div>
 
-                          <div className="mt-4 pt-3 border-t border-neutral-200/50 dark:border-white/10 flex items-center justify-between text-xs font-semibold text-neutral-500 dark:text-neutral-400 group-hover:text-black dark:group-hover:text-white transition-colors">
+                          <div className="mt-4 pt-3 border-t border-neutral-200/50 dark:border-white/10 flex items-center justify-between text-xs font-sans font-semibold text-neutral-500 dark:text-neutral-400 group-hover:text-black dark:group-hover:text-white transition-colors">
                             <span>{isRtl ? 'استعراض الكل' : 'Explore all'}</span>
                             <ArrowRight
                               size={13}
@@ -720,7 +720,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                           >
                             <BookOpen size={15} />
                           </div>
-                          <span className="text-xs font-semibold">{dict.nav.blog}</span>
+                          <span className="text-xs font-heading font-semibold tracking-tight">{dict.nav.blog}</span>
                         </Link>
 
                         <Link
@@ -742,7 +742,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                           >
                             <Calendar size={15} />
                           </div>
-                          <span className="text-xs font-semibold">{dict.nav.events}</span>
+                          <span className="text-xs font-heading font-semibold tracking-tight">{dict.nav.events}</span>
                         </Link>
 
                         <Link
@@ -764,7 +764,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                           >
                             <Download size={15} />
                           </div>
-                          <span className="text-xs font-semibold">{dict.nav.downloads}</span>
+                          <span className="text-xs font-heading font-semibold tracking-tight">{dict.nav.downloads}</span>
                         </Link>
 
                         <Link
@@ -786,7 +786,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                           >
                             <Headphones size={15} />
                           </div>
-                          <span className="text-xs font-semibold">{dict.nav.podcasts}</span>
+                          <span className="text-xs font-heading font-semibold tracking-tight">{dict.nav.podcasts}</span>
                         </Link>
                       </div>
 
@@ -832,16 +832,16 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
                               }`}
                             >
                               <div>
-                                <h5 className="text-xs font-bold text-white group-hover:text-[#FF5C00] transition-colors leading-snug">
+                                <h5 className="text-xs font-heading font-semibold tracking-tight text-white group-hover:text-[#FF5C00] transition-colors leading-snug">
                                   {card.title}
                                 </h5>
                                 {card.description && (
-                                  <p className="text-[11px] text-neutral-300 line-clamp-2 mt-1 leading-normal font-normal">
+                                  <p className="text-[11px] font-sans text-neutral-300 line-clamp-2 mt-1 leading-normal font-normal">
                                     {card.description}
                                   </p>
                                 )}
                               </div>
-                              <div className="mt-3 flex items-center justify-between text-[11px] font-semibold text-[#FF5C00] pt-2 border-t border-white/10">
+                              <div className="mt-3 flex items-center justify-between text-[11px] font-sans font-semibold text-[#FF5C00] pt-2 border-t border-white/10">
                                 <span>{card.linkText || (isRtl ? 'تفاصيل المؤتمر' : 'Conference details')}</span>
                                 {isExternal ? (
                                   <ArrowUpRight
@@ -873,7 +873,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
               <Link
                 href={switchHref}
                 prefetch={false}
-                className={`inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-medium active:scale-95 transition-all duration-200 shrink-0 whitespace-nowrap ${
+                className={`inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-full font-sans text-xs font-medium active:scale-95 transition-all duration-200 shrink-0 whitespace-nowrap ${
                   isLightSection
                     ? 'border border-neutral-300/80 bg-white/70 text-neutral-800 hover:text-neutral-950 hover:bg-white hover:border-neutral-400 shadow-xs'
                     : 'border border-white/20 bg-white/[0.08] text-neutral-200 hover:text-white hover:border-white/40 shadow-xs'
@@ -897,7 +897,7 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
               <Link
                 href={isForProviders ? `/${lang}/for-providers/apply` : `/${lang}/contact`}
                 prefetch={false}
-                className={`inline-flex items-center gap-1.5 px-3 xl:px-4 py-1.5 rounded-full text-xs font-semibold active:scale-95 transition-all shrink-0 whitespace-nowrap ${
+                className={`inline-flex items-center gap-1.5 px-3 xl:px-4 py-1.5 rounded-full font-sans text-xs font-semibold tracking-tight active:scale-95 transition-all shrink-0 whitespace-nowrap ${
                   isLightSection
                     ? 'bg-neutral-950 hover:bg-black text-white shadow-xs hover:shadow-md hover:shadow-black/20'
                     : 'bg-white hover:bg-neutral-200 text-black shadow-xs hover:shadow-md hover:shadow-white/20'

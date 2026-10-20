@@ -128,9 +128,9 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: Loca
               as="h1"
               onScroll={false}
               text={isAr ? 'الأسئلة الأكثر شيوعاً وتكراراً' : 'Frequently Asked Questions'}
-              className="mt-6 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl text-white font-heading"
+              className="mt-6 font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-white"
             />
-            <p className="mt-6 text-xl leading-relaxed text-neutral-400 max-w-2xl mx-auto">
+            <p className="mt-6 font-sans text-base sm:text-lg lg:text-xl font-normal leading-relaxed text-slate-400 max-w-2xl mx-auto">
               {isAr
                 ? 'كل ما تحتاج معرفته حول كيفية قيام بونت لوك بربط مزودي تدريب الشركات بصناع القرار المؤهلين في المنطقة.'
                 : 'Everything you need to know about how PontLook connects corporate training companies with qualified enterprise decision makers.'}
@@ -148,14 +148,14 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: Loca
               <TextReveal
                 as="h3"
                 text={isAr ? 'هل ما زال لديك أي استفسار؟' : 'Still have questions?'}
-                className="text-2xl font-semibold text-white mb-4 font-heading text-center"
+                className="mb-4 font-heading text-xl sm:text-2xl font-semibold tracking-tight text-white text-center"
               />
-              <p className="text-neutral-400 text-base sm:text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+              <p className="mb-8 max-w-2xl mx-auto font-sans text-base sm:text-lg font-normal leading-relaxed text-slate-400">
                 {isAr
                   ? 'فريقنا جاهز لمساعدتك دائماً. تواصل معنا لمناقشة متطلباتك المحددة وكيف يمكننا دعم نمو أعمالك في أسواق المنطقة.'
                   : 'We’re here to help. Reach out to our team to discuss your specific needs and how we can support your growth across the region.'}
               </p>
-              <Link href={`/${lang}/contact`} className="btn-primary w-full sm:w-auto inline-flex items-center justify-center">
+              <Link href={`/${lang}/contact`} className="btn-primary w-full sm:w-auto inline-flex items-center justify-center font-sans text-sm font-semibold tracking-tight">
                 {isAr ? 'تواصل معنا' : 'Contact Us'}
               </Link>
             </div>

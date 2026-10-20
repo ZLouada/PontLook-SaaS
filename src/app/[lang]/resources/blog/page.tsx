@@ -88,7 +88,7 @@ export default async function BlogPage({
         {/* Header */}
         <div className="max-w-3xl mb-14">
           <Reveal>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 bg-neutral-100/80 text-xs font-mono uppercase tracking-wider text-neutral-700 mb-5">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 bg-neutral-100/80 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] text-neutral-700 mb-5">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00]" />
               <Link href={`/${lang}/resources`} className="hover:text-black transition-colors">
                 {isAr ? 'الموارد' : 'Resources'}
@@ -99,13 +99,13 @@ export default async function BlogPage({
           </Reveal>
 
           <Reveal delay={0.1}>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-neutral-950 tracking-tight leading-tight mb-4">
+            <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-neutral-950 leading-[1.1] mb-4">
               {isAr ? 'أحدث الرؤى والأدلة التدريبية' : 'Latest Workforce Insights & Guides'}
             </h1>
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="text-neutral-600 text-sm sm:text-base leading-relaxed">
+            <p className="font-sans text-base sm:text-lg font-normal leading-relaxed text-neutral-600">
               {isAr
                 ? 'أدلة إرشادية معمقة، دراسات حالة إقليمية، واستراتيجيات عملية لحل فجوات المهارات في منشآت الخليج.'
                 : 'Actionable diagnostic frameworks, regional case studies, and practical guidance to bridge capability gaps in the GCC.'}
@@ -137,30 +137,26 @@ export default async function BlogPage({
                         {/* Meta badges */}
                         <div className="flex items-center gap-3 text-xs text-neutral-500 mb-3">
                           {post.categories && post.categories[0] && (
-                            <span
-                              className={`px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-800 font-semibold text-[11px] uppercase tracking-wider border border-neutral-200 ${
-                                isAr ? 'font-arabic' : 'font-mono'
-                              }`}
-                            >
+                            <span className="px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-800 font-mono text-[11px] font-semibold uppercase tracking-wider border border-neutral-200">
                               {post.categories[0].title}
                             </span>
                           )}
                           {postDate && (
-                            <span className="flex items-center gap-1 text-[11px] font-mono text-neutral-500">
+                            <span className="flex items-center gap-1 font-mono text-[11px] text-neutral-500 tabular-nums">
                               <Calendar size={12} />
                               {postDate}
                             </span>
                           )}
                         </div>
 
-                        <h2 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors mb-2.5 line-clamp-2">
+                        <h2 className="font-heading text-lg sm:text-xl font-semibold tracking-tight leading-[1.3] text-neutral-950 group-hover:text-[#FF5C00] transition-colors mb-2.5 line-clamp-2">
                           <Link href={`/${lang}/resources/blog/${post.slug?.current}`}>
                             {post.title}
                           </Link>
                         </h2>
 
                         {post.excerpt && (
-                          <p className="text-xs sm:text-sm text-neutral-600 line-clamp-3 leading-relaxed">
+                          <p className="font-sans text-xs sm:text-sm text-neutral-600 line-clamp-3 leading-relaxed font-normal">
                             {post.excerpt}
                           </p>
                         )}

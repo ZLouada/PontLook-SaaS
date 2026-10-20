@@ -67,14 +67,14 @@ export default function HowItWorksStatic({ lang, dict }: HowItWorksStaticProps) 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Column */}
             <div className="lg:col-span-5 flex flex-col items-start text-start space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-semibold uppercase tracking-wider font-sans">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em]">
                 <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 animate-pulse" />
                 <span>{dict?.how_it_works?.eyebrow || (isAr ? 'آلية العمل' : 'HOW IT WORKS')}</span>
               </div>
 
               <h2
                 id="how-it-works-title"
-                className="text-[1.35rem] xs:text-[1.5rem] sm:text-3xl lg:text-[34px] xl:text-[36px] font-semibold text-neutral-950 tracking-tight leading-[1.18] font-heading"
+                className="font-heading text-3xl sm:text-4xl font-bold tracking-tight leading-[1.18] text-neutral-950"
               >
                 {dict?.how_it_works?.title || (isAr ? 'من تشخيص الفجوة المهارية إلى التدريب في 3 خطوات واضحة' : 'From Skill Gap to Training in 3 Straightforward Steps')}
               </h2>
@@ -87,10 +87,10 @@ export default function HowItWorksStatic({ lang, dict }: HowItWorksStaticProps) 
                   className="group inline-flex items-center justify-between gap-4 p-3.5 sm:p-4 rounded-2xl bg-white hover:bg-neutral-50 border border-neutral-200/90 hover:border-neutral-300 transition-all duration-200 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_-4px_rgba(0,0,0,0.1)] w-full sm:min-w-[280px]"
                 >
                   <div className="flex flex-col text-start">
-                    <span className="text-sm sm:text-base font-semibold text-neutral-950 transition-colors">
+                    <span className="font-heading text-sm sm:text-base font-semibold tracking-tight text-neutral-950 transition-colors">
                       {isAr ? 'انضم إلى الشبكة' : 'Join network'}
                     </span>
-                    <span className="text-xs text-neutral-500 transition-colors">
+                    <span className="font-sans text-xs text-neutral-500 transition-colors">
                       {isAr ? 'لمزودي التدريب' : 'for training providers'}
                     </span>
                   </div>
@@ -107,13 +107,13 @@ export default function HowItWorksStatic({ lang, dict }: HowItWorksStaticProps) 
               <div className="order-2 grid grid-cols-3 gap-1.5 sm:gap-2.5 w-full py-0.5">
                 {/* Step 1 Tab - Active */}
                 <div className="group relative flex min-h-[44px] items-center justify-center gap-1 sm:gap-1.5 py-2 px-1.5 xs:px-2 sm:px-3 rounded-xl border text-[11px] xs:text-xs font-medium select-none text-white border-neutral-950 bg-neutral-950 shadow-md">
-                  <span className="relative z-10 text-[10px] xs:text-[11px] font-mono font-bold shrink-0 text-white/60">
+                  <span className="relative z-10 text-[10px] xs:text-[11px] font-mono font-semibold tabular-nums shrink-0 text-white/60">
                     01
                   </span>
-                  <span className="relative z-10 font-semibold block sm:hidden">
+                  <span className="relative z-10 font-sans font-semibold block sm:hidden">
                     {isAr ? 'تشخيص' : 'DIAGNOSE'}
                   </span>
-                  <span className="relative z-10 font-semibold hidden sm:block truncate">
+                  <span className="relative z-10 font-sans font-semibold hidden sm:block truncate">
                     {isAr ? 'تشخيص الفجوة' : 'Diagnose Gaps'}
                   </span>
                   <div className="relative z-10 shrink-0 ms-0.5 sm:ms-1 hidden xs:block">
@@ -123,26 +123,26 @@ export default function HowItWorksStatic({ lang, dict }: HowItWorksStaticProps) 
 
                 {/* Step 2 Tab */}
                 <div className="group relative flex min-h-[44px] items-center justify-center gap-1 sm:gap-1.5 py-2 px-1.5 xs:px-2 sm:px-3 rounded-xl border text-[11px] xs:text-xs font-medium select-none bg-white text-neutral-600 border-neutral-200">
-                  <span className="relative z-10 text-[10px] xs:text-[11px] font-mono font-bold shrink-0 text-neutral-400">
+                  <span className="relative z-10 text-[10px] xs:text-[11px] font-mono font-semibold tabular-nums shrink-0 text-neutral-400">
                     02
                   </span>
-                  <span className="relative z-10 font-semibold block sm:hidden">
+                  <span className="relative z-10 font-sans font-semibold block sm:hidden">
                     {isAr ? 'تطابق' : 'SCOOP'}
                   </span>
-                  <span className="relative z-10 font-semibold hidden sm:block truncate">
+                  <span className="relative z-10 font-sans font-semibold hidden sm:block truncate">
                     {isAr ? 'حصر المزودين' : 'Scoop Matches'}
                   </span>
                 </div>
 
                 {/* Step 3 Tab */}
                 <div className="group relative flex min-h-[44px] items-center justify-center gap-1 sm:gap-1.5 py-2 px-1.5 xs:px-2 sm:px-3 rounded-xl border text-[11px] xs:text-xs font-medium select-none bg-white text-neutral-600 border-neutral-200">
-                  <span className="relative z-10 text-[10px] xs:text-[11px] font-mono font-bold shrink-0 text-neutral-400">
+                  <span className="relative z-10 text-[10px] xs:text-[11px] font-mono font-semibold tabular-nums shrink-0 text-neutral-400">
                     03
                   </span>
-                  <span className="relative z-10 font-semibold block sm:hidden">
+                  <span className="relative z-10 font-sans font-semibold block sm:hidden">
                     {isAr ? 'ربط مباشر' : 'MATCH'}
                   </span>
-                  <span className="relative z-10 font-semibold hidden sm:block truncate">
+                  <span className="relative z-10 font-sans font-semibold hidden sm:block truncate">
                     {isAr ? 'ربط وتعاقد' : 'Direct Match'}
                   </span>
                 </div>
@@ -153,13 +153,13 @@ export default function HowItWorksStatic({ lang, dict }: HowItWorksStaticProps) 
                 <div className="relative rounded-2xl sm:rounded-3xl border border-neutral-200/90 bg-white p-3.5 xs:p-4 sm:p-5 lg:p-5 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.06)] overflow-hidden">
                   <div className="space-y-2.5 sm:space-y-3 relative z-10">
                     <div className="space-y-1 text-start">
-                      <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 inline-block">
+                      <span className="font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider tabular-nums text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 inline-block">
                         01 · DIAGNOSE
                       </span>
-                      <h3 className="text-base sm:text-lg font-heading font-semibold text-neutral-950 leading-snug">
+                      <h3 className="font-heading text-lg sm:text-xl font-semibold text-neutral-950 tracking-tight leading-[1.3]">
                         {isAr ? 'تحديد دقيق للفجوة المهارية واحتياج المنظمة الفعلي' : 'Pinpoint Capability Gaps Before Spending Budget'}
                       </h3>
-                      <p className="text-xs sm:text-[13px] text-neutral-600 font-sans leading-relaxed">
+                      <p className="font-sans text-sm sm:text-base text-neutral-600 font-normal leading-relaxed">
                         {isAr
                           ? 'نحلل التحدي المؤسسي الداخلي لديك: قيادة، مبيعات، تحول رقمي، أو امتثال، ونحدد نطاق التدريب المطلوب بدقة.'
                           : 'We diagnose your true organizational bottleneck: leadership, sales velocity, AI upskilling, or compliance, defining exact requirements.'}

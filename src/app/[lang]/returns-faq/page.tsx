@@ -175,7 +175,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
         <div className="container-site max-w-4xl relative z-10 text-center mx-auto px-6">
           <Reveal>
             <span className="chip mx-auto">{isAr ? 'دعم العملاء والسياسات' : 'Customer Support & Policies'}</span>
-            <h1 className="mt-6 text-4xl font-semibold sm:text-5xl lg:text-6xl text-white leading-tight font-heading tracking-[-0.03em]">
+            <h1 className="mt-6 font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-white">
               {isAr ? (
                 <>
                   سياسة الاسترجاع <span className="text-white">والأسئلة الشائعة</span>
@@ -186,7 +186,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
                 </>
               )}
             </h1>
-            <p className="mt-4 text-base sm:text-lg text-neutral-400 max-w-2xl mx-auto font-sans">
+            <p className="mt-4 font-sans text-base sm:text-lg font-normal leading-relaxed text-slate-400 max-w-2xl mx-auto">
               {isAr
                 ? 'إرشادات واضحة وشفافة لطلبات المنتجات وضمان الجودة والإلغاء والاسترداد المالي.'
                 : 'Clear, transparent guidelines for merchandise orders, quality assurance, cancellations, and refunds.'}
@@ -207,8 +207,8 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
                       <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/10 text-white flex items-center justify-center mb-4 shadow-sm">
                         <Icon size={20} strokeWidth={1.75} />
                       </div>
-                      <h3 className="text-base font-semibold text-white mb-2 font-heading">{item.title}</h3>
-                      <p className="text-xs text-neutral-400 leading-relaxed font-sans">{item.desc}</p>
+                      <h3 className="font-heading text-base font-semibold tracking-tight text-white mb-2">{item.title}</h3>
+                      <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
                 </Reveal>
@@ -223,7 +223,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
           <Reveal>
             <div className="prose prose-invert max-w-none space-y-12 text-neutral-300 leading-relaxed font-sans">
               <div className="bg-[#0F1013] p-8 rounded-2xl sm:rounded-3xl border border-[#26282D]">
-                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
+                <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight leading-[1.3] text-white mb-4">
                   1. Made to Order Fulfillment Policy
                 </h2>
                 <p className="mb-4">
@@ -235,7 +235,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
               </div>
 
               <div>
-                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
+                <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight leading-[1.3] text-white mb-4">
                   2. 30 Day Quality Guarantee & Defect Reporting
                 </h2>
                 <p className="mb-4">
@@ -265,7 +265,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
               </div>
 
               <div>
-                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
+                <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight leading-[1.3] text-white mb-4">
                   3. Order Cancellation Policy
                 </h2>
                 <p className="mb-4">
@@ -282,7 +282,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
               </div>
 
               <div className="bg-[#0F1013] p-8 rounded-2xl sm:rounded-3xl border border-[#26282D]">
-                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
+                <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight leading-[1.3] text-white mb-4">
                   4. Refund Processing & Payment Authorization
                 </h2>
                 <p className="mb-4">
@@ -302,7 +302,7 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
               </div>
 
               <div>
-                <h2 className="text-2xl font-semibold text-white mb-4 font-heading">
+                <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight leading-[1.3] text-white mb-4">
                   5. Fourthwall Fulfillment Partner Terms
                 </h2>
                 <p className="mb-4">
@@ -317,16 +317,16 @@ export default async function ReturnsFAQPage({ params }: { params: Promise<{ lan
 
               <div className="bg-[#0F1013] p-5 xs:p-7 sm:p-8 rounded-2xl sm:rounded-3xl border border-[#26282D] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-6">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-semibold text-white mb-2 font-heading">
+                  <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight text-white mb-2">
                     Need Help With an Order?
                   </h2>
-                  <p className="text-neutral-400 text-sm leading-relaxed">
+                  <p className="font-sans text-sm text-neutral-400 leading-relaxed">
                     Our support team is ready to assist you with any questions regarding returns, orders, or quality inquiries.
                   </p>
                 </div>
                 <Link
                   href={`/${lang}/contact`}
-                  className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm shrink-0 px-6 py-3 rounded-full"
+                  className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans text-sm font-semibold tracking-tight shrink-0 px-6 py-3 rounded-full"
                 >
                   <Mail size={16} />
                   Contact Support

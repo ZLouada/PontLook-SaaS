@@ -106,11 +106,11 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
         <div>
           <div className="flex items-center gap-2.5">
             <Signal />
-            <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
+            <h2 className="font-heading text-xl sm:text-2xl font-semibold tracking-tight text-white">
               How should the training be delivered?
             </h2>
           </div>
-          <p className="mt-1 text-sm text-neutral-400">
+          <p className="mt-1 font-sans text-sm text-neutral-400">
             Choose the instructional format that best fits your workforce location and logistics.
           </p>
         </div>
@@ -155,17 +155,17 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                     </div>
                   </div>
 
-                  <h3 className="font-heading mt-3.5 text-base font-semibold text-white">
+                  <h3 className="font-heading mt-3.5 text-base font-semibold tracking-tight text-white">
                     {mode.title}
                   </h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-neutral-400">
+                  <p className="mt-1.5 font-sans text-xs leading-relaxed text-neutral-400">
                     {mode.description}
                   </p>
                 </div>
 
                 <div className="mt-4">
                   <span
-                    className={`inline-block rounded-md px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
+                    className={`font-mono inline-block rounded-md px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
                       isSelected
                         ? 'bg-white/20 text-white'
                         : 'bg-[#16171B] text-neutral-400 border border-[#26282D]'
@@ -189,11 +189,11 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
         <section className="rounded-2xl border border-[#26282D] bg-[#16171B] p-4 sm:p-5">
           <div className="flex items-center gap-2">
             <MapPin size={18} className="text-white" />
-            <h3 className="font-heading text-sm font-semibold text-white">
+            <h3 className="font-heading text-sm font-semibold tracking-tight text-white">
               Primary Location for In Person Sessions
             </h3>
           </div>
-          <p className="mt-1 text-xs text-neutral-400">
+          <p className="mt-1 font-sans text-xs text-neutral-400">
             Select your host city so we only match providers with accredited trainers and logistics in your hub.
           </p>
 
@@ -206,7 +206,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                   key={city}
                   type="button"
                   onClick={() => setValue('city', city, { shouldValidate: true })}
-                  className={`rounded-xl px-3.5 py-2.5 min-h-[44px] inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-medium transition-all active:scale-95 touch-manipulation ${
+                  className={`rounded-xl px-3.5 py-2.5 min-h-[44px] inline-flex items-center justify-center gap-2 font-sans text-xs sm:text-sm font-medium tracking-tight transition-all active:scale-95 touch-manipulation ${
                     isSelected
                       ? 'bg-white text-black font-semibold shadow-sm'
                       : 'border border-[#26282D] bg-[#0F1013] text-neutral-300 hover:border-white/20 hover:bg-white/[0.05]'
@@ -222,7 +222,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
             })}
           </div>
           {errors.city && (
-            <p className="mt-2 text-xs font-medium text-red-600" role="alert">
+            <p className="mt-2 font-sans text-xs font-medium text-red-400" role="alert">
               {errors.city.message}
             </p>
           )}
@@ -231,10 +231,10 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
 
       <section className="space-y-3">
         <div>
-          <h3 className="font-heading text-base font-semibold text-white">
+          <h3 className="font-heading text-base font-semibold tracking-tight text-white">
             Instruction Language
           </h3>
-          <p className="mt-0.5 text-xs text-neutral-400">
+          <p className="mt-0.5 font-sans text-xs text-neutral-400">
             Ensure instructors can facilitate natively and provide localized course materials.
           </p>
         </div>
@@ -254,10 +254,10 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                 }`}
               >
                 <div>
-                  <div className="text-sm font-semibold text-white">
+                  <div className="font-sans text-sm font-semibold tracking-tight text-white">
                     {lang.label}
                   </div>
-                  <div className="text-[11px] text-neutral-500">
+                  <div className="font-sans text-[11px] text-neutral-500">
                     {lang.sublabel}
                   </div>
                 </div>
@@ -275,7 +275,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
           })}
         </div>
         {errors.language && (
-          <p className="text-xs font-medium text-red-600" role="alert">
+          <p className="font-sans text-xs font-medium text-red-400" role="alert">
             {errors.language.message}
           </p>
         )}
@@ -283,10 +283,10 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
 
       <section className="space-y-3">
         <div>
-          <h3 className="font-heading text-base font-semibold text-white">
+          <h3 className="font-heading text-base font-semibold tracking-tight text-white">
             Program Customization Level
           </h3>
-          <p className="mt-0.5 text-xs text-neutral-400">
+          <p className="mt-0.5 font-sans text-xs text-neutral-400">
             Do you require tailored curriculum adapted to your internal organizational case studies?
           </p>
         </div>
@@ -313,7 +313,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                       ) : (
                         <BookOpen size={16} className="text-neutral-500" />
                       )}
-                      <span className="text-sm font-semibold text-white">
+                      <span className="font-sans text-sm font-semibold tracking-tight text-white">
                         {opt.title}
                       </span>
                     </span>
@@ -329,14 +329,14 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
                     </div>
                   </div>
 
-                  <p className="mt-2 text-xs leading-relaxed text-neutral-400">
+                  <p className="mt-2 font-sans text-xs leading-relaxed text-neutral-400">
                     {opt.description}
                   </p>
                 </div>
 
                 {opt.recommended && (
                   <div className="mt-3">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#16171B] border border-[#26282D] px-2.5 py-0.5 text-[10px] font-bold text-neutral-300">
+                    <span className="font-mono inline-flex items-center gap-1.5 rounded-full bg-[#16171B] border border-[#26282D] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-neutral-300">
                       <Star size={11} className="text-amber-400 fill-amber-400 shrink-0" />
                       <span>Recommended for Enterprise Organizations</span>
                     </span>
@@ -347,7 +347,7 @@ export default function Step2Delivery({ data, onNext, onBack, isSubmitting }: St
           })}
         </div>
         {errors.customization && (
-          <p className="text-xs font-medium text-red-600" role="alert">
+          <p className="font-sans text-xs font-medium text-red-400" role="alert">
             {errors.customization.message}
           </p>
         )}

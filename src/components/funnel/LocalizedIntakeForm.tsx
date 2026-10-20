@@ -230,10 +230,10 @@ export default function LocalizedIntakeForm({
         </div>
 
         <div className="space-y-2">
-          <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-[#FF5C00]/10 text-[#FF5C00] uppercase tracking-wider">
+          <span className="font-mono text-[11px] sm:text-xs font-semibold px-3 py-1 rounded-full bg-[#FF5C00]/10 text-[#FF5C00] uppercase tracking-[0.06em]">
             {isAr ? 'تم استلام طلبك بنجاح' : 'Intake Request Confirmed'}
           </span>
-          <h3 className="text-2xl sm:text-3xl font-bold text-white">
+          <h3 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight text-white">
             {role === 'buyer'
               ? isAr
                 ? 'جاري فحص المتطلبات والتوفيق مع المزودين المعتمدين'
@@ -242,7 +242,7 @@ export default function LocalizedIntakeForm({
               ? 'تم استلام طلب الانضمام لشبكة المزودين المعتمدين'
               : 'Provider Application Received for Qualification'}
           </h3>
-          <p className="text-sm text-neutral-300 max-w-lg mx-auto">
+          <p className="font-sans text-sm sm:text-base text-neutral-300 max-w-lg mx-auto leading-relaxed">
             {role === 'buyer'
               ? isAr
                 ? 'خلال 48 ساعة، سيتواصل معك فريق التحقق لتقديم 2 إلى 3 عروض مخصصة مطابقة لهيئات الاعتماد المطلوبة بدون أي رسوم.'
@@ -293,7 +293,7 @@ export default function LocalizedIntakeForm({
           <button
             type="button"
             onClick={() => setRole('buyer')}
-            className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
+            className={`px-5 py-2.5 rounded-xl font-sans text-xs sm:text-sm font-semibold tracking-tight transition-all ${
               role === 'buyer'
                 ? 'bg-[#FF5C00] text-black shadow-md'
                 : 'text-neutral-400 hover:text-white'
@@ -305,7 +305,7 @@ export default function LocalizedIntakeForm({
           <button
             type="button"
             onClick={() => setRole('provider')}
-            className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
+            className={`px-5 py-2.5 rounded-xl font-sans text-xs sm:text-sm font-semibold tracking-tight transition-all ${
               role === 'provider'
                 ? 'bg-blue-600 text-white shadow-md'
                 : 'text-neutral-400 hover:text-white'
@@ -705,7 +705,7 @@ export default function LocalizedIntakeForm({
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full sm:w-auto px-8 py-4 rounded-xl font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 ${
+            className={`w-full sm:w-auto px-8 py-4 rounded-xl font-sans font-semibold text-sm tracking-tight transition-all duration-200 flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 ${
               role === 'buyer'
                 ? 'bg-[#FF5C00] hover:bg-[#ff7828] text-black shadow-[#FF5C00]/20'
                 : 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-600/20'

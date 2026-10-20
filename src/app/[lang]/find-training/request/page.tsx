@@ -87,20 +87,20 @@ export default async function FindTrainingRequestPage({
         <div className="flex items-center justify-between gap-4 mb-6 sm:mb-8">
           <Link
             href={`/${lang}/find-training`}
-            className="inline-flex items-center gap-2 text-xs font-semibold text-neutral-400 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-neutral-400 hover:text-white transition-colors"
           >
             <ArrowLeft size={14} className="rtl:-scale-x-100" />
             <span>{isAr ? 'العودة لنظرة عامة' : 'Back to Training Overview'}</span>
           </Link>
 
-          <span className="text-xs text-neutral-300 font-bold uppercase tracking-wider">
+          <span className="font-mono text-[11px] sm:text-xs text-neutral-300 font-semibold uppercase tracking-wider">
             {isAr ? 'طلب تدريب مؤسسي' : 'Enterprise Intake'}
           </span>
         </div>
 
         {/* Header Intro */}
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-3 shadow-xs">
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16171B] border border-[#26282D] text-neutral-300 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] mb-3 shadow-xs">
             <Building2 size={13} className="text-white" />
             <span>{isAr ? 'خدمة مجانية 100% للشركات' : '100% Free for Enterprises'}</span>
           </span>
@@ -109,10 +109,10 @@ export default async function FindTrainingRequestPage({
             as="h1"
             text={isAr ? 'حدد متطلبات التدريب المؤسسي' : 'Define Your Workforce Training Scope'}
             onScroll={false}
-            className="text-2xl sm:text-4xl font-semibold text-white font-heading tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white font-heading tracking-tight leading-[1.1]"
           />
 
-          <p className="mt-2 text-sm sm:text-base text-neutral-400 leading-relaxed">
+          <p className="mt-2 font-sans text-sm sm:text-base text-neutral-400 leading-relaxed">
             {isAr
               ? 'أكمل النموذج في 60 ثانية لاستلام عروض أسعار تفصيلية ومناهج مقترحة من أفضل مزودي التدريب المعتمدين بالخليج.'
               : 'Complete this 60 second questionnaire to receive itemized proposals and syllabi from vetted training academies across the GCC.'}

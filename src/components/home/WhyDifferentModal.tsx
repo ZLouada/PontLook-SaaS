@@ -116,13 +116,13 @@ export default function WhyDifferentModal({
                   <activeCard.icon size={15} />
                 </IconFrame>
                 <span
-                  className={`px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold font-sans ${activeCard.theme.badgeBg}`}
+                  className={`px-2.5 py-0.5 rounded-full font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider tabular-nums ${activeCard.theme.badgeBg}`}
                 >
                   {activeCard.badge}
                 </span>
                 {activeCard.angle && (
                   <span
-                    className={`text-[11px] sm:text-xs font-medium font-sans ${activeCard.theme.accentText}`}
+                    className={`font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider tabular-nums ${activeCard.theme.accentText}`}
                   >
                     {activeCard.angle}
                   </span>
@@ -148,10 +148,10 @@ export default function WhyDifferentModal({
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.15, duration: 0.3 }}
               >
-                <h3 className="text-lg sm:text-xl font-semibold text-neutral-950 tracking-tight leading-snug font-heading">
+                <h3 className="font-heading text-lg sm:text-xl font-semibold tracking-tight leading-[1.3] text-neutral-950">
                   {activeCard.title}
                 </h3>
-                <p className="text-sm text-neutral-600 font-sans leading-relaxed mt-1.5">
+                <p className="font-sans text-sm sm:text-base font-normal text-neutral-600 leading-relaxed mt-1.5">
                   {activeCard.text}
                 </p>
               </m.div>
@@ -165,7 +165,7 @@ export default function WhyDifferentModal({
                   className="rounded-xl p-3 sm:p-3.5 bg-neutral-50 border border-neutral-200 flex flex-col justify-between space-y-2"
                 >
                   <div>
-                    <div className="text-[11px] font-semibold text-neutral-900 uppercase tracking-wider font-sans mb-1">
+                    <div className="font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider tabular-nums text-neutral-900 mb-1">
                       {isAr ? 'أهم المميزات والقيمة المقدمة' : 'Key Strategic Advantages'}
                     </div>
                     {activeCard.visualMetaphor && (
@@ -174,7 +174,7 @@ export default function WhyDifferentModal({
                       </div>
                     )}
                   </div>
-                  <ul className="space-y-2 text-[0.8125rem] sm:text-sm text-neutral-700 font-sans">
+                  <ul className="space-y-2 font-sans text-sm font-normal text-neutral-700">
                     {activeCard.takeaways.map((point: string, pIdx: number) => (
                       <m.li
                         key={pIdx}
@@ -220,7 +220,7 @@ export default function WhyDifferentModal({
               transition={{ delay: 0.28, duration: 0.3 }}
               className="p-3.5 sm:p-5 border-t border-neutral-200 bg-neutral-50 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3"
             >
-              <span className="text-[11px] text-neutral-500 font-sans hidden sm:inline">
+              <span className="font-sans text-[11px] text-neutral-500 hidden sm:inline">
                 {isAr
                   ? 'انقر في المساحة الفارغة أو Esc للإغلاق'
                   : 'Click outside or press Esc to close'}
@@ -234,7 +234,7 @@ export default function WhyDifferentModal({
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                  className={`w-full sm:w-auto inline-flex items-center justify-center min-h-[48px] px-5 py-3 rounded-xl ${activeCard.theme.buttonBg} font-medium text-sm transition-colors font-sans touch-manipulation active:scale-[0.98]`}
+                  className={`w-full sm:w-auto inline-flex items-center justify-center min-h-[48px] px-5 py-3 rounded-xl ${activeCard.theme.buttonBg} font-sans font-semibold tracking-tight text-sm transition-colors touch-manipulation active:scale-[0.98]`}
                 >
                   <span>{activeCard.cta}</span>
                   <ExternalLink size={14} className="ms-1.5" />
@@ -248,7 +248,7 @@ export default function WhyDifferentModal({
                 >
                   <Link
                     href={activeCard.href}
-                    className={`w-full inline-flex items-center justify-center min-h-[48px] px-5 py-3 rounded-xl ${activeCard.theme.buttonBg} font-medium text-sm transition-colors font-sans touch-manipulation active:scale-[0.98]`}
+                    className={`w-full inline-flex items-center justify-center min-h-[48px] px-5 py-3 rounded-xl ${activeCard.theme.buttonBg} font-sans font-semibold tracking-tight text-sm transition-colors touch-manipulation active:scale-[0.98]`}
                   >
                     <span>{activeCard.cta}</span>
                     <ArrowRight size={14} className="ms-1.5 rtl:-scale-x-100" />

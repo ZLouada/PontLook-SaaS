@@ -428,7 +428,9 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
       // Enterprise domain tags (desktop only to prevent CPU font layout overhead on mobile)
       if (!isMobile && asm >= 1 && smoothScrollP < 0.9) {
         ctx.globalAlpha = 1;
-        ctx.font = '500 10.5px Inter, system-ui, sans-serif';
+        ctx.font = isAr
+          ? '500 10.5px Cairo, system-ui, sans-serif'
+          : '500 10.5px Inter, system-ui, sans-serif';
         ctx.fillStyle = '#FFB280';
 
         for (let i = 6, k = 0; i < K; i += 15, k++) {
@@ -533,7 +535,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
           id="lead"
           className="absolute inset-0 grid place-content-center text-center opacity-0 pointer-events-none px-[5vw] z-10 transition-transform duration-75 ease-out pb-[6vh]"
         >
-          <h2 className="font-heading font-light text-[clamp(2.2rem,6vw,5.6rem)] leading-[1.04] tracking-tight text-white max-w-5xl mx-auto md:drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
+          <h2 className="font-heading font-bold text-[clamp(2.2rem,6vw,5.6rem)] leading-[1.04] tracking-tight text-white max-w-5xl mx-auto md:drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]">
             {isAr ? (
               <>
                 توقف عن ملاحقة الشركات. <br />
@@ -547,7 +549,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
             )}
           </h2>
 
-          <p className="mt-7 text-neutral-300 text-sm sm:text-base font-sans md:drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
+          <p className="mt-7 font-sans text-base sm:text-lg font-normal leading-relaxed text-neutral-300 md:drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
             {isAr ? 'منظومة التشغيل والربط لـ' : 'Operating System for'}
             <b className="block text-white font-medium mt-1">
               {isAr ? 'مزودي تدريب الشركات في الخليج' : 'GCC Corporate Training Providers'}
@@ -557,7 +559,7 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
           <div className="mt-8 flex justify-center gap-3 pointer-events-auto">
             <a
               href="#connection-bridge"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF5C00] hover:bg-[#FF6A1A] text-white text-xs sm:text-sm font-sans font-semibold rounded-xl shadow-lg shadow-orange-500/25 transition-all duration-200"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF5C00] hover:bg-[#FF6A1A] text-white text-xs sm:text-sm font-sans font-semibold tracking-tight rounded-xl shadow-lg shadow-orange-500/25 transition-all duration-200"
             >
               <span>{isAr ? 'انضم كشريك تدريب' : 'Apply as provider'}</span>
               <span>→</span>

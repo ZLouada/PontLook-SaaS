@@ -37,11 +37,11 @@ export function FormTextField({
   return (
     <div className="w-full">
       <div className="mb-2 flex items-center justify-between">
-        <label htmlFor={id} className="text-sm font-semibold text-neutral-300">
+        <label htmlFor={id} className="font-sans text-xs sm:text-sm font-semibold tracking-tight text-neutral-300">
           {label}
         </label>
         {optional && (
-          <span className="text-xs font-normal text-neutral-500">
+          <span className="font-sans text-xs font-normal text-neutral-500">
             Optional
           </span>
         )}
@@ -60,7 +60,7 @@ export function FormTextField({
           autoComplete={autoComplete}
           aria-invalid={hasError}
           aria-describedby={hasError ? `${id}-error` : hint ? `${id}-hint` : undefined}
-          className={`w-full rounded-xl border bg-[#16171B] px-4 py-3.5 text-base sm:text-sm text-white shadow-sm transition-all placeholder:text-neutral-500 focus:outline-none focus:ring-1 focus:ring-white/20 ${
+          className={`w-full rounded-xl border bg-[#16171B] px-4 py-3.5 font-sans text-base sm:text-sm font-normal text-white shadow-sm transition-all placeholder:text-neutral-500 focus:outline-none focus:ring-1 focus:ring-white/20 ${
             icon ? 'ps-11' : ''
           } ${
             hasError
@@ -72,13 +72,13 @@ export function FormTextField({
       </div>
 
       {hint && !hasError && (
-        <p id={`${id}-hint`} className="mt-1.5 text-xs text-neutral-500">
+        <p id={`${id}-hint`} className="mt-1.5 font-sans text-xs text-neutral-500">
           {hint}
         </p>
       )}
 
       {hasError && (
-        <p id={`${id}-error`} className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-red-600" role="alert">
+        <p id={`${id}-error`} className="mt-1.5 flex items-center gap-1.5 font-sans text-xs font-medium text-red-400" role="alert">
           <span>{error?.message}</span>
         </p>
       )}
@@ -105,11 +105,11 @@ export function FormSelectField({
   return (
     <div className="w-full">
       <div className="mb-2 flex items-center justify-between">
-        <label htmlFor={id} className="text-sm font-semibold text-neutral-300">
+        <label htmlFor={id} className="font-sans text-xs sm:text-sm font-semibold tracking-tight text-neutral-300">
           {label}
         </label>
         {optional && (
-          <span className="text-xs font-normal text-neutral-500">
+          <span className="font-sans text-xs font-normal text-neutral-500">
             Optional
           </span>
         )}
@@ -120,7 +120,7 @@ export function FormSelectField({
           id={id}
           aria-invalid={hasError}
           aria-describedby={hasError ? `${id}-error` : hint ? `${id}-hint` : undefined}
-          className={`w-full appearance-none rounded-xl border bg-[#16171B] px-4 py-3.5 pe-10 text-base sm:text-sm text-white shadow-sm transition-all focus:outline-none focus:ring-1 focus:ring-white/20 ${
+          className={`w-full appearance-none rounded-xl border bg-[#16171B] px-4 py-3.5 pe-10 font-sans text-base sm:text-sm font-normal text-white shadow-sm transition-all focus:outline-none focus:ring-1 focus:ring-white/20 ${
             hasError
               ? 'border-red-500 bg-red-50/20 focus:border-red-500 focus:ring-red-400'
               : 'border-[#26282D] hover:border-white/20 focus:border-white/40 focus:ring-white/20'
@@ -145,13 +145,13 @@ export function FormSelectField({
       </div>
 
       {hint && !hasError && (
-        <p id={`${id}-hint`} className="mt-1.5 text-xs text-neutral-500">
+        <p id={`${id}-hint`} className="mt-1.5 font-sans text-xs text-neutral-500">
           {hint}
         </p>
       )}
 
       {hasError && (
-        <p id={`${id}-error`} className="mt-1.5 text-xs font-medium text-red-600" role="alert">
+        <p id={`${id}-error`} className="mt-1.5 font-sans text-xs font-medium text-red-400" role="alert">
           {error?.message}
         </p>
       )}
@@ -183,10 +183,10 @@ export function PhoneInputWithCountry({
   return (
     <div className="w-full">
       <div className="mb-2 flex items-center justify-between">
-        <label htmlFor={phoneId} className="text-sm font-semibold text-neutral-300">
+        <label htmlFor={phoneId} className="font-sans text-xs sm:text-sm font-semibold tracking-tight text-neutral-300">
           {label}
         </label>
-        <span className="text-xs font-medium text-neutral-500">Direct verification line</span>
+        <span className="font-sans text-xs font-medium text-neutral-500">Direct verification line</span>
       </div>
 
       <div className="flex gap-2">
@@ -196,7 +196,7 @@ export function PhoneInputWithCountry({
           </div>
           <select
             id={codeRegistration.name}
-            className="w-full appearance-none rounded-xl border border-[#26282D] bg-[#16171B] ps-10 pe-6 py-3.5 text-base sm:text-sm font-medium text-white shadow-sm transition-all hover:border-white/20 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
+            className="w-full appearance-none rounded-xl border border-[#26282D] bg-[#16171B] ps-10 pe-6 py-3.5 font-sans text-base sm:text-sm font-medium text-white shadow-sm transition-all hover:border-white/20 focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
             {...codeRegistration}
           >
             {GCC_COUNTRIES.map((c) => (
@@ -217,7 +217,7 @@ export function PhoneInputWithCountry({
             placeholder="50 123 4567"
             aria-invalid={hasError}
             aria-describedby={hasError ? `${phoneId}-error` : hint ? `${phoneId}-hint` : undefined}
-            className={`w-full rounded-xl border bg-[#16171B] px-4 py-3.5 text-base sm:text-sm text-white shadow-sm transition-all placeholder:text-neutral-500 focus:outline-none focus:ring-1 focus:ring-white/20 ${
+            className={`w-full rounded-xl border bg-[#16171B] px-4 py-3.5 font-sans text-base sm:text-sm font-normal text-white shadow-sm transition-all placeholder:text-neutral-500 focus:outline-none focus:ring-1 focus:ring-white/20 ${
               hasError
                 ? 'border-red-500 bg-red-50/20 text-red-900 focus:border-red-500 focus:ring-red-400'
                 : 'border-[#26282D] hover:border-white/20 focus:border-white/40 focus:ring-white/20'
@@ -228,13 +228,13 @@ export function PhoneInputWithCountry({
       </div>
 
       {hint && !hasError && (
-        <p id={`${phoneId}-hint`} className="mt-1.5 text-xs text-neutral-500">
+        <p id={`${phoneId}-hint`} className="mt-1.5 font-sans text-xs text-neutral-500">
           {hint}
         </p>
       )}
 
       {hasError && (
-        <p id={`${phoneId}-error`} className="mt-1.5 text-xs font-medium text-red-600" role="alert">
+        <p id={`${phoneId}-error`} className="mt-1.5 font-sans text-xs font-medium text-red-400" role="alert">
           {phoneError?.message || codeError?.message}
         </p>
       )}
@@ -258,7 +258,7 @@ export function StepNavigation({
   return (
     <div className="mt-8 sm:mt-10 border-t border-[#26282D] pt-4 sm:pt-6">
       {trustMessage && (
-        <div className="mb-3 sm:mb-4 flex items-center justify-center gap-1.5 text-xs font-medium text-neutral-400">
+        <div className="mb-3 sm:mb-4 flex items-center justify-center gap-1.5 font-sans text-xs font-medium text-neutral-400">
           <Lock size={13} className="text-emerald-600 shrink-0" />
           <span className="text-center">{trustMessage}</span>
         </div>
@@ -275,7 +275,7 @@ export function StepNavigation({
                 e.stopPropagation();
                 onBack(e);
               }}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#26282D] bg-transparent hover:bg-white/[0.05] px-5 py-3 text-sm font-semibold text-neutral-300 hover:text-white shadow-xs transition-all active:scale-[0.98] sm:w-auto min-h-[44px] touch-manipulation"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#26282D] bg-transparent hover:bg-white/[0.05] px-5 py-3 font-sans text-sm font-semibold tracking-tight text-neutral-300 hover:text-white shadow-xs transition-all active:scale-[0.98] sm:w-auto min-h-[44px] touch-manipulation"
             >
               <ArrowLeft size={16} className="rtl:rotate-180 shrink-0" />
               <span>Back</span>
@@ -287,7 +287,7 @@ export function StepNavigation({
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`inline-flex w-full items-center justify-center gap-2.5 rounded-xl px-7 py-3.5 sm:py-4 text-base sm:text-sm font-semibold shadow-xs transition-all hover:shadow active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:w-auto min-h-[48px] touch-manipulation ${
+            className={`inline-flex w-full items-center justify-center gap-2.5 rounded-xl px-7 py-3.5 sm:py-4 font-sans text-sm font-semibold tracking-tight shadow-xs transition-all hover:shadow active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:w-auto min-h-[48px] touch-manipulation ${
               isFinalStep
                 ? 'bg-white/[0.05] hover:bg-white/[0.10] text-emerald-400 border border-[#26282D] hover:border-emerald-400/40 backdrop-blur-md'
                 : 'bg-white/[0.05] hover:bg-white/[0.10] text-white border border-[#26282D] hover:border-white/30 backdrop-blur-md'

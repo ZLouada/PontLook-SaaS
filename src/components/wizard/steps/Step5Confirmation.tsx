@@ -138,15 +138,15 @@ Thank you for choosing PontLook.com : The GCC Corporate Training Matchmaking Net
           <Seal size={56} />
         </div>
         <div className="inline-flex items-center gap-2 rounded-full border border-[#26282D] bg-[#16171B] px-4 py-1.5 shadow-sm">
-          <span className="text-xs font-semibold uppercase tracking-wider text-neutral-300">
+          <span className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] text-neutral-300">
             Matching in Progress · 120+ Vetted Providers
           </span>
         </div>
 
-        <h2 className="font-heading mt-5 text-2xl font-semibold tracking-normal text-white sm:text-3xl">
+        <h2 className="font-heading mt-5 text-2xl sm:text-3xl font-bold tracking-tight text-white">
           Enterprise Scope Received. Matching Begins Now.
         </h2>
-        <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-neutral-400">
+        <p className="mx-auto mt-2 max-w-xl font-sans text-sm sm:text-base leading-relaxed text-neutral-400">
           Thank you, <strong className="text-white">{data.fullName || 'Leader'}</strong>. Your training specifications for <strong className="text-white">{data.organizationName || 'your organization'}</strong> have been prioritized in our qualification queue.
         </p>
 

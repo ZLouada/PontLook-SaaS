@@ -145,15 +145,11 @@ function ResourcesCategoryTabsInner({
     <section className="mb-20 sm:mb-28 pt-10" dir={isAr ? 'rtl' : 'ltr'}>
       {/* 1. Centered Section Heading */}
       <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 px-4">
-        <h2
-          className={`font-bold text-3xl md:text-4xl text-neutral-950 tracking-tight ${
-            isAr ? 'font-arabic' : 'font-heading tracking-[-0.02em]'
-          }`}
-        >
+        <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight text-neutral-950">
           {title || (isAr ? 'أبرز الموارد المعرفية' : 'Featured Resources')}
         </h2>
         {subtitle && (
-          <p className="mt-3 text-neutral-600 text-sm sm:text-base leading-relaxed">
+          <p className="mt-3 font-sans text-neutral-600 text-sm sm:text-base leading-relaxed">
             {subtitle}
           </p>
         )}
@@ -177,7 +173,7 @@ function ResourcesCategoryTabsInner({
                 <span className="text-xs font-mono uppercase tracking-wider text-neutral-500 shrink-0">
                   {isAr ? 'التصنيف:' : 'Category:'}
                 </span>
-                <span className={`font-bold text-sm sm:text-base text-neutral-950 truncate ${isAr ? 'font-arabic' : 'font-heading'}`}>
+                <span className="font-heading font-bold text-sm sm:text-base text-neutral-950 truncate">
                   {activeTabObj.label}
                 </span>
               </div>
@@ -206,9 +202,7 @@ function ResourcesCategoryTabsInner({
                     aria-selected={isSelected}
                     type="button"
                     onClick={() => handleTabClick(tab.value)}
-                    className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm transition-colors cursor-pointer select-none text-start ${
-                      isAr ? 'font-arabic' : 'font-heading'
-                    } ${
+                    className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl font-sans text-sm transition-colors cursor-pointer select-none text-start ${
                       isSelected
                         ? 'bg-neutral-950 text-white font-semibold'
                         : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950 font-medium'
@@ -246,11 +240,7 @@ function ResourcesCategoryTabsInner({
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute top-3 start-3">
-                      <span
-                        className={`px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider backdrop-blur-md bg-white/95 text-neutral-950 border border-neutral-200/80 shadow-xs ${
-                          isAr ? 'font-arabic' : 'font-mono'
-                        }`}
-                      >
+                      <span className="px-3 py-1 rounded-full font-mono text-[11px] font-semibold uppercase tracking-wider backdrop-blur-md bg-white/95 text-neutral-950 border border-neutral-200/80 shadow-xs">
                         {item.categoryLabel}
                       </span>
                     </div>
@@ -264,41 +254,37 @@ function ResourcesCategoryTabsInner({
                     {/* Card Meta Row */}
                     <div className="flex items-center justify-between gap-2 text-xs text-neutral-500 mb-3">
                       {!item.image && (
-                        <span
-                          className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider border ${
-                            isAr ? 'font-arabic' : 'font-mono'
-                          } bg-neutral-100 text-neutral-800 border-neutral-200`}
-                        >
+                        <span className="px-2.5 py-0.5 rounded-full font-mono text-[11px] font-semibold uppercase tracking-wider border bg-neutral-100 text-neutral-800 border-neutral-200">
                           {item.categoryLabel}
                         </span>
                       )}
                       {item.typeLabel && (
-                        <span className="text-[10px] uppercase font-mono tracking-wider text-neutral-400">
+                        <span className="font-mono text-[10px] uppercase tracking-wider text-neutral-400">
                           {item.typeLabel}
                         </span>
                       )}
                       {(item.readTime || item.date || item.format) && (
-                        <span className="font-mono text-[11px] ms-auto">
+                        <span className="font-mono text-[11px] tabular-nums ms-auto">
                           {item.readTime || item.format || item.date}
                         </span>
                       )}
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-3">
+                    <h3 className="font-heading text-lg sm:text-xl font-semibold tracking-tight text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-[1.3] mb-3">
                       {item.title}
                     </h3>
 
                     {/* Excerpt */}
                     {item.excerpt && (
-                      <p className="text-neutral-600 text-xs sm:text-sm leading-relaxed line-clamp-3 font-normal">
+                      <p className="font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed line-clamp-3 font-normal">
                         {item.excerpt}
                       </p>
                     )}
                   </div>
 
                   {/* CTA Footer */}
-                  <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between text-xs font-semibold text-neutral-800 group-hover:text-[#FF5C00] transition-colors">
+                  <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between font-sans text-xs font-semibold tracking-tight text-neutral-800 group-hover:text-[#FF5C00] transition-colors">
                     <span>{item.ctaText || (isAr ? 'قراءة المقال' : 'Read Article')}</span>
                     <ArrowRight
                       size={14}
@@ -359,11 +345,7 @@ function ResourcesCategoryTabsSkeleton({
   return (
     <section className="mb-20 sm:mb-28 pt-10" dir={isAr ? 'rtl' : 'ltr'}>
       <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 px-4">
-        <h2
-          className={`font-bold text-3xl md:text-4xl text-neutral-950 tracking-tight ${
-            isAr ? 'font-arabic' : 'font-heading tracking-[-0.02em]'
-          }`}
-        >
+        <h2 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight text-neutral-950">
           {title || (isAr ? 'أبرز الموارد المعرفية' : 'Featured Resources')}
         </h2>
       </div>

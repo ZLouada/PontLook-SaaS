@@ -84,7 +84,7 @@ export default async function ContactPage({
     <div className="bg-black">
       <section className="container-site grid gap-8 sm:gap-14 pt-24 sm:pt-36 pb-16 sm:pb-24 lg:grid-cols-5">
         <Reveal className="lg:col-span-2">
-          <span className="chip gap-2 normal-case tracking-wider">
+          <span className="chip gap-2">
             <Signal size={14} />
             {contactData.chip}
           </span>
@@ -92,17 +92,17 @@ export default async function ContactPage({
             as="h1"
             onScroll={false}
             text={contactData.title}
-            className="mt-4 sm:mt-5 text-3xl sm:text-4xl font-semibold leading-tight text-white font-heading"
+            className="mt-4 sm:mt-5 text-3xl sm:text-4xl lg:text-5xl font-heading font-bold tracking-tight leading-[1.1] text-white"
           />
-          <p className="mt-4 text-lg leading-relaxed text-neutral-400">
+          <p className="mt-4 font-sans text-base sm:text-lg font-normal leading-relaxed text-slate-400">
             {contactData.subtitle}
           </p>
-          <ul className="mt-8 space-y-4 text-sm text-neutral-300">
+          <ul className="mt-8 space-y-4 font-sans text-sm text-neutral-300">
             <li className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#16171B] border border-[#26282D] text-white">
                 <Mail size={18} />
               </span>
-              <a href="mailto:contact@pontlook.com" className="font-medium text-neutral-300 hover:text-white transition-colors">
+              <a href="mailto:contact@pontlook.com" className="font-sans font-medium text-neutral-300 hover:text-white transition-colors">
                 {contactData.emailLabel}
               </a>
             </li>

@@ -15,7 +15,7 @@ const ACCREDITATIONS = [
 
 export function TrustBadges() {
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-4 font-sans">
       <div className="flex flex-wrap items-center justify-center gap-2 rounded-xl border border-[#26282D] bg-[#16171B] px-4 py-2.5 text-center text-xs text-neutral-300 shadow-sm">
         <div className="flex items-center gap-1.5 font-semibold text-emerald-400">
           <ShieldCheck size={15} />
@@ -30,7 +30,7 @@ export function TrustBadges() {
 
       <div className="rounded-xl border border-[#26282D] bg-[#16171B] p-4">
         <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-neutral-400">
+          <div className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.06em] text-neutral-400">
             <BadgeCheck size={16} className="text-white" />
             <span>Network Faculty Standards & Accreditations</span>
           </div>
@@ -39,7 +39,7 @@ export function TrustBadges() {
             {ACCREDITATIONS.map((acc) => (
               <div
                 key={acc.name}
-                className="group flex items-center gap-1.5 rounded-lg border border-[#26282D] bg-[#0F1013] px-2.5 py-1 text-xs shadow-xs transition-colors hover:border-white/20"
+                className="group flex items-center gap-1.5 rounded-lg border border-[#26282D] bg-[#0F1013] px-2.5 py-1 font-mono text-[11px] shadow-xs transition-colors hover:border-white/20"
                 title={`${acc.name} · ${acc.desc}`}
               >
                 <span className="font-semibold tracking-normal text-white">

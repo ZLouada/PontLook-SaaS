@@ -14,7 +14,7 @@
   border: 1px solid var(--theme-elevation-150, #262626);
   border-radius: 12px;
   color: var(--theme-text, #ffffff);
-  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
   box-sizing: border-box;
 }
 
@@ -391,7 +391,7 @@
   color: #1a1a1a;
   border-radius: 8px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
-  font-family: Arial, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
   max-width: 650px;
 }
 

@@ -72,18 +72,18 @@ export default async function FindTrainingPage({
         <div className="lg:col-span-6 xl:col-span-5 px-5 sm:px-8 md:px-12 lg:px-14 py-12 sm:py-16 lg:py-24 flex flex-col justify-center text-start z-10">
           <div className="inline-flex items-center gap-2 mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-            <span className="font-mono text-xs uppercase tracking-widest text-neutral-400">
+            <span className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] text-neutral-400">
               {isAr ? 'منظومة تدريب الشركات الخليجية' : 'GCC ENTERPRISE TRAINING INTAKE'}
             </span>
           </div>
 
-          <h1 className="font-heading font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl tracking-tight leading-[1.06] text-white">
+          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-white">
             {isAr
               ? 'احصل على 3 عروض تدريبية مخصصة لتطوير كوادر منشأتك'
               : 'Get 3 curated training proposals for your workforce'}
           </h1>
 
-          <p className="mt-6 sm:mt-8 text-neutral-300 text-base sm:text-lg leading-relaxed max-w-xl font-normal">
+          <p className="mt-6 sm:mt-8 font-sans text-base sm:text-lg font-normal leading-relaxed text-neutral-300 max-w-xl">
             {isAr
               ? 'لا داعي للبحث اليدوي بين مئات الكتالوجات العامة. حدد متطلباتك التدريبية في 60 ثانية، وسنصلك بأفضل مزودي التدريب المعتمدين وفق متطلباتك الدقيقة وبدون أي التزام.'
               : 'Stop sifting through generic vendor catalogs. Submit your training requirements in 60 seconds and we introduce you only to proven providers matched to your domain and region.'}
@@ -92,32 +92,32 @@ export default async function FindTrainingPage({
           <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-3.5 sm:gap-4">
             <Link
               href={`/${lang}/find-training/request`}
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 bg-white text-black font-semibold text-xs sm:text-sm tracking-wide rounded-none border border-white hover:bg-black hover:text-white transition-all duration-200"
+              className="inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 bg-white text-black font-sans text-sm font-semibold tracking-tight rounded-none border border-white hover:bg-black hover:text-white transition-all duration-200"
             >
               <span>{isAr ? 'طلب عروض التدريب' : 'Request training proposals'}</span>
             </Link>
 
             <a
               href="#how"
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 bg-transparent text-white font-medium text-xs sm:text-sm tracking-wide rounded-none border border-white/40 hover:border-white hover:bg-white/10 transition-all duration-200"
+              className="inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 bg-transparent text-white font-sans text-sm font-medium tracking-tight rounded-none border border-white/40 hover:border-white hover:bg-white/10 transition-all duration-200"
             >
               <span>{isAr ? 'كيف تعمل المنصة' : 'How matchmaking works'}</span>
             </a>
           </div>
 
-          <div className="mt-10 sm:mt-12 pt-6 border-t border-white/10 flex items-center gap-6 text-xs font-mono text-neutral-400">
+          <div className="mt-10 sm:mt-12 pt-6 border-t border-white/10 flex items-center gap-6 font-mono text-xs text-neutral-400">
             <div>
-              <span className="text-white font-bold block text-sm">60s</span>
+              <span className="text-white font-heading font-bold block text-sm tabular-nums">60s</span>
               <span>{isAr ? 'وقت التقديم' : 'Intake time'}</span>
             </div>
             <div className="w-[1px] h-8 bg-white/10" />
             <div>
-              <span className="text-white font-bold block text-sm">100%</span>
+              <span className="text-white font-heading font-bold block text-sm tabular-nums">100%</span>
               <span>{isAr ? 'مجاني للشركات' : 'Free for buyers'}</span>
             </div>
             <div className="w-[1px] h-8 bg-white/10" />
             <div>
-              <span className="text-white font-bold block text-sm">48h</span>
+              <span className="text-white font-heading font-bold block text-sm tabular-nums">48h</span>
               <span>{isAr ? 'مهلة التسليم' : 'Delivery SLA'}</span>
             </div>
           </div>
@@ -145,7 +145,7 @@ export default async function FindTrainingPage({
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3">
           {/* Proof 1 */}
           <div className="px-6 sm:px-10 py-12 sm:py-16 md:py-20 border-b md:border-b-0 ltr:md:border-r rtl:md:border-l border-white/20">
-            <b className="font-heading font-semibold text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-none block text-white">
+            <b className="font-heading font-extrabold text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-none block text-white tabular-nums">
               48h
             </b>
             <span className="font-sans text-sm sm:text-base text-neutral-300 mt-4 block uppercase tracking-wider">
@@ -155,7 +155,7 @@ export default async function FindTrainingPage({
 
           {/* Proof 2 */}
           <div className="px-6 sm:px-10 py-12 sm:py-16 md:py-20 border-b md:border-b-0 ltr:md:border-r rtl:md:border-l border-white/20">
-            <b className="font-heading font-semibold text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-none block text-white">
+            <b className="font-heading font-extrabold text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-none block text-white tabular-nums">
               2–3
             </b>
             <span className="font-sans text-sm sm:text-base text-neutral-300 mt-4 block uppercase tracking-wider">
@@ -165,7 +165,7 @@ export default async function FindTrainingPage({
 
           {/* Proof 3 */}
           <div className="px-6 sm:px-10 py-12 sm:py-16 md:py-20">
-            <b className="font-heading font-semibold text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-none block text-white">
+            <b className="font-heading font-extrabold text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-none block text-white tabular-nums">
               100%
             </b>
             <span className="font-sans text-sm sm:text-base text-neutral-300 mt-4 block uppercase tracking-wider">
@@ -180,15 +180,15 @@ export default async function FindTrainingPage({
       {/* ======================================================== */}
       <section className="py-24 sm:py-32 lg:py-36 px-4 sm:px-8 text-center bg-black">
         <div className="max-w-4xl mx-auto">
-          <span className="font-mono text-xs uppercase tracking-widest text-neutral-400 px-3 py-1 border border-white/20 inline-block mb-6">
+          <span className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] text-neutral-400 px-3 py-1 border border-white/20 inline-block mb-6">
             {isAr ? 'تأهيل الكفاءات المؤسسية' : 'ENTERPRISE SCOPE'}
           </span>
 
-          <h2 className="font-heading font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight text-white mb-6">
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.18] text-white mb-6">
             {isAr ? 'جاهز لتطوير كوادر منشأتك؟' : 'Ready to upskill your workforce?'}
           </h2>
 
-          <p className="font-sans text-base sm:text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+          <p className="font-sans text-base sm:text-lg text-neutral-300 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
             {isAr
               ? 'اطرح متطلبات تدريب فريقك واستلم عروض أسعار تفصيلية من أفضل معاهد ومزودي التدريب المعتمدين بالخليج خلال 48 ساعة.'
               : 'Submit your training requirements in 60 seconds. Our matching concierge connects you with accredited providers across the GCC.'}
@@ -197,14 +197,14 @@ export default async function FindTrainingPage({
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
               href={`/${lang}/find-training/request`}
-              className="inline-flex items-center justify-center px-8 py-4 bg-white text-black font-semibold text-sm tracking-wide rounded-none border border-white hover:bg-black hover:text-white transition-all duration-200"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-black font-sans text-sm font-semibold tracking-tight rounded-none border border-white hover:bg-black hover:text-white transition-all duration-200"
             >
               <span>{isAr ? 'طلب عروض التدريب' : 'Request training proposals'}</span>
             </Link>
 
             <Link
               href={`/${lang}/contact`}
-              className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white font-medium text-sm tracking-wide rounded-none border border-white/40 hover:border-white hover:bg-white/10 transition-all duration-200"
+              className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white font-sans text-sm font-medium tracking-tight rounded-none border border-white/40 hover:border-white hover:bg-white/10 transition-all duration-200"
             >
               <span>{isAr ? 'حجز جلسة استشارية' : 'Book a consultation'}</span>
             </Link>

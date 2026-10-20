@@ -6,6 +6,7 @@
   --color-primary: #0052FF;
   --color-accent: #0052FF;
   --color-accent-secondary: #4D7CFF;
+  --font-arabic: var(--font-cairo);
 
   /* Shared motion curve — mirrors ease.out in src/lib/motion.ts */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -13,10 +14,13 @@
 
 @layer base {
   html {
+    font-family: var(--font-sans), system-ui, sans-serif;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     max-width: 100%;
     overflow-x: clip;
     /* The header floats over the page, so an anchor jump has to stop short of it. */
@@ -105,11 +109,9 @@
   h4,
   h5,
   h6 {
-    @apply font-heading text-white font-semibold;
-    letter-spacing: -0.025em;
+    font-family: var(--font-heading), var(--font-sans), system-ui, sans-serif;
+    letter-spacing: -0.02em;
     line-height: 1.12;
-    font-feature-settings: "kern" 1, "liga" 1;
-    font-stretch: normal;
   }
   /* Offset must be an explicit dark value, otherwise the ring renders a white
      halo against the canvas. */
@@ -117,6 +119,21 @@
     @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-black;
   }
 
+  html[dir="rtl"],
+  [dir="rtl"] {
+    --font-sans: var(--font-cairo);
+    --font-heading: var(--font-cairo);
+    --font-arabic: var(--font-cairo);
+  }
+
+  html[dir="rtl"],
+  html[dir="rtl"] body,
+  html[dir="rtl"] h1,
+  html[dir="rtl"] h2,
+  html[dir="rtl"] h3,
+  html[dir="rtl"] h4,
+  html[dir="rtl"] h5,
+  html[dir="rtl"] h6,
   [dir="rtl"],
   [dir="rtl"] body,
   [dir="rtl"] .font-sans,
@@ -133,16 +150,14 @@
   [dir="rtl"] button,
   [dir="rtl"] input,
   [dir="rtl"] textarea {
-    font-family: var(--font-arabic), 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, system-ui, sans-serif !important;
-    letter-spacing: 0px !important;
+    font-family: var(--font-cairo), system-ui, sans-serif !important;
+    letter-spacing: 0em !important;
     word-spacing: normal !important;
-    font-feature-settings: "liga" 1, "calt" 1 !important;
   }
   .font-arabic {
-    font-family: var(--font-arabic), 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, system-ui, sans-serif !important;
-    letter-spacing: 0px !important;
+    font-family: var(--font-cairo), system-ui, sans-serif !important;
+    letter-spacing: 0em !important;
     word-spacing: normal !important;
-    font-feature-settings: "liga" 1, "calt" 1 !important;
   }
 }
 
@@ -217,7 +232,7 @@
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 xs:px-6 py-3 sm:py-3.5 text-xs xs:text-sm font-semibold transition-all duration-200 transform-gpu min-h-[44px] touch-manipulation select-none;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 xs:px-6 py-3 sm:py-3.5 font-sans text-sm font-semibold tracking-tight transition-all duration-200 transform-gpu min-h-[44px] touch-manipulation select-none;
   }
   .btn-primary {
     @apply btn sheen bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/10 hover:border-white/30 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),0_2px_8px_rgba(0,0,0,0.4)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25),0_0_20px_rgba(255,255,255,0.08)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98];
@@ -231,17 +246,17 @@
   }
 
   .chip {
-    @apply inline-flex items-center rounded-full border border-[#26282D] bg-[#16171B] px-4 py-1.5 text-xs font-sans font-semibold uppercase tracking-wider text-neutral-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)];
+    @apply inline-flex items-center rounded-full border border-[#26282D] bg-[#16171B] px-4 py-1.5 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] text-neutral-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)];
   }
 
   .field-label {
-    @apply mb-1.5 block text-sm font-medium text-neutral-300;
+    @apply mb-1.5 block font-sans text-xs sm:text-sm font-semibold tracking-tight text-neutral-300;
   }
   .field-input {
-    @apply w-full rounded-2xl border border-[#26282D] bg-[#16171B] px-4 py-3.5 sm:px-5 sm:py-4 text-[16px] sm:text-sm text-white placeholder:text-neutral-500 transition-all duration-200 focus:border-white/40 focus:ring-1 focus:ring-white/40 shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)];
+    @apply w-full rounded-2xl border border-[#26282D] bg-[#16171B] px-4 py-3.5 sm:px-5 sm:py-4 font-sans text-[16px] sm:text-sm font-normal text-white placeholder:text-neutral-500 transition-all duration-200 focus:border-white/40 focus:ring-1 focus:ring-white/40 shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)];
   }
   .field-error {
-    @apply mt-1.5 text-xs font-medium text-red-400;
+    @apply mt-1.5 font-sans text-xs font-medium text-red-400;
   }
 }
 
@@ -656,15 +671,15 @@
 }
 
 /* ===== DIRECT CONNECTION ARCHITECTURE EDITORIAL (DCD) ===== */
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap');
-
 .dcd {
   --ink: #0C0B0A;
   --paper: #F3EFE6;
   --mu: #9B968B;
   --ac: #FF5A00;
-  --serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-  --sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --heading: var(--font-heading), var(--font-sans), system-ui, sans-serif;
+  --serif: var(--font-heading), var(--font-sans), system-ui, sans-serif;
+  --sans: var(--font-sans), system-ui, -apple-system, sans-serif;
+  --mono: var(--font-mono), monospace;
   background: var(--ink);
   color: var(--paper);
   font-family: var(--sans);
@@ -680,18 +695,25 @@
   margin: 0 auto;
 }
 .dcd-eye {
-  font-size: 14px;
-  letter-spacing: 0.03em;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--mu);
 }
 .dcd h2 {
-  font: 400 clamp(2.7rem, 7.2vw, 6.4rem) / 0.97 var(--serif);
-  letter-spacing: -0.022em;
+  font-family: var(--font-heading), var(--font-sans), sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   margin-top: 20px;
-  max-width: 11.5em;
+  max-width: 14em;
 }
 .dcd h2 em {
-  font-style: italic;
+  font-style: normal;
+  color: var(--paper);
 }
 .dcd-line {
   position: relative;

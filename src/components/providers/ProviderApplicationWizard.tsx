@@ -340,11 +340,11 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
             <Seal size={56} label={applicationRef || undefined} />
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight mb-3">
+          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white tracking-tight mb-3">
             {isAr ? 'تم استلام طلب الشراكة بنجاح' : 'Partner Application Received'}
           </h2>
 
-          <p className="text-neutral-400 text-sm sm:text-base leading-relaxed max-w-lg mx-auto mb-8 font-normal">
+          <p className="font-sans text-sm sm:text-base leading-relaxed max-w-lg mx-auto mb-8 font-normal text-neutral-400">
             {isAr
               ? 'شكراً لكم. يقوم فريق الشراكات بمراجعة بيانات مؤسستكم التدريبية، وسنتواصل معكم عبر البريد والواتساب خلال يومي عمل لجدولة مكالمة التأهيل وبدء استقبال الفرص.'
               : 'Thank you for applying. Our partnerships team is reviewing your profile and credentials. We will reach out via email and WhatsApp within 2 business days to schedule your qualification call.'}
@@ -352,7 +352,7 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
 
           {/* Roadmap */}
           <div className="bg-[#16171B] border border-[#26282D] rounded-2xl p-5 sm:p-6 text-start mb-8 space-y-4">
-            <div className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-semibold">
+            <div className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.06em] text-neutral-400 font-semibold">
               {isAr ? 'مسار التأهيل والاعتماد' : 'Qualification Roadmap'}
             </div>
 
@@ -458,13 +458,13 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
         {step === 1 && (
           <div>
             <div className="mb-6 sm:mb-8">
-              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-[11px] xs:text-xs text-neutral-300 font-semibold uppercase tracking-wider mb-3">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-[11px] xs:text-xs text-neutral-300 font-semibold uppercase tracking-[0.06em] mb-3">
                 {isAr ? 'الخطوة 1 · معلومات المنشأة' : 'Step 1 · Basic Information'}
               </span>
-              <h1 className="text-xl xs:text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight">
+              <h1 className="font-heading text-xl xs:text-2xl sm:text-3xl font-bold text-white tracking-tight leading-[1.1]">
                 {isAr ? 'معلومات عن مؤسستكم التدريبية' : 'Tell us about your training organization'}
               </h1>
-              <p className="mt-2 text-xs xs:text-sm text-neutral-400 leading-relaxed">
+              <p className="mt-2 font-sans text-xs xs:text-sm sm:text-base text-neutral-400 leading-relaxed font-normal">
                 {isAr
                   ? 'نتعاون مع المعاهد التدريبية المعتمدة ومراكز التدريب المتخصصة لتزويدهم بعملاء مؤسسيين مؤهلين.'
                   : 'We partner with accredited boutique academies and enterprise training institutions across the GCC.'}
@@ -570,13 +570,13 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
         {step === 2 && (
           <div>
             <div className="mb-6 sm:mb-8">
-              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-xs text-neutral-300 font-semibold uppercase tracking-wider mb-3">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-[11px] sm:text-xs text-neutral-300 font-semibold uppercase tracking-[0.06em] mb-3">
                 {isAr ? 'الخطوة 2 · مجالات التدريب والتخصص' : 'Step 2 · Capabilities & Focus'}
               </span>
-              <h1 className="text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight">
+              <h1 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight leading-[1.1]">
                 {isAr ? 'ما هي مجالات تخصصكم التدريبي؟' : 'What are your core training specialties?'}
               </h1>
-              <p className="mt-2 text-sm text-neutral-400 leading-relaxed">
+              <p className="mt-2 font-sans text-xs sm:text-sm md:text-base text-neutral-400 leading-relaxed font-normal">
                 {isAr
                   ? 'حدد كافة المجالات التي تمتلكون فيها برامج معتمدة وخبرات تنفيذية مثبتة مع كبرى الشركات.'
                   : 'Select all disciplines where your faculty holds accredited credentials and verified client outcomes.'}
@@ -652,13 +652,13 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
         {step === 3 && (
           <div>
             <div className="mb-6 sm:mb-8">
-              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-xs text-neutral-300 font-semibold uppercase tracking-wider mb-3">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-[11px] sm:text-xs text-neutral-300 font-semibold uppercase tracking-[0.06em] mb-3">
                 {isAr ? 'الخطوة 3 · التغطية الجغرافية والحجم' : 'Step 3 · Geographic Reach & Scale'}
               </span>
-              <h1 className="text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight">
+              <h1 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight leading-[1.1]">
                 {isAr ? 'أين تنفذون برامجكم التدريبية؟' : 'Where do you deliver corporate programs?'}
               </h1>
-              <p className="mt-2 text-sm text-neutral-400 leading-relaxed">
+              <p className="mt-2 font-sans text-xs sm:text-sm md:text-base text-neutral-400 leading-relaxed font-normal">
                 {isAr
                   ? 'يستقبل بونت لوك طلبات تدريبية مستمرة من جهات وشركات كبرى في مدن الأعمال الخليجية.'
                   : 'PontLook receives corporate training requests across major business hubs in the GCC.'}
@@ -762,13 +762,13 @@ export default function ProviderApplicationWizard({ lang, isAr }: ProviderApplic
         {step === 4 && (
           <div>
             <div className="mb-6 sm:mb-8">
-              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-xs text-neutral-300 font-semibold uppercase tracking-wider mb-3">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#16171B] border border-[#26282D] font-mono text-[11px] sm:text-xs text-neutral-300 font-semibold uppercase tracking-[0.06em] mb-3">
                 {isAr ? 'الخطوة 4 · التواصل والتحقق' : 'Step 4 · Verification & Next Steps'}
               </span>
-              <h1 className="text-2xl sm:text-3xl font-semibold text-white font-heading tracking-tight">
+              <h1 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight leading-[1.1]">
                 {isAr ? 'بيانات التواصل لاستقبال الفرص' : 'Where should we deliver qualified opportunities?'}
               </h1>
-              <p className="mt-2 text-sm text-neutral-400 leading-relaxed">
+              <p className="mt-2 font-sans text-xs sm:text-sm md:text-base text-neutral-400 leading-relaxed font-normal">
                 {isAr
                   ? 'سيتواصل فريق الشراكات معكم لجدولة مكالمة التحقق ومطابقة أولى الفرص التدريبية المتاحة.'
                   : 'Our partnerships team will reach out directly to finalize accreditation verification and begin lead delivery.'}

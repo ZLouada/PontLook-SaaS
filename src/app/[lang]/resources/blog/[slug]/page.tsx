@@ -165,7 +165,7 @@ export default async function BlogPostDetailPage({
         <Reveal>
           <Link
             href={`/${lang}/resources`}
-            className="inline-flex items-center gap-2 text-xs font-medium text-neutral-600 hover:text-black transition-colors mb-8"
+            className="inline-flex items-center gap-2 font-sans text-xs font-semibold tracking-tight text-neutral-600 hover:text-black transition-colors mb-8"
           >
             <ArrowLeft size={14} className="rtl:rotate-180" />
             <span>{isAr ? 'العودة لمركز الموارد' : 'Back to Resources'}</span>
@@ -176,16 +176,12 @@ export default async function BlogPostDetailPage({
         <Reveal delay={0.05}>
           <div className="flex flex-wrap items-center gap-3 mb-4 text-xs">
             {category && (
-              <span
-                className={`px-3 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25 text-[#FF5C00] font-semibold text-[11px] uppercase tracking-wider ${
-                  isAr ? 'font-arabic' : 'font-mono'
-                }`}
-              >
+              <span className="px-3 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25 text-[#FF5C00] font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em]">
                 {category}
               </span>
             )}
             {date && (
-              <span className="flex items-center gap-1.5 text-neutral-500 font-mono text-[11px]">
+              <span className="flex items-center gap-1.5 text-neutral-500 font-mono text-[11px] tabular-nums">
                 <Calendar size={13} />
                 {date}
               </span>
@@ -195,7 +191,7 @@ export default async function BlogPostDetailPage({
 
         {/* Title */}
         <Reveal delay={0.1}>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-neutral-950 tracking-tight leading-tight mb-6">
+          <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-950 leading-[1.1] mb-6">
             {title}
           </h1>
         </Reveal>
@@ -207,8 +203,8 @@ export default async function BlogPostDetailPage({
               <User size={18} />
             </div>
             <div>
-              <p className="text-sm font-semibold text-neutral-950">PontLook Research</p>
-              <p className="text-xs text-neutral-600">Editorial & Intelligence Team</p>
+              <p className="font-heading text-sm font-semibold tracking-tight text-neutral-950">PontLook Research</p>
+              <p className="font-sans text-xs text-neutral-600">Editorial & Intelligence Team</p>
             </div>
           </div>
         </Reveal>

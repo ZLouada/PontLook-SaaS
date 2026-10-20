@@ -268,23 +268,23 @@ export default function WhyDifferentStatic({ lang, dict }: WhyDifferentStaticPro
       <div className="container-site relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Section Header */}
         <div className="mb-5 sm:mb-8 text-center max-w-3xl mx-auto space-y-2 sm:space-y-2.5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-semibold uppercase tracking-wider font-sans mb-1">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] mb-1">
             <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 animate-pulse" />
             <span>{dict?.why_different?.eyebrow || (isAr ? 'حلول عملية مباشرة' : 'PROBLEM SOLVED')}</span>
           </div>
 
-          <h2 className="h-section text-neutral-950">
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold tracking-tight leading-[1.18] text-neutral-950">
             {dict?.why_different?.title || (isAr ? 'حدد فجواتك بدقة. ارتبط بنخبة الخبراء المعتمدين. بدون أي تعقيدات مشتريات.' : 'Pinpoint your gaps. Connect with vetted experts. Zero procurement friction.')}
           </h2>
 
-          <p className="text-sm text-neutral-600 font-sans leading-relaxed max-w-2xl mx-auto">
+          <p className="font-sans text-base sm:text-lg font-normal leading-relaxed text-neutral-600 max-w-2xl mx-auto">
             {dict?.why_different?.subtitle ||
               (isAr
                 ? 'نحلل التحديات المؤسسية الحقيقية لنقدم أدلة مجانية قابلة للتطبيق، ونربط قادة التدريب مباشرة بمزودي البرامج المعتمدين والمؤهلين لتنفيذ الحل.'
                 : 'We analyze real GCC workplace challenges to deliver free, actionable problem solving guides on our blog, and directly connect corporate leaders with the verified training providers ready to implement the solution.')}
           </p>
 
-          <div className="pt-1 flex items-center justify-center gap-1.5 text-[11px] text-neutral-500 font-sans">
+          <div className="pt-1 flex items-center justify-center gap-1.5 font-sans text-xs text-neutral-500">
             <span>{isAr ? 'اسحب لعرض جميع البطاقات · انقر لفتح النافذة' : 'Swipe to view cards · Tap any card to open window'}</span>
           </div>
         </div>
@@ -303,10 +303,10 @@ export default function WhyDifferentStatic({ lang, dict }: WhyDifferentStaticPro
                     {/* Card Front Top */}
                     <div className="space-y-1.5 sm:space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className={`px-2 py-0.5 rounded-full text-[11px] font-medium font-sans ${it.badgeBg}`}>
+                        <span className={`px-2 py-0.5 rounded-full font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider tabular-nums ${it.badgeBg}`}>
                           {it.badge}
                         </span>
-                        <span className="text-[11px] font-mono text-neutral-400">
+                        <span className="font-mono text-[10px] sm:text-[11px] font-semibold tabular-nums text-neutral-400">
                           {it.index}
                         </span>
                       </div>
@@ -315,18 +315,18 @@ export default function WhyDifferentStatic({ lang, dict }: WhyDifferentStaticPro
                         <IconFrame variant={it.themeVariant} size="sm">
                           <Icon size={18} />
                         </IconFrame>
-                        <h3 className="font-heading font-semibold text-neutral-950 text-sm sm:text-base leading-snug line-clamp-2">
+                        <h3 className="font-heading font-semibold text-neutral-950 text-base sm:text-lg leading-snug line-clamp-2">
                           {it.title}
                         </h3>
                       </div>
 
                       {it.angle && (
-                        <p className="text-[11px] sm:text-xs font-semibold text-neutral-800 line-clamp-1 font-sans">
+                        <p className="font-sans text-xs font-semibold text-neutral-800 line-clamp-1">
                           {it.angle}
                         </p>
                       )}
 
-                      <p className="text-[11px] sm:text-xs text-neutral-600 line-clamp-2 leading-relaxed font-sans">
+                      <p className="font-sans text-xs sm:text-sm text-neutral-600 line-clamp-2 leading-relaxed font-normal">
                         {it.text}
                       </p>
                     </div>
@@ -337,7 +337,7 @@ export default function WhyDifferentStatic({ lang, dict }: WhyDifferentStaticPro
                     </div>
 
                     {/* Card Footer CTA */}
-                    <div className="pt-2 border-t border-neutral-100 flex items-center justify-between text-[11px] font-medium text-neutral-800 font-sans">
+                    <div className="pt-2 border-t border-neutral-100 flex items-center justify-between font-sans text-xs font-medium text-neutral-800">
                       <span className="truncate">{it.cta}</span>
                       <ArrowRight size={13} className="rtl:-scale-x-100 text-neutral-400 shrink-0 ms-1" />
                     </div>

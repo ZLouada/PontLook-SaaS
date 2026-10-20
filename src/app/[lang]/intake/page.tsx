@@ -132,14 +132,14 @@ export default async function IntakePage({
       <div className="relative max-w-5xl mx-auto space-y-12">
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#FF5C00]/30 bg-[#FF5C00]/10 text-[#FF5C00] text-xs font-mono font-medium tracking-wide uppercase">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#FF5C00]/30 bg-[#FF5C00]/10 text-[#FF5C00] font-mono text-[11px] sm:text-xs font-semibold tracking-[0.06em] uppercase">
             <Sparkles className="w-3.5 h-3.5" />
             <span>
               {tokens?.countryName || 'GCC'} • {isAr ? 'بوابة التوفيق والاعتماد' : 'Verification & Matchmaking Desk'}
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+          <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-[1.1]">
             {isAr
               ? tokens?.countryName
                 ? `طلب التدريب المؤسسي المعتمد في ${tokens.countryName}`
@@ -149,7 +149,7 @@ export default async function IntakePage({
               : 'Verified Corporate Training Intake & Matching'}
           </h1>
 
-          <p className="text-sm sm:text-base text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="font-sans text-base sm:text-lg font-normal leading-relaxed text-slate-400 max-w-2xl mx-auto">
             {isAr
               ? 'اطرح متطلبات مجموعتك التدريبية (10+ متدربين) واحصل على 2 إلى 3 عروض مفصلة من مزودين معتمدين ومرخصين خلال 48 ساعة بدون أي رسوم للمنشأة.'
               : 'Submit your enterprise cohort requirements (10+ learners) once. PontLook introduces you to 2–3 pre-vetted, accredited providers within 48 hours at zero cost.'}

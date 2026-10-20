@@ -159,11 +159,11 @@ export default async function ResourcesPage({
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/15 via-transparent to-black/10 pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-heading font-extrabold text-white tracking-tight leading-[1.08] mb-5 sm:mb-6 max-w-3xl">
+          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-5 sm:mb-6 max-w-3xl">
             {heroTitle}
           </h1>
 
-          <p className="text-white/95 text-base sm:text-lg md:text-xl font-normal leading-relaxed max-w-2xl sm:max-w-3xl">
+          <p className="font-sans text-base sm:text-lg font-normal leading-relaxed text-white/95 max-w-2xl sm:max-w-3xl">
             {heroSubtitle}
           </p>
         </div>
@@ -185,7 +185,7 @@ export default async function ResourcesPage({
             <Link
               key={idx}
               href={pill.href}
-              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
+              className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-sans text-xs sm:text-sm font-semibold tracking-tight whitespace-nowrap transition-all duration-200 ${
                 pill.active
                   ? 'bg-neutral-950 text-white shadow-sm'
                   : 'bg-neutral-100 hover:bg-neutral-200/80 text-neutral-700 hover:text-neutral-950 border border-neutral-200'
@@ -205,7 +205,7 @@ export default async function ResourcesPage({
               {/* Main Large Spotlight Card */}
               {spotlight && (
                 <div className={mediaCards.length > 0 ? "lg:col-span-7 xl:col-span-8 flex flex-col" : "lg:col-span-12 flex flex-col"}>
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 mb-3 block">
+                  <span className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] text-neutral-500 mb-3 block">
                     {isAr ? 'محتوى مميز' : 'FEATURED'}
                   </span>
                   <Link
@@ -224,10 +224,10 @@ export default async function ResourcesPage({
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                         <div className="absolute top-4 start-4 sm:top-6 sm:start-6 flex items-center gap-2">
-                          <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-white/20 text-white backdrop-blur-md border border-white/30">
+                          <span className="px-3 py-1 rounded-full font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider bg-white/20 text-white backdrop-blur-md border border-white/30">
                             {spotlight.badge}
                           </span>
-                          <span className="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#FF5C00] text-white">
+                          <span className="px-3 py-1 rounded-full font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider bg-[#FF5C00] text-white">
                             {spotlight.category}
                           </span>
                         </div>
@@ -236,22 +236,22 @@ export default async function ResourcesPage({
 
                     <div className="p-6 sm:p-8 lg:p-10 flex-1 flex flex-col justify-between">
                       <div>
-                        <div className="flex items-center gap-3 text-xs font-mono text-neutral-500 mb-3">
-                          {spotlight.readTime && <span>{spotlight.readTime}</span>}
+                        <div className="flex items-center gap-3 font-mono text-xs text-neutral-500 mb-3">
+                          {spotlight.readTime && <span className="tabular-nums">{spotlight.readTime}</span>}
                           {spotlight.readTime && spotlight.date && <span>•</span>}
-                          {spotlight.date && <span>{spotlight.date}</span>}
+                          {spotlight.date && <span className="tabular-nums">{spotlight.date}</span>}
                         </div>
-                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-neutral-950 group-hover:text-black transition-colors leading-tight mb-4">
+                        <h2 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-neutral-950 group-hover:text-black transition-colors leading-[1.18] mb-4">
                           {spotlight.title}
                         </h2>
                         {spotlight.excerpt && (
-                          <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-normal">
+                          <p className="font-sans text-sm sm:text-base leading-relaxed font-normal text-neutral-600">
                             {spotlight.excerpt}
                           </p>
                         )}
                       </div>
 
-                      <div className="mt-8 pt-6 border-t border-neutral-200 flex items-center justify-between text-sm font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
+                      <div className="mt-8 pt-6 border-t border-neutral-200 flex items-center justify-between font-sans text-sm font-semibold tracking-tight text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
                         <span>{spotlight.cta}</span>
                         <ArrowRight size={18} className="rtl:-scale-x-100 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
                       </div>
@@ -263,7 +263,7 @@ export default async function ResourcesPage({
               {/* Executive Toolkits & Media (Right Stack or Full Grid) */}
               {mediaCards.length > 0 && (
                 <div className={spotlight ? "lg:col-span-5 xl:col-span-4 flex flex-col" : "lg:col-span-12 flex flex-col"}>
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 mb-3 block">
+                  <span className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] text-neutral-500 mb-3 block">
                     {isAr ? 'أدوات ومحتوى تنفيذي' : 'EXECUTIVE TOOLKITS & MEDIA'}
                   </span>
                   <div className={spotlight ? "flex flex-col gap-6 sm:gap-8 justify-between flex-1" : "grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 flex-1"}>
@@ -277,27 +277,27 @@ export default async function ResourcesPage({
                       >
                         <div>
                           <div className="flex items-center justify-between mb-4">
-                            <span className={`px-2.5 py-1 rounded-full text-[11px] font-mono uppercase tracking-wider border ${card.badgeColor || 'bg-neutral-200 text-neutral-800 border-neutral-300'}`}>
+                            <span className={`px-2.5 py-1 rounded-full font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider border ${card.badgeColor || 'bg-neutral-200 text-neutral-800 border-neutral-300'}`}>
                               {card.badge}
                             </span>
                             {card.date && (
-                              <span className="text-xs font-mono text-neutral-500">
+                              <span className="font-mono text-xs text-neutral-500 tabular-nums">
                                 {card.date}
                               </span>
                             )}
                           </div>
 
-                          <h3 className="text-xl sm:text-2xl font-heading font-bold text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-snug mb-2">
+                          <h3 className="font-heading text-lg sm:text-xl font-semibold tracking-tight text-neutral-950 group-hover:text-[#FF5C00] transition-colors leading-[1.3] mb-2">
                             {card.title}
                           </h3>
                           {card.desc && (
-                            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
+                            <p className="font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
                               {card.desc}
                             </p>
                           )}
                         </div>
 
-                        <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between text-xs font-semibold text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
+                        <div className="mt-6 pt-4 border-t border-neutral-200 flex items-center justify-between font-sans text-xs font-semibold tracking-tight text-neutral-950 group-hover:text-[#FF5C00] transition-colors">
                           <span>{card.cta}</span>
                           {card.isExternal ? (
                             <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -333,16 +333,16 @@ export default async function ResourcesPage({
           <section className="mb-20 sm:mb-28 pt-10 border-t border-neutral-200">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-10">
               <div>
-                <div className="font-mono text-xs uppercase tracking-widest text-neutral-500 mb-2">
+                <div className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] text-neutral-500 mb-2">
                   {isAr ? 'الفعاليات وورش العمل' : 'EVENTS & ROUNDTABLES'}
                 </div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-neutral-950">
+                <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-neutral-950">
                   {isAr ? 'الفعاليات القادمة والجلسات التنفيذية' : 'Upcoming Summits & Masterclasses'}
                 </h2>
               </div>
               <Link
                 href={`/${lang}/resources/events`}
-                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-neutral-600 hover:text-black transition-colors"
+                className="inline-flex items-center gap-1.5 font-sans text-xs sm:text-sm font-semibold tracking-tight text-neutral-600 hover:text-black transition-colors"
               >
                 <span>{isAr ? 'جدول الفعاليات بالكامل' : 'View all events'}</span>
                 <ArrowRight size={14} className="rtl:-scale-x-100" />

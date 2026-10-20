@@ -372,16 +372,16 @@ export default function WhyDifferent() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-5 sm:mb-8 text-center max-w-3xl mx-auto space-y-2 sm:space-y-2.5"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-semibold uppercase tracking-wider font-sans mb-1">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] mb-1">
             <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 animate-pulse" />
             <span>{dict.why_different?.eyebrow || (isAr ? 'حلول عملية مباشرة' : 'PROBLEM SOLVED')}</span>
           </div>
 
-          <h2 className="h-section text-neutral-950">
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold tracking-tight leading-[1.18] text-neutral-950">
             {dict.why_different?.title || (isAr ? 'حدد فجواتك بدقة. ارتبط بنخبة الخبراء المعتمدين. بدون أي تعقيدات مشتريات.' : 'Pinpoint your gaps. Connect with vetted experts. Zero procurement friction.')}
           </h2>
 
-          <p className="text-sm text-neutral-600 font-sans leading-relaxed max-w-2xl mx-auto">
+          <p className="font-sans text-base sm:text-lg font-normal leading-relaxed text-neutral-600 max-w-2xl mx-auto">
             {dict.why_different?.subtitle ||
               (isAr
                 ? 'نحلل التحديات المؤسسية الحقيقية لنقدم أدلة مجانية قابلة للتطبيق، ونربط قادة التدريب مباشرة بمزودي البرامج المعتمدين والمؤهلين لتنفيذ الحل.'
@@ -392,7 +392,7 @@ export default function WhyDifferent() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.4 }}
-            className="pt-1 flex items-center justify-center gap-1.5 text-[11px] text-neutral-500 font-sans"
+            className="pt-1 flex items-center justify-center gap-1.5 font-sans text-xs text-neutral-500"
           >
             <span>{isAr ? 'اسحب لعرض جميع البطاقات · انقر لفتح النافذة' : 'Swipe to view cards · Tap any card to open window'}</span>
           </m.div>
@@ -442,19 +442,19 @@ export default function WhyDifferent() {
                           {/* Card Front Top */}
                           <div className="space-y-1.5 sm:space-y-2">
                             <div className="flex items-center justify-between">
-                              <span className={`px-2 py-0.5 rounded-full text-[11px] font-medium font-sans ${theme.badgeBg}`}>
+                              <span className={`px-2 py-0.5 rounded-full font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider tabular-nums ${theme.badgeBg}`}>
                                 {it.badge}
                               </span>
-                              <span className="text-[11px] font-mono text-neutral-400">
+                              <span className="font-mono text-[10px] sm:text-[11px] font-semibold tabular-nums text-neutral-400">
                                 {it.index}
                               </span>
                             </div>
 
-                            <h3 className="text-[0.9375rem] sm:text-base lg:text-xs xl:text-sm font-semibold text-neutral-950 tracking-tight leading-snug font-heading group-hover:text-neutral-950 transition-colors">
+                            <h3 className="font-heading text-lg sm:text-xl font-semibold text-neutral-950 tracking-tight leading-[1.3] group-hover:text-neutral-950 transition-colors">
                               {it.title}
                             </h3>
 
-                            <p className="text-[0.8125rem] sm:text-xs text-neutral-600 font-sans leading-relaxed line-clamp-2">
+                            <p className="font-sans text-xs sm:text-sm font-normal text-neutral-600 leading-relaxed line-clamp-2">
                               {it.text}
                             </p>
                           </div>
@@ -465,7 +465,7 @@ export default function WhyDifferent() {
                               <Icon size={14} strokeWidth={1.75} />
                             </IconFrame>
 
-                            <div className="inline-flex items-center gap-1 text-xs font-medium text-neutral-600 group-hover:text-neutral-950 transition-colors duration-200">
+                            <div className="inline-flex items-center gap-1 font-sans text-xs font-medium text-neutral-600 group-hover:text-neutral-950 transition-colors duration-200">
                               <span>{isAr ? 'افتح النافذة' : 'Open window'}</span>
                               <ArrowRight size={12} className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-scale-x-100 text-neutral-400 group-hover:text-neutral-950" />
                             </div>
@@ -481,19 +481,19 @@ export default function WhyDifferent() {
                         {/* Card Front Top */}
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <span className={`px-2 py-0.5 rounded-full text-[11px] font-medium font-sans ${theme.badgeBg}`}>
+                            <span className={`px-2 py-0.5 rounded-full font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider tabular-nums ${theme.badgeBg}`}>
                               {it.badge}
                             </span>
-                            <span className="text-[11px] font-mono text-neutral-400">
+                            <span className="font-mono text-[10px] sm:text-[11px] font-semibold tabular-nums text-neutral-400">
                               {it.index}
                             </span>
                           </div>
 
-                          <h3 className="text-[0.9375rem] sm:text-base font-semibold text-neutral-950 tracking-tight leading-snug font-heading">
+                          <h3 className="font-heading text-lg sm:text-xl font-semibold text-neutral-950 tracking-tight leading-[1.3]">
                             {it.title}
                           </h3>
 
-                          <p className="text-[0.8125rem] text-neutral-600 font-sans leading-relaxed line-clamp-3">
+                          <p className="font-sans text-xs sm:text-sm font-normal text-neutral-600 leading-relaxed line-clamp-3">
                             {it.text}
                           </p>
                         </div>

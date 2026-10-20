@@ -78,14 +78,14 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
       <div className="space-y-2">
         <div className="flex items-center gap-2">
           <Signal />
-          <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
+          <span className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] text-emerald-400">
             Final Step // Enterprise Verification
           </span>
         </div>
-        <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-heading">
+        <h3 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-white">
           Where should verified providers send their proposals?
         </h3>
-        <p className="text-sm text-neutral-400 font-sans">
+        <p className="font-sans text-sm sm:text-base font-normal leading-relaxed text-slate-400">
           All inquiries are verified by PontLook. Direct executive access only, zero automated vendor solicitations.
         </p>
       </div>
@@ -132,7 +132,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
         />
 
         <div className="w-full">
-          <label htmlFor="country" className="mb-2 block text-sm font-semibold text-neutral-300">
+          <label htmlFor="country" className="mb-2 block font-sans text-xs sm:text-sm font-semibold tracking-tight text-neutral-300">
             Primary Country of Operation
           </label>
           <div className="relative">
@@ -143,7 +143,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
               id="country"
               value={selectedCountry}
               onChange={handleCountryChange}
-              className="w-full appearance-none rounded-xl border border-[#26282D] bg-[#16171B] px-4 py-3.5 ps-11 pe-9 text-base sm:text-sm font-medium text-white shadow-sm transition-all focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
+              className="w-full appearance-none rounded-xl border border-[#26282D] bg-[#16171B] px-4 py-3.5 ps-11 pe-9 font-sans text-base sm:text-sm font-normal text-white shadow-sm transition-all focus:border-white/40 focus:outline-none focus:ring-1 focus:ring-white/20"
             >
               {GCC_COUNTRIES.map((c) => (
                 <option key={c.code} value={c.name} className="bg-[#16171B] text-white">
@@ -156,7 +156,7 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
             </div>
           </div>
           {errors.country && (
-            <p className="mt-1.5 text-xs font-medium text-red-600" role="alert">
+            <p className="mt-1.5 font-sans text-xs font-medium text-red-400" role="alert">
               {errors.country.message}
             </p>
           )}
@@ -181,10 +181,10 @@ export default function Step4Contact({ data, onNext, onBack, isSubmitting }: Ste
             <Lock size={18} />
           </div>
           <div>
-            <h4 className="text-sm font-bold text-white">
+            <h4 className="font-heading text-sm font-semibold tracking-tight text-white">
               Enterprise Confidentiality Guarantee
             </h4>
-            <p className="mt-1 text-xs leading-relaxed text-neutral-400">
+            <p className="mt-1 font-sans text-xs leading-relaxed text-neutral-400">
               Your request is private and shared with a <strong>maximum of 3 matched providers</strong> who fit your exact domain and procurement specifications. No vendor spam, no unsolicited cold calls.
             </p>
           </div>

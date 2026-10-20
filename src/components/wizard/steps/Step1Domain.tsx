@@ -279,18 +279,18 @@ export default function Step1Domain({ data, onNext, isSubmitting }: Step1Props) 
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2.5">
             <Signal />
-            <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
+            <h2 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-white">
               What training domains do you need?
             </h2>
           </div>
           {selectedCount > 0 && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-white">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-white">
               <Layers size={13} />
               {selectedCount} {selectedCount === 1 ? 'domain' : 'domains'} selected
             </span>
           )}
         </div>
-        <p className="mt-1 text-sm text-neutral-400">
+        <p className="mt-1 font-sans text-sm sm:text-base text-neutral-400 leading-relaxed">
           Select all target capabilities for your enterprise cohort. We’ll match specialized providers with proven ROI.
         </p>
       </div>

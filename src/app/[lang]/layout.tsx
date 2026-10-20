@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Cairo, JetBrains_Mono } from 'next/font/google';
+import { Inter, Poppins, Cairo, JetBrains_Mono } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -10,6 +10,7 @@ import {
   getLocaleDirection,
   getHtmlLang,
   getCountryCode,
+  getBaseLanguage,
 } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import { getNavbarResourcesCard } from '@/lib/payload/resources';
@@ -18,23 +19,30 @@ import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
 
 const inter = Inter({
   subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-sans',
 });
 
-const cairo = Cairo({
-  subsets: ['arabic', 'latin'],
-  weight: ['400', '600', '700'],
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['600', '700', '800'],
   display: 'swap',
-  variable: '--font-arabic',
-  preload: false,
+  variable: '--font-heading',
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
+  weight: ['500', '600', '700'],
   display: 'swap',
   variable: '--font-mono',
-  preload: false,
+});
+
+const cairo = Cairo({
+  subsets: ['arabic', 'latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+  variable: '--font-cairo',
 });
 
 export const viewport: Viewport = {
@@ -173,9 +181,22 @@ export default async function RootLayout({
     getDictionary(lang),
     getNavbarResourcesCard(lang),
   ]);
-  const isAr = isArabicLocale(lang);
-  const dir = getLocaleDirection(lang);
+  const baseLang = getBaseLanguage(lang);
+  const isAr = baseLang === 'ar';
+  const dir = isAr ? 'rtl' : 'ltr';
   const htmlLang = getHtmlLang(lang);
+
+  const fontVariables = isAr
+    ? `${cairo.variable} ${jetbrainsMono.variable}`
+    : `${inter.variable} ${poppins.variable} ${jetbrainsMono.variable}`;
+
+  const htmlStyle = isAr
+    ? ({
+        '--font-sans': 'var(--font-cairo)',
+        '--font-heading': 'var(--font-cairo)',
+        '--font-arabic': 'var(--font-cairo)',
+      } as React.CSSProperties)
+    : undefined;
 
   const jsonLdGraph = {
     "@context": "https://schema.org",
@@ -241,8 +262,14 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang={htmlLang} dir={dir} className={`${inter.variable} ${cairo.variable} ${jetbrainsMono.variable}`}>
+    <html lang={htmlLang} dir={dir} className={fontVariables} style={htmlStyle}>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
+          rel="stylesheet"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -250,7 +277,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`bg-black text-neutral-300 antialiased selection:bg-white/20 selection:text-white ${isAr ? 'font-arabic' : ''}`}>
+      <body className="bg-black text-neutral-300 font-sans antialiased selection:bg-[#FF5500]/20 selection:text-[#FF5500]">
         <DictionaryProvider dictionary={dictionary}>
           <FramerMotionProvider>
             <Navbar lang={lang} resourcesCard={resourcesCard} />

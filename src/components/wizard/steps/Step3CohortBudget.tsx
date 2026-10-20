@@ -90,11 +90,11 @@ export default function Step3CohortBudget({ data, onNext, onBack, isSubmitting }
         <div>
           <div className="flex items-center gap-2.5">
             <Signal />
-            <h2 className="font-heading text-xl font-semibold tracking-normal text-white sm:text-2xl">
+            <h2 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-white">
               Target Cohort Size
             </h2>
           </div>
-          <p className="mt-1 text-sm text-neutral-400">
+          <p className="mt-1 font-sans text-sm sm:text-base text-neutral-400 leading-relaxed">
             How many participants or leaders will be trained in this intake cycle?
           </p>
         </div>

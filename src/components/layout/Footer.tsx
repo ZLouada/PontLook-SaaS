@@ -25,7 +25,7 @@ export default async function Footer({ lang = 'en' }: FooterProps) {
         {/* Horizon Wordmark Lockup */}
         <div className="relative -mt-2 sm:-mt-3 md:-mt-4 lg:-mt-5 overflow-hidden select-none pointer-events-none transform-gpu flex items-center justify-center">
           <div className="flex items-center justify-center px-4">
-            <span className="text-[3rem] 2xs:text-[3.5rem] xs:text-[4.25rem] sm:text-8xl md:text-9xl lg:text-[10.5rem] font-bold tracking-[-0.03em] text-transparent bg-clip-text bg-gradient-to-b from-white/90 via-white/30 to-white/0 leading-none font-sans">
+            <span className="text-[3rem] 2xs:text-[3.5rem] xs:text-[4.25rem] sm:text-8xl md:text-9xl lg:text-[10.5rem] font-heading font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white/90 via-white/30 to-white/0 leading-none">
               PontLook
             </span>
           </div>
@@ -50,11 +50,11 @@ export default async function Footer({ lang = 'en' }: FooterProps) {
         <div className="container-site relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mx-auto">
           {/* Column 1: Mission & Registered Entity */}
           <div className="space-y-4">
-            <p className="text-[0.8125rem] sm:text-sm leading-relaxed text-neutral-400 font-normal">
+            <p className="text-[0.8125rem] sm:text-sm leading-relaxed text-neutral-400 font-sans font-normal">
               {dict.footer?.about ||
                 'We identify enterprise organizations experiencing verified workforce challenges and connect them with the right corporate training providers. Qualified opportunities only, no retainers, no cold outreach.'}
             </p>
-            <div className="pt-2 flex items-start gap-2.5 text-[0.8125rem] text-neutral-300 font-medium leading-snug">
+            <div className="pt-2 flex items-start gap-2.5 text-[0.8125rem] text-neutral-300 font-sans font-medium leading-snug">
               <IconFrame variant="blue" size="xs">
                 <MapPin size={13} />
               </IconFrame>
@@ -64,8 +64,8 @@ export default async function Footer({ lang = 'en' }: FooterProps) {
 
           {/* Column 2: Platform */}
           <nav aria-label="Footer: platform" className="space-y-3 sm:space-y-4">
-            <p className="text-xs font-bold uppercase tracking-[0.12em] text-neutral-200">PLATFORM</p>
-            <ul className="space-y-1 text-sm font-medium text-neutral-400">
+            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-neutral-200">PLATFORM</p>
+            <ul className="space-y-1 font-sans text-sm font-medium text-neutral-400">
               <li>
                 <Link href={`/${lang}/who-we-are`} className="inline-flex min-h-[44px] items-center hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
                   {dict.nav?.who_we_are || 'Who we are'}
@@ -96,10 +96,10 @@ export default async function Footer({ lang = 'en' }: FooterProps) {
 
           {/* Column 3: Legal & Compliance */}
           <div className="space-y-3 sm:space-y-4">
-            <p className="text-xs font-bold uppercase tracking-[0.12em] text-neutral-200">
+            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-neutral-200">
               LEGAL &amp; COMPLIANCE
             </p>
-            <ul className="space-y-1 text-sm font-medium text-neutral-400">
+            <ul className="space-y-1 font-sans text-sm font-medium text-neutral-400">
               <li>
                 <Link href={`/${lang}/privacy-policy`} className="inline-flex min-h-[44px] items-center hover:text-white transition-colors sm:min-h-0 sm:py-1.5">
                   {dict.footer?.privacy_policy || 'Privacy Policy'}
@@ -115,7 +115,7 @@ export default async function Footer({ lang = 'en' }: FooterProps) {
                   {dict.footer?.returns_faq || 'Returns & FAQ'}
                 </Link>
               </li>
-              <li className="pt-2 text-[0.8125rem] text-neutral-400 font-medium">
+              <li className="pt-2 font-mono text-xs text-neutral-400 font-medium">
                 Firstnestcare, LLC · Delaware DE
               </li>
             </ul>
@@ -123,8 +123,8 @@ export default async function Footer({ lang = 'en' }: FooterProps) {
 
           {/* Column 4: Get In Touch */}
           <div className="space-y-3 sm:space-y-4">
-            <p className="text-xs font-bold uppercase tracking-[0.12em] text-neutral-200">GET IN TOUCH</p>
-            <ul className="space-y-2 text-sm font-medium text-neutral-400">
+            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-neutral-200">GET IN TOUCH</p>
+            <ul className="space-y-2 font-sans text-sm font-medium text-neutral-400">
               <li>
                 <a href="mailto:contact@pontlook.com" className="group inline-flex min-h-[44px] items-center gap-2.5 hover:text-white transition-colors sm:min-h-0 sm:py-1">
                   <IconFrame variant="brand" size="xs">

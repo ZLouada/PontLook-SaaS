@@ -469,14 +469,14 @@ export default function LeadTiers(_props?: {
 
         <div className="container-site relative z-10 px-3.5 xs:px-4 sm:px-8 lg:px-12">
           <div className="text-center max-w-2xl mx-auto mb-10 xs:mb-12 sm:mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 text-xs font-semibold uppercase tracking-wider mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-[#26282D] text-neutral-300 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] mb-4">
               <span className="h-1.5 w-1.5 rounded-full bg-white" />
               <span>{isAr ? 'مستويات التأهيل والمطابقة' : 'QUALIFICATION TIERS'}</span>
             </div>
-            <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight font-heading">
+            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.18]">
               {isAr ? 'تدفق متوقع لفرص الشركات والمؤسسات' : 'A predictable pipeline of enterprise opportunities'}
             </h2>
-            <p className="mt-3 xs:mt-4 text-sm xs:text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto font-sans">
+            <p className="mt-3 xs:mt-4 text-base sm:text-lg text-neutral-400 font-sans font-normal leading-relaxed max-w-2xl mx-auto">
               {isAr
                 ? 'يتم تقييم كل فرصة بناءً على التحقق من صانع القرار، وحجم الشركة، والميزانية، والجدول الزمني، وعمق الاحتياج لتكون على دراية تامة بتفاصيل كل فرصة.'
                 : "Every lead is scored on decision maker verification, company size, budget, timeline, and depth of need, so you always know exactly what you're walking into."}
@@ -503,20 +503,20 @@ export default function LeadTiers(_props?: {
                           {/* Left Details */}
                           <div className="lg:col-span-7 space-y-2.5 xs:space-y-3 sm:space-y-4">
                             <div className="flex items-center gap-1.5 xs:gap-2">
-                              <span className="px-2 xs:px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] xs:text-xs font-bold font-mono bg-white/[0.08] text-white border border-[#26282D]">
+                              <span className="px-2 xs:px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider tabular-nums bg-white/[0.08] text-white border border-[#26282D]">
                                 {tier.step}
                               </span>
-                              <span className="inline-flex items-center gap-1.5 px-2 xs:px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] xs:text-xs font-semibold bg-orange-500/10 text-[#FF5C00] border border-orange-500/30">
+                              <span className="inline-flex items-center gap-1.5 px-2 xs:px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider tabular-nums bg-orange-500/10 text-[#FF5C00] border border-orange-500/30">
                                 <Signal tone="orange" size={14} speed={1 - idx * 0.12} />
                                 <span>{tier.badge}</span>
                               </span>
                             </div>
 
-                            <h3 className="text-lg xs:text-xl sm:text-2xl lg:text-3xl font-semibold text-white tracking-tight leading-snug font-heading">
+                            <h3 className="font-heading text-lg sm:text-xl font-semibold text-white tracking-tight leading-[1.3]">
                               {tier.title}
                             </h3>
 
-                            <p className="text-xs sm:text-sm lg:text-base text-neutral-400 leading-relaxed font-sans">
+                            <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed font-normal">
                               {tier.description}
                             </p>
 
@@ -524,7 +524,7 @@ export default function LeadTiers(_props?: {
                               <div className="pt-2">
                                 <Link
                                   href={`/${lang}/for-providers/apply`}
-                                  className="w-full xs:w-auto inline-flex items-center justify-center px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-semibold text-xs xs:text-sm shadow-lg shadow-orange-500/25 active:scale-95 transition-all"
+                                  className="w-full xs:w-auto inline-flex items-center justify-center px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl bg-[#FF5C00] hover:bg-[#FF6A1A] text-white font-sans font-semibold text-xs xs:text-sm shadow-lg shadow-orange-500/25 active:scale-95 transition-all"
                                 >
                                   <span>{isAr ? 'قدم كشريك تدريب معتمد' : 'Apply as Verified Provider'}</span>
                                   <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
@@ -536,14 +536,14 @@ export default function LeadTiers(_props?: {
                           {/* Right Preview Card */}
                           <div className="lg:col-span-5">
                             <div className="rounded-xl sm:rounded-2xl bg-[#16171B] border border-[#26282D] p-3.5 xs:p-4 sm:p-6 space-y-2.5 xs:space-y-3 sm:space-y-4 text-white">
-                              <div className="text-[10px] xs:text-[11px] sm:text-xs font-semibold text-neutral-400 tracking-wide uppercase">
+                              <div className="font-mono text-[10px] sm:text-[11px] font-semibold text-neutral-400 tracking-wider uppercase tabular-nums">
                                 {tier.project}
                               </div>
 
                               <div>
-                                <div className="flex justify-between text-[11px] xs:text-xs font-semibold text-neutral-300 mb-1 sm:mb-1.5">
+                                <div className="flex justify-between font-sans text-xs font-semibold text-neutral-300 mb-1 sm:mb-1.5">
                                   <span>{isAr ? 'دقة التطابق' : 'Match Accuracy'}</span>
-                                  <span className="font-bold text-[#FF5C00] tabular-nums">{tier.accuracy}</span>
+                                  <span className="font-mono font-bold text-[#FF5C00] tabular-nums">{tier.accuracy}</span>
                                 </div>
                                 <div className="h-1.5 sm:h-2 w-full rounded-full bg-white/10 overflow-hidden">
                                   <div className={`h-full rounded-full ${tier.barColor} ${tier.barWidth} transition-all duration-500`} />
@@ -588,15 +588,15 @@ export default function LeadTiers(_props?: {
       <div className="container-site relative z-10 px-3.5 xs:px-4 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 xs:mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-950 text-xs font-semibold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-950 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] mb-4">
             <span className="h-1.5 w-1.5 rounded-full bg-neutral-950" />
             <span>{isAr ? 'خيارات الشراكة والتعاون' : 'COLLABORATION PATHWAYS'}</span>
           </div>
 
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-semibold text-neutral-950 tracking-[-0.03em] leading-tight font-heading">
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold tracking-tight leading-[1.18] text-neutral-950">
             {exp?.title || (isAr ? 'ابدأ برؤى وأبحاث مدروسة. اعقد شراكات تثمر أثراً حقيقياً.' : 'Start with Our Insights. Partner for Real Impact.')}
           </h2>
-          <p className="mt-3 xs:mt-4 text-sm xs:text-base sm:text-lg text-neutral-600 leading-relaxed max-w-2xl mx-auto font-sans">
+          <p className="mt-3 xs:mt-4 text-base sm:text-lg text-neutral-600 font-sans font-normal leading-relaxed max-w-2xl mx-auto">
             {exp?.subtitle ||
               (isAr
                 ? 'لا نكتفي بربط احتياجات الشركات مع خبراء التدريب المعتمدين على أرض الواقع. استكشف مدونتنا للاطلاع على أطر عمل وأدلة مجانية، وعندما تكون جاهزاً، نوصلك مباشرة بالشريك الأنسب.'
@@ -607,7 +607,7 @@ export default function LeadTiers(_props?: {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 xs:gap-3.5 sm:gap-4 mt-6 xs:mt-8">
             <Link
               href={`/${lang}/resources`}
-              className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-300 font-medium text-xs xs:text-sm shadow-xs active:scale-[0.98] transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-300 font-sans font-semibold tracking-tight text-xs xs:text-sm shadow-xs active:scale-[0.98] transition-all"
             >
               <span>{exp?.btn_blog || (isAr ? 'استكشف المدونة والموارد' : 'Explore the Blog & Resources')}</span>
               <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
@@ -615,7 +615,7 @@ export default function LeadTiers(_props?: {
 
             <Link
               href={`/${lang}/find-training`}
-              className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-neutral-950 hover:bg-black text-white font-medium text-xs xs:text-sm shadow-lg shadow-neutral-900/10 active:scale-[0.98] transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-5 xs:px-7 py-2.5 xs:py-3.5 rounded-2xl bg-neutral-950 hover:bg-black text-white font-sans font-semibold tracking-tight text-xs xs:text-sm shadow-lg shadow-neutral-900/10 active:scale-[0.98] transition-all"
             >
               <span>{exp?.btn_match || (isAr ? 'ابدأ الربط للتدريب' : 'Get Matched for Training')}</span>
               <ArrowRight size={16} className="ms-2 rtl:-scale-x-100" />
@@ -659,19 +659,19 @@ export default function LeadTiers(_props?: {
                       <div className="lg:col-span-7 space-y-3 xs:space-y-4">
                         {/* Layered Rounded Pill Badges */}
                         <div className="inline-flex items-center p-1 rounded-full border border-neutral-200 bg-neutral-50 shadow-xs gap-1.5 flex-wrap">
-                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] xs:text-[11px] font-semibold ${theme.pillOuter}`}>
+                          <span className={`px-2.5 py-0.5 rounded-full font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider tabular-nums ${theme.pillOuter}`}>
                             {badgeOption}
                           </span>
-                          <span className={`px-2.5 xs:px-3 py-0.5 rounded-full text-[10px] xs:text-[11px] font-medium ${theme.pillInner}`}>
+                          <span className={`px-2.5 xs:px-3 py-0.5 rounded-full font-sans text-[10px] xs:text-[11px] font-medium ${theme.pillInner}`}>
                             {badgePersona}
                           </span>
                         </div>
 
-                        <h3 className="text-lg xs:text-xl sm:text-2xl font-semibold text-neutral-950 tracking-tight leading-snug font-heading">
+                        <h3 className="font-heading text-lg sm:text-xl font-semibold text-neutral-950 tracking-tight leading-[1.3]">
                           {title}
                         </h3>
 
-                        <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-sans">
+                        <p className="font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
                           {subtitle}
                         </p>
 
@@ -681,7 +681,7 @@ export default function LeadTiers(_props?: {
                               href={href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className={`w-full xs:w-auto inline-flex items-center justify-center min-h-[44px] px-4 xs:px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all touch-manipulation active:scale-[0.98]`}
+                              className={`w-full xs:w-auto inline-flex items-center justify-center min-h-[44px] px-4 xs:px-5 py-2.5 rounded-xl ${theme.buttonClass} font-sans font-semibold tracking-tight text-xs sm:text-sm transition-all touch-manipulation active:scale-[0.98]`}
                             >
                               <span>{cta}</span>
                               <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
@@ -689,7 +689,7 @@ export default function LeadTiers(_props?: {
                           ) : (
                             <Link
                               href={href.startsWith('http') ? href : `/${lang}${href}`}
-                              className={`w-full xs:w-auto inline-flex items-center justify-center min-h-[44px] px-4 xs:px-5 py-2.5 rounded-xl ${theme.buttonClass} font-medium text-xs sm:text-sm transition-all touch-manipulation active:scale-[0.98]`}
+                              className={`w-full xs:w-auto inline-flex items-center justify-center min-h-[44px] px-4 xs:px-5 py-2.5 rounded-xl ${theme.buttonClass} font-sans font-semibold tracking-tight text-xs sm:text-sm transition-all touch-manipulation active:scale-[0.98]`}
                             >
                               <span>{cta}</span>
                               <ArrowRight size={15} className="ms-2 rtl:-scale-x-100" />
@@ -701,21 +701,21 @@ export default function LeadTiers(_props?: {
                       {/* Right Preview Card */}
                       <div className="lg:col-span-5">
                         <div className={`rounded-xl sm:rounded-2xl ${theme.innerCardBg} ${theme.innerCardBorder} border p-3 xs:p-4 sm:p-5 space-y-2.5 xs:space-y-3 shadow-md`}>
-                          <div className="text-[10px] xs:text-[11px] font-semibold text-neutral-500 tracking-wide uppercase">
+                          <div className="font-mono text-[10px] sm:text-[11px] font-semibold text-neutral-500 tracking-wider uppercase tabular-nums">
                             {previewHeader}
                           </div>
 
                           <div>
-                            <div className="flex justify-between text-xs font-semibold text-neutral-600 mb-1">
+                            <div className="flex justify-between font-sans text-xs font-semibold text-neutral-600 mb-1">
                               <span>{metricLabel}</span>
-                              <span className="font-bold text-neutral-950 tabular-nums">{metricValue}</span>
+                              <span className="font-mono font-bold text-neutral-950 tabular-nums">{metricValue}</span>
                             </div>
                             <div className="h-1.5 w-full rounded-full bg-neutral-200 overflow-hidden">
                               <div className={`h-full rounded-full ${theme.meterColor} ${metricWidth}`} />
                             </div>
                           </div>
 
-                          <ul className="space-y-1.5 pt-1 text-xs text-neutral-700">
+                          <ul className="space-y-1.5 pt-1 font-sans text-xs text-neutral-700 font-normal">
                             {checklist.map((item: string, cIdx: number) => (
                               <li key={cIdx} className="flex items-start gap-1.5">
                                 <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 mt-1 shrink-0" />

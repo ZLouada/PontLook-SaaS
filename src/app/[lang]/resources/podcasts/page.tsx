@@ -73,7 +73,7 @@ export default async function PodcastsPage({
         {/* Header */}
         <div className="max-w-3xl mb-14">
           <Reveal>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 bg-neutral-100/80 text-xs font-mono uppercase tracking-wider text-neutral-700 mb-5">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 bg-neutral-100/80 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em] text-neutral-700 mb-5">
               <span className="h-1.5 w-1.5 rounded-full bg-[#FF5C00]" />
               <Link href={`/${lang}/resources`} className="hover:text-black transition-colors font-medium">
                 {isAr ? 'الموارد' : 'Resources'}
@@ -84,13 +84,13 @@ export default async function PodcastsPage({
           </Reveal>
 
           <Reveal delay={0.1}>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-neutral-950 tracking-tight leading-tight mb-4">
+            <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-950 tracking-tight leading-[1.1] mb-4">
               {isAr ? 'بودكاست حوارات التدريب المؤسسي' : 'The Corporate L&D Leadership Podcast'}
             </h1>
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="text-neutral-600 text-sm sm:text-base leading-relaxed">
+            <p className="font-sans text-neutral-600 text-sm sm:text-base leading-relaxed">
               {isAr
                 ? 'حوارات صريحة وغير مكررة مع صُنّاع القرار في كبرى المنشآت والجهات التدريبية حول أحدث توجهات تطوير الكوادر.'
                 : 'Direct conversations with enterprise talent deciders and vetted training directors navigating workforce transformation across the GCC.'}
@@ -111,12 +111,12 @@ export default async function PodcastsPage({
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2.5 text-xs text-neutral-500 mb-2">
                         {ep.tag && (
-                          <span className="px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-700 font-medium">
+                          <span className="px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-700 font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider tabular-nums">
                             {ep.tag}
                           </span>
                         )}
                         {ep.duration && (
-                          <span className="flex items-center gap-1 font-mono text-[11px] text-neutral-500">
+                          <span className="flex items-center gap-1 font-mono text-[11px] font-semibold text-neutral-500 tabular-nums">
                             <Clock size={11} />
                             {ep.duration}
                           </span>
@@ -124,23 +124,23 @@ export default async function PodcastsPage({
                         {ep.date && (
                           <>
                             <span className="text-neutral-300">•</span>
-                            <span className="font-mono text-[11px] text-neutral-500">{ep.date}</span>
+                            <span className="font-mono text-[11px] font-semibold text-neutral-500 tabular-nums">{ep.date}</span>
                           </>
                         )}
                       </div>
 
-                      <h2 className="text-lg sm:text-xl font-heading font-bold text-neutral-950 mb-1.5">
+                      <h2 className="font-heading text-lg sm:text-xl font-semibold text-neutral-950 tracking-tight leading-[1.3] mb-1.5">
                         {ep.title}
                       </h2>
 
                       {ep.guest && (
-                        <p className="text-xs text-[#FF5C00] font-medium mb-2">
+                        <p className="font-sans text-xs text-[#FF5C00] font-semibold mb-2">
                           {ep.guest}
                         </p>
                       )}
 
                       {ep.desc && (
-                        <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-2xl">
+                        <p className="font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-2xl">
                           {ep.desc}
                         </p>
                       )}
@@ -153,7 +153,7 @@ export default async function PodcastsPage({
                         href={ep.audioUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all shadow-sm active:scale-95"
+                        className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-neutral-950 hover:bg-black text-white font-sans text-sm font-semibold tracking-tight transition-all shadow-sm active:scale-95"
                       >
                         <Headphones size={14} />
                         <span>{isAr ? 'استمع للحلقة' : 'Listen Episode'}</span>
@@ -161,7 +161,7 @@ export default async function PodcastsPage({
                     ) : (
                       <button
                         type="button"
-                        className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all shadow-sm active:scale-95"
+                        className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-neutral-950 hover:bg-black text-white font-sans text-sm font-semibold tracking-tight transition-all shadow-sm active:scale-95"
                       >
                         <Headphones size={14} />
                         <span>{isAr ? 'استمع للحلقة' : 'Listen Episode'}</span>
@@ -173,7 +173,7 @@ export default async function PodcastsPage({
             ))
           ) : (
             <div className="p-12 rounded-3xl border border-dashed border-neutral-300 bg-neutral-50 text-center">
-              <p className="text-base text-neutral-600 font-medium">
+              <p className="font-sans text-sm sm:text-base text-neutral-600 font-normal">
                 {isAr ? 'لا توجد حلقات بودكاست منشورة حالياً.' : 'No podcast episodes published at this moment. Please check back soon.'}
               </p>
             </div>
