@@ -86,10 +86,11 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
     return `/${oppositeLang}${pathname.startsWith('/') ? pathname : `/${pathname}`}`;
   })();
 
-  // Close dropdowns on route changes
+  // Close dropdowns and reset light section on route changes
   useEffect(() => {
     setActiveDropdown(null);
     setOpen(false);
+    setIsLightSection(false);
   }, [pathname]);
 
   // Window scroll & light section intersection detection (zero forced reflow)
@@ -103,7 +104,13 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
       const lightElements = document.querySelectorAll(
         '[data-nav-light="true"], [data-nav-theme="light"]'
       );
-      if (lightElements.length === 0) return;
+      if (lightElements.length === 0) {
+        if (activeLightElements.size > 0) {
+          activeLightElements.clear();
+        }
+        setIsLightSection(false);
+        return;
+      }
 
       if (!observer) {
         observer = new IntersectionObserver(
@@ -882,9 +889,8 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
               >
                 <Globe size={13} className={`shrink-0 ${isLightSection ? 'text-neutral-700' : 'text-neutral-300'}`} />
                 <span
-                  className={`whitespace-nowrap shrink-0 leading-none ${
-                    !isRtl ? 'font-arabic [letter-spacing:0!important]' : ''
-                  }`}
+                  className="whitespace-nowrap shrink-0 font-arabic text-xs leading-none"
+                  style={{ letterSpacing: '0px', fontFeatureSettings: 'normal' }}
                   dir={isRtl ? 'ltr' : 'rtl'}
                 >
                   {isRtl ? 'English' : 'العربية'}
@@ -922,9 +928,8 @@ export default function Navbar({ lang, resourcesCard }: Readonly<NavbarProps>) {
               >
                 <Globe size={13} className={`shrink-0 ${isLightSection ? 'text-neutral-700' : 'text-neutral-400'}`} />
                 <span
-                  className={`font-semibold text-[11px] xs:text-xs whitespace-nowrap shrink-0 leading-none ${
-                    !isRtl ? 'font-arabic [letter-spacing:0!important]' : ''
-                  }`}
+                  className="font-semibold text-[11px] xs:text-xs whitespace-nowrap shrink-0 font-arabic leading-none"
+                  style={{ letterSpacing: '0px', fontFeatureSettings: 'normal' }}
                   dir={isRtl ? 'ltr' : 'rtl'}
                 >
                   {isRtl ? 'EN' : 'عربي'}

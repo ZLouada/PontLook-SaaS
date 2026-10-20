@@ -286,9 +286,21 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       ctx.lineTo(0, -1);
       ctx.stroke();
 
-      // Helipad platform & base pod
+      // Architectural cantilevered helipad & base pod
+      ctx.strokeStyle = FG;
+      ctx.lineWidth = 0.003;
+      ctx.beginPath();
+      ctx.moveTo(0, -0.56);
+      ctx.lineTo(-0.08, -0.56);
+      ctx.moveTo(0, -0.51);
+      ctx.lineTo(-0.065, -0.56);
+      ctx.stroke();
+
       ctx.fillStyle = FG;
-      ctx.fillRect(-0.08, -0.56, 0.08, 0.01);
+      ctx.beginPath();
+      ctx.ellipse(-0.065, -0.564, 0.02, 0.005, 0, 0, TAU);
+      ctx.fill();
+
       ctx.beginPath();
       ctx.ellipse(0.15, 0, 0.5, 0.018, 0, 0, TAU);
       ctx.fill();
@@ -314,7 +326,7 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
 
       const t = (now - t0) / 1000;
       const rv = RM ? 1 : ez(cl(t / 2.2));
-      asm = RM ? 1 : ez(cl((t - 0.8) / 3));
+      asm = RM ? 1 : cl((t - 0.5) / 2.0);
       mx += (tx - mx) * 0.05;
       glow *= 0.94;
       const h = hz();
@@ -496,9 +508,12 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
       {/* High-Contrast White Telemetry HUD */}
       <div
         id="hud"
-        className="absolute start-4 top-4 font-mono font-medium text-[11px] sm:text-[12px] tracking-wider text-white bg-black/70 border border-white/20 px-3 py-1 rounded-sm backdrop-blur-xs pointer-events-none z-10"
+        className="absolute start-4 top-4 font-mono font-medium text-[11px] sm:text-[12px] tracking-wider text-white bg-black/75 border border-white/20 px-3 py-1.5 rounded-sm backdrop-blur-md pointer-events-none z-10 flex items-center"
       >
-        <span className="inline-block w-1.5 h-1.5 rounded-full bg-white me-2 animate-ping" />
+        <span className="relative flex h-2 w-2 me-2 shrink-0">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
+        </span>
         <span ref={hudRef}>{initialHud}</span>
       </div>
     </div>

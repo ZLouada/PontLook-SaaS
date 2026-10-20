@@ -188,7 +188,7 @@ export default async function RootLayout({
 
   const fontVariables = isAr
     ? `${cairo.variable} ${jetbrainsMono.variable}`
-    : `${inter.variable} ${poppins.variable} ${jetbrainsMono.variable}`;
+    : `${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} ${cairo.variable}`;
 
   const htmlStyle = isAr
     ? ({
@@ -196,7 +196,9 @@ export default async function RootLayout({
         '--font-heading': 'var(--font-cairo)',
         '--font-arabic': 'var(--font-cairo)',
       } as React.CSSProperties)
-    : undefined;
+    : ({
+        '--font-arabic': 'var(--font-cairo)',
+      } as React.CSSProperties);
 
   const jsonLdGraph = {
     "@context": "https://schema.org",
