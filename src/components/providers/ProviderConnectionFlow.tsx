@@ -1,16 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { m, useReducedMotion } from 'framer-motion';
-import {
-  Building2,
-  Zap,
-  Briefcase,
-  ArrowRight,
-} from '@/components/icons';
-import Magnetic from '@/components/shared/Magnetic';
 
 interface ProviderConnectionFlowProps {
   lang: string;
@@ -18,194 +9,421 @@ interface ProviderConnectionFlowProps {
 
 export default function ProviderConnectionFlow({ lang }: ProviderConnectionFlowProps) {
   const isAr = lang === 'ar';
-  const reduce = useReducedMotion();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [inViewXs, setInViewXs] = useState(false);
+  const [inViewCta, setInViewCta] = useState(false);
+  const [progressKey, setProgressKey] = useState(0);
+  const [stat1, setStat1] = useState(4);
+  const [stat2, setStat2] = useState(48);
 
-  const nodes = [
+  const xsRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLElement | null)[]>([]);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const selectCard = useCallback((index: number) => {
+    setActiveIndex(index);
+    setProgressKey((prev) => prev + 1);
+  }, []);
+
+  const prev = useCallback(() => {
+    const nextIndex = (activeIndex - 1 + 4) % 4;
+    selectCard(nextIndex);
+  }, [activeIndex, selectCard]);
+
+  const next = useCallback(() => {
+    const nextIndex = (activeIndex + 1) % 4;
+    selectCard(nextIndex);
+  }, [activeIndex, selectCard]);
+
+  // Card hover with 110ms debounce on pointer devices
+  const handleMouseEnterCard = (index: number) => {
+    if (typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches) {
+      if (index !== activeIndex) {
+        if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = setTimeout(() => {
+          selectCard(index);
+        }, 110);
+      }
+    }
+  };
+
+  const handleMouseLeaveCard = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+  };
+
+  // Keyboard navigation across cards
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    let delta = 0;
+    if (e.key === 'ArrowRight') delta = isAr ? -1 : 1;
+    else if (e.key === 'ArrowLeft') delta = isAr ? 1 : -1;
+    else if (e.key === 'ArrowDown') delta = 1;
+    else if (e.key === 'ArrowUp') delta = -1;
+    else if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      selectCard(index);
+      return;
+    }
+
+    if (delta !== 0) {
+      e.preventDefault();
+      const nextIndex = (index + delta + 4) % 4;
+      selectCard(nextIndex);
+      cardsRef.current[nextIndex]?.focus();
+    }
+  };
+
+  // Intersection Observer for the cards section (triggering autoplay)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const el = xsRef.current;
+    if (!el || !('IntersectionObserver' in window)) {
+      setInViewXs(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setInViewXs(entries[0].isIntersecting);
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Intersection Observer for the CTA section (triggering circular gauges & countup)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const el = ctaRef.current;
+    if (!el || !('IntersectionObserver' in window)) {
+      setInViewCta(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setInViewCta(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Countup animation for stats in CTA
+  useEffect(() => {
+    if (!inViewCta) return;
+    if (typeof window === 'undefined') return;
+    const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isReduced) {
+      setStat1(4);
+      setStat2(48);
+      return;
+    }
+
+    setStat1(0);
+    setStat2(0);
+    const duration = 1400;
+    const t0 = performance.now();
+    let rafId: number;
+
+    const tick = (now: number) => {
+      const progress = Math.min(1, (now - t0) / duration);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      setStat1(Math.round(4 * ease));
+      setStat2(Math.round(48 * ease));
+      if (progress < 1) {
+        rafId = requestAnimationFrame(tick);
+      }
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, [inViewCta]);
+
+  const stages = [
     {
-      id: 'provider',
-      type: 'supply',
-      icon: Building2,
-      badge: isAr ? 'مزود التدريب' : 'TRAINING FIRM',
+      n: '01',
+      tag: isAr ? 'مركز التدريب' : 'Training Firm',
+      vLabel: isAr ? 'مركز التدريب' : 'Training Firm',
       title: isAr ? 'مركزك التدريبي' : 'Your Training Firm',
-      desc: isAr ? 'خبرات تدريبية متخصصة' : 'Specialized GCC Expertise',
-      meta: isAr ? 'طاقة استيعابية جاهزة' : 'Delivery Ready',
-      color: '#FF5C00',
+      desc: isAr ? 'خبرات تدريبية متخصصة لدول الخليج' : 'Specialized GCC Expertise',
+      foot: isAr ? 'طاقة استيعابية جاهزة' : 'Delivery Ready',
+      renderVisual: () => (
+        <div className="v1">
+          <s /><s /><s />
+          <div className="tile">
+            <svg viewBox="0 0 24 24">
+              <rect x="5" y="3" width="14" height="18" rx="1.5" />
+              <path d="M9 8h2M13 8h2M9 12h2M13 12h2M10 21v-4h4v4" />
+            </svg>
+          </div>
+        </div>
+      ),
+      renderIcon: () => (
+        <svg viewBox="0 0 24 24">
+          <rect x="5" y="3" width="14" height="18" rx="1.5" />
+          <path d="M9 8h2M13 8h2M9 12h2M13 12h2M10 21v-4h4v4" />
+        </svg>
+      ),
     },
     {
-      id: 'pontlock',
-      type: 'hub',
-      isLogo: true,
-      badge: isAr ? 'محرك الربط' : 'CONNECTION ENGINE',
-      title: isAr ? 'محرك بونت لوك' : 'Pontlock Platform',
-      desc: isAr ? 'مطابقة آلية وتأهيل فوري' : 'Verified BANT Audit & Match',
-      meta: isAr ? 'صفر اشتراكات · ضمان 100%' : 'Zero Retainer · 100% SLA',
-      color: '#FF5C00',
+      n: '02',
+      tag: isAr ? 'محرك الربط' : 'Connection Engine',
+      vLabel: isAr ? 'محرك الربط' : 'Connection Engine',
+      title: isAr ? 'منصة بونت لوك' : 'PontLook Platform',
+      desc: isAr ? 'مطابقة آلية وتأهيل BANT' : 'Verified BANT Audit & Match',
+      foot: isAr ? 'صفر اشتراكات · ضمان 100%' : 'Zero Retainer · 100% SLA',
+      renderVisual: () => (
+        <div className="v2">
+          <div className="sw" />
+          <div className="rn" />
+          <div className="rn" />
+          <em>B</em><em>A</em><em>N</em><em>T</em>
+          <div className="tile ac">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="5" r="1.6" />
+              <circle cx="5" cy="12" r="1.6" />
+              <circle cx="19" cy="12" r="1.6" />
+              <circle cx="12" cy="19" r="1.6" />
+              <circle cx="12" cy="12" r="2.2" />
+              <path d="M12 7v3M7 12h3M14 12h3M12 14v3" />
+            </svg>
+          </div>
+        </div>
+      ),
+      renderIcon: () => (
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="5" r="1.6" />
+          <circle cx="5" cy="12" r="1.6" />
+          <circle cx="19" cy="12" r="1.6" />
+          <circle cx="12" cy="19" r="1.6" />
+          <circle cx="12" cy="12" r="2.2" />
+          <path d="M12 7v3M7 12h3M14 12h3M12 14v3" />
+        </svg>
+      ),
     },
     {
-      id: 'channel',
-      type: 'route',
-      icon: Zap,
-      badge: isAr ? 'قناة التعاقد' : 'DIRECT PIPELINE',
+      n: '03',
+      tag: isAr ? 'قناة التعاقد' : 'Direct Pipeline',
+      vLabel: isAr ? 'قناة التعاقد' : 'Direct Pipeline',
       title: isAr ? 'تعاقد مباشر' : 'Direct Engagement',
       desc: isAr ? 'بدون وساطة أو مناقصات باردة' : 'Zero Cold Bidding Cycles',
-      meta: isAr ? 'كراسة شروط معتمدة' : 'Pre-Scoped Mandates',
-      color: '#FFFFFF',
+      foot: isAr ? 'كراسة شروط معتمدة' : 'Pre-Scoped Mandates',
+      renderVisual: () => (
+        <div className="v3">
+          <u />
+          <div className="ln" />
+          <div className="pk" />
+          <div className="tile">
+            <svg viewBox="0 0 24 24">
+              <path d="M13 3 5 13h6l-1 8 8-10h-6l1-8z" />
+            </svg>
+          </div>
+          <u />
+        </div>
+      ),
+      renderIcon: () => (
+        <svg viewBox="0 0 24 24">
+          <path d="M13 3 5 13h6l-1 8 8-10h-6l1-8z" />
+        </svg>
+      ),
     },
     {
-      id: 'enterprise',
-      type: 'demand',
-      icon: Briefcase,
-      badge: isAr ? 'المنشأة المتعاقدة' : 'CORPORATE BUYER',
+      n: '04',
+      tag: isAr ? 'المنشأة المتعاقدة' : 'Corporate Buyer',
+      vLabel: isAr ? 'المنشأة المتعاقدة' : 'Corporate Buyer',
       title: isAr ? 'عملاء مؤسسيون' : 'Enterprise Client',
-      desc: isAr ? 'ميزانية معتمدة 120-250 ألف ر.س' : 'SAR 120k–250k+ Budget',
-      meta: isAr ? 'الرياض · دبي · الدوحة' : 'Riyadh · Dubai · Doha',
-      color: '#3B82F6',
+      desc: isAr ? 'ميزانية معتمدة 120-250+ ألف ر.س' : 'SAR 120k–250k+ Budget',
+      foot: isAr ? 'الرياض · دبي · الدوحة' : 'Riyadh · Dubai · Doha',
+      renderVisual: () => (
+        <div className="v4">
+          <i /><i /><i />
+          <div className="tile">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="7" width="18" height="13" rx="2" />
+              <path d="M9 7V5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5v2M3 13h18" />
+            </svg>
+          </div>
+        </div>
+      ),
+      renderIcon: () => (
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="7" width="18" height="13" rx="2" />
+          <path d="M9 7V5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5v2M3 13h18" />
+        </svg>
+      ),
     },
   ];
 
   return (
-    <section id="connection-bridge" className="relative py-12 sm:py-20 px-3.5 xs:px-4 sm:px-6 lg:px-8 bg-black overflow-hidden scroll-mt-16">
+    <section
+      id="connection-bridge"
+      className="relative py-12 sm:py-20 px-3.5 xs:px-4 sm:px-6 lg:px-8 bg-black overflow-hidden scroll-mt-16"
+      dir={isAr ? 'rtl' : 'ltr'}
+    >
       {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[300px] bg-[#FF5C00]/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[360px] bg-[#FF5A00]/10 rounded-full blur-[140px] pointer-events-none -z-10" />
 
-      <div className="max-w-6xl mx-auto relative z-10 w-full">
-        {/* Main Card Container */}
-        <div className="rounded-3xl border border-white/10 bg-[#0B0B0C] p-5 xs:p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden">
-          
-          {/* Top Bar: Headline Only (Removed 2-5 Days badge as requested) */}
-          <div className="flex items-center gap-3 pb-6 border-b border-white/10">
-            <div>
-              <span className="text-[11px] uppercase tracking-widest text-[#FF5C00] font-semibold font-mono block">
-                {isAr ? 'نموذج الربط المباشر' : 'DIRECT CONNECTION ARCHITECTURE'}
-              </span>
-              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white tracking-tight font-heading mt-0.5">
-                {isAr ? 'كيف تربط بونت لوك بين خبرتك والطلب المؤسسي' : 'Connecting Training Expertise with Confirmed Demand'}
-              </h3>
+      <div className={`dcb ${isPaused ? 'paused' : ''}`} aria-labelledby="dcb-h">
+        {/* Header Bar: Eye-brow, Title, Navigation Arrows & Stage Counter */}
+        <div className="dcb-hd">
+          <div>
+            <div className="dcb-eye">
+              {isAr ? 'نموذج الربط المباشر' : 'DIRECT CONNECTION ARCHITECTURE'}
+            </div>
+            <h2 id="dcb-h">
+              {isAr
+                ? 'ربط الخبرات التدريبية بالطلب المؤسسي المؤكد'
+                : 'Connecting Training Expertise with Confirmed Demand'}
+            </h2>
+          </div>
+          <div className="dcb-nav">
+            <button
+              type="button"
+              onClick={prev}
+              aria-label={isAr ? 'المرحلة السابقة' : 'Previous stage'}
+            >
+              {isAr ? '→' : '←'}
+            </button>
+            <span>
+              <b className="cnt">0{activeIndex + 1}</b> / 04
+            </span>
+            <button
+              type="button"
+              onClick={next}
+              aria-label={isAr ? 'المرحلة التالية' : 'Next stage'}
+            >
+              {isAr ? '←' : '→'}
+            </button>
+          </div>
+        </div>
+
+        {/* 4 Expanding Interactive Panels (Accordion) */}
+        <div
+          ref={xsRef}
+          className="xs"
+          role="tablist"
+          aria-label={isAr ? 'مراحل الربط المباشر' : 'Direct connection stages'}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {stages.map((stage, idx) => {
+            const isActive = activeIndex === idx;
+            return (
+              <article
+                key={stage.n}
+                ref={(el) => {
+                  cardsRef.current[idx] = el;
+                }}
+                className={`xp ${isActive ? 'on' : ''} ${isActive && inViewXs ? 'auto' : ''}`}
+                role="tab"
+                tabIndex={0}
+                data-n={stage.n}
+                aria-selected={isActive}
+                onClick={() => selectCard(idx)}
+                onFocus={() => selectCard(idx)}
+                onMouseEnter={() => handleMouseEnterCard(idx)}
+                onMouseLeave={handleMouseLeaveCard}
+                onKeyDown={(e) => handleKeyDown(e, idx)}
+              >
+                <span className="xp-num">{stage.n}</span>
+                <span className="xp-tag">{stage.tag}</span>
+                <span className="xp-ico">{stage.renderIcon()}</span>
+                <span className="xp-v">{stage.vLabel}</span>
+
+                {/* Animated Interactive Visualizer */}
+                <div className="xp-vis" aria-hidden="true">
+                  {stage.renderVisual()}
+                </div>
+
+                {/* Card Expanded Content Body */}
+                <div className="xp-body">
+                  <h3>{stage.title}</h3>
+                  <p>{stage.desc}</p>
+                  <span className="xp-ft">{stage.foot}</span>
+                </div>
+
+                {/* 6s Progress Bar for Auto Slide Progression */}
+                {isActive && (
+                  <i
+                    key={progressKey}
+                    className="xp-pr"
+                    style={{
+                      animationPlayState: isPaused ? 'paused' : 'running',
+                    }}
+                    onAnimationEnd={next}
+                  />
+                )}
+              </article>
+            );
+          })}
+        </div>
+
+        {/* Bottom CTA Block with Moving Gradient Border & Circular Radial Gauges */}
+        <div
+          ref={ctaRef}
+          id="apply"
+          className={`cta ${inViewCta ? 'in' : ''}`}
+        >
+          <div className="cta-l">
+            <h3>
+              {isAr
+                ? 'جاهز لملء جدول تدريبك بطلبات مؤكدة؟'
+                : 'Ready to fill your delivery schedule with qualified clients?'}
+            </h3>
+            <p>
+              {isAr
+                ? 'أكمل نموذج التأهيل المبدئي خلال 4 دقائق وسيتواصل معك فريق الشراكات لتفعيل ملفك خلال 48 ساعة.'
+                : 'Complete our 4-minute qualification form. Our team will activate your profile within 48 hours.'}
+            </p>
+            <div className="btns">
+              <Link href={`/${lang}/for-providers/apply`} className="pri">
+                <span>{isAr ? 'تقديم طلب الانضمام كشريك معتمد' : 'Apply as Verified Provider'}</span>
+                <span aria-hidden="true" className={isAr ? 'inline-block -scale-x-100' : ''}>
+                  →
+                </span>
+              </Link>
+              <a href="#story" className="sec">
+                {isAr ? 'مزايا ونموذج الشراكة' : 'Partnership Model & SLAs'}
+              </a>
+            </div>
+            <div className="mt-4 text-[11px] text-neutral-400 font-mono">
+              {isAr
+                ? '🔒 انضمام مجاني · استكمال الطلب في 4 دقائق · احتفظ بكامل أتعاب تنفيذ التدريب بنسبة 100%.'
+                : '🔒 Free to join · 4-minute application · Keep 100% of your training delivery fees.'}
             </div>
           </div>
 
-          {/* Interactive Horizontal 4-Node Flow with Line strictly covered behind solid cards */}
-          <div className="py-8 sm:py-10 relative">
-            {/* Visual connector line behind nodes (Desktop) - z-0 with cards at z-10 */}
-            <div className="hidden lg:block absolute top-[39%] left-[10%] right-[10%] h-[2px] bg-gradient-to-r from-[#FF5C00]/30 via-[#FF5C00] to-[#3B82F6]/50 z-0 pointer-events-none">
-              {/* Animated Light Pulse traveling across the line (pure CSS GPU animation) */}
-              <div className="w-14 h-[3px] bg-white rounded-full shadow-[0_0_12px_#ffffff] -translate-y-[0.5px] rail-pulse" />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10">
-              {nodes.map((node, index) => {
-                const IconComponent = node.icon;
-                return (
-                  <m.div
-                    key={node.id}
-                    initial={reduce ? { opacity: 0 } : { opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className={`rounded-2xl border p-4 sm:p-4.5 flex flex-col justify-between transition-all duration-300 relative z-10 group ${
-                      node.isLogo
-                        ? 'bg-[#14100E] border-[#FF5C00]/40 shadow-[0_0_24px_rgba(255,92,0,0.18)] ring-1 ring-[#FF5C00]/30'
-                        : 'bg-[#0E0F12] border-white/10 hover:border-white/20 shadow-lg'
-                    }`}
-                  >
-                    <div>
-                      {/* Node Header Pill */}
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-neutral-300 font-mono">
-                          {node.badge}
-                        </span>
-                        <span className="text-[10px] font-mono text-neutral-500">0{index + 1}</span>
-                      </div>
-
-                      {/* Icon / Central Logo */}
-                      <div className="w-10 h-10 rounded-xl mx-auto mb-3 flex items-center justify-center relative">
-                        {node.isLogo ? (
-                          /* Pontlock Central Logo Container */
-                          <div className="w-10 h-10 rounded-xl bg-[#FF5C00] p-2 flex items-center justify-center shadow-[0_0_20px_rgba(255,92,0,0.5)] relative">
-                            <Image
-                              src="/images/brand/pontlook-icon-white.png"
-                              alt="PontLook"
-                              width={24}
-                              height={24}
-                              className="object-contain"
-                            />
-                          </div>
-                        ) : (
-                          <div
-                            className="w-10 h-10 rounded-xl flex items-center justify-center border transition-transform duration-200 group-hover:scale-105"
-                            style={{
-                              borderColor: `${node.color}40`,
-                              backgroundColor: `${node.color}15`,
-                            }}
-                          >
-                            {IconComponent && <IconComponent size={18} style={{ color: node.color }} />}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Title & Description */}
-                      <div className="text-center">
-                        <h4 className="text-sm font-bold text-white mb-1 font-heading leading-snug">
-                          {node.title}
-                        </h4>
-                        <p className="text-[11px] text-neutral-400 leading-relaxed font-sans line-clamp-2">
-                          {node.desc}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Bottom Status Chip */}
-                    <div className="mt-3 pt-2.5 border-t border-white/5 text-center">
-                      <span className="text-[10px] font-medium text-neutral-300 font-mono">
-                        {node.meta}
-                      </span>
-                    </div>
-                  </m.div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* High-Conscience Conversion Trigger Block (Green subtitles removed) */}
-          <div className="mt-4 sm:mt-6 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-[#141416] via-[#101012] to-[#141416] border border-white/10 flex flex-col md:flex-row items-center justify-between gap-5">
-            <div className="text-center md:text-start">
-              <h4 className="text-base sm:text-lg font-bold text-white mb-1 font-heading">
-                {isAr ? 'جاهز لملء جدول تدريبك بطلبات مؤكدة؟' : 'Ready to fill your delivery schedule with qualified clients?'}
-              </h4>
-              <p className="text-xs sm:text-sm text-neutral-400 font-sans max-w-xl">
-                {isAr
-                  ? 'أكمل نموذج التأهيل المبدئي خلال 4 دقائق وسيتواصل معك فريق الشراكات خلال 48 ساعة.'
-                  : 'Complete our 4-minute qualification form. Our team will activate your profile within 48 hours.'}
-              </p>
-              <div className="mt-1.5 text-[11px] text-neutral-500 font-sans">
-                {isAr
-                  ? '🔒 انضمام مجاني · استكمال الطلب في 4 دقائق · احتفظ بكامل أتعاب تنفيذ التدريب بنسبة 100%.'
-                  : '🔒 Free to join · 4-minute application · Keep 100% of your training delivery fees.'}
+          <div className="cta-r" aria-hidden="true">
+            <div className="dl" style={{ '--o': '65' } as React.CSSProperties}>
+              <svg viewBox="0 0 120 120">
+                <circle className="bg" cx="60" cy="60" r="52" />
+                <circle className="fg" cx="60" cy="60" r="52" />
+              </svg>
+              <div>
+                <b data-c="4">{stat1}</b>
+                <span>{isAr ? 'دقائق للطلب' : 'minute form'}</span>
               </div>
             </div>
-
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto shrink-0">
-              <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
-                <Link
-                  href={`/${lang}/for-providers/apply`}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-white bg-[#FF5C00] hover:bg-[#FF6A1A] transition-all shadow-lg shadow-orange-500/25 text-xs sm:text-sm min-h-[44px] active:scale-95"
-                >
-                  <span>{isAr ? 'تقديم طلب الانضمام كشريك تدريب' : 'Apply as Verified Provider'}</span>
-                  <ArrowRight size={15} className="rtl:-scale-x-100" />
-                </Link>
-              </Magnetic>
-
-              <Magnetic strength={0.22} activeDistance={35} className="w-full sm:w-auto">
-                <a
-                  href="#why-partner"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-medium text-white/90 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/25 transition-all text-xs sm:text-sm min-h-[44px] active:scale-95"
-                >
-                  <span>{isAr ? 'مزايا ونموذج الشراكة' : 'Partnership Model & SLAs'}</span>
-                </a>
-              </Magnetic>
+            <div className="dl" style={{ '--o': '30' } as React.CSSProperties}>
+              <svg viewBox="0 0 120 120">
+                <circle className="bg" cx="60" cy="60" r="52" />
+                <circle className="fg" cx="60" cy="60" r="52" />
+              </svg>
+              <div>
+                <b data-c="48">{stat2}</b>
+                <span>{isAr ? 'ساعة للتفعيل' : 'hours to activate'}</span>
+              </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
