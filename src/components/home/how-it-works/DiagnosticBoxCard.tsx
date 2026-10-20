@@ -57,12 +57,12 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
       {/* Top HUD Diagnostics Header */}
       <div className="relative z-10 flex items-center justify-between pb-2 mb-2 border-b border-neutral-200/70 text-xs">
         <div className="flex items-center gap-1.5 text-neutral-700">
-          <span className="font-mono text-[10px] text-neutral-400 font-bold">[ 01_DIAGNOSE ]</span>
-          <span className="font-semibold text-[11px] sm:text-xs">
+          <span className="font-mono text-[10px] text-neutral-400 font-semibold tracking-wider tabular-nums">[ 01_DIAGNOSE ]</span>
+          <span className="font-heading font-semibold text-[11px] sm:text-xs tracking-tight">
             {isAr ? 'فحص الاحتياج المهاري للمنظمة' : 'Enterprise Skill Diagnostics'}
           </span>
         </div>
-        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-semibold">
+        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[10px] font-semibold uppercase tracking-wider">
           <span className="relative flex h-1.5 w-1.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
@@ -175,10 +175,10 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
               <div className="flex items-start gap-1.5">
                 <IconComp size={12} className={`${prob.iconColor} shrink-0 mt-0.5`} />
                 <div className="min-w-0">
-                  <div className="text-[9.5px] sm:text-[10.5px] font-bold leading-tight truncate">
+                  <div className="font-heading text-[9.5px] sm:text-[10.5px] font-semibold tracking-tight leading-tight truncate">
                     {prob.title}
                   </div>
-                  <div className="text-[8px] sm:text-[9px] opacity-75 leading-tight truncate">
+                  <div className="font-sans text-[8px] sm:text-[9px] opacity-75 leading-tight truncate">
                     {prob.desc}
                   </div>
                 </div>

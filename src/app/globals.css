@@ -682,7 +682,7 @@
   --mono: var(--font-mono), monospace;
   background: var(--ink);
   color: var(--paper);
-  font-family: var(--sans);
+  font-family: var(--font-sans), system-ui, sans-serif;
   padding: clamp(64px, 10vw, 140px) clamp(20px, 5vw, 72px);
   position: relative;
   width: 100%;

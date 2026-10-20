@@ -18,12 +18,12 @@ export default function ScoopMatchesCard({ isAr = false }: ScoopMatchesCardProps
       {/* Top HUD Matching Header */}
       <div className="relative z-10 flex items-center justify-between pb-2 mb-2 border-b border-neutral-200/70 text-xs">
         <div className="flex items-center gap-1.5 text-neutral-700">
-          <span className="font-mono text-[10px] text-neutral-400 font-bold">[ 02_MATCH ]</span>
-          <span className="font-semibold text-[11px] sm:text-xs">
+          <span className="font-mono text-[10px] text-neutral-400 font-semibold tracking-wider tabular-nums">[ 02_MATCH ]</span>
+          <span className="font-heading font-semibold text-[11px] sm:text-xs tracking-tight">
             {isAr ? 'فرز العروض وتحليل الملاءمة' : 'Vetted Proposal Intelligence'}
           </span>
         </div>
-        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-semibold">
+        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[10px] font-semibold uppercase tracking-wider">
           <Sparkles size={11} className="text-emerald-600 shrink-0" />
           <span>{isAr ? '3 عروض مطابقة' : '3 Ranked Matches'}</span>
         </div>
@@ -86,11 +86,11 @@ export default function ScoopMatchesCard({ isAr = false }: ScoopMatchesCardProps
         >
           {/* Top Tag & Match Score */}
           <div className="flex items-center justify-between gap-1 pb-1 mb-1.5 border-b border-white/10">
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-[8px] sm:text-[9px] font-bold border border-emerald-400/30">
+            <span className="font-mono inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-[8px] sm:text-[9px] font-semibold uppercase tracking-wider border border-emerald-400/30">
               <Sparkles size={8} />
               {isAr ? 'العرض الأفضل ملاءمة' : 'Top Match'}
             </span>
-            <div className="flex items-center gap-1 text-[10.5px] sm:text-[11.5px] font-black text-emerald-300 font-mono">
+            <div className="flex items-center gap-1 font-mono text-[10.5px] sm:text-[11.5px] font-bold text-emerald-300 tabular-nums">
               <span>98%</span>
               <span className="text-[7.5px] text-emerald-400/70 font-normal">FIT</span>
             </div>
@@ -98,11 +98,11 @@ export default function ScoopMatchesCard({ isAr = false }: ScoopMatchesCardProps
 
           {/* Supplier Name */}
           <div className="mb-1.5">
-            <div className="text-[10px] sm:text-[11px] font-bold leading-tight text-white flex items-center gap-1.5">
+            <div className="font-heading text-[10px] sm:text-[11px] font-semibold tracking-tight leading-tight text-white flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               <span>{isAr ? 'المركز الخليجي للتميز المؤسسي' : 'GCC Institute for Excellence'}</span>
             </div>
-            <div className="text-[8.5px] text-emerald-200/70 leading-snug mt-0.5">
+            <div className="font-sans text-[8.5px] text-emerald-200/70 leading-snug mt-0.5">
               {isAr ? 'مسار قيادي وتقني متكامل مخصص' : 'Custom Corporate Leadership Syllabus'}
             </div>
           </div>

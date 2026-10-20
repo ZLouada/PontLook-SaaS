@@ -20,12 +20,12 @@ export default function ConnectionBridgeCard({ isAr = false }: ConnectionBridgeC
       {/* Top Meta Header */}
       <div className="relative z-10 flex items-center justify-between pb-2 mb-2 border-b border-neutral-200/70 text-xs">
         <div className="flex items-center gap-1.5 text-neutral-700">
-          <span className="font-mono text-[10px] text-neutral-400 font-bold">[ 03_CONNECTION ]</span>
-          <span className="font-semibold text-[11px] sm:text-xs">
+          <span className="font-mono text-[10px] text-neutral-400 font-semibold tracking-wider tabular-nums">[ 03_CONNECTION ]</span>
+          <span className="font-heading font-semibold text-[11px] sm:text-xs tracking-tight">
             {isAr ? 'الربط المباشر بين الطرفين' : 'DIRECT ENTERPRISE ENGAGEMENT'}
           </span>
         </div>
-        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-semibold">
+        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[10px] font-semibold uppercase tracking-wider">
           <span className="relative flex h-1.5 w-1.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
             <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-600" />
@@ -123,10 +123,10 @@ export default function ConnectionBridgeCard({ isAr = false }: ConnectionBridgeC
 
           {/* Center Text */}
           <div className="flex-1 min-w-0 text-start">
-            <div className="text-[7.5px] sm:text-[8px] font-bold uppercase tracking-wider text-emerald-700 font-mono">
+            <div className="font-mono text-[8px] font-semibold uppercase tracking-wider text-emerald-700">
               {isAr ? 'من التعاقد إلى تدشين التدريب' : 'FROM AGREEMENT TO KICKOFF'}
             </div>
-            <div className="text-[10px] sm:text-[11px] font-bold text-neutral-900 leading-tight truncate">
+            <div className="font-heading text-[10px] sm:text-[11px] font-semibold tracking-tight text-neutral-900 leading-tight truncate">
               {isAr ? 'عقد مباشر بدون وسطاء أو عمولات' : 'To scheduled corporate training.'}
             </div>
           </div>

@@ -35,9 +35,9 @@ export default function Button({
   ...motionProps
 }: CombinedButtonProps) {
   const sizeClasses = {
-    sm: 'min-h-[44px] px-3.5 xs:px-4 py-2 text-xs font-semibold gap-1.5 touch-manipulation',
-    md: 'min-h-[44px] sm:min-h-[48px] px-4 xs:px-5 sm:px-6 py-2.5 sm:py-3.5 text-xs xs:text-sm font-semibold gap-2 touch-manipulation',
-    lg: 'min-h-[48px] sm:min-h-[52px] px-5 xs:px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold gap-2.5 touch-manipulation',
+    sm: 'min-h-[44px] px-3.5 xs:px-4 py-2 font-sans text-xs font-semibold tracking-tight gap-1.5 touch-manipulation',
+    md: 'min-h-[44px] sm:min-h-[48px] px-4 xs:px-5 sm:px-6 py-2.5 sm:py-3.5 font-sans text-xs xs:text-sm font-semibold tracking-tight gap-2 touch-manipulation',
+    lg: 'min-h-[48px] sm:min-h-[52px] px-5 xs:px-6 sm:px-8 py-3 sm:py-4 font-sans text-sm sm:text-base font-semibold tracking-tight gap-2.5 touch-manipulation',
   }[size];
 
   const variantClasses = {

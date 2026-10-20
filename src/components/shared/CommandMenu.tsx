@@ -365,7 +365,7 @@ export default function CommandMenu({ open, onOpenChange, lang = 'en' }: Command
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={isAr ? 'ابحث عن الصفحات، الإجراءات، أو الخدمات...' : 'Search pages, actions, or services...'}
-                className="w-full bg-transparent text-xs xs:text-sm sm:text-base text-white placeholder-neutral-500 focus:outline-none"
+                className="w-full bg-transparent font-sans text-xs xs:text-sm sm:text-base text-white placeholder-neutral-500 focus:outline-none"
               />
               {query && (
                 <button
@@ -384,7 +384,7 @@ export default function CommandMenu({ open, onOpenChange, lang = 'en' }: Command
             {/* Results List */}
             <div ref={listRef} className="overflow-y-auto p-2 sm:p-3 space-y-1">
               {filteredItems.length === 0 ? (
-                <div className="py-12 text-center text-neutral-500 text-sm">
+                <div className="py-12 text-center text-neutral-500 font-sans text-sm">
                   {isAr ? 'لم يتم العثور على نتائج مطابقة' : 'No matching results found'}
                 </div>
               ) : (
@@ -416,16 +416,16 @@ export default function CommandMenu({ open, onOpenChange, lang = 'en' }: Command
                         </div>
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-semibold truncate">
+                            <span className="font-heading text-sm font-semibold tracking-tight truncate">
                               {isAr ? item.titleAr : item.titleEn}
                             </span>
                             {(item.badgeEn || item.badgeAr) && (
-                              <span className="shrink-0 px-2 py-0.5 rounded-full bg-white/[0.06] text-[10px] font-mono text-neutral-400">
+                              <span className="shrink-0 px-2 py-0.5 rounded-full bg-white/[0.06] text-[10px] font-mono font-semibold uppercase tracking-wider text-neutral-400">
                                 {isAr ? item.badgeAr : item.badgeEn}
                               </span>
                             )}
                           </div>
-                          <p className="text-xs text-neutral-400 truncate mt-0.5">
+                          <p className="font-sans text-xs text-neutral-400 truncate mt-0.5">
                             {isAr ? item.descAr : item.descEn}
                           </p>
                         </div>
@@ -444,19 +444,19 @@ export default function CommandMenu({ open, onOpenChange, lang = 'en' }: Command
             </div>
 
             {/* Footer keycap hints */}
-            <div className="px-4 sm:px-6 py-2.5 border-t border-[#26282D] bg-[#16171B]/30 flex items-center justify-between text-[11px] text-neutral-500">
+            <div className="px-4 sm:px-6 py-2.5 border-t border-[#26282D] bg-[#16171B]/30 flex items-center justify-between text-[11px] font-mono text-neutral-500">
               <div className="flex items-center gap-3">
                 <span className="inline-flex items-center gap-1">
                   <kbd className="px-1.5 py-0.5 rounded bg-white/[0.05] border border-white/10 font-mono text-[10px]">↑</kbd>
                   <kbd className="px-1.5 py-0.5 rounded bg-white/[0.05] border border-white/10 font-mono text-[10px]">↓</kbd>
-                  <span>{isAr ? 'للتنقل' : 'Navigate'}</span>
+                  <span className="font-sans text-[11px]">{isAr ? 'للتنقل' : 'Navigate'}</span>
                 </span>
                 <span className="inline-flex items-center gap-1">
                   <kbd className="px-1.5 py-0.5 rounded bg-white/[0.05] border border-white/10 font-mono text-[10px]">↵</kbd>
-                  <span>{isAr ? 'للاختيار' : 'Select'}</span>
+                  <span className="font-sans text-[11px]">{isAr ? 'للاختيار' : 'Select'}</span>
                 </span>
               </div>
-              <span className="text-[10px] font-mono text-neutral-500">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-500">
                 PontLook Command Engine
               </span>
             </div>
