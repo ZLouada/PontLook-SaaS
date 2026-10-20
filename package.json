@@ -10,7 +10,8 @@
     "lint": "next lint",
     "deploy": "npm run build",
     "generate:types": "payload generate:types",
-    "generate:importmap": "payload generate:importmap"
+    "generate:importmap": "payload generate:importmap",
+    "db:harden-rls": "tsx scripts/enable-supabase-rls.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

@@ -41,6 +41,7 @@ next-env.d.ts
 /home/
 scripts/*
 !scripts/migrate-resources-to-payload.ts
+!scripts/enable-supabase-rls.ts
 .agents/
 .remote_theme_backup/
 .wordpress_theme_staging/
