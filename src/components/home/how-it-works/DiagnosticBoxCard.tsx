@@ -21,7 +21,7 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
       bgColor: 'bg-amber-50 border-amber-200/90 text-amber-950',
       title: isAr ? 'فجوة القيادة التنفيذية' : 'Executive Leadership Gap',
       desc: isAr ? 'بطء اتخاذ القرارات C-Suite' : 'Slow C-Suite Decisions',
-      position: 'top-1 start-1 sm:top-1.5 sm:start-1.5',
+      position: 'top-0.5 start-0.5 sm:top-1 sm:start-1',
     },
     {
       id: 'p2',
@@ -30,7 +30,7 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
       bgColor: 'bg-rose-50 border-rose-200/90 text-rose-950',
       title: isAr ? 'بطء مسار المبيعات B2B' : 'B2B Sales Velocity Lag',
       desc: isAr ? '-32% إغلاق الصفقات' : '-32% Conversion Pace',
-      position: 'top-1 end-1 sm:top-1.5 end-1 sm:end-1.5',
+      position: 'top-0.5 end-0.5 sm:top-1 end-0.5 sm:end-1',
     },
     {
       id: 'p3',
@@ -39,7 +39,7 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
       bgColor: 'bg-blue-50 border-blue-200/90 text-blue-950',
       title: isAr ? 'تأخر التحول الرقمي و AI' : 'Digital & AI Upskilling',
       desc: isAr ? 'نقص المهارات التطبيقية' : 'Applied Tech Gap',
-      position: 'bottom-7 start-1 sm:bottom-7 sm:start-1.5',
+      position: 'bottom-1 start-0.5 sm:bottom-1.5 sm:start-1',
     },
     {
       id: 'p4',
@@ -48,21 +48,21 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
       bgColor: 'bg-emerald-50 border-emerald-200/90 text-emerald-950',
       title: isAr ? 'شهادات اعتماد خليجية' : 'Accredited GCC Certs',
       desc: isAr ? 'مستهدفات التوطين 2030' : 'Vision 2030 Standards',
-      position: 'bottom-7 end-1 sm:bottom-7 end-1 sm:end-1.5',
+      position: 'bottom-1 end-0.5 sm:bottom-1.5 end-0.5 sm:end-1',
     },
   ];
 
   return (
-    <div className="relative w-full rounded-2xl bg-white border border-neutral-200/90 p-3 sm:p-5 overflow-hidden font-sans shadow-xs">
+    <div className="relative w-full rounded-2xl bg-white border border-neutral-200/90 p-2.5 sm:p-3.5 xl:p-4 overflow-hidden font-sans shadow-xs">
       {/* Top HUD Diagnostics Header */}
-      <div className="relative z-10 flex items-center justify-between pb-2 mb-2 border-b border-neutral-200/70 text-xs">
+      <div className="relative z-10 flex items-center justify-between pb-1.5 mb-1.5 sm:pb-2 sm:mb-2 border-b border-neutral-200/70 text-xs">
         <div className="flex items-center gap-1.5 text-neutral-700">
-          <span className="font-mono text-[10px] text-neutral-400 font-semibold tracking-wider tabular-nums">[ 01_DIAGNOSE ]</span>
-          <span className="font-heading font-semibold text-[11px] sm:text-xs tracking-tight">
+          <span className="font-mono text-[9px] sm:text-[10px] text-neutral-400 font-semibold tracking-wider tabular-nums">[ 01_DIAGNOSE ]</span>
+          <span className="font-heading font-semibold text-[10.5px] sm:text-xs tracking-tight">
             {isAr ? 'فحص الاحتياج المهاري للمنظمة' : 'Enterprise Skill Diagnostics'}
           </span>
         </div>
-        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[10px] font-semibold uppercase tracking-wider">
+        <div className="flex items-center gap-1 px-1.5 sm:px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider">
           <span className="relative flex h-1.5 w-1.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
@@ -72,18 +72,12 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
       </div>
 
       {/* Center 3D Box & Scanner Stage */}
-      <div className="relative z-10 h-44 sm:h-48 w-full flex items-center justify-center my-0.5">
-        {/* HUD Corner Target Brackets */}
-        <div className="absolute top-2 start-2 w-3.5 h-3.5 border-t-2 border-s-2 border-emerald-500/70 rounded-tl pointer-events-none" />
-        <div className="absolute top-2 end-2 w-3.5 h-3.5 border-t-2 border-e-2 border-emerald-500/70 rounded-tr pointer-events-none" />
-        <div className="absolute bottom-2 start-2 w-3.5 h-3.5 border-b-2 border-s-2 border-emerald-500/70 rounded-bl pointer-events-none" />
-        <div className="absolute bottom-2 end-2 w-3.5 h-3.5 border-b-2 border-e-2 border-emerald-500/70 rounded-br pointer-events-none" />
-
+      <div className="relative z-10 h-32 xs:h-36 sm:h-40 lg:h-36 xl:h-44 w-full flex items-center justify-center my-0.5">
         {/* 3D Isometric Enterprise Box */}
         <div className="relative flex items-center justify-center">
           <svg
             viewBox="0 0 200 200"
-            className="w-32 h-32 sm:w-36 sm:h-36 drop-shadow-[0_12px_24px_rgba(20,40,30,0.16)]"
+            className="w-24 h-24 xs:w-28 xs:h-28 sm:w-32 sm:h-32 lg:w-28 lg:h-28 xl:w-36 xl:h-36 drop-shadow-[0_12px_24px_rgba(20,40,30,0.16)]"
           >
             {/* Box Bottom Shadow */}
             <ellipse cx="100" cy="175" rx="70" ry="18" fill="rgba(0,0,0,0.08)" />
@@ -147,7 +141,7 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
           {/* Animated Glowing Laser Scanner Line */}
           <m.div
             animate={{
-              y: [-45, 38, -45],
+              y: [-35, 30, -35],
               opacity: [0.7, 1, 0.7],
             }}
             transition={{
@@ -170,15 +164,15 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
               initial={{ opacity: 0, scale: 0.88, y: 4 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: 0.15 + idx * 0.1, duration: 0.4 }}
-              className={`absolute ${prob.position} z-30 max-w-[125px] xs:max-w-[140px] sm:max-w-[160px] p-1.5 sm:p-2 rounded-xl border ${prob.bgColor} shadow-sm transition-transform hover:scale-105`}
+              className={`absolute ${prob.position} z-30 max-w-[110px] xs:max-w-[125px] sm:max-w-[145px] xl:max-w-[160px] p-1 sm:p-1.5 xl:p-2 rounded-xl border ${prob.bgColor} shadow-xs transition-transform hover:scale-105`}
             >
-              <div className="flex items-start gap-1.5">
-                <IconComp size={12} className={`${prob.iconColor} shrink-0 mt-0.5`} />
+              <div className="flex items-start gap-1 sm:gap-1.5">
+                <IconComp size={11} className={`${prob.iconColor} shrink-0 mt-0.5`} />
                 <div className="min-w-0">
-                  <div className="font-heading text-[9.5px] sm:text-[10.5px] font-semibold tracking-tight leading-tight truncate">
+                  <div className="font-heading text-[9px] xs:text-[9.5px] sm:text-[10px] xl:text-[10.5px] font-semibold tracking-tight leading-tight truncate">
                     {prob.title}
                   </div>
-                  <div className="font-sans text-[8px] sm:text-[9px] opacity-75 leading-tight truncate">
+                  <div className="font-sans text-[7.5px] xs:text-[8px] sm:text-[8.5px] xl:text-[9px] opacity-75 leading-tight truncate">
                     {prob.desc}
                   </div>
                 </div>
@@ -189,8 +183,8 @@ export default function DiagnosticBoxCard({ isAr = false }: DiagnosticBoxCardPro
       </div>
 
       {/* Bottom Diagnosis Verification Pill */}
-      <div className="relative z-10 pt-2 border-t border-neutral-200/70 flex items-center justify-center text-center">
-        <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold text-neutral-600">
+      <div className="relative z-10 pt-1.5 sm:pt-2 border-t border-neutral-200/70 flex items-center justify-center text-center">
+        <span className="inline-flex items-center gap-1.5 text-[9.5px] sm:text-[10.5px] xl:text-[11px] font-semibold text-neutral-600">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
           <span>{isAr ? 'تم تشخيص احتياجات المنشأة وحصر الفجوات بدقة' : 'Workforce Skill Gaps Successfully Profiled'}</span>
         </span>

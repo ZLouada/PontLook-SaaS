@@ -165,7 +165,7 @@ export default function HowItWorks() {
       aria-labelledby="how-it-works-title"
     >
       {/* Viewport Stage: Pinned during the garage door opening on desktop; natural flow on mobile */}
-      <div className="relative lg:sticky top-0 w-full min-h-0 lg:min-h-[100dvh] h-auto lg:h-[100dvh] flex flex-col justify-center items-center z-20 pt-16 sm:pt-20 lg:pt-20 xl:pt-24 pb-4 lg:pb-6 overflow-visible lg:overflow-hidden bg-white">
+      <div className="relative lg:sticky top-0 w-full min-h-0 lg:min-h-[100dvh] h-auto lg:h-[100dvh] flex flex-col justify-center items-center z-20 pt-0 lg:pt-14 xl:pt-18 pb-0 lg:pb-4 overflow-visible bg-white">
         {/* ================================================================
             THE WHITE CONTENT
             Reveals and pops up as the garage door rolls open upwards on desktop;
@@ -183,7 +183,7 @@ export default function HowItWorks() {
           }
           className="container-site relative z-20 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl w-full flex flex-col justify-center"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-12 items-center">
             
             {/* LEFT COLUMN: Section Title, Subtitle, Highlights & White "Join Network" Window */}
             {/* Each column reveals as it enters. On desktop this sits inside the
@@ -194,9 +194,9 @@ export default function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewportOnceMobile}
               transition={{ duration: dur.slow, ease: ease.out }}
-              className="lg:col-span-5 flex flex-col items-start text-start space-y-4"
+              className="lg:col-span-5 flex flex-col items-start text-start space-y-3 lg:space-y-3.5 xl:space-y-4"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em]">
+              <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.06em]">
                 <span className="h-1.5 w-1.5 rounded-full bg-neutral-950 animate-pulse" />
                 <span>{dict.how_it_works?.eyebrow || (isAr ? 'آلية العمل' : 'HOW IT WORKS')}</span>
               </div>
@@ -204,27 +204,27 @@ export default function HowItWorks() {
               <TextReveal
                 as="h2"
                 text={dict.how_it_works?.title || (isAr ? 'من تشخيص الفجوة المهارية إلى التدريب في 3 خطوات واضحة' : 'From Skill Gap to Training in 3 Straightforward Steps')}
-                className="font-heading text-3xl sm:text-4xl font-bold text-neutral-950 tracking-tight leading-[1.18]"
+                className="font-heading text-2xl sm:text-3xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold text-neutral-950 tracking-tight leading-[1.18]"
               />
 
               {/* White "Join network" Window Card */}
-              <div className="pt-3 w-full sm:w-auto">
+              <div className="pt-1.5 sm:pt-2 xl:pt-3 w-full sm:w-auto">
                 <Magnetic strength={0.2} activeDistance={35} className="w-full sm:w-auto">
                   <Press className="w-full sm:w-auto" strength={0.7} vibrate>
                     <Link
                       href={`/${lang}/for-providers/apply`}
-                      className="group inline-flex items-center justify-between gap-4 p-3.5 sm:p-4 rounded-2xl bg-white hover:bg-neutral-50 border border-neutral-200/90 hover:border-neutral-300 transition-all duration-200 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_-4px_rgba(0,0,0,0.1)] w-full sm:min-w-[280px]"
+                      className="group inline-flex items-center justify-between gap-3 sm:gap-4 p-3 sm:p-3.5 xl:p-4 rounded-2xl bg-white hover:bg-neutral-50 border border-neutral-200/90 hover:border-neutral-300 transition-all duration-200 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_-4px_rgba(0,0,0,0.1)] w-full sm:min-w-[240px] xl:min-w-[280px]"
                     >
                       <div className="flex flex-col text-start">
-                        <span className="font-heading text-sm sm:text-base font-semibold tracking-tight text-neutral-950 transition-colors">
+                        <span className="font-heading text-xs sm:text-sm xl:text-base font-semibold tracking-tight text-neutral-950 transition-colors">
                           {isAr ? 'انضم إلى الشبكة' : 'Join network'}
                         </span>
-                        <span className="font-sans text-xs text-neutral-500 transition-colors">
+                        <span className="font-sans text-[11px] sm:text-xs text-neutral-500 transition-colors">
                           {isAr ? 'لمزودي التدريب' : 'for training providers'}
                         </span>
                       </div>
-                      <div className="h-9 w-9 rounded-xl bg-neutral-950 hover:bg-black text-white flex items-center justify-center transition-colors shrink-0 shadow-sm shadow-neutral-900/10">
-                        <ArrowRight size={16} className="rtl:-scale-x-100 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
+                      <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl bg-neutral-950 hover:bg-black text-white flex items-center justify-center transition-colors shrink-0 shadow-sm shadow-neutral-900/10">
+                        <ArrowRight size={15} className="rtl:-scale-x-100 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
                       </div>
                     </Link>
                   </Press>
@@ -232,13 +232,13 @@ export default function HowItWorks() {
               </div>
             </m.div>
 
-            {/* RIGHT COLUMN: Step Tabs on Top + Large White Window with Mockup */}
+            {/* RIGHT COLUMN: Active Step Card + Step Tabs Docked Under */}
             <m.div
               initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewportOnceMobile}
               transition={{ duration: dur.slow, ease: ease.out, delay: 0.1 }}
-              className="lg:col-span-7 flex flex-col gap-4"
+              className="lg:col-span-7 flex flex-col gap-2.5 sm:gap-3 xl:gap-4"
             >
 
               {/* Step Navigation Tabs — Ecomflow-style row docked UNDER the panel */}
@@ -249,7 +249,7 @@ export default function HowItWorks() {
                     <button
                       key={st.id}
                       onClick={() => goToStep(idx)}
-                      className={`group relative flex min-h-[44px] items-center justify-center gap-1 sm:gap-1.5 py-2 px-1.5 xs:px-2 sm:px-3 rounded-xl border transition-colors duration-200 text-[11px] xs:text-xs font-medium cursor-pointer touch-manipulation select-none active:scale-[0.98] ${
+                      className={`group relative flex min-h-[38px] sm:min-h-[42px] items-center justify-center gap-1 sm:gap-1.5 py-1.5 sm:py-2 px-1.5 xs:px-2 sm:px-3 rounded-xl border transition-colors duration-200 text-[11px] xs:text-xs font-medium cursor-pointer touch-manipulation select-none active:scale-[0.98] ${
                         isActive
                           ? 'text-white border-neutral-950'
                           : 'bg-white text-neutral-600 border-neutral-200 hover:border-neutral-300 hover:text-neutral-950 hover:bg-neutral-50'
@@ -298,18 +298,18 @@ export default function HowItWorks() {
                     animate="center"
                     exit={prefersReducedMotion ? 'center' : 'exit'}
                     transition={{ duration: dur.base, ease: ease.out }}
-                    className="relative rounded-2xl sm:rounded-3xl border border-neutral-200/90 bg-white p-3.5 xs:p-4 sm:p-5 lg:p-5 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.06)] overflow-hidden transition-colors"
+                    className="relative rounded-2xl sm:rounded-3xl border border-neutral-200/90 bg-white p-3 sm:p-4 xl:p-5 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.06)] overflow-hidden transition-colors"
                   >
-                    <div className="space-y-2.5 sm:space-y-3 relative z-10">
+                    <div className="space-y-2 sm:space-y-2.5 xl:space-y-3 relative z-10">
                       {/* Card Header with Eyebrow and Headline */}
-                      <div className="space-y-1 text-start">
-                        <span className={`font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider tabular-nums ${currentStep.tagColor}`}>
+                      <div className="space-y-0.5 sm:space-y-1 text-start">
+                        <span className={`font-mono text-[9.5px] sm:text-[10px] xl:text-[11px] font-semibold uppercase tracking-wider tabular-nums ${currentStep.tagColor}`}>
                           {currentStep.tag}
                         </span>
-                        <h3 className="font-heading text-lg sm:text-xl font-semibold text-neutral-950 tracking-tight leading-[1.3]">
+                        <h3 className="font-heading text-base sm:text-lg xl:text-xl font-semibold text-neutral-950 tracking-tight leading-[1.25]">
                           {currentStep.headline}
                         </h3>
-                        <p className="font-sans text-sm sm:text-base text-neutral-600 font-normal leading-relaxed">
+                        <p className="font-sans text-xs sm:text-sm xl:text-base text-neutral-600 font-normal leading-relaxed">
                           {currentStep.desc}
                         </p>
                       </div>
@@ -321,7 +321,7 @@ export default function HowItWorks() {
                     </div>
 
                     {/* Card Bottom Progress Dots */}
-                    <div className="flex items-center justify-between pt-1 mt-2.5 border-t border-neutral-200 text-xs text-neutral-500">
+                    <div className="flex items-center justify-between pt-1 mt-2 border-t border-neutral-200 text-xs text-neutral-500">
                       <div className="flex items-center">
                         {steps.map((_, dotIdx) => (
                           <button
@@ -329,7 +329,7 @@ export default function HowItWorks() {
                             onClick={() => goToStep(dotIdx)}
                             aria-label={`Go to step ${dotIdx + 1}`}
                             aria-current={activeStep === dotIdx}
-                            className="group flex h-9 w-5 items-center justify-center"
+                            className="group flex h-8 w-5 items-center justify-center"
                           >
                             <span
                               className={`block h-1.5 rounded-full transition-all duration-300 ${
@@ -344,7 +344,7 @@ export default function HowItWorks() {
 
                       <button
                         onClick={() => goToStep((activeStep + 1) % steps.length)}
-                        className="inline-flex min-h-[38px] items-center gap-1.5 font-medium text-xs text-neutral-600 hover:text-neutral-950 transition-colors"
+                        className="inline-flex min-h-[34px] items-center gap-1.5 font-medium text-xs text-neutral-600 hover:text-neutral-950 transition-colors"
                       >
                         <span>{isAr ? 'الخطوة التالية' : 'Next Step'}</span>
                         <ArrowRight size={12} className="rtl:-scale-x-100" />
@@ -373,16 +373,6 @@ export default function HowItWorks() {
           className="hidden lg:flex w-full absolute inset-0 h-full bg-black text-white shadow-2xl flex-col justify-start items-center overflow-hidden z-30 pointer-events-none select-none"
           aria-hidden="true"
         >
-          {/* Subtle dark technical dot grid */}
-          <div
-            className="absolute inset-0 opacity-[0.06]"
-            style={{
-              backgroundImage:
-                'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.7) 1px, transparent 0)',
-              backgroundSize: '36px 36px',
-            }}
-          />
-
           {/* Architectural horizontal garage door shutter slats */}
           <div
             className="absolute inset-0 opacity-[0.75]"

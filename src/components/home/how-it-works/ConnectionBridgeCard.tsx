@@ -16,16 +16,16 @@ interface ConnectionBridgeCardProps {
  */
 export default function ConnectionBridgeCard({ isAr = false }: ConnectionBridgeCardProps) {
   return (
-    <div className="relative w-full rounded-2xl bg-white border border-neutral-200/90 p-3 sm:p-5 overflow-hidden font-sans shadow-xs">
+    <div className="relative w-full rounded-2xl bg-white border border-neutral-200/90 p-2.5 sm:p-3.5 xl:p-4 overflow-hidden font-sans shadow-xs">
       {/* Top Meta Header */}
-      <div className="relative z-10 flex items-center justify-between pb-2 mb-2 border-b border-neutral-200/70 text-xs">
+      <div className="relative z-10 flex items-center justify-between pb-1.5 mb-1.5 sm:pb-2 sm:mb-2 border-b border-neutral-200/70 text-xs">
         <div className="flex items-center gap-1.5 text-neutral-700">
-          <span className="font-mono text-[10px] text-neutral-400 font-semibold tracking-wider tabular-nums">[ 03_CONNECTION ]</span>
-          <span className="font-heading font-semibold text-[11px] sm:text-xs tracking-tight">
+          <span className="font-mono text-[9px] sm:text-[10px] text-neutral-400 font-semibold tracking-wider tabular-nums">[ 03_CONNECTION ]</span>
+          <span className="font-heading font-semibold text-[10.5px] sm:text-xs tracking-tight">
             {isAr ? 'الربط المباشر بين الطرفين' : 'DIRECT ENTERPRISE ENGAGEMENT'}
           </span>
         </div>
-        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[10px] font-semibold uppercase tracking-wider">
+        <div className="flex items-center gap-1 px-1.5 sm:px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider">
           <span className="relative flex h-1.5 w-1.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
             <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-600" />
@@ -35,7 +35,7 @@ export default function ConnectionBridgeCard({ isAr = false }: ConnectionBridgeC
       </div>
 
       {/* Center Horizontal Pipeline Diagram Stage */}
-      <div className="relative z-10 h-44 sm:h-48 w-full flex flex-col justify-center items-center my-0.5">
+      <div className="relative z-10 h-32 xs:h-36 sm:h-40 lg:h-36 xl:h-44 w-full flex flex-col justify-center items-center my-0.5">
         {/* Horizontal Pipeline Track */}
         <div className="relative w-full max-w-xs sm:max-w-sm flex items-center justify-between px-2 sm:px-4">
           {/* Connector Line Track (Background) */}
@@ -57,12 +57,12 @@ export default function ConnectionBridgeCard({ isAr = false }: ConnectionBridgeC
 
           {/* LEFT NODE: Enterprise / Company */}
           <div className="relative z-10 flex flex-col items-center">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-neutral-50 border border-neutral-200/90 flex items-center justify-center shadow-xs text-neutral-700 transition-transform hover:scale-105">
-              <Building2 size={18} strokeWidth={1.75} />
+            <div className="w-8 h-8 sm:w-9 sm:h-9 xl:w-10 xl:h-10 rounded-xl bg-neutral-50 border border-neutral-200/90 flex items-center justify-center shadow-xs text-neutral-700 transition-transform hover:scale-105">
+              <Building2 size={16} strokeWidth={1.75} />
             </div>
             {/* Small Conduit Anchor Dot */}
             <div className="mt-1 w-1.5 h-1.5 rounded-xs bg-neutral-900" />
-            <span className="mt-0.5 text-[8.5px] sm:text-[9.5px] font-bold uppercase tracking-wider text-neutral-600 font-mono">
+            <span className="mt-0.5 text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-neutral-600 font-mono">
               {isAr ? 'المنشأة' : 'ENTERPRISE'}
             </span>
           </div>
@@ -72,14 +72,14 @@ export default function ConnectionBridgeCard({ isAr = false }: ConnectionBridgeC
             {/* Pulsing Aura */}
             <div className="relative">
               <span className="animate-ping absolute inset-0 rounded-2xl bg-emerald-500/20 pointer-events-none" />
-              <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white border-2 border-neutral-950 p-1 flex items-center justify-center shadow-md">
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 xl:w-11 xl:h-11 rounded-2xl bg-white border-2 border-neutral-950 p-1 flex items-center justify-center shadow-md">
                 {/* Isometric Cube Shape Frame */}
-                <div className="relative w-7 h-7 flex items-center justify-center">
+                <div className="relative w-6 h-6 flex items-center justify-center">
                   <Image
                     src="/images/brand/pontlook-icon-orange.png"
                     alt="PontLook"
-                    width={22}
-                    height={22}
+                    width={18}
+                    height={18}
                     className="object-contain"
                   />
                 </div>
@@ -87,19 +87,19 @@ export default function ConnectionBridgeCard({ isAr = false }: ConnectionBridgeC
             </div>
             {/* Conduit Anchor Dot */}
             <div className="mt-1 w-1.5 h-1.5 rounded-xs bg-neutral-900" />
-            <span className="mt-0.5 text-[8.5px] sm:text-[9.5px] font-extrabold tracking-wider text-neutral-950 font-mono lowercase">
+            <span className="mt-0.5 text-[8px] sm:text-[9px] font-extrabold tracking-wider text-neutral-950 font-mono lowercase">
               pontlook
             </span>
           </div>
 
           {/* RIGHT NODE: Vetted Provider */}
           <div className="relative z-10 flex flex-col items-center">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-neutral-50 border border-neutral-200/90 flex items-center justify-center shadow-xs text-neutral-700 transition-transform hover:scale-105">
-              <GraduationCap size={18} strokeWidth={1.75} />
+            <div className="w-8 h-8 sm:w-9 sm:h-9 xl:w-10 xl:h-10 rounded-xl bg-neutral-50 border border-neutral-200/90 flex items-center justify-center shadow-xs text-neutral-700 transition-transform hover:scale-105">
+              <GraduationCap size={16} strokeWidth={1.75} />
             </div>
             {/* Small Conduit Anchor Dot */}
             <div className="mt-1 w-1.5 h-1.5 rounded-xs bg-neutral-900" />
-            <span className="mt-0.5 text-[8.5px] sm:text-[9.5px] font-bold uppercase tracking-wider text-neutral-600 font-mono">
+            <span className="mt-0.5 text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-neutral-600 font-mono">
               {isAr ? 'مركز التدريب' : 'PROVIDER'}
             </span>
           </div>
@@ -110,11 +110,11 @@ export default function ConnectionBridgeCard({ isAr = false }: ConnectionBridgeC
           initial={{ opacity: 0, y: 10, rotate: isAr ? 2 : -2 }}
           animate={{ opacity: 1, y: 0, rotate: isAr ? 2 : -2 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="relative z-20 mt-3 sm:mt-4 w-60 sm:w-72 bg-white rounded-2xl border border-neutral-200/90 p-2 sm:p-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.06)] flex items-center justify-between gap-2 transition-transform hover:rotate-0 hover:scale-[1.02]"
+          className="relative z-20 mt-2 sm:mt-2.5 xl:mt-3.5 w-52 xs:w-56 sm:w-64 xl:w-72 bg-white rounded-2xl border border-neutral-200/90 p-1.5 sm:p-2 xl:p-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.06)] flex items-center justify-between gap-2 transition-transform hover:rotate-0 hover:scale-[1.02]"
         >
           {/* Left Isometric Icon Box */}
-          <div className="w-8 h-8 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 shrink-0">
-            <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 shrink-0">
+            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M12 2L2 7l10 5 10-5-10-5z" />
               <path d="M2 17l10 5 10-5" />
               <path d="M2 12l10 5 10-5" />
@@ -123,24 +123,24 @@ export default function ConnectionBridgeCard({ isAr = false }: ConnectionBridgeC
 
           {/* Center Text */}
           <div className="flex-1 min-w-0 text-start">
-            <div className="font-mono text-[8px] font-semibold uppercase tracking-wider text-emerald-700">
+            <div className="font-mono text-[7.5px] sm:text-[8px] font-semibold uppercase tracking-wider text-emerald-700">
               {isAr ? 'من التعاقد إلى تدشين التدريب' : 'FROM AGREEMENT TO KICKOFF'}
             </div>
-            <div className="font-heading text-[10px] sm:text-[11px] font-semibold tracking-tight text-neutral-900 leading-tight truncate">
+            <div className="font-heading text-[9.5px] sm:text-[10.5px] font-semibold tracking-tight text-neutral-900 leading-tight truncate">
               {isAr ? 'عقد مباشر بدون وسطاء أو عمولات' : 'To scheduled corporate training.'}
             </div>
           </div>
 
           {/* Right Green Check */}
-          <div className="w-5 h-5 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-700 flex items-center justify-center shrink-0">
-            <Check size={11} strokeWidth={2.8} />
+          <div className="w-4.5 h-4.5 sm:w-5 sm:h-5 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-700 flex items-center justify-center shrink-0">
+            <Check size={10} strokeWidth={2.8} />
           </div>
         </m.div>
       </div>
 
       {/* Bottom Fulfillment Status (Matching reference image) */}
-      <div className="relative z-10 pt-2 border-t border-neutral-200/70 flex items-center justify-center text-center">
-        <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-medium text-neutral-600">
+      <div className="relative z-10 pt-1.5 sm:pt-2 border-t border-neutral-200/70 flex items-center justify-center text-center">
+        <span className="inline-flex items-center gap-1.5 text-[9.5px] sm:text-[10.5px] xl:text-[11px] font-medium text-neutral-600">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
           <span>
             {isAr
