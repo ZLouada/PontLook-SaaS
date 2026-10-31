@@ -5,6 +5,8 @@ import { NextRequest, NextResponse } from 'next/server';
  * Forces clean file attachments (save file dialog) even for cross-origin S3/Supabase
  * or formats that browsers default to streaming in-tab (.mp3, .pdf, .wav).
  */
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const rawUrl = searchParams.get('url');

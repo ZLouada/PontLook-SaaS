@@ -1,4 +1,13 @@
-export const revalidate = 60;
-export const dynamicParams = true;
+import { redirect } from 'next/navigation';
+import type { Locale } from '@/i18n/config';
 
-export { default, generateMetadata, generateStaticParams } from '../blog/[slug]/page';
+export const dynamic = 'force-dynamic';
+
+export default async function ResourceSlugCatchAll({
+  params,
+}: {
+  params: Promise<{ lang: Locale; slug: string }>;
+}) {
+  const { lang, slug } = await params;
+  redirect(`/${lang}/resources/blog/${slug}`);
+}
