@@ -183,7 +183,7 @@ export interface Article {
   featuredImage?: (number | null) | Media;
   status: 'draft' | 'published';
   /**
-   * Attach executive podcast audio briefings and downloadable toolkits/e-books for this article.
+   * Attach executive podcast audio briefings (.mp3, .wav) and downloadable toolkits (.pdf, .zip) to this article.
    */
   mediaAttachments?: {
     /**

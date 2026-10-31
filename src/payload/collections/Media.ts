@@ -9,9 +9,14 @@ const dirname = path.dirname(filename)
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  labels: {
+    singular: 'Media File',
+    plural: 'Media Library (Uploads)',
+  },
   admin: {
     useAsTitle: 'alt',
     defaultColumns: ['filename', 'alt', 'mimeType', 'filesize', 'createdAt'],
+    group: 'Assets & Media',
   },
   access: {
     read: () => true,

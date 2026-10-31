@@ -4,9 +4,14 @@ import { revalidatePodcastChange, revalidatePodcastDelete } from '../hooks/reval
 
 export const Podcasts: CollectionConfig = {
   slug: 'podcasts',
+  labels: {
+    singular: 'Podcast Episode',
+    plural: 'Podcasts',
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'guest', 'duration', 'status', 'updatedAt'],
+    group: 'Resources & Content',
   },
   access: {
     read: isPublishedOrAuthenticated,

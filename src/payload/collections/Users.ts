@@ -7,6 +7,7 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
     defaultColumns: ['email', 'role', 'createdAt'],
+    group: 'Administration',
   },
   access: {
     admin: ({ req: { user } }) =>

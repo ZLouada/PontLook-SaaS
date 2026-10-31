@@ -181,12 +181,15 @@ export const AdminMediaDownloadButton: React.FC<AdminMediaDownloadButtonProps> =
 
   // If no media is uploaded yet
   if (!resolvedMedia) {
+    const isPodcast =
+      (customLabel || fieldPath || '').toLowerCase().includes('podcast') ||
+      (customLabel || fieldPath || '').toLowerCase().includes('audio')
     return (
       <div
         style={{
-          marginTop: '0.5rem',
+          marginTop: '0.375rem',
           marginBottom: '1rem',
-          padding: '0.75rem 1rem',
+          padding: '0.625rem 0.875rem',
           borderRadius: '8px',
           border: '1px dashed #334155',
           backgroundColor: '#090D16',
@@ -195,16 +198,16 @@ export const AdminMediaDownloadButton: React.FC<AdminMediaDownloadButtonProps> =
           lineHeight: '1.4',
           display: 'flex',
           alignItems: 'center',
-          gap: '0.5rem',
+          gap: '0.625rem',
         }}
       >
-        <span style={{ fontSize: '1rem', opacity: 0.6 }}>ℹ</span>
+        <span style={{ fontSize: '1.1rem' }}>{isPodcast ? '🎙️' : '📥'}</span>
         <span>
           {isLoading
             ? 'Resolving attached file metadata...'
-            : customLabel
-              ? `No ${customLabel.toLowerCase()} uploaded yet. Upload a file above to enable one-click admin download.`
-              : 'No file uploaded yet. Attach a podcast audio or document above to enable one-click admin verification.'}
+            : isPodcast
+              ? 'No podcast audio attached yet. Click the upload button above to select or drag & drop an audio file (.mp3, .m4a, .wav).'
+              : 'No downloadable file attached yet. Click the upload button above to select or drag & drop a document (.pdf, .zip, .docx).'}
         </span>
       </div>
     )

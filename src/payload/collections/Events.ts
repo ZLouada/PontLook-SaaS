@@ -4,9 +4,14 @@ import { revalidateEventChange, revalidateEventDelete } from '../hooks/revalidat
 
 export const Events: CollectionConfig = {
   slug: 'events',
+  labels: {
+    singular: 'Event',
+    plural: 'Events',
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'date', 'location', 'status', 'updatedAt'],
+    group: 'Resources & Content',
   },
   access: {
     read: isPublishedOrAuthenticated,

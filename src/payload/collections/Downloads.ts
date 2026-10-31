@@ -4,9 +4,14 @@ import { revalidateDownloadChange, revalidateDownloadDelete } from '../hooks/rev
 
 export const Downloads: CollectionConfig = {
   slug: 'downloads',
+  labels: {
+    singular: 'Downloadable Toolkit',
+    plural: 'Downloadable Resources (Toolkits)',
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'format', 'fileSize', 'status', 'updatedAt'],
+    group: 'Resources & Content',
   },
   access: {
     read: isPublishedOrAuthenticated,

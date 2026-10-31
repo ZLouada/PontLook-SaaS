@@ -4,9 +4,14 @@ import { revalidateArticleChange, revalidateArticleDelete } from '../hooks/reval
 
 export const Articles: CollectionConfig = {
   slug: 'articles',
+  labels: {
+    singular: 'Blog / Article',
+    plural: 'Blog Posts & Articles',
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'status', 'publishedAt', 'updatedAt'],
+    group: 'Resources & Content',
   },
   access: {
     read: isPublishedOrAuthenticated,
@@ -120,8 +125,9 @@ export const Articles: CollectionConfig = {
       type: 'group',
       label: 'Podcast & Downloadable Media',
       admin: {
+        position: 'sidebar',
         description:
-          'Attach executive podcast audio briefings and downloadable toolkits/e-books for this article.',
+          'Attach executive podcast audio briefings (.mp3, .wav) and downloadable toolkits (.pdf, .zip) to this article.',
       },
       fields: [
         {
