@@ -3,11 +3,10 @@ import Hero from '@/components/home/Hero';
 import { Locale, i18n, isArabicLocale } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 
-import DeferredHowItWorks from '@/components/home/DeferredHowItWorks';
-import HowItWorksStatic from '@/components/home/HowItWorksStatic';
-import DeferredWhyDifferent from '@/components/home/DeferredWhyDifferent';
-import WhyDifferentStatic from '@/components/home/WhyDifferentStatic';
-import ProviderTeaser from '@/components/home/ProviderTeaser';
+import HomeRoadmapSteps from '@/components/home/HomeRoadmapSteps';
+import HomeWhyDifferent from '@/components/home/HomeWhyDifferent';
+import HomeCollaborationPathways from '@/components/home/HomeCollaborationPathways';
+import HomeGuaranteeSection from '@/components/home/HomeGuaranteeSection';
 import { getDictionary } from '@/i18n';
 
 export async function generateStaticParams() {
@@ -73,14 +72,26 @@ export default async function HomePage({
 }) {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
+  const isAr = isArabicLocale(lang);
   const dict = await getDictionary(lang);
 
   return (
     <>
       <Hero />
-      <DeferredHowItWorks fallback={<HowItWorksStatic lang={lang} dict={dict} />} />
-      <DeferredWhyDifferent fallback={<WhyDifferentStatic lang={lang} dict={dict} />} />
-      <ProviderTeaser lang={lang} dict={dict} />
+      <div
+        style={
+          {
+            '--k': '#ffffff',
+            '--w': '#000000',
+          } as React.CSSProperties
+        }
+        className="bg-black text-white selection:bg-white selection:text-black font-sans overflow-x-hidden"
+      >
+        <HomeRoadmapSteps isAr={isAr} lang={lang} dict={dict} />
+        <HomeWhyDifferent isAr={isAr} lang={lang} dict={dict} />
+        <HomeCollaborationPathways isAr={isAr} lang={lang} dict={dict} />
+        <HomeGuaranteeSection isAr={isAr} lang={lang} />
+      </div>
     </>
   );
 }
