@@ -11,7 +11,7 @@ const securityHeaders = [
   },
   {
     key: 'X-Frame-Options',
-    value: 'DENY',
+    value: 'SAMEORIGIN',
   },
   {
     key: 'X-Content-Type-Options',
@@ -29,12 +29,14 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://api.web3forms.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://api.web3forms.com https://challenges.cloudflare.com https://static.cloudflareinsights.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "img-src 'self' data: blob: https:",
       "font-src 'self' data: https://fonts.gstatic.com",
-      "connect-src 'self' https://api.web3forms.com https://*.resend.com https://*.sanity.io wss://*.sanity.io",
-      "frame-ancestors 'none'",
+      "frame-src 'self' https://challenges.cloudflare.com",
+      "connect-src 'self' https://api.web3forms.com https://*.resend.com https://*.supabase.co https://challenges.cloudflare.com",
+      "worker-src 'self' blob:",
+      "frame-ancestors 'self'",
       "base-uri 'self'",
       "form-action 'self' https://api.web3forms.com",
     ].join('; '),
