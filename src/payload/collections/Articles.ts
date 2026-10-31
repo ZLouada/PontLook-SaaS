@@ -116,6 +116,93 @@ export const Articles: CollectionConfig = {
       },
     },
     {
+      name: 'mediaAttachments',
+      type: 'group',
+      label: 'Podcast & Downloadable Media',
+      admin: {
+        description:
+          'Attach executive podcast audio briefings and downloadable toolkits/e-books for this article.',
+      },
+      fields: [
+        {
+          name: 'podcastAudio',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          admin: {
+            description:
+              'Upload a podcast episode or 4-minute executive audio summary (.mp3, .m4a, .wav). Automatically renders the audio player + download button on the blog post.',
+          },
+        },
+        {
+          name: 'podcastDownloadButton',
+          type: 'ui',
+          admin: {
+            components: {
+              Field: '@/components/payload/AdminMediaDownloadButton#AdminMediaDownloadButton',
+            },
+            custom: {
+              targetField: 'mediaAttachments.podcastAudio',
+              label: 'Podcast Audio File',
+              kind: 'podcast',
+            },
+          },
+        },
+        {
+          name: 'podcastTitle',
+          type: 'text',
+          localized: true,
+          required: false,
+          admin: {
+            description:
+              'Optional custom title for the audio bar; defaults to the blog post title if left blank.',
+          },
+        },
+        {
+          name: 'podcastDuration',
+          type: 'text',
+          required: false,
+          admin: {
+            description: 'Episode duration (e.g. "04:15" or "14 mins").',
+          },
+        },
+        {
+          name: 'downloadableAttachment',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          admin: {
+            description:
+              'Attach an E-Book PDF, checklist, or toolkit file. Automatically renders the sleek Download Card & Button on the blog post.',
+          },
+        },
+        {
+          name: 'attachmentDownloadButton',
+          type: 'ui',
+          admin: {
+            components: {
+              Field: '@/components/payload/AdminMediaDownloadButton#AdminMediaDownloadButton',
+            },
+            custom: {
+              targetField: 'mediaAttachments.downloadableAttachment',
+              label: 'Downloadable Toolkit File',
+              kind: 'attachment',
+            },
+          },
+        },
+        {
+          name: 'downloadButtonLabel',
+          type: 'text',
+          localized: true,
+          required: false,
+          admin: {
+            description:
+              'Optional custom CTA label (falls back to localized default "Download Executive Toolkit" / "تحميل الملف المرفق").',
+          },
+        },
+      ],
+    },
+    {
       name: 'seoEditor',
       type: 'ui',
       admin: {

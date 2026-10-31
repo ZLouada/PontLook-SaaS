@@ -108,6 +108,21 @@ export const Downloads: CollectionConfig = {
       },
     },
     {
+      name: 'fileDownloadPreview',
+      type: 'ui',
+      admin: {
+        position: 'sidebar',
+        components: {
+          Field: '@/components/payload/AdminMediaDownloadButton#AdminMediaDownloadButton',
+        },
+        custom: {
+          targetField: 'file',
+          label: 'Attached Toolkit File',
+          kind: 'attachment',
+        },
+      },
+    },
+    {
       name: 'status',
       type: 'select',
       required: true,

@@ -129,6 +129,22 @@ export const getPayloadClient = cache(async () => {
   return await getPayload({ config: configPromise })
 })
 
+export interface AdaptedMediaAttachment {
+  url: string
+  filename: string
+  filesize: number | null
+  mimeType: string | null
+  fileBadge?: string
+}
+
+export interface AdaptedMediaAttachments {
+  podcastAudio: AdaptedMediaAttachment | null
+  podcastTitle?: string | null
+  podcastDuration?: string | null
+  downloadableAttachment: AdaptedMediaAttachment | null
+  downloadButtonLabel?: string | null
+}
+
 // Types for component compatibility
 export interface AdaptedArticle {
   id: string
@@ -146,6 +162,7 @@ export interface AdaptedArticle {
   image: string | null
   imageAlt?: string | null
   status: string
+  mediaAttachments?: AdaptedMediaAttachments | null
   author: {
     name: string
     image: string | null
@@ -268,6 +285,40 @@ async function resolveMediaDoc(payload: any, media: any, locale?: Locale): Promi
   return media
 }
 
+// Helper: Resolve Media document and format as AdaptedMediaAttachment
+export async function adaptMediaAttachment(
+  payload: any,
+  mediaRef: any,
+  locale?: Locale
+): Promise<AdaptedMediaAttachment | null> {
+  if (!mediaRef) return null
+  const resolved = await resolveMediaDoc(payload, mediaRef, locale)
+  if (!resolved) return null
+
+  const url = getMediaUrl(resolved)
+  if (!url) return null
+
+  const filename =
+    typeof resolved === 'object' && resolved.filename
+      ? resolved.filename
+      : url.split('/').pop() || 'file'
+  const filesize =
+    typeof resolved === 'object' && typeof resolved.filesize === 'number'
+      ? resolved.filesize
+      : null
+  const mimeType =
+    typeof resolved === 'object' && typeof resolved.mimeType === 'string'
+      ? resolved.mimeType
+      : null
+
+  return {
+    url,
+    filename,
+    filesize,
+    mimeType,
+  }
+}
+
 // 1. Get Published Articles
 export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedArticle[]> => {
   try {
@@ -301,6 +352,25 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
         const categorySlug = normalizeCategorySlug(art.category)
         const categoryLabel = getCategoryLabel(art.category, locale)
 
+        const podcastMedia = await adaptMediaAttachment(payload, art.mediaAttachments?.podcastAudio, locale)
+        const downloadMedia = await adaptMediaAttachment(payload, art.mediaAttachments?.downloadableAttachment, locale)
+        const mediaAttachments: AdaptedMediaAttachments | null =
+          podcastMedia || downloadMedia
+            ? {
+                podcastAudio: podcastMedia,
+                podcastTitle:
+                  typeof art.mediaAttachments?.podcastTitle === 'object'
+                    ? art.mediaAttachments.podcastTitle[toPayloadLocale(locale)] || art.mediaAttachments.podcastTitle.en
+                    : art.mediaAttachments?.podcastTitle || null,
+                podcastDuration: art.mediaAttachments?.podcastDuration || null,
+                downloadableAttachment: downloadMedia,
+                downloadButtonLabel:
+                  typeof art.mediaAttachments?.downloadButtonLabel === 'object'
+                    ? art.mediaAttachments.downloadButtonLabel[toPayloadLocale(locale)] || art.mediaAttachments.downloadButtonLabel.en
+                    : art.mediaAttachments?.downloadButtonLabel || null,
+              }
+            : null
+
         return {
           id: String(art.id),
           slug: art.slug,
@@ -317,6 +387,7 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
           image: imageUrl,
           imageAlt: imageAlt || null,
           status: art.status || 'published',
+          mediaAttachments,
           author: {
             name: 'PontLook Research',
             image: null,
@@ -388,6 +459,25 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
     const categorySlug = normalizeCategorySlug(art.category)
     const categoryLabel = getCategoryLabel(art.category, locale)
 
+    const podcastMedia = await adaptMediaAttachment(payload, art.mediaAttachments?.podcastAudio, locale)
+    const downloadMedia = await adaptMediaAttachment(payload, art.mediaAttachments?.downloadableAttachment, locale)
+    const mediaAttachments: AdaptedMediaAttachments | null =
+      podcastMedia || downloadMedia
+        ? {
+            podcastAudio: podcastMedia,
+            podcastTitle:
+              typeof art.mediaAttachments?.podcastTitle === 'object'
+                ? art.mediaAttachments.podcastTitle[toPayloadLocale(locale)] || art.mediaAttachments.podcastTitle.en
+                : art.mediaAttachments?.podcastTitle || null,
+            podcastDuration: art.mediaAttachments?.podcastDuration || null,
+            downloadableAttachment: downloadMedia,
+            downloadButtonLabel:
+              typeof art.mediaAttachments?.downloadButtonLabel === 'object'
+                ? art.mediaAttachments.downloadButtonLabel[toPayloadLocale(locale)] || art.mediaAttachments.downloadButtonLabel.en
+                : art.mediaAttachments?.downloadButtonLabel || null,
+          }
+        : null
+
     return {
       id: String(art.id),
       slug: art.slug,
@@ -404,6 +494,7 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
       image: imageUrl,
       imageAlt: imageAlt || null,
       status: art.status || 'published',
+      mediaAttachments,
       author: {
         name: 'PontLook Research',
         image: null,

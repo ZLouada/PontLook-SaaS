@@ -9,6 +9,7 @@ import Reveal from '@/components/shared/Reveal';
 import { ArrowLeft, Calendar, User } from '@/components/icons';
 import { getArticleBySlug, getAllArticleSlugs } from '@/lib/payload/resources';
 import { RichText } from '@/components/resources/RichText';
+import { BlogMediaActionCard } from '@/components/resources/BlogMediaActionCard';
 
 export const revalidate = 60;
 export const dynamicParams = true;
@@ -220,6 +221,19 @@ export default async function BlogPostDetailPage({
                 priority
                 sizes="(max-width: 896px) 100vw, 896px"
                 className="object-cover"
+              />
+            </div>
+          </Reveal>
+        )}
+
+        {/* Executive Media & Podcast Action Card */}
+        {article.mediaAttachments && (
+          <Reveal delay={0.22}>
+            <div className="mb-10">
+              <BlogMediaActionCard
+                mediaAttachments={article.mediaAttachments}
+                postTitle={title}
+                lang={lang}
               />
             </div>
           </Reveal>

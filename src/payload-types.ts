@@ -182,6 +182,31 @@ export interface Article {
   } | null;
   featuredImage?: (number | null) | Media;
   status: 'draft' | 'published';
+  /**
+   * Attach executive podcast audio briefings and downloadable toolkits/e-books for this article.
+   */
+  mediaAttachments?: {
+    /**
+     * Upload a podcast episode or 4-minute executive audio summary (.mp3, .m4a, .wav). Automatically renders the audio player + download button on the blog post.
+     */
+    podcastAudio?: (number | null) | Media;
+    /**
+     * Optional custom title for the audio bar; defaults to the blog post title if left blank.
+     */
+    podcastTitle?: string | null;
+    /**
+     * Episode duration (e.g. "04:15" or "14 mins").
+     */
+    podcastDuration?: string | null;
+    /**
+     * Attach an E-Book PDF, checklist, or toolkit file. Automatically renders the sleek Download Card & Button on the blog post.
+     */
+    downloadableAttachment?: (number | null) | Media;
+    /**
+     * Optional custom CTA label (falls back to localized default "Download Executive Toolkit" / "تحميل الملف المرفق").
+     */
+    downloadButtonLabel?: string | null;
+  };
   meta?: {
     /**
      * Custom browser tab & OG title (leave empty to use article title)
@@ -523,6 +548,15 @@ export interface ArticlesSelect<T extends boolean = true> {
   content?: T;
   featuredImage?: T;
   status?: T;
+  mediaAttachments?:
+    | T
+    | {
+        podcastAudio?: T;
+        podcastTitle?: T;
+        podcastDuration?: T;
+        downloadableAttachment?: T;
+        downloadButtonLabel?: T;
+      };
   meta?:
     | T
     | {
