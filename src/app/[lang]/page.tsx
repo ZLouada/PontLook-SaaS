@@ -85,7 +85,7 @@ export default async function HomePage({
             '--w': '#000000',
           } as React.CSSProperties
         }
-        className="bg-black text-white selection:bg-white selection:text-black font-sans overflow-x-hidden"
+        className="bg-black text-white selection:bg-white selection:text-black font-sans"
       >
         <HomeRoadmapSteps isAr={isAr} lang={lang} dict={dict} />
         <HomeWhyDifferent isAr={isAr} lang={lang} dict={dict} />

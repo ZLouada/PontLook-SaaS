@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from '@/components/icons';
 
@@ -218,48 +218,60 @@ export default function HomeCollaborationPathways({
   const chapters = isAr ? chaptersAr : chaptersEn;
   const currentChapter = chapters[activeIdx] || chapters[0];
 
+  const updateScrollIndex = useCallback(() => {
+    const storyEl = storyRef.current;
+    if (!storyEl) return;
+
+    const r = storyEl.getBoundingClientRect();
+    const vh = window.innerHeight || 800;
+    const scrollableHeight = r.height - vh;
+
+    if (scrollableHeight <= 0) return;
+
+    // When the top of storyEl passes 0, user is scrolling through this section
+    const progress = Math.min(1, Math.max(0, -r.top / scrollableHeight));
+    const n = chapters.length;
+    const nextIdx = Math.min(n - 1, Math.floor(progress * n));
+
+    setActiveIdx(nextIdx);
+  }, [chapters.length]);
+
   useEffect(() => {
-    const cl = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
-    let activeIdxCurrent = -1;
     let ticking = false;
 
     const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        ticking = false;
-        const storyEl = storyRef.current;
-        if (!storyEl) return;
-
-        const r = storyEl.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > window.innerHeight) return;
-
-        const scrollableHeight = r.height - window.innerHeight;
-        if (scrollableHeight <= 0) return;
-
-        const q = cl(-r.top / scrollableHeight);
-        const n = chapters.length;
-        const i = Math.min(n - 1, Math.floor(q * n));
-
-        if (i !== activeIdxCurrent) {
-          activeIdxCurrent = i;
-          setActiveIdx(i);
-        }
-      });
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateScrollIndex();
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    window.addEventListener('resize', onScroll, { passive: true });
+    updateScrollIndex();
 
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [chapters.length]);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [updateScrollIndex]);
 
   const scrollToChapter = (idx: number) => {
     const storyEl = storyRef.current;
     if (!storyEl) return;
-    const scrollableHeight = storyEl.scrollHeight - window.innerHeight;
+
+    const r = storyEl.getBoundingClientRect();
+    const vh = window.innerHeight || 800;
+    const scrollableHeight = r.height - vh;
+    const currentScrollY = window.scrollY || window.pageYOffset;
+
+    // Precise absolute document coordinate
     const targetScroll =
-      storyEl.offsetTop + (idx / (chapters.length - 1)) * scrollableHeight;
+      currentScrollY + r.top + (idx / chapters.length + 0.02) * scrollableHeight;
+
     window.scrollTo({ top: targetScroll, behavior: 'smooth' });
   };
 
@@ -267,18 +279,13 @@ export default function HomeCollaborationPathways({
     <section
       ref={storyRef}
       id="collaboration-pathways"
-      className="relative h-[240vh] md:h-[400vh] bg-black select-none touch-pan-y border-t border-white/20"
+      className="relative h-[280vh] md:h-[400vh] bg-black select-none touch-pan-y border-t border-white/20"
     >
       {/* Sticky 100svh Viewport */}
-      <div className="sticky top-0 h-[100svh] overflow-hidden bg-black text-white flex items-center touch-pan-y">
-        {/* Ambient Subtle Background Glow */}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] bg-[#FF5C00]/5 rounded-full blur-[150px] pointer-events-none -z-10"
-          aria-hidden="true"
-        />
-
-        <div className="max-w-7xl mx-auto w-full px-5 sm:px-8 lg:px-12 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+      <div className="sticky top-0 h-[100svh] min-h-[580px] overflow-hidden bg-black text-white flex items-center touch-pan-y">
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-10 lg:px-16 py-6 sm:py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 xl:gap-20 items-center">
+            
             {/* LEFT SIDE: Stepper + Headline + Subtitle + Action CTA */}
             <div className="lg:col-span-6 flex flex-col justify-center">
               {/* Upper Eyebrow Context */}
@@ -288,8 +295,8 @@ export default function HomeCollaborationPathways({
                   : 'COLLABORATION PATHWAYS · 4 OPTIONS'}
               </div>
 
-              {/* Stepper Titles */}
-              <div className="flex flex-wrap lg:flex-col gap-2.5 sm:gap-3.5 mb-5 sm:mb-7 font-mono text-xs">
+              {/* Stepper Titles (Pure Black & White) */}
+              <div className="flex flex-wrap lg:flex-col gap-2.5 sm:gap-3 mb-5 sm:mb-7 font-mono text-xs">
                 {chapters.map((ch, idx) => {
                   const isActive = idx === activeIdx;
                   return (
@@ -297,16 +304,16 @@ export default function HomeCollaborationPathways({
                       key={ch.id}
                       type="button"
                       onClick={() => scrollToChapter(idx)}
-                      className={`flex items-center gap-2.5 transition-all duration-300 text-start cursor-pointer outline-none ${
+                      className={`flex items-center gap-2.5 transition-all duration-200 text-start cursor-pointer outline-none ${
                         isActive
                           ? 'text-white font-semibold lg:translate-x-1.5 rtl:lg:-translate-x-1.5'
                           : 'text-neutral-500 font-normal hover:text-neutral-300'
                       }`}
                     >
                       <span
-                        className={`w-2 h-2 rounded-full transition-all duration-300 shrink-0 ${
+                        className={`w-2 h-2 rounded-full transition-all duration-200 shrink-0 ${
                           isActive
-                            ? 'bg-[#FF5C00] shadow-[0_0_10px_#FF5C00] scale-125'
+                            ? 'bg-white shadow-[0_0_10px_rgba(255,255,255,0.9)] scale-125'
                             : 'bg-white/20'
                         }`}
                       />
@@ -319,16 +326,16 @@ export default function HomeCollaborationPathways({
               </div>
 
               {/* Main Headline */}
-              <h2 className="font-heading font-bold text-[clamp(1.75rem,3.6vw,3.4rem)] leading-[1.1] tracking-tight text-white transition-opacity duration-200">
+              <h2 className="font-heading font-semibold text-2xl sm:text-4xl lg:text-5xl tracking-tight leading-[1.08] text-white transition-opacity duration-200">
                 {currentChapter.title}
               </h2>
 
               {/* Subtitle */}
-              <p className="mt-4 sm:mt-5 font-sans text-sm sm:text-base md:text-lg text-neutral-400 leading-relaxed font-normal">
+              <p className="mt-3 sm:mt-5 font-sans text-sm sm:text-base md:text-lg text-neutral-400 leading-relaxed font-normal max-w-xl">
                 {currentChapter.desc}
               </p>
 
-              {/* Action Button */}
+              {/* Action Buttons (Pure Black & White) */}
               <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3">
                 <Link
                   href={currentChapter.ctaHref}
@@ -346,17 +353,17 @@ export default function HomeCollaborationPathways({
               </div>
             </div>
 
-            {/* RIGHT SIDE: Content Facing the Title (En Face, Telemetry Header + Rows + Protocol Bar) */}
+            {/* RIGHT SIDE: Content Facing the Title (Pure Black & White Canvas) */}
             <div className="lg:col-span-6 flex flex-col justify-center">
               {/* Category Tag & Live Telemetry Header */}
-              <div className="flex items-center justify-between pb-3.5 border-b border-white/15">
+              <div className="flex items-center justify-between pb-3.5 border-b border-white/20">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#FF5C00] shadow-[0_0_8px_#FF5C00]" />
-                  <span className="text-[#FF5C00] font-mono text-[11px] sm:text-xs uppercase tracking-[0.06em] font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+                  <span className="text-white font-mono text-[11px] sm:text-xs uppercase tracking-[0.08em] font-semibold">
                     {currentChapter.previewHeader}
                   </span>
                 </div>
-                <span className="text-[10px] sm:text-[11px] font-mono text-neutral-500">
+                <span className="text-[10px] sm:text-[11px] font-mono text-neutral-400">
                   {isAr
                     ? `المسار ${activeIdx + 1} من 04`
                     : `OPTION 0${activeIdx + 1} / 04`}
@@ -370,7 +377,7 @@ export default function HomeCollaborationPathways({
                     key={idx}
                     className="flex justify-between items-center gap-4 py-4 sm:py-5.5 transition-all duration-200 group"
                   >
-                    <span className="font-normal text-white text-sm sm:text-base lg:text-lg group-hover:text-[#FFA048] transition-colors">
+                    <span className="font-normal text-white text-sm sm:text-base lg:text-lg group-hover:text-white transition-colors">
                       {col1}
                     </span>
                     <span className="text-neutral-400 text-end font-light font-mono text-xs sm:text-sm lg:text-base shrink-0">
@@ -380,17 +387,18 @@ export default function HomeCollaborationPathways({
                 ))}
               </div>
 
-              {/* Live Telemetry Status Bar */}
-              <div className="pt-4 flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-neutral-500 border-t border-white/10">
+              {/* Live Telemetry Status Bar (Pure Black & White) */}
+              <div className="pt-4 flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-neutral-400 border-t border-white/20">
                 <span className="flex items-center gap-2 text-neutral-300">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_#10B981]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_6px_rgba(255,255,255,0.8)]" />
                   {isAr ? 'بروتوكول ربط معتمد' : 'VERIFIED PARTNERSHIP PROTOCOL'}
                 </span>
-                <span className="text-neutral-400 uppercase tracking-wider">
+                <span className="text-neutral-400 uppercase tracking-wider font-mono">
                   {currentChapter.protocol}
                 </span>
               </div>
             </div>
+
           </div>
         </div>
       </div>
