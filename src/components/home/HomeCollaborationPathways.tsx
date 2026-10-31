@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from '@/components/icons';
 
@@ -10,148 +10,124 @@ interface HomeCollaborationPathwaysProps {
   dict?: any;
 }
 
-interface PathwayCard {
-  option: string;
+interface StoryChapter {
+  id: string;
+  num: string;
   badge: string;
   title: string;
   desc: string;
   previewHeader: string;
-  metricLabel: string;
-  metricValue: string;
-  checklist: string[];
+  rows: [string, string][];
   protocol: string;
   ctaText: string;
   ctaHref: string;
 }
-
-const STACK_CONFIGS = [
-  {
-    topClass: 'top-20 sm:top-24 lg:top-28',
-    zIndex: 10,
-    spacing: 'mb-8 sm:mb-12 lg:mb-16',
-  },
-  {
-    topClass: 'top-24 sm:top-28 lg:top-32',
-    zIndex: 20,
-    spacing: 'mb-8 sm:mb-12 lg:mb-16',
-  },
-  {
-    topClass: 'top-28 sm:top-32 lg:top-36',
-    zIndex: 30,
-    spacing: 'mb-8 sm:mb-12 lg:mb-16',
-  },
-  {
-    topClass: 'top-32 sm:top-36 lg:top-40',
-    zIndex: 40,
-    spacing: 'mb-0',
-  },
-];
 
 export default function HomeCollaborationPathways({
   isAr = false,
   lang,
   dict,
 }: HomeCollaborationPathwaysProps) {
+  const storyRef = useRef<HTMLDivElement>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+
   const exp = dict?.experience_cards;
 
-  const pathwaysEn: PathwayCard[] = [
+  const chaptersEn: StoryChapter[] = [
     {
-      option: 'OPTION // 01',
-      badge: 'FOR TRAINING FIRMS',
+      id: 'provider',
+      num: '01',
+      badge: 'For Training Firms',
       title:
         exp?.cards?.provider?.title ||
         'Deliver Training to Ready Corporate Clients',
       desc:
         exp?.cards?.provider?.subtitle ||
-        'Partner with qualified GCC enterprises that have active corporate budgets and executive buy-in.',
+        'Partner with qualified GCC enterprises that have active corporate budgets and confirmed decision-maker buy-in.',
       previewHeader:
         exp?.cards?.provider?.previewHeader ||
         'PARTNER PIPELINE · ACTIVE ENGAGEMENTS',
-      metricLabel: exp?.cards?.provider?.metricLabel || 'Lead Quality Score',
-      metricValue: exp?.cards?.provider?.metricValue || '98% Accuracy',
-      checklist: (exp?.cards?.provider?.checklist as string[]) || [
-        'Verified Corporate Budgets: Pre-approved funding in SAR & AED',
-        'Direct Executive Access: Direct introductions to CHROs & L&D heads',
-        'Zero Retainer Risk: No monthly retainers or speculative bids',
+      rows: [
+        ['Verified Corporate Budgets', 'Pre-approved SAR / AED'],
+        ['Direct Executive Access', 'Meet CHROs & CLOs directly'],
+        ['Zero Retainer Risk', 'Pay only for qualified leads'],
       ],
       protocol: 'PROTOCOL · PROVIDER NETWORK',
-      ctaText: exp?.cards?.provider?.cta || 'Apply to Join Network',
+      ctaText: exp?.cards?.provider?.cta || 'Join as a Training Provider',
       ctaHref: `/${lang}/for-providers`,
     },
     {
-      option: 'OPTION // 02',
-      badge: 'FOR ENTERPRISES',
+      id: 'enterprise',
+      num: '02',
+      badge: 'For Enterprises',
       title:
         exp?.cards?.enterprise?.title ||
-        'Find the Right Training Specialist for Your Team',
+        'Find & Match with Vetted Training Specialists',
       desc:
         exp?.cards?.enterprise?.subtitle ||
-        'Share what your team needs to achieve. We curate 2–3 handpicked, pre-scoped training proposals within 48 hours.',
+        'Tell us your workforce challenge and get directly matched with verified providers equipped to solve it.',
       previewHeader:
         exp?.cards?.enterprise?.previewHeader ||
         'ENTERPRISE MATCHING · CURATED PROGRAM',
-      metricLabel: exp?.cards?.enterprise?.metricLabel || 'Provider Fit Score',
-      metricValue: exp?.cards?.enterprise?.metricValue || '96% Match',
-      checklist: (exp?.cards?.enterprise?.checklist as string[]) || [
-        '100% Free for Buyers: Zero platform fees or procurement markups',
-        'Curated Precision: 2 to 3 handpicked proposals, zero bidding wars',
-        'Zero Sales Spam: No cold calls or unwanted vendor outreach',
+      rows: [
+        ['100% Free for Buyers', '$0 Platform Fees'],
+        ['Curated Precision', '2 to 3 handpicked proposals'],
+        ['Zero Procurement Friction', 'No cold calls or vendor spam'],
       ],
       protocol: 'PROTOCOL · ENTERPRISE MATCH',
-      ctaText: exp?.cards?.enterprise?.cta || 'Request Training Matches',
+      ctaText: exp?.cards?.enterprise?.cta || 'Find a Training Specialist',
       ctaHref: `/${lang}/find-training`,
     },
     {
-      option: 'OPTION // 03',
-      badge: 'KNOWLEDGE & RESEARCH',
+      id: 'knowledge',
+      num: '03',
+      badge: 'Knowledge & Research',
       title:
         exp?.cards?.hub?.title ||
-        'Download Practical L&D Frameworks & Toolkits',
+        'Explore Actionable L&D Insights & Guides',
       desc:
         exp?.cards?.hub?.subtitle ||
-        'GCC workforce benchmarks, localization data, and training ROI templates—completely free on our blog.',
+        'Dive into free, research-backed frameworks, workforce reports, and practical guides on regional talent trends.',
       previewHeader:
         exp?.cards?.hub?.previewHeader ||
         'KNOWLEDGE HUB · OPEN ACCESS TOOLKITS',
-      metricLabel: exp?.cards?.hub?.metricLabel || 'Practical Value',
-      metricValue: exp?.cards?.hub?.metricValue || '100% Free Access',
-      checklist: (exp?.cards?.hub?.checklist as string[]) || [
-        'Workforce Benchmarks: GCC skill shortage & Saudization reports',
-        'Diagnostic Frameworks: Step-by-step L&D audit templates',
-        'Proven Case Studies: Real data on measuring corporate training ROI',
+      rows: [
+        ['Workforce Benchmarks', 'GCC skill shortage & talent reports'],
+        ['Diagnostic Frameworks', 'Step-by-step L&D audit templates'],
+        ['Practical ROI Case Studies', 'Real corporate impact data'],
       ],
       protocol: 'PROTOCOL · OPEN ACCESS',
       ctaText: exp?.cards?.hub?.cta || 'Explore Free Resources',
       ctaHref: `/${lang}/resources`,
     },
     {
-      option: 'OPTION // 04',
-      badge: 'EXECUTIVE ADVISORY',
+      id: 'advisory',
+      num: '04',
+      badge: 'Executive Advisory',
       title:
         exp?.cards?.consultation?.title ||
         'Need Guidance? Speak Directly with Our Team',
       desc:
         exp?.cards?.consultation?.subtitle ||
-        'Discuss your specific enterprise training requirements directly with our executive advisory team.',
+        "Have unique workforce requirements or want to learn how PontLook works for your organization? We're here to help.",
       previewHeader:
         exp?.cards?.consultation?.previewHeader ||
         'DIRECT ADVISORY · EXECUTIVE CONSULTATION',
-      metricLabel: exp?.cards?.consultation?.metricLabel || 'Advisory SLA',
-      metricValue: exp?.cards?.consultation?.metricValue || 'Within 24 Hours',
-      checklist: (exp?.cards?.consultation?.checklist as string[]) || [
-        '1-on-1 Consultation: Discuss exact organizational objectives',
-        'Tailored Roadmap: Custom provider scouting and qualification',
-        '100% Confidential: No commitment and zero pressure',
+      rows: [
+        ['1-on-1 Consultation', 'Discuss exact workforce objectives'],
+        ['Custom Provider Roadmap', 'Tailored scouting & qualification'],
+        ['Response SLA', 'Within 24 Hours · Confidential'],
       ],
       protocol: 'PROTOCOL · EXECUTIVE CONSULT',
-      ctaText: exp?.cards?.consultation?.cta || 'Book an Exploratory Call',
+      ctaText: exp?.cards?.consultation?.cta || 'Book a Discovery Call',
       ctaHref: `/${lang}/contact`,
     },
   ];
 
-  const pathwaysAr: PathwayCard[] = [
+  const chaptersAr: StoryChapter[] = [
     {
-      option: 'الخيار // 01',
+      id: 'provider',
+      num: '٠١',
       badge: 'لمزودي ومراكز التدريب',
       title:
         exp?.cards?.provider?.title ||
@@ -162,19 +138,18 @@ export default function HomeCollaborationPathways({
       previewHeader:
         exp?.cards?.provider?.previewHeader ||
         'خط أنابيب الشركاء · مشاريع نشطة',
-      metricLabel: exp?.cards?.provider?.metricLabel || 'درجة جودة الفرص',
-      metricValue: exp?.cards?.provider?.metricValue || 'دقة 98%',
-      checklist: (exp?.cards?.provider?.checklist as string[]) || [
-        'ميزانيات معتمدة: تمويل مؤسسي مؤكد بالريال والدرهم',
-        'وصول تنفيذي مباشر: لقاءات مباشرة مع مديري الموارد البشرية والتدريب',
-        'انعدام المخاطرة: بدون رسوم اشتراك شهري أو مزايدات غير مضمونة',
+      rows: [
+        ['ميزانيات معتمدة ومخصصة', 'تمويل مؤكد بالريال والدرهم'],
+        ['وصول تنفيذي مباشر', 'مديرو الموارد البشرية والتدريب'],
+        ['انعدام مخاطرة الاشتراكات', 'دفع حصري مقابل الفرص المؤهلة'],
       ],
       protocol: 'بروتوكول · شبكة المزودين',
       ctaText: exp?.cards?.provider?.cta || 'قدم للانضمام إلى الشبكة',
       ctaHref: `/${lang}/for-providers`,
     },
     {
-      option: 'الخيار // 02',
+      id: 'enterprise',
+      num: '٠٢',
       badge: 'للشركات والمؤسسات',
       title:
         exp?.cards?.enterprise?.title ||
@@ -185,19 +160,18 @@ export default function HomeCollaborationPathways({
       previewHeader:
         exp?.cards?.enterprise?.previewHeader ||
         'مطابقة المنشآت · برنامج منتقى',
-      metricLabel: exp?.cards?.enterprise?.metricLabel || 'درجة ملاءمة المزود',
-      metricValue: exp?.cards?.enterprise?.metricValue || 'توافق 96%',
-      checklist: (exp?.cards?.enterprise?.checklist as string[]) || [
-        'مجاني 100% للشركات: بدون أي رسوم منصة أو هوامش مشتريات إضافية',
-        'دقة الاختيار: 2 إلى 3 عروض منتقاة بعناية وبدون مزايدات عشوائية',
-        'بدون إزعاج تسويقي: انعدام المكالمات العشوائية وعروض المبيعات المزعجة',
+      rows: [
+        ['مجاني 100% للشركات', 'صفر رسوم منصة أو عمولات خفية'],
+        ['دقة الاختيار والتوفيق', 'من 2 إلى 3 عروض منتقاة بعناية'],
+        ['انعدام التعقيدات الإدارية', 'بدون مكالمات عشوائية أو إزعاج'],
       ],
       protocol: 'بروتوكول · مطابقة المنشآت',
       ctaText: exp?.cards?.enterprise?.cta || 'اطلب مطابقة تدريبية',
       ctaHref: `/${lang}/find-training`,
     },
     {
-      option: 'الخيار // 03',
+      id: 'knowledge',
+      num: '٠٣',
       badge: 'مركز المعرفة والأبحاث',
       title:
         exp?.cards?.hub?.title ||
@@ -208,19 +182,18 @@ export default function HomeCollaborationPathways({
       previewHeader:
         exp?.cards?.hub?.previewHeader ||
         'مركز المعرفة · أدلة مفتوحة الوصول',
-      metricLabel: exp?.cards?.hub?.metricLabel || 'القيمة العملية',
-      metricValue: exp?.cards?.hub?.metricValue || 'وصول مجاني بالكامل',
-      checklist: (exp?.cards?.hub?.checklist as string[]) || [
-        'مؤشرات القوى العاملة: تقارير نقص الكفاءات ونسب التوطين الخليجية',
-        'أطر عمل تشخيصية: نماذج وقوائم تدقيق الاحتياج التدريبي خطوة بخطوة',
-        'دراسات حالة واقعية: بيانات حقيقية لقياس العائد على الاستثمار التدريبي',
+      rows: [
+        ['مؤشرات القوى العاملة', 'تقارير نقص الكفاءات ونسب التوطين'],
+        ['أطر عمل تشخيصية', 'نماذج وقوائم تدقيق الاحتياج خطوة بخطوة'],
+        ['دراسات حالة واقعية', 'بيانات حقيقية لقياس أثر التدريب'],
       ],
       protocol: 'بروتوكول · وصول مفتوح',
       ctaText: exp?.cards?.hub?.cta || 'تصفح الأدلة والموارد',
       ctaHref: `/${lang}/resources`,
     },
     {
-      option: 'الخيار // 04',
+      id: 'advisory',
+      num: '٠٤',
       badge: 'استشارة تنفيذية خاصة',
       title:
         exp?.cards?.consultation?.title ||
@@ -231,144 +204,195 @@ export default function HomeCollaborationPathways({
       previewHeader:
         exp?.cards?.consultation?.previewHeader ||
         'استشارة مباشرة · جلسة تنفيذية',
-      metricLabel: exp?.cards?.consultation?.metricLabel || 'التزام الاستجابة',
-      metricValue: exp?.cards?.consultation?.metricValue || 'خلال 24 ساعة',
-      checklist: (exp?.cards?.consultation?.checklist as string[]) || [
-        'استشارة فردية مخصصة: مراجعة مستهدفات منشأتكم التدريبية بالتفصيل',
-        'خارطة طريق مخصصة: تحديد واختيار المزودين الأنسب لاحتياجكم بدقة',
-        'سرية تامة 100%: بدون أي التزام أو ضغوط تعاقدية',
+      rows: [
+        ['استشارة فردية مخصصة', 'مراجعة مستهدفات منشأتكم التدريبية'],
+        ['خارطة طريق مخصصة', 'تحديد واختيار المزودين الأنسب لاحتياجكم'],
+        ['سرعة الاستجابة', 'خلال 24 ساعة · سرية تامة 100%'],
       ],
       protocol: 'بروتوكول · استشارة تنفيذية',
-      ctaText: exp?.cards?.consultation?.cta || 'احجز جلسة استشارية',
+      ctaText: exp?.cards?.consultation?.cta || 'احجز مكالمة استكشافية',
       ctaHref: `/${lang}/contact`,
     },
   ];
 
-  const pathways = isAr ? pathwaysAr : pathwaysEn;
+  const chapters = isAr ? chaptersAr : chaptersEn;
+  const currentChapter = chapters[activeIdx] || chapters[0];
+
+  useEffect(() => {
+    const cl = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+    let activeIdxCurrent = -1;
+    let ticking = false;
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        const storyEl = storyRef.current;
+        if (!storyEl) return;
+
+        const r = storyEl.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) return;
+
+        const scrollableHeight = r.height - window.innerHeight;
+        if (scrollableHeight <= 0) return;
+
+        const q = cl(-r.top / scrollableHeight);
+        const n = chapters.length;
+        const i = Math.min(n - 1, Math.floor(q * n));
+
+        if (i !== activeIdxCurrent) {
+          activeIdxCurrent = i;
+          setActiveIdx(i);
+        }
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [chapters.length]);
+
+  const scrollToChapter = (idx: number) => {
+    const storyEl = storyRef.current;
+    if (!storyEl) return;
+    const scrollableHeight = storyEl.scrollHeight - window.innerHeight;
+    const targetScroll =
+      storyEl.offsetTop + (idx / (chapters.length - 1)) * scrollableHeight;
+    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+  };
 
   return (
-    <section className="border-t border-white/20 py-16 sm:py-24 lg:py-28 px-4 sm:px-6 md:px-10 lg:px-16 max-w-7xl mx-auto w-full">
-      {/* Context Header */}
-      <div className="mb-12 sm:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-        <div>
-          <div className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-400 mb-3 sm:mb-4">
-            {isAr
-              ? 'مسارات التعاون والربط المؤسسي · 4 خيارات'
-              : 'COLLABORATION PATHWAYS · 4 OPTIONS'}
-          </div>
-          <h2 className="font-heading font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.05] text-white max-w-3xl mb-4 sm:mb-5">
-            {exp?.title ||
-              (isAr
-                ? 'ابدأ برؤى وأبحاث مدروسة. اعقد شراكات تثمر أثراً حقيقياً.'
-                : 'Start with Our Insights. Partner for Real Impact.')}
-          </h2>
-          <p className="text-base sm:text-lg text-neutral-400 max-w-2xl font-normal leading-relaxed">
-            {exp?.subtitle ||
-              (isAr
-                ? 'لا نكتفي بربط احتياجات الشركات مع نخبة مزودي التدريب على أرض الواقع. استكشف مدونتنا للاطلاع على أدلة مجانية ومعايير مهارية خليجية وأطر تشخيصية دقيقة، وعندما تكون جاهزاً، دعنا نوفق بينك وبين خبراء التدريب المعتمدين لتنفيذ الحلول فوراً.'
-                : "We don't just bridge corporate needs with expert providers on the ground. Explore our blog for free, in-depth L&D guides, regional skill benchmarks, and diagnostic frameworks, and whenever you're ready, let us match you directly with the verified training experts who execute the solution.")}
-          </p>
-        </div>
+    <section
+      ref={storyRef}
+      id="collaboration-pathways"
+      className="relative h-[240vh] md:h-[400vh] bg-black select-none touch-pan-y border-t border-white/20"
+    >
+      {/* Sticky 100svh Viewport */}
+      <div className="sticky top-0 h-[100svh] overflow-hidden bg-black text-white flex items-center touch-pan-y">
+        {/* Ambient Subtle Background Glow */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] bg-[#FF5C00]/5 rounded-full blur-[150px] pointer-events-none -z-10"
+          aria-hidden="true"
+        />
 
-        <div className="flex flex-wrap items-center gap-3 shrink-0">
-          <Link
-            href={`/${lang}/resources`}
-            className="inline-flex items-center justify-center px-6 py-3 bg-white text-black text-xs sm:text-sm font-semibold tracking-wide border-[1.5px] border-white hover:bg-black hover:text-white transition-colors duration-200"
-          >
-            <span>{exp?.btn_blog || (isAr ? 'استكشف الموارد المجانية' : 'Explore Free Resources')}</span>
-            <ArrowRight size={14} className="ms-2 rtl:-scale-x-100" />
-          </Link>
-          <Link
-            href={`/${lang}/find-training`}
-            className="inline-flex items-center justify-center px-6 sm:px-3 py-3 bg-transparent text-white text-xs sm:text-sm font-semibold tracking-wide border-[1.5px] border-white hover:bg-white hover:text-black transition-colors duration-200"
-          >
-            <span>{exp?.btn_match || (isAr ? 'ابدأ طلب مطابقة' : 'Find Training Partner')}</span>
-            <ArrowRight size={14} className="ms-2 rtl:-scale-x-100" />
-          </Link>
-        </div>
-      </div>
+        <div className="max-w-7xl mx-auto w-full px-5 sm:px-8 lg:px-12 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+            {/* LEFT SIDE: Stepper + Headline + Subtitle + Action CTA */}
+            <div className="lg:col-span-6 flex flex-col justify-center">
+              {/* Upper Eyebrow Context */}
+              <div className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-400 mb-3 sm:mb-4">
+                {isAr
+                  ? 'مسارات التعاون والربط المؤسسي · 4 خيارات'
+                  : 'COLLABORATION PATHWAYS · 4 OPTIONS'}
+              </div>
 
-      {/* Sticky Stacked Cards Stream */}
-      <div className="relative max-w-5xl mx-auto pb-16 sm:pb-24 lg:pb-36">
-        {pathways.map((card, idx) => {
-          const config = STACK_CONFIGS[idx] || STACK_CONFIGS[0];
+              {/* Stepper Titles */}
+              <div className="flex flex-wrap lg:flex-col gap-2.5 sm:gap-3.5 mb-5 sm:mb-7 font-mono text-xs">
+                {chapters.map((ch, idx) => {
+                  const isActive = idx === activeIdx;
+                  return (
+                    <button
+                      key={ch.id}
+                      type="button"
+                      onClick={() => scrollToChapter(idx)}
+                      className={`flex items-center gap-2.5 transition-all duration-300 text-start cursor-pointer outline-none ${
+                        isActive
+                          ? 'text-white font-semibold lg:translate-x-1.5 rtl:lg:-translate-x-1.5'
+                          : 'text-neutral-500 font-normal hover:text-neutral-300'
+                      }`}
+                    >
+                      <span
+                        className={`w-2 h-2 rounded-full transition-all duration-300 shrink-0 ${
+                          isActive
+                            ? 'bg-[#FF5C00] shadow-[0_0_10px_#FF5C00] scale-125'
+                            : 'bg-white/20'
+                        }`}
+                      />
+                      <span className="text-[11px] sm:text-xs tracking-wide">
+                        {ch.num} · {ch.badge}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
 
-          return (
-            <div
-              key={idx}
-              className={`sticky ${config.topClass} ${config.spacing}`}
-              style={{ zIndex: config.zIndex }}
-            >
-              <article className="w-full bg-black border-[1.5px] border-white/20 p-6 sm:p-8 lg:p-10 shadow-[0_-12px_36px_rgba(0,0,0,0.9),0_20px_50px_rgba(0,0,0,0.85)]">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
-                  {/* Left Details */}
-                  <div className="lg:col-span-7 space-y-4">
-                    <small className="block font-mono text-xs uppercase tracking-wider font-semibold text-neutral-400">
-                      {card.option} · {card.badge}
-                    </small>
+              {/* Main Headline */}
+              <h2 className="font-heading font-bold text-[clamp(1.75rem,3.6vw,3.4rem)] leading-[1.1] tracking-tight text-white transition-opacity duration-200">
+                {currentChapter.title}
+              </h2>
 
-                    <h3 className="font-heading font-semibold text-2xl sm:text-3xl lg:text-4xl text-white tracking-tight leading-snug">
-                      {card.title}
-                    </h3>
+              {/* Subtitle */}
+              <p className="mt-4 sm:mt-5 font-sans text-sm sm:text-base md:text-lg text-neutral-400 leading-relaxed font-normal">
+                {currentChapter.desc}
+              </p>
 
-                    <p className="text-sm sm:text-base text-neutral-300 leading-relaxed font-normal">
-                      {card.desc}
-                    </p>
-
-                    <div className="pt-2">
-                      <Link
-                        href={card.ctaHref}
-                        className="inline-flex items-center justify-center px-6 sm:px-7 py-3 sm:py-3.5 bg-white text-black text-xs sm:text-sm font-semibold tracking-wide border-[1.5px] border-white hover:bg-black hover:text-white transition-colors duration-200"
-                      >
-                        <span>{card.ctaText}</span>
-                        <ArrowRight size={14} className="ms-2 rtl:-scale-x-100" />
-                      </Link>
-                    </div>
-                  </div>
-
-                  {/* Right Architectural Specifications Panel */}
-                  <div className="lg:col-span-5">
-                    <div className="border-[1.5px] border-white/20 bg-neutral-950 p-4 sm:p-6 space-y-3.5">
-                      <div className="font-mono text-[10px] sm:text-[11px] font-semibold text-neutral-400 tracking-wider uppercase tabular-nums border-b border-white/10 pb-2">
-                        {card.previewHeader}
-                      </div>
-
-                      <div className="space-y-1.5">
-                        <div className="flex justify-between items-center font-mono text-xs text-neutral-300">
-                          <span>{card.metricLabel}</span>
-                          <span className="font-bold text-white tabular-nums">
-                            {card.metricValue}
-                          </span>
-                        </div>
-                        <div className="h-1.5 w-full bg-white/10 overflow-hidden">
-                          <div className="h-full bg-white w-full" />
-                        </div>
-                      </div>
-
-                      <div className="space-y-2 pt-2 border-t border-white/10">
-                        {card.checklist.map((item, cIdx) => (
-                          <div
-                            key={cIdx}
-                            className="flex items-start gap-2 text-xs sm:text-sm text-neutral-300 font-sans"
-                          >
-                            <span className="font-mono text-xs font-bold text-white mt-0.5 shrink-0">
-                              —
-                            </span>
-                            <span className="leading-relaxed">{item}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="pt-2 border-t border-white/10 font-mono text-[10px] uppercase tracking-widest text-neutral-400">
-                        {card.protocol}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
+              {/* Action Button */}
+              <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3">
+                <Link
+                  href={currentChapter.ctaHref}
+                  className="inline-flex items-center justify-center px-6 sm:px-7 py-3 sm:py-3.5 bg-white text-black text-xs sm:text-sm font-semibold tracking-wide border-[1.5px] border-white hover:bg-black hover:text-white transition-colors duration-200"
+                >
+                  <span>{currentChapter.ctaText}</span>
+                  <ArrowRight size={14} className="ms-2 rtl:-scale-x-100" />
+                </Link>
+                <Link
+                  href={`/${lang}/resources`}
+                  className="inline-flex items-center justify-center px-6 sm:px-7 py-3 sm:py-3.5 bg-transparent text-white text-xs sm:text-sm font-semibold tracking-wide border-[1.5px] border-white hover:bg-white hover:text-black transition-colors duration-200"
+                >
+                  <span>{isAr ? 'تصفح المدونة' : 'Browse Resources'}</span>
+                </Link>
+              </div>
             </div>
-          );
-        })}
+
+            {/* RIGHT SIDE: Content Facing the Title (En Face, Telemetry Header + Rows + Protocol Bar) */}
+            <div className="lg:col-span-6 flex flex-col justify-center">
+              {/* Category Tag & Live Telemetry Header */}
+              <div className="flex items-center justify-between pb-3.5 border-b border-white/15">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#FF5C00] shadow-[0_0_8px_#FF5C00]" />
+                  <span className="text-[#FF5C00] font-mono text-[11px] sm:text-xs uppercase tracking-[0.06em] font-semibold">
+                    {currentChapter.previewHeader}
+                  </span>
+                </div>
+                <span className="text-[10px] sm:text-[11px] font-mono text-neutral-500">
+                  {isAr
+                    ? `المسار ${activeIdx + 1} من 04`
+                    : `OPTION 0${activeIdx + 1} / 04`}
+                </span>
+              </div>
+
+              {/* Open, Clean Content Rows directly on black canvas */}
+              <div className="divide-y divide-white/10">
+                {currentChapter.rows.map(([col1, col2], idx) => (
+                  <div
+                    key={idx}
+                    className="flex justify-between items-center gap-4 py-4 sm:py-5.5 transition-all duration-200 group"
+                  >
+                    <span className="font-normal text-white text-sm sm:text-base lg:text-lg group-hover:text-[#FFA048] transition-colors">
+                      {col1}
+                    </span>
+                    <span className="text-neutral-400 text-end font-light font-mono text-xs sm:text-sm lg:text-base shrink-0">
+                      {col2}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Live Telemetry Status Bar */}
+              <div className="pt-4 flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-neutral-500 border-t border-white/10">
+                <span className="flex items-center gap-2 text-neutral-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_#10B981]" />
+                  {isAr ? 'بروتوكول ربط معتمد' : 'VERIFIED PARTNERSHIP PROTOCOL'}
+                </span>
+                <span className="text-neutral-400 uppercase tracking-wider">
+                  {currentChapter.protocol}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
