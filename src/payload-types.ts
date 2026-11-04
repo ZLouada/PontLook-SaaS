@@ -157,6 +157,24 @@ export interface Article {
     | 'training-roi'
     | 'corporate-culture';
   /**
+   * Target market, country, or region for this article (e.g. "Saudi Arabia", "France", "Thailand", "GCC", "UAE"). Dynamically personalizes in-content and end-of-post consultation banners.
+   */
+  locationContext?: string | null;
+  /**
+   * Article author profile, credentials, and social links matching reference layout.
+   */
+  author?: {
+    name?: string | null;
+    role?: string | null;
+    avatar?: (number | null) | Media;
+    /**
+     * Displayed in the end-of-article author profile box.
+     */
+    bio?: string | null;
+    socialLinkedIn?: string | null;
+    socialTwitter?: string | null;
+  };
+  /**
    * Estimated read time (e.g. 12 min read)
    */
   readTime?: string | null;
@@ -575,6 +593,17 @@ export interface ArticlesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   category?: T;
+  locationContext?: T;
+  author?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        avatar?: T;
+        bio?: T;
+        socialLinkedIn?: T;
+        socialTwitter?: T;
+      };
   readTime?: T;
   publishedAt?: T;
   excerpt?: T;

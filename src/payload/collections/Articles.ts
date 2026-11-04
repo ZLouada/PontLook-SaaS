@@ -64,6 +64,72 @@ export const Articles: CollectionConfig = {
       ],
     },
     {
+      name: 'locationContext',
+      label: 'Location / Market Context',
+      type: 'text',
+      localized: true,
+      required: false,
+      admin: {
+        position: 'sidebar',
+        description:
+          'Target market, country, or region for this article (e.g. "Saudi Arabia", "France", "Thailand", "GCC", "UAE"). Dynamically personalizes in-content and end-of-post consultation banners.',
+      },
+    },
+    {
+      name: 'author',
+      type: 'group',
+      label: 'Author & Contributor Controls',
+      admin: {
+        position: 'sidebar',
+        description: 'Article author profile, credentials, and social links matching reference layout.',
+      },
+      fields: [
+        {
+          name: 'name',
+          label: 'Author Name',
+          type: 'text',
+          localized: true,
+          defaultValue: 'PontLook Research',
+        },
+        {
+          name: 'role',
+          label: 'Author Role / Title',
+          type: 'text',
+          localized: true,
+          defaultValue: 'Editorial & Intelligence Team',
+        },
+        {
+          name: 'avatar',
+          label: 'Author Avatar Photo',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+        },
+        {
+          name: 'bio',
+          label: 'Author Short Bio',
+          type: 'textarea',
+          localized: true,
+          required: false,
+          admin: {
+            description: 'Displayed in the end-of-article author profile box.',
+          },
+        },
+        {
+          name: 'socialLinkedIn',
+          label: 'LinkedIn Profile URL',
+          type: 'text',
+          required: false,
+        },
+        {
+          name: 'socialTwitter',
+          label: 'X (Twitter) Profile URL',
+          type: 'text',
+          required: false,
+        },
+      ],
+    },
+    {
       name: 'readTime',
       type: 'text',
       required: false,

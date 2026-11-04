@@ -14,6 +14,7 @@ import { SidebarLeadForm } from '@/components/resources/SidebarLeadForm';
 import { PontlookFeatureCard } from '@/components/resources/PontlookFeatureCard';
 import { EndOfPostDownloadCard } from '@/components/resources/EndOfPostDownloadCard';
 import { EndOfPostCtaBanner } from '@/components/resources/EndOfPostCtaBanner';
+import { BlogAuthorBioCard } from '@/components/resources/BlogAuthorBioCard';
 
 export const revalidate = 60;
 export const dynamicParams = true;
@@ -205,10 +206,27 @@ export default async function BlogPostDetailPage({
           </nav>
         </Reveal>
 
-        {/* 2-Column Responsive Layout: Main Content (8 cols) + Sticky Sidebar (4 cols) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
+        {/* Responsive Grid Layout:
+            - Wide screens (xl: >= 1280px): 3 columns (3 cols Left Sticky TOC, 6 cols Article, 3 cols Right Sidebar)
+            - Medium screens (lg: 1024px-1279px): 2 columns (7 cols Article, 5 cols Right Sidebar with TOC + Widgets)
+            - Mobile (< 1024px): 1 column with collapsible top TOC accordion
+        */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 xl:grid-cols-12 gap-8 lg:gap-10">
+          {/* Left Column: Dedicated Sticky TOC on Wide Desktop (matching reference blog_ref_top.png) */}
+          {headings.length > 0 && (
+            <aside className="hidden xl:block xl:col-span-3">
+              <div className="sticky top-28 space-y-6 max-h-[calc(100vh-8rem)] overflow-y-auto pr-2">
+                <BlogTableOfContents
+                  headings={headings}
+                  isAr={isAr}
+                  readTime={readTime}
+                />
+              </div>
+            </aside>
+          )}
+
           {/* Main Reading Column */}
-          <article className="lg:col-span-8 min-w-0">
+          <article className={`min-w-0 ${headings.length > 0 ? 'lg:col-span-7 xl:col-span-6' : 'lg:col-span-8 xl:col-span-8'}`}>
             {/* Meta Tags: Category, Date, Read Time */}
             <Reveal delay={0.05}>
               <div className="flex flex-wrap items-center gap-3 mb-4 text-xs">
@@ -239,16 +257,56 @@ export default async function BlogPostDetailPage({
               </h1>
             </Reveal>
 
-            {/* Author info */}
+            {/* Author info (Dynamic from CMS) */}
             <Reveal delay={0.15}>
-              <div className="flex items-center gap-3.5 pb-8 mb-8 border-b border-neutral-200">
-                <div className="h-10 w-10 rounded-full bg-neutral-200 flex items-center justify-center text-neutral-700">
-                  <User size={18} />
+              <div className="flex flex-wrap items-center justify-between gap-4 pb-8 mb-8 border-b border-neutral-200">
+                <div className="flex items-center gap-3.5">
+                  <div className="relative h-11 w-11 rounded-full overflow-hidden bg-neutral-200 flex items-center justify-center text-neutral-700 border border-neutral-300 shrink-0">
+                    {article.author?.image ? (
+                      <ResourceImage
+                        src={article.author.image}
+                        alt={article.author.name}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <User size={18} />
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-heading text-sm font-bold tracking-tight text-neutral-950">
+                      {article.author?.name || 'PontLook Research'}
+                    </p>
+                    <p className="font-sans text-xs text-neutral-500">
+                      {article.author?.role || (isAr ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team')}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-heading text-sm font-semibold tracking-tight text-neutral-950">PontLook Research</p>
-                  <p className="font-sans text-xs text-neutral-600">Editorial & Intelligence Team</p>
-                </div>
+
+                {(article.author?.socialLinkedIn || article.author?.socialTwitter) && (
+                  <div className="flex items-center gap-2">
+                    {article.author.socialLinkedIn && (
+                      <a
+                        href={article.author.socialLinkedIn}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-neutral-500 hover:text-[#0077b5] px-2.5 py-1 rounded-full bg-neutral-100 hover:bg-neutral-200 transition-colors font-mono"
+                      >
+                        LinkedIn ↗
+                      </a>
+                    )}
+                    {article.author.socialTwitter && (
+                      <a
+                        href={article.author.socialTwitter}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-neutral-500 hover:text-black px-2.5 py-1 rounded-full bg-neutral-100 hover:bg-neutral-200 transition-colors font-mono"
+                      >
+                        𝕏 ↗
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             </Reveal>
 
@@ -324,11 +382,20 @@ export default async function BlogPostDetailPage({
               </Reveal>
             )}
 
+            {/* Author Bio Box (Matching reference blog_ref_bottom.png) */}
+            <Reveal delay={0.22}>
+              <BlogAuthorBioCard
+                author={article.author}
+                isAr={isAr}
+              />
+            </Reveal>
+
             {/* End of Post Consultation CTA Banner (Matching Pasted image 20261101185732.png) */}
             <Reveal delay={0.25}>
               <EndOfPostCtaBanner
                 isAr={isAr}
                 lang={lang}
+                locationContext={article.locationContext}
               />
             </Reveal>
 
@@ -351,11 +418,11 @@ export default async function BlogPostDetailPage({
           </article>
 
           {/* Sticky Right Sidebar (Matching Pasted image 20261101184049.png & payload.md) */}
-          <aside className="lg:col-span-4 space-y-8">
-            <div className="sticky top-28 space-y-8">
-              {/* 1. Desktop Table of Contents ("Where I am in there so every blog") */}
+          <aside className={`${headings.length > 0 ? 'lg:col-span-5 xl:col-span-3' : 'lg:col-span-4 xl:col-span-4'} space-y-8`}>
+            <div className="sticky top-28 space-y-6 max-h-[calc(100vh-8rem)] overflow-y-auto pr-1">
+              {/* On lg screens only (when left column is hidden), display TOC at the top of the sidebar */}
               {headings.length > 0 && (
-                <div className="hidden lg:block">
+                <div className="hidden lg:block xl:hidden">
                   <BlogTableOfContents
                     headings={headings}
                     isAr={isAr}

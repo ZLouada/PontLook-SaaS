@@ -165,6 +165,7 @@ export interface AdaptedArticle {
   mediaAttachments?: AdaptedMediaAttachments | null
   sidebarDownloads?: AdaptedDownload[]
   endOfPostDownload?: AdaptedDownload | null
+  locationContext?: string | null
   sidebarWidgets?: {
     showLeadForm?: boolean
     showFeatureCard?: boolean
@@ -172,8 +173,11 @@ export interface AdaptedArticle {
   }
   author: {
     name: string
+    role?: string | null
     image: string | null
     bio: string | null
+    socialLinkedIn?: string | null
+    socialTwitter?: string | null
   }
   seo?: {
     title?: string
@@ -448,12 +452,32 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
               }
             : null
 
+        const authorAvatar = art.author?.avatar ? await resolveMediaDoc(payload, art.author.avatar, locale) : null
+        const authorAvatarUrl = getMediaUrl(authorAvatar)
+        const authorName =
+          typeof art.author?.name === 'object'
+            ? art.author.name[toPayloadLocale(locale)] || art.author.name.en || 'PontLook Research'
+            : art.author?.name || 'PontLook Research'
+        const authorRole =
+          typeof art.author?.role === 'object'
+            ? art.author.role[toPayloadLocale(locale)] || art.author.role.en || (locale === 'ar' ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team')
+            : art.author?.role || (locale === 'ar' ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team')
+        const authorBio =
+          typeof art.author?.bio === 'object'
+            ? art.author.bio[toPayloadLocale(locale)] || art.author.bio.en || null
+            : art.author?.bio || null
+        const locationContext =
+          typeof art.locationContext === 'object'
+            ? art.locationContext[toPayloadLocale(locale)] || art.locationContext.en || null
+            : art.locationContext || null
+
         return {
           id: String(art.id),
           slug: art.slug,
           title: art.title || '',
           category: categoryLabel,
           categorySlug,
+          locationContext,
           readTime: art.readTime || '6 min read',
           date: displayDate,
           publishedAt: art.publishedAt || null,
@@ -466,9 +490,12 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
           status: art.status || 'published',
           mediaAttachments,
           author: {
-            name: 'PontLook Research',
-            image: null,
-            bio: null,
+            name: authorName,
+            role: authorRole,
+            image: authorAvatarUrl,
+            bio: authorBio,
+            socialLinkedIn: art.author?.socialLinkedIn || null,
+            socialTwitter: art.author?.socialTwitter || null,
           },
           seo: {
             title: art.meta?.title || undefined,
@@ -599,12 +626,32 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
       }
     }
 
+    const authorAvatar = art.author?.avatar ? await resolveMediaDoc(payload, art.author.avatar, locale) : null
+    const authorAvatarUrl = getMediaUrl(authorAvatar)
+    const authorName =
+      typeof art.author?.name === 'object'
+        ? art.author.name[toPayloadLocale(locale)] || art.author.name.en || 'PontLook Research'
+        : art.author?.name || 'PontLook Research'
+    const authorRole =
+      typeof art.author?.role === 'object'
+        ? art.author.role[toPayloadLocale(locale)] || art.author.role.en || (locale === 'ar' ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team')
+        : art.author?.role || (locale === 'ar' ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team')
+    const authorBio =
+      typeof art.author?.bio === 'object'
+        ? art.author.bio[toPayloadLocale(locale)] || art.author.bio.en || null
+        : art.author?.bio || null
+    const locationContext =
+      typeof art.locationContext === 'object'
+        ? art.locationContext[toPayloadLocale(locale)] || art.locationContext.en || null
+        : art.locationContext || null
+
     return {
       id: String(art.id),
       slug: art.slug,
       title: art.title || '',
       category: categoryLabel,
       categorySlug,
+      locationContext,
       readTime: art.readTime || '6 min read',
       date: displayDate,
       publishedAt: art.publishedAt || null,
@@ -627,9 +674,12 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
             : art.sidebarWidgets?.featureCardCustomTitle || null,
       },
       author: {
-        name: 'PontLook Research',
-        image: null,
-        bio: null,
+        name: authorName,
+        role: authorRole,
+        image: authorAvatarUrl,
+        bio: authorBio,
+        socialLinkedIn: art.author?.socialLinkedIn || null,
+        socialTwitter: art.author?.socialTwitter || null,
       },
       seo: {
         title: art.meta?.title || undefined,

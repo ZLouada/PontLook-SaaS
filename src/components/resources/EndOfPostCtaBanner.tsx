@@ -7,9 +7,12 @@ import { ArrowRight } from '@/components/icons';
 interface EndOfPostCtaBannerProps {
   isAr?: boolean;
   lang: string;
+  locationContext?: string | null;
 }
 
-export function EndOfPostCtaBanner({ isAr = false, lang }: EndOfPostCtaBannerProps) {
+export function EndOfPostCtaBanner({ isAr = false, lang, locationContext }: EndOfPostCtaBannerProps) {
+  const cleanLocation = locationContext?.trim();
+
   return (
     <div className="relative overflow-hidden rounded-[32px] bg-[#070C18] border border-neutral-800 p-8 sm:p-12 text-center text-white my-12 shadow-xl">
       {/* Decorative top lime/emerald highlight bar */}
@@ -20,11 +23,17 @@ export function EndOfPostCtaBanner({ isAr = false, lang }: EndOfPostCtaBannerPro
         <h3 className="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white mb-4 leading-tight">
           {isAr ? (
             <>
-              جاهز لتطوير وتأهيل <span className="text-[#a3e635]">فريق عملك؟</span>
+              جاهز لتطوير وتأهيل{' '}
+              <span className="text-[#a3e635]">
+                {cleanLocation ? `فريق عملك في ${cleanLocation}؟` : 'فريق عملك؟'}
+              </span>
             </>
           ) : (
             <>
-              Ready to Upskill Your <span className="text-[#a3e635]">Enterprise Team?</span>
+              Ready to Upskill Your{' '}
+              <span className="text-[#a3e635]">
+                {cleanLocation ? `${cleanLocation} Team?` : 'Enterprise Team?'}
+              </span>
             </>
           )}
         </h3>
@@ -32,8 +41,8 @@ export function EndOfPostCtaBanner({ isAr = false, lang }: EndOfPostCtaBannerPro
         {/* Subtitle */}
         <p className="font-sans text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-xl mx-auto mb-8 font-light">
           {isAr
-            ? 'انضم إلى أكثر من 200 جهة وشركة تثق في PontLook لتشخيص الاحتياج التدريبي والربط مع أفضل المدربين وبيوت الخبرة في 48 ساعة.'
-            : 'Join 200+ organizations that trust PontLook for corporate training. Get matched with vetted expert trainers in 48 hours.'}
+            ? `انضم إلى أكثر من 200 جهة وشركة تثق في PontLook لتشخيص الاحتياج التدريبي والربط مع أفضل المدربين وبيوت الخبرة${cleanLocation ? ` في ${cleanLocation}` : ''} في 48 ساعة.`
+            : `Join 200+ organizations that trust PontLook for corporate training${cleanLocation ? ` in ${cleanLocation}` : ''}. Get matched with vetted expert trainers in 48 hours.`}
         </p>
 
         {/* Action Button */}
