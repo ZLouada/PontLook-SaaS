@@ -70,8 +70,8 @@ export default buildConfig({
       ssl: process.env.DATABASE_URI?.includes('supabase')
         ? { rejectUnauthorized: false }
         : undefined,
-      max: 10,
-      idleTimeoutMillis: 10000,
+      max: process.env.NODE_ENV === 'production' ? 2 : 5,
+      idleTimeoutMillis: 5000,
       connectionTimeoutMillis: 10000,
     },
     push: false,

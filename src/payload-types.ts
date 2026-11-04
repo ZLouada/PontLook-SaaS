@@ -207,6 +207,31 @@ export interface Article {
      */
     downloadButtonLabel?: string | null;
   };
+  /**
+   * Select downloadable toolkits uploaded in the Downloads page to showcase in the sticky right sidebar as the reader scrolls.
+   */
+  sidebarDownloads?: (number | Download)[] | null;
+  /**
+   * Select the primary toolkit/resource to feature at the bottom of the article before the consultation banner.
+   */
+  endOfPostDownload?: (number | null) | Download;
+  /**
+   * Control interactive widgets displayed alongside the article.
+   */
+  sidebarWidgets?: {
+    /**
+     * Display the interactive "Training Consultation" lead intake form in the sidebar.
+     */
+    showLeadForm?: boolean | null;
+    /**
+     * Display the PontLook Feature Blueprint Card (Application A/B) in the sidebar.
+     */
+    showFeatureCard?: boolean | null;
+    /**
+     * Optional custom headline for the sidebar feature card.
+     */
+    featureCardCustomTitle?: string | null;
+  };
   meta?: {
     /**
      * Custom browser tab & OG title (leave empty to use article title)
@@ -313,7 +338,7 @@ export interface Download {
    */
   slug: string;
   /**
-   * Select the primary PontLook category for this resource.
+   * Select the primary PontLook category/topic for this resource.
    */
   category:
     | 'leadership'
@@ -325,9 +350,17 @@ export interface Download {
     | 'training-roi'
     | 'corporate-culture';
   /**
-   * Document format (e.g. XLSX, PDF, DOCX)
+   * Format/type of content (e.g. Ebook, Guide, Template, Tool).
    */
-  format?: string | null;
+  contentType: 'ebook' | 'guide' | 'kit' | 'partner-contribution' | 'quiz-game' | 'template' | 'tool' | 'webinar';
+  /**
+   * File delivery format (e.g. PDF, Excel, Google Sheets).
+   */
+  format: 'PDF' | 'Excel' | 'Google Sheets' | 'Word' | 'Powerpoint' | 'Google Docs' | 'Google Slides';
+  /**
+   * Card cover / preview image displayed on the Resource Library and in blog sidebars.
+   */
+  image?: (number | null) | Media;
   /**
    * File size label (e.g. 1.8 MB)
    */
@@ -557,6 +590,15 @@ export interface ArticlesSelect<T extends boolean = true> {
         downloadableAttachment?: T;
         downloadButtonLabel?: T;
       };
+  sidebarDownloads?: T;
+  endOfPostDownload?: T;
+  sidebarWidgets?:
+    | T
+    | {
+        showLeadForm?: T;
+        showFeatureCard?: T;
+        featureCardCustomTitle?: T;
+      };
   meta?:
     | T
     | {
@@ -582,7 +624,9 @@ export interface DownloadsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   category?: T;
+  contentType?: T;
   format?: T;
+  image?: T;
   fileSize?: T;
   description?: T;
   features?:

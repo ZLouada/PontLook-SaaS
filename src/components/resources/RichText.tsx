@@ -8,42 +8,107 @@ interface RichTextProps {
   isAr?: boolean;
 }
 
+export function slugifyHeading(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\p{L}\p{N}\s-]/gu, '')
+    .replace(/\s+/g, '-')
+    .slice(0, 80) || 'section';
+}
+
+export function extractTextFromNode(node: any): string {
+  if (!node) return '';
+  if (typeof node === 'string') return node;
+  if (node.text) return node.text;
+  if (Array.isArray(node.children)) {
+    return node.children.map(extractTextFromNode).join('');
+  }
+  return '';
+}
+
+export interface ArticleHeading {
+  id: string;
+  text: string;
+  level: number;
+}
+
+export function extractHeadingsFromContent(data: any): ArticleHeading[] {
+  const headings: ArticleHeading[] = [];
+  if (!data) return headings;
+
+  let rootChildren: any[] = [];
+  if (typeof data === 'object' && data.root && Array.isArray(data.root.children)) {
+    rootChildren = data.root.children;
+  } else if (typeof data === 'string' && data.trim().startsWith('{')) {
+    try {
+      const parsed = JSON.parse(data);
+      if (parsed.root && Array.isArray(parsed.root.children)) {
+        rootChildren = parsed.root.children;
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  const seenIds = new Set<string>();
+
+  for (const child of rootChildren) {
+    if (child.type === 'heading') {
+      const tag = child.tag || 'h2';
+      const level = parseInt(tag.replace('h', ''), 10) || 2;
+      const text = extractTextFromNode(child).trim();
+      if (text) {
+        let id = slugifyHeading(text);
+        if (seenIds.has(id)) {
+          id = `${id}-${headings.length + 1}`;
+        }
+        seenIds.add(id);
+        headings.push({ id, text, level });
+      }
+    }
+  }
+  return headings;
+}
+
 const customConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
   ...defaultConverters,
   heading: ({ node, nodesToJSX }) => {
     const Tag = (node.tag as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6') || 'h2';
+    const text = extractTextFromNode(node).trim();
+    const id = slugifyHeading(text);
     let headingClasses = '';
 
     switch (Tag) {
       case 'h1':
         // Primary title hierarchy (Hero/Page scale)
         headingClasses =
-          'text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-neutral-950 tracking-tight leading-[1.1] mt-12 mb-6';
+          'text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-neutral-950 tracking-tight leading-[1.1] mt-12 mb-6 scroll-mt-24';
         break;
       case 'h2':
         // Major article sections
         headingClasses =
-          'text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-neutral-950 tracking-tight leading-[1.18] mt-12 mb-5';
+          'text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-neutral-950 tracking-tight leading-[1.18] mt-12 mb-5 scroll-mt-24';
         break;
       case 'h3':
         // Subsections
         headingClasses =
-          'text-lg sm:text-xl md:text-2xl font-heading font-semibold text-neutral-900 tracking-tight leading-[1.3] mt-8 mb-3';
+          'text-lg sm:text-xl md:text-2xl font-heading font-semibold text-neutral-900 tracking-tight leading-[1.3] mt-8 mb-3 scroll-mt-24';
         break;
       case 'h4':
         headingClasses =
-          'text-base font-heading font-semibold text-neutral-900 tracking-tight leading-snug mt-6 mb-2';
+          'text-base font-heading font-semibold text-neutral-900 tracking-tight leading-snug mt-6 mb-2 scroll-mt-24';
         break;
       case 'h5':
       case 'h6':
         headingClasses =
-          'text-sm sm:text-base font-heading font-semibold text-neutral-900 tracking-tight leading-snug mt-4 mb-2';
+          'text-sm sm:text-base font-heading font-semibold text-neutral-900 tracking-tight leading-snug mt-4 mb-2 scroll-mt-24';
         break;
     }
 
     return React.createElement(
       Tag,
-      { className: headingClasses },
+      { id, className: headingClasses },
       nodesToJSX({ nodes: node.children })
     );
   },

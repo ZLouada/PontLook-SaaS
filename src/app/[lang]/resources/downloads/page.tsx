@@ -4,6 +4,7 @@ import { Locale, i18n, isArabicLocale } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
 import { getDownloads } from '@/lib/payload/resources';
+import { DownloadsLibraryClient } from '@/components/resources/DownloadsLibraryClient';
 import { Download, ArrowRight, FileText, CheckCircle2 } from '@/components/icons';
 
 export const revalidate = 60;
@@ -98,68 +99,14 @@ export default async function DownloadsPage({
           </Reveal>
         </div>
 
-        {/* Grid of Toolkits */}
-        {dynamicToolkits.length > 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-            {dynamicToolkits.map((tool, idx) => (
-              <Reveal key={tool.id} delay={0.1 * (idx + 1)}>
-                <div className="h-full flex flex-col justify-between p-8 rounded-3xl bg-white hover:bg-neutral-50/80 border border-neutral-200 hover:border-neutral-300 transition-all duration-300 shadow-sm hover:shadow-md">
-                  <div>
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="h-12 w-12 rounded-2xl bg-[#FF5C00]/10 border border-[#FF5C00]/20 flex items-center justify-center text-[#FF5C00]">
-                        <FileText size={22} />
-                      </div>
-                      <div className="flex items-center gap-2 text-[11px] font-mono text-neutral-500">
-                        {tool.category && (
-                          <span className="px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-800 font-mono text-[11px] font-semibold uppercase tracking-wider border border-neutral-200">
-                            {tool.category}
-                          </span>
-                        )}
-                        <span className="px-2 py-0.5 rounded bg-neutral-100 text-neutral-700 font-mono font-medium">{tool.format}</span>
-                        <span className="font-mono tabular-nums">{tool.fileSize}</span>
-                      </div>
-                    </div>
-
-                    <h2 className="font-heading text-lg sm:text-xl font-semibold tracking-tight text-neutral-950 leading-[1.3] mb-3">
-                      {tool.title}
-                    </h2>
-
-                    <p className="font-sans text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal mb-6">
-                      {tool.desc}
-                    </p>
-
-                    <div className="space-y-2 mb-8 pt-4 border-t border-neutral-200">
-                      {tool.features.map((feat, fIdx) => (
-                        <div key={fIdx} className="flex items-start gap-2 text-xs text-neutral-700">
-                          <CheckCircle2 size={14} className="text-[#FF5C00] shrink-0 mt-0.5" />
-                          <span>{feat}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <Link
-                      href={tool.fileUrl ? tool.fileUrl : `/${lang}/contact?interest=${encodeURIComponent(tool.id)}`}
-                      target={tool.fileUrl && tool.fileUrl.startsWith('http') ? '_blank' : undefined}
-                      rel={tool.fileUrl && tool.fileUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all active:scale-95 shadow-sm"
-                    >
-                      <Download size={14} />
-                      <span>{isAr ? 'طلب التحميل مجاناً' : 'Download Toolkit Free'}</span>
-                    </Link>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        ) : (
-          <div className="p-12 rounded-3xl border border-dashed border-neutral-300 bg-neutral-50 text-center">
-            <p className="text-base text-neutral-600 font-medium">
-              {isAr ? 'لا توجد أدلة أو قوالب متاحة للتحميل حالياً.' : 'No downloadable toolkits available at this moment. Please check back soon.'}
-            </p>
-          </div>
-        )}
+        {/* Interactive Resource Library (HubSpot Model with Filters & Search) */}
+        <Reveal delay={0.25}>
+          <DownloadsLibraryClient
+            initialToolkits={dynamicToolkits}
+            isAr={isAr}
+            lang={lang}
+          />
+        </Reveal>
       </div>
     </div>
   );

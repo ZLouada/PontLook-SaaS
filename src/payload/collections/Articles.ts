@@ -209,6 +209,66 @@ export const Articles: CollectionConfig = {
       ],
     },
     {
+      name: 'sidebarDownloads',
+      label: 'Sticky Sidebar Downloads',
+      type: 'relationship',
+      relationTo: 'downloads',
+      hasMany: true,
+      admin: {
+        position: 'sidebar',
+        description:
+          'Select downloadable toolkits uploaded in the Downloads page to showcase in the sticky right sidebar as the reader scrolls.',
+      },
+    },
+    {
+      name: 'endOfPostDownload',
+      label: 'End-of-Post Featured Download',
+      type: 'relationship',
+      relationTo: 'downloads',
+      hasMany: false,
+      admin: {
+        position: 'sidebar',
+        description:
+          'Select the primary toolkit/resource to feature at the bottom of the article before the consultation banner.',
+      },
+    },
+    {
+      name: 'sidebarWidgets',
+      type: 'group',
+      label: 'Sidebar Widgets & CTAs',
+      admin: {
+        position: 'sidebar',
+        description: 'Control interactive widgets displayed alongside the article.',
+      },
+      fields: [
+        {
+          name: 'showLeadForm',
+          type: 'checkbox',
+          defaultValue: true,
+          admin: {
+            description: 'Display the interactive "Training Consultation" lead intake form in the sidebar.',
+          },
+        },
+        {
+          name: 'showFeatureCard',
+          type: 'checkbox',
+          defaultValue: true,
+          admin: {
+            description: 'Display the PontLook Feature Blueprint Card (Application A/B) in the sidebar.',
+          },
+        },
+        {
+          name: 'featureCardCustomTitle',
+          type: 'text',
+          localized: true,
+          required: false,
+          admin: {
+            description: 'Optional custom headline for the sidebar feature card.',
+          },
+        },
+      ],
+    },
+    {
       name: 'seoEditor',
       type: 'ui',
       admin: {

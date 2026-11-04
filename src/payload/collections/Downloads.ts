@@ -10,7 +10,7 @@ export const Downloads: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'format', 'fileSize', 'status', 'updatedAt'],
+    defaultColumns: ['title', 'category', 'contentType', 'format', 'fileSize', 'status', 'updatedAt'],
     group: 'Resources & Content',
   },
   access: {
@@ -43,14 +43,14 @@ export const Downloads: CollectionConfig = {
     },
     {
       name: 'category',
-      label: 'Category',
+      label: 'Topic / Category',
       type: 'select',
       required: true,
       defaultValue: 'leadership',
       index: true,
       admin: {
         position: 'sidebar',
-        description: 'Select the primary PontLook category for this resource.',
+        description: 'Select the primary PontLook category/topic for this resource.',
       },
       options: [
         { label: 'Leadership', value: 'leadership' },
@@ -64,12 +64,57 @@ export const Downloads: CollectionConfig = {
       ],
     },
     {
+      name: 'contentType',
+      label: 'Content Type',
+      type: 'select',
+      required: true,
+      defaultValue: 'guide',
+      index: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Format/type of content (e.g. Ebook, Guide, Template, Tool).',
+      },
+      options: [
+        { label: 'Ebook', value: 'ebook' },
+        { label: 'Guide', value: 'guide' },
+        { label: 'Kit', value: 'kit' },
+        { label: 'Partner Contribution', value: 'partner-contribution' },
+        { label: 'Quiz/Game', value: 'quiz-game' },
+        { label: 'Template', value: 'template' },
+        { label: 'Tool', value: 'tool' },
+        { label: 'Webinar', value: 'webinar' },
+      ],
+    },
+    {
       name: 'format',
-      type: 'text',
+      label: 'File Format',
+      type: 'select',
+      required: true,
+      defaultValue: 'PDF',
+      index: true,
+      admin: {
+        position: 'sidebar',
+        description: 'File delivery format (e.g. PDF, Excel, Google Sheets).',
+      },
+      options: [
+        { label: 'PDF', value: 'PDF' },
+        { label: 'Excel', value: 'Excel' },
+        { label: 'Google Sheets', value: 'Google Sheets' },
+        { label: 'Word', value: 'Word' },
+        { label: 'Powerpoint', value: 'Powerpoint' },
+        { label: 'Google Docs', value: 'Google Docs' },
+        { label: 'Google Slides', value: 'Google Slides' },
+      ],
+    },
+    {
+      name: 'image',
+      label: 'Resource Image / Thumbnail',
+      type: 'upload',
+      relationTo: 'media',
       required: false,
       admin: {
         position: 'sidebar',
-        description: 'Document format (e.g. XLSX, PDF, DOCX)',
+        description: 'Card cover / preview image displayed on the Resource Library and in blog sidebars.',
       },
     },
     {

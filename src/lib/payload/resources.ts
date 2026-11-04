@@ -163,6 +163,13 @@ export interface AdaptedArticle {
   imageAlt?: string | null
   status: string
   mediaAttachments?: AdaptedMediaAttachments | null
+  sidebarDownloads?: AdaptedDownload[]
+  endOfPostDownload?: AdaptedDownload | null
+  sidebarWidgets?: {
+    showLeadForm?: boolean
+    showFeatureCard?: boolean
+    featureCardCustomTitle?: string | null
+  }
   author: {
     name: string
     image: string | null
@@ -187,11 +194,14 @@ export interface AdaptedDownload {
   title: string
   category: string
   categorySlug: PontLookCategorySlug
+  contentType: string
+  contentTypeSlug?: string
   format: string
   fileSize: string
   desc: string
   features: string[]
   fileUrl: string
+  image: string | null
 }
 
 export interface AdaptedEvent {
@@ -317,6 +327,73 @@ export async function adaptMediaAttachment(
     filesize,
     mimeType,
   }
+}
+
+// Helper: Adapt Download document from Payload to AdaptedDownload
+export function adaptDownloadDoc(dl: any, locale: Locale = 'en'): AdaptedDownload {
+  const fileUrl = getMediaUrl(dl.file) || ''
+  const imageUrl = getMediaUrl(dl.image) || null
+  const features = Array.isArray(dl.features)
+    ? dl.features.map((f: any) => (typeof f === 'string' ? f : f.item || '')).filter(Boolean)
+    : []
+  const categorySlug = normalizeCategorySlug(dl.category)
+  const categoryLabel = getCategoryLabel(dl.category, locale)
+  const contentTypeRaw = dl.contentType || 'guide'
+  const isAr = locale.startsWith('ar')
+  const contentTypeLabels: Record<string, { en: string; ar: string }> = {
+    ebook: { en: 'Ebook', ar: 'كتاب إلكتروني' },
+    guide: { en: 'Guide', ar: 'دليل تنفيذي' },
+    kit: { en: 'Kit', ar: 'حقيبة أدوات' },
+    'partner-contribution': { en: 'Partner Contribution', ar: 'مساهمة الشركاء' },
+    'quiz-game': { en: 'Quiz / Game', ar: 'اختبار / لعبة' },
+    template: { en: 'Template', ar: 'نموذج عمل' },
+    tool: { en: 'Tool', ar: 'أداة تشخيص' },
+    webinar: { en: 'Webinar', ar: 'ورشة رقمية' },
+  }
+  const contentType = contentTypeLabels[contentTypeRaw]?.[isAr ? 'ar' : 'en'] || contentTypeRaw
+
+  return {
+    id: String(dl.id),
+    slug: dl.slug || '',
+    title: (typeof dl.title === 'object' ? dl.title[toPayloadLocale(locale)] || dl.title.en : dl.title) || '',
+    category: categoryLabel,
+    categorySlug,
+    contentType,
+    contentTypeSlug: contentTypeRaw,
+    format: dl.format || 'PDF',
+    fileSize: dl.fileSize || '1.8 MB',
+    desc: (typeof dl.description === 'object' ? dl.description[toPayloadLocale(locale)] || dl.description.en : dl.description) || '',
+    features,
+    fileUrl,
+    image: imageUrl,
+  }
+}
+
+// Helper: Resolve download document from relation or ID
+export async function resolveDownloadDoc(
+  payload: any,
+  dlRef: any,
+  locale: Locale = 'en'
+): Promise<AdaptedDownload | null> {
+  if (!dlRef) return null
+  if (typeof dlRef === 'object' && dlRef.title) {
+    return adaptDownloadDoc(dlRef, locale)
+  }
+  const id = typeof dlRef === 'object' ? dlRef.id : dlRef
+  if (id) {
+    try {
+      const doc = await payload.findByID({
+        collection: 'downloads',
+        id,
+        depth: 1,
+        locale: toPayloadLocale(locale),
+      })
+      if (doc) return adaptDownloadDoc(doc, locale)
+    } catch (err) {
+      console.warn(`[Payload Data Layer] Could not resolve download ID ${id}:`, err)
+    }
+  }
+  return null
 }
 
 // 1. Get Published Articles
@@ -478,6 +555,50 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
           }
         : null
 
+    // Resolve sidebar downloads selected in Payload
+    let sidebarDownloads: AdaptedDownload[] = []
+    if (Array.isArray(art.sidebarDownloads) && art.sidebarDownloads.length > 0) {
+      const resolvedList = await Promise.all(
+        art.sidebarDownloads.map((dlRef: any) => resolveDownloadDoc(payload, dlRef, locale))
+      )
+      sidebarDownloads = resolvedList.filter((d): d is AdaptedDownload => Boolean(d))
+    }
+
+    // Resolve end-of-post featured download selected in Payload
+    let endOfPostDownload: AdaptedDownload | null = null
+    if (art.endOfPostDownload) {
+      endOfPostDownload = await resolveDownloadDoc(payload, art.endOfPostDownload, locale)
+    }
+
+    // Smart fallback: If no downloads were manually attached to this post, automatically pull the category toolkit!
+    if (sidebarDownloads.length === 0 || !endOfPostDownload) {
+      try {
+        const fallbackRes = await payload.find({
+          collection: 'downloads',
+          where: {
+            status: { equals: 'published' },
+          },
+          locale: toPayloadLocale(locale),
+          depth: 1,
+          limit: 3,
+          overrideAccess: false,
+        })
+        const allFallback = fallbackRes.docs.map((doc: any) => adaptDownloadDoc(doc, locale))
+        // Prefer matching category first
+        const categoryMatch = allFallback.filter((d) => d.categorySlug === categorySlug)
+        const relevantDownloads = categoryMatch.length > 0 ? categoryMatch : allFallback
+
+        if (sidebarDownloads.length === 0 && relevantDownloads.length > 0) {
+          sidebarDownloads = relevantDownloads.slice(0, 2)
+        }
+        if (!endOfPostDownload && relevantDownloads.length > 0) {
+          endOfPostDownload = relevantDownloads[0]
+        }
+      } catch (err) {
+        console.warn('[Payload Data Layer] Fallback download retrieval error:', err)
+      }
+    }
+
     return {
       id: String(art.id),
       slug: art.slug,
@@ -495,6 +616,16 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
       imageAlt: imageAlt || null,
       status: art.status || 'published',
       mediaAttachments,
+      sidebarDownloads,
+      endOfPostDownload,
+      sidebarWidgets: {
+        showLeadForm: art.sidebarWidgets?.showLeadForm ?? true,
+        showFeatureCard: art.sidebarWidgets?.showFeatureCard ?? true,
+        featureCardCustomTitle:
+          typeof art.sidebarWidgets?.featureCardCustomTitle === 'object'
+            ? art.sidebarWidgets.featureCardCustomTitle[toPayloadLocale(locale)] || art.sidebarWidgets.featureCardCustomTitle.en
+            : art.sidebarWidgets?.featureCardCustomTitle || null,
+      },
       author: {
         name: 'PontLook Research',
         image: null,
@@ -665,27 +796,7 @@ export const getDownloads = cache(async (locale: Locale = 'en'): Promise<Adapted
       overrideAccess: false,
     })
 
-    return result.docs.map((dl: any) => {
-      const fileUrl = getMediaUrl(dl.file) || ''
-      const features = Array.isArray(dl.features)
-        ? dl.features.map((f: any) => (typeof f === 'string' ? f : f.item || '')).filter(Boolean)
-        : []
-      const categorySlug = normalizeCategorySlug(dl.category)
-      const categoryLabel = getCategoryLabel(dl.category, locale)
-
-      return {
-        id: String(dl.id),
-        slug: dl.slug,
-        title: dl.title || '',
-        category: categoryLabel,
-        categorySlug,
-        format: dl.format || 'PDF',
-        fileSize: dl.fileSize || '1.8 MB',
-        desc: dl.description || '',
-        features,
-        fileUrl,
-      }
-    })
+    return result.docs.map((dl: any) => adaptDownloadDoc(dl, locale))
   } catch (error) {
     console.error('[Payload Data Layer] Failed to get downloads:', error)
     return []

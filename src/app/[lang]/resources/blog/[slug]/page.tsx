@@ -1,15 +1,19 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import { ResourceImage } from '@/components/resources/ResourceImage';
 import { Locale, i18n, isArabicLocale } from '@/i18n/config';
 import { constructAlternates, SITE_URL, buildBlogPostingSchema, buildBreadcrumbSchema } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
-import { ArrowLeft, Calendar, User } from '@/components/icons';
+import { ArrowLeft, Calendar, User, Clock, ChevronRight } from '@/components/icons';
 import { getArticleBySlug, getAllArticleSlugs } from '@/lib/payload/resources';
-import { RichText } from '@/components/resources/RichText';
+import { RichText, extractHeadingsFromContent } from '@/components/resources/RichText';
 import { BlogMediaActionCard } from '@/components/resources/BlogMediaActionCard';
+import { BlogTableOfContents } from '@/components/resources/BlogTableOfContents';
+import { SidebarLeadForm } from '@/components/resources/SidebarLeadForm';
+import { PontlookFeatureCard } from '@/components/resources/PontlookFeatureCard';
+import { EndOfPostDownloadCard } from '@/components/resources/EndOfPostDownloadCard';
+import { EndOfPostCtaBanner } from '@/components/resources/EndOfPostCtaBanner';
 
 export const revalidate = 60;
 export const dynamicParams = true;
@@ -107,14 +111,21 @@ export default async function BlogPostDetailPage({
   const {
     title,
     category,
+    categorySlug,
     date,
+    readTime,
     excerpt,
     content,
     image: imageUrl,
     imageAlt,
     updatedAt,
     publishedAt,
+    sidebarDownloads,
+    endOfPostDownload,
+    sidebarWidgets,
   } = article;
+
+  const headings = extractHeadingsFromContent(content);
 
   const canonicalUrl = article.seo?.canonicalUrl || `${SITE_URL}/${lang}/resources/blog/${slug}`;
   const absoluteImageUrl = imageUrl
@@ -127,6 +138,7 @@ export default async function BlogPostDetailPage({
     { name: isAr ? 'الرئيسية' : 'Home', url: `${SITE_URL}/${lang}` },
     { name: isAr ? 'الموارد' : 'Resources', url: `${SITE_URL}/${lang}/resources` },
     { name: isAr ? 'المدونة' : 'Blog', url: `${SITE_URL}/${lang}/resources/blog` },
+    ...(category ? [{ name: category, url: `${SITE_URL}/${lang}/resources?category=${encodeURIComponent(categorySlug)}` }] : []),
     { name: title, url: canonicalUrl },
   ];
 
@@ -155,128 +167,255 @@ export default async function BlogPostDetailPage({
       data-nav-theme="light"
       className="min-h-screen bg-white text-neutral-900 transition-colors duration-200"
     >
-      <article className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+      <div className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Schema.org BlogPosting & BreadcrumbList JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdString }}
         />
 
-        {/* Back button */}
+        {/* Semantic SEO Breadcrumbs Navigation (As specified in Structure how to Work SEO Content) */}
         <Reveal>
-          <Link
-            href={`/${lang}/resources`}
-            className="inline-flex items-center gap-2 font-sans text-xs font-semibold tracking-tight text-neutral-600 hover:text-black transition-colors mb-8"
+          <nav
+            aria-label="Breadcrumb"
+            className="flex items-center gap-1.5 text-xs text-neutral-500 font-mono mb-8 overflow-x-auto whitespace-nowrap pb-2"
           >
-            <ArrowLeft size={14} className="rtl:rotate-180" />
-            <span>{isAr ? 'العودة لمركز الموارد' : 'Back to Resources'}</span>
-          </Link>
-        </Reveal>
-
-        {/* Categories & Date */}
-        <Reveal delay={0.05}>
-          <div className="flex flex-wrap items-center gap-3 mb-4 text-xs">
+            <Link href={`/${lang}`} className="hover:text-black transition-colors">
+              {isAr ? 'الرئيسية' : 'Home'}
+            </Link>
+            <ChevronRight size={12} className="text-neutral-400 rtl:rotate-180 shrink-0" />
+            <Link href={`/${lang}/resources`} className="hover:text-black transition-colors">
+              {isAr ? 'الموارد' : 'Resources'}
+            </Link>
+            <ChevronRight size={12} className="text-neutral-400 rtl:rotate-180 shrink-0" />
+            <Link href={`/${lang}/resources/blog`} className="hover:text-black transition-colors">
+              {isAr ? 'المدونة' : 'Blog'}
+            </Link>
             {category && (
-              <span className="px-3 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25 text-[#FF5C00] font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em]">
-                {category}
-              </span>
+              <>
+                <ChevronRight size={12} className="text-neutral-400 rtl:rotate-180 shrink-0" />
+                <Link
+                  href={`/${lang}/resources?category=${encodeURIComponent(categorySlug)}`}
+                  className="hover:text-black transition-colors text-neutral-700 font-medium"
+                >
+                  {category}
+                </Link>
+              </>
             )}
-            {date && (
-              <span className="flex items-center gap-1.5 text-neutral-500 font-mono text-[11px] tabular-nums">
-                <Calendar size={13} />
-                {date}
-              </span>
+          </nav>
+        </Reveal>
+
+        {/* 2-Column Responsive Layout: Main Content (8 cols) + Sticky Sidebar (4 cols) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
+          {/* Main Reading Column */}
+          <article className="lg:col-span-8 min-w-0">
+            {/* Meta Tags: Category, Date, Read Time */}
+            <Reveal delay={0.05}>
+              <div className="flex flex-wrap items-center gap-3 mb-4 text-xs">
+                {category && (
+                  <span className="px-3 py-1 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/25 text-[#FF5C00] font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.06em]">
+                    {category}
+                  </span>
+                )}
+                {date && (
+                  <span className="flex items-center gap-1.5 text-neutral-500 font-mono text-[11px] tabular-nums">
+                    <Calendar size={13} />
+                    {date}
+                  </span>
+                )}
+                {readTime && (
+                  <span className="flex items-center gap-1.5 text-neutral-500 font-mono text-[11px]">
+                    <Clock size={13} />
+                    {readTime}
+                  </span>
+                )}
+              </div>
+            </Reveal>
+
+            {/* Article Title */}
+            <Reveal delay={0.1}>
+              <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-950 leading-[1.12] mb-6">
+                {title}
+              </h1>
+            </Reveal>
+
+            {/* Author info */}
+            <Reveal delay={0.15}>
+              <div className="flex items-center gap-3.5 pb-8 mb-8 border-b border-neutral-200">
+                <div className="h-10 w-10 rounded-full bg-neutral-200 flex items-center justify-center text-neutral-700">
+                  <User size={18} />
+                </div>
+                <div>
+                  <p className="font-heading text-sm font-semibold tracking-tight text-neutral-950">PontLook Research</p>
+                  <p className="font-sans text-xs text-neutral-600">Editorial & Intelligence Team</p>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Main Feature Image */}
+            {imageUrl && (
+              <Reveal delay={0.2}>
+                <div className="relative aspect-video w-full min-h-[220px] sm:min-h-[340px] shrink-0 rounded-3xl overflow-hidden mb-10 border border-neutral-200 bg-neutral-100 shadow-sm">
+                  <ResourceImage
+                    src={imageUrl}
+                    alt={imageAlt || title}
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 768px"
+                    className="object-cover"
+                  />
+                </div>
+              </Reveal>
             )}
-          </div>
-        </Reveal>
 
-        {/* Title */}
-        <Reveal delay={0.1}>
-          <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-950 leading-[1.1] mb-6">
-            {title}
-          </h1>
-        </Reveal>
+            {/* Mobile / Tablet Table of Contents */}
+            {headings.length > 0 && (
+              <div className="lg:hidden mb-8">
+                <BlogTableOfContents
+                  headings={headings}
+                  isAr={isAr}
+                  readTime={readTime}
+                />
+              </div>
+            )}
 
-        {/* Author info */}
-        <Reveal delay={0.15}>
-          <div className="flex items-center gap-3.5 pb-8 mb-8 border-b border-neutral-200">
-            <div className="h-10 w-10 rounded-full bg-neutral-200 flex items-center justify-center text-neutral-700">
-              <User size={18} />
-            </div>
-            <div>
-              <p className="font-heading text-sm font-semibold tracking-tight text-neutral-950">PontLook Research</p>
-              <p className="font-sans text-xs text-neutral-600">Editorial & Intelligence Team</p>
-            </div>
-          </div>
-        </Reveal>
+            {/* Executive Media & Podcast Action Card */}
+            {article.mediaAttachments && (
+              <Reveal delay={0.22}>
+                <div className="mb-10">
+                  <BlogMediaActionCard
+                    mediaAttachments={article.mediaAttachments}
+                    postTitle={title}
+                    lang={lang}
+                  />
+                </div>
+              </Reveal>
+            )}
 
-        {/* Main Feature Image */}
-        {imageUrl && (
-          <Reveal delay={0.2}>
-            <div className="relative aspect-video w-full min-h-[220px] sm:min-h-[320px] shrink-0 rounded-3xl overflow-hidden mb-10 border border-neutral-200 bg-neutral-100 shadow-sm">
-              <ResourceImage
-                src={imageUrl}
-                alt={imageAlt || title}
-                fill
-                priority
-                sizes="(max-width: 896px) 100vw, 896px"
-                className="object-cover"
-              />
-            </div>
-          </Reveal>
-        )}
+            {/* Excerpt Lead */}
+            {excerpt && (
+              <Reveal delay={0.25}>
+                <p className="text-base sm:text-lg text-neutral-700 leading-relaxed font-medium mb-8 p-6 rounded-2xl bg-neutral-50 border border-neutral-200 italic">
+                  {excerpt}
+                </p>
+              </Reveal>
+            )}
 
-        {/* Executive Media & Podcast Action Card */}
-        {article.mediaAttachments && (
-          <Reveal delay={0.22}>
-            <div className="mb-10">
-              <BlogMediaActionCard
-                mediaAttachments={article.mediaAttachments}
-                postTitle={title}
+            {/* Body Content with Linked Heading Anchors */}
+            {content ? (
+              <div className="mb-12">
+                <RichText data={content} isAr={isAr} />
+              </div>
+            ) : (
+              <p className="text-neutral-600 text-sm leading-relaxed mb-12">
+                {isAr
+                  ? 'محتوى المقال قيد التحديث والتوثيق من قبل فريق أبحاث PontLook.'
+                  : 'Article content is being documented by the PontLook research team.'}
+              </p>
+            )}
+
+            {/* End of Post Featured Download Toolkit (Selected in Payload) */}
+            {endOfPostDownload && (
+              <Reveal delay={0.2}>
+                <EndOfPostDownloadCard
+                  download={endOfPostDownload}
+                  isAr={isAr}
+                />
+              </Reveal>
+            )}
+
+            {/* End of Post Consultation CTA Banner (Matching Pasted image 20261101185732.png) */}
+            <Reveal delay={0.25}>
+              <EndOfPostCtaBanner
+                isAr={isAr}
                 lang={lang}
               />
+            </Reveal>
+
+            {/* Bottom Footer Navigation */}
+            <div className="mt-12 pt-8 border-t border-neutral-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <Link
+                href={`/${lang}/resources`}
+                className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-neutral-600 hover:text-black transition-colors"
+              >
+                <ArrowLeft size={14} className="rtl:rotate-180" />
+                <span>{isAr ? 'العودة لمركز الموارد والتقارير' : 'Back to Resources & Knowledge Hub'}</span>
+              </Link>
+              <Link
+                href={`/${lang}/find-training`}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-neutral-950 hover:bg-black text-white font-semibold text-xs transition-all shadow-sm"
+              >
+                <span>{isAr ? 'ابحث عن مزود تدريب معتمد' : 'Find a Verified Training Provider'}</span>
+              </Link>
             </div>
-          </Reveal>
-        )}
+          </article>
 
-        {/* Excerpt Lead */}
-        {excerpt && (
-          <Reveal delay={0.25}>
-            <p className="text-base sm:text-lg text-neutral-700 leading-relaxed font-medium mb-8 p-6 rounded-2xl bg-neutral-50 border border-neutral-200 italic">
-              {excerpt}
-            </p>
-          </Reveal>
-        )}
+          {/* Sticky Right Sidebar (Matching Pasted image 20261101184049.png & payload.md) */}
+          <aside className="lg:col-span-4 space-y-8">
+            <div className="sticky top-28 space-y-8">
+              {/* 1. Desktop Table of Contents ("Where I am in there so every blog") */}
+              {headings.length > 0 && (
+                <div className="hidden lg:block">
+                  <BlogTableOfContents
+                    headings={headings}
+                    isAr={isAr}
+                    readTime={readTime}
+                  />
+                </div>
+              )}
 
-        {/* Body Content */}
-        {content ? (
-          <Reveal delay={0.3}>
-            <RichText data={content} isAr={isAr} />
-          </Reveal>
-        ) : (
-          <p className="text-neutral-600 text-sm leading-relaxed">
-            {isAr
-              ? 'محتوى المقال قيد التحديث والتوثيق من قبل فريق أبحاث PontLook.'
-              : 'Article content is being documented by the PontLook research team.'}
-          </p>
-        )}
+              {/* 2. Sticky Sidebar Lead Form ("not just downloads in the right but forms also") */}
+              {sidebarWidgets?.showLeadForm !== false && (
+                <SidebarLeadForm
+                  isAr={isAr}
+                  defaultCategory={categorySlug}
+                  sourceArticleTitle={title}
+                />
+              )}
 
-        {/* Share / CTA Footer */}
-        <div className="mt-16 pt-8 border-t border-neutral-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <Link
-            href={`/${lang}/find-training`}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF5C00] hover:bg-[#ff6d1a] text-black font-semibold text-xs transition-all shadow-md shadow-[#FF5C00]/20"
-          >
-            <span>{isAr ? 'ابحث عن مزود تدريب معتمد' : 'Find a Verified Training Provider'}</span>
-          </Link>
-          <Link
-            href={`/${lang}/resources`}
-            className="text-xs font-medium text-neutral-600 hover:text-black transition-colors"
-          >
-            {isAr ? '← تصفح المزيد من الموارد' : 'Browse more resources →'}
-          </Link>
+              {/* 3. Downloads Selected in Payload ("one in the right when I scroll down I see the downloads based on how I put in there") */}
+              {sidebarDownloads && sidebarDownloads.length > 0 ? (
+                sidebarDownloads.map((dl) => (
+                  <PontlookFeatureCard
+                    key={dl.id}
+                    download={dl}
+                    isAr={isAr}
+                  />
+                ))
+              ) : (
+                // Default Blueprint Feature Card from PontLook_Card_Design_Analysis.md
+                sidebarWidgets?.showFeatureCard !== false && (
+                  <PontlookFeatureCard
+                    isAr={isAr}
+                    category={isAr ? 'الأدوات التشخيصية' : 'FREE DIAGNOSTIC TOOLKIT'}
+                    titleRegular={isAr ? 'رؤى القوى العاملة التي تبني' : 'Workforce insights that build'}
+                    titleItalic={isAr ? 'قدرات المستقبل' : 'future-ready capabilities.'}
+                    description={
+                      isAr
+                        ? 'مصفوفات تشخيص الفجوات المهارية، مؤشرات العائد على التدريب، وخطط التوطين المعتمدة لمتخذي القرار في الموارد البشرية.'
+                        : 'Data-backed GCC labor benchmarks, talent localization roadmaps, and diagnostic frameworks for corporate decision-makers.'
+                    }
+                    innerEyebrow={isAr ? 'حقيبة مجانية' : 'FREE DIAGNOSTIC TOOLKIT'}
+                    innerTitle={isAr ? 'مصفوفة تدقيق الفجوات المهارية في المنشأة' : 'PontLook Skill Gap Audit Matrix'}
+                    innerDescription={
+                      isAr
+                        ? 'حمل إطار العمل التشخيصي لتقييم نقص المهارات في الأقسام قبل التعاقد مع مدربين خارجيين.'
+                        : 'Download our step-by-step diagnostic framework to evaluate departmental skill shortages before procuring external trainers.'
+                    }
+                    tags={
+                      isAr
+                        ? ['السعودة ونطاقات', 'العائد على التدريب', 'مهارات الذكاء الاصطناعي', 'التوطين']
+                        : ['Saudization', 'Leadership ROI', 'AI Upskilling', 'Emiratization', 'Retention']
+                    }
+                    ctaLabel={isAr ? 'تصفح مركز المعرفة والأدلة' : 'Explore the L&D Knowledge Hub & Guides'}
+                    ctaHref={`/${lang}/resources/downloads`}
+                  />
+                )
+              )}
+            </div>
+          </aside>
         </div>
-      </article>
+      </div>
     </div>
   );
 }
