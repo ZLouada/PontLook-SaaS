@@ -18,11 +18,12 @@ export const Media: CollectionConfig = {
     defaultColumns: ['filename', 'alt', 'mimeType', 'filesize', 'createdAt'],
     group: 'Assets & Media',
   },
+  lockDocuments: false,
   access: {
     read: () => true,
     create: isEditorOrAdmin,
     update: isEditorOrAdmin,
-    delete: isAdmin,
+    delete: isEditorOrAdmin,
   },
   hooks: {
     afterChange: [revalidateMediaChange],

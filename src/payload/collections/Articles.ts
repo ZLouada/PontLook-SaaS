@@ -13,11 +13,12 @@ export const Articles: CollectionConfig = {
     defaultColumns: ['title', 'category', 'status', 'publishedAt', 'updatedAt'],
     group: 'Resources & Content',
   },
+  lockDocuments: false,
   access: {
     read: isPublishedOrAuthenticated,
     create: isEditorOrAdmin,
     update: isEditorOrAdmin,
-    delete: isAdmin,
+    delete: isEditorOrAdmin,
   },
   hooks: {
     afterChange: [revalidateArticleChange],

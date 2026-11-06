@@ -15,6 +15,15 @@ export function toPayloadLocale(locale?: string | null): PayloadLocale {
   return locale?.startsWith('ar') ? 'ar' : 'en';
 }
 
+export function getLocalizedValue<T = string>(val: any, locale?: string | null, fallback: T | null = null): T | null {
+  if (val === null || val === undefined) return fallback
+  if (typeof val === 'object') {
+    const payloadLoc = toPayloadLocale(locale)
+    return (val[payloadLoc] ?? val.en ?? fallback) as T | null
+  }
+  return (val as T) ?? fallback
+}
+
 // Helper: Extract image URL from Payload Media relation or string
 export function getMediaUrl(media: any): string | null {
   if (!media) return null
@@ -359,14 +368,14 @@ export function adaptDownloadDoc(dl: any, locale: Locale = 'en'): AdaptedDownloa
   return {
     id: String(dl.id),
     slug: dl.slug || '',
-    title: (typeof dl.title === 'object' ? dl.title[toPayloadLocale(locale)] || dl.title.en : dl.title) || '',
+    title: getLocalizedValue<string>(dl.title, locale, '') || '',
     category: categoryLabel,
     categorySlug,
     contentType,
     contentTypeSlug: contentTypeRaw,
     format: dl.format || 'PDF',
     fileSize: dl.fileSize || '1.8 MB',
-    desc: (typeof dl.description === 'object' ? dl.description[toPayloadLocale(locale)] || dl.description.en : dl.description) || '',
+    desc: getLocalizedValue<string>(dl.description, locale, '') || '',
     features,
     fileUrl,
     image: imageUrl,
@@ -439,37 +448,25 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
           podcastMedia || downloadMedia
             ? {
                 podcastAudio: podcastMedia,
-                podcastTitle:
-                  typeof art.mediaAttachments?.podcastTitle === 'object'
-                    ? art.mediaAttachments.podcastTitle[toPayloadLocale(locale)] || art.mediaAttachments.podcastTitle.en
-                    : art.mediaAttachments?.podcastTitle || null,
+                podcastTitle: getLocalizedValue<string>(art.mediaAttachments?.podcastTitle, locale, null),
                 podcastDuration: art.mediaAttachments?.podcastDuration || null,
                 downloadableAttachment: downloadMedia,
-                downloadButtonLabel:
-                  typeof art.mediaAttachments?.downloadButtonLabel === 'object'
-                    ? art.mediaAttachments.downloadButtonLabel[toPayloadLocale(locale)] || art.mediaAttachments.downloadButtonLabel.en
-                    : art.mediaAttachments?.downloadButtonLabel || null,
+                downloadButtonLabel: getLocalizedValue<string>(art.mediaAttachments?.downloadButtonLabel, locale, null),
               }
             : null
 
         const authorAvatar = art.author?.avatar ? await resolveMediaDoc(payload, art.author.avatar, locale) : null
         const authorAvatarUrl = getMediaUrl(authorAvatar)
         const authorName =
-          typeof art.author?.name === 'object'
-            ? art.author.name[toPayloadLocale(locale)] || art.author.name.en || 'PontLook Research'
-            : art.author?.name || 'PontLook Research'
+          getLocalizedValue<string>(art.author?.name, locale, 'PontLook Research') || 'PontLook Research'
         const authorRole =
-          typeof art.author?.role === 'object'
-            ? art.author.role[toPayloadLocale(locale)] || art.author.role.en || (locale === 'ar' ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team')
-            : art.author?.role || (locale === 'ar' ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team')
-        const authorBio =
-          typeof art.author?.bio === 'object'
-            ? art.author.bio[toPayloadLocale(locale)] || art.author.bio.en || null
-            : art.author?.bio || null
-        const locationContext =
-          typeof art.locationContext === 'object'
-            ? art.locationContext[toPayloadLocale(locale)] || art.locationContext.en || null
-            : art.locationContext || null
+          getLocalizedValue<string>(
+            art.author?.role,
+            locale,
+            locale === 'ar' ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team'
+          ) || (locale === 'ar' ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team')
+        const authorBio = getLocalizedValue<string>(art.author?.bio, locale, null)
+        const locationContext = getLocalizedValue<string>(art.locationContext, locale, null)
 
         return {
           id: String(art.id),
@@ -569,16 +566,10 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
       podcastMedia || downloadMedia
         ? {
             podcastAudio: podcastMedia,
-            podcastTitle:
-              typeof art.mediaAttachments?.podcastTitle === 'object'
-                ? art.mediaAttachments.podcastTitle[toPayloadLocale(locale)] || art.mediaAttachments.podcastTitle.en
-                : art.mediaAttachments?.podcastTitle || null,
+            podcastTitle: getLocalizedValue<string>(art.mediaAttachments?.podcastTitle, locale, null),
             podcastDuration: art.mediaAttachments?.podcastDuration || null,
             downloadableAttachment: downloadMedia,
-            downloadButtonLabel:
-              typeof art.mediaAttachments?.downloadButtonLabel === 'object'
-                ? art.mediaAttachments.downloadButtonLabel[toPayloadLocale(locale)] || art.mediaAttachments.downloadButtonLabel.en
-                : art.mediaAttachments?.downloadButtonLabel || null,
+            downloadButtonLabel: getLocalizedValue<string>(art.mediaAttachments?.downloadButtonLabel, locale, null),
           }
         : null
 
@@ -629,21 +620,15 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
     const authorAvatar = art.author?.avatar ? await resolveMediaDoc(payload, art.author.avatar, locale) : null
     const authorAvatarUrl = getMediaUrl(authorAvatar)
     const authorName =
-      typeof art.author?.name === 'object'
-        ? art.author.name[toPayloadLocale(locale)] || art.author.name.en || 'PontLook Research'
-        : art.author?.name || 'PontLook Research'
+      getLocalizedValue<string>(art.author?.name, locale, 'PontLook Research') || 'PontLook Research'
     const authorRole =
-      typeof art.author?.role === 'object'
-        ? art.author.role[toPayloadLocale(locale)] || art.author.role.en || (locale === 'ar' ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team')
-        : art.author?.role || (locale === 'ar' ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team')
-    const authorBio =
-      typeof art.author?.bio === 'object'
-        ? art.author.bio[toPayloadLocale(locale)] || art.author.bio.en || null
-        : art.author?.bio || null
-    const locationContext =
-      typeof art.locationContext === 'object'
-        ? art.locationContext[toPayloadLocale(locale)] || art.locationContext.en || null
-        : art.locationContext || null
+      getLocalizedValue<string>(
+        art.author?.role,
+        locale,
+        locale === 'ar' ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team'
+      ) || (locale === 'ar' ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team')
+    const authorBio = getLocalizedValue<string>(art.author?.bio, locale, null)
+    const locationContext = getLocalizedValue<string>(art.locationContext, locale, null)
 
     return {
       id: String(art.id),
@@ -668,10 +653,11 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
       sidebarWidgets: {
         showLeadForm: art.sidebarWidgets?.showLeadForm ?? true,
         showFeatureCard: art.sidebarWidgets?.showFeatureCard ?? true,
-        featureCardCustomTitle:
-          typeof art.sidebarWidgets?.featureCardCustomTitle === 'object'
-            ? art.sidebarWidgets.featureCardCustomTitle[toPayloadLocale(locale)] || art.sidebarWidgets.featureCardCustomTitle.en
-            : art.sidebarWidgets?.featureCardCustomTitle || null,
+        featureCardCustomTitle: getLocalizedValue<string>(
+          art.sidebarWidgets?.featureCardCustomTitle,
+          locale,
+          null
+        ),
       },
       author: {
         name: authorName,

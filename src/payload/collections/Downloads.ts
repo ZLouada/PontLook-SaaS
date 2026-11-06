@@ -13,11 +13,12 @@ export const Downloads: CollectionConfig = {
     defaultColumns: ['title', 'category', 'contentType', 'format', 'fileSize', 'status', 'updatedAt'],
     group: 'Resources & Content',
   },
+  lockDocuments: false,
   access: {
     read: isPublishedOrAuthenticated,
     create: isEditorOrAdmin,
     update: isEditorOrAdmin,
-    delete: isAdmin,
+    delete: isEditorOrAdmin,
   },
   hooks: {
     afterChange: [revalidateDownloadChange],

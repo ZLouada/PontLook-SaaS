@@ -13,11 +13,12 @@ export const Podcasts: CollectionConfig = {
     defaultColumns: ['title', 'guest', 'duration', 'status', 'updatedAt'],
     group: 'Resources & Content',
   },
+  lockDocuments: false,
   access: {
     read: isPublishedOrAuthenticated,
     create: isEditorOrAdmin,
     update: isEditorOrAdmin,
-    delete: isAdmin,
+    delete: isEditorOrAdmin,
   },
   hooks: {
     afterChange: [revalidatePodcastChange],

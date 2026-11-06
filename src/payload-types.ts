@@ -518,31 +518,6 @@ export interface PayloadKv {
  */
 export interface PayloadLockedDocument {
   id: number;
-  document?:
-    | ({
-        relationTo: 'articles';
-        value: number | Article;
-      } | null)
-    | ({
-        relationTo: 'downloads';
-        value: number | Download;
-      } | null)
-    | ({
-        relationTo: 'events';
-        value: number | Event;
-      } | null)
-    | ({
-        relationTo: 'podcasts';
-        value: number | Podcast;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: number | Media;
-      } | null)
-    | ({
-        relationTo: 'users';
-        value: number | User;
-      } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
@@ -794,7 +769,6 @@ export interface PayloadKvSelect<T extends boolean = true> {
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
-  document?: T;
   globalSlug?: T;
   user?: T;
   updatedAt?: T;

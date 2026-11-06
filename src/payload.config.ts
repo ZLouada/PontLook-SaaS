@@ -64,14 +64,19 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+  debug: process.env.NODE_ENV !== 'production' || process.env.PAYLOAD_DEBUG === 'true',
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
       ssl: process.env.DATABASE_URI?.includes('supabase')
         ? { rejectUnauthorized: false }
         : undefined,
-      max: process.env.NODE_ENV === 'production' ? 2 : 5,
-      idleTimeoutMillis: 5000,
+      max:
+        process.env.NEXT_PHASE === 'phase-production-build' ||
+        process.env.npm_lifecycle_event === 'build'
+          ? 2
+          : 8,
+      idleTimeoutMillis: 10000,
       connectionTimeoutMillis: 10000,
     },
     push: false,

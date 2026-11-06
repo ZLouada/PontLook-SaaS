@@ -13,11 +13,12 @@ export const Events: CollectionConfig = {
     defaultColumns: ['title', 'date', 'location', 'status', 'updatedAt'],
     group: 'Resources & Content',
   },
+  lockDocuments: false,
   access: {
     read: isPublishedOrAuthenticated,
     create: isEditorOrAdmin,
     update: isEditorOrAdmin,
-    delete: isAdmin,
+    delete: isEditorOrAdmin,
   },
   hooks: {
     afterChange: [revalidateEventChange],

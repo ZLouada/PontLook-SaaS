@@ -9,6 +9,7 @@ export const Users: CollectionConfig = {
     defaultColumns: ['email', 'role', 'createdAt'],
     group: 'Administration',
   },
+  lockDocuments: false,
   access: {
     admin: ({ req: { user } }) =>
       Boolean(
