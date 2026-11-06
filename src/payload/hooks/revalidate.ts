@@ -5,32 +5,41 @@ import type {
   GlobalAfterChangeHook,
 } from 'payload'
 
+const scheduleAsync =
+  typeof setImmediate === 'function'
+    ? setImmediate
+    : (fn: () => void) => setTimeout(fn, 0)
+
 /**
  * Safely revalidates a list of paths using Next.js on-demand revalidation.
+ * Executed asynchronously on the next event loop tick so database mutation
+ * transactions are committed and freed before page regeneration runs.
  * Catches errors if invoked outside Next.js request context (e.g. CLI scripts).
  */
 export function revalidatePaths(
   paths: (string | { path: string; type?: 'page' | 'layout' })[]
 ): void {
-  for (const item of paths) {
-    const path = typeof item === 'string' ? item : item.path
-    const type = typeof item === 'object' ? item.type : undefined
-    try {
-      if (type) {
-        revalidatePath(path, type)
-      } else {
-        revalidatePath(path)
+  scheduleAsync(() => {
+    for (const item of paths) {
+      const path = typeof item === 'string' ? item : item.path
+      const type = typeof item === 'object' ? item.type : undefined
+      try {
+        if (type) {
+          revalidatePath(path, type)
+        } else {
+          revalidatePath(path)
+        }
+        console.log(
+          `[Payload Invalidation] Revalidated: ${path}${type ? ` (${type})` : ''}`
+        )
+      } catch (err: any) {
+        console.warn(
+          `[Payload Invalidation] Warning revalidating ${path}:`,
+          err?.message || err
+        )
       }
-      console.log(
-        `[Payload Invalidation] Revalidated: ${path}${type ? ` (${type})` : ''}`
-      )
-    } catch (err: any) {
-      console.warn(
-        `[Payload Invalidation] Warning revalidating ${path}:`,
-        err?.message || err
-      )
     }
-  }
+  })
 }
 
 // ----------------------------------------------------

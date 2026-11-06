@@ -64,7 +64,28 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  debug: process.env.NODE_ENV !== 'production' || process.env.PAYLOAD_DEBUG === 'true',
+  debug: true,
+  hooks: {
+    afterError: [
+      ({ error, collection }) => {
+        const collectionPrefix = collection ? `[${collection.slug}] ` : ''
+        console.error(
+          `[Payload Error] ${collectionPrefix}${error?.message || error}`,
+          error
+        )
+        const errorMessage = error?.message || 'Operation failed. Please try again.'
+        return {
+          response: {
+            errors: [
+              {
+                message: errorMessage,
+              },
+            ],
+          },
+        }
+      },
+    ],
+  },
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
