@@ -77,32 +77,59 @@ const customConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
     const Tag = (node.tag as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6') || 'h2';
     const text = extractTextFromNode(node).trim();
     const id = slugifyHeading(text);
-    let headingClasses = '';
 
+    if (Tag === 'h2') {
+      return React.createElement(
+        'div',
+        { className: 'mt-14 mb-6 scroll-mt-28 group/h2' },
+        React.createElement(
+          'h2',
+          {
+            id,
+            className:
+              'text-2xl sm:text-3xl md:text-[2.25rem] font-heading font-bold text-[#0B0B10] tracking-tight leading-[1.14]',
+          },
+          nodesToJSX({ nodes: node.children })
+        ),
+        React.createElement(
+          'svg',
+          {
+            xmlns: 'http://www.w3.org/2000/svg',
+            width: '84',
+            height: '14',
+            viewBox: '0 0 84 14',
+            className: 'mt-3.5 text-[#FF5A1F] block',
+            'aria-hidden': 'true',
+          },
+          React.createElement('path', {
+            d: 'M2 7q10-9 20 0t20 0 20 0 20 0',
+            fill: 'none',
+            stroke: 'currentColor',
+            strokeWidth: '3',
+            strokeLinecap: 'round',
+          })
+        )
+      );
+    }
+
+    let headingClasses = '';
     switch (Tag) {
       case 'h1':
-        // Primary title hierarchy (Hero/Page scale)
         headingClasses =
-          'text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-neutral-950 tracking-tight leading-[1.1] mt-12 mb-6 scroll-mt-24';
-        break;
-      case 'h2':
-        // Major article sections
-        headingClasses =
-          'text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-neutral-950 tracking-tight leading-[1.18] mt-12 mb-5 scroll-mt-24';
+          'text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-[#0B0B10] tracking-tight leading-[1.08] mt-14 mb-6 scroll-mt-28';
         break;
       case 'h3':
-        // Subsections
         headingClasses =
-          'text-lg sm:text-xl md:text-2xl font-heading font-semibold text-neutral-900 tracking-tight leading-[1.3] mt-8 mb-3 scroll-mt-24';
+          'text-xl sm:text-2xl font-heading font-bold text-[#0B0B10] tracking-tight leading-[1.25] mt-10 mb-4 scroll-mt-28';
         break;
       case 'h4':
         headingClasses =
-          'text-base font-heading font-semibold text-neutral-900 tracking-tight leading-snug mt-6 mb-2 scroll-mt-24';
+          'text-lg sm:text-xl font-heading font-semibold text-[#0B0B10] tracking-tight leading-snug mt-8 mb-3 scroll-mt-28';
         break;
       case 'h5':
       case 'h6':
         headingClasses =
-          'text-sm sm:text-base font-heading font-semibold text-neutral-900 tracking-tight leading-snug mt-4 mb-2 scroll-mt-24';
+          'text-base font-heading font-semibold text-[#0B0B10] tracking-tight leading-snug mt-6 mb-2 scroll-mt-28';
         break;
     }
 
@@ -117,10 +144,9 @@ const customConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
     if (!children || (Array.isArray(children) && children.length === 0)) {
       return React.createElement('p', { className: 'mb-4' }, React.createElement('br'));
     }
-    // Body: font-sans leading-relaxed text-neutral-700
     return React.createElement(
       'p',
-      { className: 'font-sans text-base sm:text-lg text-neutral-700 leading-relaxed font-normal mb-6' },
+      { className: 'font-sans text-[1.125rem] text-[#3B3B44] leading-[1.8] font-normal mb-6' },
       children
     );
   },
@@ -128,8 +154,8 @@ const customConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
     const isOrdered = node.listType === 'number' || node.tag === 'ol';
     const Tag = isOrdered ? 'ol' : 'ul';
     const listClasses = isOrdered
-      ? 'list-decimal list-outside ml-6 rtl:mr-6 rtl:ml-0 mb-6 space-y-2 font-sans text-base sm:text-lg leading-relaxed text-neutral-700'
-      : 'list-disc list-outside ml-6 rtl:mr-6 rtl:ml-0 mb-6 space-y-2 font-sans text-base sm:text-lg leading-relaxed text-neutral-700';
+      ? 'list-decimal list-outside ml-6 rtl:mr-6 rtl:ml-0 mb-8 space-y-2.5 font-sans text-[1.08rem] leading-[1.75] text-[#3B3B44]'
+      : 'list-disc list-outside ml-6 rtl:mr-6 rtl:ml-0 mb-8 space-y-2.5 font-sans text-[1.08rem] leading-[1.75] text-[#3B3B44]';
 
     return React.createElement(
       Tag,
@@ -149,9 +175,22 @@ const customConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
       'blockquote',
       {
         className:
-          'border-l-4 rtl:border-r-4 rtl:border-l-0 border-[#FF5C00] pl-5 rtl:pr-5 py-3 my-8 italic font-sans text-neutral-800 bg-neutral-50/80 rounded-r-xl rtl:rounded-l-xl text-base sm:text-lg leading-relaxed',
+          'relative my-10 pt-10 sm:pt-12 font-heading font-semibold text-xl sm:text-2xl text-[#0B0B10] leading-snug pl-4 rtl:pr-4 rtl:pl-0',
       },
-      nodesToJSX({ nodes: node.children })
+      React.createElement(
+        'span',
+        {
+          className:
+            'absolute top-0 left-0 rtl:right-0 rtl:left-auto text-7xl sm:text-8xl font-heading font-extrabold text-[#FF5A1F] leading-none select-none pointer-events-none -mt-2 opacity-90',
+          'aria-hidden': 'true',
+        },
+        '“'
+      ),
+      React.createElement(
+        'div',
+        { className: 'relative z-10' },
+        nodesToJSX({ nodes: node.children })
+      )
     );
   },
   link: ({ node, nodesToJSX }) => {
@@ -166,7 +205,8 @@ const customConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
         href,
         target,
         rel,
-        className: 'text-[#FF5C00] font-medium hover:underline transition-colors',
+        className:
+          'text-[#C93D07] font-medium underline underline-offset-4 decoration-[#FF5A1F]/50 hover:decoration-[#FF5A1F] hover:text-[#FF5A1F] transition-colors',
       },
       nodesToJSX({ nodes: node.children })
     );

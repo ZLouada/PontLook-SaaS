@@ -650,6 +650,23 @@
   animation: kinetic-float-bob-rev 3.6s ease-in-out infinite;
 }
 
+@keyframes rise {
+  from {
+    transform: translate(-50%, 55%);
+  }
+  to {
+    transform: translate(-50%, 0);
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-kinetic-spin,
   .animate-kinetic-orbit,
