@@ -92,16 +92,9 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const paths: { lang: Locale; slug: string }[] = [];
-  const slugs = await getAllArticleSlugs();
-
-  for (const locale of i18n.locales) {
-    for (const slug of slugs) {
-      paths.push({ lang: locale, slug });
-    }
-  }
-
-  return paths;
+  // Return empty array to allow reliable on-demand ISR rendering (dynamicParams = true, revalidate = 60).
+  // This completely eliminates remote CI/Hostinger build failures caused by external DB pool exhaustion or timeouts.
+  return [];
 }
 
 export default async function BlogPostDetailPage({
@@ -139,7 +132,13 @@ export default async function BlogPostDetailPage({
   } = article;
 
   const headings = extractHeadingsFromContent(content);
-  const allArticles = await getArticles(lang);
+
+  let allArticles: any[] = [];
+  try {
+    allArticles = await getArticles(lang);
+  } catch (err) {
+    console.error('[BlogPostDetailPage] Failed to fetch related articles:', err);
+  }
 
   const canonicalUrl = article.seo?.canonicalUrl || `${SITE_URL}/${lang}/resources/blog/${article.slug || slug}`;
   const absoluteImageUrl = imageUrl
@@ -152,7 +151,7 @@ export default async function BlogPostDetailPage({
     { name: isAr ? 'الرئيسية' : 'Home', url: `${SITE_URL}/${lang}` },
     { name: isAr ? 'الموارد' : 'Resources', url: `${SITE_URL}/${lang}/resources` },
     { name: isAr ? 'المدونة' : 'Blog', url: `${SITE_URL}/${lang}/resources/blog` },
-    ...(category ? [{ name: category, url: `${SITE_URL}/${lang}/resources?category=${encodeURIComponent(categorySlug)}` }] : []),
+    ...(category ? [{ name: category, url: `${SITE_URL}/${lang}/resources?category=${encodeURIComponent(categorySlug || '')}` }] : []),
     { name: title, url: canonicalUrl },
   ];
 
@@ -175,12 +174,13 @@ export default async function BlogPostDetailPage({
 
   const jsonLdString = JSON.stringify(jsonLdGraph).replace(/</g, '\\u003c');
 
-  const authorInitials = (article.author?.name || 'PontLook Research')
+  const authorInitials = ((article.author?.name || 'PontLook Research')
     .split(' ')
+    .filter(Boolean)
     .map((w) => w[0])
     .slice(0, 2)
     .join('')
-    .toUpperCase();
+    .toUpperCase()) || 'PL';
 
   return (
     <div

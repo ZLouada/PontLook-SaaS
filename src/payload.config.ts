@@ -64,7 +64,7 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  debug: true,
+  debug: process.env.NODE_ENV !== 'production' || process.env.PAYLOAD_DEBUG === 'true',
   hooks: {
     afterError: [
       ({ error, collection }) => {

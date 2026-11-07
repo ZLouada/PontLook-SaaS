@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
+import ResourceImage from '@/components/resources/ResourceImage';
 import { Locale, i18n, isArabicLocale } from '@/i18n/config';
 import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
 import { ArrowRight, BookOpen, Calendar, Clock, User } from '@/components/icons';
 import { getArticles } from '@/lib/payload/resources';
 import { BlogSkylineCta } from '@/components/resources/BlogSkylineCta';
-import { BlogHeroArch } from '@/components/resources/BlogHeroArch';
 
 export const revalidate = 60;
 
@@ -65,7 +64,12 @@ export default async function BlogPage({
   const isAr = isArabicLocale(lang);
 
   // Load published articles from Payload Local API
-  const articles = await getArticles(lang);
+  let articles: any[] = [];
+  try {
+    articles = await getArticles(lang);
+  } catch (err) {
+    console.error('[BlogPage] Failed to fetch articles:', err);
+  }
 
   const featuredPost = articles[0] || null;
   const regularPosts = articles.slice(1);
@@ -179,7 +183,7 @@ export default async function BlogPage({
 
                 <div className="relative aspect-[4/3] rounded-[24px] overflow-hidden border-2 border-[#0B0B10] bg-white shadow-sm">
                   {featuredPost.image ? (
-                    <Image
+                    <ResourceImage
                       src={featuredPost.image}
                       alt={featuredPost.title}
                       fill

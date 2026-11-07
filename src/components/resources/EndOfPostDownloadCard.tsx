@@ -76,15 +76,12 @@ export function EndOfPostDownloadCard({
         console.error('[EndOfPostDownloadCard] Download error:', err);
       }
 
-      const timer1 = setTimeout(() => {
+      setTimeout(() => {
         setDownloadState('completed');
-        const timer2 = setTimeout(() => {
+        setTimeout(() => {
           setDownloadState('idle');
         }, 2500);
-        return () => clearTimeout(timer2);
       }, 900);
-
-      return () => clearTimeout(timer1);
     },
     [fileUrl, filename, downloadState]
   );

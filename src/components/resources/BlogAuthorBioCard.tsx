@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+import ResourceImage from './ResourceImage';
 
 interface AuthorData {
   name: string;
@@ -26,12 +26,13 @@ export function BlogAuthorBioCard({ author, isAr = false }: BlogAuthorBioCardPro
       ? 'جزء من فريق أبحاث واستخبارات سوق العمل في PontLook، متخصص في استراتيجيات التدريب المؤسسي، سياسات التوطين، وتطوير رأس المال البشري بدول الخليج.'
       : 'Part of the PontLook Research & Intelligence team, covering workforce modernisation, nationalisation policies, and corporate L&D strategy across the GCC.');
 
-  const initials = authorName
+  const initials = (authorName
     .split(' ')
+    .filter(Boolean)
     .map((n) => n[0])
     .slice(0, 2)
     .join('')
-    .toUpperCase() || 'PL';
+    .toUpperCase()) || 'PL';
 
   return (
     <div
@@ -41,7 +42,7 @@ export function BlogAuthorBioCard({ author, isAr = false }: BlogAuthorBioCardPro
       {/* 54px Circular Avatar in Brand Orange or custom photo */}
       <div className="relative w-13 h-13 sm:w-14 sm:h-14 rounded-full overflow-hidden bg-[#FF5A1F] text-white flex items-center justify-center font-heading font-bold text-base sm:text-lg shrink-0 shadow-xs">
         {author?.image ? (
-          <Image
+          <ResourceImage
             src={author.image}
             alt={authorName}
             fill

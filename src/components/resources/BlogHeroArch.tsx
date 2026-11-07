@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
+import React, { useEffect, useState, useId } from 'react';
+import ResourceImage from './ResourceImage';
 
 interface BlogHeroArchProps {
   imageUrl?: string | null;
@@ -19,6 +19,8 @@ export function BlogHeroArch({
   isAr = false,
 }: BlogHeroArchProps) {
   const [rotation, setRotation] = useState<number>(0);
+  const rawId = useId();
+  const pathId = `badge-circle-path-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,7 +51,7 @@ export function BlogHeroArch({
       <div className="relative aspect-[4/5] rounded-t-[240px] rounded-b-[32px] overflow-hidden border-2 border-[#0B0B10] bg-gradient-to-b from-[#FFF8F1] via-[#FFE3CD] to-[#FFC397] shadow-sm">
         {imageUrl ? (
           <div className="relative w-full h-full">
-            <Image
+            <ResourceImage
               src={imageUrl}
               alt={imageAlt}
               fill
@@ -113,7 +115,7 @@ export function BlogHeroArch({
       >
         <svg viewBox="0 0 124 124" className="w-full h-full" aria-hidden="true">
           <defs>
-            <path id="badge-circle-path" d="M62 62m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0" />
+            <path id={pathId} d="M62 62m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0" />
           </defs>
           <text
             fontFamily="Inter, system-ui, sans-serif"
@@ -122,7 +124,7 @@ export function BlogHeroArch({
             fill="#0B0B10"
             letterSpacing="0.05em"
           >
-            <textPath href="#badge-circle-path" textLength="272" lengthAdjust="spacing">
+            <textPath href={`#${pathId}`} textLength="272" lengthAdjust="spacing">
               {badgeText}
             </textPath>
           </text>

@@ -10,14 +10,14 @@ interface BlogKeepReadingProps {
 }
 
 export function BlogKeepReading({
-  articles,
+  articles = [],
   currentSlug,
   lang,
   isAr = false,
 }: BlogKeepReadingProps) {
   // Filter out current article and take up to 4
-  const related = articles
-    .filter((a) => a.slug !== currentSlug)
+  const related = (articles || [])
+    .filter((a) => a && a.slug && a.slug !== currentSlug)
     .slice(0, 4);
 
   if (related.length === 0) return null;
