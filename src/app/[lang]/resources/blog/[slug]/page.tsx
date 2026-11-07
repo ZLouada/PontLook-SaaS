@@ -14,7 +14,6 @@ import { BlogMediaActionCard } from '@/components/resources/BlogMediaActionCard'
 import { EndOfPostDownloadCard } from '@/components/resources/EndOfPostDownloadCard';
 import { BlogAuthorBioCard } from '@/components/resources/BlogAuthorBioCard';
 import { BlogKeepReading } from '@/components/resources/BlogKeepReading';
-import { BlogSkylineCta } from '@/components/resources/BlogSkylineCta';
 
 export const revalidate = 60;
 export const dynamicParams = true;
@@ -377,11 +376,6 @@ export default async function BlogPostDetailPage({
         lang={lang}
         isAr={isAr}
       />
-
-      {/* End of Page Gulf Skyline CTA Banner */}
-      <div className="max-w-[1160px] mx-auto px-4 sm:px-6">
-        <BlogSkylineCta lang={lang} isAr={isAr} />
-      </div>
     </div>
   );
 }

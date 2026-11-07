@@ -6,7 +6,6 @@ import { constructAlternates } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
 import { ArrowRight, BookOpen, Calendar, Clock, User } from '@/components/icons';
 import { getArticles } from '@/lib/payload/resources';
-import { BlogSkylineCta } from '@/components/resources/BlogSkylineCta';
 
 export const revalidate = 60;
 
@@ -294,9 +293,6 @@ export default async function BlogPage({
             </div>
           </Reveal>
         )}
-
-        {/* End of Page Skyline Consultation CTA Banner */}
-        <BlogSkylineCta lang={lang} isAr={isAr} />
       </div>
     </div>
   );

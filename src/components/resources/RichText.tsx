@@ -81,13 +81,13 @@ const customConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
     if (Tag === 'h2') {
       return React.createElement(
         'div',
-        { className: 'mt-14 mb-6 scroll-mt-28 group/h2' },
+        { id: `section-${id}`, className: 'mt-14 mb-6 scroll-mt-36 group/h2' },
         React.createElement(
           'h2',
           {
             id,
             className:
-              'text-2xl sm:text-3xl md:text-[2.25rem] font-heading font-bold text-[#0B0B10] tracking-tight leading-[1.14]',
+              'text-2xl sm:text-3xl md:text-[2.25rem] font-heading font-bold text-[#0B0B10] tracking-tight leading-[1.14] scroll-mt-36',
           },
           nodesToJSX({ nodes: node.children })
         ),
@@ -116,20 +116,20 @@ const customConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
     switch (Tag) {
       case 'h1':
         headingClasses =
-          'text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-[#0B0B10] tracking-tight leading-[1.08] mt-14 mb-6 scroll-mt-28';
+          'text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-[#0B0B10] tracking-tight leading-[1.08] mt-14 mb-6 scroll-mt-36';
         break;
       case 'h3':
         headingClasses =
-          'text-xl sm:text-2xl font-heading font-bold text-[#0B0B10] tracking-tight leading-[1.25] mt-10 mb-4 scroll-mt-28';
+          'text-xl sm:text-2xl font-heading font-bold text-[#0B0B10] tracking-tight leading-[1.25] mt-10 mb-4 scroll-mt-36';
         break;
       case 'h4':
         headingClasses =
-          'text-lg sm:text-xl font-heading font-semibold text-[#0B0B10] tracking-tight leading-snug mt-8 mb-3 scroll-mt-28';
+          'text-lg sm:text-xl font-heading font-semibold text-[#0B0B10] tracking-tight leading-snug mt-8 mb-3 scroll-mt-36';
         break;
       case 'h5':
       case 'h6':
         headingClasses =
-          'text-base font-heading font-semibold text-[#0B0B10] tracking-tight leading-snug mt-6 mb-2 scroll-mt-28';
+          'text-base font-heading font-semibold text-[#0B0B10] tracking-tight leading-snug mt-6 mb-2 scroll-mt-36';
         break;
     }
 
