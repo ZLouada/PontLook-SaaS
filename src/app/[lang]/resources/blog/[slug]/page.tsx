@@ -10,10 +10,7 @@ import { getArticleBySlug, getAllArticleSlugs } from '@/lib/payload/resources';
 import { RichText, extractHeadingsFromContent } from '@/components/resources/RichText';
 import { BlogMediaActionCard } from '@/components/resources/BlogMediaActionCard';
 import { BlogTableOfContents } from '@/components/resources/BlogTableOfContents';
-import { SidebarLeadForm } from '@/components/resources/SidebarLeadForm';
-import { PontlookFeatureCard } from '@/components/resources/PontlookFeatureCard';
 import { EndOfPostDownloadCard } from '@/components/resources/EndOfPostDownloadCard';
-import { EndOfPostCtaBanner } from '@/components/resources/EndOfPostCtaBanner';
 import { BlogAuthorBioCard } from '@/components/resources/BlogAuthorBioCard';
 
 export const revalidate = 60;
@@ -135,9 +132,7 @@ export default async function BlogPostDetailPage({
     imageAlt,
     updatedAt,
     publishedAt,
-    sidebarDownloads,
     endOfPostDownload,
-    sidebarWidgets,
   } = article;
 
   const headings = extractHeadingsFromContent(content);
@@ -220,15 +215,14 @@ export default async function BlogPostDetailPage({
           </nav>
         </Reveal>
 
-        {/* Responsive Grid Layout:
-            - Wide screens (xl: >= 1280px): 3 columns (3 cols Left Sticky TOC, 6 cols Article, 3 cols Right Sidebar)
-            - Medium screens (lg: 1024px-1279px): 2 columns (7 cols Article, 5 cols Right Sidebar with TOC + Widgets)
+        {/* Clean Responsive Layout:
+            - Desktop (lg: >= 1024px): Left Sticky TOC (if headings exist) + Focused Reading Column
             - Mobile (< 1024px): 1 column with collapsible top TOC accordion
         */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 xl:grid-cols-12 gap-8 lg:gap-10">
-          {/* Left Column: Dedicated Sticky TOC on Wide Desktop (matching reference blog_ref_top.png) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          {/* Left Column: Dedicated Sticky TOC on Desktop */}
           {headings.length > 0 && (
-            <aside className="hidden xl:block xl:col-span-3">
+            <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">
               <div className="sticky top-28 space-y-6 max-h-[calc(100vh-8rem)] overflow-y-auto pr-2">
                 <BlogTableOfContents
                   headings={headings}
@@ -240,7 +234,7 @@ export default async function BlogPostDetailPage({
           )}
 
           {/* Main Reading Column */}
-          <article className={`min-w-0 ${headings.length > 0 ? 'lg:col-span-7 xl:col-span-6' : 'lg:col-span-8 xl:col-span-8'}`}>
+          <article className={`min-w-0 ${headings.length > 0 ? 'lg:col-span-8 xl:col-span-9 max-w-4xl' : 'col-span-12 max-w-4xl mx-auto w-full'}`}>
             {/* Meta Tags: Category, Date, Read Time */}
             <Reveal delay={0.05}>
               <div className="flex flex-wrap items-center gap-3 mb-4 text-xs">
@@ -351,8 +345,8 @@ export default async function BlogPostDetailPage({
               </div>
             )}
 
-            {/* Executive Media & Podcast Action Card */}
-            {article.mediaAttachments && (
+            {/* Executive Audio Briefing (only rendered if podcast audio attached) */}
+            {article.mediaAttachments?.podcastAudio && (
               <Reveal delay={0.22}>
                 <div className="mb-10">
                   <BlogMediaActionCard
@@ -386,30 +380,24 @@ export default async function BlogPostDetailPage({
               </p>
             )}
 
-            {/* End of Post Featured Download Toolkit (Selected in Payload) */}
-            {endOfPostDownload && (
+            {/* End of Article Download Section (from endOfPostDownload or mediaAttachments.downloadableAttachment) */}
+            {(endOfPostDownload || article.mediaAttachments?.downloadableAttachment) && (
               <Reveal delay={0.2}>
                 <EndOfPostDownloadCard
                   download={endOfPostDownload}
+                  attachment={article.mediaAttachments?.downloadableAttachment}
+                  buttonLabel={article.mediaAttachments?.downloadButtonLabel}
+                  postTitle={title}
                   isAr={isAr}
                 />
               </Reveal>
             )}
 
-            {/* Author Bio Box (Matching reference blog_ref_bottom.png) */}
+            {/* Author Bio Box */}
             <Reveal delay={0.22}>
               <BlogAuthorBioCard
                 author={article.author}
                 isAr={isAr}
-              />
-            </Reveal>
-
-            {/* End of Post Consultation CTA Banner (Matching Pasted image 20261101185732.png) */}
-            <Reveal delay={0.25}>
-              <EndOfPostCtaBanner
-                isAr={isAr}
-                lang={lang}
-                locationContext={article.locationContext}
               />
             </Reveal>
 
@@ -430,71 +418,6 @@ export default async function BlogPostDetailPage({
               </Link>
             </div>
           </article>
-
-          {/* Sticky Right Sidebar (Matching Pasted image 20261101184049.png & payload.md) */}
-          <aside className={`${headings.length > 0 ? 'lg:col-span-5 xl:col-span-3' : 'lg:col-span-4 xl:col-span-4'} space-y-8`}>
-            <div className="sticky top-28 space-y-6 max-h-[calc(100vh-8rem)] overflow-y-auto pr-1">
-              {/* On lg screens only (when left column is hidden), display TOC at the top of the sidebar */}
-              {headings.length > 0 && (
-                <div className="hidden lg:block xl:hidden">
-                  <BlogTableOfContents
-                    headings={headings}
-                    isAr={isAr}
-                    readTime={readTime}
-                  />
-                </div>
-              )}
-
-              {/* 2. Sticky Sidebar Lead Form ("not just downloads in the right but forms also") */}
-              {sidebarWidgets?.showLeadForm !== false && (
-                <SidebarLeadForm
-                  isAr={isAr}
-                  defaultCategory={categorySlug}
-                  sourceArticleTitle={title}
-                />
-              )}
-
-              {/* 3. Downloads Selected in Payload ("one in the right when I scroll down I see the downloads based on how I put in there") */}
-              {sidebarDownloads && sidebarDownloads.length > 0 ? (
-                sidebarDownloads.map((dl) => (
-                  <PontlookFeatureCard
-                    key={dl.id}
-                    download={dl}
-                    isAr={isAr}
-                  />
-                ))
-              ) : (
-                // Default Blueprint Feature Card from PontLook_Card_Design_Analysis.md
-                sidebarWidgets?.showFeatureCard !== false && (
-                  <PontlookFeatureCard
-                    isAr={isAr}
-                    category={isAr ? 'الأدوات التشخيصية' : 'FREE DIAGNOSTIC TOOLKIT'}
-                    titleRegular={isAr ? 'رؤى القوى العاملة التي تبني' : 'Workforce insights that build'}
-                    titleItalic={isAr ? 'قدرات المستقبل' : 'future-ready capabilities.'}
-                    description={
-                      isAr
-                        ? 'مصفوفات تشخيص الفجوات المهارية، مؤشرات العائد على التدريب، وخطط التوطين المعتمدة لمتخذي القرار في الموارد البشرية.'
-                        : 'Data-backed GCC labor benchmarks, talent localization roadmaps, and diagnostic frameworks for corporate decision-makers.'
-                    }
-                    innerEyebrow={isAr ? 'حقيبة مجانية' : 'FREE DIAGNOSTIC TOOLKIT'}
-                    innerTitle={isAr ? 'مصفوفة تدقيق الفجوات المهارية في المنشأة' : 'PontLook Skill Gap Audit Matrix'}
-                    innerDescription={
-                      isAr
-                        ? 'حمل إطار العمل التشخيصي لتقييم نقص المهارات في الأقسام قبل التعاقد مع مدربين خارجيين.'
-                        : 'Download our step-by-step diagnostic framework to evaluate departmental skill shortages before procuring external trainers.'
-                    }
-                    tags={
-                      isAr
-                        ? ['السعودة ونطاقات', 'العائد على التدريب', 'مهارات الذكاء الاصطناعي', 'التوطين']
-                        : ['Saudization', 'Leadership ROI', 'AI Upskilling', 'Emiratization', 'Retention']
-                    }
-                    ctaLabel={isAr ? 'تصفح مركز المعرفة والأدلة' : 'Explore the L&D Knowledge Hub & Guides'}
-                    ctaHref={`/${lang}/resources/downloads`}
-                  />
-                )
-              )}
-            </div>
-          </aside>
         </div>
       </div>
     </div>
