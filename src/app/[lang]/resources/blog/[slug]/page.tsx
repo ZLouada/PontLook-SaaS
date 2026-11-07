@@ -214,7 +214,7 @@ export default async function BlogPostDetailPage({
         <Reveal>
           <nav
             aria-label="Breadcrumb"
-            className="flex items-center gap-2 text-xs sm:text-[13px] text-[#7A7A85] font-sans mb-6 overflow-x-auto whitespace-nowrap"
+            className="flex items-center gap-2 text-xs sm:text-[13px] text-[#585865] font-sans mb-6 overflow-x-auto whitespace-nowrap"
           >
             <Link href={`/${lang}`} className="hover:text-[#0B0B10] transition-colors">
               {isAr ? 'الرئيسية' : 'Home'}
@@ -278,13 +278,13 @@ export default async function BlogPostDetailPage({
                     <b className="block font-heading text-sm sm:text-[15px] text-[#0B0B10] leading-snug">
                       {article.author?.name || 'PontLook Research'}
                     </b>
-                    <small className="block text-xs sm:text-[13px] text-[#7A7A85]">
+                    <small className="block text-xs sm:text-[13px] text-[#585865]">
                       {article.author?.role || (isAr ? 'فريق التحرير والبحوث' : 'Editorial & Intelligence Team')}
                     </small>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 text-xs sm:text-sm text-[#7A7A85] font-sans border-l rtl:border-r rtl:border-l-0 border-[#ECE7E2] pl-4 rtl:pr-4">
+                <div className="flex items-center gap-3 text-xs sm:text-sm text-[#585865] font-sans border-l rtl:border-r rtl:border-l-0 border-[#ECE7E2] pl-4 rtl:pr-4">
                   {date && <span>{date}</span>}
                   {date && readTime && <span>·</span>}
                   {readTime && <span>{readTime}</span>}
@@ -365,7 +365,7 @@ export default async function BlogPostDetailPage({
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 pt-6 border-t border-[#ECE7E2] text-sm">
               <Link
                 href={`/${lang}/resources`}
-                className="text-[#7A7A85] hover:text-[#0B0B10] font-medium transition-colors inline-flex items-center gap-1.5"
+                className="text-[#585865] hover:text-[#0B0B10] font-medium transition-colors inline-flex items-center gap-1.5"
               >
                 <span>‹</span>
                 <span>{isAr ? 'العودة لمركز المعرفة والموارد' : 'Back to Resources & Knowledge Hub'}</span>

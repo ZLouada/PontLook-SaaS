@@ -85,7 +85,7 @@ export default async function BlogPage({
         <Reveal>
           <nav
             aria-label="Breadcrumb"
-            className="flex items-center gap-2 text-xs sm:text-[13px] text-[#7A7A85] font-sans mb-6 overflow-x-auto whitespace-nowrap"
+            className="flex items-center gap-2 text-xs sm:text-[13px] text-[#585865] font-sans mb-6 overflow-x-auto whitespace-nowrap"
           >
             <Link href={`/${lang}`} className="hover:text-[#0B0B10] transition-colors">
               {isAr ? 'الرئيسية' : 'Home'}
@@ -160,7 +160,7 @@ export default async function BlogPage({
                   )}
 
                   <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[#0B0B10]/10">
-                    <div className="flex items-center gap-3 text-xs sm:text-[13px] text-[#7A7A85] font-sans">
+                    <div className="flex items-center gap-3 text-xs sm:text-[13px] text-[#585865] font-sans">
                       <span className="font-semibold text-[#0B0B10]">
                         {featuredPost.author?.name || 'PontLook Research'}
                       </span>
@@ -221,7 +221,7 @@ export default async function BlogPage({
                           {post.category || (isAr ? 'مقال' : 'Article')}
                         </span>
                         {post.readTime && (
-                          <span className="text-[11px] font-mono text-[#7A7A85]">
+                          <span className="text-[11px] font-mono text-[#585865]">
                             {post.readTime}
                           </span>
                         )}
@@ -236,14 +236,14 @@ export default async function BlogPage({
 
                       {/* Excerpt */}
                       {post.excerpt && (
-                        <p className="font-sans text-xs sm:text-sm text-[#7A7A85] leading-relaxed line-clamp-3 mb-6">
+                        <p className="font-sans text-xs sm:text-sm text-[#4F4F5B] leading-relaxed line-clamp-3 mb-6">
                           {post.excerpt}
                         </p>
                       )}
                     </div>
 
                     {/* Footer */}
-                    <div className="pt-4 border-t border-[#ECE7E2] flex items-center justify-between text-xs text-[#7A7A85]">
+                    <div className="pt-4 border-t border-[#ECE7E2] flex items-center justify-between text-xs text-[#585865]">
                       <div className="flex items-center gap-2">
                         <div className="w-5 h-5 rounded-full bg-[#0B0B10] text-white flex items-center justify-center text-[10px] font-heading font-bold">
                           {(post.author?.name || 'PL')[0]}

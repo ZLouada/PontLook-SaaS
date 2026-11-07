@@ -83,7 +83,9 @@ export function BlogChapterNav({ headings, isAr = false }: BlogChapterNavProps) 
   const [activeId, setActiveId] = useState<string>(headings[0]?.id || '');
   const [progress, setProgress] = useState<number>(0);
   const navRef = useRef<HTMLElement | null>(null);
+  const progressBarRef = useRef<HTMLElement | null>(null);
   const linkRefs = useRef<{ [key: string]: HTMLAnchorElement | null }>({});
+  const headingElementsRef = useRef<{ id: string; el: HTMLElement }[]>([]);
 
   // Auto-scroll active pill into view inside the horizontal nav container
   const scrollActivePillIntoView = useCallback((id: string) => {
@@ -103,8 +105,8 @@ export function BlogChapterNav({ headings, isAr = false }: BlogChapterNavProps) 
   useEffect(() => {
     if (!headings || headings.length === 0) return;
 
-    // Resolve heading elements dynamically with fallback to querySelector
-    const resolveHeadingElements = () => {
+    // Resolve heading elements once and cache in ref
+    const updateHeadingCache = () => {
       const elements: { id: string; el: HTMLElement }[] = [];
       const allHeadings = document.querySelectorAll<HTMLElement>(
         '#article-content h2, #article-content h3'
@@ -121,69 +123,98 @@ export function BlogChapterNav({ headings, isAr = false }: BlogChapterNavProps) 
         }
       });
 
-      return elements;
+      headingElementsRef.current = elements;
     };
 
-    const handleScroll = () => {
-      const art = document.getElementById('article-content');
-      if (!art) {
-        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-        if (totalHeight > 0) {
-          setProgress(Math.min(1, Math.max(0, window.scrollY / totalHeight)));
+    updateHeadingCache();
+
+    let rafId: number | null = null;
+    let articleEl: HTMLElement | null = null;
+
+    const onScroll = () => {
+      if (rafId !== null) return;
+
+      rafId = requestAnimationFrame(() => {
+        if (!articleEl) {
+          articleEl = document.getElementById('article-content');
         }
-        return;
-      }
 
-      // Calculate article-specific reading percentage
-      const r = art.getBoundingClientRect();
-      const total = r.height - window.innerHeight * 0.4;
-      let p = 0;
-      if (total > 0) {
-        p = Math.min(1, Math.max(0, (-r.top + window.innerHeight * 0.15) / total));
-        setProgress(p);
-      }
-
-      // Detect active heading
-      const headingElements = resolveHeadingElements();
-      if (headingElements.length === 0) return;
-
-      // When near bottom of article (p >= 0.92), lock highlight to final chapter
-      if (p >= 0.92) {
-        const lastId = headingElements[headingElements.length - 1].id;
-        setActiveId((prev) => {
-          if (prev !== lastId) {
-            scrollActivePillIntoView(lastId);
-            return lastId;
+        let p = 0;
+        if (!articleEl) {
+          const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+          if (totalHeight > 0) {
+            p = Math.min(1, Math.max(0, window.scrollY / totalHeight));
           }
-          return prev;
+        } else {
+          const r = articleEl.getBoundingClientRect();
+          const total = r.height - window.innerHeight * 0.4;
+          if (total > 0) {
+            p = Math.min(1, Math.max(0, (-r.top + window.innerHeight * 0.15) / total));
+          }
+        }
+
+        // Direct GPU composited update of progress bar without React re-render
+        if (progressBarRef.current) {
+          progressBarRef.current.style.transform = `scaleX(${p})`;
+        }
+
+        // Only update React state when rounded percentage changes to avoid render thrashing
+        setProgress((prev) => {
+          const prevPct = Math.round(prev * 100);
+          const newPct = Math.round(p * 100);
+          return prevPct !== newPct ? p : prev;
         });
-        return;
-      }
 
-      let current = headingElements[0].id;
-      for (let i = 0; i < headingElements.length; i++) {
-        const { id, el } = headingElements[i];
-        if (el.getBoundingClientRect().top < window.innerHeight * 0.38) {
-          current = id;
-        }
-      }
+        // Detect active heading from cached elements
+        const headingElements = headingElementsRef.current;
+        if (headingElements.length > 0) {
+          if (p >= 0.92) {
+            const lastId = headingElements[headingElements.length - 1].id;
+            setActiveId((prev) => {
+              if (prev !== lastId) {
+                scrollActivePillIntoView(lastId);
+                return lastId;
+              }
+              return prev;
+            });
+          } else {
+            let current = headingElements[0].id;
+            const threshold = window.innerHeight * 0.38;
+            for (let i = 0; i < headingElements.length; i++) {
+              const { id, el } = headingElements[i];
+              if (el.getBoundingClientRect().top < threshold) {
+                current = id;
+              }
+            }
 
-      setActiveId((prev) => {
-        if (prev !== current) {
-          scrollActivePillIntoView(current);
-          return current;
+            setActiveId((prev) => {
+              if (prev !== current) {
+                scrollActivePillIntoView(current);
+                return current;
+              }
+              return prev;
+            });
+          }
         }
-        return prev;
+
+        rafId = null;
       });
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
-    handleScroll();
+    const onResize = () => {
+      articleEl = null;
+      updateHeadingCache();
+      onScroll();
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    onScroll();
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+      if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, [headings, scrollActivePillIntoView]);
 
@@ -240,7 +271,7 @@ export function BlogChapterNav({ headings, isAr = false }: BlogChapterNavProps) 
                 className={`group flex items-center shrink-0 px-3.5 py-1.5 rounded-full text-xs sm:text-[13px] font-medium transition-all duration-200 cursor-pointer select-none ${
                   isActive
                     ? 'bg-[#0B0B10] text-white border border-[#0B0B10] shadow-[0_2px_8px_rgba(11,11,16,0.18)] font-semibold'
-                    : 'bg-[#F7F5F2] hover:bg-[#FFF1E6] text-[#555560] hover:text-[#0B0B10] border border-[#ECE7E2] hover:border-[#FFD2B0] shadow-2xs'
+                    : 'bg-[#F7F5F2] hover:bg-[#FFF1E6] text-[#4F4F5B] hover:text-[#0B0B10] border border-[#ECE7E2] hover:border-[#FFD2B0] shadow-2xs'
                 }`}
               >
                 {/* Numeric index prefix with PontLook orange accent */}
@@ -248,7 +279,7 @@ export function BlogChapterNav({ headings, isAr = false }: BlogChapterNavProps) 
                   className={`font-mono text-[10px] sm:text-[11px] font-bold transition-colors ${
                     isActive
                       ? 'text-[#FF5A1F]'
-                      : 'text-[#9B968B] group-hover:text-[#FF5A1F]'
+                      : 'text-[#615C54] group-hover:text-[#FF5A1F]'
                   } mr-1.5 rtl:ml-1.5 rtl:mr-0`}
                 >
                   {chapterNum}
@@ -281,8 +312,9 @@ export function BlogChapterNav({ headings, isAr = false }: BlogChapterNavProps) 
         {/* Precision Laser Reading Progress Indicator along bottom edge */}
         <div className="absolute left-0 right-0 bottom-[-1px] h-[2px] overflow-hidden pointer-events-none">
           <i
+            ref={progressBarRef}
             aria-hidden="true"
-            className="h-full w-full bg-gradient-to-r from-[#FF5A1F] via-[#FF7A33] to-[#FF5A1F] block transition-transform duration-100 ease-out shadow-[0_1px_4px_rgba(255,90,31,0.5)]"
+            className="h-full w-full bg-gradient-to-r from-[#FF5A1F] via-[#FF7A33] to-[#FF5A1F] block shadow-[0_1px_4px_rgba(255,90,31,0.5)] will-change-transform"
             style={{
               transform: `scaleX(${progress})`,
               transformOrigin: isAr ? 'right' : 'left',

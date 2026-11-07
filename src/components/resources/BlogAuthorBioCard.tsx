@@ -64,7 +64,7 @@ export function BlogAuthorBioCard({ author, isAr = false }: BlogAuthorBioCardPro
               href={author.socialLinkedIn}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-[#7A7A85] hover:text-[#0077b5] font-medium"
+              className="text-xs text-[#585865] hover:text-[#0077b5] font-medium"
             >
               LinkedIn ↗
             </a>

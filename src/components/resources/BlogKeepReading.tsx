@@ -54,7 +54,7 @@ export function BlogKeepReading({
               </h5>
 
               {/* Read Time */}
-              <span className="text-xs sm:text-[13px] text-[#7A7A85] font-mono whitespace-nowrap">
+              <span className="text-xs sm:text-[13px] text-[#585865] font-mono whitespace-nowrap">
                 {readTimeDisplay}
               </span>
             </Link>

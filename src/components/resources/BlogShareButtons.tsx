@@ -43,7 +43,7 @@ export function BlogShareButtons({ title = '', isAr = false }: BlogShareButtonsP
         className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-[#ECE7E2] bg-white text-[#0B0B10] hover:border-[#FF5A1F] text-xs sm:text-[13px] font-medium transition-all hover:-translate-y-0.5 cursor-pointer shadow-2xs"
       >
         <svg
-          className="w-3.5 h-3.5 text-[#7A7A85]"
+          className="w-3.5 h-3.5 text-[#585865]"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"

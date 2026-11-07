@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useId } from 'react';
+import React, { useEffect, useRef, useId } from 'react';
 import ResourceImage from './ResourceImage';
 
 interface BlogHeroArchProps {
@@ -18,18 +18,30 @@ export function BlogHeroArch({
   authorName = 'PontLook Research',
   isAr = false,
 }: BlogHeroArchProps) {
-  const [rotation, setRotation] = useState<number>(0);
+  const badgeRef = useRef<HTMLDivElement>(null);
   const rawId = useId();
   const pathId = `badge-circle-path-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`;
 
+  // Use requestAnimationFrame and direct DOM transform to eliminate React re-renders during scroll
   useEffect(() => {
+    let rafId: number | null = null;
     const handleScroll = () => {
-      setRotation(window.scrollY * 0.12);
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        if (badgeRef.current) {
+          const rot = window.scrollY * 0.12 * (isAr ? -1 : 1);
+          badgeRef.current.style.transform = `rotate(${rot}deg)`;
+        }
+        rafId = null;
+      });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
+  }, [isAr]);
 
   const badgeText = `${authorName} · ${readTime} · `;
 
@@ -102,15 +114,12 @@ export function BlogHeroArch({
         )}
       </div>
 
-      {/* Rotating Badge with Circular Text Path */}
+      {/* Rotating Badge with Circular Text Path (GPU-composited via badgeRef) */}
       <div
-        className={`absolute bottom-[50px] sm:bottom-[70px] w-24 h-24 sm:w-28 sm:h-28 md:w-[124px] md:h-[124px] rounded-full bg-white border-2 border-[#0B0B10] grid place-items-center z-10 shadow-lg ${
+        ref={badgeRef}
+        className={`absolute bottom-[50px] sm:bottom-[70px] w-24 h-24 sm:w-28 sm:h-28 md:w-[124px] md:h-[124px] rounded-full bg-white border-2 border-[#0B0B10] grid place-items-center z-10 shadow-lg will-change-transform ${
           isAr ? '-right-4 sm:-right-8' : '-left-4 sm:-left-8'
         }`}
-        style={{
-          transform: `rotate(${isAr ? -rotation : rotation}deg)`,
-          transition: 'transform 0.05s linear',
-        }}
         aria-hidden="true"
       >
         <svg viewBox="0 0 124 124" className="w-full h-full" aria-hidden="true">
