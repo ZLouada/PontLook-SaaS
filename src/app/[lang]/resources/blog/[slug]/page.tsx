@@ -5,7 +5,7 @@ import { Locale, i18n, isArabicLocale } from '@/i18n/config';
 import { constructAlternates, SITE_URL, buildBlogPostingSchema, buildBreadcrumbSchema } from '@/lib/seo';
 import Reveal from '@/components/shared/Reveal';
 import { ChevronRight } from '@/components/icons';
-import { getArticleBySlug, getAllArticleSlugs, getArticles } from '@/lib/payload/resources';
+import { getArticleBySlug, getAllArticleSlugs, getArticles, getDownloads } from '@/lib/payload/resources';
 import { RichText, extractHeadingsFromContent } from '@/components/resources/RichText';
 import { BlogHeroArch } from '@/components/resources/BlogHeroArch';
 import { BlogChapterNav } from '@/components/resources/BlogChapterNav';
@@ -138,6 +138,21 @@ export default async function BlogPostDetailPage({
   } catch (err) {
     console.error('[BlogPostDetailPage] Failed to fetch related articles:', err);
   }
+
+  let targetDownload = endOfPostDownload;
+  if (!targetDownload && !article.mediaAttachments?.downloadableAttachment) {
+    try {
+      const allDownloads = await getDownloads(lang);
+      if (allDownloads && allDownloads.length > 0) {
+        targetDownload =
+          allDownloads.find((d) => d.categorySlug === categorySlug) || allDownloads[0];
+      }
+    } catch (err) {
+      console.error('[BlogPostDetailPage] Failed to fetch fallback download:', err);
+    }
+  }
+
+  const hasDownload = Boolean(targetDownload || article.mediaAttachments?.downloadableAttachment);
 
   const canonicalUrl = article.seo?.canonicalUrl || `${SITE_URL}/${lang}/resources/blog/${article.slug || slug}`;
   const absoluteImageUrl = imageUrl
@@ -301,71 +316,85 @@ export default async function BlogPostDetailPage({
         <BlogChapterNav headings={headings} isAr={isAr} />
       )}
 
-      {/* Article Content Column */}
-      <main className="max-w-[760px] mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-12" id="article-content">
-        {/* Executive Audio Briefing (if podcast audio attached) */}
-        {article.mediaAttachments?.podcastAudio && (
-          <Reveal delay={0.1}>
-            <div className="mb-12">
-              <BlogMediaActionCard
-                mediaAttachments={article.mediaAttachments}
-                postTitle={title}
-                lang={lang}
+      {/* Article Content & Top-Right Download Section */}
+      <main className="max-w-[1160px] mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-16" id="article-content">
+        <div
+          className={`grid grid-cols-1 ${
+            hasDownload
+              ? 'lg:grid-cols-[minmax(0,1fr)_340px] xl:grid-cols-[minmax(0,1fr)_380px] gap-10 xl:gap-14 items-start'
+              : 'max-w-[760px] mx-auto'
+          }`}
+        >
+          {/* Left Column: Article Content */}
+          <div className="min-w-0">
+            {/* Executive Audio Briefing (if podcast audio attached) */}
+            {article.mediaAttachments?.podcastAudio && (
+              <Reveal delay={0.1}>
+                <div className="mb-10">
+                  <BlogMediaActionCard
+                    mediaAttachments={article.mediaAttachments}
+                    postTitle={title}
+                    lang={lang}
+                  />
+                </div>
+              </Reveal>
+            )}
+
+            {/* RichText Article Body */}
+            {content ? (
+              <article className="prose-editorial">
+                <RichText data={content} isAr={isAr} />
+              </article>
+            ) : (
+              <p className="font-sans text-[#3B3B44] text-base leading-relaxed">
+                {isAr
+                  ? 'محتوى المقال قيد التحديث والتوثيق من قبل فريق أبحاث PontLook.'
+                  : 'Article content is being documented by the PontLook research team.'}
+              </p>
+            )}
+
+            {/* Author Bio Box */}
+            <Reveal delay={0.2}>
+              <BlogAuthorBioCard
+                author={article.author}
+                isAr={isAr}
               />
+            </Reveal>
+
+            {/* End Nav (.endnav) */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 pt-6 border-t border-[#ECE7E2] text-sm">
+              <Link
+                href={`/${lang}/resources`}
+                className="text-[#7A7A85] hover:text-[#0B0B10] font-medium transition-colors inline-flex items-center gap-1.5"
+              >
+                <span>‹</span>
+                <span>{isAr ? 'العودة لمركز المعرفة والموارد' : 'Back to Resources & Knowledge Hub'}</span>
+              </Link>
+
+              <Link
+                href={`/${lang}/find-training`}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#0B0B10] hover:bg-black text-white text-xs sm:text-[13px] font-semibold transition-transform duration-150 hover:-translate-y-0.5 shadow-sm"
+              >
+                <span>{isAr ? 'ابحث عن مزود تدريب معتمد' : 'Find a verified training provider'}</span>
+              </Link>
             </div>
-          </Reveal>
-        )}
+          </div>
 
-        {/* RichText Article Body */}
-        {content ? (
-          <article className="prose-editorial">
-            <RichText data={content} isAr={isAr} />
-          </article>
-        ) : (
-          <p className="font-sans text-[#3B3B44] text-base leading-relaxed">
-            {isAr
-              ? 'محتوى المقال قيد التحديث والتوثيق من قبل فريق أبحاث PontLook.'
-              : 'Article content is being documented by the PontLook research team.'}
-          </p>
-        )}
-
-        {/* End of Article Download Card (from endOfPostDownload or mediaAttachments.downloadableAttachment) */}
-        {(endOfPostDownload || article.mediaAttachments?.downloadableAttachment) && (
-          <Reveal delay={0.15}>
-            <EndOfPostDownloadCard
-              download={endOfPostDownload}
-              attachment={article.mediaAttachments?.downloadableAttachment}
-              buttonLabel={article.mediaAttachments?.downloadButtonLabel}
-              postTitle={title}
-              isAr={isAr}
-            />
-          </Reveal>
-        )}
-
-        {/* Author Bio Box */}
-        <Reveal delay={0.2}>
-          <BlogAuthorBioCard
-            author={article.author}
-            isAr={isAr}
-          />
-        </Reveal>
-
-        {/* End Nav (.endnav) */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 pt-6 border-t border-[#ECE7E2] text-sm">
-          <Link
-            href={`/${lang}/resources`}
-            className="text-[#7A7A85] hover:text-[#0B0B10] font-medium transition-colors inline-flex items-center gap-1.5"
-          >
-            <span>‹</span>
-            <span>{isAr ? 'العودة لمركز المعرفة والموارد' : 'Back to Resources & Knowledge Hub'}</span>
-          </Link>
-
-          <Link
-            href={`/${lang}/find-training`}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#0B0B10] hover:bg-black text-white text-xs sm:text-[13px] font-semibold transition-transform duration-150 hover:-translate-y-0.5 shadow-sm"
-          >
-            <span>{isAr ? 'ابحث عن مزود تدريب معتمد' : 'Find a verified training provider'}</span>
-          </Link>
+          {/* Top-Right Column: Download Toolkit Section (Sticky on desktop) */}
+          {hasDownload && (
+            <aside className="w-full lg:sticky lg:top-32 order-first lg:order-none mb-8 lg:mb-0">
+              <Reveal delay={0.15}>
+                <EndOfPostDownloadCard
+                  download={targetDownload}
+                  attachment={article.mediaAttachments?.downloadableAttachment}
+                  buttonLabel={article.mediaAttachments?.downloadButtonLabel}
+                  postTitle={title}
+                  isAr={isAr}
+                  variant="sidebar"
+                />
+              </Reveal>
+            </aside>
+          )}
         </div>
       </main>
 
