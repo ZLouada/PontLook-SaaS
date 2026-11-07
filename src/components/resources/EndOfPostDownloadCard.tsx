@@ -48,15 +48,25 @@ export function EndOfPostDownloadCard({
     buttonLabel ||
     (postTitle ? `${postTitle} - ${isAr ? 'الملف المرفق' : 'Executive Toolkit'}` : (isAr ? 'الأدوات والنماذج التنفيذية' : 'Executive Toolkit'));
 
-  const description =
-    download?.desc ||
-    (isAr
-      ? `مرفق بحثي معتمد من فريق أبحاث PontLook. ${fileBadge}. جاهز للتحميل الفوري.`
-      : `Official PontLook research framework. ${fileBadge}. Ready for instant download.`);
+  // Prevent duplicate title in description
+  const rawDesc = (download?.desc || '').trim();
+  const normalizedTitle = title.replace(/\s+/g, ' ').trim().toLowerCase();
+  const normalizedDesc = rawDesc.replace(/\s+/g, ' ').trim().toLowerCase();
+
+  const isDuplicateDesc =
+    !rawDesc ||
+    normalizedDesc === normalizedTitle ||
+    normalizedTitle.includes(normalizedDesc);
+
+  const displayDescription = isDuplicateDesc
+    ? (isAr
+      ? 'أطر عمل ونماذج استراتيجية معتمدة لفرق القيادة والتطوير.'
+      : 'Executive frameworks & strategic benchmarks for decision-makers.')
+    : rawDesc;
 
   const defaultActionLabel =
     buttonLabel?.trim() ||
-    (isAr ? 'تحميل الملف PDF' : 'Download PDF');
+    (isAr ? 'تحميل الملف PDF' : 'Download');
 
   const handleDownload = useCallback(
     (e: React.MouseEvent) => {
@@ -99,13 +109,13 @@ export function EndOfPostDownloadCard({
     return (
       <div
         dir={isAr ? 'rtl' : 'ltr'}
-        className="relative overflow-hidden my-12 p-6 sm:p-8 rounded-[24px] sm:rounded-[28px] bg-white border-2 border-[#0B0B10] shadow-[6px_6px_0px_#FF5A1F] sm:shadow-[8px_8px_0px_#FF5A1F] transition-transform duration-200"
+        className="relative overflow-hidden my-8 p-4 sm:p-5 rounded-2xl bg-white border-[1.5px] border-[#0B0B10] shadow-[4px_4px_0px_#FF5A1F] transition-transform duration-200"
       >
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="flex items-start gap-4 sm:gap-5">
-            <div className="w-14 h-14 rounded-[18px] bg-[#0B0B10] text-white flex items-center justify-center shrink-0 shadow-sm">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <div className="w-11 h-11 rounded-xl bg-[#0B0B10] text-white flex items-center justify-center shrink-0 shadow-xs">
               <svg
-                className="w-6 h-6 text-[#FF5A1F]"
+                className="w-5 h-5 text-[#FF5A1F]"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -117,11 +127,11 @@ export function EndOfPostDownloadCard({
               </svg>
             </div>
             <div className="min-w-0">
-              <b className="block font-heading text-xl sm:text-2xl font-bold text-[#0B0B10] tracking-tight leading-snug">
+              <b className="block font-heading text-base sm:text-lg font-bold text-[#0B0B10] tracking-tight leading-snug">
                 {title}
               </b>
-              <span className="block font-sans text-xs sm:text-sm text-[#7A7A85] mt-1 leading-relaxed">
-                {description}
+              <span className="block font-sans text-xs sm:text-[13px] text-[#7A7A85] mt-0.5 leading-relaxed">
+                {displayDescription}
               </span>
             </div>
           </div>
@@ -130,22 +140,22 @@ export function EndOfPostDownloadCard({
               type="button"
               onClick={handleDownload}
               disabled={downloadState === 'downloading' || !fileUrl}
-              className={`w-full md:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full font-heading font-semibold text-sm transition-all duration-150 cursor-pointer ${
+              className={`w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-heading font-semibold text-xs sm:text-sm transition-all duration-150 cursor-pointer ${
                 downloadState === 'completed'
-                  ? 'bg-emerald-600 text-white shadow-md'
-                  : 'bg-[#FF5A1F] hover:bg-[#C93D07] text-white shadow-md hover:-translate-y-0.5 active:translate-y-0'
+                  ? 'bg-emerald-600 text-white shadow-sm'
+                  : 'bg-[#FF5A1F] hover:bg-[#C93D07] text-white shadow-sm hover:-translate-y-0.5 active:translate-y-0'
               }`}
             >
               {downloadState === 'idle' && (
                 <>
                   <span>{defaultActionLabel}</span>
-                  <span className="font-mono text-[11px] px-2 py-0.5 rounded-full bg-black/20 text-white/95">
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded-full bg-black/20 text-white/95">
                     {fileBadge}
                   </span>
                 </>
               )}
               {downloadState === 'downloading' && (
-                <span>{isAr ? 'جاري التحميل...' : 'Starting Download...'}</span>
+                <span>{isAr ? 'جاري التحميل...' : 'Downloading...'}</span>
               )}
               {downloadState === 'completed' && (
                 <span>{isAr ? 'تم التحميل بنجاح ✓' : 'Downloaded ✓'}</span>
@@ -157,84 +167,54 @@ export function EndOfPostDownloadCard({
     );
   }
 
-  // Sidebar variant: vertical card designed for top-right sidebar
+  // Sidebar variant: sleek, minimized vertical card
   return (
     <div
       dir={isAr ? 'rtl' : 'ltr'}
-      className="relative overflow-hidden p-5 sm:p-6 rounded-[22px] bg-white border-2 border-[#0B0B10] shadow-[6px_6px_0px_#FF5A1F] hover:shadow-[8px_8px_0px_#FF5A1F] transition-all duration-200"
+      className="relative overflow-hidden p-3.5 sm:p-4 rounded-2xl bg-white border-[1.5px] border-[#0B0B10] shadow-[4px_4px_0px_#FF5A1F] hover:shadow-[5px_5px_0px_#FF5A1F] transition-all duration-200"
     >
       {/* Header Eyebrow & Format Pill */}
-      <div className="flex items-center justify-between gap-2 mb-3.5">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF1E6] text-[#C93D07] text-[11px] font-mono font-bold uppercase tracking-wider">
+      <div className="flex items-center justify-between gap-2 mb-2.5">
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FFF1E6] text-[#C93D07] text-[10px] font-mono font-bold uppercase tracking-wider">
           <span className="w-1.5 h-1.5 rounded-full bg-[#FF5A1F]" />
-          {download?.contentType || (isAr ? 'حقيبة تنفيذية' : 'Executive Toolkit')}
+          {download?.contentType || (isAr ? 'دليل' : 'Guide')}
         </span>
-        <span className="text-[11px] font-mono font-semibold text-[#555560] bg-neutral-100 px-2.5 py-0.5 rounded-full border border-neutral-200">
+        <span className="text-[10px] font-mono font-semibold text-[#555560] bg-neutral-100 px-2 py-0.5 rounded-full border border-neutral-200">
           {fileBadge}
         </span>
       </div>
 
-      {/* Optional Preview Image Thumbnail */}
+      {/* Compact Preview Image Thumbnail */}
       {download?.image && (
-        <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden mb-4 border border-[#ECE7E2] bg-neutral-100">
+        <div className="relative aspect-[16/9] max-h-36 w-full rounded-xl overflow-hidden mb-3 border border-[#ECE7E2] bg-neutral-100">
           <ResourceImage
             src={download.image}
             alt={title}
             fill
-            sizes="(max-width: 1024px) 100vw, 380px"
+            sizes="(max-width: 1024px) 100vw, 320px"
             className="object-cover"
           />
         </div>
       )}
 
-      {/* Icon (if no image), Title & Description */}
-      <div className="flex items-start gap-3 mb-3">
-        {!download?.image && (
-          <div className="w-10 h-10 rounded-xl bg-[#0B0B10] text-[#FF5A1F] flex items-center justify-center shrink-0 shadow-xs">
-            <svg
-              className="w-5 h-5 text-[#FF5A1F]"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" />
-            </svg>
-          </div>
+      {/* Title & Description without redundancy */}
+      <div className="mb-3">
+        <b className="block font-heading text-[13px] sm:text-sm font-bold text-[#0B0B10] tracking-tight leading-snug line-clamp-2">
+          {title}
+        </b>
+        {displayDescription && (
+          <p className="font-sans text-[11px] sm:text-xs text-[#555560] leading-relaxed line-clamp-2 mt-1">
+            {displayDescription}
+          </p>
         )}
-        <div className="min-w-0 flex-1">
-          <b className="block font-heading text-base sm:text-lg font-bold text-[#0B0B10] tracking-tight leading-snug">
-            {title}
-          </b>
-        </div>
       </div>
-
-      {description && (
-        <p className="font-sans text-xs text-[#555560] leading-relaxed line-clamp-3 mb-4">
-          {description}
-        </p>
-      )}
-
-      {/* Key Highlights / Features if present */}
-      {download?.features && download.features.length > 0 && (
-        <ul className="mb-4 space-y-1.5 text-xs text-[#3B3B44] border-t border-[#ECE7E2] pt-3">
-          {download.features.slice(0, 3).map((feat, i) => (
-            <li key={i} className="flex items-start gap-2">
-              <span className="text-[#FF5A1F] font-bold text-xs shrink-0">✓</span>
-              <span className="line-clamp-1">{feat}</span>
-            </li>
-          ))}
-        </ul>
-      )}
 
       {/* Orange Accent Download CTA Button */}
       <button
         type="button"
         onClick={handleDownload}
         disabled={downloadState === 'downloading' || !fileUrl}
-        className={`w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full font-heading font-semibold text-xs sm:text-[13px] transition-all duration-150 cursor-pointer shadow-sm ${
+        className={`w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full font-heading font-semibold text-xs transition-all duration-150 cursor-pointer shadow-xs ${
           downloadState === 'completed'
             ? 'bg-emerald-600 text-white'
             : 'bg-[#FF5A1F] hover:bg-[#C93D07] text-white hover:-translate-y-0.5 active:translate-y-0'
@@ -243,7 +223,7 @@ export function EndOfPostDownloadCard({
         {downloadState === 'idle' && (
           <>
             <svg
-              className="w-4 h-4 text-white shrink-0"
+              className="w-3.5 h-3.5 text-white shrink-0"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -259,7 +239,7 @@ export function EndOfPostDownloadCard({
 
         {downloadState === 'downloading' && (
           <>
-            <svg className="w-4 h-4 text-white animate-spin shrink-0" viewBox="0 0 24 24" fill="none">
+            <svg className="w-3.5 h-3.5 text-white animate-spin shrink-0" viewBox="0 0 24 24" fill="none">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path
                 className="opacity-75"
@@ -273,7 +253,7 @@ export function EndOfPostDownloadCard({
 
         {downloadState === 'completed' && (
           <>
-            <svg className="w-4 h-4 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3.5 h-3.5 text-white shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span>{isAr ? 'تم التحميل بنجاح ✓' : 'Downloaded ✓'}</span>
@@ -282,12 +262,14 @@ export function EndOfPostDownloadCard({
       </button>
 
       {/* Trust Footer */}
-      <p className="text-[10px] font-mono text-center text-[#9B968B] mt-2.5">
-        {isAr ? '🔒 ملف معتمد من أبحاث PontLook · تحميل فوري مجاني' : '🔒 Verified PontLook Framework · Instant Download'}
-      </p>
+      <div className="flex items-center justify-center gap-1.5 text-[10.5px] font-sans text-[#7A7A85] mt-2">
+        <span className="text-[#10B981] font-bold">✓</span>
+        <span>{isAr ? 'ملف رسمي معتمد · تحميل فوري' : 'Verified PontLook Framework · Instant Download'}</span>
+      </div>
     </div>
   );
 }
 
 export default EndOfPostDownloadCard;
+
 

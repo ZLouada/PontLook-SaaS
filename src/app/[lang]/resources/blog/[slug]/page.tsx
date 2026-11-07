@@ -321,7 +321,7 @@ export default async function BlogPostDetailPage({
         <div
           className={`grid grid-cols-1 ${
             hasDownload
-              ? 'lg:grid-cols-[minmax(0,1fr)_340px] xl:grid-cols-[minmax(0,1fr)_380px] gap-10 xl:gap-14 items-start'
+              ? 'lg:grid-cols-[minmax(0,1fr)_300px] xl:grid-cols-[minmax(0,1fr)_330px] gap-8 lg:gap-12 items-start'
               : 'max-w-[760px] mx-auto'
           }`}
         >
@@ -382,7 +382,7 @@ export default async function BlogPostDetailPage({
 
           {/* Top-Right Column: Download Toolkit Section (Sticky on desktop) */}
           {hasDownload && (
-            <aside className="w-full lg:sticky lg:top-32 order-first lg:order-none mb-8 lg:mb-0">
+            <aside className="w-full max-w-[340px] mx-auto lg:max-w-none lg:sticky lg:top-32 order-first lg:order-none mb-8 lg:mb-0">
               <Reveal delay={0.15}>
                 <EndOfPostDownloadCard
                   download={targetDownload}
