@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isEditorOrAdmin, isPublishedOrAuthenticated } from '../access'
 import { revalidateDownloadChange, revalidateDownloadDelete } from '../hooks/revalidate'
+import { formatSlug } from '../utilities/formatSlug'
 
 export const Downloads: CollectionConfig = {
   slug: 'downloads',
@@ -39,7 +40,10 @@ export const Downloads: CollectionConfig = {
       index: true,
       admin: {
         position: 'sidebar',
-        description: 'Unique slug for the downloadable resource',
+        description: 'Unique slug for the downloadable resource (auto-generated from title if left blank)',
+      },
+      hooks: {
+        beforeValidate: [formatSlug('title')],
       },
     },
     {

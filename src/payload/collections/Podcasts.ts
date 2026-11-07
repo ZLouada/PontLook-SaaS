@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isEditorOrAdmin, isPublishedOrAuthenticated } from '../access'
 import { revalidatePodcastChange, revalidatePodcastDelete } from '../hooks/revalidate'
+import { formatSlug } from '../utilities/formatSlug'
 
 export const Podcasts: CollectionConfig = {
   slug: 'podcasts',
@@ -39,7 +40,10 @@ export const Podcasts: CollectionConfig = {
       index: true,
       admin: {
         position: 'sidebar',
-        description: 'Unique slug for the podcast episode',
+        description: 'Unique slug for the podcast episode (auto-generated from title if left blank)',
+      },
+      hooks: {
+        beforeValidate: [formatSlug('title')],
       },
     },
     {

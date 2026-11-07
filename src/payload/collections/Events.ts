@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isEditorOrAdmin, isPublishedOrAuthenticated } from '../access'
 import { revalidateEventChange, revalidateEventDelete } from '../hooks/revalidate'
+import { formatSlug } from '../utilities/formatSlug'
 
 export const Events: CollectionConfig = {
   slug: 'events',
@@ -39,7 +40,10 @@ export const Events: CollectionConfig = {
       index: true,
       admin: {
         position: 'sidebar',
-        description: 'Unique slug for the event',
+        description: 'Unique slug for the event (auto-generated from title if left blank)',
+      },
+      hooks: {
+        beforeValidate: [formatSlug('title')],
       },
     },
     {

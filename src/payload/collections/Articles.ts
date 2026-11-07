@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isEditorOrAdmin, isPublishedOrAuthenticated } from '../access'
 import { revalidateArticleChange, revalidateArticleDelete } from '../hooks/revalidate'
+import { formatSlug } from '../utilities/formatSlug'
 
 export const Articles: CollectionConfig = {
   slug: 'articles',
@@ -21,6 +22,14 @@ export const Articles: CollectionConfig = {
     delete: isEditorOrAdmin,
   },
   hooks: {
+    beforeChange: [
+      ({ data }) => {
+        if (data.status === 'published' && !data.publishedAt) {
+          data.publishedAt = new Date().toISOString()
+        }
+        return data
+      },
+    ],
     afterChange: [revalidateArticleChange],
     afterDelete: [revalidateArticleDelete],
   },
@@ -39,7 +48,10 @@ export const Articles: CollectionConfig = {
       index: true,
       admin: {
         position: 'sidebar',
-        description: 'URL-friendly identifier for the article',
+        description: 'URL-friendly identifier for the article (auto-generated from title if left blank)',
+      },
+      hooks: {
+        beforeValidate: [formatSlug('title')],
       },
     },
     {

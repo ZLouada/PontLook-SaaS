@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { ResourceImage } from '@/components/resources/ResourceImage';
 import { Locale, i18n, isArabicLocale } from '@/i18n/config';
@@ -19,6 +19,14 @@ import { BlogAuthorBioCard } from '@/components/resources/BlogAuthorBioCard';
 export const revalidate = 60;
 export const dynamicParams = true;
 
+function safeDecode(val: string): string {
+  try {
+    return decodeURIComponent(val);
+  } catch {
+    return val;
+  }
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -36,8 +44,9 @@ export async function generateMetadata({
     const ogDescription = article.seo?.ogDescription || description;
     const imageUrl = article.seo?.ogImage || article.image || 'https://pontlook.com/images/brand/og-main.png';
 
-    const defaultAlternates = constructAlternates(lang, `resources/blog/${slug}`);
-    const canonical = article.seo?.canonicalUrl || (defaultAlternates?.canonical as string) || `${SITE_URL}/${lang}/resources/blog/${slug}`;
+    const cleanSlug = article.slug || slug;
+    const defaultAlternates = constructAlternates(lang, `resources/blog/${cleanSlug}`);
+    const canonical = article.seo?.canonicalUrl || (defaultAlternates?.canonical as string) || `${SITE_URL}/${lang}/resources/blog/${cleanSlug}`;
 
     return {
       title: {
@@ -109,6 +118,11 @@ export default async function BlogPostDetailPage({
     notFound();
   }
 
+  // Canonical redirect if requested slug differs from article's canonical slug (e.g. encoded spaces, uppercase, apostrophes)
+  if (article.slug && slug !== article.slug && safeDecode(slug) !== article.slug) {
+    redirect(`/${lang}/resources/blog/${article.slug}`);
+  }
+
   const {
     title,
     category,
@@ -128,7 +142,7 @@ export default async function BlogPostDetailPage({
 
   const headings = extractHeadingsFromContent(content);
 
-  const canonicalUrl = article.seo?.canonicalUrl || `${SITE_URL}/${lang}/resources/blog/${slug}`;
+  const canonicalUrl = article.seo?.canonicalUrl || `${SITE_URL}/${lang}/resources/blog/${article.slug || slug}`;
   const absoluteImageUrl = imageUrl
     ? imageUrl.startsWith('http')
       ? imageUrl

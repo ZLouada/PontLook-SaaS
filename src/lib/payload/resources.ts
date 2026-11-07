@@ -9,6 +9,7 @@ import {
   normalizeCategorySlug,
   getCategoryLabel,
 } from '@/constants/categories'
+import { slugify } from '@/payload/utilities/formatSlug'
 
 export type PayloadLocale = 'en' | 'ar';
 export function toPayloadLocale(locale?: string | null): PayloadLocale {
@@ -518,7 +519,26 @@ export const getArticles = cache(async (locale: Locale = 'en'): Promise<AdaptedA
 export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'): Promise<AdaptedArticle | null> => {
   try {
     const payload = await getPayloadClient()
-    const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase()
+    const raw = decodeURIComponent(slug).trim()
+    const slugified = slugify(raw)
+    const lower = raw.toLowerCase()
+    const noSpaces = raw.replace(/\s+/g, '')
+    const noSpacesLower = lower.replace(/\s+/g, '')
+    const strippedApostrophe = raw.replace(/['’]/g, '')
+    const strippedNoSpaces = strippedApostrophe.replace(/\s+/g, '')
+
+    const candidateSlugs = Array.from(
+      new Set([
+        raw,
+        slugified,
+        lower,
+        noSpaces,
+        noSpacesLower,
+        strippedApostrophe,
+        strippedNoSpaces,
+        slug.trim(),
+      ])
+    ).filter(Boolean)
 
     const result = await payload.find({
       collection: 'articles',
@@ -526,7 +546,7 @@ export const getArticleBySlug = cache(async (slug: string, locale: Locale = 'en'
         and: [
           {
             slug: {
-              equals: normalizedSlug,
+              in: candidateSlugs,
             },
           },
           {
