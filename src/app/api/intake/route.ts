@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { Resend } from 'resend';
+import { getPayload } from 'payload';
+import configPromise from '@/payload.config';
 import { calculateLeadScore } from '@/lib/lead-scoring';
 import { isCorporateEmail, TRAINING_DOMAINS, DELIVERY_MODES, COHORT_SIZES, TIMELINES, BUDGET_BANDS } from '@/components/wizard/schemas';
 import { resolveDomainLabel } from '@/components/wizard/trainingDomains';
@@ -157,6 +159,51 @@ export async function POST(req: NextRequest) {
 
     const fullPhoneNumber = `${data.phoneCountryCode || ''} ${data.phoneNumber || ''}`.trim() || 'N/A';
 
+    // 3. Database-First Persistence: Save Lead in PostgreSQL via Payload CMS
+    let dbRecordId: string | number | null = null;
+    try {
+      const payload = await getPayload({ config: configPromise });
+      const createdLead = await payload.create({
+        collection: 'leads',
+        data: {
+          leadId,
+          fullName: data.fullName,
+          workEmail: data.workEmail,
+          jobTitle: data.jobTitle || '',
+          organizationName: data.organizationName || 'Confidential Enterprise',
+          country: data.country,
+          phoneNumber: fullPhoneNumber,
+          role: data.role || 'buyer',
+          tier: leadScoreResult.tier,
+          score: leadScoreResult.score,
+          status: 'new',
+          trainingDomains: domainNames,
+          deliveryMode: `${deliveryModeName}${data.city ? ` (${data.city})` : ''}`,
+          city: data.city || '',
+          language: data.language || 'bilingual',
+          customization: data.customization || 'tailored',
+          cohortSize: cohortLabel,
+          timeline: timelineLabel,
+          budgetBand: budgetLabel,
+          currency: data.currency || 'USD',
+          headcount: data.headcount || '',
+          additionalContext: data.additionalContext || '',
+          checklist: leadScoreResult.checklist,
+          sourceIp: ip,
+          dispatchStatus: {
+            emailSent: false,
+            slackSent: false,
+            crmSent: false,
+          },
+        },
+        overrideAccess: true,
+      });
+      dbRecordId = createdLead?.id ?? null;
+      console.log(`[Intake API] Lead ${leadId} successfully persisted in database (Record ID: ${dbRecordId})`);
+    } catch (dbErr) {
+      console.error('[Intake API] Warning: Failed to persist lead to database:', dbErr);
+    }
+
     let emailSent = false;
     if (resend) {
       try {
@@ -281,6 +328,7 @@ export async function POST(req: NextRequest) {
       submittedAt: new Date().toISOString(),
     };
 
+    let slackSent = false;
     if (slackWebhookUrl) {
       try {
         const tierBadge = `[${leadScoreResult.tier}]`;
@@ -292,11 +340,13 @@ export async function POST(req: NextRequest) {
           }),
           signal: AbortSignal.timeout(5000),
         });
+        slackSent = true;
       } catch (slackErr) {
         console.error('Slack webhook dispatch failed or timed out:', slackErr);
       }
     }
 
+    let crmSent = false;
     if (crmWebhookUrl) {
       try {
         await fetch(crmWebhookUrl, {
@@ -324,13 +374,35 @@ export async function POST(req: NextRequest) {
           }),
           signal: AbortSignal.timeout(5000),
         });
+        crmSent = true;
       } catch (crmErr) {
         console.error('CRM webhook dispatch failed or timed out:', crmErr);
       }
     }
 
+    // 4. Update Lead Record with Final Dispatch Status
+    if (dbRecordId) {
+      try {
+        const payload = await getPayload({ config: configPromise });
+        await payload.update({
+          collection: 'leads',
+          id: dbRecordId,
+          data: {
+            dispatchStatus: {
+              emailSent,
+              slackSent,
+              crmSent,
+            },
+          },
+          overrideAccess: true,
+        });
+      } catch (updateErr) {
+        console.warn(`[Intake API] Notice: Could not update final dispatch status for lead ${leadId}:`, updateErr);
+      }
+    }
+
     const duration = Date.now() - startTime;
-    console.log(`[Intake API] Processed lead ${leadId} in ${duration}ms (Tier: ${leadScoreResult.tier}, Score: ${leadScoreResult.score})`);
+    console.log(`[Intake API] Processed lead ${leadId} in ${duration}ms (Tier: ${leadScoreResult.tier}, Score: ${leadScoreResult.score}, DB: ${dbRecordId ?? 'N/A'})`);
 
     return NextResponse.json(
       {
@@ -339,7 +411,10 @@ export async function POST(req: NextRequest) {
         tier: leadScoreResult.tier,
         score: leadScoreResult.score,
         emailSent,
-        message: 'Enterprise intake scope successfully registered and queued for matching.',
+        slackSent,
+        crmSent,
+        savedToDatabase: Boolean(dbRecordId),
+        message: 'Enterprise intake scope successfully registered, secured in database, and queued for matching.',
       },
       { status: 200 }
     );

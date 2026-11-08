@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
@@ -8,6 +9,7 @@ import { fileURLToPath } from 'url'
 import { Articles } from './payload/collections/Articles'
 import { Downloads } from './payload/collections/Downloads'
 import { Events } from './payload/collections/Events'
+import { Leads } from './payload/collections/Leads'
 import { Media } from './payload/collections/Media'
 import { Podcasts } from './payload/collections/Podcasts'
 import { Users } from './payload/collections/Users'
@@ -37,6 +39,28 @@ export default buildConfig({
     Podcasts,
     Media,
     Users,
+    Leads,
+  ],
+  plugins: [
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: process.env.S3_BUCKET || process.env.SUPABASE_STORAGE_BUCKET || '',
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || process.env.SUPABASE_S3_ACCESS_KEY || '',
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || process.env.SUPABASE_S3_SECRET_KEY || '',
+        },
+        region: process.env.S3_REGION || process.env.SUPABASE_S3_REGION || 'auto',
+        endpoint: process.env.S3_ENDPOINT || process.env.SUPABASE_S3_ENDPOINT,
+        forcePathStyle: true,
+      },
+      enabled: Boolean(
+        (process.env.S3_BUCKET || process.env.SUPABASE_STORAGE_BUCKET) &&
+          (process.env.S3_ACCESS_KEY_ID || process.env.SUPABASE_S3_ACCESS_KEY)
+      ),
+    }),
   ],
   globals: [
     ResourcesHero,

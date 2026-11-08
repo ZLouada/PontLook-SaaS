@@ -73,6 +73,7 @@ export interface Config {
     podcasts: Podcast;
     media: Media;
     users: User;
+    leads: Lead;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     podcasts: PodcastsSelect<false> | PodcastsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    leads: LeadsSelect<false> | LeadsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -199,7 +201,7 @@ export interface Article {
     [k: string]: unknown;
   } | null;
   featuredImage?: (number | null) | Media;
-  status: 'draft' | 'published';
+  status: 'draft' | 'published' | 'archived';
   /**
    * Attach executive podcast audio briefings (.mp3, .wav) and downloadable toolkits (.pdf, .zip) to this article.
    */
@@ -394,7 +396,7 @@ export interface Download {
       }[]
     | null;
   file?: (number | null) | Media;
-  status: 'draft' | 'published';
+  status: 'draft' | 'published' | 'archived';
   updatedAt: string;
   createdAt: string;
 }
@@ -431,7 +433,7 @@ export interface Event {
    * External or internal registration URL
    */
   rsvpLink?: string | null;
-  status: 'draft' | 'published';
+  status: 'draft' | 'published' | 'archived';
   updatedAt: string;
   createdAt: string;
 }
@@ -464,7 +466,7 @@ export interface Podcast {
    * Streaming audio URL (e.g. Spotify, Apple Podcasts, or MP3 stream)
    */
   audioUrl?: string | null;
-  status: 'draft' | 'published';
+  status: 'draft' | 'published' | 'archived';
   updatedAt: string;
   createdAt: string;
 }
@@ -494,6 +496,94 @@ export interface User {
     | null;
   password?: string | null;
   collection: 'users';
+}
+/**
+ * Enterprise corporate training intake leads submitted via the PontLook matching wizard.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads".
+ */
+export interface Lead {
+  id: number;
+  /**
+   * Unique reference identifier (e.g. PL-M3X...)
+   */
+  leadId: string;
+  /**
+   * Contact full name
+   */
+  fullName: string;
+  /**
+   * Verified business/corporate email
+   */
+  workEmail: string;
+  /**
+   * Organizational job title / role
+   */
+  jobTitle?: string | null;
+  /**
+   * Company or government agency name
+   */
+  organizationName: string;
+  /**
+   * Primary corporate location / country
+   */
+  country: string;
+  /**
+   * Direct phone number with international country code
+   */
+  phoneNumber?: string | null;
+  role?: ('buyer' | 'provider') | null;
+  tier: 'HOT' | 'WARM' | 'QUALIFIED';
+  /**
+   * Algorithmic qualification score (0-100)
+   */
+  score: number;
+  status: 'new' | 'contacted' | 'in_qualification' | 'proposals_sent' | 'won' | 'lost' | 'disqualified';
+  /**
+   * Resolved training domains requested by the enterprise
+   */
+  trainingDomains?: string | null;
+  /**
+   * Preferred format (In-Person, Virtual, Hybrid)
+   */
+  deliveryMode?: string | null;
+  city?: string | null;
+  language?: string | null;
+  customization?: string | null;
+  cohortSize?: string | null;
+  timeline?: string | null;
+  budgetBand?: string | null;
+  currency?: string | null;
+  headcount?: string | null;
+  /**
+   * Special requirements, bespoke objectives, or compliance mandates
+   */
+  additionalContext?: string | null;
+  /**
+   * Internal concierge & sales notes (private to admin & editor)
+   */
+  notes?: string | null;
+  dispatchStatus?: {
+    emailSent?: boolean | null;
+    slackSent?: boolean | null;
+    crmSent?: boolean | null;
+  };
+  /**
+   * Verification criteria evaluation snapshot
+   */
+  checklist?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  sourceIp?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -755,6 +845,46 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads_select".
+ */
+export interface LeadsSelect<T extends boolean = true> {
+  leadId?: T;
+  fullName?: T;
+  workEmail?: T;
+  jobTitle?: T;
+  organizationName?: T;
+  country?: T;
+  phoneNumber?: T;
+  role?: T;
+  tier?: T;
+  score?: T;
+  status?: T;
+  trainingDomains?: T;
+  deliveryMode?: T;
+  city?: T;
+  language?: T;
+  customization?: T;
+  cohortSize?: T;
+  timeline?: T;
+  budgetBand?: T;
+  currency?: T;
+  headcount?: T;
+  additionalContext?: T;
+  notes?: T;
+  dispatchStatus?:
+    | T
+    | {
+        emailSent?: T;
+        slackSent?: T;
+        crmSent?: T;
+      };
+  checklist?: T;
+  sourceIp?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

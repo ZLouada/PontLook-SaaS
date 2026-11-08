@@ -103,10 +103,12 @@ export const Podcasts: CollectionConfig = {
       name: 'status',
       type: 'select',
       required: true,
+      index: true,
       defaultValue: 'draft',
       options: [
         { label: 'Draft', value: 'draft' },
         { label: 'Published', value: 'published' },
+        { label: 'Archived', value: 'archived' },
       ],
       admin: {
         position: 'sidebar',
