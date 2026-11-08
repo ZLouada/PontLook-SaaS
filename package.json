@@ -52,6 +52,13 @@
     "source-map-js": "^1.2.2",
     "happy-dom": "^21.0.4",
     "undici": "^7.30.2",
+    "tar": "^7.5.22",
+    "ws": "^8.22.0",
+    "braces": "^3.0.3",
+    "micromatch": "^4.0.8",
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "^11.0.5"
+    },
     "next": {
       "postcss": "^8.5.32"
     }
