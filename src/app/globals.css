@@ -1,12 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Poppins:wght@600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Poppins', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-cairo: 'Cairo', system-ui, sans-serif;
+  --font-arabic: var(--font-cairo);
   --color-primary: #0052FF;
   --color-accent: #0052FF;
   --color-accent-secondary: #4D7CFF;
-  --font-arabic: var(--font-cairo);
 
   /* Shared motion curve — mirrors ease.out in src/lib/motion.ts */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);

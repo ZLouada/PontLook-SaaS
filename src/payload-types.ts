@@ -141,7 +141,7 @@ export interface Article {
   id: number;
   title: string;
   /**
-   * URL-friendly identifier for the article
+   * URL-friendly identifier for the article (auto-generated from title if left blank)
    */
   slug: string;
   /**
@@ -352,7 +352,7 @@ export interface Download {
   id: number;
   title: string;
   /**
-   * Unique slug for the downloadable resource
+   * Unique slug for the downloadable resource (auto-generated from title if left blank)
    */
   slug: string;
   /**
@@ -406,7 +406,7 @@ export interface Event {
   id: number;
   title: string;
   /**
-   * Unique slug for the event
+   * Unique slug for the event (auto-generated from title if left blank)
    */
   slug: string;
   date: string;
@@ -443,7 +443,7 @@ export interface Podcast {
   id: number;
   title: string;
   /**
-   * Unique slug for the podcast episode
+   * Unique slug for the podcast episode (auto-generated from title if left blank)
    */
   slug: string;
   /**

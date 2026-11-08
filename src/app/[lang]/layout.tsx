@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Poppins, Cairo, JetBrains_Mono } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -16,34 +15,6 @@ import { constructAlternates } from '@/lib/seo';
 import { getNavbarResourcesCard } from '@/lib/payload/resources';
 import { DictionaryProvider } from '@/components/providers/DictionaryProvider';
 import FramerMotionProvider from '@/components/shared/FramerMotionProvider';
-
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-  variable: '--font-sans',
-});
-
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['600', '700', '800'],
-  display: 'swap',
-  variable: '--font-heading',
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  display: 'swap',
-  variable: '--font-mono',
-});
-
-const cairo = Cairo({
-  subsets: ['arabic', 'latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  display: 'swap',
-  variable: '--font-cairo',
-});
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -186,10 +157,6 @@ export default async function RootLayout({
   const dir = isAr ? 'rtl' : 'ltr';
   const htmlLang = getHtmlLang(lang);
 
-  const fontVariables = isAr
-    ? `${cairo.variable} ${jetbrainsMono.variable}`
-    : `${inter.variable} ${poppins.variable} ${jetbrainsMono.variable} ${cairo.variable}`;
-
   const htmlStyle = isAr
     ? ({
         '--font-sans': 'var(--font-cairo)',
@@ -264,8 +231,10 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang={htmlLang} dir={dir} className={fontVariables} style={htmlStyle}>
+    <html lang={htmlLang} dir={dir} style={htmlStyle}>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
