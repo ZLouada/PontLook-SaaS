@@ -152,6 +152,30 @@ export const Articles: CollectionConfig = {
       },
     },
     {
+      name: 'docType',
+      label: 'Card Document Type',
+      type: 'text',
+      localized: true,
+      required: false,
+      admin: {
+        position: 'sidebar',
+        description:
+          'Document badge label shown on Hero & Resource cards (e.g. "Q2 REPORT", "TREND STUDY", "CASE STUDY", "PLAYBOOK", "FINANCE WHITEPAPER"). If left blank, automatically uses the category name.',
+      },
+    },
+    {
+      name: 'featuredInHero',
+      label: 'Feature in Hero 3D Deck',
+      type: 'checkbox',
+      defaultValue: false,
+      index: true,
+      admin: {
+        position: 'sidebar',
+        description:
+          'Toggle to feature this blog article in the Resources Hero 3D carousel if slots are not explicitly assigned in Resources Hero.',
+      },
+    },
+    {
       name: 'publishedAt',
       type: 'date',
       required: false,

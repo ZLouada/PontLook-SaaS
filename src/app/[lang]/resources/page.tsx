@@ -160,6 +160,7 @@ export default async function ResourcesPage({
         lang={lang}
         customTitle={heroTitle}
         customSubtitle={heroSubtitle}
+        cmsCards={hero.cards}
       />
 
       {/* ======================================================== */}

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Locale, isArabicLocale } from '@/i18n/config';
 
-interface SlideCard {
+export interface SlideCard {
   id: number;
   number: string;
   badgeEn: string;
@@ -22,7 +22,7 @@ interface SlideCard {
   accentColor: string;
 }
 
-const CARDS: SlideCard[] = [
+export const FALLBACK_CARDS: SlideCard[] = [
   {
     id: 0,
     number: 'DOC // 01',
@@ -97,22 +97,28 @@ const CARDS: SlideCard[] = [
   },
 ];
 
+const CARDS = FALLBACK_CARDS;
 const TOTAL_CARDS = CARDS.length;
 
 interface ResourcesHeroDarkProps {
   lang: Locale;
   customTitle?: string;
   customSubtitle?: string;
+  cmsCards?: SlideCard[];
 }
 
 export default function ResourcesHeroDark({
   lang,
   customTitle,
   customSubtitle,
+  cmsCards,
 }: ResourcesHeroDarkProps) {
   const isAr = isArabicLocale(lang);
   const router = useRouter();
   const [, startTransition] = useTransition();
+
+  const cards = cmsCards && cmsCards.length > 0 ? cmsCards : CARDS;
+  const totalCards = cards.length;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeFilter, setActiveFilter] = useState('all');
@@ -165,13 +171,13 @@ export default function ResourcesHeroDark({
 
   const nextCard = useCallback(() => {
     triggerRecoil('next');
-    setCurrentIndex((prev) => (prev + 1) % TOTAL_CARDS);
-  }, [triggerRecoil]);
+    setCurrentIndex((prev) => (prev + 1) % totalCards);
+  }, [triggerRecoil, totalCards]);
 
   const prevCard = useCallback(() => {
     triggerRecoil('prev');
-    setCurrentIndex((prev) => (prev - 1 + TOTAL_CARDS) % TOTAL_CARDS);
-  }, [triggerRecoil]);
+    setCurrentIndex((prev) => (prev - 1 + totalCards) % totalCards);
+  }, [triggerRecoil, totalCards]);
 
   const selectCard = (idx: number) => {
     if (idx === currentIndex) return;
@@ -231,7 +237,7 @@ export default function ResourcesHeroDark({
 
   const handleFilterClick = (filterId: string, cardIdx: number, filterLabel: string) => {
     setActiveFilter(filterId);
-    selectCard(cardIdx);
+    selectCard(cardIdx % totalCards);
     showToast(isAr ? `تم التصنيف حسب: ${filterLabel}` : `Filtered by: ${filterLabel}`);
   };
 
@@ -257,7 +263,7 @@ export default function ResourcesHeroDark({
 
   // 3D Depth Card Transform Calculator (Precision Vector Geometry & Physics Curve)
   const getCardStyle = (i: number): React.CSSProperties => {
-    const relativePos = (i - currentIndex + TOTAL_CARDS) % TOTAL_CARDS;
+    const relativePos = (i - currentIndex + totalCards) % totalCards;
     const sign = isAr ? -1 : 1;
 
     if (relativePos === 0) {
@@ -496,13 +502,13 @@ export default function ResourcesHeroDark({
               }}
               className="relative w-full max-w-[340px] sm:max-w-[420px] h-[450px]"
             >
-              {CARDS.map((card, i) => {
+              {cards.map((card, i) => {
                 const isActive = currentIndex === i;
                 const style = getCardStyle(i);
 
                 return (
                   <article
-                    key={card.id}
+                    key={card.id ?? i}
                     onClick={() => selectCard(i)}
                     style={{
                       ...style,
@@ -581,7 +587,7 @@ export default function ResourcesHeroDark({
                         />
 
                         {/* Card 0: Minimal Curved Line Metric Chart with Live Path Draw Animation */}
-                        {card.id === 0 && (
+                        {i % 4 === 0 && (
                           <svg
                             className="w-full h-full text-slate-400"
                             viewBox="0 0 320 90"
@@ -645,7 +651,7 @@ export default function ResourcesHeroDark({
                         )}
 
                         {/* Card 1: Isometric 3D Wireframe Cube with Pulsing Projection */}
-                        {card.id === 1 && (
+                        {i % 4 === 1 && (
                           <svg
                             className="w-24 h-24 text-slate-500"
                             viewBox="0 0 100 100"
@@ -684,7 +690,7 @@ export default function ResourcesHeroDark({
                         )}
 
                         {/* Card 2: Abstract Open Folio Graphic */}
-                        {card.id === 2 && (
+                        {i % 4 === 2 && (
                           <svg
                             className="w-24 h-24 text-slate-400"
                             viewBox="0 0 100 100"
@@ -719,7 +725,7 @@ export default function ResourcesHeroDark({
                         )}
 
                         {/* Card 3: Ascending Capability ROI Step Graphic */}
-                        {card.id === 3 && (
+                        {i % 4 === 3 && (
                           <svg
                             className="w-28 h-24 text-slate-400"
                             viewBox="0 0 100 100"
@@ -789,7 +795,11 @@ export default function ResourcesHeroDark({
                       {/* Card Footer Action */}
                       <div className="pt-4 border-t border-white/5 flex items-center justify-between">
                         <Link
-                          href={`/${lang}${card.href}`}
+                          href={
+                            card.href.startsWith(`/${lang}`)
+                              ? card.href
+                              : `/${lang}${card.href.startsWith('/') ? card.href : `/${card.href}`}`
+                          }
                           className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-white hover:text-[#FF5C00] transition-colors group/link"
                         >
                           <span>{isAr ? card.ctaAr : card.ctaEn}</span>
@@ -823,7 +833,9 @@ export default function ResourcesHeroDark({
                 {String(currentIndex + 1).padStart(2, '0')}
               </span>
               <span className="text-slate-500">/</span>
-              <span className="text-slate-500">04</span>
+              <span className="text-slate-500">
+                {String(totalCards).padStart(2, '0')}
+              </span>
             </div>
 
             <div className="flex items-center gap-1.5 ms-2">

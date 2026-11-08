@@ -180,6 +180,14 @@ export interface Article {
    * Estimated read time (e.g. 12 min read)
    */
   readTime?: string | null;
+  /**
+   * Document badge label shown on Hero & Resource cards (e.g. "Q2 REPORT", "TREND STUDY", "CASE STUDY", "PLAYBOOK", "FINANCE WHITEPAPER"). If left blank, automatically uses the category name.
+   */
+  docType?: string | null;
+  /**
+   * Toggle to feature this blog article in the Resources Hero 3D carousel if slots are not explicitly assigned in Resources Hero.
+   */
+  featuredInHero?: boolean | null;
   publishedAt?: string | null;
   /**
    * Summary of the article displayed in cards and previews
@@ -670,6 +678,8 @@ export interface ArticlesSelect<T extends boolean = true> {
         socialTwitter?: T;
       };
   readTime?: T;
+  docType?: T;
+  featuredInHero?: T;
   publishedAt?: T;
   excerpt?: T;
   content?: T;
@@ -936,13 +946,29 @@ export interface ResourcesHero {
    */
   eyebrow?: string | null;
   /**
-   * Main hero headline (e.g. The PontLook L&D resource hub)
+   * Main hero headline (e.g. L&D Resource Hub)
    */
   title: string;
   /**
    * Hero subtitle or value proposition paragraph
    */
   description?: string | null;
+  /**
+   * Select the blog article to feature on Card 01 (front active position). If empty, defaults to the latest published article.
+   */
+  card1Article?: (number | null) | Article;
+  /**
+   * Select the blog article to feature on Card 02 (second position).
+   */
+  card2Article?: (number | null) | Article;
+  /**
+   * Select the blog article to feature on Card 03 (third position).
+   */
+  card3Article?: (number | null) | Article;
+  /**
+   * Select the blog article to feature on Card 04 (fourth position).
+   */
+  card4Article?: (number | null) | Article;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1012,6 +1038,10 @@ export interface ResourcesHeroSelect<T extends boolean = true> {
   eyebrow?: T;
   title?: T;
   description?: T;
+  card1Article?: T;
+  card2Article?: T;
+  card3Article?: T;
+  card4Article?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

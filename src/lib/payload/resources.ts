@@ -243,10 +243,28 @@ export interface AdaptedPodcast {
   audioUrl: string
 }
 
+export interface AdaptedHeroCard {
+  id: number
+  number: string
+  badgeEn: string
+  badgeAr: string
+  docTypeEn: string
+  docTypeAr: string
+  titleEn: string
+  titleAr: string
+  descEn: string
+  descAr: string
+  href: string
+  ctaEn: string
+  ctaAr: string
+  accentColor: string
+}
+
 export interface AdaptedHero {
   title: string
   subtitle: string
   eyebrow?: string
+  cards?: AdaptedHeroCard[]
 }
 
 export interface AdaptedSpotlight {
@@ -944,6 +962,81 @@ export const getPodcasts = cache(async (locale: Locale = 'en'): Promise<AdaptedP
 })
 
 // 7. Get Resources Hero Global
+export const FALLBACK_HERO_CARDS: AdaptedHeroCard[] = [
+  {
+    id: 0,
+    number: 'DOC // 01',
+    badgeEn: 'Featured • 8 min read',
+    badgeAr: 'مميز • ٨ دقائق قراءة',
+    docTypeEn: 'Q2 REPORT',
+    docTypeAr: 'تقرير الربع الثاني',
+    titleEn: 'The Future of B2B Training',
+    titleAr: 'مستقبل التدريب المؤسسي B2B',
+    descEn:
+      'How GCC enterprises are shifting from broad catalog subscriptions to verified, outcome-based capability delivery.',
+    descAr:
+      'كيف تتحول المنشآت في الخليج من الاشتراكات العامة إلى برامج بناء الكفاءات الموجهة بالنتائج وقابلة للقياس.',
+    href: '/resources/blog',
+    ctaEn: 'Read Brief',
+    ctaAr: 'قراءة الملخص',
+    accentColor: '#FF5C00',
+  },
+  {
+    id: 1,
+    number: 'DOC // 02',
+    badgeEn: 'Trends • 12 min read',
+    badgeAr: 'اتجاهات • ١٢ دقيقة قراءة',
+    docTypeEn: 'TREND STUDY',
+    docTypeAr: 'دراسة الاتجاهات',
+    titleEn: 'L&D Industry Trends',
+    titleAr: 'اتجاهات قطاع التدريب والتطوير',
+    descEn:
+      'Decentralized learning budgets and why AI-assisted simulation cohorts outperform traditional webinar modules.',
+    descAr:
+      'لامركزية ميزانيات التعلم ولماذا تتفوق مجموعات المحاكاة المدعومة بالذكاء الاصطناعي على الورش التقليدية.',
+    href: '/resources/blog',
+    ctaEn: 'Read Brief',
+    ctaAr: 'قراءة الملخص',
+    accentColor: '#FF5C00',
+  },
+  {
+    id: 2,
+    number: 'DOC // 03',
+    badgeEn: 'Guide • Case Study',
+    badgeAr: 'دليل • دراسة حالة',
+    docTypeEn: 'PLAYBOOK',
+    docTypeAr: 'دليل تطبيقي',
+    titleEn: 'Interactive Strategies',
+    titleAr: 'استراتيجيات تفاعلية',
+    descEn:
+      'Action blueprints for regional enterprises transitioning teams to high-stakes practical labs and verified outcomes.',
+    descAr:
+      'أدلة تنفيذية للمنشآت الإقليمية لنقل الفرق إلى معامل تطبيقية عالية الكفاءة ونتائج معتمدة.',
+    href: '/resources/blog',
+    ctaEn: 'Read Brief',
+    ctaAr: 'قراءة الملخص',
+    accentColor: '#FF5C00',
+  },
+  {
+    id: 3,
+    number: 'DOC // 04',
+    badgeEn: 'Executive ROI • 5 min',
+    badgeAr: 'عائد الاستثمار • ٥ دقائق',
+    docTypeEn: 'FINANCE WHITEPAPER',
+    docTypeAr: 'ورقة بيضاء مالية',
+    titleEn: 'Measuring Capability ROI',
+    titleAr: 'قياس العائد على بناء القدرات',
+    descEn:
+      'Proven audit frameworks to correlate specialized executive training directly with measurable business performance.',
+    descAr:
+      'أطر تدقيق مثبتة لربط التدريب التنفيذي المتخصص مباشرة بالأداء التشغيلي والمالي للمنشأة.',
+    href: '/resources/downloads',
+    ctaEn: 'Read Brief',
+    ctaAr: 'قراءة الملخص',
+    accentColor: '#FF5C00',
+  },
+]
+
 export const getResourcesHero = cache(async (locale: Locale = 'en'): Promise<AdaptedHero> => {
   const isAr = locale.startsWith('ar');
   try {
@@ -951,8 +1044,102 @@ export const getResourcesHero = cache(async (locale: Locale = 'en'): Promise<Ada
     const hero = await payload.findGlobal({
       slug: 'resources-hero',
       locale: toPayloadLocale(locale),
+      depth: 2,
       overrideAccess: false,
     })
+
+    // Helper to resolve an article relation if it's an ID
+    const resolveArticle = async (artField: any): Promise<any | null> => {
+      if (!artField) return null
+      if (typeof artField === 'object' && artField.title) return artField
+      const artId = typeof artField === 'object' ? artField.id : artField
+      if (artId) {
+        try {
+          return await payload.findByID({
+            collection: 'articles',
+            id: artId,
+            locale: toPayloadLocale(locale),
+            depth: 1,
+          })
+        } catch {
+          return null
+        }
+      }
+      return null
+    }
+
+    const assignedArticles = await Promise.all([
+      resolveArticle((hero as any)?.card1Article),
+      resolveArticle((hero as any)?.card2Article),
+      resolveArticle((hero as any)?.card3Article),
+      resolveArticle((hero as any)?.card4Article),
+    ])
+
+    // Fetch published articles if any slot is empty
+    const needsFallback = assignedArticles.some((a) => !a)
+    let extraArticles: any[] = []
+    if (needsFallback) {
+      try {
+        const assignedIds = new Set(
+          assignedArticles.filter(Boolean).map((a) => a.id)
+        )
+        const artRes = await payload.find({
+          collection: 'articles',
+          where: {
+            status: { equals: 'published' },
+          },
+          sort: '-publishedAt',
+          limit: 8,
+          locale: toPayloadLocale(locale),
+          depth: 1,
+        })
+        extraArticles = artRes.docs.filter((a) => !assignedIds.has(a.id))
+      } catch (err) {
+        console.error('[Payload Data Layer] Failed to fetch extra articles for hero:', err)
+      }
+    }
+
+    let extraIdx = 0
+    const finalCards: AdaptedHeroCard[] = []
+
+    for (let i = 0; i < 4; i++) {
+      const art = assignedArticles[i] || extraArticles[extraIdx++]
+      if (art && art.title) {
+        const num = String(i + 1).padStart(2, '0')
+        const catSlug = art.category || 'leadership'
+        const categoryLabelEn = getCategoryLabel(catSlug, 'en')
+        const categoryLabelAr = getCategoryLabel(catSlug, 'ar')
+        const readTime = art.readTime || (isAr ? '٥ دقائق قراءة' : '5 min read')
+        const titleStr = art.title || (isAr ? 'مقال تحليلي' : 'Intelligence Brief')
+        const excerptStr =
+          art.excerpt ||
+          art.meta?.description ||
+          (isAr
+            ? 'استكشف التحليل الكامل وأحدث الرؤى العملية المنشورة على منصة PontLook.'
+            : 'Explore comprehensive insights and practical frameworks published on PontLook.')
+        const docTypeEn = ((art as any).docType || categoryLabelEn).toUpperCase()
+        const docTypeAr = (art as any).docType || categoryLabelAr
+
+        finalCards.push({
+          id: i,
+          number: `DOC // ${num}`,
+          badgeEn: `${categoryLabelEn} • ${readTime}`,
+          badgeAr: `${categoryLabelAr} • ${readTime}`,
+          docTypeEn,
+          docTypeAr,
+          titleEn: titleStr,
+          titleAr: titleStr,
+          descEn: excerptStr,
+          descAr: excerptStr,
+          href: `/resources/blog/${art.slug}`,
+          ctaEn: isAr ? 'قراءة المقال' : 'Read Article',
+          ctaAr: 'قراءة المقال',
+          accentColor: '#FF5C00',
+        })
+      } else {
+        finalCards.push(FALLBACK_HERO_CARDS[i])
+      }
+    }
 
     return {
       title: hero?.title || (isAr ? 'مركز موارد التدريب والتطوير' : 'L&D Resource Hub'),
@@ -962,6 +1149,7 @@ export const getResourcesHero = cache(async (locale: Locale = 'en'): Promise<Ada
           ? 'استكشف أحدث الرؤى العملية، واتجاهات القطاع، ومستقبل تدريب وتطوير الكفاءات المؤسسية.'
           : 'Explore actionable insights, industry trends, and the future of enterprise training.'),
       eyebrow: hero?.eyebrow || undefined,
+      cards: finalCards,
     }
   } catch (error) {
     console.error('[Payload Data Layer] Failed to get resources hero:', error)
@@ -971,6 +1159,7 @@ export const getResourcesHero = cache(async (locale: Locale = 'en'): Promise<Ada
         isAr
           ? 'استكشف أحدث الرؤى العملية، واتجاهات القطاع، ومستقبل تدريب وتطوير الكفاءات المؤسسية.'
           : 'Explore actionable insights, industry trends, and the future of enterprise training.',
+      cards: FALLBACK_HERO_CARDS,
     }
   }
 })
