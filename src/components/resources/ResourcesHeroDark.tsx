@@ -168,14 +168,17 @@ export default function ResourcesHeroDark({
         {/* DESKTOP 1:1 COMPOSITION (lg and above): EXACT COPY OF REFERENCE MOCKUP    */}
         {/* ========================================================================= */}
         <div className="hidden lg:block relative w-full aspect-[1024/517] max-w-[1360px] mx-auto rounded-3xl overflow-hidden select-none">
-          {/* Master 2x Retina Artwork: Wireframe Diagram, 3D Cubes, Connecting Nodes */}
+          {/* Master 3x Retina Artwork (2880x1454): High-pass sharpened, zero compression loss */}
           <Image
             src="/images/resources/hero-canvas-background@2x.webp"
             alt="L&D Resource Network Visualisation"
             fill
             priority
+            unoptimized
+            quality={100}
             sizes="(max-width: 1440px) 100vw, 1360px"
-            className="object-cover object-center select-none pointer-events-none"
+            className="object-cover object-center select-none pointer-events-none [image-rendering:-webkit-optimize-contrast]"
+            style={{ imageRendering: '-webkit-optimize-contrast' }}
           />
 
           {/* 1. ONE CRISP TITLE (Single Line Across Top-Left to Mid): "L&D Resource Hub" */}
@@ -195,7 +198,7 @@ export default function ResourcesHeroDark({
               isAr ? 'right-[5.27%]' : 'left-[5.27%]'
             }`}
           >
-            <p className="font-sans text-neutral-300 font-normal leading-relaxed text-[clamp(11px,1.15vw,15px)]">
+            <p className="font-sans text-neutral-200 font-normal leading-relaxed text-[clamp(11px,1.15vw,15px)] drop-shadow-sm">
               {displaySubtitle}
             </p>
           </div>
@@ -431,8 +434,11 @@ export default function ResourcesHeroDark({
               alt="L&D Resource Network Visualisation"
               fill
               priority
+              unoptimized
+              quality={100}
               sizes="100vw"
-              className="object-cover object-right"
+              className="object-cover object-right [image-rendering:-webkit-optimize-contrast]"
+              style={{ imageRendering: '-webkit-optimize-contrast' }}
             />
           </div>
 
