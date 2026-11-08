@@ -39,7 +39,7 @@ const CARDS: SlideCard[] = [
     href: '/resources/blog',
     ctaEn: 'Read Brief',
     ctaAr: 'قراءة الملخص',
-    accentColor: '#38bdf8',
+    accentColor: '#FF5C00',
   },
   {
     id: 1,
@@ -57,7 +57,7 @@ const CARDS: SlideCard[] = [
     href: '/resources/blog',
     ctaEn: 'Read Brief',
     ctaAr: 'قراءة الملخص',
-    accentColor: '#38bdf8',
+    accentColor: '#FF5C00',
   },
   {
     id: 2,
@@ -75,7 +75,7 @@ const CARDS: SlideCard[] = [
     href: '/resources/blog',
     ctaEn: 'Read Brief',
     ctaAr: 'قراءة الملخص',
-    accentColor: '#38bdf8',
+    accentColor: '#FF5C00',
   },
   {
     id: 3,
@@ -93,7 +93,7 @@ const CARDS: SlideCard[] = [
     href: '/resources/downloads',
     ctaEn: 'Read Brief',
     ctaAr: 'قراءة الملخص',
-    accentColor: '#34d399',
+    accentColor: '#FF5C00',
   },
 ];
 
@@ -291,16 +291,16 @@ export default function ResourcesHeroDark({
   ];
 
   return (
-    <section className="relative w-full bg-black text-slate-100 rounded-b-[2.5rem] sm:rounded-b-[3.5rem] lg:rounded-b-[48px] overflow-hidden pt-20 sm:pt-24 lg:pt-28 pb-10 sm:pb-12 lg:pb-14 border-b border-neutral-900 shadow-2xl selection:bg-cyan-500/30 selection:text-white">
+    <section className="relative w-full bg-black text-slate-100 rounded-b-[2.5rem] sm:rounded-b-[3.5rem] lg:rounded-b-[48px] overflow-hidden pt-20 sm:pt-24 lg:pt-28 pb-10 sm:pb-12 lg:pb-14 border-b border-neutral-900 shadow-2xl selection:bg-[#FF5C00]/30 selection:text-white">
       {/* 1. Soft atmospheric light glow without grid lines or squares */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
           background:
-            'radial-gradient(circle at 65% 45%, rgba(56, 189, 248, 0.08) 0%, rgba(14, 165, 233, 0.02) 40%, transparent 75%)',
+            'radial-gradient(circle at 65% 45%, rgba(255, 92, 0, 0.08) 0%, rgba(234, 88, 12, 0.02) 40%, transparent 75%)',
         }}
       />
-      <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[140px] pointer-events-none z-0" />
+      <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-orange-600/5 rounded-full blur-[140px] pointer-events-none z-0" />
 
       {/* 2. Main Hero Content Container */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-center">
@@ -350,7 +350,7 @@ export default function ResourcesHeroDark({
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder={isAr ? 'بحث...' : 'Search...'}
-                      className="w-28 sm:w-36 bg-white/10 text-xs text-white placeholder:text-slate-500 rounded-lg px-2.5 py-1 outline-none border border-cyan-500/40"
+                      className="w-28 sm:w-36 bg-white/10 text-xs text-white placeholder:text-slate-500 rounded-lg px-2.5 py-1 outline-none border border-[#FF5C00]/50 focus:border-[#FF5C00]"
                     />
                     <button
                       type="button"
@@ -403,8 +403,8 @@ export default function ResourcesHeroDark({
               <div className="h-8 w-px bg-white/10" />
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF5C00] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF5C00]" />
                 </span>
                 <span className="text-[11px] text-slate-300">
                   {isAr ? 'جلسات الربع الثاني متاحة' : 'Q2 Briefings live'}
@@ -439,7 +439,7 @@ export default function ResourcesHeroDark({
                     }}
                     className={`absolute inset-0 rounded-2xl p-7 flex flex-col justify-between cursor-pointer ${
                       isActive
-                        ? 'border border-cyan-400/40 shadow-[0_30px_60px_-15px_rgba(0,0,0,1),0_0_40px_-5px_rgba(56,189,248,0.25),inset_0_1px_2px_0_rgba(255,255,255,0.25)]'
+                        ? 'border border-[#FF5C00]/50 shadow-[0_30px_60px_-15px_rgba(0,0,0,1),0_0_40px_-5px_rgba(255,92,0,0.35),inset_0_1px_2px_0_rgba(255,255,255,0.25)]'
                         : 'border border-white/10 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.95),inset_0_1px_1px_0_rgba(255,255,255,0.12)]'
                     }`}
                   >
@@ -465,13 +465,13 @@ export default function ResourcesHeroDark({
                       <div className="flex items-center justify-between border-b border-white/5 pb-4">
                         <span
                           className={`text-[11px] uppercase tracking-wider font-semibold flex items-center gap-2 ${
-                            isActive ? 'text-cyan-400' : 'text-slate-300'
+                            isActive ? 'text-[#FF5C00]' : 'text-slate-300'
                           }`}
                         >
                           <span
                             className={`w-1.5 h-1.5 rounded-full inline-block ${
                               isActive
-                                ? 'bg-cyan-400 shadow-[0_0_8px_#38bdf8]'
+                                ? 'bg-[#FF5C00] shadow-[0_0_8px_#FF5C00]'
                                 : 'bg-slate-400'
                             }`}
                           />
@@ -484,7 +484,7 @@ export default function ResourcesHeroDark({
 
                       {/* Central Pure Vector SVG Visualizations */}
                       <div className="my-4 h-28 w-full rounded-xl bg-white/[0.02] border border-white/5 p-3 flex items-center justify-center relative overflow-hidden transition-colors">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-500/5 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#FF5C00]/10 to-transparent pointer-events-none" />
 
                         {/* Card 0: Minimal Curved Line Metric Chart */}
                         {card.id === 0 && (
@@ -512,8 +512,8 @@ export default function ResourcesHeroDark({
                             />
                             <path
                               d="M 20 60 C 100 65, 140 45, 160 45 C 180 45, 230 25, 300 20"
-                              stroke="rgba(56, 189, 248, 0.7)"
-                              strokeWidth="2"
+                              stroke="#FF5C00"
+                              strokeWidth="2.2"
                               strokeLinecap="round"
                             />
                             <path
@@ -522,13 +522,13 @@ export default function ResourcesHeroDark({
                               strokeWidth="1.2"
                               strokeDasharray="2 2"
                             />
-                            <circle cx="160" cy="45" r="4" fill="#38bdf8" />
+                            <circle cx="160" cy="45" r="4" fill="#FF5C00" />
                             <circle
                               cx="160"
                               cy="45"
                               r="9"
-                              stroke="#38bdf8"
-                              strokeOpacity="0.3"
+                              stroke="#FF5C00"
+                              strokeOpacity="0.35"
                               strokeWidth="1.5"
                             />
                           </svg>
@@ -561,9 +561,9 @@ export default function ResourcesHeroDark({
                               y1="49"
                               x2="50"
                               y2="20"
-                              stroke="#38bdf8"
+                              stroke="#FF5C00"
                               strokeDasharray="2 2"
-                              strokeOpacity="0.8"
+                              strokeOpacity="0.9"
                             />
                           </svg>
                         )}
@@ -588,7 +588,7 @@ export default function ResourcesHeroDark({
                               y2="68"
                               stroke="rgba(255,255,255,0.3)"
                             />
-                            <circle cx="50" cy="50" r="3" fill="#38bdf8" />
+                            <circle cx="50" cy="50" r="3" fill="#FF5C00" />
                           </svg>
                         )}
 
@@ -636,7 +636,7 @@ export default function ResourcesHeroDark({
                               y2="35"
                               stroke="rgba(255,255,255,0.4)"
                             />
-                            <circle cx="80" cy="35" r="4" fill="#38bdf8" />
+                            <circle cx="80" cy="35" r="4" fill="#FF5C00" />
                           </svg>
                         )}
                       </div>
@@ -655,7 +655,7 @@ export default function ResourcesHeroDark({
                       <div className="pt-4 border-t border-white/5 flex items-center justify-between">
                         <Link
                           href={`/${lang}${card.href}`}
-                          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-white hover:text-cyan-400 transition-colors group"
+                          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-white hover:text-[#FF5C00] transition-colors group"
                         >
                           <span>{isAr ? card.ctaAr : card.ctaEn}</span>
                           <span className="text-xs transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1">
@@ -742,7 +742,7 @@ export default function ResourcesHeroDark({
               {isAr ? 'تحميل دليل تقارير التدريب كاملاً (PDF)' : 'Download Complete PDF Guide'}
             </span>
             <svg
-              className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 group-hover:translate-y-0.5 transition"
+              className="w-4 h-4 text-slate-400 group-hover:text-[#FF5C00] group-hover:translate-y-0.5 transition"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -760,11 +760,11 @@ export default function ResourcesHeroDark({
 
       {/* Floating Toast Notification */}
       <div
-        className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-neutral-900/95 border border-cyan-500/40 text-cyan-200 text-xs px-4 py-2.5 rounded-full shadow-2xl backdrop-blur-xl transition-all duration-300 flex items-center gap-2 ${
+        className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-neutral-900/95 border border-[#FF5C00]/40 text-orange-200 text-xs px-4 py-2.5 rounded-full shadow-2xl backdrop-blur-xl transition-all duration-300 flex items-center gap-2 ${
           toastMessage ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
         }`}
       >
-        <svg className="w-4 h-4 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 text-[#FF5C00] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
         </svg>
         <span>{toastMessage}</span>
