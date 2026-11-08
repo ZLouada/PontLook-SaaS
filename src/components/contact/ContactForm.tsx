@@ -13,7 +13,7 @@ const schema = z.object({
   email: z.string().trim().max(254, 'Email is too long').email('Enter a valid email'),
   company: z.string().trim().min(2, 'Company is required').max(150, 'Company name is too long'),
   topic: z.enum(['provider', 'company', 'partnership', 'media', 'other'], {
-    errorMap: () => ({ message: 'Select a topic' }),
+    message: 'Select a topic',
   }),
   message: z.string().trim().min(20, 'Give us at least a couple of sentences (20+ characters)').max(5000, 'Message is too long'),
   _gotcha: z.string().optional(),

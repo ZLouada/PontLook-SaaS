@@ -219,14 +219,14 @@ export const step1DomainSchema = z
 export const step2DeliverySchema = z
   .object({
     deliveryMode: z.enum(['in_person', 'virtual', 'hybrid'], {
-      required_error: 'Please select a delivery format.',
+      message: 'Please select a delivery format.',
     }),
     city: z.string().optional().or(z.literal('')),
     language: z.enum(['arabic', 'english', 'bilingual'], {
-      required_error: 'Please choose preferred delivery language.',
+      message: 'Please choose preferred delivery language.',
     }),
     customization: z.enum(['tailored', 'standard'], {
-      required_error: 'Please select courseware customization level.',
+      message: 'Please select courseware customization level.',
     }),
   })
   .refine(
@@ -244,13 +244,13 @@ export const step2DeliverySchema = z
 
 export const step3CohortBudgetSchema = z.object({
   cohortSize: z.enum(['1_5_execs', '6_20_team', '21_50_dept', '50_plus_enterprise'], {
-    required_error: 'Please select target cohort size.',
+    message: 'Please select target cohort size.',
   }),
   timeline: z.enum(['immediate', 'within_30_days', 'next_quarter', 'planning'], {
-    required_error: 'Please select your target start timeline.',
+    message: 'Please select your target start timeline.',
   }),
   budgetBand: z.enum(['under_10k', '10k_25k', '25k_50k', '50k_plus', 'pending_guidance'], {
-    required_error: 'Please select an estimated budget tier or request guidance.',
+    message: 'Please select an estimated budget tier or request guidance.',
   }),
   additionalContext: z.string().optional().or(z.literal('')),
 });
