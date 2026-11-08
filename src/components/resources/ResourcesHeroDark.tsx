@@ -119,9 +119,11 @@ export default function ResourcesHeroDark({
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [recoilDirection, setRecoilDirection] = useState<'next' | 'prev' | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const recoilTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const isOldDefaultTitle =
     !customTitle ||
@@ -153,16 +155,27 @@ export default function ResourcesHeroDark({
     }, 2600);
   }, []);
 
-  const nextCard = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % TOTAL_CARDS);
+  const triggerRecoil = useCallback((dir: 'next' | 'prev') => {
+    setRecoilDirection(dir);
+    if (recoilTimeoutRef.current) clearTimeout(recoilTimeoutRef.current);
+    recoilTimeoutRef.current = setTimeout(() => {
+      setRecoilDirection(null);
+    }, 450);
   }, []);
 
+  const nextCard = useCallback(() => {
+    triggerRecoil('next');
+    setCurrentIndex((prev) => (prev + 1) % TOTAL_CARDS);
+  }, [triggerRecoil]);
+
   const prevCard = useCallback(() => {
+    triggerRecoil('prev');
     setCurrentIndex((prev) => (prev - 1 + TOTAL_CARDS) % TOTAL_CARDS);
-  }, []);
+  }, [triggerRecoil]);
 
   const selectCard = (idx: number) => {
     if (idx === currentIndex) return;
+    triggerRecoil(idx > currentIndex ? 'next' : 'prev');
     setCurrentIndex(idx);
   };
 
@@ -242,7 +255,7 @@ export default function ResourcesHeroDark({
     }, 900);
   };
 
-  // 3D Depth Card Transform Calculator (Precision Vector Geometry)
+  // 3D Depth Card Transform Calculator (Precision Vector Geometry & Physics Curve)
   const getCardStyle = (i: number): React.CSSProperties => {
     const relativePos = (i - currentIndex + TOTAL_CARDS) % TOTAL_CARDS;
     const sign = isAr ? -1 : 1;
@@ -257,26 +270,26 @@ export default function ResourcesHeroDark({
       };
     } else if (relativePos === 1) {
       return {
-        transform: `translateX(${sign * 85}px) translateY(-12px) translateZ(-80px) rotateY(${sign * -14}deg) rotateX(2deg) scale(0.92)`,
-        opacity: 0.6,
+        transform: `translateX(${sign * 90}px) translateY(-14px) translateZ(-85px) rotateY(${sign * -14}deg) rotateX(2deg) scale(0.92)`,
+        opacity: 0.62,
         zIndex: 30,
-        filter: 'brightness(0.7) blur(0.5px)',
+        filter: 'brightness(0.72) blur(0.4px)',
         pointerEvents: 'auto',
       };
     } else if (relativePos === 2) {
       return {
-        transform: `translateX(${sign * 160}px) translateY(-24px) translateZ(-160px) rotateY(${sign * -20}deg) rotateX(3deg) scale(0.85)`,
-        opacity: 0.35,
+        transform: `translateX(${sign * 175}px) translateY(-28px) translateZ(-165px) rotateY(${sign * -20}deg) rotateX(3deg) scale(0.84)`,
+        opacity: 0.38,
         zIndex: 20,
-        filter: 'brightness(0.48) blur(1px)',
+        filter: 'brightness(0.48) blur(0.8px)',
         pointerEvents: 'auto',
       };
     } else {
       return {
-        transform: `translateX(${sign * 220}px) translateY(-36px) translateZ(-240px) rotateY(${sign * -24}deg) scale(0.78)`,
-        opacity: 0.15,
+        transform: `translateX(${sign * 240}px) translateY(-42px) translateZ(-245px) rotateY(${sign * -24}deg) scale(0.76)`,
+        opacity: 0.16,
         zIndex: 10,
-        filter: 'brightness(0.3) blur(2px)',
+        filter: 'brightness(0.28) blur(1.8px)',
         pointerEvents: 'none',
       };
     }
@@ -292,9 +305,61 @@ export default function ResourcesHeroDark({
 
   return (
     <section className="relative w-full bg-black text-slate-100 rounded-b-[2.5rem] sm:rounded-b-[3.5rem] lg:rounded-b-[48px] overflow-hidden pt-20 sm:pt-24 lg:pt-28 pb-10 sm:pb-12 lg:pb-14 border-b border-neutral-900 shadow-2xl selection:bg-[#FF5C00]/30 selection:text-white">
+      {/* Dynamic Keyframe Animations */}
+      <style jsx global>{`
+        @keyframes sheenSweep {
+          0% {
+            transform: translateX(-150%) rotate(-35deg);
+            opacity: 0;
+          }
+          30% {
+            opacity: 0.7;
+          }
+          100% {
+            transform: translateX(150%) rotate(-35deg);
+            opacity: 0;
+          }
+        }
+        @keyframes deckRecoilNext {
+          0% {
+            transform: scale(1) rotate(0deg);
+          }
+          35% {
+            transform: scale(0.975) rotate(-0.6deg);
+          }
+          100% {
+            transform: scale(1) rotate(0deg);
+          }
+        }
+        @keyframes deckRecoilPrev {
+          0% {
+            transform: scale(1) rotate(0deg);
+          }
+          35% {
+            transform: scale(0.975) rotate(0.6deg);
+          }
+          100% {
+            transform: scale(1) rotate(0deg);
+          }
+        }
+        @keyframes counterFlip {
+          0% {
+            transform: translateY(8px);
+            opacity: 0;
+          }
+          100% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+        .animate-counter-flip {
+          animation: counterFlip 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+      `}</style>
+
       {/* 1. Soft atmospheric light glow without grid lines or squares */}
       <div
-        className="absolute inset-0 pointer-events-none z-0"
+        className="absolute inset-0 pointer-events-none z-0 transition-opacity duration-700"
         style={{
           background:
             'radial-gradient(circle at 65% 45%, rgba(255, 92, 0, 0.08) 0%, rgba(234, 88, 12, 0.02) 40%, transparent 75%)',
@@ -331,8 +396,8 @@ export default function ResourcesHeroDark({
                     onClick={() => handleFilterClick(f.id, f.cardIdx, label)}
                     className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 whitespace-nowrap cursor-pointer ${
                       isActive
-                        ? 'text-white bg-white/15 shadow-sm border border-white/20'
-                        : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        ? 'text-white bg-white/15 shadow-sm border border-white/20 scale-[1.02]'
+                        : 'text-slate-400 hover:text-white hover:bg-white/5 active:scale-95'
                     }`}
                   >
                     {label}
@@ -350,7 +415,7 @@ export default function ResourcesHeroDark({
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder={isAr ? 'بحث...' : 'Search...'}
-                      className="w-28 sm:w-36 bg-white/10 text-xs text-white placeholder:text-slate-500 rounded-lg px-2.5 py-1 outline-none border border-[#FF5C00]/50 focus:border-[#FF5C00]"
+                      className="w-28 sm:w-36 bg-white/10 text-xs text-white placeholder:text-slate-500 rounded-lg px-2.5 py-1 outline-none border border-[#FF5C00]/50 focus:border-[#FF5C00] transition-colors"
                     />
                     <button
                       type="button"
@@ -364,7 +429,7 @@ export default function ResourcesHeroDark({
                   <button
                     type="button"
                     onClick={() => setIsSearchOpen(true)}
-                    className="p-1.5 text-slate-400 hover:text-white transition rounded-lg hover:bg-white/10 cursor-pointer"
+                    className="p-1.5 text-slate-400 hover:text-white transition rounded-lg hover:bg-white/10 cursor-pointer active:scale-95"
                     title={isAr ? 'ابحث في الموارد' : 'Search Hub'}
                     aria-label="Search Hub"
                   >
@@ -422,6 +487,13 @@ export default function ResourcesHeroDark({
           >
             <div
               ref={containerRef}
+              style={{
+                animation: recoilDirection
+                  ? recoilDirection === 'next'
+                    ? 'deckRecoilNext 0.45s ease-out'
+                    : 'deckRecoilPrev 0.45s ease-out'
+                  : 'none',
+              }}
               className="relative w-full max-w-[340px] sm:max-w-[420px] h-[450px]"
             >
               {CARDS.map((card, i) => {
@@ -434,13 +506,14 @@ export default function ResourcesHeroDark({
                     onClick={() => selectCard(i)}
                     style={{
                       ...style,
-                      transition: 'all 0.65s cubic-bezier(0.16, 1, 0.3, 1)',
+                      transition:
+                        'transform 0.75s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.65s cubic-bezier(0.19, 1, 0.22, 1), filter 0.65s cubic-bezier(0.19, 1, 0.22, 1)',
                       willChange: 'transform, opacity, filter',
                     }}
-                    className={`absolute inset-0 rounded-2xl p-7 flex flex-col justify-between cursor-pointer ${
+                    className={`absolute inset-0 rounded-2xl p-7 flex flex-col justify-between cursor-pointer group ${
                       isActive
-                        ? 'border border-[#FF5C00]/50 shadow-[0_30px_60px_-15px_rgba(0,0,0,1),0_0_40px_-5px_rgba(255,92,0,0.35),inset_0_1px_2px_0_rgba(255,255,255,0.25)]'
-                        : 'border border-white/10 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.95),inset_0_1px_1px_0_rgba(255,255,255,0.12)]'
+                        ? 'border border-[#FF5C00]/50 shadow-[0_35px_70px_-15px_rgba(0,0,0,1),0_0_45px_-5px_rgba(255,92,0,0.38),inset_0_1px_2px_0_rgba(255,255,255,0.25)]'
+                        : 'border border-white/10 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.95),inset_0_1px_1px_0_rgba(255,255,255,0.12)] hover:border-white/20'
                     }`}
                   >
                     {/* Background Glass Gradient */}
@@ -452,11 +525,28 @@ export default function ResourcesHeroDark({
                       }}
                     />
 
-                    {/* Folder Tab Notch Effect */}
+                    {/* Active Specular Light Sheen Reflection Sweep */}
+                    {isActive && (
+                      <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none z-30">
+                        <div
+                          key={`sheen-${currentIndex}`}
+                          className="absolute -inset-full w-[250%] h-[250%] pointer-events-none opacity-0"
+                          style={{
+                            background:
+                              'linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.14) 48%, rgba(255, 92, 0, 0.22) 52%, transparent 60%)',
+                            animation: 'sheenSweep 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                          }}
+                        />
+                      </div>
+                    )}
+
+                    {/* Folder Tab Notch Effect with Active Glow Highlight */}
                     <div
-                      className={`absolute -top-[10px] w-[90px] h-[12px] bg-[#14161c] border-t border-l border-r border-white/20 rounded-t-[6px] pointer-events-none ${
-                        isAr ? 'right-7' : 'left-7'
-                      }`}
+                      className={`absolute -top-[10px] w-[90px] h-[12px] bg-[#14161c] border-t border-l border-r rounded-t-[6px] pointer-events-none transition-all duration-500 ${
+                        isActive
+                          ? 'border-t-[#FF5C00] border-l-[#FF5C00]/40 border-r-[#FF5C00]/40 shadow-[0_-2px_12px_rgba(255,92,0,0.5)]'
+                          : 'border-white/20'
+                      } ${isAr ? 'right-7' : 'left-7'}`}
                     />
 
                     {/* Content Layers (Relative for Z-Index Above Background) */}
@@ -464,14 +554,14 @@ export default function ResourcesHeroDark({
                       {/* Header Meta */}
                       <div className="flex items-center justify-between border-b border-white/5 pb-4">
                         <span
-                          className={`text-[11px] uppercase tracking-wider font-semibold flex items-center gap-2 ${
+                          className={`text-[11px] uppercase tracking-wider font-semibold flex items-center gap-2 transition-colors duration-300 ${
                             isActive ? 'text-[#FF5C00]' : 'text-slate-300'
                           }`}
                         >
                           <span
-                            className={`w-1.5 h-1.5 rounded-full inline-block ${
+                            className={`w-1.5 h-1.5 rounded-full inline-block transition-all duration-300 ${
                               isActive
-                                ? 'bg-[#FF5C00] shadow-[0_0_8px_#FF5C00]'
+                                ? 'bg-[#FF5C00] shadow-[0_0_8px_#FF5C00] scale-125'
                                 : 'bg-slate-400'
                             }`}
                           />
@@ -482,11 +572,15 @@ export default function ResourcesHeroDark({
                         </span>
                       </div>
 
-                      {/* Central Pure Vector SVG Visualizations */}
-                      <div className="my-4 h-28 w-full rounded-xl bg-white/[0.02] border border-white/5 p-3 flex items-center justify-center relative overflow-hidden transition-colors">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#FF5C00]/10 to-transparent pointer-events-none" />
+                      {/* Central Pure Vector SVG Visualizations with Interactive Animations */}
+                      <div className="my-4 h-28 w-full rounded-xl bg-white/[0.02] border border-white/5 p-3 flex items-center justify-center relative overflow-hidden transition-all duration-500">
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-transparent via-[#FF5C00]/10 to-transparent pointer-events-none transition-opacity duration-500 ${
+                            isActive ? 'opacity-100' : 'opacity-20'
+                          }`}
+                        />
 
-                        {/* Card 0: Minimal Curved Line Metric Chart */}
+                        {/* Card 0: Minimal Curved Line Metric Chart with Live Path Draw Animation */}
                         {card.id === 0 && (
                           <svg
                             className="w-full h-full text-slate-400"
@@ -513,8 +607,16 @@ export default function ResourcesHeroDark({
                             <path
                               d="M 20 60 C 100 65, 140 45, 160 45 C 180 45, 230 25, 300 20"
                               stroke="#FF5C00"
-                              strokeWidth="2.2"
+                              strokeWidth="2.4"
                               strokeLinecap="round"
+                              style={{
+                                strokeDasharray: 380,
+                                strokeDashoffset: isActive ? 0 : 380,
+                                transition: 'stroke-dashoffset 0.95s cubic-bezier(0.16, 1, 0.3, 1)',
+                                filter: isActive
+                                  ? 'drop-shadow(0 0 6px rgba(255, 92, 0, 0.6))'
+                                  : 'none',
+                              }}
                             />
                             <path
                               d="M 20 70 C 110 70, 140 45, 160 45 C 180 45, 220 58, 300 55"
@@ -522,19 +624,27 @@ export default function ResourcesHeroDark({
                               strokeWidth="1.2"
                               strokeDasharray="2 2"
                             />
-                            <circle cx="160" cy="45" r="4" fill="#FF5C00" />
+                            <circle
+                              cx="160"
+                              cy="45"
+                              r={isActive ? 4.5 : 3.5}
+                              fill="#FF5C00"
+                              className="transition-all duration-300"
+                            />
                             <circle
                               cx="160"
                               cy="45"
                               r="9"
                               stroke="#FF5C00"
-                              strokeOpacity="0.35"
+                              strokeOpacity={isActive ? 0.45 : 0.2}
                               strokeWidth="1.5"
+                              className={isActive ? 'animate-ping' : ''}
+                              style={{ transformOrigin: '160px 45px' }}
                             />
                           </svg>
                         )}
 
-                        {/* Card 1: Isometric 3D Wireframe Cube */}
+                        {/* Card 1: Isometric 3D Wireframe Cube with Pulsing Projection */}
                         {card.id === 1 && (
                           <svg
                             className="w-24 h-24 text-slate-500"
@@ -546,7 +656,8 @@ export default function ResourcesHeroDark({
                             <polygon
                               points="50,15 85,32 50,49 15,32"
                               stroke="rgba(255,255,255,0.4)"
-                              fill="rgba(255,255,255,0.02)"
+                              fill={isActive ? 'rgba(255,92,0,0.05)' : 'rgba(255,255,255,0.02)'}
+                              className="transition-colors duration-500"
                             />
                             <polygon
                               points="15,32 50,49 50,85 15,68"
@@ -563,7 +674,11 @@ export default function ResourcesHeroDark({
                               y2="20"
                               stroke="#FF5C00"
                               strokeDasharray="2 2"
-                              strokeOpacity="0.9"
+                              strokeOpacity={isActive ? 0.95 : 0.6}
+                              className={isActive ? 'animate-pulse' : ''}
+                              style={{
+                                filter: isActive ? 'drop-shadow(0 0 5px #FF5C00)' : 'none',
+                              }}
                             />
                           </svg>
                         )}
@@ -580,6 +695,8 @@ export default function ResourcesHeroDark({
                             <path
                               d="M20 70 C 35 60, 45 60, 50 68 C 55 60, 65 60, 80 70 L 80 35 C 65 25, 55 25, 50 33 C 45 25, 35 25, 20 35 Z"
                               stroke="rgba(255,255,255,0.4)"
+                              fill={isActive ? 'rgba(255,92,0,0.04)' : 'none'}
+                              className="transition-colors duration-500"
                             />
                             <line
                               x1="50"
@@ -588,7 +705,16 @@ export default function ResourcesHeroDark({
                               y2="68"
                               stroke="rgba(255,255,255,0.3)"
                             />
-                            <circle cx="50" cy="50" r="3" fill="#FF5C00" />
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r={isActive ? 3.5 : 2.5}
+                              fill="#FF5C00"
+                              className="transition-all duration-300"
+                              style={{
+                                filter: isActive ? 'drop-shadow(0 0 6px #FF5C00)' : 'none',
+                              }}
+                            />
                           </svg>
                         )}
 
@@ -636,7 +762,16 @@ export default function ResourcesHeroDark({
                               y2="35"
                               stroke="rgba(255,255,255,0.4)"
                             />
-                            <circle cx="80" cy="35" r="4" fill="#FF5C00" />
+                            <circle
+                              cx="80"
+                              cy="35"
+                              r={isActive ? 4.5 : 3.5}
+                              fill="#FF5C00"
+                              className="transition-all duration-300"
+                              style={{
+                                filter: isActive ? 'drop-shadow(0 0 8px #FF5C00)' : 'none',
+                              }}
+                            />
                           </svg>
                         )}
                       </div>
@@ -655,10 +790,10 @@ export default function ResourcesHeroDark({
                       <div className="pt-4 border-t border-white/5 flex items-center justify-between">
                         <Link
                           href={`/${lang}${card.href}`}
-                          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-white hover:text-[#FF5C00] transition-colors group"
+                          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-white hover:text-[#FF5C00] transition-colors group/link"
                         >
                           <span>{isAr ? card.ctaAr : card.ctaEn}</span>
-                          <span className="text-xs transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1">
+                          <span className="text-xs transition-transform duration-200 group-hover/link:translate-x-1 rtl:group-hover/link:-translate-x-1">
                             ↗
                           </span>
                         </Link>
@@ -680,19 +815,22 @@ export default function ResourcesHeroDark({
         <div className="mt-8 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Pagination Counter & Direction Buttons */}
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-sm sm:text-base font-mono tracking-widest">
-              <span className="font-bold text-white">
+            <div className="flex items-center gap-2 text-sm sm:text-base font-mono tracking-widest overflow-hidden h-6">
+              <span
+                key={currentIndex}
+                className="font-bold text-white inline-block animate-counter-flip"
+              >
                 {String(currentIndex + 1).padStart(2, '0')}
               </span>
-              <span className="text-slate-400">/</span>
-              <span className="text-slate-400">04</span>
+              <span className="text-slate-500">/</span>
+              <span className="text-slate-500">04</span>
             </div>
 
             <div className="flex items-center gap-1.5 ms-2">
               <button
                 type="button"
                 onClick={prevCard}
-                className="w-8 h-8 rounded-full border border-white/10 hover:border-white/30 bg-white/[0.02] hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition cursor-pointer"
+                className="w-8 h-8 rounded-full border border-white/10 hover:border-white/30 bg-white/[0.02] hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-all active:scale-90 hover:scale-105 cursor-pointer"
                 aria-label={isAr ? 'البطاقة السابقة' : 'Previous Brief'}
               >
                 <svg
@@ -712,7 +850,7 @@ export default function ResourcesHeroDark({
               <button
                 type="button"
                 onClick={nextCard}
-                className="w-8 h-8 rounded-full border border-white/10 hover:border-white/30 bg-white/[0.02] hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition cursor-pointer"
+                className="w-8 h-8 rounded-full border border-white/10 hover:border-white/30 bg-white/[0.02] hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-all active:scale-90 hover:scale-105 cursor-pointer"
                 aria-label={isAr ? 'البطاقة التالية' : 'Next Brief'}
               >
                 <svg
@@ -736,13 +874,13 @@ export default function ResourcesHeroDark({
           <button
             type="button"
             onClick={handleDownloadGuide}
-            className="group flex items-center gap-2 text-xs font-medium text-slate-300 hover:text-white transition-colors py-2 px-3.5 rounded-lg hover:bg-white/5 cursor-pointer"
+            className="group flex items-center gap-2 text-xs font-medium text-slate-300 hover:text-white transition-all duration-200 py-2 px-3.5 rounded-lg hover:bg-white/5 active:scale-95 cursor-pointer"
           >
             <span>
               {isAr ? 'تحميل دليل تقارير التدريب كاملاً (PDF)' : 'Download Complete PDF Guide'}
             </span>
             <svg
-              className="w-4 h-4 text-slate-400 group-hover:text-[#FF5C00] group-hover:translate-y-0.5 transition"
+              className="w-4 h-4 text-slate-400 group-hover:text-[#FF5C00] group-hover:translate-y-0.5 transition-all"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
