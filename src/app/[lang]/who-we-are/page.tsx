@@ -10,7 +10,7 @@ import RoadmapTabs from '@/components/who-we-are/RoadmapTabs';
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
@@ -57,10 +57,10 @@ export async function generateStaticParams() {
 export default async function WhoWeArePage({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }) {
   const resolvedParams = await params;
-  const lang = resolvedParams?.lang || 'en';
+  const lang = (resolvedParams?.lang as Locale) || 'en';
   const isAr = isArabicLocale(lang);
 
   return (

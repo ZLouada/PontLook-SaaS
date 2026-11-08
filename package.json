@@ -18,12 +18,12 @@
     "@payloadcms/db-postgres": "3.90.2",
     "@payloadcms/next": "3.90.2",
     "@payloadcms/richtext-lexical": "3.90.2",
-    "@payloadcms/storage-s3": "^3.90.2",
+    "@payloadcms/storage-s3": "3.90.2",
     "@payloadcms/ui": "3.90.2",
     "framer-motion": "^11.18.2",
     "graphql": "^16.8.1",
     "lucide-react": "^0.454.0",
-    "next": "15.4.11",
+    "next": "15.5.29",
     "nodemailer": "^10.1.0",
     "payload": "3.90.2",
     "react": "19.0.1",
@@ -32,7 +32,7 @@
     "resend": "^6.20.0",
     "server-only": "^0.0.1",
     "sharp": "^0.35.5",
-    "zod": "^3.23.8"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/node": "^20.16.10",
@@ -41,9 +41,19 @@
     "@types/react-dom": "19.0.1",
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.1",
-    "eslint-config-next": "15.4.11",
-    "postcss": "^8.4.47",
+    "eslint-config-next": "15.5.29",
+    "postcss": "^8.5.32",
     "tailwindcss": "^3.4.13",
     "typescript": "^5.6.2"
+  },
+  "overrides": {
+    "dompurify": "^3.4.17",
+    "brace-expansion": "^1.1.21",
+    "source-map-js": "^1.2.2",
+    "happy-dom": "^21.0.4",
+    "undici": "^7.30.2",
+    "next": {
+      "postcss": "^8.5.32"
+    }
   }
 }

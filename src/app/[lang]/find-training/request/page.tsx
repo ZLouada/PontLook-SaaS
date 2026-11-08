@@ -11,7 +11,7 @@ import { constructAlternates } from '@/lib/seo';
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
@@ -70,10 +70,10 @@ function FunnelLoadingFallback() {
 export default async function FindTrainingRequestPage({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }) {
   const resolvedParams = await params;
-  const lang = resolvedParams?.lang || 'en';
+  const lang = (resolvedParams?.lang as Locale) || 'en';
   const isAr = isArabicLocale(lang);
 
   return (

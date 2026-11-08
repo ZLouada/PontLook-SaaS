@@ -9,7 +9,7 @@ import { constructAlternates } from '@/lib/seo';
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
@@ -53,9 +53,9 @@ export async function generateStaticParams() {
   return i18n.locales.map((lang) => ({ lang }));
 }
 
-export default async function TermsOfServicePage({ params }: { params: Promise<{ lang: Locale }> }) {
+export default async function TermsOfServicePage({ params }: { params: Promise<{ lang: string }> }) {
   const resolvedParams = await params;
-  const lang = resolvedParams?.lang || 'en';
+  const lang = (resolvedParams?.lang as Locale) || 'en';
   const isAr = isArabicLocale(lang);
 
   return (

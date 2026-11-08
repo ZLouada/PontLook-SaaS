@@ -10,7 +10,7 @@ import { constructAlternates } from '@/lib/seo';
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
@@ -92,9 +92,9 @@ const faqsAr = [
   { question: "كم يستغرق بدء استقبال الفرص؟", answer: "بمجرد الاتفاق على معايير الاستهداف وشروط التأهيل، يبدأ فريقنا فوراً بعمليات البحث والتواصل وتأهيل الفرص الملائمة." },
 ];
 
-export default async function FAQPage({ params }: { params: Promise<{ lang: Locale }> }) {
+export default async function FAQPage({ params }: { params: Promise<{ lang: string }> }) {
   const resolvedParams = await params;
-  const lang = resolvedParams?.lang || 'en';
+  const lang = (resolvedParams?.lang as Locale) || 'en';
   const isAr = isArabicLocale(lang);
   const faqs = isAr ? faqsAr : faqsEn;
 

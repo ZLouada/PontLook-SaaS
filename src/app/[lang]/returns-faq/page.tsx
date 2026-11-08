@@ -10,7 +10,7 @@ import { constructAlternates } from '@/lib/seo';
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const resolvedParams = await params;
   const lang = (resolvedParams?.lang as Locale) || 'en';
@@ -100,9 +100,9 @@ const policyHighlightsAr = [
   },
 ];
 
-export default async function ReturnsFAQPage({ params }: { params: Promise<{ lang: Locale }> }) {
+export default async function ReturnsFAQPage({ params }: { params: Promise<{ lang: string }> }) {
   const resolvedParams = await params;
-  const lang = resolvedParams?.lang || 'en';
+  const lang = (resolvedParams?.lang as Locale) || 'en';
   const isAr = isArabicLocale(lang);
   const policyHighlights = isAr ? policyHighlightsAr : policyHighlightsEn;
 

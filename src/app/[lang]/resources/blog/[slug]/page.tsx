@@ -29,9 +29,10 @@ function safeDecode(val: string): string {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ lang: Locale; slug: string }>;
+  params: Promise<{ lang: string; slug: string }>;
 }): Promise<Metadata> {
-  const { lang, slug } = await params;
+  const { lang: rawLang, slug } = await params;
+  const lang = (rawLang as Locale) || 'en';
   const isAr = isArabicLocale(lang);
 
   const article = await getArticleBySlug(slug, lang);
@@ -99,9 +100,10 @@ export async function generateStaticParams() {
 export default async function BlogPostDetailPage({
   params,
 }: {
-  params: Promise<{ lang: Locale; slug: string }>;
+  params: Promise<{ lang: string; slug: string }>;
 }) {
-  const { lang, slug } = await params;
+  const { lang: rawLang, slug } = await params;
+  const lang = (rawLang as Locale) || 'en';
   const isAr = isArabicLocale(lang);
 
   const article = await getArticleBySlug(slug, lang);

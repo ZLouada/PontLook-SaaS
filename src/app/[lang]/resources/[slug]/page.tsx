@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 export default async function ResourceSlugCatchAll({
   params,
 }: {
-  params: Promise<{ lang: Locale; slug: string }>;
+  params: Promise<{ lang: string; slug: string }>;
 }) {
   const { lang, slug } = await params;
   redirect(`/${lang}/resources/blog/${slug}`);
