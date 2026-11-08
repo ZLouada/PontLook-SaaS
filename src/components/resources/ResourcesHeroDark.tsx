@@ -148,9 +148,9 @@ export default function ResourcesHeroDark({
   ];
 
   return (
-    <section className="relative w-full bg-black text-white rounded-b-[2.5rem] sm:rounded-b-[3.5rem] lg:rounded-b-[48px] overflow-hidden pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-16 lg:pb-20 border-b border-neutral-900 shadow-2xl">
-      {/* Background Subtle Technical Grid */}
-      <div className="absolute inset-0 pointer-events-none opacity-40 select-none">
+    <section className="relative w-full bg-black text-white rounded-b-[2.5rem] sm:rounded-b-[3.5rem] lg:rounded-b-[48px] overflow-hidden pt-20 sm:pt-24 lg:pt-28 pb-10 sm:pb-12 lg:pb-14 border-b border-neutral-900 shadow-2xl">
+      {/* Subtle global technical grid backdrop */}
+      <div className="absolute inset-0 pointer-events-none opacity-30 select-none">
         <div
           className="absolute inset-0"
           style={{
@@ -161,18 +161,217 @@ export default function ResourcesHeroDark({
             backgroundSize: '80px 80px',
           }}
         />
-        <span className="absolute top-12 left-1/4 font-mono text-[10px] text-neutral-600">00.1900</span>
-        <span className="absolute top-20 right-1/4 font-mono text-[10px] text-neutral-600">20.4278</span>
-        <span className="absolute top-1/2 left-1/3 font-mono text-[10px] text-neutral-600">10.5035</span>
-        <span className="absolute bottom-12 left-1/2 font-mono text-[10px] text-neutral-600">-2.0157</span>
-        <span className="absolute bottom-16 right-1/3 font-mono text-[10px] text-neutral-600">-0.0488</span>
       </div>
 
-      <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-        {/* Top Header Bar: Search relocated to the high end of the header so it doesn't bother the screen */}
-        <div className="flex items-center justify-between mb-4 sm:mb-6">
-          {/* Mobile Filter by Topic pill strip */}
-          <div className="lg:hidden flex items-center gap-2 overflow-x-auto no-scrollbar py-1 text-xs font-mono text-neutral-400">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        {/* ========================================================================= */}
+        {/* DESKTOP 1:1 COMPOSITION (lg and above): EXACT COPY OF REFERENCE MOCKUP    */}
+        {/* ========================================================================= */}
+        <div className="hidden lg:block relative w-full aspect-[1024/517] max-w-[1360px] mx-auto rounded-3xl overflow-hidden select-none">
+          {/* Master 2x Retina Artwork: Wireframe Diagram, 3D Cubes, Connecting Nodes */}
+          <Image
+            src="/images/resources/hero-canvas-background@2x.webp"
+            alt="L&D Resource Network Visualisation"
+            fill
+            priority
+            sizes="(max-width: 1440px) 100vw, 1360px"
+            className="object-cover object-center select-none pointer-events-none"
+          />
+
+          {/* 1. ONE CRISP TITLE (Single Line Across Top-Left to Mid): "L&D Resource Hub" */}
+          <div
+            className={`absolute top-[8.5%] z-20 ${
+              isAr ? 'right-[5.27%]' : 'left-[5.27%]'
+            }`}
+          >
+            <h1 className="font-heading font-extrabold text-white tracking-tight leading-none whitespace-nowrap drop-shadow-md text-[clamp(2.2rem,4.1vw,3.85rem)]">
+              {displayTitle}
+            </h1>
+          </div>
+
+          {/* 2. CRISP VECTOR SUBTITLE (Directly below Title) */}
+          <div
+            className={`absolute top-[22.8%] z-20 max-w-[37%] ${
+              isAr ? 'right-[5.27%]' : 'left-[5.27%]'
+            }`}
+          >
+            <p className="font-sans text-neutral-300 font-normal leading-relaxed text-[clamp(11px,1.15vw,15px)]">
+              {displaySubtitle}
+            </p>
+          </div>
+
+          {/* 3. VERTICAL TOPIC FILTER (Left of Card) */}
+          <div
+            className={`absolute top-[46.5%] z-20 h-[44%] flex items-center justify-end ${
+              isAr ? 'right-[3.0%]' : 'left-[3.0%]'
+            }`}
+          >
+            <div
+              className={`flex items-center gap-2.5 text-[10px] xl:text-[11px] tracking-wider text-neutral-500 [writing-mode:vertical-rl] ${
+                isAr ? 'rotate-0' : 'rotate-180'
+              }`}
+            >
+              <span className="font-sans font-bold text-white tracking-normal text-xs">
+                {isAr ? 'تصنيف المحتوى' : 'Filter by Topic'}
+              </span>
+              <span className="text-neutral-700">|</span>
+              <div className="flex items-center gap-2 font-mono text-[10px] text-neutral-400">
+                {topics.map((t, idx) => (
+                  <React.Fragment key={idx}>
+                    <Link
+                      href={t.href}
+                      className="hover:text-white transition-colors cursor-pointer"
+                    >
+                      {isAr ? t.labelAr : t.labelEn}
+                    </Link>
+                    {idx < topics.length - 1 && <span className="text-neutral-700">•</span>}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* 4. FUNCTIONAL SEARCH BAR (Directly below Subtitle, above Card) */}
+          <form
+            onSubmit={handleSearchSubmit}
+            className={`absolute top-[34.2%] z-20 w-[22.8%] h-[7.5%] min-h-[38px] ${
+              isAr ? 'right-[10.55%]' : 'left-[10.55%]'
+            }`}
+          >
+            <div className="relative w-full h-full flex items-center rounded-xl border border-neutral-800 bg-[#0C0D12]/90 hover:border-neutral-600 focus-within:border-neutral-400 transition-all duration-200 px-3.5 backdrop-blur-md shadow-lg">
+              <Search
+                size={14}
+                className="text-neutral-400 shrink-0 me-2.5 transition-colors group-focus-within:text-white"
+              />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={isAr ? 'ابحث في الرؤى والأبحاث...' : 'search insights...'}
+                className="w-full bg-transparent text-xs xl:text-sm text-white placeholder:text-neutral-500 focus:outline-none"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="text-neutral-500 hover:text-white text-xs px-1 cursor-pointer"
+                  aria-label="Clear search"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+          </form>
+
+          {/* 5. INTERACTIVE FEATURED CARD (Directly below Search Bar) */}
+          <div
+            className={`absolute top-[46.0%] z-20 w-[22.8%] h-[45%] rounded-2xl border border-white/15 bg-[#0C0D12]/95 p-4 xl:p-5 flex flex-col justify-between backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-white/30 group ${
+              isAr ? 'right-[10.55%]' : 'left-[10.55%]'
+            }`}
+          >
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-mono text-[9px] xl:text-[10px] font-semibold uppercase tracking-wider text-neutral-400">
+                  {isAr ? slide.badgeAr : slide.badgeEn}
+                </span>
+                <span className="font-mono text-[9px] xl:text-[10px] text-neutral-500 tabular-nums">
+                  {slide.number} / 04
+                </span>
+              </div>
+
+              <h3 className="font-heading text-sm xl:text-base font-bold text-white tracking-tight mb-1.5 line-clamp-2 group-hover:text-white transition-colors">
+                {isAr ? slide.titleAr : slide.titleEn}
+              </h3>
+
+              <p className="font-sans text-[11px] xl:text-xs text-neutral-400 leading-relaxed line-clamp-3">
+                {isAr ? slide.excerptAr : slide.excerptEn}
+              </p>
+            </div>
+
+            <Link
+              href={`/${lang}${slide.href}`}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-neutral-200 transition-colors group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 duration-200"
+            >
+              <span>{isAr ? slide.ctaAr : slide.ctaEn}</span>
+              <ArrowUpRight size={14} className="transition-transform group-hover:scale-110" />
+            </Link>
+          </div>
+
+          {/* 6. INTERACTIVE HOTSPOTS ON 3D NETWORK NODES */}
+          {/* Node 0: Center Scroll (Future of B2B Training) */}
+          <button
+            type="button"
+            onClick={() => setActiveSlide(0)}
+            className={`absolute top-[67%] left-[68%] -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full transition-all duration-300 cursor-pointer z-30 ${
+              activeSlide === 0
+                ? 'ring-2 ring-white ring-offset-2 ring-offset-black scale-125 bg-white/25 shadow-[0_0_15px_rgba(255,255,255,0.4)]'
+                : 'hover:scale-110 bg-transparent'
+            }`}
+            aria-label="View Future of B2B Training"
+          />
+
+          {/* Node 1: Article (L&D Industry Trends) */}
+          <button
+            type="button"
+            onClick={() => setActiveSlide(1)}
+            className={`absolute top-[71%] left-[44%] -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full transition-all duration-300 cursor-pointer z-30 ${
+              activeSlide === 1
+                ? 'ring-2 ring-white ring-offset-2 ring-offset-black scale-125 bg-white/25 shadow-[0_0_15px_rgba(255,255,255,0.4)]'
+                : 'hover:scale-110 bg-transparent'
+            }`}
+            aria-label="View L&D Industry Trends"
+          />
+
+          {/* Node 2: Far Right Document (Interactive Strategies) */}
+          <button
+            type="button"
+            onClick={() => setActiveSlide(2)}
+            className={`absolute top-[48%] left-[89%] -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full transition-all duration-300 cursor-pointer z-30 ${
+              activeSlide === 2
+                ? 'ring-2 ring-white ring-offset-2 ring-offset-black scale-125 bg-white/25 shadow-[0_0_15px_rgba(255,255,255,0.4)]'
+                : 'hover:scale-110 bg-transparent'
+            }`}
+            aria-label="View Interactive Strategies"
+          />
+
+          {/* Node 3: Top Wireframe Cube */}
+          <button
+            type="button"
+            onClick={() => setActiveSlide(3)}
+            className={`absolute top-[41%] left-[64%] -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full transition-all duration-300 cursor-pointer z-30 ${
+              activeSlide === 3
+                ? 'ring-2 ring-white ring-offset-2 ring-offset-black scale-125 bg-white/25 shadow-[0_0_15px_rgba(255,255,255,0.4)]'
+                : 'hover:scale-110 bg-transparent'
+            }`}
+            aria-label="View Enterprise Transformation"
+          />
+
+          {/* 7. SLIDE SWITCHER AT BOTTOM RIGHT: "01 / 04 →" */}
+          <div
+            className={`absolute bottom-[4.5%] z-20 select-none ${
+              isAr ? 'left-[4.0%]' : 'right-[4.0%]'
+            }`}
+          >
+            <button
+              type="button"
+              onClick={handleNextSlide}
+              aria-label="Next slide"
+              className="group inline-flex items-center gap-2.5 font-mono text-sm xl:text-base font-semibold text-white tracking-wider cursor-pointer hover:text-white transition-colors px-2 py-1"
+            >
+              <span className="tabular-nums tracking-widest">{slide.number} / 04</span>
+              <span className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 inline-flex items-center">
+                <ArrowRight size={18} className="rtl:rotate-180 text-white" />
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* MOBILE & TABLET RESPONSIVE FALLBACK (< lg): CLEAN STACKED PRESENTATION    */}
+        {/* ========================================================================= */}
+        <div className="lg:hidden flex flex-col gap-6">
+          {/* Mobile Topic Filter Bar */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 text-xs font-mono text-neutral-400">
             <span className="font-semibold text-white uppercase shrink-0">
               {isAr ? 'تصنيف:' : 'Filter:'}
             </span>
@@ -188,21 +387,29 @@ export default function ResourcesHeroDark({
             </div>
           </div>
 
-          <div className="hidden lg:block" />
+          {/* Clean Vector Title & Subtitle */}
+          <div>
+            <h1 className="font-heading text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight mb-2.5">
+              {displayTitle}
+            </h1>
+            <p className="font-sans text-neutral-300 text-sm sm:text-base leading-relaxed">
+              {displaySubtitle}
+            </p>
+          </div>
 
-          {/* Search Bar at high end of header */}
-          <form onSubmit={handleSearchSubmit} className="relative z-30 shrink-0 ms-auto">
-            <div className="relative flex items-center rounded-full border border-neutral-800 bg-[#0C0D12]/90 hover:border-neutral-600 focus-within:border-neutral-400 transition-all duration-200 px-3.5 py-1.5 sm:px-4 sm:py-2 backdrop-blur-md shadow-lg">
+          {/* Search Bar */}
+          <form onSubmit={handleSearchSubmit} className="w-full">
+            <div className="relative flex items-center rounded-xl border border-neutral-800 bg-[#0C0D12]/90 hover:border-neutral-600 focus-within:border-neutral-400 transition-all duration-200 px-3.5 py-2.5 backdrop-blur-md shadow-lg">
               <Search
-                size={14}
-                className="text-neutral-400 shrink-0 me-2.5 transition-colors group-focus-within:text-white"
+                size={16}
+                className="text-neutral-400 shrink-0 me-2.5"
               />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={isAr ? 'ابحث في الرؤى والأبحاث...' : 'search insights...'}
-                className="w-36 sm:w-52 md:w-64 bg-transparent text-xs sm:text-sm text-white placeholder:text-neutral-500 focus:outline-none"
+                className="w-full bg-transparent text-sm text-white placeholder:text-neutral-500 focus:outline-none"
               />
               {searchQuery && (
                 <button
@@ -216,212 +423,50 @@ export default function ResourcesHeroDark({
               )}
             </div>
           </form>
-        </div>
 
-        {/* Main Composition: Crisp Vector Typography on the Left, Pure 3D Wireframe Diagram on the Right */}
-        <div className="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-8 xl:gap-12 relative">
-          {/* Desktop Vertical Topic Sidebar on far left */}
-          <div
-            className={`hidden lg:flex flex-col justify-end shrink-0 select-none pb-4 ${
-              isAr ? 'pl-2' : 'pr-2'
-            }`}
-          >
-            <div
-              className={`flex items-center gap-3 text-xs tracking-wider text-neutral-500 [writing-mode:vertical-rl] ${
-                isAr ? 'rotate-0' : 'rotate-180'
-              }`}
-            >
-              <span className="font-sans font-bold text-white tracking-normal text-sm">
-                {isAr ? 'تصنيف المحتوى' : 'Filter by Topic'}
+          {/* 3D Wireframe Visual Canvas on Mobile */}
+          <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-neutral-800/80 bg-black">
+            <Image
+              src="/images/resources/hero-canvas-background@2x.webp"
+              alt="L&D Resource Network Visualisation"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-right"
+            />
+          </div>
+
+          {/* Featured Card */}
+          <div className="rounded-2xl border border-white/15 bg-[#0C0D12]/95 p-5 backdrop-blur-xl shadow-xl">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-neutral-400">
+                {isAr ? slide.badgeAr : slide.badgeEn}
               </span>
-              <span className="text-neutral-600">|</span>
-              <div className="flex items-center gap-2 font-mono text-[11px] text-neutral-400">
-                {topics.map((t, idx) => (
-                  <React.Fragment key={idx}>
-                    <Link href={t.href} className="hover:text-white transition-colors">
-                      {isAr ? t.labelAr : t.labelEn}
-                    </Link>
-                    {idx < topics.length - 1 && <span className="text-neutral-600">•</span>}
-                  </React.Fragment>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Left Column: Razor-sharp Vector Title, Subtitle, and Lower Card */}
-          <div className="w-full lg:w-[42%] xl:w-[40%] flex flex-col justify-between shrink-0 z-10">
-            <div>
-              {/* Native Vector Heading - Crisp on all screens, no raster blur */}
-              <h1 className="font-heading text-4xl sm:text-5xl lg:text-5xl xl:text-[3.75rem] font-extrabold text-white tracking-tight leading-[1.08] mb-4 whitespace-normal lg:whitespace-nowrap drop-shadow-sm">
-                {displayTitle}
-              </h1>
-
-              {/* Native Vector Subtitle */}
-              <p className="font-sans text-neutral-300 text-sm sm:text-base lg:text-lg font-normal leading-relaxed max-w-xl">
-                {displaySubtitle}
-              </p>
-            </div>
-
-            {/* Featured Card: Positioned 'bellow a little bit' with comfortable top spacing */}
-            <div className="mt-8 sm:mt-10 lg:mt-14">
-              <div className="relative rounded-2xl border border-white/15 bg-[#0C0D12]/95 p-5 sm:p-6 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-white/30 group">
-                <div className="flex items-center justify-between mb-2.5">
-                  <span className="font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-neutral-300">
-                    {isAr ? slide.badgeAr : slide.badgeEn}
-                  </span>
-                  <span className="font-mono text-[10px] sm:text-[11px] text-neutral-400 tabular-nums">
-                    {slide.number} / 04
-                  </span>
-                </div>
-
-                <h3 className="font-heading text-lg sm:text-xl font-bold text-white tracking-tight mb-2 group-hover:text-white transition-colors">
-                  {isAr ? slide.titleAr : slide.titleEn}
-                </h3>
-
-                <p className="font-sans text-xs sm:text-sm text-neutral-300 leading-relaxed line-clamp-3 mb-4">
-                  {isAr ? slide.excerptAr : slide.excerptEn}
-                </p>
-
-                <Link
-                  href={`/${lang}${slide.href}`}
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-white hover:text-neutral-200 transition-colors group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 duration-200"
-                >
-                  <span>{isAr ? slide.ctaAr : slide.ctaEn}</span>
-                  <ArrowUpRight size={15} className="transition-transform group-hover:scale-110" />
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Pure 3D Wireframe Network Diagram with Crisp Vector Badges */}
-          <div className="w-full lg:w-[58%] xl:w-[60%] relative flex flex-col justify-between min-h-[400px] sm:min-h-[460px] lg:min-h-[520px]">
-            {/* Diagram Canvas with authentic 3D wireframe artwork (no blurry raster text) */}
-            <div className="relative w-full h-full flex items-center justify-center">
-              <div className="relative w-full aspect-[694/517] max-w-[760px]">
-                {/* Crisp 2x retina wireframe graphic */}
-                <Image
-                  src="/images/resources/hero-wireframe-diagram@2x.webp"
-                  alt="L&D Resource Network Visualisation"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 760px"
-                  className="object-contain object-center select-none pointer-events-none"
-                />
-
-                {/* --- Vector Crisp Badges Overlaid at Exact Geometric Positions --- */}
-
-                {/* 1. Badge: L&D Industry Trends */}
-                <div className="absolute top-[48%] left-[14%] -translate-y-1/2 flex flex-col items-start pointer-events-none">
-                  <span className="font-sans text-[11px] sm:text-xs font-semibold text-white drop-shadow-md tracking-tight whitespace-nowrap">
-                    {isAr ? 'اتجاهات القطاع' : 'L&D Industry Trends'}
-                  </span>
-                </div>
-
-                {/* 2. Badge: Top Cube (+ Expand) */}
-                <button
-                  type="button"
-                  onClick={() => setActiveSlide(3)}
-                  className="absolute top-[24%] left-[45%] -translate-x-1/2 -translate-y-1/2 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold text-white/95 bg-white/10 hover:bg-white/20 border border-white/25 backdrop-blur-md shadow-md cursor-pointer transition-all duration-200 hover:scale-105"
-                  aria-label="Expand Enterprise Transformation"
-                >
-                  + Expand
-                </button>
-
-                {/* 3. Badge: Future of B2B Training */}
-                <div className="absolute top-[62%] left-[64%] -translate-y-1/2 flex flex-col items-start pointer-events-none select-none">
-                  <span className="font-sans text-[11px] sm:text-xs font-semibold text-white drop-shadow-md tracking-tight whitespace-nowrap">
-                    {isAr ? 'مستقبل تدريب B2B' : 'Future of B2B Training'}
-                  </span>
-                  <span className="mt-1 px-2 py-0.5 rounded-full text-[9px] font-mono font-semibold uppercase tracking-wider text-neutral-300 bg-neutral-900/90 border border-neutral-700/80 shadow-sm">
-                    {isAr ? 'دليل • دراسة حالة' : 'GUIDE • Case Study'}
-                  </span>
-                </div>
-
-                {/* 4. Badge: Right Document (+ Expand) */}
-                <button
-                  type="button"
-                  onClick={() => setActiveSlide(2)}
-                  className="absolute top-[23%] left-[86%] -translate-x-1/2 -translate-y-1/2 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold text-white/95 bg-white/10 hover:bg-white/20 border border-white/25 backdrop-blur-md shadow-md cursor-pointer transition-all duration-200 hover:scale-105"
-                  aria-label="Expand Interactive Strategies"
-                >
-                  + Expand
-                </button>
-
-                {/* 5. Badge: Interactive Strategies */}
-                <div className="absolute top-[59%] left-[76%] -translate-y-1/2 flex flex-col items-start pointer-events-none select-none">
-                  <span className="font-sans text-[11px] sm:text-xs font-semibold text-white drop-shadow-md tracking-tight whitespace-nowrap">
-                    {isAr ? 'استراتيجيات تفاعلية' : 'Interactive Strategies'}
-                  </span>
-                  <span className="mt-1 px-2 py-0.5 rounded-full text-[9px] font-mono font-semibold uppercase tracking-wider text-neutral-300 bg-neutral-900/90 border border-neutral-700/80 shadow-sm">
-                    {isAr ? 'ملف PDF • ٨ دقائق' : 'PDF • 8 min read'}
-                  </span>
-                </div>
-
-                {/* Interactive Hotspot Targets on the Diagram Nodes (Highlight Active Slide) */}
-                {/* Node 1: Article / L&D Industry Trends */}
-                <button
-                  type="button"
-                  onClick={() => setActiveSlide(1)}
-                  className={`absolute top-[68%] left-[16%] -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full transition-all duration-300 cursor-pointer ${
-                    activeSlide === 1
-                      ? 'ring-2 ring-white ring-offset-2 ring-offset-black scale-125 bg-white/30'
-                      : 'hover:scale-110 bg-transparent'
-                  }`}
-                  aria-label="View L&D Industry Trends"
-                />
-
-                {/* Node 2: Top Wireframe Cube */}
-                <button
-                  type="button"
-                  onClick={() => setActiveSlide(3)}
-                  className={`absolute top-[34%] left-[48%] -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full transition-all duration-300 cursor-pointer ${
-                    activeSlide === 3
-                      ? 'ring-2 ring-white ring-offset-2 ring-offset-black scale-125 bg-white/30'
-                      : 'hover:scale-110 bg-transparent'
-                  }`}
-                  aria-label="View Enterprise Workforce Transformation"
-                />
-
-                {/* Node 3: Center Scroll */}
-                <button
-                  type="button"
-                  onClick={() => setActiveSlide(0)}
-                  className={`absolute top-[68%] left-[51%] -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full transition-all duration-300 cursor-pointer ${
-                    activeSlide === 0
-                      ? 'ring-2 ring-white ring-offset-2 ring-offset-black scale-125 bg-white/30'
-                      : 'hover:scale-110 bg-transparent'
-                  }`}
-                  aria-label="View Future of B2B Training"
-                />
-
-                {/* Node 4: Far Right Document */}
-                <button
-                  type="button"
-                  onClick={() => setActiveSlide(2)}
-                  className={`absolute top-[38%] left-[84%] -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full transition-all duration-300 cursor-pointer ${
-                    activeSlide === 2
-                      ? 'ring-2 ring-white ring-offset-2 ring-offset-black scale-125 bg-white/30'
-                      : 'hover:scale-110 bg-transparent'
-                  }`}
-                  aria-label="View Interactive Strategies"
-                />
-              </div>
-            </div>
-
-            {/* Bottom Right Crisp Vector Monospace Slide Switcher: "01 / 04 →" */}
-            <div className="flex items-center justify-end mt-4 select-none z-20">
               <button
                 type="button"
                 onClick={handleNextSlide}
-                aria-label="Next slide"
-                className="group inline-flex items-center gap-2.5 font-mono text-sm sm:text-base font-semibold text-white tracking-wider cursor-pointer hover:text-white transition-colors px-2 py-1"
+                className="font-mono text-xs text-white hover:text-neutral-200 inline-flex items-center gap-1 cursor-pointer"
               >
-                <span className="tabular-nums tracking-widest">{slide.number} / 04</span>
-                <span className="transition-transform duration-200 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 inline-flex items-center">
-                  <ArrowRight size={18} className="rtl:rotate-180 text-white" />
-                </span>
+                <span>{slide.number} / 04</span>
+                <ArrowRight size={13} className="rtl:rotate-180" />
               </button>
             </div>
+
+            <h3 className="font-heading text-base font-bold text-white tracking-tight mb-2">
+              {isAr ? slide.titleAr : slide.titleEn}
+            </h3>
+
+            <p className="font-sans text-xs text-neutral-300 leading-relaxed mb-4">
+              {isAr ? slide.excerptAr : slide.excerptEn}
+            </p>
+
+            <Link
+              href={`/${lang}${slide.href}`}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-neutral-200 transition-colors"
+            >
+              <span>{isAr ? slide.ctaAr : slide.ctaEn}</span>
+              <ArrowUpRight size={14} />
+            </Link>
           </div>
         </div>
       </div>
