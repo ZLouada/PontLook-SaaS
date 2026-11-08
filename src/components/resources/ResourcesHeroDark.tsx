@@ -252,7 +252,7 @@ export default function ResourcesHeroDark({
           <div className="w-full lg:w-[42%] xl:w-[40%] flex flex-col justify-between shrink-0 z-10">
             <div>
               {/* Native Vector Heading - Crisp on all screens, no raster blur */}
-              <h1 className="font-heading text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[3.75rem] font-extrabold text-white tracking-tight leading-[1.06] mb-4 drop-shadow-sm">
+              <h1 className="font-heading text-4xl sm:text-5xl lg:text-5xl xl:text-[3.75rem] font-extrabold text-white tracking-tight leading-[1.08] mb-4 whitespace-normal lg:whitespace-nowrap drop-shadow-sm">
                 {displayTitle}
               </h1>
 
