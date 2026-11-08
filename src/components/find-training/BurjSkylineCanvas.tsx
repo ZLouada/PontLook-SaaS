@@ -467,8 +467,9 @@ export default function BurjSkylineCanvas({ isAr = false, className = '' }: Burj
         hudRef.current.textContent = nextHud;
       }
 
-      // When reduced motion is active, pause continuous rAF loop once idle
-      if (RM && asm >= 1 && beams.length === 0 && !isInteracting && Math.abs(tx - mx) < 0.005) {
+      // Mobile Canvas Bypassing: once the skyline assembly renders, pause continuous loop on mobile
+      // or reduced motion when not actively interacting. Touch / interaction awakens startLoop() on demand.
+      if ((RM || isMobile) && asm >= 1 && beams.length === 0 && !isInteracting && Math.abs(tx - mx) < 0.005) {
         isRunning = false;
         return;
       }

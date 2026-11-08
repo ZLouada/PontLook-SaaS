@@ -1,0 +1,45 @@
+name: CI Pipeline (Quality & Production Build Gate)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-and-build:
+    name: Typecheck, Lint & Production Build
+    runs-on: ubuntu-latest
+
+    env:
+      NEXT_TELEMETRY_DISABLED: 1
+      NODE_ENV: production
+      PAYLOAD_SECRET: ci_build_temporary_secret_key_at_least_32_chars
+      DATABASE_URI: postgresql://postgres:ci_placeholder@localhost:5432/postgres
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Setup Node.js 22 Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: 3. Clean Install Dependencies
+        run: npm ci
+
+      - name: 4. Static TypeScript Typecheck
+        run: npx tsc --noEmit
+
+      - name: 5. ESLint Quality Check
+        run: npm run lint
+
+      - name: 6. Full Next.js 15 & Payload CMS Production Build
+        run: npm run build

@@ -524,7 +524,9 @@ export default function RaceBridgeCanvas({
         ctx.stroke();
         ctx.globalAlpha = 1;
       }
-      if (RM) {
+      // Mobile Canvas Bypassing: once the bridge cables render on mobile, pause continuous loop
+      // to eliminate main-thread CPU throttling and heavy battery draw.
+      if (RM || (isMobile && up >= 1)) {
         isRunning = false;
         return;
       }

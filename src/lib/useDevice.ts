@@ -37,6 +37,16 @@ export function useCoarsePointer(): boolean {
   return useMediaQuery('(pointer: coarse)');
 }
 
+/** Detects mobile viewport width (< 768px). */
+export function useIsMobile(): boolean {
+  return useMediaQuery('(max-width: 767px)');
+}
+
+/** Detects user preference for reduced motion. */
+export function useReducedMotion(): boolean {
+  return useMediaQuery('(prefers-reduced-motion: reduce)');
+}
+
 /**
  * Fires a very short vibration where the platform supports it. iOS Safari
  * ignores this, so it is a bonus on Android rather than something to rely on.

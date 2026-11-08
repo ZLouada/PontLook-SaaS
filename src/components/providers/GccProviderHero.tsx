@@ -482,9 +482,10 @@ export default function GccProviderHero({ isAr = false }: GccProviderHeroProps) 
 
       ctx.globalAlpha = 1;
 
-      // When reduced motion is requested, pause continuous loop once idle
+      // Mobile Canvas Bypassing: pause continuous loop on mobile (<768px) or reduced motion once idle.
+      // Awakens on touch or scroll on demand.
       if (
-        RM &&
+        (RM || isMobile) &&
         asm >= 1 &&
         blast < 0.005 &&
         shock === null &&

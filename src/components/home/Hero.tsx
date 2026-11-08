@@ -616,8 +616,9 @@ export default function Hero() {
       ctx.fillRect(0, 0, W, H);
       ctx.globalAlpha = 1;
 
-      // When reduced motion is requested, pause continuous loop once idle
-      if (RM && !dn && Math.abs(drag) < 0.001 && arcs.length === 0) {
+      // Mobile Canvas Bypassing: on mobile (<768px) or reduced motion, halt the continuous 60fps loop
+      // once the globe projection renders. Touch, drag, or scroll awakens startLoop() on demand, slashing mobile TBT.
+      if ((RM || isMobile) && !dn && Math.abs(drag) < 0.001 && arcs.length === 0) {
         isRunning = false;
         return;
       }
