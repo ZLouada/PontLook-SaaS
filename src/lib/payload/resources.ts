@@ -955,22 +955,22 @@ export const getResourcesHero = cache(async (locale: Locale = 'en'): Promise<Ada
     })
 
     return {
-      title: hero?.title || (isAr ? 'مركز موارد التدريب والتطوير في PontLook' : 'The PontLook L&D resource hub'),
+      title: hero?.title || (isAr ? 'مركز موارد التدريب والتطوير' : 'L&D Resource Hub'),
       subtitle:
         hero?.description ||
         (isAr
-          ? 'رؤى واستراتيجيات وموارد لمساعدة المنشآت على بناء كوادر أقوى من خلال قرارات تدريبية أفضل.'
-          : 'Insights, strategies, and resources to help organisations build stronger workforces through better training decisions.'),
+          ? 'استكشف أحدث الرؤى العملية، واتجاهات القطاع، ومستقبل تدريب وتطوير الكفاءات المؤسسية.'
+          : 'Explore actionable insights, industry trends, and the future of enterprise training.'),
       eyebrow: hero?.eyebrow || undefined,
     }
   } catch (error) {
     console.error('[Payload Data Layer] Failed to get resources hero:', error)
     return {
-      title: isAr ? 'مركز موارد التدريب والتطوير في PontLook' : 'The PontLook L&D resource hub',
+      title: isAr ? 'مركز موارد التدريب والتطوير' : 'L&D Resource Hub',
       subtitle:
         isAr
-          ? 'رؤى واستراتيجيات وموارد لمساعدة المنشآت على بناء كوادر أقوى من خلال قرارات تدريبية أفضل.'
-          : 'Insights, strategies, and resources to help organisations build stronger workforces through better training decisions.',
+          ? 'استكشف أحدث الرؤى العملية، واتجاهات القطاع، ومستقبل تدريب وتطوير الكفاءات المؤسسية.'
+          : 'Explore actionable insights, industry trends, and the future of enterprise training.',
     }
   }
 })

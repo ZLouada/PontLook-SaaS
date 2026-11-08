@@ -14,6 +14,7 @@ import {
   AdaptedFeaturedItem,
 } from '@/lib/payload/resources';
 import ResourcesCategoryTabs, { ResourceTabItem } from '@/components/resources/ResourcesCategoryTabs';
+import ResourcesHeroDark from '@/components/resources/ResourcesHeroDark';
 import {
   BookOpen,
   Headphones,
@@ -42,11 +43,11 @@ export async function generateMetadata({
   const isAr = isArabicLocale(lang);
 
   const title = isAr
-    ? 'مركز الموارد والأبحاث | منصة PontLook للتدريب المؤسسي'
-    : 'Resource Hub for HR & Corporate L&D Leaders | PontLook';
+    ? 'مركز موارد التدريب والتطوير | منصة PontLook'
+    : 'L&D Resource Hub | PontLook';
   const description = isAr
-    ? 'استكشف أحدث المقالات، وحلقات البودكاست، والتقارير القابلة للتحميل، والفعاليات التنفيذية المتخصصة في تدريب وتطوير الكفاءات في الخليج.'
-    : 'Explore GoodHabitz-inspired resource library: in-depth corporate training guides, executive podcasts, downloadable toolkits, and upcoming GCC workforce events.';
+    ? 'استكشف أحدث الرؤى العملية، واتجاهات القطاع، ومستقبل تدريب وتطوير الكفاءات المؤسسية.'
+    : 'Explore actionable insights, industry trends, and the future of enterprise training.';
 
   return {
     title: {
@@ -152,22 +153,13 @@ export default async function ResourcesPage({
   return (
     <div className="min-h-screen bg-white text-neutral-900 transition-colors duration-200">
       {/* ======================================================== */}
-      {/* 1. ORANGE HERO WINDOW (GoodHabitz Inspired Style)         */}
+      {/* 1. DARK NETWORK HERO (Futuristic L&D Hub Style)           */}
       {/* ======================================================== */}
-      <section className="relative w-full bg-[#FF5C00] text-white rounded-b-[2.5rem] sm:rounded-b-[3.5rem] lg:rounded-b-[48px] overflow-hidden pt-36 sm:pt-40 lg:pt-44 pb-16 sm:pb-20 lg:pb-24 px-4 sm:px-6 lg:px-8 text-center shadow-lg">
-        {/* Subtle ambient highlight for high-end polish */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/15 via-transparent to-black/10 pointer-events-none" />
-
-        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-5 sm:mb-6 max-w-3xl">
-            {heroTitle}
-          </h1>
-
-          <p className="font-sans text-base sm:text-lg font-normal leading-relaxed text-white/95 max-w-2xl sm:max-w-3xl">
-            {heroSubtitle}
-          </p>
-        </div>
-      </section>
+      <ResourcesHeroDark
+        lang={lang}
+        customTitle={heroTitle}
+        customSubtitle={heroSubtitle}
+      />
 
       {/* ======================================================== */}
       {/* WHITE CONTENT BODY (Triggers light theme navbar on scroll)*/}
